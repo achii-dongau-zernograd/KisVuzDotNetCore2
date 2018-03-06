@@ -53,6 +53,8 @@ namespace KisVuzDotNetCore2
 
             app.UseStaticFiles();
 
+	    app.UseAuthentication();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using KisVuzDotNetCore2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers
 {
@@ -22,6 +23,7 @@ namespace KisVuzDotNetCore2.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
