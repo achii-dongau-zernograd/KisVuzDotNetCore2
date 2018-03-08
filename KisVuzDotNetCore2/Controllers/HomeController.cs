@@ -23,7 +23,7 @@ namespace KisVuzDotNetCore2.Controllers
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles ="Администраторы")]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
