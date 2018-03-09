@@ -48,12 +48,13 @@ namespace KisVuzDotNetCore2
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
+                app.UseDeveloperExceptionPage();
             }
 
             app.UseStaticFiles();
 
-	    app.UseAuthentication();
+	        app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
