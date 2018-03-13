@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -44,5 +45,36 @@ namespace KisVuzDotNetCore2.Models
         public string RoleId { get; set; }
         public string[] IdsToAdd { get; set; }
         public string[] IdsToDelete { get; set; }
+    }
+
+    public class UserProfileModificationModel
+    {
+        [Display(Name = "Логин")]
+        public string UserName { get; set; }
+
+        [Display(Name = "Имя")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Фамилия")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Отчество")]
+        public string Patronymic { get; set; }
+
+        [DataType(DataType.Date)]
+        [Display(Name = "Дата рождения")]
+        public DateTime Birthdate { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Display(Name = "Телефон")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Фотография пользователя")]
+        public byte[] AppUserPhoto { get; set; }
+
+        [Display(Name = "Фотография пользователя")]
+        public IFormFile AppUserPhotoFile { get; set; }
     }
 }
