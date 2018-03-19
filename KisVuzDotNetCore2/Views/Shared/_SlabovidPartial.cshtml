@@ -1,0 +1,10 @@
+﻿@{
+    byte[] slabovid;
+    if (Context.Session.TryGetValue("slabovid", out slabovid))
+    {
+        if (slabovid[0] == 1)
+        {
+            <link rel="stylesheet" href="~/css/slabovid.css" asp-append-version="true" />
+        }
+    }
+}

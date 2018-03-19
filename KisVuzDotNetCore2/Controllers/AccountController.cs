@@ -51,13 +51,14 @@ namespace KisVuzDotNetCore2.Controllers
             return View(details);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();            
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+                
 
         [AllowAnonymous]
         public IActionResult AccessDenied()

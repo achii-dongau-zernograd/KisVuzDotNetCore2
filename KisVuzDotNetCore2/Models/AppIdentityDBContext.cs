@@ -15,6 +15,9 @@ namespace KisVuzDotNetCore2.Models
             
         }
 
+        public DbSet<StructOrgUprav> StructOrgUprav { get; set; }
+        public DbSet<FileModel> Files { get; set; }
+
         public static async Task CreateAdminAccount(IServiceProvider serviceProvider, IConfiguration configuration)
         {
             using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())

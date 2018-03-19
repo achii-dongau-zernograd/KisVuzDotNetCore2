@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - KisVuzDotNetCore2</title>
+    <title>@ViewData["Title"] - КИС</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -15,6 +15,7 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    @await Html.PartialAsync("_SlabovidPartial")
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -26,15 +27,38 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">KisVuzDotNetCore2</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">КИС АЧИИ</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">О проекте</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Контакты</a></li>
-                    <li><a asp-area="" asp-controller="UserAdmin" asp-action="Index">Пользователи</a></li>
-                    <li><a asp-area="" asp-controller="RoleAdmin" asp-action="Index">Роли</a></li>
+
+                    <!-- Выпадающий список: Сведения об образовательной организации -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сведения об образовательной организации<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="Sveden" asp-action="Common">Основные сведения</a></li>
+                            <li><a asp-controller="Sveden" asp-action="Struct">Структура и органы управления образовательной организацией</a></li>
+                            <li><a asp-controller="Sveden" asp-action="Document">Документы</a></li>
+                            <li><a asp-controller="Sveden" asp-action="Education">Образование</a></li>
+                            <li><a asp-controller="Sveden" asp-action="EduStandarts">Образовательные стандарты</a></li>
+                            <li><a asp-controller="Sveden" asp-action="Employees">Руководство. Педагогический (научно-педагогический) состав</a></li>
+                            <li><a asp-controller="Sveden" asp-action="Objects">Материально-техническое обеспечение и оснащённость образовательного процесса</a></li>
+                            <li><a asp-controller="Sveden" asp-action="Grants">Стипендии и иные виды материальной поддержки</a></li>
+                            <li><a asp-controller="Sveden" asp-action="Paid_edu">Платные образовательные услуги</a></li>
+                            <li><a asp-controller="Sveden" asp-action="Budget">Финансово-хозяйственная деятельность</a></li>
+                            <li><a asp-controller="Sveden" asp-action="Vacant">Вакантные места для приема (перевода)</a></li>
+                        </ul>
+                    </li>
+                    <!-- Выпадающий список: Администрирование -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Администрирование<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="UserAdmin" asp-action="Index">Пользователи</a></li>
+                            <li><a asp-area="" asp-controller="RoleAdmin" asp-action="Index">Роли</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -44,9 +68,10 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - KisVuzDotNetCore2</p>
+            <p class="text-center">&copy; 2017 <a href="http://www.ачгаа.рф/">Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ</a>. Все права защищены.</p>
+            <p class="text-center">Разработка сайта - Кафедра Т и ИУС.</p>
         </footer>
-    </div>
+    </div>     
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

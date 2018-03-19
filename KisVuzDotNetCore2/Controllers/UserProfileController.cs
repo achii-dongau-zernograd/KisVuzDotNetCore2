@@ -47,13 +47,13 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeProfile(UserProfileModificationModel user/*[Required]AppUser user*/)
+        public async Task<IActionResult> ChangeProfile(UserProfileModificationModel user)
         {
             if(ModelState.IsValid)
             {
                 AppUser changingUser = await CurrentUser;
-                changingUser.UserName    = user.UserName;
-                changingUser.Email       = user.Email;
+                //changingUser.UserName    = user.UserName;
+                //changingUser.Email       = user.Email;
                 changingUser.PhoneNumber = user.PhoneNumber;
                 changingUser.LastName    = user.LastName;
                 changingUser.FirstName   = user.FirstName;

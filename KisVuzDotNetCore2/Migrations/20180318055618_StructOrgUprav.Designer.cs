@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20180318055618_StructOrgUprav")]
+    partial class StructOrgUprav
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,20 +79,6 @@ namespace KisVuzDotNetCore2.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.FileModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Path");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Files");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.StructOrgUprav", b =>

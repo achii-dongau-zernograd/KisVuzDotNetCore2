@@ -38,5 +38,12 @@ namespace KisVuzDotNetCore2.Models
         /// Фотография пользователя
         /// </summary>
         public byte[] AppUserPhoto { get; set; }
+
+        //////////////////
+
+        // Занимаемая должность???
+        //public string TeachingLevel { get; set; }
+
+
     }
 }
