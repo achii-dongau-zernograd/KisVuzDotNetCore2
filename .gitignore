@@ -324,4 +324,4 @@ ASALocalRun/
 *.nvuser
 
 # wwwroot/files/
-files/*
+KisVuzDotNetCore2/wwwroot/files/*
