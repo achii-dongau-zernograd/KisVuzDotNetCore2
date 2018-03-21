@@ -26,6 +26,11 @@ namespace KisVuzDotNetCore2.Controllers
             return View(_context.Files.ToList());
         }
 
+        public IActionResult AddFile()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddFile(IFormFile uploadedFile)
         {
@@ -42,7 +47,13 @@ namespace KisVuzDotNetCore2.Controllers
                 {
                     await uploadedFile.CopyToAsync(fileStream);
                 }
+
                 FileModel file = new FileModel { Name = Path.GetFileName(uploadedFile.FileName), Path = path };
+                if(Path.GetExtension(uploadedFile.FileName)==".pdf")
+                {
+                    file.ContentType = "application/pdf";
+                }
+
                 _context.Files.Add(file);
                 _context.SaveChanges();
             }
@@ -69,6 +80,26 @@ namespace KisVuzDotNetCore2.Controllers
                     
             }
             return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// Возвращает файл, имеющий указанный идентификатор
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult GetFile(int id)
+        {
+            FileModel file = _context.Files.SingleOrDefault(f => f.Id == id);
+            if (file != null)
+            {
+                // Путь к файлу
+                string file_path = file.Path;
+                // Тип файла - content-type
+                string file_type = file.ContentType;
+                // Имя файла - необязательно
+                string file_name = file.Name;
+                return PhysicalFile(file_path, file_type, file_name);
+            }
+            return NotFound();
         }
     }
 }
