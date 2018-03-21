@@ -322,6 +322,3 @@ ASALocalRun/
 
 # NVidia Nsight GPU debugger configuration file
 *.nvuser
-
-# wwwroot/files/
-KisVuzDotNetCore2/wwwroot/files/*
