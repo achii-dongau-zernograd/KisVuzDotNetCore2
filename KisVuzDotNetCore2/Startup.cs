@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using KisVuzDotNetCore2.Models;
+﻿using KisVuzDotNetCore2.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -65,9 +61,7 @@ namespace KisVuzDotNetCore2
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-            });
-
-            //AppIdentityDBContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+            });            
         }
     }
 }
