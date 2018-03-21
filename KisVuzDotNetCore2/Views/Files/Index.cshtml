@@ -35,8 +35,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Path)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UploadDate)
+            <td>                
+                @String.Format("{0:dd.MM.yyyy}", item.UploadDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ContentType)
