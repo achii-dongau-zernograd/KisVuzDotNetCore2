@@ -67,7 +67,7 @@ namespace KisVuzDotNetCore2
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            AppIdentityDBContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+            //AppIdentityDBContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
 }
