@@ -18,12 +18,26 @@ namespace KisVuzDotNetCore2.Controllers
         {
             _context = context;
         }
-          
+
         // GET: EduUgses
-        public async Task<IActionResult> Index()
+        /*public async Task<IActionResult> Index()
         {
             var appIdentityDBContext = _context.EduUgses.Include(e => e.EduLevel);
             return View(await appIdentityDBContext.ToListAsync());
+        }*/
+        public async Task<IActionResult> Index(int? id)
+        {
+            if (id == null)
+            {
+                var appIdentityDBContext = _context.EduUgses.Include(e => e.EduLevel);
+                return View(await appIdentityDBContext.ToListAsync());
+            }
+            else
+            {
+                var appIdentityDBContext = _context.EduUgses.Include(e => e.EduLevel).Where(l=>l.EduLevelId==id);
+                return View(await appIdentityDBContext.ToListAsync());
+            }
+            
         }
 
         // GET: EduUgses/Details/5

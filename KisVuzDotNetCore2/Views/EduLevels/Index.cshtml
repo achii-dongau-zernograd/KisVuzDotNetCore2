@@ -24,7 +24,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.EduLevelName)
+                <a asp-controller="EduUgses" asp-action="Index" asp-route-id="@item.EduLevelId">
+                    @Html.DisplayFor(modelItem => item.EduLevelName)
+                </a>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EduLevelId">Редактировать</a> |
