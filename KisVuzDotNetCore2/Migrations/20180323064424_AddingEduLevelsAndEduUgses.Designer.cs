@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20180323064424_AddingEduLevelsAndEduUgses")]
+    partial class AddingEduLevelsAndEduUgses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,24 +91,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("EduLevelId");
 
                     b.ToTable("EduLevels");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduNapravl", b =>
-                {
-                    b.Property<int>("EduNapravlId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("EduNapravCode");
-
-                    b.Property<string>("EduNapravName");
-
-                    b.Property<int>("EduUgsId");
-
-                    b.HasKey("EduNapravlId");
-
-                    b.HasIndex("EduUgsId");
-
-                    b.ToTable("EduNapravls");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduUgs", b =>
@@ -277,14 +260,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduNapravl", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduUgs", "EduUgs")
-                        .WithMany()
-                        .HasForeignKey("EduUgsId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduUgs", b =>

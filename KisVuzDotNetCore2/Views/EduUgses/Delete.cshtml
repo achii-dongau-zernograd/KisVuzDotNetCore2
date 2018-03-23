@@ -1,0 +1,37 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduUgs
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h2>Удалить УГС?</h2>
+
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduLevel.EduLevelName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduLevel.EduLevelName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduUgsCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduUgsCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduUgsName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduUgsName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduUgsId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

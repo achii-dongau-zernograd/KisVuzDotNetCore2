@@ -1,0 +1,17 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduLevel
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h3>Удалить уровень образования?</h3>
+<div>
+    <hr />
+    <b>@Html.DisplayFor(model => model.EduLevelName)</b>
+    <br /><br />
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduLevelId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

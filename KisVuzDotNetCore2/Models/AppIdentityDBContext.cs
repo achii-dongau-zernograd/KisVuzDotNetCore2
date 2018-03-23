@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using KisVuzDotNetCore2.Models.Education;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,8 +16,13 @@ namespace KisVuzDotNetCore2.Models
             
         }
 
+        // Education
+        public DbSet<EduLevel> EduLevels { get; set; }
+        public DbSet<EduUgs> EduUgses { get; set; }
+        public DbSet<EduNapravl> EduNapravls { get; set; }
+
         public DbSet<StructOrgUprav> StructOrgUprav { get; set; }
-        public DbSet<FileModel> Files { get; set; }
+        public DbSet<FileModel> Files { get; set; }        
 
         public static async Task CreateAdminAccount(IServiceProvider serviceProvider, IConfiguration configuration)
         {
