@@ -12,16 +12,19 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.EduNapravCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EduNapravName)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduNapravCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduNapravName)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.EduUgs)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model=>model.EduNapravlStandartDocLink)
+            </th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +38,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EduUgs.EduUgsName)
+            </td>
+            <td>
+                @if (!String.IsNullOrWhiteSpace(item.EduNapravlStandartDocLink))
+                {
+                    <a href="@item.EduNapravlStandartDocLink" target="_blank">Открыть</a>
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EduNapravlId">Редактировать</a> |

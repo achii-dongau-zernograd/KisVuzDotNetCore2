@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20180325123802_AddingEduYearsYearBeginningPlanStructInstitutesFacultetsKafs")]
+    partial class AddingEduYearsYearBeginningPlanStructInstitutesFacultetsKafs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,27 +130,19 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("EduPlanId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("EduFormId");
-
                     b.Property<int>("EduProfileId");
 
                     b.Property<int?>("EduYearBeginningTrainingId");
 
                     b.Property<int?>("EduYearId");
 
-                    b.Property<int>("StructKafId");
-
                     b.HasKey("EduPlanId");
-
-                    b.HasIndex("EduFormId");
 
                     b.HasIndex("EduProfileId");
 
                     b.HasIndex("EduYearBeginningTrainingId");
 
                     b.HasIndex("EduYearId");
-
-                    b.HasIndex("StructKafId");
 
                     b.ToTable("EduPlans");
                 });
@@ -419,11 +412,6 @@ namespace KisVuzDotNetCore2.Migrations
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduPlan", b =>
                 {
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
-                        .WithMany()
-                        .HasForeignKey("EduFormId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
                         .WithMany()
                         .HasForeignKey("EduProfileId")
@@ -436,11 +424,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduYear", "EduYear")
                         .WithMany()
                         .HasForeignKey("EduYearId");
-
-                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructKaf", "StructKaf")
-                        .WithMany()
-                        .HasForeignKey("StructKafId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProfile", b =>

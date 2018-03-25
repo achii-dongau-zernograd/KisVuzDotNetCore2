@@ -10,23 +10,22 @@ using KisVuzDotNetCore2.Models.Education;
 
 namespace KisVuzDotNetCore2.Controllers
 {
-    public class EduNapravlsController : Controller
+    public class EduFormsController : Controller
     {
         private readonly AppIdentityDBContext _context;
 
-        public EduNapravlsController(AppIdentityDBContext context)
+        public EduFormsController(AppIdentityDBContext context)
         {
             _context = context;
         }
 
-        // GET: EduNapravls
+        // GET: EduForms
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.EduNapravls.Include(e => e.EduUgs);
-            return View(await appIdentityDBContext.ToListAsync());
+            return View(await _context.EduForms.ToListAsync());
         }
 
-        // GET: EduNapravls/Details/5
+        // GET: EduForms/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,43 +33,39 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var eduNapravl = await _context.EduNapravls
-                .Include(e => e.EduUgs)
-                .Include(e => e.EduUgs.EduLevel)
-                .SingleOrDefaultAsync(m => m.EduNapravlId == id);
-            if (eduNapravl == null)
+            var eduForm = await _context.EduForms
+                .SingleOrDefaultAsync(m => m.EduFormId == id);
+            if (eduForm == null)
             {
                 return NotFound();
             }
 
-            return View(eduNapravl);
+            return View(eduForm);
         }
 
-        // GET: EduNapravls/Create
+        // GET: EduForms/Create
         public IActionResult Create()
         {
-            ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsId");
             return View();
         }
 
-        // POST: EduNapravls/Create
+        // POST: EduForms/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EduNapravlId,EduNapravCode,EduNapravName,EduUgsId")] EduNapravl eduNapravl)
+        public async Task<IActionResult> Create([Bind("EduFormId,EduFormName")] EduForm eduForm)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(eduNapravl);
+                _context.Add(eduForm);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsId", eduNapravl.EduUgsId);
-            return View(eduNapravl);
+            return View(eduForm);
         }
 
-        // GET: EduNapravls/Edit/5
+        // GET: EduForms/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,23 +73,22 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var eduNapravl = await _context.EduNapravls.SingleOrDefaultAsync(m => m.EduNapravlId == id);
-            if (eduNapravl == null)
+            var eduForm = await _context.EduForms.SingleOrDefaultAsync(m => m.EduFormId == id);
+            if (eduForm == null)
             {
                 return NotFound();
             }
-            ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsName", eduNapravl.EduUgsId);
-            return View(eduNapravl);
+            return View(eduForm);
         }
 
-        // POST: EduNapravls/Edit/5
+        // POST: EduForms/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EduNapravlId,EduNapravCode,EduNapravName,EduUgsId,EduNapravlStandartDocLink")] EduNapravl eduNapravl)
+        public async Task<IActionResult> Edit(int id, [Bind("EduFormId,EduFormName")] EduForm eduForm)
         {
-            if (id != eduNapravl.EduNapravlId)
+            if (id != eduForm.EduFormId)
             {
                 return NotFound();
             }
@@ -103,12 +97,12 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 try
                 {
-                    _context.Update(eduNapravl);
+                    _context.Update(eduForm);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EduNapravlExists(eduNapravl.EduNapravlId))
+                    if (!EduFormExists(eduForm.EduFormId))
                     {
                         return NotFound();
                     }
@@ -119,11 +113,10 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsName", eduNapravl.EduUgsId);
-            return View(eduNapravl);
+            return View(eduForm);
         }
 
-        // GET: EduNapravls/Delete/5
+        // GET: EduForms/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,31 +124,30 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var eduNapravl = await _context.EduNapravls
-                .Include(e => e.EduUgs)
-                .SingleOrDefaultAsync(m => m.EduNapravlId == id);
-            if (eduNapravl == null)
+            var eduForm = await _context.EduForms
+                .SingleOrDefaultAsync(m => m.EduFormId == id);
+            if (eduForm == null)
             {
                 return NotFound();
             }
 
-            return View(eduNapravl);
+            return View(eduForm);
         }
 
-        // POST: EduNapravls/Delete/5
+        // POST: EduForms/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var eduNapravl = await _context.EduNapravls.SingleOrDefaultAsync(m => m.EduNapravlId == id);
-            _context.EduNapravls.Remove(eduNapravl);
+            var eduForm = await _context.EduForms.SingleOrDefaultAsync(m => m.EduFormId == id);
+            _context.EduForms.Remove(eduForm);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EduNapravlExists(int id)
+        private bool EduFormExists(int id)
         {
-            return _context.EduNapravls.Any(e => e.EduNapravlId == id);
+            return _context.EduForms.Any(e => e.EduFormId == id);
         }
     }
 }

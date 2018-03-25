@@ -23,8 +23,7 @@ namespace KisVuzDotNetCore2
                 var services = scope.ServiceProvider;
 
                 try
-                {
-                    //AppIdentityDBContext.CreateAdminAccount(services, services.GetService<IConfiguration>()).Wait();
+                {                    
                     AppIdentityDBContext.InitDatabase(services, services.GetService<IConfiguration>()).Wait();
                 }
                 catch (Exception ex)

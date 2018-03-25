@@ -9,6 +9,7 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Создать</a>
 </p>
+
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -19,31 +20,46 @@
                     @Html.DisplayNameFor(model => model.EduUgsName)
                 </th>
             <th>
-                @Html.DisplayNameFor(model => model.EduLevel.EduLevelName)
-            </th>
-            <th>
                 Действия
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduUgsCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduUgsName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduLevel.EduLevelName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EduUgsId">Редактировать</a> |
-                <a asp-action="Details" asp-route-id="@item.EduUgsId">Направления</a> |
-                <a asp-action="Delete" asp-route-id="@item.EduUgsId">Удалить</a>
-            </td>
-        </tr>
-}
+        @{
+            // Формируем список уровней образования
+            List<string> eduLevelNames = new List<string>();
+            foreach (var ugs in Model)
+            {
+                if (!eduLevelNames.Contains(ugs.EduLevel.EduLevelName))
+                {
+                    eduLevelNames.Add(ugs.EduLevel.EduLevelName);
+                }
+            }
+        }
+
+        @foreach (var eduLevel in eduLevelNames)
+        {
+            <tr>
+                <td colspan="3" class="well"><h4>@eduLevel</h4></td>
+            </tr>
+            foreach (var item in Model.Where(ugs => ugs.EduLevel.EduLevelName == eduLevel))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EduUgsCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EduUgsName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.EduUgsId">Редактировать</a> |
+                        <a asp-action="Details" asp-route-id="@item.EduUgsId">Направления</a> |
+                        <a asp-action="Delete" asp-route-id="@item.EduUgsId">Удалить</a>
+                    </td>                    
+                </tr>
+            }
+        }
+
+
     </tbody>
 </table>

@@ -29,6 +29,12 @@ namespace KisVuzDotNetCore2.Models.Education
         public string EduNapravName { get; set; }
 
         /// <summary>
+        /// Ссылка на файл образовательного стандарта
+        /// </summary>
+        [Display(Name = "Образовательный стандарт")]
+        public string EduNapravlStandartDocLink { get; set; }
+
+        /// <summary>
         /// Идентификатор записи УГС
         /// </summary>
         public int EduUgsId { get; set; }
@@ -39,5 +45,9 @@ namespace KisVuzDotNetCore2.Models.Education
         [Display(Name = "УГС")]
         public EduUgs EduUgs { get; set; }
 
+        /// <summary>
+        /// Профили подготовки (направленности, специализации)
+        /// </summary>
+        public List<EduProfile> EduProfiles = new List<EduProfile>();
     }
 }

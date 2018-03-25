@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20180325125457_ConnectionEduPlansStructKaf")]
+    partial class ConnectionEduPlansStructKaf
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,8 +130,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("EduPlanId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("EduFormId");
-
                     b.Property<int>("EduProfileId");
 
                     b.Property<int?>("EduYearBeginningTrainingId");
@@ -140,8 +139,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("StructKafId");
 
                     b.HasKey("EduPlanId");
-
-                    b.HasIndex("EduFormId");
 
                     b.HasIndex("EduProfileId");
 
@@ -419,11 +416,6 @@ namespace KisVuzDotNetCore2.Migrations
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduPlan", b =>
                 {
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
-                        .WithMany()
-                        .HasForeignKey("EduFormId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
                         .WithMany()
                         .HasForeignKey("EduProfileId")

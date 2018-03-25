@@ -1,15 +1,26 @@
 ﻿@model KisVuzDotNetCore2.Models.Education.EduNapravl
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Направление подготовки";
 }
 
-<h2>Details</h2>
+<h2>Направление подготовки / специальность</h2>
 
-<div>
-    <h4>EduNapravl</h4>
+<div>    
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduUgs.EduLevel.EduLevelName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduUgs.EduLevel.EduLevelName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduUgs.EduUgsName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduUgs.EduUgsName)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.EduNapravCode)
         </dt>
@@ -23,14 +34,17 @@
             @Html.DisplayFor(model => model.EduNapravName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EduUgs)
+            @Html.DisplayNameFor(model => model.EduNapravlStandartDocLink)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduUgs.EduUgsId)
+            <a href="@Html.DisplayFor(model => model.EduNapravlStandartDocLink)" target="_blank">
+                @Html.DisplayFor(model => model.EduNapravlStandartDocLink)
+            </a>
         </dd>
+
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.EduNapravlId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.EduNapravlId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" class="btn btn-default">Назад</a>
 </div>

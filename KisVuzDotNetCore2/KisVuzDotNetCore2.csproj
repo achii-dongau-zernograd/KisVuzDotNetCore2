@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180325071506_AddingEduProfile.cs" />
+    <Compile Remove="Migrations\20180325071506_AddingEduProfile.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="appsettings.json~RF509e0cd.TMP" />
   </ItemGroup>
 
