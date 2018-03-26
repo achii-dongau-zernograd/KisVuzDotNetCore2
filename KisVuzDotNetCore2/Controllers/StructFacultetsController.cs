@@ -29,6 +29,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: StructFacultets/Create
         public IActionResult Create()
         {
+            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteName");
             return View();
         }
 
@@ -61,6 +62,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
+            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteName");
             return View(structFacultet);
         }
 
@@ -108,6 +110,7 @@ namespace KisVuzDotNetCore2.Controllers
             }
 
             var structFacultet = await _context.StructFacultets
+                .Include(m => m.StructInstitute)
                 .SingleOrDefaultAsync(m => m.StructFacultetId == id);
             if (structFacultet == null)
             {

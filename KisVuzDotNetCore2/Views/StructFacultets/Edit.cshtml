@@ -1,12 +1,12 @@
 ﻿@model KisVuzDotNetCore2.Models.Struct.StructFacultet
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Факультет. Редактировать";
 }
 
-<h2>Edit</h2>
+<h2>Редактирование</h2>
 
-<h4>StructFacultet</h4>
+<h4>Факультет</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,20 +19,18 @@
                 <span asp-validation-for="StructFacultetName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StructInstituteId" class="control-label"></label>
+                <label asp-for="StructInstitute.StructInstituteName" class="control-label"></label>
                 <select asp-for="StructInstituteId" class="form-control" asp-items="ViewBag.StructInstituteId"></select>
                 <span asp-validation-for="StructInstituteId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a class="btn btn-default" asp-action="Index">Отмена</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
