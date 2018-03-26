@@ -25,23 +25,6 @@ namespace KisVuzDotNetCore2.Controllers
             return View(await _context.EduYears.ToListAsync());
         }
 
-        // GET: EduYears/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var eduYear = await _context.EduYears
-                .SingleOrDefaultAsync(m => m.EduYearId == id);
-            if (eduYear == null)
-            {
-                return NotFound();
-            }
-
-            return View(eduYear);
-        }
 
         // GET: EduYears/Create
         public IActionResult Create()
