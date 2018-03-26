@@ -10,45 +10,62 @@ using KisVuzDotNetCore2.Models.Education;
 
 namespace KisVuzDotNetCore2.Controllers
 {
-    public class EduFormsController : Controller
+    public class EduYearsController : Controller
     {
         private readonly AppIdentityDBContext _context;
 
-        public EduFormsController(AppIdentityDBContext context)
+        public EduYearsController(AppIdentityDBContext context)
         {
             _context = context;
         }
 
-        // GET: EduForms
+        // GET: EduYears
         public async Task<IActionResult> Index()
         {
-            return View(await _context.EduForms.ToListAsync());
+            return View(await _context.EduYears.ToListAsync());
         }
 
+        // GET: EduYears/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        // GET: EduForms/Create
+            var eduYear = await _context.EduYears
+                .SingleOrDefaultAsync(m => m.EduYearId == id);
+            if (eduYear == null)
+            {
+                return NotFound();
+            }
+
+            return View(eduYear);
+        }
+
+        // GET: EduYears/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: EduForms/Create
+        // POST: EduYears/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EduFormId,EduFormName")] EduForm eduForm)
+        public async Task<IActionResult> Create([Bind("EduYearId,EduYearName")] EduYear eduYear)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(eduForm);
+                _context.Add(eduYear);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(eduForm);
+            return View(eduYear);
         }
 
-        // GET: EduForms/Edit/5
+        // GET: EduYears/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -56,22 +73,22 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var eduForm = await _context.EduForms.SingleOrDefaultAsync(m => m.EduFormId == id);
-            if (eduForm == null)
+            var eduYear = await _context.EduYears.SingleOrDefaultAsync(m => m.EduYearId == id);
+            if (eduYear == null)
             {
                 return NotFound();
             }
-            return View(eduForm);
+            return View(eduYear);
         }
 
-        // POST: EduForms/Edit/5
+        // POST: EduYears/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EduFormId,EduFormName")] EduForm eduForm)
+        public async Task<IActionResult> Edit(int id, [Bind("EduYearId,EduYearName")] EduYear eduYear)
         {
-            if (id != eduForm.EduFormId)
+            if (id != eduYear.EduYearId)
             {
                 return NotFound();
             }
@@ -80,12 +97,12 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 try
                 {
-                    _context.Update(eduForm);
+                    _context.Update(eduYear);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EduFormExists(eduForm.EduFormId))
+                    if (!EduYearExists(eduYear.EduYearId))
                     {
                         return NotFound();
                     }
@@ -96,10 +113,10 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(eduForm);
+            return View(eduYear);
         }
 
-        // GET: EduForms/Delete/5
+        // GET: EduYears/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -107,30 +124,30 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var eduForm = await _context.EduForms
-                .SingleOrDefaultAsync(m => m.EduFormId == id);
-            if (eduForm == null)
+            var eduYear = await _context.EduYears
+                .SingleOrDefaultAsync(m => m.EduYearId == id);
+            if (eduYear == null)
             {
                 return NotFound();
             }
 
-            return View(eduForm);
+            return View(eduYear);
         }
 
-        // POST: EduForms/Delete/5
+        // POST: EduYears/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var eduForm = await _context.EduForms.SingleOrDefaultAsync(m => m.EduFormId == id);
-            _context.EduForms.Remove(eduForm);
+            var eduYear = await _context.EduYears.SingleOrDefaultAsync(m => m.EduYearId == id);
+            _context.EduYears.Remove(eduYear);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EduFormExists(int id)
+        private bool EduYearExists(int id)
         {
-            return _context.EduForms.Any(e => e.EduFormId == id);
+            return _context.EduYears.Any(e => e.EduYearId == id);
         }
     }
 }

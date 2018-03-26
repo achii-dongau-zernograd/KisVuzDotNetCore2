@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduForm>
 
 @{
-    ViewData["Title"] = "Формы обучения";
+    ViewData["Title"] = "Index";
 }
 
-<h2>Формы обучения</h2>
+<h2>Index</h2>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Создать</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -15,9 +15,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.EduFormName)
                 </th>
-            <th>
-                Действие
-            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -27,8 +25,9 @@
                 @Html.DisplayFor(modelItem => item.EduFormName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.EduFormId">Редактировать</a> |
-                <a asp-action="Delete" asp-route-id="@item.EduFormId">Удалить</a>
+                <a asp-action="Edit" asp-route-id="@item.EduFormId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.EduFormId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduFormId">Delete</a>
             </td>
         </tr>
 }

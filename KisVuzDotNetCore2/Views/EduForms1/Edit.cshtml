@@ -1,27 +1,32 @@
 ﻿@model KisVuzDotNetCore2.Models.Education.EduForm
 
 @{
-    ViewData["Title"] = "Создать";
+    ViewData["Title"] = "Edit";
 }
 
-<h2>Создать</h2>
+<h2>Edit</h2>
 
+<h4>EduForm</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EduFormId" />
             <div class="form-group">
                 <label asp-for="EduFormName" class="control-label"></label>
                 <input asp-for="EduFormName" class="form-control" />
                 <span asp-validation-for="EduFormName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Создать" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-default">Отмена</a>
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
     </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
