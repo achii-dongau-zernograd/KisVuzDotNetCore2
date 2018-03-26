@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Struct.StructFacultet>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Факультеты";
 }
 
-<h2>Index</h2>
+<h2>Факультеты</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class ="btn btn-primary" asp-action="Create">Создать</a>
 </p>
 <table class="table">
     <thead>
@@ -31,9 +31,8 @@
                 @Html.DisplayFor(modelItem => item.StructInstitute.StructInstituteName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.StructFacultetId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StructFacultetId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.StructFacultetId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.StructFacultetId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.StructFacultetId">Удалить</a>
             </td>
         </tr>
 }
