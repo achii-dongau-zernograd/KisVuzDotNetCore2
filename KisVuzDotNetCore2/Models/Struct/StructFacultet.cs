@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <summary>
         /// Наименование факультета
         /// </summary>
+        [Display(Name= "Наименование факультета")]
         public string StructFacultetName { get; set; }
                 
         /// <summary>
