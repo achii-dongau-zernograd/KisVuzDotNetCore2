@@ -34,6 +34,9 @@ namespace KisVuzDotNetCore2.Models.Education
         [Display(Name = "Образовательный стандарт")]
         public string EduNapravlStandartDocLink { get; set; }
 
+
+        ////////// Навигационные свойства и поля ////////////
+
         /// <summary>
         /// Идентификатор записи УГС
         /// </summary>

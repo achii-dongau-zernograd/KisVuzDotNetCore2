@@ -192,11 +192,11 @@ namespace KisVuzDotNetCore2.Models
                         EduLevelName = "Высшее образование - подготовка кадров высшей квалификации"
                     };
 
-                    await context.EduLevels.AddRangeAsync(new EduLevel[] { eduLevel1Spo,
+                    await context.EduLevels.AddRangeAsync(eduLevel1Spo,
                         eduLevel2VoBak,
                         eduLevel3VoMag,
                         eduLevel4VoSpec,
-                        eduLevel5VoAsp });
+                        eduLevel5VoAsp );
                     await context.SaveChangesAsync();
                 }
                 #endregion
