@@ -1,13 +1,12 @@
 ﻿@model KisVuzDotNetCore2.Models.Education.EduUgs
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Направления";
 }
 
-<h2>Details</h2>
+<h2>Направления</h2>
 
 <div>
-    <h4>EduUgs</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -23,14 +22,14 @@
             @Html.DisplayFor(model => model.EduUgsName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EduLevel)
+            @Html.DisplayNameFor(model => model.EduLevel.EduLevelName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduLevel.EduLevelId)
+            @Html.DisplayFor(model => model.EduLevel.EduLevelName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.EduUgsId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.EduUgsId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index">Отмена</a>
 </div>
