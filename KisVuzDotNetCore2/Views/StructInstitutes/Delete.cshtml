@@ -1,0 +1,25 @@
+﻿@model KisVuzDotNetCore2.Models.Struct.StructInstitute
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h2>Удалить институт?</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StructInstituteName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StructInstituteName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="StructInstituteId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a class = "btn btn-default" asp-action="Index">Отмена</a>
+    </form>
+</div>

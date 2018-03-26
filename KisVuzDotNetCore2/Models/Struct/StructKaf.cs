@@ -14,12 +14,12 @@ namespace KisVuzDotNetCore2.Models.Struct
         public int StructKafId { get; set; }
 
         /// <summary>
-        /// Наименование факультета
+        /// Наименование кафедры
         /// </summary>
         public int StructKafName { get; set; }
 
         /// <summary>
-        /// Наименование факультета (сокращённое)
+        /// Наименование кафедры (сокращённое)
         /// </summary>
         public int StructKafNameSokr { get; set; }
 

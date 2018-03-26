@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models.Struct
 {
@@ -15,6 +16,7 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <summary>
         /// Наименование института
         /// </summary>
+        [Display(Name = "Наименование института")]
         public string StructInstituteName { get; set; }
 
         ////////// Навигационные свойства и поля ///////////
