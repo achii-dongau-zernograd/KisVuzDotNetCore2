@@ -20,10 +20,41 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         // GET: EduNapravls
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id, int? eduLevelId)
         {
-            var appIdentityDBContext = _context.EduNapravls.Include(e => e.EduUgs);
-            return View(await appIdentityDBContext.ToListAsync());
+            IQueryable<EduNapravl> filteredEduNapravls;
+
+            if(eduLevelId!=null)
+            {
+                ViewData["EduLevels"] = _context.EduLevels.Where(l => l.EduLevelId == eduLevelId).ToList();
+                ViewData["EduUgses"] = _context.EduUgses.Where(l=>l.EduLevelId==eduLevelId).ToList();
+                filteredEduNapravls = _context.EduNapravls.Where(n => n.EduUgs.EduLevelId == eduLevelId).Include(e => e.EduUgs);
+            }
+            else
+            {                
+                if (id != null)
+                {
+                    int? eduLevel=null;
+                    var r = _context.EduUgses.Where(l => l.EduUgsId == id).FirstOrDefault();
+                    if(r==null)
+                    {
+                        return NotFound();                        
+                    }
+                    eduLevel = r.EduLevelId;
+
+                    ViewData["EduLevels"] = _context.EduLevels.Where(l=>l.EduLevelId==eduLevel).ToList();
+                    ViewData["EduUgses"] = _context.EduUgses.Where(l => l.EduUgsId == id).ToList();
+                    filteredEduNapravls = _context.EduNapravls.Where(n => n.EduUgsId == id).Include(e => e.EduUgs);
+                }
+                else
+                {
+                    ViewData["EduLevels"] = _context.EduLevels.ToList();
+                    ViewData["EduUgses"] = _context.EduUgses.ToList();
+                    filteredEduNapravls = _context.EduNapravls.Include(e => e.EduUgs);
+                }
+            }            
+            
+            return View(await filteredEduNapravls.ToListAsync());
         }
 
         // GET: EduNapravls/Details/5

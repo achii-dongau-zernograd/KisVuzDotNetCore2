@@ -10,7 +10,7 @@
     <a asp-action="Create" class="btn btn-primary">Создать</a>
 </p>
 
-<table class="table table-bordered table-hover">
+<table class="table table-hover">
     <thead>
         <tr>
                 <th>
@@ -49,7 +49,9 @@
                         @Html.DisplayFor(modelItem => item.EduUgsCode)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.EduUgsName)
+                        <a asp-controller="EduNapravls" asp-action="Index" asp-route-id="@item.EduUgsId">
+                            @Html.DisplayFor(modelItem => item.EduUgsName)
+                        </a>
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.EduUgsId">Редактировать</a> |

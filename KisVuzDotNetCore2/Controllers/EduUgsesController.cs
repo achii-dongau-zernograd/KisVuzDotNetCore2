@@ -60,9 +60,10 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         // GET: EduUgses/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["EduLevelId"] = new SelectList(_context.EduLevels, "EduLevelId", "EduLevelName");
+            ViewData["EduLevelId"] = new SelectList(_context.EduLevels, "EduLevelId", "EduLevelName", id);
+            
             return View();
         }
 

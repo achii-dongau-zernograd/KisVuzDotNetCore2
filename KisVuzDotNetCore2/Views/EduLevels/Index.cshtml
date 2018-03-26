@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Создать</a>
 </p>
-<table class="table table-bordered  table-hover">
+<table class="table table-hover">
     <thead>
         <tr>
                 <th>
@@ -30,7 +30,9 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EduLevelId">Редактировать</a> |
-                <a asp-action="Delete" asp-route-id="@item.EduLevelId">Удалить</a>
+                <a asp-controller="EduUgses" asp-action="Create" asp-route-id="@item.EduLevelId">Добавить УГС</a> |
+                <a asp-controller="EduNapravls" asp-action="Index" asp-route-edulevelid="@item.EduLevelId">Направления подготовки</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduLevelId" class="text-danger"><span class="glyphicon glyphicon-remove"></span> Удалить</a>
             </td>
         </tr>
 }

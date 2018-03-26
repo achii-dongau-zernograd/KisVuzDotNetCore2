@@ -9,48 +9,59 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EduNapravCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EduNapravName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EduUgs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model=>model.EduNapravlStandartDocLink)
-            </th>
-            <th>Действия</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduNapravCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduNapravName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduUgs.EduUgsName)
-            </td>
-            <td>
-                @if (!String.IsNullOrWhiteSpace(item.EduNapravlStandartDocLink))
+
+
+@foreach (var eduLevel in (IEnumerable<KisVuzDotNetCore2.Models.Education.EduLevel>)ViewData["EduLevels"])
+{
+    <hr />
+    <h3 class="well text-center">@eduLevel.EduLevelName</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.EduNapravCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EduNapravName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EduNapravlStandartDocLink)
+                </th>
+                <th>
+                    Действия
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var eduUgs in ((IEnumerable<KisVuzDotNetCore2.Models.Education.EduUgs>)ViewData["EduUgses"]).Where(l=>l.EduLevelId==eduLevel.EduLevelId))
+            {
+                <tr>
+                    <td colspan="4" class="well text-center text-info">@eduUgs.EduUgsCode - @eduUgs.EduUgsName</td>
+                </tr>
+                @foreach (var item in Model.Where(n=>n.EduUgsId==eduUgs.EduUgsId))
                 {
-                    <a href="@item.EduNapravlStandartDocLink" target="_blank">Открыть</a>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EduNapravCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EduNapravName)
+                        </td>                        
+                        <td>
+                            @if (!String.IsNullOrWhiteSpace(item.EduNapravlStandartDocLink))
+                            {
+                                <a href="@item.EduNapravlStandartDocLink" target="_blank">Открыть</a>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.EduNapravlId">Редактировать</a> |
+                            <a asp-action="Details" asp-route-id="@item.EduNapravlId">Подробнее </a> |
+                            <a asp-action="Delete" asp-route-id="@item.EduNapravlId">Удалить</a>
+                        </td>
+                    </tr>
                 }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EduNapravlId">Редактировать</a> |
-                <a asp-action="Details" asp-route-id="@item.EduNapravlId">Подробнее </a> |
-                <a asp-action="Delete" asp-route-id="@item.EduNapravlId">Удалить</a>
-            </td>
-        </tr>
+            }
+        
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
