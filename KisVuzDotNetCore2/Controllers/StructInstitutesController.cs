@@ -86,7 +86,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StructInstituteId,StructInstituteName")] StructInstitute structInstitute)
+        public async Task<IActionResult> Edit(int id, [Bind("StructInstituteId,StructInstituteName,ExistenceOfFilials,WorkingRegime,WorkingSchedule,DateOfCreation")] StructInstitute structInstitute)
         {
             if (id != structInstitute.StructInstituteId)
             {

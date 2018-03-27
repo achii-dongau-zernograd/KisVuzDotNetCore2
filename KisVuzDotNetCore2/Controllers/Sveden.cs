@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using KisVuzDotNetCore2.Models.Sveden;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,14 +13,28 @@ namespace KisVuzDotNetCore2.Controllers
     /// Контроллер, реализующий отображение раздела
     /// "Сведеия об образовательной организации"
     /// </summary>
-    public class Sveden:Controller
+    public class Sveden : Controller
     {
+        IHostingEnvironment _appEnvironment;
+
+        public Sveden(IHostingEnvironment appEnvironment)
+        {
+            _appEnvironment = appEnvironment;
+        }
+
         /// <summary>
         /// Подраздел "Основные сведения"
         /// </summary>
         /// <returns></returns>
         public async Task<IActionResult> Common()
         {
+            #region t3uchredLaw.xml
+            SvedenCommonUchredLawRepository _svedenCommonUchredLawRepository = new SvedenCommonUchredLawRepository();
+            string[] paths = { _appEnvironment.WebRootPath, "files", "xml", "t3uchredLaw.xml" };
+            string path = Path.Combine(paths);
+            _svedenCommonUchredLawRepository.ImportFromXML(path);
+            #endregion
+
             return View();
         }
 

@@ -76,6 +76,26 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<StructKaf> StructKafs { get; set; }
 
+        ///////////////////////////////////
+        /// <summary>
+        /// Адреса
+        /// </summary>
+        public DbSet<Address> Addresses { get; set; }
+
+        /// <summary>
+        /// Телефоны
+        /// </summary>
+        public DbSet<Telephone> Telephones { get; set; }
+
+        /// <summary>
+        /// Факсы
+        /// </summary>
+        public DbSet<Fax> Faxes { get; set; }
+
+        /// <summary>
+        /// Адреса электронной почты
+        /// </summary>
+        public DbSet<Email> Emails { get; set; }
 
         ////////// Сведения об образовательной организации ////////
 
@@ -884,10 +904,14 @@ namespace KisVuzDotNetCore2.Models
                     StructInstitute institute = new StructInstitute
                     {
                         StructInstituteId = 1,
-                        StructInstituteName = "Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ"
+                        StructInstituteName = "Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ",
+                        DateOfCreation = new DateTime(2014, 09, 15),
+                        ExistenceOfFilials = false,
+                        WorkingRegime = "Режим работы: вход в учебные корпуса и общежития — по пропускам и студенческим билетам",
+                        WorkingSchedule = "График работы: понедельник-пятница с 8.00 до 17.00. Выходной — суббота, воскресенье"
                     };
 
-                    await context.StructInstitutes.AddRangeAsync(new StructInstitute[] { institute });
+                    await context.StructInstitutes.AddAsync( institute );
                     await context.SaveChangesAsync();
                 }
                 #endregion
