@@ -1,0 +1,59 @@
+﻿@model KisVuzDotNetCore2.Models.Struct.StructSubvision
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>StructSubvision</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StructSubvisionId" />
+            <div class="form-group">
+                <label asp-for="StructSubvisionName" class="control-label"></label>
+                <input asp-for="StructSubvisionName" class="form-control" />
+                <span asp-validation-for="StructSubvisionName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StructSubvisionFioChief" class="control-label"></label>
+                <input asp-for="StructSubvisionFioChief" class="form-control" />
+                <span asp-validation-for="StructSubvisionFioChief" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StructSubvisionPostChief" class="control-label"></label>
+                <input asp-for="StructSubvisionPostChief" class="form-control" />
+                <span asp-validation-for="StructSubvisionPostChief" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StructSubvisionAdressId" class="control-label"></label>
+                <select asp-for="StructSubvisionAdressId" class="form-control" asp-items="ViewBag.StructSubvisionAdressId"></select>
+                <span asp-validation-for="StructSubvisionAdressId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StructSubvisionSite" class="control-label"></label>
+                <input asp-for="StructSubvisionSite" class="form-control" />
+                <span asp-validation-for="StructSubvisionSite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StructSubvisionTypeId" class="control-label"></label>
+                <select asp-for="StructSubvisionTypeId" class="form-control" asp-items="ViewBag.StructSubvisionTypeId"></select>
+                <span asp-validation-for="StructSubvisionTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

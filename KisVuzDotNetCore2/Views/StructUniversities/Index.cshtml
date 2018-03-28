@@ -1,4 +1,4 @@
-﻿@model IEnumerable<KisVuzDotNetCore2.Models.Struct.StructInstitute>
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Struct.StructUniversity>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,7 +13,7 @@
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.StructInstituteName)
+                    @Html.DisplayNameFor(model => model.StructUniversityName)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DateOfCreation)
@@ -30,9 +30,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Address)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.University)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -40,7 +37,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.StructInstituteName)
+                @Html.DisplayFor(modelItem => item.StructUniversityName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateOfCreation)
@@ -58,12 +55,9 @@
                 @Html.DisplayFor(modelItem => item.Address.AddressId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.University.StructUniversityId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.StructInstituteId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StructInstituteId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.StructInstituteId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.StructUniversityId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.StructUniversityId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.StructUniversityId">Delete</a>
             </td>
         </tr>
 }

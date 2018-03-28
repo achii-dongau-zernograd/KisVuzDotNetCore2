@@ -1,4 +1,4 @@
-﻿@model KisVuzDotNetCore2.Models.Struct.StructInstitute
+﻿@model KisVuzDotNetCore2.Models.Struct.StructUniversity
 
 @{
     ViewData["Title"] = "Create";
@@ -6,16 +6,16 @@
 
 <h2>Create</h2>
 
-<h4>StructInstitute</h4>
+<h4>StructUniversity</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="StructInstituteName" class="control-label"></label>
-                <input asp-for="StructInstituteName" class="form-control" />
-                <span asp-validation-for="StructInstituteName" class="text-danger"></span>
+                <label asp-for="StructUniversityName" class="control-label"></label>
+                <input asp-for="StructUniversityName" class="form-control" />
+                <span asp-validation-for="StructUniversityName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateOfCreation" class="control-label"></label>
@@ -42,10 +42,6 @@
                 <label asp-for="WorkingSchedule" class="control-label"></label>
                 <input asp-for="WorkingSchedule" class="form-control" />
                 <span asp-validation-for="WorkingSchedule" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UniversityId" class="control-label"></label>
-                <select asp-for="UniversityId" class ="form-control" asp-items="ViewBag.UniversityId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

@@ -5,14 +5,15 @@ using System.Collections.Generic;
 
 namespace KisVuzDotNetCore2.Migrations
 {
-    public partial class StructInstituteModelChanging : Migration
+    public partial class university : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
                 name: "AddressId",
                 table: "StructInstitutes",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "DateOfCreation",
@@ -25,6 +26,12 @@ namespace KisVuzDotNetCore2.Migrations
                 table: "StructInstitutes",
                 nullable: false,
                 defaultValue: false);
+
+            migrationBuilder.AddColumn<int>(
+                name: "UniversityId",
+                table: "StructInstitutes",
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.AddColumn<string>(
                 name: "WorkingRegime",
@@ -55,6 +62,30 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StructUniversities",
+                columns: table => new
+                {
+                    StructUniversityId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AddressId = table.Column<int>(nullable: false),
+                    DateOfCreation = table.Column<DateTime>(nullable: false),
+                    ExistenceOfFilials = table.Column<bool>(nullable: false),
+                    StructUniversityName = table.Column<string>(nullable: true),
+                    WorkingRegime = table.Column<string>(nullable: true),
+                    WorkingSchedule = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StructUniversities", x => x.StructUniversityId);
+                    table.ForeignKey(
+                        name: "FK_StructUniversities_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "AddressId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Emails",
                 columns: table => new
                 {
@@ -62,7 +93,8 @@ namespace KisVuzDotNetCore2.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EmailComment = table.Column<string>(nullable: true),
                     EmailValue = table.Column<string>(nullable: true),
-                    StructInstituteId = table.Column<int>(nullable: true)
+                    StructInstituteId = table.Column<int>(nullable: true),
+                    StructUniversityId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,6 +104,12 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.StructInstituteId,
                         principalTable: "StructInstitutes",
                         principalColumn: "StructInstituteId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Emails_StructUniversities_StructUniversityId",
+                        column: x => x.StructUniversityId,
+                        principalTable: "StructUniversities",
+                        principalColumn: "StructUniversityId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -83,7 +121,8 @@ namespace KisVuzDotNetCore2.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     FaxComment = table.Column<string>(nullable: true),
                     FaxValue = table.Column<string>(nullable: true),
-                    StructInstituteId = table.Column<int>(nullable: true)
+                    StructInstituteId = table.Column<int>(nullable: true),
+                    StructUniversityId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,6 +133,12 @@ namespace KisVuzDotNetCore2.Migrations
                         principalTable: "StructInstitutes",
                         principalColumn: "StructInstituteId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Faxes_StructUniversities_StructUniversityId",
+                        column: x => x.StructUniversityId,
+                        principalTable: "StructUniversities",
+                        principalColumn: "StructUniversityId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,6 +148,7 @@ namespace KisVuzDotNetCore2.Migrations
                     TelephoneId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     StructInstituteId = table.Column<int>(nullable: true),
+                    StructUniversityId = table.Column<int>(nullable: true),
                     TelephoneComment = table.Column<string>(nullable: true),
                     TelephoneNumber = table.Column<string>(nullable: true)
                 },
@@ -115,6 +161,12 @@ namespace KisVuzDotNetCore2.Migrations
                         principalTable: "StructInstitutes",
                         principalColumn: "StructInstituteId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Telephones_StructUniversities_StructUniversityId",
+                        column: x => x.StructUniversityId,
+                        principalTable: "StructUniversities",
+                        principalColumn: "StructUniversityId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -123,9 +175,19 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StructInstitutes_UniversityId",
+                table: "StructInstitutes",
+                column: "UniversityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Emails_StructInstituteId",
                 table: "Emails",
                 column: "StructInstituteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Emails_StructUniversityId",
+                table: "Emails",
+                column: "StructUniversityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Faxes_StructInstituteId",
@@ -133,9 +195,24 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "StructInstituteId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Faxes_StructUniversityId",
+                table: "Faxes",
+                column: "StructUniversityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StructUniversities_AddressId",
+                table: "StructUniversities",
+                column: "AddressId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Telephones_StructInstituteId",
                 table: "Telephones",
                 column: "StructInstituteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Telephones_StructUniversityId",
+                table: "Telephones",
+                column: "StructUniversityId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_StructInstitutes_Addresses_AddressId",
@@ -143,7 +220,15 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "AddressId",
                 principalTable: "Addresses",
                 principalColumn: "AddressId",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_StructInstitutes_StructUniversities_UniversityId",
+                table: "StructInstitutes",
+                column: "UniversityId",
+                principalTable: "StructUniversities",
+                principalColumn: "StructUniversityId",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -152,8 +237,9 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "FK_StructInstitutes_Addresses_AddressId",
                 table: "StructInstitutes");
 
-            migrationBuilder.DropTable(
-                name: "Addresses");
+            migrationBuilder.DropForeignKey(
+                name: "FK_StructInstitutes_StructUniversities_UniversityId",
+                table: "StructInstitutes");
 
             migrationBuilder.DropTable(
                 name: "Emails");
@@ -164,8 +250,18 @@ namespace KisVuzDotNetCore2.Migrations
             migrationBuilder.DropTable(
                 name: "Telephones");
 
+            migrationBuilder.DropTable(
+                name: "StructUniversities");
+
+            migrationBuilder.DropTable(
+                name: "Addresses");
+
             migrationBuilder.DropIndex(
                 name: "IX_StructInstitutes_AddressId",
+                table: "StructInstitutes");
+
+            migrationBuilder.DropIndex(
+                name: "IX_StructInstitutes_UniversityId",
                 table: "StructInstitutes");
 
             migrationBuilder.DropColumn(
@@ -178,6 +274,10 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropColumn(
                 name: "ExistenceOfFilials",
+                table: "StructInstitutes");
+
+            migrationBuilder.DropColumn(
+                name: "UniversityId",
                 table: "StructInstitutes");
 
             migrationBuilder.DropColumn(

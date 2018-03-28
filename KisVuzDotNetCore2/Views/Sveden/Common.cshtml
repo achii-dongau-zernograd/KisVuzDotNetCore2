@@ -1,1 +1,107 @@
 ﻿<h1>Основные сведения</h1>
+
+<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Основные сведения</a>
+<div class="collapse" id="spoiler-1">
+   <div class="well">
+        <table class="table">
+            <tr>
+                <th>Дата создания образовательной организации</th>
+                <td itemprop="regDate">@ViewData["DateOfCreation"]</td>
+            </tr>
+            <tr>
+                <th>Адрес местонахождения образовательной организации</th>
+                <td>@ViewData["Address"]</td>
+            </tr>
+            <tr>
+                <th>Филиалы образовательной организации</th>
+                <td>
+                    @((bool)ViewData["ExistenceOfFilials"] ? "Есть" : "Нет")
+                </td>
+            </tr>
+            <tr>
+                <th>Режим, график работы</th>
+                <td>
+                    <p>@ViewData["WorkingRegime"]</p>
+                    <p>@ViewData["WorkingSchedule"]</p>
+                </td>
+            </tr>
+            <tr>
+                <th>Контактные телефоны</th>
+                <td>
+                    @foreach (Telephone tel in (List<Telephone>)ViewData["Telephones"])
+                    {
+                        <p><b>@tel.TelephoneNumber</b> - @tel.TelephoneComment</p>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th>Факсы</th>
+                <td>
+                    @foreach (Fax fax in (List<Fax>)ViewData["Faxes"])
+                    {
+                        <p><b>@fax.FaxValue</b></p>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th>Адреса электронной почты</th>
+                <td>
+                    @foreach (Email email in (List<Email>)ViewData["Emailes"])
+                    {
+                        <p><b>@email.EmailValue</b></p>
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об учредителях</a>
+<div class="collapse" id="spoiler-2">
+    <div class="well">
+        <table itemprop="uchredLaw" class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Наименование учредителя</th>
+                    <th>Фамилия, имя, отчество руководителя учредителя (ей) образовательной организации</th>
+                    <th>Адрес местонахождения учредителя(ей)</th>
+                    <th>Контактные телефоны</th>
+                    <th>Адрес электронной почты</th>
+                    <th>Адрес сайта учредителя(ей) в сети "Интернет"</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr itemprop="uchredLaw">
+                    <td itemprop="nameUchred">Министерство сельского хозяйства Российской Федерации (Минсельхоз России)</td>
+                    <td itemprop="fullnameUchred">Министр сельского хозяйства РФ - Ткачев Александр Николаевич</td>
+                    <td itemprop="addressUchred">107139, г. Москва, Орликов переулок, д. 1/11</td>
+                    <td itemprop="telUchred">+7 (495) 607-80-00</td>
+                    <td itemprop="mailUchred">info@mcx.ru</td>
+                    <td itemprop="websiteUchred">http://mcx.ru/</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о филиалах</a>
+<div class="collapse" id="spoiler-3">
+    <div class="well">
+        <table itemprop="filInfo" class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr itemprop="filInfo">
+                    <th>Наименование филиала</th>
+                    <th>Адрес местонахождения филиала образовательной организации</th>
+                    <th>Адрес официального сайта в сети "Интернет" (при наличии)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3" itemprop="nameFil" class="text-center">Филиалов нет</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

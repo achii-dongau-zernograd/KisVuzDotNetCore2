@@ -12,6 +12,30 @@
     <Compile Remove="Migrations\20180327091641_StructInstituteModelChanging.Designer.cs" />
     <Compile Remove="Migrations\20180327092404_StructInstituteModelChanging.cs" />
     <Compile Remove="Migrations\20180327092404_StructInstituteModelChanging.Designer.cs" />
+    <Compile Remove="Migrations\20180327094526_StructInstituteModelChanging.cs" />
+    <Compile Remove="Migrations\20180327094526_StructInstituteModelChanging.Designer.cs" />
+    <Compile Remove="Migrations\20180327122824_institute.cs" />
+    <Compile Remove="Migrations\20180327122824_institute.Designer.cs" />
+    <Compile Remove="Migrations\20180327123203_institute.cs" />
+    <Compile Remove="Migrations\20180327123203_institute.Designer.cs" />
+    <Compile Remove="Migrations\20180327123613_institute.cs" />
+    <Compile Remove="Migrations\20180327123613_institute.Designer.cs" />
+    <Compile Remove="Migrations\20180327125153_institute.cs" />
+    <Compile Remove="Migrations\20180327125153_institute.Designer.cs" />
+    <Compile Remove="Migrations\20180327131850_institute.cs" />
+    <Compile Remove="Migrations\20180327131850_institute.Designer.cs" />
+    <Compile Remove="Migrations\20180328065643_university.cs" />
+    <Compile Remove="Migrations\20180328065643_university.Designer.cs" />
+    <Compile Remove="Migrations\20180328123653_Struct.cs" />
+    <Compile Remove="Migrations\20180328123653_Struct.Designer.cs" />
+    <Compile Remove="Migrations\20180328125248_qwqw.cs" />
+    <Compile Remove="Migrations\20180328125248_qwqw.Designer.cs" />
+    <Compile Remove="Migrations\20180328125409_Struct.cs" />
+    <Compile Remove="Migrations\20180328125409_Struct.Designer.cs" />
+    <Compile Remove="Migrations\20180328131341_Struct2.cs" />
+    <Compile Remove="Migrations\20180328131341_Struct2.Designer.cs" />
+    <Compile Remove="Migrations\20180328131425_Struct.cs" />
+    <Compile Remove="Migrations\20180328131425_Struct.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

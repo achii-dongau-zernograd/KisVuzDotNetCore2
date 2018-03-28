@@ -5,23 +5,23 @@ using System.ComponentModel.DataAnnotations;
 namespace KisVuzDotNetCore2.Models.Struct
 {
     /// <summary>
-    /// Модель "Институт"
+    /// Модель "Университет"
     /// </summary>
-    public class StructInstitute
+    public class StructUniversity
     {
         /// <summary>
-        /// УИД института
+        /// УИД университета
         /// </summary>
-        public int StructInstituteId { get; set; }
+        public int StructUniversityId { get; set; }
 
         /// <summary>
-        /// Наименование института
+        /// Наименование университета
         /// </summary>
-        [Display(Name = "Наименование института")]
-        public string StructInstituteName { get; set; }
+        [Display(Name = "Наименование университета")]
+        public string StructUniversityName { get; set; }
 
         /// <summary>
-        /// Дата создания образовательной организации
+        /// Дата создания
         /// </summary>
         [DataType(DataType.Date)]
         [Display(Name = "Дата создания")]
@@ -71,16 +71,14 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <summary>
         /// Адреса электронной почты
         /// </summary>
+        [Display(Name = "Адреса электронной почты")]
         public List<Email> Emailes { get; set; } = new List<Email>();
 
 
         ////////// Навигационные свойства и поля ///////////
-        public int UniversityId { get; set; }
-        public StructUniversity University { get; set; }
-
         /// <summary>
-        /// Факультеты в составе института
+        /// Институты в составе университета
         /// </summary>
-        public List<StructFacultet> StructFacultets { get; set; } = new List<StructFacultet>();                
+        public List<StructInstitute> StructInstitutes { get; set; } = new List<StructInstitute>();                
     }
 }

@@ -22,7 +22,8 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: StructInstitutes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.StructInstitutes.ToListAsync());
+            var appIdentityDBContext = _context.StructInstitutes.Include(s => s.Address).Include(s => s.University);
+            return View(await appIdentityDBContext.ToListAsync());
         }
 
         // GET: StructInstitutes/Details/5
@@ -34,6 +35,8 @@ namespace KisVuzDotNetCore2.Controllers
             }
 
             var structInstitute = await _context.StructInstitutes
+                .Include(s => s.Address)
+                .Include(s => s.University)
                 .SingleOrDefaultAsync(m => m.StructInstituteId == id);
             if (structInstitute == null)
             {
@@ -46,6 +49,8 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: StructInstitutes/Create
         public IActionResult Create()
         {
+            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId");
+            ViewData["UniversityId"] = new SelectList(_context.StructUniversities, "StructUniversityId", "StructUniversityId");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StructInstituteId,StructInstituteName")] StructInstitute structInstitute)
+        public async Task<IActionResult> Create([Bind("StructInstituteId,StructInstituteName,DateOfCreation,AddressId,ExistenceOfFilials,WorkingRegime,WorkingSchedule,UniversityId")] StructInstitute structInstitute)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +67,8 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structInstitute.AddressId);
+            ViewData["UniversityId"] = new SelectList(_context.StructUniversities, "StructUniversityId", "StructUniversityId", structInstitute.UniversityId);
             return View(structInstitute);
         }
 
@@ -78,6 +85,8 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
+            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structInstitute.AddressId);
+            ViewData["UniversityId"] = new SelectList(_context.StructUniversities, "StructUniversityId", "StructUniversityId", structInstitute.UniversityId);
             return View(structInstitute);
         }
 
@@ -86,7 +95,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StructInstituteId,StructInstituteName,ExistenceOfFilials,WorkingRegime,WorkingSchedule,DateOfCreation")] StructInstitute structInstitute)
+        public async Task<IActionResult> Edit(int id, [Bind("StructInstituteId,StructInstituteName,DateOfCreation,AddressId,ExistenceOfFilials,WorkingRegime,WorkingSchedule,UniversityId")] StructInstitute structInstitute)
         {
             if (id != structInstitute.StructInstituteId)
             {
@@ -113,6 +122,8 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structInstitute.AddressId);
+            ViewData["UniversityId"] = new SelectList(_context.StructUniversities, "StructUniversityId", "StructUniversityId", structInstitute.UniversityId);
             return View(structInstitute);
         }
 
@@ -125,6 +136,8 @@ namespace KisVuzDotNetCore2.Controllers
             }
 
             var structInstitute = await _context.StructInstitutes
+                .Include(s => s.Address)
+                .Include(s => s.University)
                 .SingleOrDefaultAsync(m => m.StructInstituteId == id);
             if (structInstitute == null)
             {

@@ -47,5 +47,25 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// </summary>
         [Display(Name = "Номер дома")]
         public string HouseNumber { get; set; }
+
+        #region Навигационные свойства
+
+        #endregion
+
+        /// <summary>
+        /// Строка адреса (только для чтения)
+        /// </summary>
+        [Display(Name = "Адрес")]
+        public string GetAddress
+        {
+            get
+            {
+                return PostCode + ", "
+                    + Region + ", "
+                    + Settlement + ", "
+                    + Street + ", "
+                    + HouseNumber;
+            }
+        }
     }
 }

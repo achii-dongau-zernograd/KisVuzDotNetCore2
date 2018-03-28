@@ -1,6 +1,8 @@
-﻿using KisVuzDotNetCore2.Models.Sveden;
+﻿using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Struct;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,10 +18,12 @@ namespace KisVuzDotNetCore2.Controllers
     public class Sveden : Controller
     {
         IHostingEnvironment _appEnvironment;
+        private readonly AppIdentityDBContext _context;
 
-        public Sveden(IHostingEnvironment appEnvironment)
+        public Sveden(IHostingEnvironment appEnvironment, AppIdentityDBContext context)
         {
             _appEnvironment = appEnvironment;
+            _context = context;
         }
 
         /// <summary>
@@ -28,12 +32,29 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Common()
         {
-            #region t3uchredLaw.xml
-            SvedenCommonUchredLawRepository _svedenCommonUchredLawRepository = new SvedenCommonUchredLawRepository();
-            string[] paths = { _appEnvironment.WebRootPath, "files", "xml", "t3uchredLaw.xml" };
-            string path = Path.Combine(paths);
-            _svedenCommonUchredLawRepository.ImportFromXML(path);
-            #endregion
+            #region Таблица 2 "Основные сведения"            
+            StructInstitute institute = _context
+                .StructInstitutes
+                .Include(a=>a.Address)
+                .Include(a=>a.Telephones)
+                .Include(a => a.Faxes)
+                .Include(a => a.Emailes)
+                .SingleOrDefault(i=>i.StructInstituteId==1);
+            if(institute==null)
+            {
+                return NotFound();
+            }
+
+            ViewData["DateOfCreation"] = String.Format("{0:dd.MM.yyyy}", institute.DateOfCreation);
+            ViewData["Address"] = institute.Address.GetAddress;
+            ViewData["ExistenceOfFilials"] = institute.ExistenceOfFilials;
+            ViewData["WorkingRegime"] = institute.WorkingRegime;
+            ViewData["WorkingSchedule"] = institute.WorkingSchedule;
+            ViewData["Telephones"] = institute.Telephones;
+            ViewData["Faxes"] = institute.Faxes;
+            ViewData["Emailes"] = institute.Emailes;
+
+            #endregion                       
 
             return View();
         }
@@ -45,6 +66,18 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Struct()
         {
+            List<StructSubvisionType> structSubvisionTypes = await _context
+                .StructSubvisionTypes
+                .ToListAsync();
+            List<StructSubvision> structSubvisions = await _context
+                .StructSubvisions
+                .Include(a => a.StructSubvisionAdress)
+                .Include(a => a.StructSubvisionEmail)
+                .Include(a => a.StructStandingOrder)
+                .Include(a => a.StructSubvisionType)
+                .ToListAsync();
+            ViewData["StructSubvisions"] = structSubvisions;
+            ViewData["StructSubvisionTypes"] = structSubvisionTypes;
             return View();
         }
 

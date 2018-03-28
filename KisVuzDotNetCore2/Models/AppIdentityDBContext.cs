@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Models
@@ -61,6 +62,12 @@ namespace KisVuzDotNetCore2.Models
 
 
         //////////// Struct /////////////
+
+        /// <summary>
+        /// Университеты
+        /// </summary>
+        public DbSet<StructUniversity> StructUniversities { get; set; }
+
         /// <summary>
         /// Институты
         /// </summary>
@@ -75,6 +82,16 @@ namespace KisVuzDotNetCore2.Models
         /// Кафедры
         /// </summary>
         public DbSet<StructKaf> StructKafs { get; set; }
+
+        /// <summary>
+        /// Структурные подразделения
+        /// </summary>
+        public DbSet<StructSubvision> StructSubvisions { get; set; }
+
+        /// <summary>
+        /// Типы структурных подразделений
+        /// </summary>
+        public DbSet<StructSubvisionType> StructSubvisionTypes { get; set; }
 
         ///////////////////////////////////
         /// <summary>
@@ -897,7 +914,34 @@ namespace KisVuzDotNetCore2.Models
             using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 AppIdentityDBContext context = serviceScope.ServiceProvider.GetService<AppIdentityDBContext>();
-                
+
+                #region Инициализация таблицы "Университеты"
+                if (!await context.StructUniversities.AnyAsync())
+                {
+                    StructUniversity university = new StructUniversity
+                    {
+                        StructUniversityId = 1,
+                        StructUniversityName = "ФГБОУ ВО Донской ГАУ",
+                        DateOfCreation = new DateTime(1993, 07, 05),
+                        ExistenceOfFilials = true,
+                        WorkingRegime = "Режим работы: вход в учебные корпуса и общежития — по пропускам и студенческим билетам",
+                        WorkingSchedule = "График работы: понедельник-пятница с 8.00 до 17.00. Выходной — суббота, воскресенье",
+                        Address = new Address
+                        {
+                            PostCode = "346493",
+                            Country = "Россия",
+                            Region = "Ростовская область",
+                            Settlement = "Октябрьский район, п. Персиановский",
+                            Street = "ул. Кривошлыкова",
+                            HouseNumber = "24"
+                        }
+                    };
+
+                    await context.StructUniversities.AddAsync(university);
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
                 #region Инициализация таблицы "Институты"
                 if (!await context.StructInstitutes.AnyAsync())
                 {
@@ -908,10 +952,79 @@ namespace KisVuzDotNetCore2.Models
                         DateOfCreation = new DateTime(2014, 09, 15),
                         ExistenceOfFilials = false,
                         WorkingRegime = "Режим работы: вход в учебные корпуса и общежития — по пропускам и студенческим билетам",
-                        WorkingSchedule = "График работы: понедельник-пятница с 8.00 до 17.00. Выходной — суббота, воскресенье"
+                        WorkingSchedule = "График работы: понедельник-пятница с 8.00 до 17.00. Выходной — суббота, воскресенье",
+                        UniversityId=1,
+                        Address = new Address
+                        {                            
+                            PostCode = "347740",
+                            Country = "Россия",
+                            Region = "Ростовская область",
+                            Settlement = "г. Зерноград",
+                            Street = "ул. Ленина",
+                            HouseNumber = "21/2"
+                        },
+                        Faxes=new List<Fax> { new Fax { FaxValue = "(886359) 43-3-80", FaxComment = "Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ" } },
+                        Emailes = new List<Email> {new Email { EmailValue = "achgaa@achgaa.ru", EmailComment = "Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ"} },
+                        Telephones =new List<Telephone>
+                        {
+                            new Telephone{TelephoneNumber="(886359) 41-8-31", TelephoneComment="Приемная комиссия"},
+                            new Telephone{TelephoneNumber="(886359) 43-3-80", TelephoneComment="Канцелярия"},
+                            new Telephone{TelephoneNumber="(886359) 42-6-78", TelephoneComment="Факультет  «Инженерно-технологический» "},
+                            new Telephone{TelephoneNumber="(886359) 41-6-56", TelephoneComment="Факультет «Энергетический»"},
+                            new Telephone{TelephoneNumber="(886359) 42-1-98", TelephoneComment="Факультет «Экономика и управление территориями»"},
+                            new Telephone{TelephoneNumber="(886359) 35-9-96", TelephoneComment="Факультет «Среднее профессиональное образование»"},
+                        }
                     };
 
-                    await context.StructInstitutes.AddAsync( institute );
+                    await context.StructInstitutes.AddAsync(institute);
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
+                #region Инициализация таблицы "Типы структурных подразделений"
+                if (!await context.StructSubvisionTypes.AnyAsync())
+                {
+                    StructSubvisionType structSubvisionType1 = new StructSubvisionType
+                    {
+                        StructSubvisionTypeId=1,
+                        StructSubvisionTypeName="Органы управления образовательной организации"
+                    };
+
+                    StructSubvisionType structSubvisionType2 = new StructSubvisionType
+                    {
+                        StructSubvisionTypeId = 2,
+                        StructSubvisionTypeName = "Структурные подразделения образовательной организации"
+                    };
+
+                    await context.StructSubvisionTypes.AddRangeAsync(structSubvisionType1, structSubvisionType2);
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
+                #region Инициализация таблицы "Структурные подразделения"
+                if (!await context.StructSubvisions.AnyAsync())
+                {
+                    StructSubvision structSubvision1 = new StructSubvision
+                    {
+                        StructSubvisionId = 1,
+                        StructSubvisionName = "Отдел финансового планирования и бухгалтерского учета",
+                        StructSubvisionFioChief = "Поваляева Елена Петровна",
+                        StructSubvisionPostChief= "Главный бухгалтер",
+                        StructSubvisionAdress =  new Address
+                        {
+                            PostCode = "347740",
+                            Country = "Россия",
+                            Region = "Ростовская область",
+                            Settlement = "г. Зерноград",
+                            Street = "ул. Ленина",
+                            HouseNumber = "21/2"
+                        },
+                        StructSubvisionSite ="",
+                        StructSubvisionEmail = new Email { EmailValue= "achgaa@itog.biz", EmailComment= "Отдел финансового планирования и бухгалтерского учета" },
+                        StructSubvisionTypeId=1
+                    };
+                    
+                    await context.StructSubvisions.AddRangeAsync(structSubvision1);
                     await context.SaveChangesAsync();
                 }
                 #endregion

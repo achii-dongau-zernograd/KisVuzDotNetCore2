@@ -1,4 +1,4 @@
-﻿@model KisVuzDotNetCore2.Models.Struct.StructInstitute
+﻿@model KisVuzDotNetCore2.Models.Struct.StructUniversity
 
 @{
     ViewData["Title"] = "Details";
@@ -7,14 +7,14 @@
 <h2>Details</h2>
 
 <div>
-    <h4>StructInstitute</h4>
+    <h4>StructUniversity</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.StructInstituteName)
+            @Html.DisplayNameFor(model => model.StructUniversityName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.StructInstituteName)
+            @Html.DisplayFor(model => model.StructUniversityName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.DateOfCreation)
@@ -46,15 +46,9 @@
         <dd>
             @Html.DisplayFor(model => model.Address.AddressId)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.University)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.University.StructUniversityId)
-        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.StructInstituteId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.StructUniversityId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

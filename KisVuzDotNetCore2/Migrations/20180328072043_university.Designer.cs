@@ -11,8 +11,8 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180327094526_StructInstituteModelChanging")]
-    partial class StructInstituteModelChanging
+    [Migration("20180328072043_university")]
+    partial class university
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -264,9 +264,13 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int?>("StructInstituteId");
 
+                    b.Property<int?>("StructUniversityId");
+
                     b.HasKey("EmailId");
 
                     b.HasIndex("StructInstituteId");
+
+                    b.HasIndex("StructUniversityId");
 
                     b.ToTable("Emails");
                 });
@@ -282,9 +286,13 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int?>("StructInstituteId");
 
+                    b.Property<int?>("StructUniversityId");
+
                     b.HasKey("FaxId");
 
                     b.HasIndex("StructInstituteId");
+
+                    b.HasIndex("StructUniversityId");
 
                     b.ToTable("Faxes");
                 });
@@ -310,13 +318,15 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("StructInstituteId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AddressId");
+                    b.Property<int>("AddressId");
 
                     b.Property<DateTime>("DateOfCreation");
 
                     b.Property<bool>("ExistenceOfFilials");
 
                     b.Property<string>("StructInstituteName");
+
+                    b.Property<int>("UniversityId");
 
                     b.Property<string>("WorkingRegime");
 
@@ -325,6 +335,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("StructInstituteId");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("UniversityId");
 
                     b.ToTable("StructInstitutes");
                 });
@@ -347,12 +359,38 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("StructKafs");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructUniversity", b =>
+                {
+                    b.Property<int>("StructUniversityId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AddressId");
+
+                    b.Property<DateTime>("DateOfCreation");
+
+                    b.Property<bool>("ExistenceOfFilials");
+
+                    b.Property<string>("StructUniversityName");
+
+                    b.Property<string>("WorkingRegime");
+
+                    b.Property<string>("WorkingSchedule");
+
+                    b.HasKey("StructUniversityId");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("StructUniversities");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Telephone", b =>
                 {
                     b.Property<int>("TelephoneId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int?>("StructInstituteId");
+
+                    b.Property<int?>("StructUniversityId");
 
                     b.Property<string>("TelephoneComment");
 
@@ -361,6 +399,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("TelephoneId");
 
                     b.HasIndex("StructInstituteId");
+
+                    b.HasIndex("StructUniversityId");
 
                     b.ToTable("Telephones");
                 });
@@ -553,6 +593,10 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.StructInstitute")
                         .WithMany("Emailes")
                         .HasForeignKey("StructInstituteId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructUniversity")
+                        .WithMany("Emailes")
+                        .HasForeignKey("StructUniversityId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Fax", b =>
@@ -560,6 +604,10 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.StructInstitute")
                         .WithMany("Faxes")
                         .HasForeignKey("StructInstituteId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructUniversity")
+                        .WithMany("Faxes")
+                        .HasForeignKey("StructUniversityId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructFacultet", b =>
@@ -574,7 +622,13 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructUniversity", "University")
+                        .WithMany("StructInstitutes")
+                        .HasForeignKey("UniversityId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructKaf", b =>
@@ -585,11 +639,23 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructUniversity", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Telephone", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.StructInstitute")
                         .WithMany("Telephones")
                         .HasForeignKey("StructInstituteId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructUniversity")
+                        .WithMany("Telephones")
+                        .HasForeignKey("StructUniversityId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
