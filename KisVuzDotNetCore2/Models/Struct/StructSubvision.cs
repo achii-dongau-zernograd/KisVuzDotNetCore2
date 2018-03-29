@@ -32,7 +32,8 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// Должность руководителя структурного подразделения
         /// </summary>
         [Display(Name = "Должность руководителя структурного подразделения")]
-        public string StructSubvisionPostChief { get; set; }
+        public Post StructSubvisionPostChief { get; set; }
+        public int StructSubvisionPostChiefId { get; set; }
 
         /// <summary>
         /// Адрес местонахождения структурного подразделения

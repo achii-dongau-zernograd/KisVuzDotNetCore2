@@ -15,13 +15,7 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// УИД факультета
         /// </summary>
         public int StructFacultetId { get; set; }
-
-        /// <summary>
-        /// Наименование факультета
-        /// </summary>
-        [Display(Name= "Наименование факультета")]
-        public string StructFacultetName { get; set; }
-                
+                        
         /// <summary>
         /// Кафедры в составе факультета
         /// </summary>
@@ -30,5 +24,8 @@ namespace KisVuzDotNetCore2.Models.Struct
         ////////// Навигационные свойства ////////////////
         public int StructInstituteId { get; set; }
         public StructInstitute StructInstitute { get; set; }
+
+        public int StructSubvisionId { get; set; }
+        public StructSubvision StructSubvision { get; set; }
     }
 }

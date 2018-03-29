@@ -93,6 +93,15 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<StructSubvisionType> StructSubvisionTypes { get; set; }
 
+        /// <summary>
+        /// Справочник должностей
+        /// </summary>
+        public DbSet<Post> Posts { get; set; }
+
+
+
+
+
         ///////////////////////////////////
         /// <summary>
         /// Адреса
@@ -915,6 +924,98 @@ namespace KisVuzDotNetCore2.Models
             {
                 AppIdentityDBContext context = serviceScope.ServiceProvider.GetService<AppIdentityDBContext>();
 
+                #region Инициализация таблицы "Адреса"
+                if (!await context.Addresses.AnyAsync())
+                {
+                    Address addressPers = new Address
+                    {
+                        AddressId = 1,
+                        PostCode = "346493",
+                        Country = "Россия",
+                        Region = "Ростовская область",
+                        Settlement = "Октябрьский район, п. Персиановский",
+                        Street = "ул. Кривошлыкова",
+                        HouseNumber = "24"
+                    };
+
+                    Address addressLenina21 = new Address
+                    {
+                        AddressId = 2,
+                        PostCode = "347740",
+                        Country = "Россия",
+                        Region = "Ростовская область",
+                        Settlement = "г. Зерноград",
+                        Street = "ул. Ленина",
+                        HouseNumber = "21"
+                    };
+
+                    Address addressSovetskaya28 = new Address
+                    {
+                        AddressId = 3,
+                        PostCode = "347740",
+                        Country = "Россия",
+                        Region = "Ростовская область",
+                        Settlement = "г. Зерноград",
+                        Street = "ул. Советская",
+                        HouseNumber = "28"
+                    };
+
+                    Address addressLenina21_2 = new Address
+                    {
+                        AddressId = 4,
+                        PostCode = "347740",
+                        Country = "Россия",
+                        Region = "Ростовская область",
+                        Settlement = "г. Зерноград",
+                        Street = "ул. Ленина",
+                        HouseNumber = "21/2"
+                    };
+
+                    Address addressSovetskaya15_4 = new Address
+                    {
+                        AddressId = 5,
+                        PostCode = "347740",
+                        Country = "Россия",
+                        Region = "Ростовская область",
+                        Settlement = "г. Зерноград",
+                        Street = "ул. Советская",
+                        HouseNumber = "15/4"
+                    };
+
+                    Address addressLenina19_a = new Address
+                    {
+                        AddressId = 6,
+                        PostCode = "347740",
+                        Country = "Россия",
+                        Region = "Ростовская область",
+                        Settlement = "г. Зерноград",
+                        Street = "ул. Ленина",
+                        HouseNumber = "19a"
+                    };
+
+                    Address addressSovetskaya17_21 = new Address
+                    {
+                        AddressId = 7,
+                        PostCode = "347740",
+                        Country = "Россия",
+                        Region = "Ростовская область",
+                        Settlement = "г. Зерноград",
+                        Street = "ул. Советская",
+                        HouseNumber = "17/21"
+                    };
+
+                    await context.Addresses.AddRangeAsync(
+                        addressPers, 
+                        addressLenina21, 
+                        addressSovetskaya28, 
+                        addressLenina21_2, 
+                        addressSovetskaya15_4, 
+                        addressLenina19_a,
+                        addressSovetskaya17_21);
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+                
                 #region Инициализация таблицы "Университеты"
                 if (!await context.StructUniversities.AnyAsync())
                 {
@@ -926,15 +1027,7 @@ namespace KisVuzDotNetCore2.Models
                         ExistenceOfFilials = true,
                         WorkingRegime = "Режим работы: вход в учебные корпуса и общежития — по пропускам и студенческим билетам",
                         WorkingSchedule = "График работы: понедельник-пятница с 8.00 до 17.00. Выходной — суббота, воскресенье",
-                        Address = new Address
-                        {
-                            PostCode = "346493",
-                            Country = "Россия",
-                            Region = "Ростовская область",
-                            Settlement = "Октябрьский район, п. Персиановский",
-                            Street = "ул. Кривошлыкова",
-                            HouseNumber = "24"
-                        }
+                        AddressId = 1
                     };
 
                     await context.StructUniversities.AddAsync(university);
@@ -953,16 +1046,8 @@ namespace KisVuzDotNetCore2.Models
                         ExistenceOfFilials = false,
                         WorkingRegime = "Режим работы: вход в учебные корпуса и общежития — по пропускам и студенческим билетам",
                         WorkingSchedule = "График работы: понедельник-пятница с 8.00 до 17.00. Выходной — суббота, воскресенье",
-                        UniversityId=1,
-                        Address = new Address
-                        {                            
-                            PostCode = "347740",
-                            Country = "Россия",
-                            Region = "Ростовская область",
-                            Settlement = "г. Зерноград",
-                            Street = "ул. Ленина",
-                            HouseNumber = "21/2"
-                        },
+                        UniversityId = 1,
+                        AddressId = 4,
                         Faxes=new List<Fax> { new Fax { FaxValue = "(886359) 43-3-80", FaxComment = "Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ" } },
                         Emailes = new List<Email> {new Email { EmailValue = "achgaa@achgaa.ru", EmailComment = "Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ"} },
                         Telephones =new List<Telephone>
@@ -996,7 +1081,87 @@ namespace KisVuzDotNetCore2.Models
                         StructSubvisionTypeName = "Структурные подразделения образовательной организации"
                     };
 
-                    await context.StructSubvisionTypes.AddRangeAsync(structSubvisionType1, structSubvisionType2);
+                    StructSubvisionType structSubvisionType3 = new StructSubvisionType
+                    {
+                        StructSubvisionTypeId = 3,
+                        StructSubvisionTypeName = "Факультеты"
+                    };
+
+                    StructSubvisionType structSubvisionType4 = new StructSubvisionType
+                    {
+                        StructSubvisionTypeId = 4,
+                        StructSubvisionTypeName = "Кафедры"
+                    };
+
+                    await context.StructSubvisionTypes.AddRangeAsync(structSubvisionType1, structSubvisionType2, structSubvisionType3, structSubvisionType4);
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
+                #region Инициализация таблицы "Должности"
+                if (!await context.Posts.AnyAsync())
+                {
+                    Post post1 = new Post
+                    {
+                        PostId = 1,
+                        PostName = "Ассистент"
+                    };
+
+                    Post post2 = new Post
+                    {
+                        PostId = 2,
+                        PostName = "Старший преподаватель"
+                    };
+
+                    Post post3 = new Post
+                    {
+                        PostId = 3,
+                        PostName = "Доцент"
+                    };
+
+                    Post post4 = new Post
+                    {
+                        PostId = 4,
+                        PostName = "Профессор"
+                    };
+
+                    Post post5 = new Post
+                    {
+                        PostId = 5,
+                        PostName = "Заведующий кафедрой"
+                    };
+
+                    Post post6 = new Post
+                    {
+                        PostId = 6,
+                        PostName = "Декан"
+                    };
+
+                    Post post7 = new Post
+                    {
+                        PostId = 7,
+                        PostName = "Начальник"
+                    };
+
+                    Post post8 = new Post
+                    {
+                        PostId = 8,
+                        PostName = "Заместитель директора"
+                    };
+
+                    Post post9 = new Post
+                    {
+                        PostId = 9,
+                        PostName = "Директор"
+                    };
+
+                    Post post10 = new Post
+                    {
+                        PostId = 10,
+                        PostName = "Главный бухгалтер"
+                    };
+
+                    await context.Posts.AddRangeAsync(post1, post2, post3, post4, post5, post6, post7, post8, post9, post10);
                     await context.SaveChangesAsync();
                 }
                 #endregion
@@ -1009,22 +1174,261 @@ namespace KisVuzDotNetCore2.Models
                         StructSubvisionId = 1,
                         StructSubvisionName = "Отдел финансового планирования и бухгалтерского учета",
                         StructSubvisionFioChief = "Поваляева Елена Петровна",
-                        StructSubvisionPostChief= "Главный бухгалтер",
-                        StructSubvisionAdress =  new Address
-                        {
-                            PostCode = "347740",
-                            Country = "Россия",
-                            Region = "Ростовская область",
-                            Settlement = "г. Зерноград",
-                            Street = "ул. Ленина",
-                            HouseNumber = "21/2"
-                        },
+                        StructSubvisionPostChiefId = 10,
+                        StructSubvisionAdressId = 2,
                         StructSubvisionSite ="",
                         StructSubvisionEmail = new Email { EmailValue= "achgaa@itog.biz", EmailComment= "Отдел финансового планирования и бухгалтерского учета" },
                         StructSubvisionTypeId=1
                     };
-                    
-                    await context.StructSubvisions.AddRangeAsync(structSubvision1);
+
+                    StructSubvision structSubvisionSpo = new StructSubvision
+                    {
+                        StructSubvisionId = 2,
+                        StructSubvisionName = "Факультет среднего профессионального образования",
+                        StructSubvisionFioChief = "Черемисин Юрий Михайлович",
+                        StructSubvisionPostChiefId = 6,
+                        StructSubvisionAdressId = 3,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "dekspo@mail.ru", EmailComment = "Факультет среднего профессионального образования" },
+                        StructSubvisionTypeId = 3
+                    };
+
+                    StructSubvision structSubvisionInjTech = new StructSubvision
+                    {
+                        StructSubvisionId = 3,
+                        StructSubvisionName = "Инженерно-технологический факультет",
+                        StructSubvisionFioChief = "Глобин Андрей Николаевич",
+                        StructSubvisionPostChiefId = 6,
+                        StructSubvisionAdressId = 3,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "atfachgaa@mail.ru", EmailComment = "Инженерно-технологический факультет" },
+                        StructSubvisionTypeId = 3
+                    };
+
+                    StructSubvision structSubvisionEnerg = new StructSubvision
+                    {
+                        StructSubvisionId = 4,
+                        StructSubvisionName = "Энергетический факультет",
+                        StructSubvisionFioChief = "Степанчук Геннадий Владимирович",
+                        StructSubvisionPostChiefId = 6,
+                        StructSubvisionAdressId = 2,
+                        StructSubvisionSite = "",
+                        //StructSubvisionEmail = new Email { EmailValue = "achgaa@itog.biz", EmailComment = "Энергетический факультет" },
+                        StructSubvisionTypeId = 3
+                    };
+
+                    StructSubvision structSubvisionEconom = new StructSubvision
+                    {
+                        StructSubvisionId = 5,
+                        StructSubvisionName = "Факультет \"Экономика и управление территориями\"",
+                        StructSubvisionFioChief = "Рева Алла Федоровна",
+                        StructSubvisionPostChiefId = 6,
+                        StructSubvisionAdressId = 2,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "achgaa@itog.biz", EmailComment = "Факультет \"Экономика и управление территориями\"" },
+                        StructSubvisionTypeId = 3
+                    };
+
+                    StructSubvision structSubvisionKafTiIuS = new StructSubvision
+                    {
+                        StructSubvisionId = 6,
+                        StructSubvisionName = "Кафедра \"Теплоэнергетика и информационно-управляющие системы\"",
+                        StructSubvisionFioChief = "Литвинов Владимир Николаевич",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 5,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "itius@achgaa.ru", EmailComment = "Кафедра \"Теплоэнергетика и информационно-управляющие системы\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionKafTbiF = new StructSubvision
+                    {
+                        StructSubvisionId = 7,
+                        StructSubvisionName = "Кафедра \"Техносферная безопасность и физика\"",
+                        StructSubvisionFioChief = "Шабанов Николай Иванович",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 2,
+                        StructSubvisionSite = "",
+                        //StructSubvisionEmail = new Email { EmailValue = "itius@achgaa.ru", EmailComment = "Кафедра \"Техносферная безопасность и физика\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionKafFiS = new StructSubvision
+                    {
+                        StructSubvisionId = 8,
+                        StructSubvisionName = "Кафедра \"Физвоспитание и спорт\"",
+                        StructSubvisionFioChief = "Пятикопов Сергей Михайлович",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 6,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "sport@achgaa.ru", EmailComment = "Кафедра \"Физвоспитание и спорт\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionKafEEOiEM = new StructSubvision
+                    {
+                        StructSubvisionId = 9,
+                        StructSubvisionName = "Кафедра \"Эксплуатация энергетического оборудования и электрических машин\"",
+                        StructSubvisionFioChief = "Таранов Михаил Алексеевич",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 2,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "expl_el_mach@achgaa.ru", EmailComment = "Кафедра \"Эксплуатация энергетического оборудования и электрических машин\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionKafEEiET = new StructSubvision
+                    {
+                        StructSubvisionId = 10,
+                        StructSubvisionName = "Кафедра \"Электроэнергетика и электротехника\"",
+                        StructSubvisionFioChief = "Забродина Ольга Борисовна",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 2,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "toeеs@achgaa.ru", EmailComment = "Кафедра \"Электроэнергетика и электротехника\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionKafBUAiA = new StructSubvision
+                    {
+                        StructSubvisionId = 11,
+                        StructSubvisionName = "Кафедра \"Бухгалтерский учет, анализ и аудит\"",
+                        StructSubvisionFioChief = "Чумакова Наталья Валерьевна",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 3,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "account@achgaa.ru", EmailComment = "Кафедра \"Бухгалтерский учет, анализ и аудит\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionKafGDiInYaz = new StructSubvision
+                    {
+                        StructSubvisionId = 12,
+                        StructSubvisionName = "Кафедра \"Гуманитарные дисциплины и иностранные языки\"",
+                        StructSubvisionFioChief = "Глушко Ирина Васильевна",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 3,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "kppiinjz@achgaa.ru", EmailComment = "Кафедра \"Гуманитарные дисциплины и иностранные языки\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionKafZUiK = new StructSubvision
+                    {
+                        StructSubvisionId = 13,
+                        StructSubvisionName = "Кафедра \"Землеустройство и кадастры\"",
+                        StructSubvisionFioChief = "Бондаренко Анатолий Михайлович",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 2,
+                        StructSubvisionSite = "",
+                        //StructSubvisionEmail = new Email { EmailValue = "kppiinjz@achgaa.ru", EmailComment = "Кафедра \"Землеустройство и кадастры\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionEiU = new StructSubvision
+                    {
+                        StructSubvisionId = 14,
+                        StructSubvisionName = "Кафедра \"Экономика и управление\"",
+                        StructSubvisionFioChief = "Рева Алла Федоровна",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 3,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "ekonom_i_upravlenie@achgaa.ru", EmailComment = "Кафедра \"Экономика и управление\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionAiSsk = new StructSubvision
+                    {
+                        StructSubvisionId = 15,
+                        StructSubvisionName = "Кафедра \"Агрономия и селекция с/х культур\"",
+                        StructSubvisionFioChief = "Хронюк Василий Борисович",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 2,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "tr@achgaa.ru", EmailComment = "Кафедра \"Агрономия и селекция с/х культур\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionVMiM = new StructSubvision
+                    {
+                        StructSubvisionId = 16,
+                        StructSubvisionName = "Кафедра \"Высшая математика и механика\"",
+                        StructSubvisionFioChief = "Степовой Дмитрий Владимирович",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 5,
+                        StructSubvisionSite = "",
+                        //StructSubvisionEmail = new Email { EmailValue = "tr@achgaa.ru", EmailComment = "Кафедра \"Высшая математика и механика\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionTSinAPK = new StructSubvision
+                    {
+                        StructSubvisionId = 17,
+                        StructSubvisionName = "Кафедра \"Технический сервис в агропромышленном комплексе\"",
+                        StructSubvisionFioChief = "Никитченко Сергей Леонидович",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 7,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "kaf-ts@achgaa.ru", EmailComment = "Кафедра \"Технический сервис в агропромышленном комплексе\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionTiSmAPK = new StructSubvision
+                    {
+                        StructSubvisionId = 18,
+                        StructSubvisionName = "Кафедра \"Технологии и средства механизации агропромышленного комплекса\"",
+                        StructSubvisionFioChief = "Толстоухова Татьяна Николаевна",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 3,
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "mtppshp@achgaa.ru", EmailComment = "Кафедра \"Технологии и средства механизации агропромышленного комплекса\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionTiA = new StructSubvision
+                    {
+                        StructSubvisionId = 19,
+                        StructSubvisionName = "Кафедра \"Тракторы и автомобили\"",
+                        StructSubvisionFioChief = "Нагорский Леонид Алексеевич",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 7,
+                        StructSubvisionSite = "",
+                        //StructSubvisionEmail = new Email { EmailValue = "mtppshp@achgaa.ru", EmailComment = "Кафедра \"Тракторы и автомобили\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    StructSubvision structSubvisionEAiTTP = new StructSubvision
+                    {
+                        StructSubvisionId = 20,
+                        StructSubvisionName = "Кафедра \"Эксплуатация автомобилей и технологии транспортных процессов\"",
+                        StructSubvisionFioChief = "Щиров Владимир Николаевич",
+                        StructSubvisionPostChiefId = 5,
+                        StructSubvisionAdressId = 5,
+                        StructSubvisionSite = "",
+                        //StructSubvisionEmail = new Email { EmailValue = "mtppshp@achgaa.ru", EmailComment = "Кафедра \"Эксплуатация автомобилей и технологии транспортных процессов\"" },
+                        StructSubvisionTypeId = 4
+                    };
+
+                    await context.StructSubvisions.AddRangeAsync(structSubvision1,
+                        structSubvisionSpo,
+                        structSubvisionInjTech,
+                        structSubvisionEnerg,
+                        structSubvisionEconom,
+                        structSubvisionKafTiIuS,
+                        structSubvisionKafTbiF,
+                        structSubvisionKafFiS,
+                        structSubvisionKafEEOiEM,
+                        structSubvisionKafEEiET,
+                        structSubvisionKafBUAiA,
+                        structSubvisionKafGDiInYaz,
+                        structSubvisionKafZUiK,
+                        structSubvisionEiU,
+                        structSubvisionAiSsk,
+                        structSubvisionVMiM,
+                        structSubvisionTSinAPK,
+                        structSubvisionTiSmAPK,
+                        structSubvisionTiA,
+                        structSubvisionEAiTTP);
                     await context.SaveChangesAsync();
                 }
                 #endregion
@@ -1034,35 +1438,164 @@ namespace KisVuzDotNetCore2.Models
                 {
                     StructFacultet facultetSpo = new StructFacultet
                     {
-                        StructFacultetId = 1,
-                        StructFacultetName = "Среднего профессионального образования",
-                        StructInstituteId = 1
+                        StructFacultetId = 1,                     
+                        StructInstituteId = 1,
+                        StructSubvisionId = 2
                     };
 
                     StructFacultet facultetInjTech = new StructFacultet
                     {
                         StructFacultetId = 2,
-                        StructFacultetName = "Инженерно-технологический",
-                        StructInstituteId = 1
+                        StructInstituteId = 1,
+                        StructSubvisionId = 3
                     };
 
                     StructFacultet facultetEnerg = new StructFacultet
                     {
-                        StructFacultetId = 3,
-                        StructFacultetName = "Энергетический",
-                        StructInstituteId = 1
+                        StructFacultetId = 3,                        
+                        StructInstituteId = 1,
+                        StructSubvisionId = 4
                     };
 
                     StructFacultet facultetEconom = new StructFacultet
                     {
-                        StructFacultetId = 4,
-                        StructFacultetName = "Экономика и управление территориями",
+                        StructFacultetId = 4,                        
                         StructInstituteId = 1,
+                        StructSubvisionId = 5
                     };
 
                     await context.StructFacultets.AddRangeAsync(new StructFacultet[] { facultetSpo,
                         facultetInjTech, facultetEnerg, facultetEconom
                     });
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
+                #region Инициализация таблицы "Кафедры"
+                if (!await context.StructKafs.AnyAsync())
+                {
+                    StructKaf kaf1 = new StructKaf
+                    {
+                        StructKafId = 1,
+                        StructFacultetId = 3,
+                        StructSubvisionId = 6
+                    };
+
+                    StructKaf kaf2 = new StructKaf
+                    {
+                        StructKafId = 2,
+                        StructFacultetId = 3,
+                        StructSubvisionId = 7
+                    };
+
+                    StructKaf kaf3 = new StructKaf
+                    {
+                        StructKafId = 3,
+                        StructFacultetId = 3,
+                        StructSubvisionId = 8
+                    };
+
+                    StructKaf kaf4 = new StructKaf
+                    {
+                        StructKafId = 4,
+                        StructFacultetId = 3,
+                        StructSubvisionId = 9
+                    };
+
+                    StructKaf kaf5 = new StructKaf
+                    {
+                        StructKafId = 5,
+                        StructFacultetId = 3,
+                        StructSubvisionId = 10
+                    };
+
+                    StructKaf kaf6 = new StructKaf
+                    {
+                        StructKafId = 6,
+                        StructFacultetId = 4,
+                        StructSubvisionId = 11
+                    };
+
+                    StructKaf kaf7 = new StructKaf
+                    {
+                        StructKafId = 7,
+                        StructFacultetId = 4,
+                        StructSubvisionId = 12
+                    };
+
+                    StructKaf kaf8 = new StructKaf
+                    {
+                        StructKafId = 8,
+                        StructFacultetId = 4,
+                        StructSubvisionId = 13
+                    };
+
+                    StructKaf kaf9 = new StructKaf
+                    {
+                        StructKafId = 9,
+                        StructFacultetId = 4,
+                        StructSubvisionId = 14
+                    };
+
+                    StructKaf kaf10 = new StructKaf
+                    {
+                        StructKafId = 10,
+                        StructFacultetId = 4,
+                        StructSubvisionId = 15
+                    };
+
+                    StructKaf kaf11 = new StructKaf
+                    {
+                        StructKafId = 11,
+                        StructFacultetId = 2,
+                        StructSubvisionId = 16
+                    };
+
+                    StructKaf kaf12 = new StructKaf
+                    {
+                        StructKafId = 12,
+                        StructFacultetId = 2,
+                        StructSubvisionId = 17
+                    };
+
+                    StructKaf kaf13 = new StructKaf
+                    {
+                        StructKafId = 13,
+                        StructFacultetId = 2,
+                        StructSubvisionId = 18
+                    };
+
+                    StructKaf kaf14 = new StructKaf
+                    {
+                        StructKafId = 14,
+                        StructFacultetId = 2,
+                        StructSubvisionId = 19
+                    };
+
+                    StructKaf kaf15 = new StructKaf
+                    {
+                        StructKafId = 15,
+                        StructFacultetId = 2,
+                        StructSubvisionId = 20
+                    };
+
+
+                    await context.StructKafs.AddRangeAsync(
+                        kaf1,
+                        kaf2,
+                        kaf3,
+                        kaf4,
+                        kaf5,
+                        kaf6,
+                        kaf7,
+                        kaf8,
+                        kaf9,
+                        kaf10,
+                        kaf11,
+                        kaf12,
+                        kaf13,
+                        kaf14,
+                        kaf15);
                     await context.SaveChangesAsync();
                 }
                 #endregion

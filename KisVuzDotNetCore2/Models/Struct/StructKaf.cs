@@ -12,17 +12,7 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// УИД кафедры
         /// </summary>
         public int StructKafId { get; set; }
-
-        /// <summary>
-        /// Наименование кафедры
-        /// </summary>
-        public int StructKafName { get; set; }
-
-        /// <summary>
-        /// Наименование кафедры (сокращённое)
-        /// </summary>
-        public int StructKafNameSokr { get; set; }
-
+        
         /// <summary>
         /// Учебные планы
         /// </summary>
@@ -38,5 +28,8 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// Факультет, которому принадлежит кафедра
         /// </summary>
         public StructFacultet StructFacultet { get; set; }
+
+        public int StructSubvisionId { get; set; }
+        public StructSubvision StructSubvision { get; set; }
     }
 }

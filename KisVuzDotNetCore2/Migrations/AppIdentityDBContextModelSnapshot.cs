@@ -296,18 +296,32 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("Faxes");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Post", b =>
+                {
+                    b.Property<int>("PostId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("PostName");
+
+                    b.HasKey("PostId");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructFacultet", b =>
                 {
                     b.Property<int>("StructFacultetId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("StructFacultetName");
-
                     b.Property<int>("StructInstituteId");
+
+                    b.Property<int>("StructSubvisionId");
 
                     b.HasKey("StructFacultetId");
 
                     b.HasIndex("StructInstituteId");
+
+                    b.HasIndex("StructSubvisionId");
 
                     b.ToTable("StructFacultets");
                 });
@@ -347,13 +361,13 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("StructFacultetId");
 
-                    b.Property<int>("StructKafName");
-
-                    b.Property<int>("StructKafNameSokr");
+                    b.Property<int>("StructSubvisionId");
 
                     b.HasKey("StructKafId");
 
                     b.HasIndex("StructFacultetId");
+
+                    b.HasIndex("StructSubvisionId");
 
                     b.ToTable("StructKafs");
                 });
@@ -373,7 +387,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<string>("StructSubvisionName");
 
-                    b.Property<string>("StructSubvisionPostChief");
+                    b.Property<int>("StructSubvisionPostChiefId");
 
                     b.Property<string>("StructSubvisionSite");
 
@@ -386,6 +400,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("StructSubvisionAdressId");
 
                     b.HasIndex("StructSubvisionEmailEmailId");
+
+                    b.HasIndex("StructSubvisionPostChiefId");
 
                     b.HasIndex("StructSubvisionTypeId");
 
@@ -661,6 +677,11 @@ namespace KisVuzDotNetCore2.Migrations
                         .WithMany("StructFacultets")
                         .HasForeignKey("StructInstituteId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructSubvision", "StructSubvision")
+                        .WithMany()
+                        .HasForeignKey("StructSubvisionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructInstitute", b =>
@@ -682,6 +703,11 @@ namespace KisVuzDotNetCore2.Migrations
                         .WithMany()
                         .HasForeignKey("StructFacultetId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructSubvision", "StructSubvision")
+                        .WithMany()
+                        .HasForeignKey("StructSubvisionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructSubvision", b =>
@@ -698,6 +724,11 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.Email", "StructSubvisionEmail")
                         .WithMany()
                         .HasForeignKey("StructSubvisionEmailEmailId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.Post", "StructSubvisionPostChief")
+                        .WithMany()
+                        .HasForeignKey("StructSubvisionPostChiefId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.StructSubvisionType", "StructSubvisionType")
                         .WithMany("StructSubvisions")

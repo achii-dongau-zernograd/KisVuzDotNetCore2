@@ -6,8 +6,36 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180304181531_Initial.cs" />
+    <Compile Remove="Migrations\20180304181531_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20180304185422_AppUser.cs" />
+    <Compile Remove="Migrations\20180304185422_AppUser.Designer.cs" />
+    <Compile Remove="Migrations\20180304190226_AppUserPhoto.cs" />
+    <Compile Remove="Migrations\20180304190226_AppUserPhoto.Designer.cs" />
+    <Compile Remove="Migrations\20180318055618_StructOrgUprav.cs" />
+    <Compile Remove="Migrations\20180318055618_StructOrgUprav.Designer.cs" />
+    <Compile Remove="Migrations\20180319152931_Files.cs" />
+    <Compile Remove="Migrations\20180319152931_Files.Designer.cs" />
+    <Compile Remove="Migrations\20180320112007_FileModelUploadDateAndContentType.cs" />
+    <Compile Remove="Migrations\20180320112007_FileModelUploadDateAndContentType.Designer.cs" />
+    <Compile Remove="Migrations\20180323064424_AddingEduLevelsAndEduUgses.cs" />
+    <Compile Remove="Migrations\20180323064424_AddingEduLevelsAndEduUgses.Designer.cs" />
+    <Compile Remove="Migrations\20180323122806_AddingEduNapravls.cs" />
+    <Compile Remove="Migrations\20180323122806_AddingEduNapravls.Designer.cs" />
+    <Compile Remove="Migrations\20180324081831_AddingEduForms.cs" />
+    <Compile Remove="Migrations\20180324081831_AddingEduForms.Designer.cs" />
+    <Compile Remove="Migrations\20180324140431_EduNapravlAddedStandartDocLink.cs" />
+    <Compile Remove="Migrations\20180324140431_EduNapravlAddedStandartDocLink.Designer.cs" />
     <Compile Remove="Migrations\20180325071506_AddingEduProfile.cs" />
     <Compile Remove="Migrations\20180325071506_AddingEduProfile.Designer.cs" />
+    <Compile Remove="Migrations\20180325071727_AddingEduProfile.cs" />
+    <Compile Remove="Migrations\20180325071727_AddingEduProfile.Designer.cs" />
+    <Compile Remove="Migrations\20180325123802_AddingEduYearsYearBeginningPlanStructInstitutesFacultetsKafs.cs" />
+    <Compile Remove="Migrations\20180325123802_AddingEduYearsYearBeginningPlanStructInstitutesFacultetsKafs.Designer.cs" />
+    <Compile Remove="Migrations\20180325125457_ConnectionEduPlansStructKaf.cs" />
+    <Compile Remove="Migrations\20180325125457_ConnectionEduPlansStructKaf.Designer.cs" />
+    <Compile Remove="Migrations\20180325132509_ConnectionEduPlanEduForm.cs" />
+    <Compile Remove="Migrations\20180325132509_ConnectionEduPlanEduForm.Designer.cs" />
     <Compile Remove="Migrations\20180327091641_StructInstituteModelChanging.cs" />
     <Compile Remove="Migrations\20180327091641_StructInstituteModelChanging.Designer.cs" />
     <Compile Remove="Migrations\20180327092404_StructInstituteModelChanging.cs" />
@@ -26,6 +54,8 @@
     <Compile Remove="Migrations\20180327131850_institute.Designer.cs" />
     <Compile Remove="Migrations\20180328065643_university.cs" />
     <Compile Remove="Migrations\20180328065643_university.Designer.cs" />
+    <Compile Remove="Migrations\20180328072043_university.cs" />
+    <Compile Remove="Migrations\20180328072043_university.Designer.cs" />
     <Compile Remove="Migrations\20180328123653_Struct.cs" />
     <Compile Remove="Migrations\20180328123653_Struct.Designer.cs" />
     <Compile Remove="Migrations\20180328125248_qwqw.cs" />
@@ -36,6 +66,22 @@
     <Compile Remove="Migrations\20180328131341_Struct2.Designer.cs" />
     <Compile Remove="Migrations\20180328131425_Struct.cs" />
     <Compile Remove="Migrations\20180328131425_Struct.Designer.cs" />
+    <Compile Remove="Migrations\20180328131725_Struct.cs" />
+    <Compile Remove="Migrations\20180328131725_Struct.Designer.cs" />
+    <Compile Remove="Migrations\20180329062532_Init.cs" />
+    <Compile Remove="Migrations\20180329062532_Init.Designer.cs" />
+    <Compile Remove="Migrations\20180329090400_init.cs" />
+    <Compile Remove="Migrations\20180329090400_init.Designer.cs" />
+    <Compile Remove="Migrations\20180329091153_init.cs" />
+    <Compile Remove="Migrations\20180329091153_init.Designer.cs" />
+    <Compile Remove="Migrations\20180329094359_init.cs" />
+    <Compile Remove="Migrations\20180329094359_init.Designer.cs" />
+    <Compile Remove="Migrations\20180329095323_init2.cs" />
+    <Compile Remove="Migrations\20180329095323_init2.Designer.cs" />
+    <Compile Remove="Migrations\20180329102454_qwqw.cs" />
+    <Compile Remove="Migrations\20180329102454_qwqw.Designer.cs" />
+    <Compile Remove="Migrations\20180329104714_init.cs" />
+    <Compile Remove="Migrations\20180329104714_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

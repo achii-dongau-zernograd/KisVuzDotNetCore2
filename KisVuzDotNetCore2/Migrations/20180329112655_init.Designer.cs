@@ -11,8 +11,8 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180328072043_university")]
-    partial class university
+    [Migration("20180329112655_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -297,18 +297,32 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("Faxes");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Post", b =>
+                {
+                    b.Property<int>("PostId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("PostName");
+
+                    b.HasKey("PostId");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructFacultet", b =>
                 {
                     b.Property<int>("StructFacultetId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("StructFacultetName");
-
                     b.Property<int>("StructInstituteId");
+
+                    b.Property<int>("StructSubvisionId");
 
                     b.HasKey("StructFacultetId");
 
                     b.HasIndex("StructInstituteId");
+
+                    b.HasIndex("StructSubvisionId");
 
                     b.ToTable("StructFacultets");
                 });
@@ -348,15 +362,63 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("StructFacultetId");
 
-                    b.Property<int>("StructKafName");
-
-                    b.Property<int>("StructKafNameSokr");
+                    b.Property<int>("StructSubvisionId");
 
                     b.HasKey("StructKafId");
 
                     b.HasIndex("StructFacultetId");
 
+                    b.HasIndex("StructSubvisionId");
+
                     b.ToTable("StructKafs");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructSubvision", b =>
+                {
+                    b.Property<int>("StructSubvisionId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("StructStandingOrderId");
+
+                    b.Property<int>("StructSubvisionAdressId");
+
+                    b.Property<int?>("StructSubvisionEmailEmailId");
+
+                    b.Property<string>("StructSubvisionFioChief");
+
+                    b.Property<string>("StructSubvisionName");
+
+                    b.Property<int>("StructSubvisionPostChiefId");
+
+                    b.Property<string>("StructSubvisionSite");
+
+                    b.Property<int>("StructSubvisionTypeId");
+
+                    b.HasKey("StructSubvisionId");
+
+                    b.HasIndex("StructStandingOrderId");
+
+                    b.HasIndex("StructSubvisionAdressId");
+
+                    b.HasIndex("StructSubvisionEmailEmailId");
+
+                    b.HasIndex("StructSubvisionPostChiefId");
+
+                    b.HasIndex("StructSubvisionTypeId");
+
+                    b.ToTable("StructSubvisions");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructSubvisionType", b =>
+                {
+                    b.Property<int>("StructSubvisionTypeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("StructSubvisionTypeName");
+
+                    b.HasKey("StructSubvisionTypeId");
+
+                    b.ToTable("StructSubvisionTypes");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructUniversity", b =>
@@ -616,6 +678,11 @@ namespace KisVuzDotNetCore2.Migrations
                         .WithMany("StructFacultets")
                         .HasForeignKey("StructInstituteId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructSubvision", "StructSubvision")
+                        .WithMany()
+                        .HasForeignKey("StructSubvisionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructInstitute", b =>
@@ -636,6 +703,37 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.StructFacultet", "StructFacultet")
                         .WithMany()
                         .HasForeignKey("StructFacultetId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructSubvision", "StructSubvision")
+                        .WithMany()
+                        .HasForeignKey("StructSubvisionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructSubvision", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "StructStandingOrder")
+                        .WithMany()
+                        .HasForeignKey("StructStandingOrderId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.Address", "StructSubvisionAdress")
+                        .WithMany()
+                        .HasForeignKey("StructSubvisionAdressId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.Email", "StructSubvisionEmail")
+                        .WithMany()
+                        .HasForeignKey("StructSubvisionEmailEmailId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.Post", "StructSubvisionPostChief")
+                        .WithMany()
+                        .HasForeignKey("StructSubvisionPostChiefId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructSubvisionType", "StructSubvisionType")
+                        .WithMany("StructSubvisions")
+                        .HasForeignKey("StructSubvisionTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

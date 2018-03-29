@@ -5,51 +5,52 @@
 }
 <table itemprop="structOrgUprav" class="table">
     <thead>
-        <th>Наименование органа управления / структурного подразделения</th>
-        <th>ФИО руководителя структурного подразделения</th>
-        <th>Должность руководителя структурного подразделения</th>
-        <th>Адрес местонахождения структурного подразделения</th>
-        <th>Адрес официального сайта структурного подразделения</th>
-        <th>Адрес электронной почты структурного подразделения</th>
-        <th>Положение об органе управления / о структурном подразделении</th>
+        <tr>
+            <th>Наименование органа управления / структурного подразделения</th>
+            <th>ФИО руководителя структурного подразделения</th>
+            <th>Должность руководителя структурного подразделения</th>
+            <th>Адрес местонахождения структурного подразделения</th>
+            <th>Адрес официального сайта структурного подразделения</th>
+            <th>Адрес электронной почты структурного подразделения</th>
+            <th>Положение об органе управления / о структурном подразделении</th>
+        </tr>        
     </thead>
         <tbody>
             @foreach (var structSubvisionType in structSubvisionTypes)
-    {
-        <tr>
-            <td colspan="7" class="text-center well">
-                <strong>
-                    @structSubvisionType.StructSubvisionTypeName
-                </strong>
-            </td>
-        </tr>
-        @foreach (var structSubvision in structSubvisions.Where(a => a.StructSubvisionTypeId == structSubvisionType.StructSubvisionTypeId))
-{
-        <tr itemprop="structOrgUprav">
-            <td itemprop="structOrgUprav">
-                @structSubvision.StructSubvisionName
-            </td>
-            <td itemprop="fio">
-                @structSubvision.StructSubvisionFioChief
-            </td>
-            <td itemprop="post">
-                @structSubvision.StructSubvisionPostChief
-            </td>
-            <td itemprop="addressStr">
-                @structSubvision.StructSubvisionAdress?.GetAddress
-            </td>
-            <td itemprop="site">
-                @structSubvision.StructSubvisionSite
-            </td>
-            <td itemprop="email">
-                @structSubvision.StructSubvisionEmail?.EmailValue
-            </td>
-            <td itemprop="divisionClauseDocLink">
-                @structSubvision.StructStandingOrder?.Path
-            </td>
-        </tr>
-}
-
-}
+             {
+                <tr>
+                    <td colspan="7" class="text-center well">
+                        <strong>
+                            @structSubvisionType.StructSubvisionTypeName
+                        </strong>
+                    </td>
+                </tr>
+                @foreach (var structSubvision in structSubvisions.Where(a => a.StructSubvisionTypeId == structSubvisionType.StructSubvisionTypeId))
+                 {
+                     <tr itemprop="structOrgUprav">
+                        <td itemprop="structOrgUprav">
+                            @structSubvision.StructSubvisionName
+                        </td>
+                        <td itemprop="fio">
+                            @structSubvision.StructSubvisionFioChief
+                        </td>
+                        <td itemprop="post">
+                            @structSubvision.StructSubvisionPostChief
+                        </td>
+                        <td itemprop="addressStr">
+                            @structSubvision.StructSubvisionAdress?.GetAddress
+                        </td>
+                        <td itemprop="site">
+                            @structSubvision.StructSubvisionSite
+                        </td>
+                        <td itemprop="email">
+                            @structSubvision.StructSubvisionEmail?.EmailValue
+                        </td>
+                        <td itemprop="divisionClauseDocLink">
+                            <a href="@structSubvision.StructStandingOrder?.Path">@structSubvision.StructStandingOrder?.Path</a>
+                        </td>
+                     </tr>
+                 }
+             }
         </tbody>
 </table>

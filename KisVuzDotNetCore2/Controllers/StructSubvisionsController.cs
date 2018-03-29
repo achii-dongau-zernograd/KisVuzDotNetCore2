@@ -22,7 +22,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: StructSubvisions
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.StructSubvisions.Include(s => s.StructSubvisionAdress).Include(s => s.StructSubvisionType);
+            var appIdentityDBContext = _context.StructSubvisions.Include(s => s.StructSubvisionAdress).Include(s => s.StructSubvisionPostChief).Include(s => s.StructSubvisionType);
             return View(await appIdentityDBContext.ToListAsync());
         }
 
@@ -36,6 +36,7 @@ namespace KisVuzDotNetCore2.Controllers
 
             var structSubvision = await _context.StructSubvisions
                 .Include(s => s.StructSubvisionAdress)
+                .Include(s => s.StructSubvisionPostChief)
                 .Include(s => s.StructSubvisionType)
                 .SingleOrDefaultAsync(m => m.StructSubvisionId == id);
             if (structSubvision == null)
@@ -50,6 +51,7 @@ namespace KisVuzDotNetCore2.Controllers
         public IActionResult Create()
         {
             ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId");
+            ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostId");
             ViewData["StructSubvisionTypeId"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeId");
             return View();
         }
@@ -59,7 +61,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StructSubvisionId,StructSubvisionName,StructSubvisionFioChief,StructSubvisionPostChief,StructSubvisionAdressId,StructSubvisionSite,StructSubvisionTypeId")] StructSubvision structSubvision)
+        public async Task<IActionResult> Create([Bind("StructSubvisionId,StructSubvisionName,StructSubvisionFioChief,StructSubvisionPostChiefId,StructSubvisionAdressId,StructSubvisionSite,StructSubvisionTypeId")] StructSubvision structSubvision)
         {
             if (ModelState.IsValid)
             {
@@ -68,6 +70,7 @@ namespace KisVuzDotNetCore2.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structSubvision.StructSubvisionAdressId);
+            ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostId", structSubvision.StructSubvisionPostChiefId);
             ViewData["StructSubvisionTypeId"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeId", structSubvision.StructSubvisionTypeId);
             return View(structSubvision);
         }
@@ -86,6 +89,7 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
             ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structSubvision.StructSubvisionAdressId);
+            ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostId", structSubvision.StructSubvisionPostChiefId);
             ViewData["StructSubvisionTypeId"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeId", structSubvision.StructSubvisionTypeId);
             return View(structSubvision);
         }
@@ -95,7 +99,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StructSubvisionId,StructSubvisionName,StructSubvisionFioChief,StructSubvisionPostChief,StructSubvisionAdressId,StructSubvisionSite,StructSubvisionTypeId")] StructSubvision structSubvision)
+        public async Task<IActionResult> Edit(int id, [Bind("StructSubvisionId,StructSubvisionName,StructSubvisionFioChief,StructSubvisionPostChiefId,StructSubvisionAdressId,StructSubvisionSite,StructSubvisionTypeId")] StructSubvision structSubvision)
         {
             if (id != structSubvision.StructSubvisionId)
             {
@@ -123,6 +127,7 @@ namespace KisVuzDotNetCore2.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structSubvision.StructSubvisionAdressId);
+            ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostId", structSubvision.StructSubvisionPostChiefId);
             ViewData["StructSubvisionTypeId"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeId", structSubvision.StructSubvisionTypeId);
             return View(structSubvision);
         }
@@ -137,6 +142,7 @@ namespace KisVuzDotNetCore2.Controllers
 
             var structSubvision = await _context.StructSubvisions
                 .Include(s => s.StructSubvisionAdress)
+                .Include(s => s.StructSubvisionPostChief)
                 .Include(s => s.StructSubvisionType)
                 .SingleOrDefaultAsync(m => m.StructSubvisionId == id);
             if (structSubvision == null)

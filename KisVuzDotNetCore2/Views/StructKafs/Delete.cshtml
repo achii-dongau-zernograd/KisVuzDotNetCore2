@@ -1,4 +1,4 @@
-﻿@model KisVuzDotNetCore2.Models.Struct.StructFacultet
+﻿@model KisVuzDotNetCore2.Models.Struct.StructKaf
 
 @{
     ViewData["Title"] = "Delete";
@@ -8,14 +8,14 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>StructFacultet</h4>
+    <h4>StructKaf</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.StructInstitute)
+            @Html.DisplayNameFor(model => model.StructFacultet)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.StructInstitute.StructInstituteId)
+            @Html.DisplayFor(model => model.StructFacultet.StructFacultetId)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.StructSubvision)
@@ -26,7 +26,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="StructFacultetId" />
+        <input type="hidden" asp-for="StructKafId" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>

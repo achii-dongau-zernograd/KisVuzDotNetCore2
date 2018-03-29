@@ -19,13 +19,13 @@
                     @Html.DisplayNameFor(model => model.StructSubvisionFioChief)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.StructSubvisionPostChief)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.StructSubvisionSite)
                 </th>
             <th>
                 @Html.DisplayNameFor(model => model.StructSubvisionAdress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StructSubvisionPostChief)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StructSubvisionType)
@@ -43,13 +43,13 @@
                 @Html.DisplayFor(modelItem => item.StructSubvisionFioChief)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StructSubvisionPostChief)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.StructSubvisionSite)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StructSubvisionAdress.AddressId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StructSubvisionPostChief.PostId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StructSubvisionType.StructSubvisionTypeId)
