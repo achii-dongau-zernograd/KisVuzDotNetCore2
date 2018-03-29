@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Загрузка файла";
+    List<FileDataType> fileDataTypes = (List<FileDataType>) ViewData["FileDataTypes"];
 }
 
 <h2>Загрузка файла</h2>
@@ -18,6 +19,17 @@
                 <input type="submit" value="Загрузить файл" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
+            <table class="table">
+                @foreach (var fileDataType in fileDataTypes)
+                {
+                    <tr>
+                        <td>@fileDataType.FileDataTypeName</td>
+                        <td>
+                            <input type="checkbox" name="SelectedFileDataTypeIds" value="@fileDataType.FileDataTypeId" />
+                        </td>
+                    </tr>                
+                }
+             </table>
         </form>
     </div>
 </div>

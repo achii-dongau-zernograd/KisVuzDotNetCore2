@@ -140,6 +140,16 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<FileModel> Files { get; set; }
 
+        /// <summary>
+        /// Типы содержимого файлов
+        /// </summary>
+        public DbSet<FileDataType> FileDataTypes { get; set; }
+
+        /// <summary>
+        /// Таблица, связующая файлы с типами содержимого
+        /// </summary>
+        public DbSet<FileToFileType> FileToFileTypes { get; set; }
+
         #endregion
 
         /// <summary>
@@ -153,6 +163,7 @@ namespace KisVuzDotNetCore2.Models
             await CreateAdminAccount(serviceProvider, configuration);
             await CreateEducationData(serviceProvider, configuration);
             await CreateStructData(serviceProvider, configuration);
+            await CreateFilesData(serviceProvider, configuration);
         }
 
         /// <summary>
@@ -1599,6 +1610,37 @@ namespace KisVuzDotNetCore2.Models
                     await context.SaveChangesAsync();
                 }
                 #endregion
+            }
+        }
+
+        /// <summary>
+        /// Инициализация данных, связанных с файловыми операциями
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static async Task CreateFilesData(IServiceProvider serviceProvider, IConfiguration configuration)
+        {
+            using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                AppIdentityDBContext context = serviceScope.ServiceProvider.GetService<AppIdentityDBContext>();
+
+                #region Инициализация таблицы "Типы содержимого файла"
+                if (!await context.FileDataTypes.AnyAsync())
+                {
+                    FileDataType fileDataType1 = new FileDataType
+                    {
+                        FileDataTypeId=1,
+                        FileDataTypeName="Положения о структурных подразделениях"
+                    };
+                                        
+
+                    await context.FileDataTypes.AddRangeAsync(
+                        fileDataType1
+                        );
+                    await context.SaveChangesAsync();
+                }
+                #endregion                                
             }
         }
     }

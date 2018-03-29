@@ -28,11 +28,12 @@ namespace KisVuzDotNetCore2.Controllers
 
         public IActionResult AddFile()
         {
+            ViewData["FileDataTypes"] = _context.FileDataTypes.ToList();
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddFile(IFormFile uploadedFile)
+        public async Task<IActionResult> AddFile(IFormFile uploadedFile, int[] SelectedFileDataTypeIds)
         {
             if (uploadedFile != null)
             {                         

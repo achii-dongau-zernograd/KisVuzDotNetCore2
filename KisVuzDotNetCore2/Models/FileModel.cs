@@ -40,5 +40,10 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         [Display(Name = "Тип файла")]
         public string ContentType { get; set; } = "application/octet-stream";
+
+        /// <summary>
+        /// Назначение файлу набора типов данных
+        /// </summary>
+        public List<FileToFileType> FileToFileTypes { get; set; }
     }
 }
