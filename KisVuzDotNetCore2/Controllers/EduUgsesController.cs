@@ -72,11 +72,11 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EduUgsId,EduUgsCode,EduUgsName,EduLevelId")] EduUgs eduUgs)
+        public async Task<IActionResult> Create(EduUgs eduUgs)
         {
             if (ModelState.IsValid)
-            {
-                _context.Add(eduUgs);
+            {                
+                _context.EduUgses.Add(eduUgs);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

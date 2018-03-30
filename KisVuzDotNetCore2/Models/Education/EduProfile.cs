@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace KisVuzDotNetCore2.Models.Education
 {
     /// <summary>
-    /// Модель "Профиль подготовки / направленность / специализация
+    /// Модель "Профиль подготовки / направленность / специализация"
     /// </summary>
     public class EduProfile
     {

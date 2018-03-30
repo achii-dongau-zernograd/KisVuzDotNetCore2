@@ -1,0 +1,31 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduProfile
+
+@{
+    ViewData["Title"] = "Удалить профиль подготовки / направленность / специализацию";
+}
+
+<h2>Удалить профиль подготовки / направленность / специализацию</h2>
+
+<div>
+      <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfileName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfileName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl.EduNapravName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduProfileId" />
+        <input type="submit" value="Удалить" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

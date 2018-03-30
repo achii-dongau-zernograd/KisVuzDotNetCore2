@@ -44,5 +44,13 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         public List<EduNapravl> EduNapravls = new List<EduNapravl>();
 
+        public string EduUgsFullName
+        {
+            get
+            {
+                return EduLevel?.EduLevelName + " - " + EduUgsCode + " " + EduUgsName;
+            }
+        }
+
     }
 }

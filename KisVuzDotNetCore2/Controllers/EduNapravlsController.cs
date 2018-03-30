@@ -78,9 +78,10 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         // GET: EduNapravls/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsId");
+            ViewData["EduUgsId"] = new SelectList(_context.EduUgses.Include(u => u.EduLevel), "EduUgsId", "EduUgsName", id);
+
             return View();
         }
 
@@ -97,7 +98,7 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsId", eduNapravl.EduUgsId);
+            ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsName", eduNapravl.EduUgsId);
             return View(eduNapravl);
         }
 

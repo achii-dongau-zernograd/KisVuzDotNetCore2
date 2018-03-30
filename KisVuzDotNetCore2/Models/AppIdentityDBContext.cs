@@ -1,4 +1,4 @@
-﻿using KisVuzDotNetCore2.Models.Education;
+﻿ using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Struct;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
