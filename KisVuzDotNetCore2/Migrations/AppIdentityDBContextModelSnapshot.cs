@@ -217,11 +217,27 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("FileDataTypeId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("FileDataTypeGroupId");
+
                     b.Property<string>("FileDataTypeName");
 
                     b.HasKey("FileDataTypeId");
 
+                    b.HasIndex("FileDataTypeGroupId");
+
                     b.ToTable("FileDataTypes");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.FileDataTypeGroup", b =>
+                {
+                    b.Property<int>("FileDataTypeGroupId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FileDataTypeGroupName");
+
+                    b.HasKey("FileDataTypeGroupId");
+
+                    b.ToTable("FileDataTypeGroups");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.FileModel", b =>
@@ -230,6 +246,8 @@ namespace KisVuzDotNetCore2.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ContentType");
+
+                    b.Property<string>("FileName");
 
                     b.Property<string>("Name");
 
@@ -496,32 +514,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("Telephones");
                 });
 
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.StructOrgUprav", b =>
-                {
-                    b.Property<int>("StructOrgUpravId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddressStr");
-
-                    b.Property<string>("DivisionClauseDocLink");
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("Fio");
-
-                    b.Property<bool>("IsOrgUprav");
-
-                    b.Property<string>("Post");
-
-                    b.Property<string>("Site");
-
-                    b.Property<string>("StructOrgUpravName");
-
-                    b.HasKey("StructOrgUpravId");
-
-                    b.ToTable("StructOrgUprav");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -676,6 +668,14 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduLevel", "EduLevel")
                         .WithMany()
                         .HasForeignKey("EduLevelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.FileDataType", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.FileDataTypeGroup", "FileDataTypeGroup")
+                        .WithMany("FileDataTypes")
+                        .HasForeignKey("FileDataTypeGroupId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

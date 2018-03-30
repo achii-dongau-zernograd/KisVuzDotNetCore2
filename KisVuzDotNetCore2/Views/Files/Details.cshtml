@@ -1,0 +1,54 @@
+﻿@model KisVuzDotNetCore2.Models.FileModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>FileModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Path)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Path)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UploadDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UploadDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContentType)
+        </dd>
+    </dl>
+</div>
+
+@foreach (var item in Model.FileToFileTypes)
+{
+    <p>@item.FileDataType.FileDataTypeGroup.FileDataTypeGroupName - @item.FileDataType.FileDataTypeName</p>
+}
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

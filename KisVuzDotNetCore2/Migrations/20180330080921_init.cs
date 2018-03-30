@@ -124,12 +124,26 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FileDataTypeGroups",
+                columns: table => new
+                {
+                    FileDataTypeGroupId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FileDataTypeGroupName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileDataTypeGroups", x => x.FileDataTypeGroupId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Files",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ContentType = table.Column<string>(nullable: true),
+                    FileName = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Path = table.Column<string>(nullable: true),
                     UploadDate = table.Column<DateTime>(nullable: false)
@@ -150,26 +164,6 @@ namespace KisVuzDotNetCore2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Posts", x => x.PostId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StructOrgUprav",
-                columns: table => new
-                {
-                    StructOrgUpravId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    AddressStr = table.Column<string>(nullable: true),
-                    DivisionClauseDocLink = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Fio = table.Column<string>(nullable: true),
-                    IsOrgUprav = table.Column<bool>(nullable: false),
-                    Post = table.Column<string>(nullable: true),
-                    Site = table.Column<string>(nullable: true),
-                    StructOrgUpravName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StructOrgUprav", x => x.StructOrgUpravId);
                 });
 
             migrationBuilder.CreateTable(
@@ -337,6 +331,26 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FileDataTypes",
+                columns: table => new
+                {
+                    FileDataTypeId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FileDataTypeGroupId = table.Column<int>(nullable: false),
+                    FileDataTypeName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileDataTypes", x => x.FileDataTypeId);
+                    table.ForeignKey(
+                        name: "FK_FileDataTypes_FileDataTypeGroups_FileDataTypeGroupId",
+                        column: x => x.FileDataTypeGroupId,
+                        principalTable: "FileDataTypeGroups",
+                        principalColumn: "FileDataTypeGroupId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StructInstitutes",
                 columns: table => new
                 {
@@ -386,6 +400,32 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.EduUgsId,
                         principalTable: "EduUgses",
                         principalColumn: "EduUgsId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FileToFileTypes",
+                columns: table => new
+                {
+                    FileToFileTypeId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FileDataTypeId = table.Column<int>(nullable: false),
+                    FileModelId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileToFileTypes", x => x.FileToFileTypeId);
+                    table.ForeignKey(
+                        name: "FK_FileToFileTypes_FileDataTypes_FileDataTypeId",
+                        column: x => x.FileDataTypeId,
+                        principalTable: "FileDataTypes",
+                        principalColumn: "FileDataTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FileToFileTypes_Files_FileModelId",
+                        column: x => x.FileModelId,
+                        principalTable: "Files",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -740,6 +780,21 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "StructUniversityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FileDataTypes_FileDataTypeGroupId",
+                table: "FileDataTypes",
+                column: "FileDataTypeGroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FileToFileTypes_FileDataTypeId",
+                table: "FileToFileTypes",
+                column: "FileDataTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FileToFileTypes_FileModelId",
+                table: "FileToFileTypes",
+                column: "FileModelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StructFacultets_StructInstituteId",
                 table: "StructFacultets",
                 column: "StructInstituteId");
@@ -834,7 +889,7 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "Faxes");
 
             migrationBuilder.DropTable(
-                name: "StructOrgUprav");
+                name: "FileToFileTypes");
 
             migrationBuilder.DropTable(
                 name: "Telephones");
@@ -861,10 +916,16 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "StructKafs");
 
             migrationBuilder.DropTable(
+                name: "FileDataTypes");
+
+            migrationBuilder.DropTable(
                 name: "EduNapravls");
 
             migrationBuilder.DropTable(
                 name: "StructFacultets");
+
+            migrationBuilder.DropTable(
+                name: "FileDataTypeGroups");
 
             migrationBuilder.DropTable(
                 name: "EduUgses");

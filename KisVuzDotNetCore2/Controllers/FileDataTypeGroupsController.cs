@@ -9,23 +9,22 @@ using KisVuzDotNetCore2.Models;
 
 namespace KisVuzDotNetCore2.Controllers
 {
-    public class FileDataTypesController : Controller
+    public class FileDataTypeGroupsController : Controller
     {
         private readonly AppIdentityDBContext _context;
 
-        public FileDataTypesController(AppIdentityDBContext context)
+        public FileDataTypeGroupsController(AppIdentityDBContext context)
         {
             _context = context;
         }
 
-        // GET: FileDataTypes
+        // GET: FileDataTypeGroups
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.FileDataTypes.Include(f => f.FileDataTypeGroup);
-            return View(await appIdentityDBContext.ToListAsync());
+            return View(await _context.FileDataTypeGroups.ToListAsync());
         }
 
-        // GET: FileDataTypes/Details/5
+        // GET: FileDataTypeGroups/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +32,39 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var fileDataType = await _context.FileDataTypes
-                .Include(f => f.FileDataTypeGroup)
-                .SingleOrDefaultAsync(m => m.FileDataTypeId == id);
-            if (fileDataType == null)
+            var fileDataTypeGroup = await _context.FileDataTypeGroups
+                .SingleOrDefaultAsync(m => m.FileDataTypeGroupId == id);
+            if (fileDataTypeGroup == null)
             {
                 return NotFound();
             }
 
-            return View(fileDataType);
+            return View(fileDataTypeGroup);
         }
 
-        // GET: FileDataTypes/Create
+        // GET: FileDataTypeGroups/Create
         public IActionResult Create()
         {
-            ViewData["FileDataTypeGroupId"] = new SelectList(_context.FileDataTypeGroups, "FileDataTypeGroupId", "FileDataTypeGroupId");
             return View();
         }
 
-        // POST: FileDataTypes/Create
+        // POST: FileDataTypeGroups/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FileDataTypeId,FileDataTypeName,FileDataTypeGroupId")] FileDataType fileDataType)
+        public async Task<IActionResult> Create([Bind("FileDataTypeGroupId,FileDataTypeGroupName")] FileDataTypeGroup fileDataTypeGroup)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(fileDataType);
+                _context.Add(fileDataTypeGroup);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FileDataTypeGroupId"] = new SelectList(_context.FileDataTypeGroups, "FileDataTypeGroupId", "FileDataTypeGroupId", fileDataType.FileDataTypeGroupId);
-            return View(fileDataType);
+            return View(fileDataTypeGroup);
         }
 
-        // GET: FileDataTypes/Edit/5
+        // GET: FileDataTypeGroups/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +72,22 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var fileDataType = await _context.FileDataTypes.SingleOrDefaultAsync(m => m.FileDataTypeId == id);
-            if (fileDataType == null)
+            var fileDataTypeGroup = await _context.FileDataTypeGroups.SingleOrDefaultAsync(m => m.FileDataTypeGroupId == id);
+            if (fileDataTypeGroup == null)
             {
                 return NotFound();
             }
-            ViewData["FileDataTypeGroupId"] = new SelectList(_context.FileDataTypeGroups, "FileDataTypeGroupId", "FileDataTypeGroupId", fileDataType.FileDataTypeGroupId);
-            return View(fileDataType);
+            return View(fileDataTypeGroup);
         }
 
-        // POST: FileDataTypes/Edit/5
+        // POST: FileDataTypeGroups/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FileDataTypeId,FileDataTypeName,FileDataTypeGroupId")] FileDataType fileDataType)
+        public async Task<IActionResult> Edit(int id, [Bind("FileDataTypeGroupId,FileDataTypeGroupName")] FileDataTypeGroup fileDataTypeGroup)
         {
-            if (id != fileDataType.FileDataTypeId)
+            if (id != fileDataTypeGroup.FileDataTypeGroupId)
             {
                 return NotFound();
             }
@@ -101,12 +96,12 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 try
                 {
-                    _context.Update(fileDataType);
+                    _context.Update(fileDataTypeGroup);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FileDataTypeExists(fileDataType.FileDataTypeId))
+                    if (!FileDataTypeGroupExists(fileDataTypeGroup.FileDataTypeGroupId))
                     {
                         return NotFound();
                     }
@@ -117,11 +112,10 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FileDataTypeGroupId"] = new SelectList(_context.FileDataTypeGroups, "FileDataTypeGroupId", "FileDataTypeGroupId", fileDataType.FileDataTypeGroupId);
-            return View(fileDataType);
+            return View(fileDataTypeGroup);
         }
 
-        // GET: FileDataTypes/Delete/5
+        // GET: FileDataTypeGroups/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,31 +123,30 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var fileDataType = await _context.FileDataTypes
-                .Include(f => f.FileDataTypeGroup)
-                .SingleOrDefaultAsync(m => m.FileDataTypeId == id);
-            if (fileDataType == null)
+            var fileDataTypeGroup = await _context.FileDataTypeGroups
+                .SingleOrDefaultAsync(m => m.FileDataTypeGroupId == id);
+            if (fileDataTypeGroup == null)
             {
                 return NotFound();
             }
 
-            return View(fileDataType);
+            return View(fileDataTypeGroup);
         }
 
-        // POST: FileDataTypes/Delete/5
+        // POST: FileDataTypeGroups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var fileDataType = await _context.FileDataTypes.SingleOrDefaultAsync(m => m.FileDataTypeId == id);
-            _context.FileDataTypes.Remove(fileDataType);
+            var fileDataTypeGroup = await _context.FileDataTypeGroups.SingleOrDefaultAsync(m => m.FileDataTypeGroupId == id);
+            _context.FileDataTypeGroups.Remove(fileDataTypeGroup);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FileDataTypeExists(int id)
+        private bool FileDataTypeGroupExists(int id)
         {
-            return _context.FileDataTypes.Any(e => e.FileDataTypeId == id);
+            return _context.FileDataTypeGroups.Any(e => e.FileDataTypeGroupId == id);
         }
     }
 }

@@ -17,6 +17,12 @@
         <dd>
             @Html.DisplayFor(model => model.FileDataTypeName)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileDataTypeGroup)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileDataTypeGroup.FileDataTypeGroupId)
+        </dd>
     </dl>
     
     <form asp-action="Delete">

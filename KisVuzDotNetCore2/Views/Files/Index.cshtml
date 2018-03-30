@@ -5,12 +5,16 @@
 }
 
 <h2>Файлы</h2>
+<a asp-action="AddFile" class="btn btn-primary">Загрузить файл</a>
 
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Path)
@@ -33,9 +37,12 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.FileName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Path)
             </td>
-            <td>                
+            <td>
                 @String.Format("{0:dd.MM.yyyy}", item.UploadDate)
             </td>
             <td>
@@ -51,5 +58,3 @@
 }
     </tbody>
 </table>
-
-<a asp-action="AddFile" class="btn btn-primary">Загрузить файл</a>
