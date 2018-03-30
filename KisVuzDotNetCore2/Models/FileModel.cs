@@ -23,6 +23,12 @@ namespace KisVuzDotNetCore2.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Имя файла с расширением
+        /// </summary>
+        [Display(Name = "Имя файла")]
+        public string FileName { get; set; }
+
+        /// <summary>
         /// Путь к файлу
         /// </summary>
         [Display(Name = "Путь к файлу")]

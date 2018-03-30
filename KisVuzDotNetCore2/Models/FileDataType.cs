@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -12,11 +13,16 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Наименование типа содержимого файла
         /// </summary>
+        [Display(Name = "Наименование типа содержимого файла")]
         public string FileDataTypeName { get; set; }
 
         /// <summary>
         /// Назначение файлу набора типов данных
         /// </summary>
-        public List<FileToFileType> FileToFileTypes { get; set; }
+        public List<FileToFileType> FileToFileTypes { get; set; } = new List<FileToFileType>();
+
+        public int FileDataTypeGroupId { get; set; }
+        [Display(Name = "Группа типов содержимого")]
+        public FileDataTypeGroup FileDataTypeGroup { get; set; }
     }
 }

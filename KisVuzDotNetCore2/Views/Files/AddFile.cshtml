@@ -2,13 +2,14 @@
 
 @{
     ViewData["Title"] = "Загрузка файла";
+    List<FileDataTypeGroup> fileDataTypeGroups = (List<FileDataTypeGroup>)ViewData["FileDataTypeGroups"];
     List<FileDataType> fileDataTypes = (List<FileDataType>) ViewData["FileDataTypes"];
 }
 
 <h2>Загрузка файла</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div >
         <form asp-action="AddFile" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -16,20 +17,33 @@
                 <input type="file" name="uploadedFile" class="form-control" />
             </div>
             <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <table class="table">
+                @foreach (var fileDataTypeGroup in fileDataTypeGroups)
+                 {
+                    <tr class="well">
+                        <td colspan="2"><strong>@fileDataTypeGroup.FileDataTypeGroupName</strong></td>
+                    </tr>
+                    @foreach (var fileDataType in fileDataTypes.Where(f=>f.FileDataTypeGroupId== fileDataTypeGroup.FileDataTypeGroupId))
+                    {
+                        <tr>
+                            <td>@fileDataType.FileDataTypeName</td>
+                            <td>
+                                <input type="checkbox" name="SelectedFileDataTypeIds" value="@fileDataType.FileDataTypeId" />
+                            </td>
+                        </tr>
+                     }
+                }
+            </table>
+
+            <div class="form-group">
                 <input type="submit" value="Загрузить файл" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
-            <table class="table">
-                @foreach (var fileDataType in fileDataTypes)
-                {
-                    <tr>
-                        <td>@fileDataType.FileDataTypeName</td>
-                        <td>
-                            <input type="checkbox" name="SelectedFileDataTypeIds" value="@fileDataType.FileDataTypeId" />
-                        </td>
-                    </tr>                
-                }
-             </table>
         </form>
     </div>
 </div>

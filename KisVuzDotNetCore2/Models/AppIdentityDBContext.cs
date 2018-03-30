@@ -11,15 +11,20 @@ using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Models
 {
+    /// <summary>
+    /// Класс контекста БД
+    /// </summary>
     public class AppIdentityDBContext : IdentityDbContext<AppUser>
     {
+        #region Конструктор
         public AppIdentityDBContext(DbContextOptions<AppIdentityDBContext> options) : base (options)
         {
             
         }
-
+        #endregion
         #region Таблицы
-        //////////////////// Education ////////////////////
+
+        #region Образовательная деятельность (Education)
         /// <summary>
         /// Уровни образования
         /// </summary>
@@ -59,9 +64,9 @@ namespace KisVuzDotNetCore2.Models
         /// Формы обучения
         /// </summary>
         public DbSet<EduForm> EduForms { get; set; }
+        #endregion
 
-
-        //////////// Struct /////////////
+        #region Структура образовательной организации (Struct)
 
         /// <summary>
         /// Университеты
@@ -92,17 +97,14 @@ namespace KisVuzDotNetCore2.Models
         /// Типы структурных подразделений
         /// </summary>
         public DbSet<StructSubvisionType> StructSubvisionTypes { get; set; }
-
+        #endregion
+                
+        #region Общие справочники (должности, адреса, телефоны, факсы и пр.)
         /// <summary>
         /// Справочник должностей
         /// </summary>
         public DbSet<Post> Posts { get; set; }
 
-
-
-
-
-        ///////////////////////////////////
         /// <summary>
         /// Адреса
         /// </summary>
@@ -122,19 +124,13 @@ namespace KisVuzDotNetCore2.Models
         /// Адреса электронной почты
         /// </summary>
         public DbSet<Email> Emails { get; set; }
+        #endregion
 
-        ////////// Сведения об образовательной организации ////////
+        #region Сведения об образовательной организации               
 
-        /// <summary>
-        /// Сведения об образовательной организации.
-        /// Структура и органы управления образовательной организацией
-        /// </summary>
-        public DbSet<StructOrgUprav> StructOrgUprav { get; set; }
+        #endregion
 
-
-
-        ////////////////////////////////////////////////////////////
-
+        #region Файлы
         /// <summary>
         /// Файлы
         /// </summary>
@@ -150,6 +146,12 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<FileToFileType> FileToFileTypes { get; set; }
 
+        /// <summary>
+        /// Группы типов содержимого файлов
+        /// </summary>
+        public DbSet<FileDataTypeGroup> FileDataTypeGroups { get; set; }
+        #endregion
+        
         #endregion
 
         /// <summary>
@@ -1625,18 +1627,50 @@ namespace KisVuzDotNetCore2.Models
             {
                 AppIdentityDBContext context = serviceScope.ServiceProvider.GetService<AppIdentityDBContext>();
 
+                #region Инициализация таблицы "Группы типов содержимого файла"
+                if (!await context.FileDataTypeGroups.AnyAsync())
+                {                    
+                    FileDataTypeGroup fileDataTypeGroup1 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = 1,
+                        FileDataTypeGroupName = "Положения"
+                    };
+
+                    FileDataTypeGroup fileDataTypeGroup2 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = 2,
+                        FileDataTypeGroupName = "Локальные нормативные акты, предусмотренные частью 2 статьи 30 федерального закона \"Об образовании в РФ\""
+                    };
+
+                    await context.FileDataTypeGroups.AddRangeAsync(
+                        fileDataTypeGroup1,
+                        fileDataTypeGroup2
+                        );
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
                 #region Инициализация таблицы "Типы содержимого файла"
                 if (!await context.FileDataTypes.AnyAsync())
                 {
                     FileDataType fileDataType1 = new FileDataType
                     {
                         FileDataTypeId=1,
-                        FileDataTypeName="Положения о структурных подразделениях"
+                        FileDataTypeName="Положения о структурных подразделениях",
+                        FileDataTypeGroupId=1
                     };
-                                        
+
+                    FileDataType fileDataType2 = new FileDataType
+                    {
+                        FileDataTypeId = 2,
+                        FileDataTypeName = "Положения об образовательной деятельности",
+                        FileDataTypeGroupId = 1
+                    };
+
 
                     await context.FileDataTypes.AddRangeAsync(
-                        fileDataType1
+                        fileDataType1,
+                        fileDataType2
                         );
                     await context.SaveChangesAsync();
                 }

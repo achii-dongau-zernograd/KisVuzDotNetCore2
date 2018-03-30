@@ -82,10 +82,16 @@
     <Compile Remove="Migrations\20180329102454_qwqw.Designer.cs" />
     <Compile Remove="Migrations\20180329104714_init.cs" />
     <Compile Remove="Migrations\20180329104714_init.Designer.cs" />
+    <Compile Remove="Migrations\20180329112655_init.cs" />
+    <Compile Remove="Migrations\20180329112655_init.Designer.cs" />
     <Compile Remove="Migrations\20180329171849_FileDataTypes.cs" />
     <Compile Remove="Migrations\20180329171849_FileDataTypes.Designer.cs" />
     <Compile Remove="Migrations\20180329172145_FileDataTypes.cs" />
     <Compile Remove="Migrations\20180329172145_FileDataTypes.Designer.cs" />
+    <Compile Remove="Migrations\20180329173037_FileDataTypes.cs" />
+    <Compile Remove="Migrations\20180329173037_FileDataTypes.Designer.cs" />
+    <Compile Remove="Migrations\20180330073816_init.cs" />
+    <Compile Remove="Migrations\20180330073816_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -108,6 +114,10 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
 	<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Sveden\" />
   </ItemGroup>
 
 </Project>
