@@ -1,41 +1,77 @@
-﻿@model IEnumerable<KisVuzDotNetCore2.Models.FileDataType>
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.FileDataTypeGroup>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Типы содержимого файлов";
 }
 
-<h2>Index</h2>
+<h2>Типы содержимого файлов</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Создать</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FileDataTypeName)
-                </th>
             <th>
-                @Html.DisplayNameFor(model => model.FileDataTypeGroup)
+                Наименование типа содержимого файлов
+            </th>
+            <th>
+                Действия
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FileDataTypeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FileDataTypeGroup.FileDataTypeGroupId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.FileDataTypeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FileDataTypeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FileDataTypeId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var group in Model)
+        {
+            <tr>
+                <td colspan="2" class="well">@group.FileDataTypeGroupName</td>
+            </tr>
+            @foreach (var fileDataType in group.FileDataTypes)
+            {
+                <tr>
+                    <td>
+                        @fileDataType.FileDataTypeName
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@fileDataType.FileDataTypeId">Редактировать</a> |
+                        <a asp-action="Details" asp-route-id="@fileDataType.FileDataTypeId">Подробнее</a> |
+                        <a asp-action="Delete" asp-route-id="@fileDataType.FileDataTypeId"><span class="text-danger"><span class="glyphicon glyphicon-remove"></span>Удалить</span></a>
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>
+
+@*<table class="table">
+        <thead>
+            <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FileDataTypeName)
+                    </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FileDataTypeGroup)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileDataTypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileDataTypeGroup.FileDataTypeGroupId)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.FileDataTypeId">Редактировать</a> |
+                    <a asp-action="Details" asp-route-id="@item.FileDataTypeId">Подробнее</a> |
+                    <a asp-action="Delete" asp-route-id="@item.FileDataTypeId">Удалить</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@

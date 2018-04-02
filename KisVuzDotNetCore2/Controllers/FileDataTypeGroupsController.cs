@@ -33,6 +33,7 @@ namespace KisVuzDotNetCore2.Controllers
             }
 
             var fileDataTypeGroup = await _context.FileDataTypeGroups
+                .Include(g=>g.FileDataTypes)
                 .SingleOrDefaultAsync(m => m.FileDataTypeGroupId == id);
             if (fileDataTypeGroup == null)
             {

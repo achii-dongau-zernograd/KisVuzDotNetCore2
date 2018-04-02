@@ -1,14 +1,13 @@
 ﻿@model KisVuzDotNetCore2.Models.FileDataTypeGroup
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Удаление группы типов содержимого файлов";
 }
 
-<h2>Delete</h2>
+<h2>Удаление группы типов содержимого файлов</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>FileDataTypeGroup</h4>
+<h3>Вы действительно хотите удалить выбранный элемент?</h3>
+<div>    
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -21,7 +20,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="FileDataTypeGroupId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
     </form>
 </div>

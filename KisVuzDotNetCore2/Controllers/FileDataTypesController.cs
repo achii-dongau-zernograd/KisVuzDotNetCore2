@@ -21,8 +21,10 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: FileDataTypes
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.FileDataTypes.Include(f => f.FileDataTypeGroup);
-            return View(await appIdentityDBContext.ToListAsync());
+            //var appIdentityDBContext = _context.FileDataTypes.Include(f => f.FileDataTypeGroup);
+            //return View(await appIdentityDBContext.ToListAsync());
+            var fileDataTypeGroups = await _context.FileDataTypeGroups.Include(g => g.FileDataTypes).ToListAsync();
+            return View(fileDataTypeGroups);
         }
 
         // GET: FileDataTypes/Details/5

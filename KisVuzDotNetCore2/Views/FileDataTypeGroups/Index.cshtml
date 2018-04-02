@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.FileDataTypeGroup>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Группы типов содержимого файлов";
 }
 
-<h2>Index</h2>
+<h2>Группы типов содержимого файлов</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Создать</a>
 </p>
 <table class="table">
     <thead>
@@ -25,9 +25,9 @@
                 @Html.DisplayFor(modelItem => item.FileDataTypeGroupName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FileDataTypeGroupId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FileDataTypeGroupId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FileDataTypeGroupId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.FileDataTypeGroupId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.FileDataTypeGroupId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.FileDataTypeGroupId">Удалить</a>
             </td>
         </tr>
 }

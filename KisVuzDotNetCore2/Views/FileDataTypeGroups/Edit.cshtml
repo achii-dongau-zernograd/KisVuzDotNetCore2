@@ -1,12 +1,12 @@
 ﻿@model KisVuzDotNetCore2.Models.FileDataTypeGroup
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактирование группы типов содержимого файлов";
 }
 
-<h2>Edit</h2>
+<h2>Редактирование</h2>
 
-<h4>FileDataTypeGroup</h4>
+<h4>Группа типов содержимого файлов</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,14 +19,11 @@
                 <span asp-validation-for="FileDataTypeGroupName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
