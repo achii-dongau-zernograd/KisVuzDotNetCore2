@@ -35,7 +35,7 @@
                             @structSubvision.StructSubvisionFioChief
                         </td>
                         <td itemprop="post">
-                            @structSubvision.StructSubvisionPostChief
+                            @structSubvision.StructSubvisionPostChief.PostName
                         </td>
                         <td itemprop="addressStr">
                             @structSubvision.StructSubvisionAdress?.GetAddress
@@ -47,10 +47,13 @@
                             @structSubvision.StructSubvisionEmail?.EmailValue
                         </td>
                         <td itemprop="divisionClauseDocLink">
-                            <a href="@structSubvision.StructStandingOrder?.Path">@structSubvision.StructStandingOrder?.Path</a>
+                            @if(structSubvision.StructStandingOrderId!=null)
+                            { 
+                                <a asp-controller="Files" asp-action="GetFile" asp-route-id="@structSubvision.StructStandingOrderId">Скачать</a>
+                            }
                         </td>
                      </tr>
-                 }
+                }
              }
         </tbody>
 </table>

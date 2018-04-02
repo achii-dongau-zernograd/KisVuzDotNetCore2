@@ -92,6 +92,16 @@
     <Compile Remove="Migrations\20180329173037_FileDataTypes.Designer.cs" />
     <Compile Remove="Migrations\20180330073816_init.cs" />
     <Compile Remove="Migrations\20180330073816_init.Designer.cs" />
+    <Compile Remove="Migrations\20180330080921_init.cs" />
+    <Compile Remove="Migrations\20180330080921_init.Designer.cs" />
+    <Compile Remove="Migrations\20180402162448_sdf.cs" />
+    <Compile Remove="Migrations\20180402162448_sdf.Designer.cs" />
+    <Compile Remove="Migrations\20180402162556_wew.cs" />
+    <Compile Remove="Migrations\20180402162556_wew.Designer.cs" />
+    <Compile Remove="Migrations\20180402163926_StructStandingOrderId.cs" />
+    <Compile Remove="Migrations\20180402163926_StructStandingOrderId.Designer.cs" />
+    <Compile Remove="Migrations\20180402164141_init.cs" />
+    <Compile Remove="Migrations\20180402164141_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

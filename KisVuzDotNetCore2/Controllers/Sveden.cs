@@ -75,6 +75,7 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(a => a.StructSubvisionEmail)
                 .Include(a => a.StructStandingOrder)
                 .Include(a => a.StructSubvisionType)
+                .Include(a => a.StructSubvisionPostChief)
                 .ToListAsync();
             ViewData["StructSubvisions"] = structSubvisions;
             ViewData["StructSubvisionTypes"] = structSubvisionTypes;

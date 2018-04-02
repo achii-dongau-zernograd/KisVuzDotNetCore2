@@ -52,23 +52,21 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// Адрес электронной почты структурного подразделения
         /// </summary>
         [Display(Name = "Адрес электронной почты структурного подразделения")]
-        public Email StructSubvisionEmail { get; set; }        
+        public Email StructSubvisionEmail { get; set; }
+        public int? StructSubvisionEmailId { get; set; }
 
         /// <summary>
         /// Положение о структурном подразделении
         /// </summary>
         [Display(Name = "Положение о структурном подразделении")]
         public FileModel StructStandingOrder { get; set; }
+        public int? StructStandingOrderId { get; set; }
 
         /// <summary>
         /// Тип структурного подразделения
         /// </summary>
         [Display(Name = "Тип структурного подразделения")]
-        public StructSubvisionType StructSubvisionType { get; set; }
-
-        /// <summary>
-        /// УИД типа структурного подразделения
-        /// </summary>
+        public StructSubvisionType StructSubvisionType { get; set; }        
         public int StructSubvisionTypeId { get; set; }
     }
 }

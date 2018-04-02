@@ -541,7 +541,7 @@ namespace KisVuzDotNetCore2.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     StructStandingOrderId = table.Column<int>(nullable: true),
                     StructSubvisionAdressId = table.Column<int>(nullable: false),
-                    StructSubvisionEmailEmailId = table.Column<int>(nullable: true),
+                    StructSubvisionEmailId = table.Column<int>(nullable: true),
                     StructSubvisionFioChief = table.Column<string>(nullable: true),
                     StructSubvisionName = table.Column<string>(nullable: true),
                     StructSubvisionPostChiefId = table.Column<int>(nullable: false),
@@ -564,8 +564,8 @@ namespace KisVuzDotNetCore2.Migrations
                         principalColumn: "AddressId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StructSubvisions_Emails_StructSubvisionEmailEmailId",
-                        column: x => x.StructSubvisionEmailEmailId,
+                        name: "FK_StructSubvisions_Emails_StructSubvisionEmailId",
+                        column: x => x.StructSubvisionEmailId,
                         principalTable: "Emails",
                         principalColumn: "EmailId",
                         onDelete: ReferentialAction.Restrict);
@@ -835,9 +835,9 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "StructSubvisionAdressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StructSubvisions_StructSubvisionEmailEmailId",
+                name: "IX_StructSubvisions_StructSubvisionEmailId",
                 table: "StructSubvisions",
-                column: "StructSubvisionEmailEmailId");
+                column: "StructSubvisionEmailId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StructSubvisions_StructSubvisionPostChiefId",

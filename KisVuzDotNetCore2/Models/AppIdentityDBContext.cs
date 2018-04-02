@@ -1689,7 +1689,7 @@ namespace KisVuzDotNetCore2.Models
                         StructSubvisionPostChiefId = 6,
                         StructSubvisionAdressId = 2,
                         StructSubvisionSite = "",
-                        //StructSubvisionEmail = new Email { EmailValue = "achgaa@itog.biz", EmailComment = "Энергетический факультет" },
+                        //StructSubvisionEmail = new Email { EmailValue = "", EmailComment = "Энергетический факультет" },
                         StructSubvisionTypeId = 3
                     };
 
@@ -1725,7 +1725,7 @@ namespace KisVuzDotNetCore2.Models
                         StructSubvisionPostChiefId = 5,
                         StructSubvisionAdressId = 2,
                         StructSubvisionSite = "",
-                        //StructSubvisionEmail = new Email { EmailValue = "itius@achgaa.ru", EmailComment = "Кафедра \"Техносферная безопасность и физика\"" },
+                        //StructSubvisionEmail = new Email { EmailValue = "", EmailComment = "Кафедра \"Техносферная безопасность и физика\"" },
                         StructSubvisionTypeId = 4
                     };
 
@@ -1797,7 +1797,7 @@ namespace KisVuzDotNetCore2.Models
                         StructSubvisionPostChiefId = 5,
                         StructSubvisionAdressId = 2,
                         StructSubvisionSite = "",
-                        //StructSubvisionEmail = new Email { EmailValue = "kppiinjz@achgaa.ru", EmailComment = "Кафедра \"Землеустройство и кадастры\"" },
+                        //StructSubvisionEmail = new Email { EmailValue = "", EmailComment = "Кафедра \"Землеустройство и кадастры\"" },
                         StructSubvisionTypeId = 4
                     };
 
@@ -1833,7 +1833,7 @@ namespace KisVuzDotNetCore2.Models
                         StructSubvisionPostChiefId = 5,
                         StructSubvisionAdressId = 5,
                         StructSubvisionSite = "",
-                        //StructSubvisionEmail = new Email { EmailValue = "tr@achgaa.ru", EmailComment = "Кафедра \"Высшая математика и механика\"" },
+                        //StructSubvisionEmail = new Email { EmailValue = "", EmailComment = "Кафедра \"Высшая математика и механика\"" },
                         StructSubvisionTypeId = 4
                     };
 
@@ -1869,7 +1869,7 @@ namespace KisVuzDotNetCore2.Models
                         StructSubvisionPostChiefId = 5,
                         StructSubvisionAdressId = 7,
                         StructSubvisionSite = "",
-                        //StructSubvisionEmail = new Email { EmailValue = "mtppshp@achgaa.ru", EmailComment = "Кафедра \"Тракторы и автомобили\"" },
+                        //StructSubvisionEmail = new Email { EmailValue = "", EmailComment = "Кафедра \"Тракторы и автомобили\"" },
                         StructSubvisionTypeId = 4
                     };
 
@@ -1881,7 +1881,7 @@ namespace KisVuzDotNetCore2.Models
                         StructSubvisionPostChiefId = 5,
                         StructSubvisionAdressId = 5,
                         StructSubvisionSite = "",
-                        //StructSubvisionEmail = new Email { EmailValue = "mtppshp@achgaa.ru", EmailComment = "Кафедра \"Эксплуатация автомобилей и технологии транспортных процессов\"" },
+                        //StructSubvisionEmail = new Email { EmailValue = "", EmailComment = "Кафедра \"Эксплуатация автомобилей и технологии транспортных процессов\"" },
                         StructSubvisionTypeId = 4
                     };
 

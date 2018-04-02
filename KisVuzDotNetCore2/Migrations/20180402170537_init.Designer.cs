@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180330080921_init")]
+    [Migration("20180402170537_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -430,7 +430,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("StructSubvisionAdressId");
 
-                    b.Property<int?>("StructSubvisionEmailEmailId");
+                    b.Property<int?>("StructSubvisionEmailId");
 
                     b.Property<string>("StructSubvisionFioChief");
 
@@ -448,7 +448,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasIndex("StructSubvisionAdressId");
 
-                    b.HasIndex("StructSubvisionEmailEmailId");
+                    b.HasIndex("StructSubvisionEmailId");
 
                     b.HasIndex("StructSubvisionPostChiefId");
 
@@ -625,7 +625,7 @@ namespace KisVuzDotNetCore2.Migrations
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduNapravl", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduUgs", "EduUgs")
-                        .WithMany()
+                        .WithMany("EduNapravls")
                         .HasForeignKey("EduUgsId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -659,7 +659,7 @@ namespace KisVuzDotNetCore2.Migrations
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProfile", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
-                        .WithMany()
+                        .WithMany("EduProfiles")
                         .HasForeignKey("EduNapravlId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -667,7 +667,7 @@ namespace KisVuzDotNetCore2.Migrations
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduUgs", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduLevel", "EduLevel")
-                        .WithMany()
+                        .WithMany("EduUgses")
                         .HasForeignKey("EduLevelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -767,7 +767,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.Email", "StructSubvisionEmail")
                         .WithMany()
-                        .HasForeignKey("StructSubvisionEmailEmailId");
+                        .HasForeignKey("StructSubvisionEmailId");
 
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.Post", "StructSubvisionPostChief")
                         .WithMany()
