@@ -49,8 +49,8 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: StructFacultets/Create
         public IActionResult Create()
         {
-            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteId");
-            ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionId");
+            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteName");
+            ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionName");
             return View();
         }
 
