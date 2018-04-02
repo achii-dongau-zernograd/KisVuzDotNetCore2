@@ -48,11 +48,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ContentType)
             </td>
-            <td>
-                <a asp-action="GetFile" asp-route-id="@item.Id">Открыть</a> |
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="RemoveFile" asp-route-id="@item.Id">Удалить</a>
+            <td>                
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Выбрать действие <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a asp-action="GetFile" asp-route-id="@item.Id"><span class="glyphicon glyphicon-download"></span> Скачать</a></li>
+                        <li><a asp-action="Edit" asp-route-id="@item.Id"><span class="glyphicon glyphicon-pencil"></span> Редактировать</a></li>
+                        <li><a asp-action="Details" asp-route-id="@item.Id"><span class="glyphicon glyphicon-list-alt"></span> Подробнее</a></li>
+                        <li class="divider"></li>
+                        <li><a asp-action="RemoveFile" asp-route-id="@item.Id"><span class="text-danger"><span class="glyphicon glyphicon-remove"></span> Удалить</span></a></li>
+                    </ul>
+                </div>
             </td>
         </tr>
 }

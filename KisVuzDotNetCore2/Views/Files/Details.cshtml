@@ -1,13 +1,12 @@
 ﻿@model KisVuzDotNetCore2.Models.FileModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Подробные сведения о файле";
 }
 
-<h2>Details</h2>
+<h2>Подробные сведения о файле</h2>
 
-<div>
-    <h4>FileModel</h4>
+<div>    
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -49,6 +48,6 @@
 }
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Редактировать</a>
+    <a asp-action="Index" class="btn btn-default">К списку файлов</a>
 </div>
