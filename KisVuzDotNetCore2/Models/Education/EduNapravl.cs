@@ -51,6 +51,6 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <summary>
         /// Профили подготовки (направленности, специализации)
         /// </summary>
-        public List<EduProfile> EduProfiles = new List<EduProfile>();
+        public List<EduProfile> EduProfiles { get; set; }
     }
 }

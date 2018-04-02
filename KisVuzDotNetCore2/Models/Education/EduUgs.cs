@@ -42,7 +42,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <summary>
         /// Направления подготовки / специальности
         /// </summary>
-        public List<EduNapravl> EduNapravls = new List<EduNapravl>();
+        public List<EduNapravl> EduNapravls { get; set; }
 
         public string EduUgsFullName
         {

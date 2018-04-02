@@ -26,6 +26,6 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <summary>
         /// Список УГС
         /// </summary>        
-        public List<EduUgs> EduUgses = new List<EduUgs>();
+        public List<EduUgs> EduUgses { get; set; }
     }    
 }

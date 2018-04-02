@@ -4,11 +4,16 @@
     ViewData["Title"] = "Направления";
 }
 
-<h2>Направления</h2>
+<h2>Основные сведения по УГС</h2>
 
 <div>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduLevel.EduLevelName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduLevel.EduLevelName)
         <dt>
             @Html.DisplayNameFor(model => model.EduUgsCode)
         </dt>
@@ -21,11 +26,18 @@
         <dd>
             @Html.DisplayFor(model => model.EduUgsName)
         </dd>
+
+        </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EduLevel.EduLevelName)
+            Направления
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduLevel.EduLevelName)
+            @foreach (var item in Model.EduNapravls)
+        {
+
+            @item.EduNapravCode <text> - </text> @item.EduNapravName
+            <br>
+    }
         </dd>
     </dl>
 </div>

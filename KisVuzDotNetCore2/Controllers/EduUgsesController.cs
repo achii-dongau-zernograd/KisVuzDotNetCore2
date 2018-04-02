@@ -50,6 +50,7 @@ namespace KisVuzDotNetCore2.Controllers
 
             var eduUgs = await _context.EduUgses
                 .Include(e => e.EduLevel)
+                .Include(e => e.EduNapravls)
                 .SingleOrDefaultAsync(m => m.EduUgsId == id);
             if (eduUgs == null)
             {

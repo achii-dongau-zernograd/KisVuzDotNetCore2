@@ -1,4 +1,4 @@
-﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduProfile>
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduLevel>
 
 @{
     ViewData["Title"] = "Профиль подготовки / направленность / специализация";
@@ -9,33 +9,49 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.EduProfileName)
-                </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EduNapravl.EduNapravName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduProfileName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EduProfileId">Редактировать</a> |
-                <a asp-action="Details" asp-route-id="@item.EduProfileId">Подробнее</a> |
-                <a asp-action="Delete" asp-route-id="@item.EduProfileId">Удалить</a>
-            </td>
-        </tr>
+
+@foreach (var level in Model)
+{
+    <a href="#spoiler-@level.EduLevelId" data-toggle="collapse" class="btn btn-primary btn-block">
+        <h3>@level.EduLevelName</h3>
+    </a>
+    <div class="collapse" id="spoiler-@level.EduLevelId">
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <th>
+                        Профиль подготовки / направленность / специализация
+                    </th>
+                    <th>
+                        Действия
+                    </th>
+                </tr>
+                @foreach (var ugs in level.EduUgses)
+                {
+                    foreach (var napravl in ugs.EduNapravls)
+                    {
+                        <tr>
+                            <td colspan="2" class="well text-center text-info">@Html.DisplayFor(modelNapravl => napravl.EduNapravCode) - @Html.DisplayFor(modelNapravl => napravl.EduNapravName)</td>
+                        </tr>
+                        foreach (var profile in napravl.EduProfiles)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelProfile => profile.EduProfileName)
+                            </td>
+
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@level.EduLevelId">Редактировать</a> |
+                                <a asp-action="Details" asp-route-id="@level.EduLevelId">Подробнее</a> |
+                                <a asp-action="Delete" asp-route-id="@level.EduLevelId">Удалить</a>
+                            </td>
+
+                        </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>        
+    </div>
 }
-    </tbody>
-</table>
+

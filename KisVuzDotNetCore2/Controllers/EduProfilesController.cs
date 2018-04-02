@@ -22,8 +22,11 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: EduProfiles
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.EduProfiles.Include(e => e.EduNapravl);
-            return View(await appIdentityDBContext.ToListAsync());
+            //var appIdentityDBContext = _context.EduProfiles.Include(e => e.EduNapravl);            
+            //return View(await appIdentityDBContext.ToListAsync());
+            var allProfiles = await _context.EduLevels.Include(a => a.EduUgses).ThenInclude(u => u.EduNapravls).ThenInclude(n => n.EduProfiles).ToListAsync();
+            
+            return View(allProfiles);
         }
 
         // GET: EduProfiles/Details/5

@@ -834,8 +834,339 @@ namespace KisVuzDotNetCore2.Models
                 }
                 #endregion
 
-                #region Инициализация таблицы "Формы обучения"
-                if (!await context.EduForms.AnyAsync())
+                #region Инициализация таблицы "Профиль подготовки / направленность / специализация"
+                if (!await context.EduProfiles.AnyAsync())
+                {
+                    #region Направленность ВО-бакалавриат
+                    EduProfile eduProfile130301 =
+                        new EduProfile
+                        {
+                            EduProfileId = 1,
+                            EduProfileName = "Энергообеспечение предприятий",
+                            EduNapravlId = 7
+                        };
+
+                    EduProfile eduProfile130302 =
+                        new EduProfile
+                        {
+                            EduProfileId = 2,
+                            EduProfileName = "Электроснабжение",
+                            EduNapravlId = 8
+                        };
+
+                    EduProfile eduProfile190302_1 =
+                        new EduProfile
+                        {
+                            EduProfileId = 3,
+                            EduProfileName = "Технология хранения и переработки зерна",
+                            EduNapravlId = 9
+                        };
+
+                    EduProfile eduProfile190302_2 =
+                        new EduProfile
+                        {
+                            EduProfileId = 4,
+                            EduProfileName = "Технология продуктов общественного питания",
+                            EduNapravlId = 9
+                        };
+
+                    EduProfile eduProfile200301 =
+                        new EduProfile
+                        {
+                            EduProfileId = 5,
+                            EduProfileName = "Безопасность технологических процессов и производств",
+                            EduNapravlId = 10
+                        };
+
+                    EduProfile eduProfile210302 =
+                        new EduProfile
+                        {
+                            EduProfileId = 6,
+                            EduProfileName = "Эемлеустройство",
+                            EduNapravlId = 11
+                        };
+
+                    EduProfile eduProfile230301_1 =
+                        new EduProfile
+                        {
+                            EduProfileId = 7,
+                            EduProfileName = "Организация перевозок и управления на автомобильном транспорте",
+                            EduNapravlId = 12
+                        };
+
+                    EduProfile eduProfile230301_2 =
+                        new EduProfile
+                        {
+                            EduProfileId = 8,
+                            EduProfileName = "Транспортная логистика",
+                            EduNapravlId = 12
+                        };
+
+                    EduProfile eduProfile230303_1 =
+                        new EduProfile
+                        {
+                            EduProfileId = 9,
+                            EduProfileName = "Автомобили и автомобильное хозяйство",
+                            EduNapravlId = 13
+                        };
+
+                    EduProfile eduProfile230303_2 =
+                        new EduProfile
+                        {
+                            EduProfileId = 10,
+                            EduProfileName = "Автомобильный сервис",
+                            EduNapravlId = 13
+                        };
+
+                    EduProfile eduProfile350304 =
+                        new EduProfile
+                        {
+                            EduProfileId = 11,
+                            EduProfileName = "Селекция и генетика сельскохозяйственных культур",
+                            EduNapravlId = 14
+                        };
+
+                    EduProfile eduProfile350306_1 =
+                        new EduProfile
+                        {
+                            EduProfileId = 12,
+                            EduProfileName = "Электрооборудование и электротехнологии",
+                            EduNapravlId = 15
+                        };
+
+                    EduProfile eduProfile350306_2 =
+                        new EduProfile
+                        {
+                            EduProfileId = 13,
+                            EduProfileName = "Техническая эксплуатация транспортных средств",
+                            EduNapravlId = 15
+                        };
+
+                    EduProfile eduProfile350306_3 =
+                        new EduProfile
+                        {
+                            EduProfileId = 14,
+                            EduProfileName = "Экономика и управление производством",
+                            EduNapravlId = 15
+                        };
+
+                    EduProfile eduProfile350306_4 =
+                        new EduProfile
+                        {
+                            EduProfileId = 15,
+                            EduProfileName = "Технические системы в агробизнесе",
+                            EduNapravlId = 15
+                        };
+
+                    EduProfile eduProfile350306_5 =
+                        new EduProfile
+                        {
+                            EduProfileId = 16,
+                            EduProfileName = "Технический сервис в АПК",
+                            EduNapravlId = 15
+                        };
+
+                    EduProfile eduProfile350306_6 =
+                        new EduProfile
+                        {
+                            EduProfileId = 17,
+                            EduProfileName = "Технологическое оборудование для хранения и переработки сельскохозяйственной продукции",
+                            EduNapravlId = 15
+                        };
+
+                    EduProfile eduProfile380301 =
+                        new EduProfile
+                        {
+                            EduProfileId = 18,
+                            EduProfileName = "Бухгалтерский учет, анализ и аудит",
+                            EduNapravlId = 16
+                        };
+
+                    EduProfile eduProfile380302 =
+                        new EduProfile
+                        {
+                            EduProfileId = 19,
+                            EduProfileName = "Производственный менеджмент",
+                            EduNapravlId = 17
+                        };
+
+                    EduProfile eduProfile380304 =
+                        new EduProfile
+                        {
+                            EduProfileId = 20,
+                            EduProfileName = "Муниципальное управление",
+                            EduNapravlId = 18
+                        };
+
+                    EduProfile eduProfile440304 =
+                        new EduProfile
+                        {
+                            EduProfileId = 21,
+                            EduProfileName = "Экономика и управление",
+                            EduNapravlId = 19
+                        };
+                    #endregion
+
+                    #region Специализация ВО-специалитет
+                    EduProfile eduProfile230501 =
+                        new EduProfile
+                        {
+                            EduProfileId = 35,
+                            EduProfileName = "Автомобили и тракторы",
+                            EduNapravlId = 28
+                        };
+                    EduProfile eduProfile380501 =
+                        new EduProfile
+                        {
+                            EduProfileId = 22,
+                            EduProfileName = "Экономико-правовое обеспечение экономической безопасности",
+                            EduNapravlId = 29
+                        };
+                    #endregion
+
+                    #region Направленность ВО-магистратура
+                    EduProfile eduProfile130401 =
+                        new EduProfile
+                        {
+                            EduProfileId = 23,
+                            EduProfileName = "Энергообеспечение предприятий",
+                            EduNapravlId = 20
+                        };
+
+                    EduProfile eduProfile130402 =
+                        new EduProfile
+                        {
+                            EduProfileId = 24,
+                            EduProfileName = "Электроснабжение",
+                            EduNapravlId = 21
+                        };
+
+                    EduProfile eduProfile230401_1 =
+                        new EduProfile
+                        {
+                            EduProfileId = 25,
+                            EduProfileName = "Организация перевозок и управления на автомобильном транспорте",
+                            EduNapravlId = 22
+                        };
+
+                    EduProfile eduProfile230401_2 =
+                        new EduProfile
+                        {
+                            EduProfileId = 26,
+                            EduProfileName = "Транспортная логистика",
+                            EduNapravlId = 22
+                        };
+
+                    EduProfile eduProfile230403_1 =
+                        new EduProfile
+                        {
+                            EduProfileId = 27,
+                            EduProfileName = "Автомобили и автомобильное хозяйство",
+                            EduNapravlId = 23
+                        };
+
+                    EduProfile eduProfile230403_2 =
+                        new EduProfile
+                        {
+                            EduProfileId = 28,
+                            EduProfileName = "Автомобильный сервис",
+                            EduNapravlId = 23
+                        };
+
+                    EduProfile eduProfile350404 =
+                        new EduProfile
+                        {
+                            EduProfileId = 29,
+                            EduProfileName = "Селекция, генетика и семеноводство сельскохозяйственных культур",
+                            EduNapravlId = 24
+                        };
+
+                    EduProfile eduProfile350406_1 =
+                        new EduProfile
+                        {
+                            EduProfileId = 30,
+                            EduProfileName = "Технологии и технические средства производства сельскохозяйственной продукции",
+                            EduNapravlId = 25
+                        };
+
+                    EduProfile eduProfile350406_2 =
+                        new EduProfile
+                        {
+                            EduProfileId = 31,
+                            EduProfileName = "Надежность технических средств в агропромышленном комплексе",
+                            EduNapravlId = 25
+                        };
+
+                    EduProfile eduProfile350406_3 =
+                        new EduProfile
+                        {
+                            EduProfileId = 32,
+                            EduProfileName = "Электрооборудование и электротехнологии",
+                            EduNapravlId = 25
+                        };
+                    
+                    EduProfile eduProfile380401 =
+                        new EduProfile
+                        {
+                            EduProfileId = 33,
+                            EduProfileName = "Бухгалтерский учет и налогообложение",
+                            EduNapravlId = 26
+                        };
+
+                    EduProfile eduProfile380402 =
+                        new EduProfile
+                        {
+                            EduProfileId = 34,
+                            EduProfileName = "Стратегический менеджмент",
+                            EduNapravlId = 27
+                        };
+                    #endregion
+
+                    await context.EduProfiles.AddRangeAsync(new EduProfile[] {
+                        eduProfile130301,
+                        eduProfile130302,
+                        eduProfile190302_1,
+                        eduProfile190302_2,
+                        eduProfile200301,
+                        eduProfile210302,
+                        eduProfile230301_1,
+                        eduProfile230301_2,
+                        eduProfile230303_1,
+                        eduProfile230303_2,
+                        eduProfile350304,
+                        eduProfile350306_1,
+                        eduProfile350306_2,
+                        eduProfile350306_3,
+                        eduProfile350306_4,
+                        eduProfile350306_5,
+                        eduProfile350306_6,
+                        eduProfile380301,
+                        eduProfile380302,
+                        eduProfile380304,
+                        eduProfile440304,
+
+                        eduProfile380501,
+                        eduProfile230501,
+
+                        eduProfile130401,
+                        eduProfile130402,
+                        eduProfile230401_1,
+                        eduProfile230401_2,
+                        eduProfile230403_1,
+                        eduProfile230403_2,
+                        eduProfile350404,
+                        eduProfile350406_1,
+                        eduProfile350406_2,
+                        eduProfile350406_3,
+                        eduProfile380401,
+                        eduProfile380402
+                    });
+                    await context.SaveChangesAsync();
+                }
+                    #endregion
+
+                    #region Инициализация таблицы "Формы обучения"
+                    if (!await context.EduForms.AnyAsync())
                 {
                     EduForm eduFormOchn = new EduForm
                     {
