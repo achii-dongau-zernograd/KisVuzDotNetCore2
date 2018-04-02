@@ -1,0 +1,25 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduYearBeginningTraining
+
+@{
+    ViewData["Title"] = "Удалить год начала подготовки";
+}
+
+<h2>Удалить год начала подготовки?</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduYearBeginningTrainingName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduYearBeginningTrainingName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduYearBeginningTrainingId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

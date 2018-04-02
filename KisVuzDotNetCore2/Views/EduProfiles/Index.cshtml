@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduLevel>
 
 @{
-    ViewData["Title"] = "Профиль подготовки / направленность / специализация";
+    ViewData["Title"] = "Профили подготовки / направленности / специализации";
 }
 
-<h2>Профиль подготовки / направленность / специализация</h2>
+<h2>Профили подготовки / направленности / специализации</h2>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Добавить</a>
@@ -13,28 +13,29 @@
 @foreach (var level in Model)
 {
     <a href="#spoiler-@level.EduLevelId" data-toggle="collapse" class="btn btn-primary btn-block">
-        <h3>@level.EduLevelName</h3>
+        @level.EduLevelName
     </a>
     <div class="collapse" id="spoiler-@level.EduLevelId">
-        <table class="table table-hover">
-            <tbody>
-                <tr>
-                    <th>
-                        Профиль подготовки / направленность / специализация
-                    </th>
-                    <th>
-                        Действия
-                    </th>
-                </tr>
-                @foreach (var ugs in level.EduUgses)
+        <div class="well">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>
+                            Профили подготовки / направленности / специализации
+                        </th>
+                        <th>
+                            Действия
+                        </th>
+                    </tr>
+                    @foreach (var ugs in level.EduUgses)
                 {
                     foreach (var napravl in ugs.EduNapravls)
                     {
                         <tr>
                             <td colspan="2" class="well text-center text-info">@Html.DisplayFor(modelNapravl => napravl.EduNapravCode) - @Html.DisplayFor(modelNapravl => napravl.EduNapravName)</td>
                         </tr>
-                        foreach (var profile in napravl.EduProfiles)
-                        {
+                    foreach (var profile in napravl.EduProfiles)
+                    {
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelProfile => profile.EduProfileName)
@@ -47,11 +48,12 @@
                             </td>
 
                         </tr>
-                        }
-                    }
                 }
-            </tbody>
-        </table>        
+            }
+        }
+                </tbody>
+            </table>
+        </div>
     </div>
-}
+        }
 

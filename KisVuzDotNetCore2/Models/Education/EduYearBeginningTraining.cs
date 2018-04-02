@@ -1,4 +1,6 @@
-﻿namespace KisVuzDotNetCore2.Models.Education
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KisVuzDotNetCore2.Models.Education
 {
     // Модель "Год начала подготовки"
     public class EduYearBeginningTraining
@@ -11,6 +13,7 @@
         /// <summary>
         /// Наименование года начала подготовки
         /// </summary>
+        [Display(Name = "Наименование года начала подготовки")]
         public string EduYearBeginningTrainingName { get; set; }
     }
 }

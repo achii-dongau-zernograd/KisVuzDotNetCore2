@@ -834,14 +834,101 @@ namespace KisVuzDotNetCore2.Models
                 }
                 #endregion
 
-                #region Инициализация таблицы "Профиль подготовки / направленность / специализация"
+                #region Инициализация таблицы "Профили подготовки / направленности / специализации"
                 if (!await context.EduProfiles.AnyAsync())
                 {
-                    #region Направленность ВО-бакалавриат
-                    EduProfile eduProfile130301 =
+                    #region Направленности СПО
+                    EduProfile eduProfile080209_9 =
                         new EduProfile
                         {
                             EduProfileId = 1,
+                            EduProfileName = "На базе 9 классов",
+                            EduNapravlId = 1
+                        };
+                    EduProfile eduProfile080209_11 =
+                        new EduProfile
+                        {
+                            EduProfileId = 2,
+                            EduProfileName = "На базе 11 классов",
+                            EduNapravlId = 1
+                        };
+                    EduProfile eduProfile210205_9 =
+                        new EduProfile
+                        {
+                            EduProfileId = 3,
+                            EduProfileName = "На базе 9 классов",
+                            EduNapravlId = 2
+                        };
+                    EduProfile eduProfile210205_11 =
+                        new EduProfile
+                        {
+                            EduProfileId = 4,
+                            EduProfileName = "На базе 11 классов",
+                            EduNapravlId = 2
+                        };
+                    EduProfile eduProfile230203_9 =
+                        new EduProfile
+                        {
+                            EduProfileId = 5,
+                            EduProfileName = "На базе 9 классов",
+                            EduNapravlId = 3
+                        };
+                    EduProfile eduProfile230203_11 =
+                        new EduProfile
+                        {
+                            EduProfileId = 6,
+                            EduProfileName = "На базе 11 классов",
+                            EduNapravlId = 3
+                        };
+                    EduProfile eduProfile350208_9 =
+                        new EduProfile
+                        {
+                            EduProfileId = 7,
+                            EduProfileName = "На базе 9 классов",
+                            EduNapravlId = 4
+                        };
+                    EduProfile eduProfile350208_11 =
+                        new EduProfile
+                        {
+                            EduProfileId = 8,
+                            EduProfileName = "На базе 11 классов",
+                            EduNapravlId = 4
+                        };
+                    EduProfile eduProfile380201_9 =
+                        new EduProfile
+                        {
+                            EduProfileId = 9,
+                            EduProfileName = "На базе 9 классов",
+                            EduNapravlId = 5
+                        };
+                    EduProfile eduProfile380201_11 =
+                        new EduProfile
+                        {
+                            EduProfileId = 10,
+                            EduProfileName = "На базе 11 классов",
+                            EduNapravlId = 5
+                        };
+                    EduProfile eduProfile380204_9 =
+                        new EduProfile
+                        {
+                            EduProfileId = 11,
+                            EduProfileName = "На базе 9 классов",
+                            EduNapravlId = 6
+                        };
+                    EduProfile eduProfile380204_11 =
+                        new EduProfile
+                        {
+                            EduProfileId = 12,
+                            EduProfileName = "На базе 11 классов",
+                            EduNapravlId = 6
+                        };
+                    #endregion
+
+                    #region Профили ВО-бакалавриат
+                    EduProfile eduProfile130301 =
+                        new EduProfile
+                        {
+                            EduProfileId = 13,
                             EduProfileName = "Энергообеспечение предприятий",
                             EduNapravlId = 7
                         };
@@ -849,7 +936,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile130302 =
                         new EduProfile
                         {
-                            EduProfileId = 2,
+                            EduProfileId = 14,
                             EduProfileName = "Электроснабжение",
                             EduNapravlId = 8
                         };
@@ -857,7 +944,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile190302_1 =
                         new EduProfile
                         {
-                            EduProfileId = 3,
+                            EduProfileId = 15,
                             EduProfileName = "Технология хранения и переработки зерна",
                             EduNapravlId = 9
                         };
@@ -865,7 +952,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile190302_2 =
                         new EduProfile
                         {
-                            EduProfileId = 4,
+                            EduProfileId = 16,
                             EduProfileName = "Технология продуктов общественного питания",
                             EduNapravlId = 9
                         };
@@ -873,7 +960,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile200301 =
                         new EduProfile
                         {
-                            EduProfileId = 5,
+                            EduProfileId = 17,
                             EduProfileName = "Безопасность технологических процессов и производств",
                             EduNapravlId = 10
                         };
@@ -881,7 +968,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile210302 =
                         new EduProfile
                         {
-                            EduProfileId = 6,
+                            EduProfileId = 18,
                             EduProfileName = "Эемлеустройство",
                             EduNapravlId = 11
                         };
@@ -889,7 +976,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile230301_1 =
                         new EduProfile
                         {
-                            EduProfileId = 7,
+                            EduProfileId = 19,
                             EduProfileName = "Организация перевозок и управления на автомобильном транспорте",
                             EduNapravlId = 12
                         };
@@ -897,7 +984,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile230301_2 =
                         new EduProfile
                         {
-                            EduProfileId = 8,
+                            EduProfileId = 20,
                             EduProfileName = "Транспортная логистика",
                             EduNapravlId = 12
                         };
@@ -905,7 +992,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile230303_1 =
                         new EduProfile
                         {
-                            EduProfileId = 9,
+                            EduProfileId = 21,
                             EduProfileName = "Автомобили и автомобильное хозяйство",
                             EduNapravlId = 13
                         };
@@ -913,7 +1000,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile230303_2 =
                         new EduProfile
                         {
-                            EduProfileId = 10,
+                            EduProfileId = 22,
                             EduProfileName = "Автомобильный сервис",
                             EduNapravlId = 13
                         };
@@ -921,7 +1008,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile350304 =
                         new EduProfile
                         {
-                            EduProfileId = 11,
+                            EduProfileId = 23,
                             EduProfileName = "Селекция и генетика сельскохозяйственных культур",
                             EduNapravlId = 14
                         };
@@ -929,7 +1016,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile350306_1 =
                         new EduProfile
                         {
-                            EduProfileId = 12,
+                            EduProfileId = 24,
                             EduProfileName = "Электрооборудование и электротехнологии",
                             EduNapravlId = 15
                         };
@@ -937,7 +1024,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile350306_2 =
                         new EduProfile
                         {
-                            EduProfileId = 13,
+                            EduProfileId = 25,
                             EduProfileName = "Техническая эксплуатация транспортных средств",
                             EduNapravlId = 15
                         };
@@ -945,7 +1032,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile350306_3 =
                         new EduProfile
                         {
-                            EduProfileId = 14,
+                            EduProfileId = 26,
                             EduProfileName = "Экономика и управление производством",
                             EduNapravlId = 15
                         };
@@ -953,7 +1040,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile350306_4 =
                         new EduProfile
                         {
-                            EduProfileId = 15,
+                            EduProfileId = 27,
                             EduProfileName = "Технические системы в агробизнесе",
                             EduNapravlId = 15
                         };
@@ -961,7 +1048,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile350306_5 =
                         new EduProfile
                         {
-                            EduProfileId = 16,
+                            EduProfileId = 28,
                             EduProfileName = "Технический сервис в АПК",
                             EduNapravlId = 15
                         };
@@ -969,7 +1056,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile350306_6 =
                         new EduProfile
                         {
-                            EduProfileId = 17,
+                            EduProfileId = 29,
                             EduProfileName = "Технологическое оборудование для хранения и переработки сельскохозяйственной продукции",
                             EduNapravlId = 15
                         };
@@ -977,7 +1064,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile380301 =
                         new EduProfile
                         {
-                            EduProfileId = 18,
+                            EduProfileId = 30,
                             EduProfileName = "Бухгалтерский учет, анализ и аудит",
                             EduNapravlId = 16
                         };
@@ -985,7 +1072,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile380302 =
                         new EduProfile
                         {
-                            EduProfileId = 19,
+                            EduProfileId = 31,
                             EduProfileName = "Производственный менеджмент",
                             EduNapravlId = 17
                         };
@@ -993,7 +1080,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile380304 =
                         new EduProfile
                         {
-                            EduProfileId = 20,
+                            EduProfileId = 32,
                             EduProfileName = "Муниципальное управление",
                             EduNapravlId = 18
                         };
@@ -1001,24 +1088,24 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile440304 =
                         new EduProfile
                         {
-                            EduProfileId = 21,
+                            EduProfileId = 33,
                             EduProfileName = "Экономика и управление",
                             EduNapravlId = 19
                         };
                     #endregion
 
-                    #region Специализация ВО-специалитет
+                    #region Специализации ВО-специалитет
                     EduProfile eduProfile230501 =
                         new EduProfile
                         {
-                            EduProfileId = 35,
+                            EduProfileId = 34,
                             EduProfileName = "Автомобили и тракторы",
                             EduNapravlId = 28
                         };
                     EduProfile eduProfile380501 =
                         new EduProfile
                         {
-                            EduProfileId = 22,
+                            EduProfileId = 35,
                             EduProfileName = "Экономико-правовое обеспечение экономической безопасности",
                             EduNapravlId = 29
                         };
@@ -1028,7 +1115,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile130401 =
                         new EduProfile
                         {
-                            EduProfileId = 23,
+                            EduProfileId = 36,
                             EduProfileName = "Энергообеспечение предприятий",
                             EduNapravlId = 20
                         };
@@ -1036,7 +1123,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile130402 =
                         new EduProfile
                         {
-                            EduProfileId = 24,
+                            EduProfileId = 37,
                             EduProfileName = "Электроснабжение",
                             EduNapravlId = 21
                         };
@@ -1044,7 +1131,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile230401_1 =
                         new EduProfile
                         {
-                            EduProfileId = 25,
+                            EduProfileId = 38,
                             EduProfileName = "Организация перевозок и управления на автомобильном транспорте",
                             EduNapravlId = 22
                         };
@@ -1052,7 +1139,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile230401_2 =
                         new EduProfile
                         {
-                            EduProfileId = 26,
+                            EduProfileId = 39,
                             EduProfileName = "Транспортная логистика",
                             EduNapravlId = 22
                         };
@@ -1060,7 +1147,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile230403_1 =
                         new EduProfile
                         {
-                            EduProfileId = 27,
+                            EduProfileId = 40,
                             EduProfileName = "Автомобили и автомобильное хозяйство",
                             EduNapravlId = 23
                         };
@@ -1068,7 +1155,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile230403_2 =
                         new EduProfile
                         {
-                            EduProfileId = 28,
+                            EduProfileId = 41,
                             EduProfileName = "Автомобильный сервис",
                             EduNapravlId = 23
                         };
@@ -1076,7 +1163,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile350404 =
                         new EduProfile
                         {
-                            EduProfileId = 29,
+                            EduProfileId = 42,
                             EduProfileName = "Селекция, генетика и семеноводство сельскохозяйственных культур",
                             EduNapravlId = 24
                         };
@@ -1084,7 +1171,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile350406_1 =
                         new EduProfile
                         {
-                            EduProfileId = 30,
+                            EduProfileId = 43,
                             EduProfileName = "Технологии и технические средства производства сельскохозяйственной продукции",
                             EduNapravlId = 25
                         };
@@ -1092,7 +1179,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile350406_2 =
                         new EduProfile
                         {
-                            EduProfileId = 31,
+                            EduProfileId = 44,
                             EduProfileName = "Надежность технических средств в агропромышленном комплексе",
                             EduNapravlId = 25
                         };
@@ -1100,7 +1187,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile350406_3 =
                         new EduProfile
                         {
-                            EduProfileId = 32,
+                            EduProfileId = 45,
                             EduProfileName = "Электрооборудование и электротехнологии",
                             EduNapravlId = 25
                         };
@@ -1108,7 +1195,7 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile380401 =
                         new EduProfile
                         {
-                            EduProfileId = 33,
+                            EduProfileId = 46,
                             EduProfileName = "Бухгалтерский учет и налогообложение",
                             EduNapravlId = 26
                         };
@@ -1116,30 +1203,74 @@ namespace KisVuzDotNetCore2.Models
                     EduProfile eduProfile380402 =
                         new EduProfile
                         {
-                            EduProfileId = 34,
+                            EduProfileId = 47,
                             EduProfileName = "Стратегический менеджмент",
                             EduNapravlId = 27
                         };
                     #endregion
 
+                    #region Специализации ВО-подготовка кадров высшей квалификации
+                    EduProfile eduProfile060601 =
+                        new EduProfile
+                        {
+                            EduProfileId = 48,
+                            EduProfileName = "Физиология и биохимия растений",
+                            EduNapravlId = 30
+                        };
+                    EduProfile eduProfile230601 =
+                        new EduProfile
+                        {
+                            EduProfileId = 49,
+                            EduProfileName = "Эксплуатация автомобильного транспорта",
+                            EduNapravlId = 31
+                        };
+                    EduProfile eduProfile350601 =
+                        new EduProfile
+                        {
+                            EduProfileId = 50,
+                            EduProfileName = "Селекция и семеноводство сельскохозяйственных растений",
+                            EduNapravlId = 32
+                        };
+                    EduProfile eduProfile350604_1 =
+                        new EduProfile
+                        {
+                            EduProfileId = 51,
+                            EduProfileName = "Технологии и средства механизации сельского хозяйства",
+                            EduNapravlId = 33
+                        };
+                    EduProfile eduProfile350604_2 =
+                        new EduProfile
+                        {
+                            EduProfileId = 52,
+                            EduProfileName = "Электротехнологии и электрооборудование в сельском хозяйстве",
+                            EduNapravlId = 33
+                        };
+                    EduProfile eduProfile350604_3 =
+                        new EduProfile
+                        {
+                            EduProfileId = 53,
+                            EduProfileName = "Технологии и средства технического обслуживания в сельском хозяйстве",
+                            EduNapravlId = 33
+                        };
+                    #endregion
+
                     await context.EduProfiles.AddRangeAsync(new EduProfile[] {
+                        eduProfile080209_9, eduProfile080209_11,
+                        eduProfile210205_9, eduProfile210205_11,
+                        eduProfile230203_9, eduProfile230203_11,
+                        eduProfile350208_9, eduProfile350208_11,
+                        eduProfile380201_9, eduProfile380201_11,
+                        eduProfile380204_9, eduProfile380204_11,
+
                         eduProfile130301,
                         eduProfile130302,
-                        eduProfile190302_1,
-                        eduProfile190302_2,
+                        eduProfile190302_1, eduProfile190302_2,
                         eduProfile200301,
                         eduProfile210302,
-                        eduProfile230301_1,
-                        eduProfile230301_2,
-                        eduProfile230303_1,
-                        eduProfile230303_2,
+                        eduProfile230301_1, eduProfile230301_2,
+                        eduProfile230303_1, eduProfile230303_2,
                         eduProfile350304,
-                        eduProfile350306_1,
-                        eduProfile350306_2,
-                        eduProfile350306_3,
-                        eduProfile350306_4,
-                        eduProfile350306_5,
-                        eduProfile350306_6,
+                        eduProfile350306_1, eduProfile350306_2, eduProfile350306_3, eduProfile350306_4, eduProfile350306_5, eduProfile350306_6,
                         eduProfile380301,
                         eduProfile380302,
                         eduProfile380304,
@@ -1150,16 +1281,17 @@ namespace KisVuzDotNetCore2.Models
 
                         eduProfile130401,
                         eduProfile130402,
-                        eduProfile230401_1,
-                        eduProfile230401_2,
-                        eduProfile230403_1,
-                        eduProfile230403_2,
+                        eduProfile230401_1, eduProfile230401_2,
+                        eduProfile230403_1, eduProfile230403_2,
                         eduProfile350404,
-                        eduProfile350406_1,
-                        eduProfile350406_2,
-                        eduProfile350406_3,
+                        eduProfile350406_1, eduProfile350406_2, eduProfile350406_3,
                         eduProfile380401,
-                        eduProfile380402
+                        eduProfile380402,
+
+                        eduProfile060601,
+                        eduProfile230601,
+                        eduProfile350601,
+                        eduProfile350604_1, eduProfile350604_2, eduProfile350604_3
                     });
                     await context.SaveChangesAsync();
                 }
