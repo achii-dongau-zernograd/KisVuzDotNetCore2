@@ -19,7 +19,7 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Назначение файлу набора типов данных
         /// </summary>
-        public List<FileToFileType> FileToFileTypes { get; set; } = new List<FileToFileType>();
+        public List<FileToFileType> FileToFileTypes { get; set; }
 
         public int FileDataTypeGroupId { get; set; }
         [Display(Name = "Группа типов содержимого")]

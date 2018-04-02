@@ -29,12 +29,7 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         public async Task<IActionResult> Details(int id)
-        {
-            //List<FileDataTypeGroup> fileDataTypeGroups = _context.FileDataTypeGroups
-            //    .Include(fileDataTypeGroup => fileDataTypeGroup.FileDataTypes)
-            //    .ThenInclude(fileDataType => fileDataType.FileToFileTypes)
-            //    .ToList();
-            //List<FileDataType> fileDataTypes = await _context.FileDataTypes.Include(p => p.FileDataTypeGroup).Include(p => p.FileToFileTypes).ToListAsync();
+        {            
             FileModel file = await _context.Files
                 .Include(f=>f.FileToFileTypes)
                 .ThenInclude(fileTofileType=> fileTofileType.FileDataType)
@@ -148,18 +143,22 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var fileModel = await _context.Files.SingleOrDefaultAsync(m => m.Id == id);
+            var fileModel = await _context.Files.Include(f=>f.FileToFileTypes).SingleOrDefaultAsync(m => m.Id == id);
             if (fileModel == null)
             {
                 return NotFound();
             }
+            List<FileDataTypeGroup> fileDataTypeGroups = await _context.FileDataTypeGroups
+                .Include(group => group.FileDataTypes)
+                .ThenInclude(fileDataType => fileDataType.FileToFileTypes).ToListAsync();
+            ViewData["fileDataTypeGroups"] = fileDataTypeGroups;
             return View(fileModel);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(FileModel fileModel)
+        public async Task<IActionResult> Edit(FileModel fileModel, int[] SelectedFileDataTypeIds)
         {
             if (ModelState.IsValid)
             {
@@ -177,6 +176,21 @@ namespace KisVuzDotNetCore2.Controllers
 
                     _context.Update(file);
                     await _context.SaveChangesAsync();
+
+                    // Удаляем существующие привязки
+                    var privyazki = _context.FileToFileTypes.Where(ftf => ftf.FileModelId == file.Id);
+                    _context.FileToFileTypes.RemoveRange(privyazki);
+
+                    // Добавляем привязку к списку типов файлов
+                    foreach (var selectedFileDataTypeId in SelectedFileDataTypeIds)
+                    {
+                        FileToFileType newElement = new FileToFileType();
+                        newElement.FileDataTypeId = selectedFileDataTypeId;
+                        newElement.FileModelId = fileModel.Id;
+                        _context.FileToFileTypes.Add(newElement);
+                    }
+
+                    _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {                    

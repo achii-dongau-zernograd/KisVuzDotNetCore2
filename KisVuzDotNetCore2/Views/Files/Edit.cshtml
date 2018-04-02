@@ -1,15 +1,16 @@
 ﻿@model KisVuzDotNetCore2.Models.FileModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактирование сведений о файле";
+    List<FileDataTypeGroup> fileDataTypeGroups = (List<FileDataTypeGroup>)ViewData["fileDataTypeGroups"];
 }
 
-<h2>Edit</h2>
+<h2>Редактирование</h2>
 
-<h4>FileModel</h4>
+<h4>Сведения о файле</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -38,15 +39,41 @@
                 <input asp-for="ContentType" class="form-control" />
                 <span asp-validation-for="ContentType" class="text-danger"></span>
             </div>
+            
+            <table class="table">
+            @foreach (var fileDataTypeGroup in fileDataTypeGroups)
+            {                
+                <tr class="well">
+                        <td colspan="2"><strong>@fileDataTypeGroup.FileDataTypeGroupName</strong></td>
+                    </tr>
+                    @foreach (var fileDataType in fileDataTypeGroup.FileDataTypes.Where(f => f.FileDataTypeGroupId == fileDataTypeGroup.FileDataTypeGroupId))
+                    {                        
+                        // Определяем, выбран ли текущий тип файлов
+                        bool IsChecked = fileDataType.FileToFileTypes.Where(ftf => ftf.FileModelId == Model.Id).Any();
+                        
+                        <tr>
+                            <td>@fileDataType.FileDataTypeName</td>
+                            <td>
+                                <input type="checkbox" name="SelectedFileDataTypeIds" value="@fileDataType.FileDataTypeId"
+                                     @{ 
+                                         if(IsChecked)
+                                         {
+                                             @: checked
+                                         }
+                                     }  
+                                       />
+                            </td>
+                        </tr>
+                     }
+            }
+            </table>
+
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
