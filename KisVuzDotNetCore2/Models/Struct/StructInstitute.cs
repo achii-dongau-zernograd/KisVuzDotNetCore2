@@ -31,7 +31,7 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// Адрес
         /// </summary>
         [Display(Name = "Адрес")]
-        public Address Address { get; set; } = new Address();
+        public Address Address { get; set; }
 
         public int AddressId { get; set; }
              

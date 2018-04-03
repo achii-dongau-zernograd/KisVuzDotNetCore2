@@ -59,7 +59,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StructFacultetId,StructInstituteId,StructSubvisionId")] StructFacultet structFacultet)
+        public async Task<IActionResult> Create(StructFacultet structFacultet)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +67,8 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteId", structFacultet.StructInstituteId);
-            ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionId", structFacultet.StructSubvisionId);
+            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteName", structFacultet.StructInstituteId);
+            ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionName", structFacultet.StructSubvisionId);
             return View(structFacultet);
         }
 
@@ -85,8 +85,8 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteId", structFacultet.StructInstituteId);
-            ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionId", structFacultet.StructSubvisionId);
+            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteName", structFacultet.StructInstituteId);
+            ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionName", structFacultet.StructSubvisionId);
             return View(structFacultet);
         }
 

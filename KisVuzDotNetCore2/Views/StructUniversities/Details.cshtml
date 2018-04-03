@@ -1,13 +1,12 @@
 ﻿@model KisVuzDotNetCore2.Models.Struct.StructUniversity
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Основные сведения об университете";
 }
 
-<h2>Details</h2>
+<h2>Основные сведения об университете</h2>
 
-<div>
-    <h4>StructUniversity</h4>
+<div>   
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -44,11 +43,11 @@
             @Html.DisplayNameFor(model => model.Address)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Address.AddressId)
+            @Html.DisplayFor(model => model.Address.GetAddress)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.StructUniversityId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.StructUniversityId" class="btn btn-primary">Редактировать</a> 
+    <a asp-action="Index" class="btn btn-default">Отмена</a>
 </div>

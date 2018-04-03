@@ -49,8 +49,8 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: StructInstitutes/Create
         public IActionResult Create()
         {
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId");
-            ViewData["UniversityId"] = new SelectList(_context.StructUniversities, "StructUniversityId", "StructUniversityId");
+            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress");
+            ViewData["UniversityId"] = new SelectList(_context.StructUniversities, "StructUniversityId", "StructUniversityName");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structInstitute.AddressId);
-            ViewData["UniversityId"] = new SelectList(_context.StructUniversities, "StructUniversityId", "StructUniversityId", structInstitute.UniversityId);
+            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress", structInstitute.AddressId);
+            ViewData["UniversityId"] = new SelectList(_context.StructUniversities, "StructUniversityId", "StructUniversityName", structInstitute.UniversityId);
             return View(structInstitute);
         }
 
@@ -85,8 +85,8 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structInstitute.AddressId);
-            ViewData["UniversityId"] = new SelectList(_context.StructUniversities, "StructUniversityId", "StructUniversityId", structInstitute.UniversityId);
+            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress", structInstitute.AddressId);
+            ViewData["UniversityId"] = new SelectList(_context.StructUniversities, "StructUniversityId", "StructUniversityName", structInstitute.UniversityId);
             return View(structInstitute);
         }
 
@@ -122,8 +122,8 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structInstitute.AddressId);
-            ViewData["UniversityId"] = new SelectList(_context.StructUniversities, "StructUniversityId", "StructUniversityId", structInstitute.UniversityId);
+            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress", structInstitute.AddressId);
+            ViewData["UniversityId"] = new SelectList(_context.StructUniversities, "StructUniversityId", "StructUniversityName", structInstitute.UniversityId);
             return View(structInstitute);
         }
 

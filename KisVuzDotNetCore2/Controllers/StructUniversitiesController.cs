@@ -48,7 +48,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: StructUniversities/Create
         public IActionResult Create()
         {
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId");
+            ViewData["Addresses"] = new SelectList(_context.Addresses, "AddressId", "GetAddress");
             return View();
         }
 
@@ -57,15 +57,15 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StructUniversityId,StructUniversityName,DateOfCreation,AddressId,ExistenceOfFilials,WorkingRegime,WorkingSchedule")] StructUniversity structUniversity)
+        public async Task<IActionResult> Create(StructUniversity structUniversity)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(structUniversity);
+                _context.StructUniversities.Add(structUniversity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structUniversity.AddressId);
+            ViewData["Addresses"] = new SelectList(_context.Addresses, "AddressId", "GetAddress", structUniversity.AddressId);
             return View(structUniversity);
         }
 
@@ -82,7 +82,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structUniversity.AddressId);
+            ViewData["AddressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress", structUniversity.AddressId);
             return View(structUniversity);
         }
 

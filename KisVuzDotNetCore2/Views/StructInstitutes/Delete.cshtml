@@ -1,14 +1,12 @@
 ﻿@model KisVuzDotNetCore2.Models.Struct.StructInstitute
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Удалить институт?";
 }
 
-<h2>Delete</h2>
+<h2>Удалить институт?</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>StructInstitute</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -45,19 +43,19 @@
             @Html.DisplayNameFor(model => model.Address)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Address.AddressId)
+            @Html.DisplayFor(model => model.Address.GetAddress)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.University)
+            @Html.DisplayNameFor(model => model.University.StructUniversityName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.University.StructUniversityId)
+            @Html.DisplayFor(model => model.University.StructUniversityName)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="StructInstituteId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
     </form>
 </div>

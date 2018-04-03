@@ -1,12 +1,11 @@
 ﻿@model KisVuzDotNetCore2.Models.Struct.StructFacultet
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактировать сведения о факультете";
 }
 
-<h2>Edit</h2>
+<h2>Редактировать сведения о факультете</h2>
 
-<h4>StructFacultet</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,24 +13,21 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="StructFacultetId" />
             <div class="form-group">
-                <label asp-for="StructInstituteId" class="control-label"></label>
+                <label asp-for="StructInstitute.StructInstituteName" class="control-label"></label>
                 <select asp-for="StructInstituteId" class="form-control" asp-items="ViewBag.StructInstituteId"></select>
                 <span asp-validation-for="StructInstituteId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StructSubvisionId" class="control-label"></label>
+                <label asp-for="StructSubvision.StructSubvisionName" class="control-label"></label>
                 <select asp-for="StructSubvisionId" class="form-control" asp-items="ViewBag.StructSubvisionId"></select>
                 <span asp-validation-for="StructSubvisionId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index"  class="btn btn-default">Отмена</a>
             </div>
-        </form>
+         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
