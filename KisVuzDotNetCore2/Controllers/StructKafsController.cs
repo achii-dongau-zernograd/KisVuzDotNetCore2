@@ -22,7 +22,10 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: StructKafs
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.StructKafs.Include(s => s.StructFacultet).Include(s => s.StructSubvision);
+            var appIdentityDBContext = _context.StructKafs
+                .Include(s => s.StructFacultet)
+                    .ThenInclude(s=>s.StructSubvision)
+                .Include(s => s.StructSubvision);
             return View(await appIdentityDBContext.ToListAsync());
         }
 

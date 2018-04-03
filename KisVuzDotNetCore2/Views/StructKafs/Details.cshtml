@@ -1,13 +1,12 @@
 ﻿@model KisVuzDotNetCore2.Models.Struct.StructKaf
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Подробнее";
 }
 
-<h2>Details</h2>
+<h2>Подробнее</h2>
 
 <div>
-    <h4>StructKaf</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -25,6 +24,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.StructKafId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.StructKafId" class="btn btn-default">Редактировать</a> |
+    <a asp-action="Index" class="btn btn-primary">Отмена</a>
 </div>

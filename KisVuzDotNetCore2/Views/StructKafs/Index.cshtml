@@ -1,39 +1,43 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Struct.StructKaf>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Кафедры";
 }
 
-<h2>Index</h2>
+<h2>Кафедры</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.StructFacultet)
+                Факультеты
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StructSubvision)
+                Кафедры
             </th>
-            <th></th>
+            <th>
+                Действия
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.StructFacultet.StructFacultetId)
+                <a asp-action="Details" asp-route-id="@item.StructFacultetId">
+                @Html.DisplayFor(modelItem => item.StructFacultet.StructSubvision.StructSubvisionName)
+                </a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StructSubvision.StructSubvisionId)
+                @Html.DisplayFor(modelItem => item.StructSubvision.StructSubvisionName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.StructKafId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StructKafId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.StructKafId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.StructKafId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.StructKafId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.StructKafId">Удалить</a>
             </td>
         </tr>
 }
