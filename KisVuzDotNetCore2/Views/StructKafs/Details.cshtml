@@ -10,20 +10,20 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.StructFacultet)
+            @Html.DisplayNameFor(model => model.StructFacultet.StructFacultetId)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.StructFacultet.StructFacultetId)
+            @Html.DisplayFor(model => model.StructFacultet.StructSubvision.StructSubvisionName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.StructSubvision)
+            @Html.DisplayNameFor(model => model.StructSubvision.StructSubvisionName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.StructSubvision.StructSubvisionId)
+            @Html.DisplayFor(model => model.StructSubvision.StructSubvisionName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.StructKafId" class="btn btn-default">Редактировать</a> |
-    <a asp-action="Index" class="btn btn-primary">Отмена</a>
+    <a asp-action="Edit" asp-route-id="@Model.StructKafId" class="btn btn-primary">Редактировать</a> 
+    <a asp-action="Index" class="btn btn-default">Отмена</a>
 </div>

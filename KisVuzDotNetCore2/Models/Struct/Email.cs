@@ -1,4 +1,6 @@
-﻿namespace KisVuzDotNetCore2.Models.Struct
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KisVuzDotNetCore2.Models.Struct
 {
     /// <summary>
     /// Адрес электронной почты
@@ -13,11 +15,13 @@
         /// <summary>
         /// Адрес электронной почты
         /// </summary>
+        [Display(Name = "Адрес электронной почты")]
         public string EmailValue { get; set; }
 
         /// <summary>
         /// Комментарий
         /// </summary>
+        [Display(Name = "Описание")]
         public string EmailComment { get; set; }
     }
 }

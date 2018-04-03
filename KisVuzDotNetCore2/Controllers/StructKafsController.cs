@@ -39,6 +39,7 @@ namespace KisVuzDotNetCore2.Controllers
 
             var structKaf = await _context.StructKafs
                 .Include(s => s.StructFacultet)
+                    .ThenInclude(f=>f.StructSubvision)
                 .Include(s => s.StructSubvision)
                 .SingleOrDefaultAsync(m => m.StructKafId == id);
             if (structKaf == null)
@@ -52,8 +53,8 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: StructKafs/Create
         public IActionResult Create()
         {
-            ViewData["StructFacultetId"] = new SelectList(_context.StructFacultets, "StructFacultetId", "StructFacultetId");
-            ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionId");
+            ViewData["StructFacultetId"] = new SelectList(_context.StructFacultets.Include(s=>s.StructSubvision) , "StructFacultetId", "StructSubvision.StructSubvisionName");
+            ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionName");
             return View();
         }
 
@@ -88,8 +89,8 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["StructFacultetId"] = new SelectList(_context.StructFacultets, "StructFacultetId", "StructFacultetId", structKaf.StructFacultetId);
-            ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionId", structKaf.StructSubvisionId);
+            ViewData["StructFacultetId"] = new SelectList(_context.StructFacultets.Include(f=>f.StructSubvision), "StructFacultetId", "StructSubvision.StructSubvisionName", structKaf.StructFacultetId);
+            ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionName", structKaf.StructSubvisionId);
             return View(structKaf);
         }
 
@@ -140,6 +141,7 @@ namespace KisVuzDotNetCore2.Controllers
 
             var structKaf = await _context.StructKafs
                 .Include(s => s.StructFacultet)
+                    .ThenInclude(f=>f.StructSubvision)
                 .Include(s => s.StructSubvision)
                 .SingleOrDefaultAsync(m => m.StructKafId == id);
             if (structKaf == null)

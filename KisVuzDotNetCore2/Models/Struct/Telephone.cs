@@ -1,4 +1,6 @@
-﻿namespace KisVuzDotNetCore2.Models.Struct
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KisVuzDotNetCore2.Models.Struct
 {
     /// <summary>
     /// Телефон
@@ -13,11 +15,13 @@
         /// <summary>
         /// Номер телефона
         /// </summary>
+        [Display(Name="Телефон")]
         public string TelephoneNumber { get; set; }
 
         /// <summary>
         /// Комментарий
         /// </summary>
+        [Display(Name = "Описание")]
         public string TelephoneComment { get; set; }
     }
 }

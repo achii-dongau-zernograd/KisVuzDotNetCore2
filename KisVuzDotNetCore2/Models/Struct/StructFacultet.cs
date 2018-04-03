@@ -10,10 +10,11 @@ namespace KisVuzDotNetCore2.Models.Struct
     /// Модель "Факультет"
     /// </summary>
     public class StructFacultet
-    {
+    {        
         /// <summary>
         /// УИД факультета
         /// </summary>
+        [Display(Name = "Наименование факультета")]
         public int StructFacultetId { get; set; }
                         
         /// <summary>

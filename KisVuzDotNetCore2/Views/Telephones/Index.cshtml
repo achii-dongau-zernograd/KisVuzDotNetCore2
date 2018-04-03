@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Struct.Telephone>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Телефоны";
 }
 
-<h2>Index</h2>
+<h2>Телефоны</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class=" btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -31,9 +31,9 @@
                 @Html.DisplayFor(modelItem => item.TelephoneComment)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.TelephoneId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TelephoneId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TelephoneId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.TelephoneId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.TelephoneId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.TelephoneId">Удалить</a>
             </td>
         </tr>
 }

@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Struct.Fax>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Факсы";
 }
 
-<h2>Index</h2>
+<h2>Факсы</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary" >Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -31,9 +31,9 @@
                 @Html.DisplayFor(modelItem => item.FaxComment)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FaxId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FaxId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FaxId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.FaxId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.FaxId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.FaxId">Удалить</a>
             </td>
         </tr>
 }

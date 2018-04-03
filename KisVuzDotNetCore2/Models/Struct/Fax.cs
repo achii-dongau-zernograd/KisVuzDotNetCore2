@@ -1,4 +1,6 @@
-﻿namespace KisVuzDotNetCore2.Models.Struct
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KisVuzDotNetCore2.Models.Struct
 {
     /// <summary>
     /// Факс
@@ -13,11 +15,13 @@
         /// <summary>
         /// Факс
         /// </summary>
+        [Display(Name = "Факс")]
         public string FaxValue { get; set; }
 
         /// <summary>
         /// Комментарий
         /// </summary>
+        [Display(Name = "Описание")]
         public string FaxComment { get; set; }
     }
 }
