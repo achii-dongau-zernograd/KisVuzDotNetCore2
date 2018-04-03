@@ -414,7 +414,7 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     EduUgsId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    EduAccredId = table.Column<int>(nullable: false),
+                    EduAccredId = table.Column<int>(nullable: true),
                     EduLevelId = table.Column<int>(nullable: false),
                     EduUgsCode = table.Column<string>(nullable: true),
                     EduUgsName = table.Column<string>(nullable: true)
@@ -427,7 +427,7 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.EduAccredId,
                         principalTable: "EduAccred",
                         principalColumn: "EduAccredId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_EduUgses_EduLevels_EduLevelId",
                         column: x => x.EduLevelId,

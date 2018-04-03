@@ -56,6 +56,6 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Аккредитация
         /// </summary>
         public EduAccred EduAccred { get; set; }
-        public int EduAccredId { get; set; }
+        public int? EduAccredId { get; set; }
     }
 }

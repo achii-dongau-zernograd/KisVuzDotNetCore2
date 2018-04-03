@@ -195,7 +195,7 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("EduUgsId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("EduAccredId");
+                    b.Property<int?>("EduAccredId");
 
                     b.Property<int>("EduLevelId");
 
@@ -699,8 +699,7 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduAccred", "EduAccred")
                         .WithMany("EduAccredUgses")
-                        .HasForeignKey("EduAccredId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EduAccredId");
 
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduLevel", "EduLevel")
                         .WithMany("EduUgses")

@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180403083742_init")]
+    [Migration("20180403085452_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -196,7 +196,7 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("EduUgsId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("EduAccredId");
+                    b.Property<int?>("EduAccredId");
 
                     b.Property<int>("EduLevelId");
 
@@ -700,8 +700,7 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduAccred", "EduAccred")
                         .WithMany("EduAccredUgses")
-                        .HasForeignKey("EduAccredId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EduAccredId");
 
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduLevel", "EduLevel")
                         .WithMany("EduUgses")
