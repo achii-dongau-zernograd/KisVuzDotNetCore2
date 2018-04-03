@@ -1,0 +1,42 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduAccred
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EduAccred</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduAccredNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduAccredNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduAccredDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduAccredDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduAccredDateExpiration)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduAccredDateExpiration)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduAccredFile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduAccredFile.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.EduAccredId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

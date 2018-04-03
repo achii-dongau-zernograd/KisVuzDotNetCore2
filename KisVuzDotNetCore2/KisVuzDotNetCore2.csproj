@@ -102,6 +102,8 @@
     <Compile Remove="Migrations\20180402163926_StructStandingOrderId.Designer.cs" />
     <Compile Remove="Migrations\20180402164141_init.cs" />
     <Compile Remove="Migrations\20180402164141_init.Designer.cs" />
+    <Compile Remove="Migrations\20180402170537_init.cs" />
+    <Compile Remove="Migrations\20180402170537_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -22,12 +22,13 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: StructSubvisions
         public async Task<IActionResult> Index()
         {
+            ViewData["StructSubvisionTypes"] = await _context.StructSubvisionTypes.ToListAsync();
             var appIdentityDBContext = _context.StructSubvisions
                 .Include(s => s.StructSubvisionAdress)
                 .Include(s => s.StructSubvisionPostChief)
                 .Include(s => s.StructSubvisionType)
-                .Include(s=>s.StructStandingOrder);
-            return View(await appIdentityDBContext.ToListAsync());
+                .Include(s => s.StructStandingOrder);
+            return View(await appIdentityDBContext.ToListAsync());            
         }
 
         // GET: StructSubvisions/Details/5
@@ -54,10 +55,9 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: StructSubvisions/Create
         public IActionResult Create()
         {
-            ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId");
-            ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostId");
-            ViewData["StructSubvisionTypeId"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeId");
-            
+            ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress");
+            ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostName");
+            ViewData["StructSubvisionTypes"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeName");            
             ViewData["files"] = new SelectList(_context.Files, "Id", "Name");
             return View();
         }
@@ -75,9 +75,10 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structSubvision.StructSubvisionAdressId);
-            ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostId", structSubvision.StructSubvisionPostChiefId);
-            ViewData["StructSubvisionTypeId"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeId", structSubvision.StructSubvisionTypeId);
+            ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress", structSubvision.StructSubvisionAdressId);
+            ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostName", structSubvision.StructSubvisionPostChiefId);
+            ViewData["StructSubvisionTypes"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeName", structSubvision.StructSubvisionTypeId);
+            ViewData["files"] = new SelectList(_context.Files, "Id", "Name");
             return View(structSubvision);
         }
 
@@ -94,9 +95,10 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structSubvision.StructSubvisionAdressId);
-            ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostId", structSubvision.StructSubvisionPostChiefId);
-            ViewData["StructSubvisionTypeId"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeId", structSubvision.StructSubvisionTypeId);
+            ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress", structSubvision.StructSubvisionAdressId);
+            ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostName", structSubvision.StructSubvisionPostChiefId);
+            ViewData["StructSubvisionTypes"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeName", structSubvision.StructSubvisionTypeId);
+            ViewData["files"] = new SelectList(_context.Files, "Id", "Name");
             return View(structSubvision);
         }
 
@@ -105,7 +107,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StructSubvisionId,StructSubvisionName,StructSubvisionFioChief,StructSubvisionPostChiefId,StructSubvisionAdressId,StructSubvisionSite,StructSubvisionTypeId")] StructSubvision structSubvision)
+        public async Task<IActionResult> Edit(int id, StructSubvision structSubvision)
         {
             if (id != structSubvision.StructSubvisionId)
             {
@@ -134,7 +136,8 @@ namespace KisVuzDotNetCore2.Controllers
             }
             ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structSubvision.StructSubvisionAdressId);
             ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostId", structSubvision.StructSubvisionPostChiefId);
-            ViewData["StructSubvisionTypeId"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeId", structSubvision.StructSubvisionTypeId);
+            ViewData["StructSubvisionTypes"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeId", structSubvision.StructSubvisionTypeId);
+            ViewData["files"] = new SelectList(_context.Files, "Id", "Name");
             return View(structSubvision);
         }
 

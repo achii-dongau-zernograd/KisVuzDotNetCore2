@@ -1,0 +1,49 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduAccred
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>EduAccred</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EduAccredId" />
+            <div class="form-group">
+                <label asp-for="EduAccredNumber" class="control-label"></label>
+                <input asp-for="EduAccredNumber" class="form-control" />
+                <span asp-validation-for="EduAccredNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduAccredDate" class="control-label"></label>
+                <input asp-for="EduAccredDate" class="form-control" />
+                <span asp-validation-for="EduAccredDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduAccredDateExpiration" class="control-label"></label>
+                <input asp-for="EduAccredDateExpiration" class="form-control" />
+                <span asp-validation-for="EduAccredDateExpiration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduAccredFileId" class="control-label"></label>
+                <select asp-for="EduAccredFileId" class="form-control" asp-items="ViewBag.EduAccredFileId"></select>
+                <span asp-validation-for="EduAccredFileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,16 +1,21 @@
 ﻿@model KisVuzDotNetCore2.Models.Struct.StructSubvision
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Удаление структурного подразделения";
 }
 
-<h2>Delete</h2>
+<h2>Удаление структурного подразделения</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>StructSubvision</h4>
+<h3>Вы действительно хотите удалить структурное подразделение?</h3>
+<div>    
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StructSubvisionType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StructSubvisionType.StructSubvisionTypeName)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.StructSubvisionName)
         </dt>
@@ -26,6 +31,12 @@
         <dt>
             @Html.DisplayNameFor(model => model.StructSubvisionSite)
         </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.StructSubvisionPostChief)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StructSubvisionPostChief.PostName)
+        </dd>
         <dd>
             @Html.DisplayFor(model => model.StructSubvisionSite)
         </dd>
@@ -33,25 +44,14 @@
             @Html.DisplayNameFor(model => model.StructSubvisionAdress)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.StructSubvisionAdress.AddressId)
+            @Html.DisplayFor(model => model.StructSubvisionAdress.GetAddress)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StructSubvisionPostChief)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StructSubvisionPostChief.PostId)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StructSubvisionType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StructSubvisionType.StructSubvisionTypeId)
-        </dd>
+
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="StructSubvisionId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
     </form>
 </div>

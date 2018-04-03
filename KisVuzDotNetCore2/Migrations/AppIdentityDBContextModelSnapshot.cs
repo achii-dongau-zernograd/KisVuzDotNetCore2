@@ -80,6 +80,26 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduAccred", b =>
+                {
+                    b.Property<int>("EduAccredId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("EduAccredDate");
+
+                    b.Property<DateTime>("EduAccredDateExpiration");
+
+                    b.Property<int>("EduAccredFileId");
+
+                    b.Property<string>("EduAccredNumber");
+
+                    b.HasKey("EduAccredId");
+
+                    b.HasIndex("EduAccredFileId");
+
+                    b.ToTable("EduAccred");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduForm", b =>
                 {
                     b.Property<int>("EduFormId")
@@ -175,6 +195,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("EduUgsId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("EduAccredId");
+
                     b.Property<int>("EduLevelId");
 
                     b.Property<string>("EduUgsCode");
@@ -182,6 +204,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<string>("EduUgsName");
 
                     b.HasKey("EduUgsId");
+
+                    b.HasIndex("EduAccredId");
 
                     b.HasIndex("EduLevelId");
 
@@ -621,6 +645,14 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduAccred", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "EduAccredFile")
+                        .WithMany()
+                        .HasForeignKey("EduAccredFileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduNapravl", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduUgs", "EduUgs")
@@ -665,6 +697,11 @@ namespace KisVuzDotNetCore2.Migrations
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduUgs", b =>
                 {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduAccred", "EduAccred")
+                        .WithMany("EduAccredUgses")
+                        .HasForeignKey("EduAccredId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduLevel", "EduLevel")
                         .WithMany("EduUgses")
                         .HasForeignKey("EduLevelId")

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduAccred>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.EduAccredNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EduAccredDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EduAccredDateExpiration)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduAccredFile)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduAccredNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduAccredDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduAccredDateExpiration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduAccredFile.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EduAccredId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.EduAccredId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduAccredId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

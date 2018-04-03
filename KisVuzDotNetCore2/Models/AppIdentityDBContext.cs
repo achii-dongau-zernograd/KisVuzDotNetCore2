@@ -2140,5 +2140,13 @@ namespace KisVuzDotNetCore2.Models
                 #endregion                                
             }
         }
+
+        /// <summary>
+        /// Инициализация данных, связанных с файловыми операциями
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.Education.EduAccred> EduAccred { get; set; }
     }
 }

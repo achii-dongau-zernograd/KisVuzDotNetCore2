@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Структурные подразделения";
+    var structSubvisionTypes = (List<KisVuzDotNetCore2.Models.Struct.StructSubvisionType>) ViewData["StructSubvisionTypes"];
 }
 
 <h2>Структурные подразделения</h2>
@@ -9,6 +10,8 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Создать</a>
 </p>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -27,43 +30,45 @@
             <th>
                 @Html.DisplayNameFor(model => model.StructSubvisionPostChief)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StructSubvisionType)
-            </th>
             <th>Положение</th>
             <th>Действия</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var structSubvisionType in structSubvisionTypes)
+    {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StructSubvisionName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StructSubvisionFioChief)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StructSubvisionSite)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StructSubvisionAdress.GetAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StructSubvisionPostChief.PostName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StructSubvisionType.StructSubvisionTypeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StructStandingOrder.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.StructSubvisionId">Редактировать</a> |
-                <a asp-action="Details" asp-route-id="@item.StructSubvisionId">Подробнее</a> |
-                <a asp-action="Delete" asp-route-id="@item.StructSubvisionId">Удалить</a>
-            </td>
+            <td colspan="7" class="well text-center"><strong>@structSubvisionType.StructSubvisionTypeName</strong></td>
         </tr>
-}
+        @foreach (var item in Model.Where(s=>s.StructSubvisionTypeId== structSubvisionType.StructSubvisionTypeId))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StructSubvisionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StructSubvisionFioChief)
+                </td>
+                <td>
+                    <a href="@Html.DisplayFor(modelItem => item.StructSubvisionSite)">@Html.DisplayFor(modelItem => item.StructSubvisionSite)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StructSubvisionAdress.GetAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StructSubvisionPostChief.PostName)
+                </td>
+                <td>
+                    <a asp-controller="Files" asp-action="GetFile" asp-route-id="@item.StructStandingOrderId">@Html.DisplayFor(modelItem => item.StructStandingOrder.Name)</a>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.StructSubvisionId">Редактировать</a> |
+                    <a asp-action="Details" asp-route-id="@item.StructSubvisionId">Подробнее</a> |
+                    <a asp-action="Delete" asp-route-id="@item.StructSubvisionId">Удалить</a>
+                </td>
+            </tr>
+        }
+    }
+
     </tbody>
 </table>
