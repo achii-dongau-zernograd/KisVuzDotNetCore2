@@ -18,26 +18,21 @@ namespace KisVuzDotNetCore2.Controllers
         {
             _context = context;
         }
-
-        // GET: EduUgses
-        /*public async Task<IActionResult> Index()
-        {
-            var appIdentityDBContext = _context.EduUgses.Include(e => e.EduLevel);
-            return View(await appIdentityDBContext.ToListAsync());
-        }*/
+                
         public async Task<IActionResult> Index(int? id)
         {
-            if (id == null)
+            List<EduUgs> eduUgses = await _context.EduUgses
+                .Include(e => e.EduLevel)
+                .Include(e => e.EduAccred)
+                    .ThenInclude(a=>a.EduAccredFile)
+                .ToListAsync();
+            if (id != null)
             {
-                var appIdentityDBContext = _context.EduUgses.Include(e => e.EduLevel);
-                return View(await appIdentityDBContext.ToListAsync());
+                eduUgses = eduUgses.Where(l => l.EduLevelId == id).ToList();
             }
-            else
-            {
-                var appIdentityDBContext = _context.EduUgses.Include(e => e.EduLevel).Where(l=>l.EduLevelId==id);
-                return View(await appIdentityDBContext.ToListAsync());
-            }
-            
+           
+            return View(eduUgses);
+
         }
 
         // GET: EduUgses/Details/5
@@ -98,6 +93,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
+            ViewData["EduAccreds"] = new SelectList(_context.EduAccreds, "EduAccredId", "GetEduAccredName", eduUgs.EduAccredId);
             ViewData["EduLevelId"] = new SelectList(_context.EduLevels, "EduLevelId", "EduLevelName", eduUgs.EduLevelId);
             return View(eduUgs);
         }
@@ -107,7 +103,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EduUgsId,EduUgsCode,EduUgsName,EduLevelId")] EduUgs eduUgs)
+        public async Task<IActionResult> Edit(int id, EduUgs eduUgs)
         {
             if (id != eduUgs.EduUgsId)
             {

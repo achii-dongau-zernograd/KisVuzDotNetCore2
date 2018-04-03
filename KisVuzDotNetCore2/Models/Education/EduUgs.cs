@@ -55,6 +55,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <summary>
         /// Аккредитация
         /// </summary>
+        [Display(Name = "Свидетельство о государственной аккредитации")]
         public EduAccred EduAccred { get; set; }
         public int? EduAccredId { get; set; }
     }

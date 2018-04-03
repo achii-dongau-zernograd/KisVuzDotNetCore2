@@ -13,12 +13,15 @@
 <table class="table table-hover">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.EduUgsCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EduUgsName)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduUgsCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduUgsName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduAccred)
+            </th>
             <th>
                 Действия
             </th>
@@ -52,6 +55,9 @@
                         <a asp-controller="EduNapravls" asp-action="Index" asp-route-id="@item.EduUgsId">
                             @Html.DisplayFor(modelItem => item.EduUgsName)
                         </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Files" asp-action="GetFile" asp-route-id="@item.EduAccred?.EduAccredFileId">@item.EduAccred?.GetEduAccredName</a>
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.EduUgsId">Редактировать</a> |

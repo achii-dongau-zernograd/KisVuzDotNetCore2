@@ -1,1 +1,28 @@
 ﻿<h1>Образование</h1>
+
+@{
+    var t6eduAccred = (IEnumerable<EduNapravl>) ViewData["t6eduAccred"];
+}
+
+<table itemprop="eduAccred" class="table table-hover">
+    <thead>
+        <tr>
+            <th>Код</th>
+            <th>Наименование специальности, направления подготовки</th>
+            <th>Уровень образования</th>
+            <th>Срок действия государственной аккредитации (дата окончания действия свидетельства о государственной аккредитации)</th>
+            <th>Языки, на которых осуществляется образование (обучение)</th>
+        </tr>
+    </thead>
+    @foreach (var item in t6eduAccred)
+    {
+        <tr itemprop="eduAccred">
+            <td itemprop="eduCode">@item.EduNapravCode</td>
+            <td itemprop="eduName">@item.EduNapravName</td>
+            <td itemprop="eduLevel">@item.EduUgs.EduLevel.EduLevelName</td>
+            <td itemprop="dateEnd">@item.EduUgs.EduAccred?.EduAccredDateExpiration</td>
+            <td itemprop="language">Русский</td>
+        </tr>
+        
+    }
+</table>

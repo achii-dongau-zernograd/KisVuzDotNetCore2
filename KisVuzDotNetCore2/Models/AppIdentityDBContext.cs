@@ -64,6 +64,11 @@ namespace KisVuzDotNetCore2.Models
         /// Формы обучения
         /// </summary>
         public DbSet<EduForm> EduForms { get; set; }
+
+        /// <summary>
+        /// Свидетельства о государственной аккредитации
+        /// </summary>
+        public DbSet<EduAccred> EduAccreds { get; set; }
         #endregion
 
         #region Структура образовательной организации (Struct)
@@ -1385,6 +1390,22 @@ namespace KisVuzDotNetCore2.Models
                     await context.SaveChangesAsync();
                 }
                 #endregion
+
+                #region Инициализация таблицы "Свидетельства о гос. аккредитации"
+                if (!await context.EduAccreds.AnyAsync())
+                {
+                    EduAccred svid1 = new EduAccred
+                    {
+                        EduAccredId = 1,
+                        EduAccredDate = new DateTime(2016,5,6),
+                        EduAccredDateExpiration = new DateTime(2020, 10, 3),
+                        EduAccredNumber="1922"
+                    };
+
+                    await context.EduAccreds.AddRangeAsync(svid1);
+                    await context.SaveChangesAsync();
+                }
+                #endregion
             }
         }
 
@@ -2105,10 +2126,17 @@ namespace KisVuzDotNetCore2.Models
                         FileDataTypeGroupName = "Локальные нормативные акты, предусмотренные частью 2 статьи 30 федерального закона \"Об образовании в РФ\""
                     };
 
+                    FileDataTypeGroup fileDataTypeGroup3 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = 3,
+                        FileDataTypeGroupName = "Подраздел \"Документы\""
+                    };
+
                     await context.FileDataTypeGroups.AddRangeAsync(
                         fileDataTypeGroup1,
-                        fileDataTypeGroup2
-                        );
+                        fileDataTypeGroup2,
+                        fileDataTypeGroup3
+                    );
                     await context.SaveChangesAsync();
                 }
                 #endregion
@@ -2130,23 +2158,39 @@ namespace KisVuzDotNetCore2.Models
                         FileDataTypeGroupId = 1
                     };
 
+                    FileDataType fileDataType3 = new FileDataType
+                    {
+                        FileDataTypeId = 3,
+                        FileDataTypeName = "Устав образовательной организации",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType4 = new FileDataType
+                    {
+                        FileDataTypeId = 4,
+                        FileDataTypeName = "Лицензия на осуществление образовательной деятельности",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType5 = new FileDataType
+                    {
+                        FileDataTypeId = 5,
+                        FileDataTypeName = "Свидетельство о государственной аккредитации (с приложениями)",
+                        FileDataTypeGroupId = 3
+                    };
+
 
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
-                        fileDataType2
+                        fileDataType2,
+                        fileDataType3,
+                        fileDataType4,
+                        fileDataType5
                         );
                     await context.SaveChangesAsync();
                 }
                 #endregion                                
             }
-        }
-
-        /// <summary>
-        /// Инициализация данных, связанных с файловыми операциями
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.Education.EduAccred> EduAccred { get; set; }
+        }        
     }
 }

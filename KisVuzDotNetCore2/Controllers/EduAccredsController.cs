@@ -22,8 +22,8 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: EduAccreds
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.EduAccred.Include(e => e.EduAccredFile);
-            return View(await appIdentityDBContext.ToListAsync());
+            var eduAccreds = await _context.EduAccreds.Include(e => e.EduAccredFile).ToListAsync();
+            return View(eduAccreds);
         }
 
         // GET: EduAccreds/Details/5
@@ -34,7 +34,7 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var eduAccred = await _context.EduAccred
+            var eduAccred = await _context.EduAccreds
                 .Include(e => e.EduAccredFile)
                 .SingleOrDefaultAsync(m => m.EduAccredId == id);
             if (eduAccred == null)
@@ -48,7 +48,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: EduAccreds/Create
         public IActionResult Create()
         {
-            ViewData["EduAccredFileId"] = new SelectList(_context.Files, "Id", "Id");
+            ViewData["EduAccredFileId"] = new SelectList(_context.Files, "Id", "Name");
             return View();
         }
 
@@ -77,12 +77,12 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var eduAccred = await _context.EduAccred.SingleOrDefaultAsync(m => m.EduAccredId == id);
+            var eduAccred = await _context.EduAccreds.SingleOrDefaultAsync(m => m.EduAccredId == id);
             if (eduAccred == null)
             {
                 return NotFound();
             }
-            ViewData["EduAccredFileId"] = new SelectList(_context.Files, "Id", "Id", eduAccred.EduAccredFileId);
+            ViewData["EduAccredFileId"] = new SelectList(_context.Files, "Id", "Name", eduAccred.EduAccredFileId);
             return View(eduAccred);
         }
 
@@ -130,7 +130,7 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var eduAccred = await _context.EduAccred
+            var eduAccred = await _context.EduAccreds
                 .Include(e => e.EduAccredFile)
                 .SingleOrDefaultAsync(m => m.EduAccredId == id);
             if (eduAccred == null)
@@ -146,15 +146,15 @@ namespace KisVuzDotNetCore2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var eduAccred = await _context.EduAccred.SingleOrDefaultAsync(m => m.EduAccredId == id);
-            _context.EduAccred.Remove(eduAccred);
+            var eduAccred = await _context.EduAccreds.SingleOrDefaultAsync(m => m.EduAccredId == id);
+            _context.EduAccreds.Remove(eduAccred);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EduAccredExists(int id)
         {
-            return _context.EduAccred.Any(e => e.EduAccredId == id);
+            return _context.EduAccreds.Any(e => e.EduAccredId == id);
         }
     }
 }

@@ -1,15 +1,14 @@
 ﻿@model KisVuzDotNetCore2.Models.Education.EduAccred
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактирование свидетельства о гос. аккредитации";
 }
 
-<h2>Edit</h2>
+<h2>Редактирование свидетельства о государственной аккредитации</h2>
 
-<h4>EduAccred</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="EduAccredId" />
@@ -30,18 +29,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="EduAccredFileId" class="control-label"></label>
-                <select asp-for="EduAccredFileId" class="form-control" asp-items="ViewBag.EduAccredFileId"></select>
+                <select asp-for="EduAccredFileId" class="form-control" asp-items="ViewBag.EduAccredFileId">
+                    <option value="">Не выбрано</option>
+                </select>
                 <span asp-validation-for="EduAccredFileId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

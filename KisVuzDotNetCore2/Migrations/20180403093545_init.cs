@@ -330,25 +330,25 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EduAccred",
+                name: "EduAccreds",
                 columns: table => new
                 {
                     EduAccredId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EduAccredDate = table.Column<DateTime>(nullable: false),
                     EduAccredDateExpiration = table.Column<DateTime>(nullable: false),
-                    EduAccredFileId = table.Column<int>(nullable: false),
+                    EduAccredFileId = table.Column<int>(nullable: true),
                     EduAccredNumber = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EduAccred", x => x.EduAccredId);
+                    table.PrimaryKey("PK_EduAccreds", x => x.EduAccredId);
                     table.ForeignKey(
-                        name: "FK_EduAccred_Files_EduAccredFileId",
+                        name: "FK_EduAccreds_Files_EduAccredFileId",
                         column: x => x.EduAccredFileId,
                         principalTable: "Files",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -423,9 +423,9 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     table.PrimaryKey("PK_EduUgses", x => x.EduUgsId);
                     table.ForeignKey(
-                        name: "FK_EduUgses_EduAccred_EduAccredId",
+                        name: "FK_EduUgses_EduAccreds_EduAccredId",
                         column: x => x.EduAccredId,
-                        principalTable: "EduAccred",
+                        principalTable: "EduAccreds",
                         principalColumn: "EduAccredId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -749,8 +749,8 @@ namespace KisVuzDotNetCore2.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_EduAccred_EduAccredFileId",
-                table: "EduAccred",
+                name: "IX_EduAccreds_EduAccredFileId",
+                table: "EduAccreds",
                 column: "EduAccredFileId");
 
             migrationBuilder.CreateIndex(
@@ -973,7 +973,7 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "StructSubvisions");
 
             migrationBuilder.DropTable(
-                name: "EduAccred");
+                name: "EduAccreds");
 
             migrationBuilder.DropTable(
                 name: "EduLevels");
