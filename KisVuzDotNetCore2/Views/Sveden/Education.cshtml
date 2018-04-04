@@ -22,17 +22,24 @@
                     <th>Срок действия государственной аккредитации (дата окончания действия свидетельства о государственной аккредитации)</th>
                     <th>Языки, на которых осуществляется образование (обучение)</th>
                 </tr>
+                <tr>
+                    <td align=center>1</td>
+                    <td align=center>2</td>
+                    <td align=center>3</td>
+                    <td align=center>4</td>
+                    <td align=center>5</td>
+                </tr>
             </thead>
             @foreach (var item in t6eduAccred)
-            {
-                <tr itemprop="eduAccred">
-                    <td itemprop="eduCode">@item.EduNapravCode</td>
-                    <td itemprop="eduName">@item.EduNapravName</td>
-                    <td itemprop="eduLevel">@item.EduUgs.EduLevel.EduLevelName</td>
-                    <td itemprop="dateEnd">@item.EduUgs.EduAccred?.EduAccredDateExpiration</td>
-                    <td itemprop="language">Русский</td>
-                </tr>
-            }
+    {
+        <tr itemprop="eduAccred">
+            <td itemprop="eduCode">@item.EduNapravCode</td>
+            <td itemprop="eduName">@item.EduNapravName</td>
+            <td itemprop="eduLevel">@item.EduUgs.EduLevel.EduLevelName</td>
+            <td itemprop="dateEnd">@item.EduUgs.EduAccred?.EduAccredDateExpiration</td>
+            <td itemprop="language">Русский</td>
+        </tr>
+}
         </table>
     </div>
 </div>
@@ -44,17 +51,17 @@
         <table itemprop="eduChislen" class="table table-hover">
             <thead>
                 <tr>
-                    <td rowspan=2 align=center>Код</td>
-                    <td rowspan=2 align=center>Наименование специальности, направление подготовки</td>
-                    <td rowspan=2 align=center>Уровень образования</td>
-                    <td rowspan=2 align=center>Формы обучения</td>
-                    <td colspan=4 align=center>Численность обучающихся за счет (количество человек):</td>
+                    <th rowspan=2>Код</th>
+                    <th rowspan=2>Наименование специальности, направление подготовки</th>
+                    <th rowspan=2>Уровень образования</th>
+                    <th rowspan=2>Формы обучения</th>
+                    <th colspan=4>Численность обучающихся за счет (количество человек):</th>
                 </tr>
                 <tr>
-                    <td align=center>бюджетных ассигнований федерального бюджета</td>
-                    <td align=center>бюджетов субъектов Российской Федерации</td>
-                    <td align=center>местных бюджетов</td>
-                    <td align=center>средств физических и (или) юридических лиц</td>
+                    <th>бюджетных ассигнований федерального бюджета</th>
+                    <th>бюджетов субъектов Российской Федерации</th>
+                    <th>местных бюджетов</th>
+                    <th>средств физических и (или) юридических лиц</th>
                 </tr>
                 <tr>
                     <td align=center>1</td>
