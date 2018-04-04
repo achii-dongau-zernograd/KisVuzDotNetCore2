@@ -1,12 +1,10 @@
 ﻿@model KisVuzDotNetCore2.Models.Struct.Fax
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактировать";
 }
 
-<h2>Edit</h2>
-
-<h4>Fax</h4>
+<h2>Редактировать</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,14 +22,15 @@
                 <span asp-validation-for="FaxComment" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default" >Отмена</a>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+
 </div>
 
 @section Scripts {
