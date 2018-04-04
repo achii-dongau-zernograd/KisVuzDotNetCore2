@@ -1,41 +1,48 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduChislen>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Численность обучающихся по реализуемым образовательным программам";
 }
 
-<h2>Index</h2>
+<h2>Численность обучающихся по реализуемым образовательным программам</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.NumberBFpriem)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NumberBRpriem)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NumberBMpriem)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NumberPpriem)
-                </th>
             <th>
-                @Html.DisplayNameFor(model => model.EduForm)
+                @Html.DisplayNameFor(model => model.EduProfile.EduProfileName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EduProfile)
+                @Html.DisplayNameFor(model => model.EduForm.EduFormName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberBFpriem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberBRpriem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberBMpriem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberPpriem)
+            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduForm.EduFormName)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NumberBFpriem)
             </td>
@@ -49,15 +56,9 @@
                 @Html.DisplayFor(modelItem => item.NumberPpriem)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EduForm.EduFormId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduProfile.EduProfileId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EduChislenId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EduChislenId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EduChislenId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.EduChislenId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.EduChislenId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduChislenId">Удалить</a>
             </td>
         </tr>
 }

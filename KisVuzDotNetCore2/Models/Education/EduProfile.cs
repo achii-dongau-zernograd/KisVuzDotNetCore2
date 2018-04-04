@@ -14,6 +14,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <summary>
         /// УИД профиля подготовки
         /// </summary>
+        [Display(Name = "Наименование профиля подготовки (направленности, специальности)")]
         public int EduProfileId { get; set; }
 
         /// <summary>
@@ -28,6 +29,16 @@ namespace KisVuzDotNetCore2.Models.Education
 
         public List<EduPlan> EduPlans = new List<EduPlan>();
 
+        [Display(Name = "Направление специальности, направление подготовки")]
+        public string GetEduProfileFullName
+        {
+            get
+            {
+                return EduNapravl.EduUgs.EduLevel.EduLevelName + " – "
+                    + EduNapravl.EduNapravCode + " – "
+                    + EduNapravl.EduNapravName + " – ";
+            }
+        }
 
         ////////// Навигационные свойства ///////////////
         /// <summary>

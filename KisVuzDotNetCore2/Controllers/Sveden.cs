@@ -104,6 +104,16 @@ namespace KisVuzDotNetCore2.Controllers
                     .ThenInclude(ugs => ugs.EduLevel)                
                 .ToListAsync();
             ViewData["t6eduAccred"] = t6eduAccred;
+
+            var t7eduChislen = await _context.EduChislens
+                .Include(c => c.EduProfile)
+                    .ThenInclude(n => n.EduNapravl)
+                    .ThenInclude(u => u.EduUgs)
+                    .ThenInclude(l => l.EduLevel)
+                .Include (f =>f.EduForm)
+                .ToListAsync();
+            ViewData["t7eduChislen"] = t7eduChislen;              
+
             return View();
         }
 
