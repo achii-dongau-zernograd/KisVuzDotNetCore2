@@ -1,1 +1,35 @@
-﻿<h1>Образовательные стандарты</h1>
+﻿@model IEnumerable<EduLevel>
+
+<h1>Образовательные стандарты</h1>
+
+@foreach (var level in Model)
+{
+    <a href="#spoiler-@level.EduLevelId" data-toggle="collapse" class="btn btn-primary btn-block">@level.EduLevelName</a>
+    <div class="collapse" id="spoiler-@level.EduLevelId">
+        <div class="well">
+            <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Код направления подготовки</th>
+                            <th>Наименование направления подготовки</th>
+                            <th>Образовательный стандарт</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            @foreach (var ugs in level.EduUgses)
+            {                
+                    @foreach (var napravl in ugs.EduNapravls)
+                    {
+                        <tr itemprop="eduStandartDoc">
+                            <td>@napravl.EduNapravCode</td>
+                            <td>@napravl.EduNapravName</td>
+                            <td itemprop="eduStandartDoc"><a href="@napravl.EduNapravlStandartDocLink">Открыть</a></td>
+                        </tr>
+                    }                    
+            }
+                    </tbody>
+              </table>
+        </div>
+    </div>
+
+}
