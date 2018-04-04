@@ -108,6 +108,12 @@
     <Compile Remove="Migrations\20180403083742_init.Designer.cs" />
     <Compile Remove="Migrations\20180403085404_dftgdf.cs" />
     <Compile Remove="Migrations\20180403085404_dftgdf.Designer.cs" />
+    <Compile Remove="Migrations\20180403085452_init.cs" />
+    <Compile Remove="Migrations\20180403085452_init.Designer.cs" />
+    <Compile Remove="Migrations\20180403091758_init.cs" />
+    <Compile Remove="Migrations\20180403091758_init.Designer.cs" />
+    <Compile Remove="Migrations\20180403103233_init2.cs" />
+    <Compile Remove="Migrations\20180403103233_init2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

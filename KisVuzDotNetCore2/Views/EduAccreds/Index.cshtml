@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduAccred>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Свидетельства о гос. аккредитации";
 }
 
-<h2>Index</h2>
+<h2>Свидетельства о государственной аккредитации</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -40,12 +40,12 @@
                 @Html.DisplayFor(modelItem => item.EduAccredDateExpiration)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EduAccredFile.Id)
+                @Html.DisplayFor(modelItem => item.EduAccredFile.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.EduAccredId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EduAccredId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EduAccredId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.EduAccredId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.EduAccredId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduAccredId">Удалить</a>
             </td>
         </tr>
 }

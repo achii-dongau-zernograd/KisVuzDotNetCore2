@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace KisVuzDotNetCore2.Migrations
@@ -89,7 +87,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<DateTime>("EduAccredDateExpiration");
 
-                    b.Property<int>("EduAccredFileId");
+                    b.Property<int?>("EduAccredFileId");
 
                     b.Property<string>("EduAccredNumber");
 
@@ -97,7 +95,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasIndex("EduAccredFileId");
 
-                    b.ToTable("EduAccred");
+                    b.ToTable("EduAccreds");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduForm", b =>
@@ -649,8 +647,7 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "EduAccredFile")
                         .WithMany()
-                        .HasForeignKey("EduAccredFileId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EduAccredFileId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduNapravl", b =>

@@ -1,13 +1,12 @@
 ﻿@model KisVuzDotNetCore2.Models.Education.EduAccred
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Свидетельство о гос. аккредитации";
 }
 
-<h2>Details</h2>
+<h2>Свидетельство о государственной аккредитации</h2>
 
-<div>
-    <h4>EduAccred</h4>
+<div>    
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -32,11 +31,11 @@
             @Html.DisplayNameFor(model => model.EduAccredFile)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduAccredFile.Id)
+            @Html.DisplayFor(model => model.EduAccredFile.Name)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.EduAccredId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.EduAccredId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" class="btn btn-default">Отмена</a>
 </div>
