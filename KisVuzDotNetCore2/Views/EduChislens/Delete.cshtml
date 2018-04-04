@@ -1,0 +1,57 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduChislen
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>EduChislen</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberBFpriem)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberBFpriem)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberBRpriem)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberBRpriem)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberBMpriem)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberBMpriem)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberPpriem)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberPpriem)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.EduProfileId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduChislenId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
