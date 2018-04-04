@@ -248,6 +248,44 @@ namespace KisVuzDotNetCore2.Models
             {
                 AppIdentityDBContext context = serviceScope.ServiceProvider.GetService<AppIdentityDBContext>();
 
+                #region Инициализация таблицы "Курсы"
+                if (!await context.EduKurses.AnyAsync())
+                {
+                    EduKurs EduKurs1 = new EduKurs
+                    {
+                        EduKursNumber=1,
+                        EduKursName="Первый курс"
+                    };
+
+                    EduKurs EduKurs2 = new EduKurs
+                    {
+                        EduKursNumber = 2,
+                        EduKursName = "Второй курс"
+                    };
+
+                    EduKurs EduKurs3 = new EduKurs
+                    {
+                        EduKursNumber = 3,
+                        EduKursName = "Третий курс"
+                    };
+
+                    EduKurs EduKurs4 = new EduKurs
+                    {
+                        EduKursNumber = 4,
+                        EduKursName = "Четвертый курс"
+                    };
+
+                    EduKurs EduKurs5 = new EduKurs
+                    {
+                        EduKursNumber = 5,
+                        EduKursName = "Пятый курс"
+                    };
+
+                    await context.EduKurses.AddRangeAsync(EduKurs1, EduKurs2, EduKurs3, EduKurs4, EduKurs5);
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
                 #region Инициализация таблицы "Уровни образования"
                 if (!await context.EduLevels.AnyAsync())
                 {
