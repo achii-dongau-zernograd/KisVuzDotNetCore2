@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Struct;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -113,7 +114,11 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> EduStandarts()
         {
-            return View();
+            List<EduLevel> eduLevelsNapravls = await _context.EduLevels
+                .Include(l => l.EduUgses)
+                    .ThenInclude(u => u.EduNapravls)
+                    .ToListAsync();
+            return View(eduLevelsNapravls);
         }
 
         /// <summary>

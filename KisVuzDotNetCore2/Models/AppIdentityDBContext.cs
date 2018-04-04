@@ -1,5 +1,6 @@
 ﻿ using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Struct;
+using KisVuzDotNetCore2.Models.Sveden;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -137,7 +138,11 @@ namespace KisVuzDotNetCore2.Models
         #endregion
 
         #region Сведения об образовательной организации               
-
+        /// <summary>
+        /// Таблица 14. Информация об администрации
+        /// образовательной организации
+        /// </summary>
+        public DbSet<Rucovodstvo> SvedenRucovodstvo { get; set; }
         #endregion
 
         #region Файлы

@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180403093545_init")]
+    [Migration("20180404080300_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,6 +99,32 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("EduAccredFileId");
 
                     b.ToTable("EduAccreds");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduChislen", b =>
+                {
+                    b.Property<int>("EduChislenId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduFormId");
+
+                    b.Property<int>("EduProfileId");
+
+                    b.Property<int>("NumberBFpriem");
+
+                    b.Property<int>("NumberBMpriem");
+
+                    b.Property<int>("NumberBRpriem");
+
+                    b.Property<int>("NumberPpriem");
+
+                    b.HasKey("EduChislenId");
+
+                    b.HasIndex("EduFormId");
+
+                    b.HasIndex("EduProfileId");
+
+                    b.ToTable("EduChislens");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduForm", b =>
@@ -539,6 +565,24 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("Telephones");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.Rucovodstvo", b =>
+                {
+                    b.Property<int>("RucovodstvoId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Fio");
+
+                    b.Property<string>("Post");
+
+                    b.Property<string>("Telephone");
+
+                    b.HasKey("RucovodstvoId");
+
+                    b.ToTable("SvedenRucovodstvo");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -651,6 +695,19 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "EduAccredFile")
                         .WithMany()
                         .HasForeignKey("EduAccredFileId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduChislen", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
+                        .WithMany()
+                        .HasForeignKey("EduFormId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
+                        .WithMany()
+                        .HasForeignKey("EduProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduNapravl", b =>

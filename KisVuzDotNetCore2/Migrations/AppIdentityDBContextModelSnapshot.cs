@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace KisVuzDotNetCore2.Migrations
@@ -562,6 +560,24 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("StructUniversityId");
 
                     b.ToTable("Telephones");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.Rucovodstvo", b =>
+                {
+                    b.Property<int>("RucovodstvoId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Fio");
+
+                    b.Property<string>("Post");
+
+                    b.Property<string>("Telephone");
+
+                    b.HasKey("RucovodstvoId");
+
+                    b.ToTable("SvedenRucovodstvo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
