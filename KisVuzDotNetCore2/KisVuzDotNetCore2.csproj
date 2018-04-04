@@ -118,8 +118,14 @@
     <Compile Remove="Migrations\20180403103233_init2.Designer.cs" />
     <Compile Remove="Migrations\20180404060255_eduChislen.cs" />
     <Compile Remove="Migrations\20180404060255_eduChislen.Designer.cs" />
+    <Compile Remove="Migrations\20180404080300_init.cs" />
+    <Compile Remove="Migrations\20180404080300_init.Designer.cs" />
     <Compile Remove="Migrations\20180404080434_init3.cs" />
     <Compile Remove="Migrations\20180404080434_init3.Designer.cs" />
+    <Compile Remove="Migrations\20180404103234_init.cs" />
+    <Compile Remove="Migrations\20180404103234_init.Designer.cs" />
+    <Compile Remove="Migrations\20180404132221_init.cs" />
+    <Compile Remove="Migrations\20180404132221_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

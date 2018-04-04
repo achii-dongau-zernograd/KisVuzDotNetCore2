@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180404080300_init")]
+    [Migration("20180404132847_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -137,6 +137,20 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("EduFormId");
 
                     b.ToTable("EduForms");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduKurs", b =>
+                {
+                    b.Property<int>("EduKursId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("EduKursName");
+
+                    b.Property<int>("EduKursNumber");
+
+                    b.HasKey("EduKursId");
+
+                    b.ToTable("EduKurses");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduLevel", b =>
@@ -327,6 +341,36 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("FileModelId");
 
                     b.ToTable("FileToFileTypes");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.Vacant", b =>
+                {
+                    b.Property<int>("VacantId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduFormId");
+
+                    b.Property<int>("EduKursId");
+
+                    b.Property<int>("EduNapravlId");
+
+                    b.Property<int>("NumberBFVacant");
+
+                    b.Property<int>("NumberBMVacant");
+
+                    b.Property<int>("NumberBRVacant");
+
+                    b.Property<int>("NumberPVacant");
+
+                    b.HasKey("VacantId");
+
+                    b.HasIndex("EduFormId");
+
+                    b.HasIndex("EduKursId");
+
+                    b.HasIndex("EduNapravlId");
+
+                    b.ToTable("Vacants");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Address", b =>
@@ -782,6 +826,24 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
                         .WithMany("FileToFileTypes")
                         .HasForeignKey("FileModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.Vacant", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
+                        .WithMany()
+                        .HasForeignKey("EduFormId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduKurs", "EduKurs")
+                        .WithMany()
+                        .HasForeignKey("EduKursId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
+                        .WithMany()
+                        .HasForeignKey("EduNapravlId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

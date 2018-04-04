@@ -1,4 +1,5 @@
 ﻿ using KisVuzDotNetCore2.Models.Education;
+using KisVuzDotNetCore2.Models.Priem;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Sveden;
 using Microsoft.AspNetCore.Identity;
@@ -18,9 +19,9 @@ namespace KisVuzDotNetCore2.Models
     public class AppIdentityDBContext : IdentityDbContext<AppUser>
     {
         #region Конструктор
-        public AppIdentityDBContext(DbContextOptions<AppIdentityDBContext> options) : base (options)
+        public AppIdentityDBContext(DbContextOptions<AppIdentityDBContext> options) : base(options)
         {
-            
+
         }
         #endregion
         #region Таблицы
@@ -60,7 +61,7 @@ namespace KisVuzDotNetCore2.Models
         /// Годы начала подготовки
         /// </summary>
         public DbSet<EduYearBeginningTraining> EduYearBeginningTrainings { get; set; }
-        
+
         /// <summary>
         /// Формы обучения
         /// </summary>
@@ -75,6 +76,11 @@ namespace KisVuzDotNetCore2.Models
         /// Численность обучающихся по реализуемым образовательным программам
         /// </summary>
         public DbSet<EduChislen> EduChislens { get; set; }
+
+        /// <summary>
+        /// Курсы
+        /// </summary>
+        public DbSet<EduKurs> EduKurses { get; set; }
         #endregion
 
         #region Структура образовательной организации (Struct)
@@ -109,7 +115,7 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<StructSubvisionType> StructSubvisionTypes { get; set; }
         #endregion
-                
+
         #region Общие справочники (должности, адреса, телефоны, факсы и пр.)
         /// <summary>
         /// Справочник должностей
@@ -166,7 +172,14 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<FileDataTypeGroup> FileDataTypeGroups { get; set; }
         #endregion
-        
+
+        #region Прием
+        /// <summary>
+        /// Кол-во вакантных мест для приема (перевода)
+        /// </summary>
+        public DbSet<Vacant> Vacants { get; set; }
+        #endregion
+
         #endregion
 
         /// <summary>
@@ -182,6 +195,7 @@ namespace KisVuzDotNetCore2.Models
             await CreateStructData(serviceProvider, configuration);
             await CreateFilesData(serviceProvider, configuration);
             await CreateEduChislen(serviceProvider, configuration);
+            await CreateRucovodstvo(serviceProvider, configuration);
         }
 
         /// <summary>
@@ -271,7 +285,7 @@ namespace KisVuzDotNetCore2.Models
                         eduLevel2VoBak,
                         eduLevel3VoMag,
                         eduLevel4VoSpec,
-                        eduLevel5VoAsp );
+                        eduLevel5VoAsp);
                     await context.SaveChangesAsync();
                 }
                 #endregion
@@ -567,7 +581,7 @@ namespace KisVuzDotNetCore2.Models
                             EduNapravlId = 7,
                             EduNapravCode = "13.03.01",
                             EduNapravName = "Теплоэнергетика и теплотехника",
-                            EduNapravlStandartDocLink= @"http://fgosvo.ru/fgosvo/downloads/474/?f=%2Fuploadfiles%2Ffgosvob%2F130301.pdf",
+                            EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/474/?f=%2Fuploadfiles%2Ffgosvob%2F130301.pdf",
                             EduUgsId = 6
                         };
 
@@ -1207,7 +1221,7 @@ namespace KisVuzDotNetCore2.Models
                             EduProfileName = "Электрооборудование и электротехнологии",
                             EduNapravlId = 25
                         };
-                    
+
                     EduProfile eduProfile380401 =
                         new EduProfile
                         {
@@ -1311,10 +1325,10 @@ namespace KisVuzDotNetCore2.Models
                     });
                     await context.SaveChangesAsync();
                 }
-                    #endregion
+                #endregion
 
-                    #region Инициализация таблицы "Формы обучения"
-                    if (!await context.EduForms.AnyAsync())
+                #region Инициализация таблицы "Формы обучения"
+                if (!await context.EduForms.AnyAsync())
                 {
                     EduForm eduFormOchn = new EduForm
                     {
@@ -1356,7 +1370,7 @@ namespace KisVuzDotNetCore2.Models
                     {
                         EduYearId = 1,
                         EduYearName = "2017-2018"
-                    };                    
+                    };
 
                     await context.EduYears.AddRangeAsync(new EduYear[] { eduYear1718 });
                     await context.SaveChangesAsync();
@@ -1408,9 +1422,9 @@ namespace KisVuzDotNetCore2.Models
                     EduAccred svid1 = new EduAccred
                     {
                         EduAccredId = 1,
-                        EduAccredDate = new DateTime(2016,5,6),
+                        EduAccredDate = new DateTime(2016, 5, 6),
                         EduAccredDateExpiration = new DateTime(2020, 10, 3),
-                        EduAccredNumber="1922"
+                        EduAccredNumber = "1922"
                     };
 
                     await context.EduAccreds.AddRangeAsync(svid1);
@@ -1513,17 +1527,17 @@ namespace KisVuzDotNetCore2.Models
                     };
 
                     await context.Addresses.AddRangeAsync(
-                        addressPers, 
-                        addressLenina21, 
-                        addressSovetskaya28, 
-                        addressLenina21_2, 
-                        addressSovetskaya15_4, 
+                        addressPers,
+                        addressLenina21,
+                        addressSovetskaya28,
+                        addressLenina21_2,
+                        addressSovetskaya15_4,
                         addressLenina19_a,
                         addressSovetskaya17_21);
                     await context.SaveChangesAsync();
                 }
                 #endregion
-                
+
                 #region Инициализация таблицы "Университеты"
                 if (!await context.StructUniversities.AnyAsync())
                 {
@@ -1556,9 +1570,9 @@ namespace KisVuzDotNetCore2.Models
                         WorkingSchedule = "График работы: понедельник-пятница с 8.00 до 17.00. Выходной — суббота, воскресенье",
                         UniversityId = 1,
                         AddressId = 4,
-                        Faxes=new List<Fax> { new Fax { FaxValue = "(886359) 43-3-80", FaxComment = "Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ" } },
-                        Emailes = new List<Email> {new Email { EmailValue = "achgaa@achgaa.ru", EmailComment = "Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ"} },
-                        Telephones =new List<Telephone>
+                        Faxes = new List<Fax> { new Fax { FaxValue = "(886359) 43-3-80", FaxComment = "Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ" } },
+                        Emailes = new List<Email> { new Email { EmailValue = "achgaa@achgaa.ru", EmailComment = "Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ" } },
+                        Telephones = new List<Telephone>
                         {
                             new Telephone{TelephoneNumber="(886359) 41-8-31", TelephoneComment="Приемная комиссия"},
                             new Telephone{TelephoneNumber="(886359) 43-3-80", TelephoneComment="Канцелярия"},
@@ -1579,8 +1593,8 @@ namespace KisVuzDotNetCore2.Models
                 {
                     StructSubvisionType structSubvisionType1 = new StructSubvisionType
                     {
-                        StructSubvisionTypeId=1,
-                        StructSubvisionTypeName="Органы управления образовательной организации"
+                        StructSubvisionTypeId = 1,
+                        StructSubvisionTypeName = "Органы управления образовательной организации"
                     };
 
                     StructSubvisionType structSubvisionType2 = new StructSubvisionType
@@ -1684,9 +1698,9 @@ namespace KisVuzDotNetCore2.Models
                         StructSubvisionFioChief = "Поваляева Елена Петровна",
                         StructSubvisionPostChiefId = 10,
                         StructSubvisionAdressId = 2,
-                        StructSubvisionSite ="",
-                        StructSubvisionEmail = new Email { EmailValue= "achgaa@itog.biz", EmailComment= "Отдел финансового планирования и бухгалтерского учета" },
-                        StructSubvisionTypeId=1
+                        StructSubvisionSite = "",
+                        StructSubvisionEmail = new Email { EmailValue = "achgaa@itog.biz", EmailComment = "Отдел финансового планирования и бухгалтерского учета" },
+                        StructSubvisionTypeId = 1
                     };
 
                     StructSubvision structSubvisionSpo = new StructSubvision
@@ -1946,7 +1960,7 @@ namespace KisVuzDotNetCore2.Models
                 {
                     StructFacultet facultetSpo = new StructFacultet
                     {
-                        StructFacultetId = 1,                     
+                        StructFacultetId = 1,
                         StructInstituteId = 1,
                         StructSubvisionId = 2
                     };
@@ -1960,14 +1974,14 @@ namespace KisVuzDotNetCore2.Models
 
                     StructFacultet facultetEnerg = new StructFacultet
                     {
-                        StructFacultetId = 3,                        
+                        StructFacultetId = 3,
                         StructInstituteId = 1,
                         StructSubvisionId = 4
                     };
 
                     StructFacultet facultetEconom = new StructFacultet
                     {
-                        StructFacultetId = 4,                        
+                        StructFacultetId = 4,
                         StructInstituteId = 1,
                         StructSubvisionId = 5
                     };
@@ -2124,7 +2138,7 @@ namespace KisVuzDotNetCore2.Models
 
                 #region Инициализация таблицы "Группы типов содержимого файла"
                 if (!await context.FileDataTypeGroups.AnyAsync())
-                {                    
+                {
                     FileDataTypeGroup fileDataTypeGroup1 = new FileDataTypeGroup
                     {
                         FileDataTypeGroupId = 1,
@@ -2152,14 +2166,16 @@ namespace KisVuzDotNetCore2.Models
                 }
                 #endregion
 
+
+
                 #region Инициализация таблицы "Типы содержимого файла"
                 if (!await context.FileDataTypes.AnyAsync())
                 {
                     FileDataType fileDataType1 = new FileDataType
                     {
-                        FileDataTypeId=1,
-                        FileDataTypeName="Положения о структурных подразделениях",
-                        FileDataTypeGroupId=1
+                        FileDataTypeId = 1,
+                        FileDataTypeName = "Положения о структурных подразделениях",
+                        FileDataTypeGroupId = 1
                     };
 
                     FileDataType fileDataType2 = new FileDataType
@@ -2218,23 +2234,112 @@ namespace KisVuzDotNetCore2.Models
 
                 #region Инициализация таблицы "Численность обучающихся"
                 if (!await context.EduChislens.AnyAsync())
-                {                    
+                {
                     foreach (var profile in context.EduProfiles)
                     {
-                        foreach(var form in context.EduForms)
+                        foreach (var form in context.EduForms)
                         {
                             EduChislen eduChislen = new EduChislen();
                             eduChislen.EduProfileId = profile.EduProfileId;
                             eduChislen.EduFormId = form.EduFormId;
-                            
+
                             await context.EduChislens.AddAsync(eduChislen);
                         }
                     }
 
-                    await context.SaveChangesAsync();                                        
+                    await context.SaveChangesAsync();
                 }
                 #endregion
-                                                             
+
+            }
+        }
+
+
+        public static async Task CreateRucovodstvo(IServiceProvider serviceProvider, IConfiguration configuration)
+        {
+            using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                AppIdentityDBContext context = serviceScope.ServiceProvider.GetService<AppIdentityDBContext>();
+
+                #region Инициализация таблицы "Руководство"
+                if (!await context.SvedenRucovodstvo.AnyAsync())
+                {
+                    Rucovodstvo SvedenRucovodstvo1 = new Rucovodstvo
+                    {
+                       Fio= "Серегин Александр Анатольевич",
+                       Post= "Директор",
+                       Telephone= "8(86359) 41-7-43",
+                       Email= "achgaa@achgaa.ru"
+                    };
+
+                    Rucovodstvo SvedenRucovodstvo2 = new Rucovodstvo
+                    {
+                        Fio = "Глечикова Наталья Александровна",
+                        Post = "И.о. зам. директора по учебной работе",
+                        Telephone = "8(86359) 42-1-76",
+                        Email = "achgaa@achgaa.ru"
+                    };
+
+                    Rucovodstvo SvedenRucovodstvo3 = new Rucovodstvo
+                    {
+                        Fio = "Юдаев Игорь Викторович",
+                        Post = "Зам. директора по научной работе",
+                        Telephone = "8(86359) 41-1-61",
+                        Email = "achgaa@achgaa.ru"
+                    };
+
+                    Rucovodstvo SvedenRucovodstvo4 = new Rucovodstvo
+                    {
+                        Fio = "Джанибеков Казбек Алиевич",
+                        Post = "Зам. директора по административно-хозяйственной работе",
+                        Telephone = "8(86359) 42-7-81",
+                        Email = "achgaa@achgaa.ru"
+                    };
+
+                    Rucovodstvo SvedenRucovodstvo5 = new Rucovodstvo
+                    {
+                        Fio = "Асатурян Сергей Вартанович",
+                        Post = "И.о. зам. директора по воспитательной работе",
+                        Telephone = "8(86359) 43-3-49",
+                        Email = "achgaa@achgaa.ru"
+                    };
+
+                    Rucovodstvo SvedenRucovodstvo6 = new Rucovodstvo
+                    {
+                        Fio = "Кабанов Александр Николаевич",
+                        Post = "И.о. зам. директора по социальной работе",
+                        Telephone = "8(86359) 34-6-12",
+                        Email = "achgaa@achgaa.ru"
+                    };
+
+                    Rucovodstvo SvedenRucovodstvo7 = new Rucovodstvo
+                    {
+                        Fio = "Бондаренко Анатолий Михайлович",
+                        Post = "И.о. зам. директора по связям с общественностью",
+                        Telephone = "8(86359) 41-3-65",
+                        Email = "achgaa@achgaa.ru"
+                    };
+
+                    Rucovodstvo SvedenRucovodstvo8 = new Rucovodstvo
+                    {
+                        Fio = "Меркулов Александр Филиппович",
+                        Post = "Директор агротехнологического центра",
+                        Telephone = "8(86359) 34-7-32",
+                        Email = "achgaa@achgaa.ru"
+                    };
+                    await context.SvedenRucovodstvo.AddRangeAsync(
+                        SvedenRucovodstvo1,
+                        SvedenRucovodstvo2,
+                        SvedenRucovodstvo3,
+                        SvedenRucovodstvo4,
+                        SvedenRucovodstvo5,
+                        SvedenRucovodstvo6,
+                        SvedenRucovodstvo7,
+                        SvedenRucovodstvo8
+                    );
+                    await context.SaveChangesAsync();
+                }
+                #endregion
             }
         }
     }
