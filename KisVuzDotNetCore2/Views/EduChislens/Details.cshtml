@@ -1,15 +1,26 @@
 ﻿@model KisVuzDotNetCore2.Models.Education.EduChislen
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Подробнее";
 }
 
-<h2>Details</h2>
+<h2>Подробнее</h2>
 
 <div>
-    <h4>EduChislen</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile.EduProfileName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.EduProfileName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm.EduFormName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.NumberBFpriem)
         </dt>
@@ -34,21 +45,9 @@
         <dd>
             @Html.DisplayFor(model => model.NumberPpriem)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EduForm)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EduForm.EduFormId)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EduProfile)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EduProfile.EduProfileId)
-        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.EduChislenId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.EduChislenId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" class="btn btn-default" >Отмена</a>
 </div>
