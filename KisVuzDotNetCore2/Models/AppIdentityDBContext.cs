@@ -248,6 +248,22 @@ namespace KisVuzDotNetCore2.Models
             {
                 AppIdentityDBContext context = serviceScope.ServiceProvider.GetService<AppIdentityDBContext>();
 
+                #region Инициализация таблицы "Свидетельства о гос. аккредитации"
+                if (!await context.EduAccreds.AnyAsync())
+                {
+                    EduAccred svid1 = new EduAccred
+                    {
+                        EduAccredId = 1,
+                        EduAccredDate = new DateTime(2016, 5, 6),
+                        EduAccredDateExpiration = new DateTime(2020, 10, 3),
+                        EduAccredNumber = "1922"
+                    };
+
+                    await context.EduAccreds.AddRangeAsync(svid1);
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
                 #region Инициализация таблицы "Курсы"
                 if (!await context.EduKurses.AnyAsync())
                 {
@@ -339,6 +355,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "08.00.00",
                             EduUgsName = "Техника и технологии строительства",
                             EduLevelId = 2,
+                            EduAccredId=1
                         };
                     EduUgs eduUgs21 =
                         new EduUgs
@@ -347,6 +364,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "21.00.00",
                             EduUgsName = "Прикладная геология, горное дело, нефтегазовое дело и геодезия",
                             EduLevelId = 2,
+                            EduAccredId = 1
                         };
 
                     EduUgs eduUgs23 =
@@ -356,6 +374,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "23.00.00",
                             EduUgsName = "Техника и технологии наземного транспорта",
                             EduLevelId = 2,
+                            EduAccredId = 1
                         };
 
                     EduUgs eduUgs35 =
@@ -365,6 +384,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "35.00.00",
                             EduUgsName = "Сельское, лесное и рыбное хозяйство",
                             EduLevelId = 2,
+                            EduAccredId = 1
                         };
 
                     EduUgs eduUgs38 =
@@ -374,6 +394,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "38.00.00",
                             EduUgsName = "Экономика и управление",
                             EduLevelId = 2,
+                            EduAccredId = 1
                         };
                     #endregion
 
@@ -385,6 +406,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "13.00.00",
                             EduUgsName = "Электро- и теплоэнергетика",
                             EduLevelId = 3,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs19VoBak =
                         new EduUgs
@@ -393,6 +415,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "19.00.00",
                             EduUgsName = "Промышленная экология и биотехнологии",
                             EduLevelId = 3,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs20VoBak =
                         new EduUgs
@@ -401,6 +424,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "20.00.00",
                             EduUgsName = "Техносферная безопасность и природообустройство",
                             EduLevelId = 3,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs21VoBak =
                         new EduUgs
@@ -409,6 +433,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "21.00.00",
                             EduUgsName = "Прикладная геология, горное дело, нефтегазовое дело и геодезия",
                             EduLevelId = 3,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs23VoBak =
                         new EduUgs
@@ -417,6 +442,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "23.00.00",
                             EduUgsName = "Техника и технологии наземного транспорта",
                             EduLevelId = 3,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs35VoBak =
                         new EduUgs
@@ -425,6 +451,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "35.00.00",
                             EduUgsName = "Сельское, лесное и рыбное хозяйство",
                             EduLevelId = 3,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs38VoBak =
                         new EduUgs
@@ -433,6 +460,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "38.00.00",
                             EduUgsName = "Экономика и управление",
                             EduLevelId = 3,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs44VoBak =
                         new EduUgs
@@ -441,6 +469,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "44.00.00",
                             EduUgsName = "Образование и педагогические науки",
                             EduLevelId = 3,
+                            EduAccredId = 1
                         };
                     #endregion
 
@@ -452,6 +481,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "13.00.00",
                             EduUgsName = "Электро- и теплоэнергетика",
                             EduLevelId = 4,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs23VoMag =
                         new EduUgs
@@ -460,6 +490,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "23.00.00",
                             EduUgsName = "Техника и технологии наземного транспорта",
                             EduLevelId = 4,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs35VoMag =
                         new EduUgs
@@ -468,6 +499,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "35.00.00",
                             EduUgsName = "Сельское, лесное и рыбное хозяйство",
                             EduLevelId = 4,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs38VoMag =
                         new EduUgs
@@ -476,6 +508,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "38.00.00",
                             EduUgsName = "Экономика и управление",
                             EduLevelId = 4,
+                            EduAccredId = 1
                         };
                     #endregion
 
@@ -487,6 +520,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "23.00.00",
                             EduUgsName = "Техника и технологии наземного транспорта",
                             EduLevelId = 5,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs38VoSpec =
                         new EduUgs
@@ -495,6 +529,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "38.00.00",
                             EduUgsName = "Экономика и управление",
                             EduLevelId = 5,
+                            EduAccredId = 1
                         };
                     #endregion
 
@@ -506,6 +541,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "06.00.00",
                             EduUgsName = "Биологические науки",
                             EduLevelId = 6,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs23VoAsp =
                         new EduUgs
@@ -514,6 +550,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "23.00.00",
                             EduUgsName = "Техника и технологии наземного транспорта",
                             EduLevelId = 6,
+                            EduAccredId = 1
                         };
                     EduUgs eduUgs35VoAsp =
                         new EduUgs
@@ -522,6 +559,7 @@ namespace KisVuzDotNetCore2.Models
                             EduUgsCode = "35.00.00",
                             EduUgsName = "Сельское, лесное и рыбное хозяйство",
                             EduLevelId = 6,
+                            EduAccredId = 1
                         };
                     #endregion
 
@@ -1452,23 +1490,7 @@ namespace KisVuzDotNetCore2.Models
                         eduYear14, eduYear15, eduYear16, eduYear17 });
                     await context.SaveChangesAsync();
                 }
-                #endregion
-
-                #region Инициализация таблицы "Свидетельства о гос. аккредитации"
-                if (!await context.EduAccreds.AnyAsync())
-                {
-                    EduAccred svid1 = new EduAccred
-                    {
-                        EduAccredId = 1,
-                        EduAccredDate = new DateTime(2016, 5, 6),
-                        EduAccredDateExpiration = new DateTime(2020, 10, 3),
-                        EduAccredNumber = "1922"
-                    };
-
-                    await context.EduAccreds.AddRangeAsync(svid1);
-                    await context.SaveChangesAsync();
-                }
-                #endregion
+                #endregion                                
             }
         }
 

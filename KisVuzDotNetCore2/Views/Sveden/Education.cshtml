@@ -23,11 +23,11 @@
                     <th>Языки, на которых осуществляется образование (обучение)</th>
                 </tr>
                 <tr>
-                    <td align=center>1</td>
-                    <td align=center>2</td>
-                    <td align=center>3</td>
-                    <td align=center>4</td>
-                    <td align=center>5</td>
+                    <th align=center>1</th>
+                    <th align=center>2</th>
+                    <th align=center>3</th>
+                    <th align=center>4</th>
+                    <th align=center>5</th>
                 </tr>
             </thead>
             @foreach (var item in t6eduAccred)
@@ -36,7 +36,7 @@
             <td itemprop="eduCode">@item.EduNapravlCode</td>
             <td itemprop="eduName">@item.EduNapravlName</td>
             <td itemprop="eduLevel">@item.EduUgs.EduLevel.EduLevelName</td>
-            <td itemprop="dateEnd">@item.EduUgs.EduAccred?.EduAccredDateExpiration</td>
+            <td itemprop="dateEnd">@item.EduUgs.EduAccred?.EduAccredDateExpiration.ToString("dd.MM.yyyy")</td>
             <td itemprop="language">Русский</td>
         </tr>
 }
@@ -44,7 +44,7 @@
     </div>
 </div>
 
-<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Информация о числе обучающихся по реализуемым образовательным программам за счет бюджетных ассигнований федерального бюджета,</br> бюджетов субъектов Российской Федерации, местных бюджетов и по договорам об образовании за счет физических и (или) юридических лиц</a>
+<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Информация о численности обучающихся по реализуемым образовательным программам за счет бюджетных ассигнований федерального бюджета,</br> бюджетов субъектов Российской Федерации, местных бюджетов и по договорам об образовании за счет средств физических и (или) юридических лиц</a>
 <div class="collapse" id="spoiler-2">
     <div class="well">
 
@@ -64,14 +64,14 @@
                     <th>средств физических и (или) юридических лиц</th>
                 </tr>
                 <tr>
-                    <td align=center>1</td>
-                    <td align=center>2</td>
-                    <td align=center>3</td>
-                    <td align=center>4</td>
-                    <td align=center>5</td>
-                    <td align=center>6</td>
-                    <td align=center>7</td>
-                    <td align=center>8</td>
+                    <td align=center><strong>1</strong></td>
+                    <td align=center><strong>2</strong></td>
+                    <td align=center><strong>3</strong></td>
+                    <td align=center><strong>4</strong></td>
+                    <td align=center><strong>5</strong></td>
+                    <td align=center><strong>6</strong></td>
+                    <td align=center><strong>7</strong></td>
+                    <td align=center><strong>8</strong></td>
                 </tr>
             </thead>
                 @foreach (var item in t7eduChislen)
