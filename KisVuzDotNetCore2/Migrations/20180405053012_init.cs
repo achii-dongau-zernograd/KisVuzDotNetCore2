@@ -556,8 +556,8 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     EduNapravlId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    EduNapravCode = table.Column<string>(nullable: true),
-                    EduNapravName = table.Column<string>(nullable: true),
+                    EduNapravlCode = table.Column<string>(nullable: true),
+                    EduNapravlName = table.Column<string>(nullable: true),
                     EduNapravlStandartDocLink = table.Column<string>(nullable: true),
                     EduUgsId = table.Column<int>(nullable: false)
                 },

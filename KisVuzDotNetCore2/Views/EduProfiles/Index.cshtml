@@ -32,7 +32,7 @@
                     foreach (var napravl in ugs.EduNapravls)
                     {
                         <tr>
-                            <td colspan="2" class="well text-center text-info">@Html.DisplayFor(modelNapravl => napravl.EduNapravCode) - @Html.DisplayFor(modelNapravl => napravl.EduNapravName)</td>
+                            <td colspan="2" class="well text-center text-info">@Html.DisplayFor(modelNapravl => napravl.EduNapravlCode) - @Html.DisplayFor(modelNapravl => napravl.EduNapravlName)</td>
                         </tr>
                     foreach (var profile in napravl.EduProfiles)
                     {
@@ -42,9 +42,9 @@
                             </td>
 
                             <td>
-                                <a asp-action="Edit" asp-route-id="@level.EduLevelId">Редактировать</a> |
-                                <a asp-action="Details" asp-route-id="@level.EduLevelId">Подробнее</a> |
-                                <a asp-action="Delete" asp-route-id="@level.EduLevelId">Удалить</a>
+                                <a asp-action="Edit" asp-route-id="@profile.EduProfileId">Редактировать</a> |
+                                <a asp-action="Details" asp-route-id="@profile.EduProfileId">Подробнее</a> |
+                                <a asp-action="Delete" asp-route-id="@profile.EduProfileId">Удалить</a>
                             </td>
 
                         </tr>

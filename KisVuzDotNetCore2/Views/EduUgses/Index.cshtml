@@ -43,7 +43,7 @@
         @foreach (var eduLevel in eduLevelNames)
         {
             <tr>
-                <td colspan="3" class="well"><h4>@eduLevel</h4></td>
+                <td colspan="4" class="well"><h4>@eduLevel</h4></td>
             </tr>
             foreach (var item in Model.Where(ugs => ugs.EduLevel.EduLevelName == eduLevel))
             {

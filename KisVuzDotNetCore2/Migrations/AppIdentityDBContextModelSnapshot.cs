@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace KisVuzDotNetCore2.Migrations
@@ -169,9 +167,9 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("EduNapravlId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("EduNapravCode");
+                    b.Property<string>("EduNapravlCode");
 
-                    b.Property<string>("EduNapravName");
+                    b.Property<string>("EduNapravlName");
 
                     b.Property<string>("EduNapravlStandartDocLink");
 

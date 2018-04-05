@@ -21,10 +21,12 @@ namespace KisVuzDotNetCore2.Controllers
 
         // GET: EduProfiles
         public async Task<IActionResult> Index()
-        {
-            //var appIdentityDBContext = _context.EduProfiles.Include(e => e.EduNapravl);            
-            //return View(await appIdentityDBContext.ToListAsync());
-            var allProfiles = await _context.EduLevels.Include(a => a.EduUgses).ThenInclude(u => u.EduNapravls).ThenInclude(n => n.EduProfiles).ToListAsync();
+        {            
+            var allProfiles = await _context.EduLevels
+                .Include(a => a.EduUgses)
+                    .ThenInclude(u => u.EduNapravls)
+                        .ThenInclude(n => n.EduProfiles)
+                .ToListAsync();
             
             return View(allProfiles);
         }
@@ -49,9 +51,9 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         // GET: EduProfiles/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravName");
+            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlName",id);
             return View();
         }
 
@@ -85,7 +87,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravName", eduProfile.EduNapravlId);
+            ViewData["EduNapravls"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlName", eduProfile.EduNapravlId);
             return View(eduProfile);
         }
 
@@ -94,7 +96,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EduProfileId,EduProfileName,EduNapravlId")] EduProfile eduProfile)
+        public async Task<IActionResult> Edit(int id, EduProfile eduProfile)
         {
             if (id != eduProfile.EduProfileId)
             {
@@ -105,7 +107,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 try
                 {
-                    _context.Update(eduProfile);
+                    _context.EduProfiles.Update(eduProfile);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -121,7 +123,7 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlId", eduProfile.EduNapravlId);
+            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlName", eduProfile.EduNapravlId);
             return View(eduProfile);
         }
 

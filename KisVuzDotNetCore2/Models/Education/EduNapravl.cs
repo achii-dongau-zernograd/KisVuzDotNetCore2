@@ -20,13 +20,13 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Код направления подготовки
         /// </summary>
         [Display (Name= "Код направления подготовки")]
-        public string EduNapravCode { get; set; }
+        public string EduNapravlCode { get; set; }
 
         /// <summary>
         /// Наименование направления подготовки
         /// </summary>
         [Display (Name= "Наименование направления подготовки")]
-        public string EduNapravName { get; set; }
+        public string EduNapravlName { get; set; }
 
         /// <summary>
         /// Ссылка на файл образовательного стандарта

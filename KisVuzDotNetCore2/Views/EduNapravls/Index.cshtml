@@ -19,10 +19,10 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.EduNapravCode)
+                    @Html.DisplayNameFor(model => model.EduNapravlCode)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.EduNapravName)
+                    @Html.DisplayNameFor(model => model.EduNapravlName)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.EduNapravlStandartDocLink)
@@ -42,10 +42,10 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.EduNapravCode)
+                            @Html.DisplayFor(modelItem => item.EduNapravlCode)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.EduNapravName)
+                            @Html.DisplayFor(modelItem => item.EduNapravlName)
                         </td>                        
                         <td>
                             @if (!String.IsNullOrWhiteSpace(item.EduNapravlStandartDocLink))
@@ -55,7 +55,7 @@
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.EduNapravlId">Редактировать</a> |
-                            <a asp-controller="EduUgses" asp-action="Create" asp-route-id="@item.EduUgsId">Добавить УГС</a>
+                            <a asp-controller="EduProfiles" asp-action="Create" asp-route-id="@item.EduNapravlId">Добавить профиль подготовки</a> |
                             <a asp-action="Details" asp-route-id="@item.EduNapravlId">Подробнее </a> |
                             <a asp-action="Delete" asp-route-id="@item.EduNapravlId">Удалить</a>
                         </td>

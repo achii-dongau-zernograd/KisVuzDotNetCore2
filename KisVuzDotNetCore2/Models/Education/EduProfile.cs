@@ -23,20 +23,20 @@ namespace KisVuzDotNetCore2.Models.Education
         [Display(Name = "Наименование профиля подготовки (направленности, специальности)")]
         public string EduProfileName { get; set; }
 
-
-        //public StructKaf
-
-
-        public List<EduPlan> EduPlans = new List<EduPlan>();
+        /// <summary>
+        /// Учебные планы по профилю подготовки
+        /// </summary>
+        [Display(Name = "Учебные планы")]
+        public List<EduPlan> EduPlans { get; set; }
 
         [Display(Name = "Направление специальности, направление подготовки")]
         public string GetEduProfileFullName
         {
             get
             {
-                return EduNapravl.EduUgs.EduLevel.EduLevelName + " – "
-                    + EduNapravl.EduNapravCode + " – "
-                    + EduNapravl.EduNapravName + " – ";
+                return EduNapravl?.EduUgs?.EduLevel?.EduLevelName + " – "
+                    + EduNapravl?.EduNapravlCode + " – "
+                    + EduNapravl?.EduNapravlName + " – ";
             }
         }
 

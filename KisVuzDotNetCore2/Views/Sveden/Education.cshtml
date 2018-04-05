@@ -33,8 +33,8 @@
             @foreach (var item in t6eduAccred)
     {
         <tr itemprop="eduAccred">
-            <td itemprop="eduCode">@item.EduNapravCode</td>
-            <td itemprop="eduName">@item.EduNapravName</td>
+            <td itemprop="eduCode">@item.EduNapravlCode</td>
+            <td itemprop="eduName">@item.EduNapravlName</td>
             <td itemprop="eduLevel">@item.EduUgs.EduLevel.EduLevelName</td>
             <td itemprop="dateEnd">@item.EduUgs.EduAccred?.EduAccredDateExpiration</td>
             <td itemprop="language">Русский</td>
@@ -77,8 +77,8 @@
                 @foreach (var item in t7eduChislen)
         {
             <tr itemprop="eduChislen">
-                <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravCode</td>
-                <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravName</td>
+                <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
+                <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName</td>
                 <td itemprop="eduLevel">@item.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
                 <td itemprop="eduForm">@item.EduForm.EduFormName</td>
                 <td itemprop="NumberBFpriem" align=center>@item.NumberBFpriem</td>

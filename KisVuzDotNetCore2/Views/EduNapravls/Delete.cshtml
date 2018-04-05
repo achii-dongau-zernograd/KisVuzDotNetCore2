@@ -10,28 +10,28 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.EduNapravCode)
+            @Html.DisplayNameFor(model => model.EduNapravlCode)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduNapravCode)
+            @Html.DisplayFor(model => model.EduNapravlCode)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EduNapravName)
+            @Html.DisplayNameFor(model => model.EduNapravlName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduNapravName)
+            @Html.DisplayFor(model => model.EduNapravlName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.EduUgs)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduUgs.EduUgsId)
+            @Html.DisplayFor(model => model.EduUgs.EduUgsFullName)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="EduNapravlId" />
-        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <input type="submit" value="Удалить" class="btn btn-danger" />
         <a asp-action="Index" class="btn btn-default" >Отмена</a>
     </form>
 </div>

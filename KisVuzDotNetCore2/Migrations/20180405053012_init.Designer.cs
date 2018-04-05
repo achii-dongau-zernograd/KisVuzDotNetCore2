@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180404132847_init")]
+    [Migration("20180405053012_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,9 +170,9 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("EduNapravlId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("EduNapravCode");
+                    b.Property<string>("EduNapravlCode");
 
-                    b.Property<string>("EduNapravName");
+                    b.Property<string>("EduNapravlName");
 
                     b.Property<string>("EduNapravlStandartDocLink");
 
