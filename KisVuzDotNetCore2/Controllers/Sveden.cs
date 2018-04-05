@@ -89,7 +89,13 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Document()
         {
-            return View();
+            var docs = await _context.FileDataTypeGroups.Where(g => g.FileDataTypeGroupName == "Сведения об образовательной организации - Документы")
+                .Include(g => g.FileDataTypes)
+                    .ThenInclude(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft=>ftft.FileModel)
+                .FirstOrDefaultAsync();
+                //.ToListAsync();
+            return View(docs);
         }
 
         /// <summary>

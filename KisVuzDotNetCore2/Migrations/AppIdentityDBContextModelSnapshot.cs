@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace KisVuzDotNetCore2.Migrations
@@ -282,6 +284,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("FileDataTypeGroupId");
 
                     b.Property<string>("FileDataTypeName");
+
+                    b.Property<string>("Itemprop");
 
                     b.HasKey("FileDataTypeId");
 
@@ -767,7 +771,7 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
-                        .WithMany()
+                        .WithMany("EduPlans")
                         .HasForeignKey("EduProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
 

@@ -49,7 +49,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: FileDataTypes/Create
         public IActionResult Create()
         {
-            ViewData["FileDataTypeGroupId"] = new SelectList(_context.FileDataTypeGroups, "FileDataTypeGroupId", "FileDataTypeGroupId");
+            ViewData["FileDataTypeGroups"] = new SelectList(_context.FileDataTypeGroups, "FileDataTypeGroupId", "FileDataTypeGroupName");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FileDataTypeId,FileDataTypeName,FileDataTypeGroupId")] FileDataType fileDataType)
+        public async Task<IActionResult> Create(FileDataType fileDataType)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FileDataTypeGroupId"] = new SelectList(_context.FileDataTypeGroups, "FileDataTypeGroupId", "FileDataTypeGroupId", fileDataType.FileDataTypeGroupId);
+            ViewData["FileDataTypeGroups"] = new SelectList(_context.FileDataTypeGroups, "FileDataTypeGroupId", "FileDataTypeGroupName", fileDataType.FileDataTypeGroupId);
             return View(fileDataType);
         }
 
@@ -83,7 +83,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["FileDataTypeGroupId"] = new SelectList(_context.FileDataTypeGroups, "FileDataTypeGroupId", "FileDataTypeGroupId", fileDataType.FileDataTypeGroupId);
+            ViewData["FileDataTypeGroups"] = new SelectList(_context.FileDataTypeGroups, "FileDataTypeGroupId", "FileDataTypeGroupName", fileDataType.FileDataTypeGroupId);
             return View(fileDataType);
         }
 
@@ -92,7 +92,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FileDataTypeId,FileDataTypeName,FileDataTypeGroupId")] FileDataType fileDataType)
+        public async Task<IActionResult> Edit(int id, FileDataType fileDataType)
         {
             if (id != fileDataType.FileDataTypeId)
             {
@@ -119,7 +119,7 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FileDataTypeGroupId"] = new SelectList(_context.FileDataTypeGroups, "FileDataTypeGroupId", "FileDataTypeGroupId", fileDataType.FileDataTypeGroupId);
+            ViewData["FileDataTypeGroups"] = new SelectList(_context.FileDataTypeGroups, "FileDataTypeGroupId", "FileDataTypeGroupName", fileDataType.FileDataTypeGroupId);
             return View(fileDataType);
         }
 

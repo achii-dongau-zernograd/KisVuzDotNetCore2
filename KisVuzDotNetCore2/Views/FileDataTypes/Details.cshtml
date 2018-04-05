@@ -1,15 +1,20 @@
 ﻿@model KisVuzDotNetCore2.Models.FileDataType
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Сведения о типе содержимого файлов";
 }
 
-<h2>Details</h2>
+<h2>Сведения о типе содержимого файлов</h2>
 
 <div>
-    <h4>FileDataType</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FileDataTypeGroup)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileDataTypeGroup.FileDataTypeGroupName)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.FileDataTypeName)
         </dt>
@@ -17,14 +22,14 @@
             @Html.DisplayFor(model => model.FileDataTypeName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.FileDataTypeGroup)
+            @Html.DisplayNameFor(model => model.Itemprop)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.FileDataTypeGroup.FileDataTypeGroupId)
+            @Html.DisplayFor(model => model.Itemprop)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.FileDataTypeId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.FileDataTypeId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" class="btn btn-default">Отмена</a>
 </div>

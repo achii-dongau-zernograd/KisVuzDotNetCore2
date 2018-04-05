@@ -1,4 +1,4 @@
-﻿ using KisVuzDotNetCore2.Models.Education;
+﻿using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Priem;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Sveden;
@@ -2214,7 +2214,7 @@ namespace KisVuzDotNetCore2.Models
                     FileDataTypeGroup fileDataTypeGroup3 = new FileDataTypeGroup
                     {
                         FileDataTypeGroupId = 3,
-                        FileDataTypeGroupName = "Подраздел \"Документы\""
+                        FileDataTypeGroupName = "Сведения об образовательной организации - Документы"
                     };
 
                     await context.FileDataTypeGroups.AddRangeAsync(
@@ -2225,9 +2225,7 @@ namespace KisVuzDotNetCore2.Models
                     await context.SaveChangesAsync();
                 }
                 #endregion
-
-
-
+                
                 #region Инициализация таблицы "Типы содержимого файла"
                 if (!await context.FileDataTypes.AnyAsync())
                 {
@@ -2249,6 +2247,7 @@ namespace KisVuzDotNetCore2.Models
                     {
                         FileDataTypeId = 3,
                         FileDataTypeName = "Устав образовательной организации",
+                        Itemprop="ustavDocLink",
                         FileDataTypeGroupId = 3
                     };
 
@@ -2256,6 +2255,7 @@ namespace KisVuzDotNetCore2.Models
                     {
                         FileDataTypeId = 4,
                         FileDataTypeName = "Лицензия на осуществление образовательной деятельности",
+                        Itemprop = "licenseDocLink",
                         FileDataTypeGroupId = 3
                     };
 
@@ -2263,25 +2263,177 @@ namespace KisVuzDotNetCore2.Models
                     {
                         FileDataTypeId = 5,
                         FileDataTypeName = "Свидетельство о государственной аккредитации (с приложениями)",
+                        Itemprop = "accreditationDocLink",
                         FileDataTypeGroupId = 3
                     };
 
+                    FileDataType fileDataType6 = new FileDataType
+                    {
+                        FileDataTypeId = 6,
+                        FileDataTypeName = "План финансово-хозяйственной деятельности образовательной организации",
+                        Itemprop = "finPlanDocLink",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType7 = new FileDataType
+                    {
+                        FileDataTypeId = 7,
+                        FileDataTypeName = "Локальные нормативные акты, регламентирующие правила приема обучающихся",
+                        Itemprop = "priemDocLink",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType8 = new FileDataType
+                    {
+                        FileDataTypeId = 8,
+                        FileDataTypeName = "Локальные нормативные акты, регламентирующие режим занятий обучающихся",
+                        Itemprop = "modeDocLink",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType9 = new FileDataType
+                    {
+                        FileDataTypeId = 9,
+                        FileDataTypeName = "Локальные нормативные акты, регламентирующие формы, периодичность и порядок текущего контроля успеваемости и промежуточной аттестации обучающихся",
+                        Itemprop = "tek_KontrolDocLink",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType10 = new FileDataType
+                    {
+                        FileDataTypeId = 10,
+                        FileDataTypeName = "Локальные нормативные акты, регламентирующие порядок и основания перевода, отчисления и восстановления обучающихся",
+                        Itemprop = "perevodDocLink",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType11 = new FileDataType
+                    {
+                        FileDataTypeId = 11,
+                        FileDataTypeName = "Локальные нормативные акты, регламентирующие порядок оформления возникновения, приостановления и прекращения отношений между образовательной организацией, обучающимися и (или) родителями (законными представителями) несовершеннолетних обучающихся",
+                        Itemprop = "vozDocLink",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType12 = new FileDataType
+                    {
+                        FileDataTypeId = 12,
+                        FileDataTypeName = "Правила внутреннего распорядка обучающихся",
+                        Itemprop = "localActStud",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType13 = new FileDataType
+                    {
+                        FileDataTypeId = 13,
+                        FileDataTypeName = "Правила внутреннего трудового распорядка",
+                        Itemprop = "localActOrder",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType14 = new FileDataType
+                    {
+                        FileDataTypeId = 14,
+                        FileDataTypeName = "Коллективный договор",
+                        Itemprop = "localActCollec",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType15 = new FileDataType
+                    {
+                        FileDataTypeId = 15,
+                        FileDataTypeName = "Отчет о результатах самообследования",
+                        Itemprop = "reportEduDocLink",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType16 = new FileDataType
+                    {
+                        FileDataTypeId = 16,
+                        FileDataTypeName = "Документ о порядке оказания платных образовательных услуг",
+                        Itemprop = "paidEduDocLink",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType17 = new FileDataType
+                    {
+                        FileDataTypeId = 17,
+                        FileDataTypeName = "Образец договора об оказании платных образовательных услуг",
+                        Itemprop = "paidEduDogDocLink",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType18 = new FileDataType
+                    {
+                        FileDataTypeId = 18,
+                        FileDataTypeName = "Документ об утверждении стоимости обучения по каждой образовательной программе",
+                        Itemprop = "paidEduStoimDocLink",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType19 = new FileDataType
+                    {
+                        FileDataTypeId = 19,
+                        FileDataTypeName = "Предписания органов, осуществляющих государственный контроль (надзор) в сфере образования",
+                        Itemprop = "prescriptionDocLink",
+                        FileDataTypeGroupId = 3
+                    };
+
+                    FileDataType fileDataType20 = new FileDataType
+                    {
+                        FileDataTypeId = 20,
+                        FileDataTypeName = "Отчеты об исполнении предписаний органов, осуществляющих государственный контроль (надзор) в сфере образования",
+                        Itemprop = "prescriptionOtchetDocLink",
+                        FileDataTypeGroupId = 3
+                    };
 
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
                         fileDataType3,
                         fileDataType4,
-                        fileDataType5
+                        fileDataType5,
+                        fileDataType6,
+                        fileDataType7,
+                        fileDataType8,
+                        fileDataType9,
+                        fileDataType10,
+                        fileDataType11,
+                        fileDataType12,
+                        fileDataType13,
+                        fileDataType14,
+                        fileDataType15,
+                        fileDataType16,
+                        fileDataType17,
+                        fileDataType18,
+                        fileDataType19,
+                        fileDataType20
                         );
                     await context.SaveChangesAsync();
                 }
-                #endregion                                
+                #endregion
+
+                #region Заполнение тестовыми данными таблицы "Файлы"
+                if (!await context.Files.AnyAsync())
+                {
+                    FileModel fileDataTypeGroup1 = new FileModel
+                    {                        
+                        Name="Описание файла",
+                        FileToFileTypes=new List<FileToFileType> { new FileToFileType { FileDataTypeId=3} }
+                    };
+                                        
+
+                    await context.Files.AddRangeAsync(
+                        fileDataTypeGroup1
+                    );
+                    await context.SaveChangesAsync();
+                }
+                #endregion
             }
         }
 
         /// <summary>
-        /// Инициализация данных, связанных с файловыми операциями
+        /// Инициализация данных, связанных с численность обучающихся
         /// </summary>
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
@@ -2314,7 +2466,12 @@ namespace KisVuzDotNetCore2.Models
             }
         }
 
-
+        /// <summary>
+        /// Инициализация таблицы "Руководство"
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
         public static async Task CreateRucovodstvo(IServiceProvider serviceProvider, IConfiguration configuration)
         {
             using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())

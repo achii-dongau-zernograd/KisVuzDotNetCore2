@@ -17,10 +17,17 @@ namespace KisVuzDotNetCore2.Models
         public string FileDataTypeName { get; set; }
 
         /// <summary>
+        /// itemprop
+        /// </summary>
+        public string Itemprop { get; set; }
+
+
+        /// <summary>
         /// Назначение файлу набора типов данных
         /// </summary>
         public List<FileToFileType> FileToFileTypes { get; set; }
 
+        [Display(Name = "Группа типов содержимого")]
         public int FileDataTypeGroupId { get; set; }
         [Display(Name = "Группа типов содержимого")]
         public FileDataTypeGroup FileDataTypeGroup { get; set; }

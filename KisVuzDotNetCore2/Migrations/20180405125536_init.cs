@@ -346,7 +346,8 @@ namespace KisVuzDotNetCore2.Migrations
                     FileDataTypeId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     FileDataTypeGroupId = table.Column<int>(nullable: false),
-                    FileDataTypeName = table.Column<string>(nullable: true)
+                    FileDataTypeName = table.Column<string>(nullable: true),
+                    Itemprop = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

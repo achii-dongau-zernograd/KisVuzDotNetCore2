@@ -1,16 +1,21 @@
 ﻿@model KisVuzDotNetCore2.Models.FileDataType
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Удаление типа файлов";
 }
 
-<h2>Delete</h2>
+<h2>Удаление типа файлов</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>FileDataType</h4>
+<h3>Вы действительно хотите удалить объект?</h3>
+<div>    
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FileDataTypeGroup)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileDataTypeGroup.FileDataTypeGroupName)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.FileDataTypeName)
         </dt>
@@ -18,16 +23,16 @@
             @Html.DisplayFor(model => model.FileDataTypeName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.FileDataTypeGroup)
+            @Html.DisplayNameFor(model => model.Itemprop)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.FileDataTypeGroup.FileDataTypeGroupId)
+            @Html.DisplayFor(model => model.Itemprop)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="FileDataTypeId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
     </form>
 </div>

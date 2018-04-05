@@ -130,6 +130,8 @@
     <Compile Remove="Migrations\20180404132847_init.Designer.cs" />
     <Compile Remove="Migrations\20180405045030_init.cs" />
     <Compile Remove="Migrations\20180405045030_init.Designer.cs" />
+    <Compile Remove="Migrations\20180405053012_init.cs" />
+    <Compile Remove="Migrations\20180405053012_init.Designer.cs" />
     <Compile Remove="Migrations\20180405055221_p.cs" />
     <Compile Remove="Migrations\20180405055221_p.Designer.cs" />
   </ItemGroup>

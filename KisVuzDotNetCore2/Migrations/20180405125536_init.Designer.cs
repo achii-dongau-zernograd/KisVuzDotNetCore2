@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180405053012_init")]
+    [Migration("20180405125536_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -285,6 +285,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("FileDataTypeGroupId");
 
                     b.Property<string>("FileDataTypeName");
+
+                    b.Property<string>("Itemprop");
 
                     b.HasKey("FileDataTypeId");
 
@@ -770,7 +772,7 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
-                        .WithMany()
+                        .WithMany("EduPlans")
                         .HasForeignKey("EduProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
 

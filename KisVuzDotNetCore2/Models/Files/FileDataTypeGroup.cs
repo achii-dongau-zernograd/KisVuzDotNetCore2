@@ -7,7 +7,7 @@ namespace KisVuzDotNetCore2.Models
     /// Группа типов данных файлов
     /// </summary>
     public class FileDataTypeGroup
-    {
+    {        
         public int FileDataTypeGroupId { get; set; }
 
         /// <summary>
