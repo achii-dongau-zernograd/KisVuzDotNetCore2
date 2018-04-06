@@ -63,7 +63,7 @@ namespace KisVuzDotNetCore2.Models
 
         [DataType(DataType.Date)]
         [Display(Name = "Дата рождения")]
-        public DateTime Birthdate { get; set; }
+        public DateTime? Birthdate { get; set; }
 
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -76,5 +76,30 @@ namespace KisVuzDotNetCore2.Models
 
         [Display(Name = "Фотография пользователя")]
         public IFormFile AppUserPhotoFile { get; set; }
+
+        [Display(Name = "Уровень образования")]
+        public int? EduLevelGroupId { get; set; }
+
+        [Display(Name = "Ученая степень")]
+        public int? AcademicDegreeId { get; set; }
+
+        [Display(Name = "Ученое звание")]
+        public int? AcademicStatId { get; set; }
+
+        /// <summary>
+        /// Дата отсчета общего стажа работы
+        /// (дата начала трудовой деятельности)
+        /// </summary>
+        [DataType(DataType.Date)]
+        [Display(Name = "Дата начала трудовой деятельности")]
+        public DateTime? DateStartWorking { get; set; }
+
+        /// <summary>
+        /// Дата отсчета стажа работы по специальности
+        /// (дата начала трудовой деятельности по специальности)
+        /// </summary>
+        [DataType(DataType.Date)]
+        [Display(Name = "Дата начала трудовой деятельности по специальности")]
+        public DateTime? DateStartWorkingSpec { get; set; }
     }
 }

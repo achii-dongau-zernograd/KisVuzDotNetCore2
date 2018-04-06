@@ -9,35 +9,66 @@
     <img style='width:80px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.AppUserPhoto))" />
 }
 
-<form asp-action="ChangeProfile" method="post" enctype="multipart/form-data">
+    <form asp-action="ChangeProfile" method="post" enctype="multipart/form-data">
 
-    <div class="form-group">
-        <label asp-for="AppUserPhotoFile"></label>
-        <input asp-for="AppUserPhotoFile" type="file" class="form-control" />
-    </div>    
-    <div class="form-group">
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Patronymic"></label>
-        <input asp-for="Patronymic" class="form-control" />
-    </div>
+        <div class="form-group">
+            <label asp-for="AppUserPhotoFile"></label>
+            <input asp-for="AppUserPhotoFile" type="file" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Patronymic"></label>
+            <input asp-for="Patronymic" class="form-control" />
+        </div>
 
-    <div class="form-group">
-        <label asp-for="Birthdate"></label>
-        <input asp-for="Birthdate" class="form-control" />
-    </div>
-    
-    <div class="form-group">
-        <label asp-for="PhoneNumber"></label>
-        <input asp-for="PhoneNumber" class="form-control" />
-    </div>
+        <div class="form-group">
+            <label asp-for="Birthdate"></label>
+            <input asp-for="Birthdate" class="form-control" />
+        </div>
 
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-    <a asp-action="Index" class="btn btn-default">Отмена</a>
-</form>
+        <div class="form-group">
+            <label asp-for="PhoneNumber"></label>
+            <input asp-for="PhoneNumber" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EduLevelGroupId"></label>
+            <select asp-for="EduLevelGroupId" class="form-control" asp-items="ViewBag.EduLevelGroups">
+                <option value="">Не выбрано</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="AcademicDegreeId"></label>
+            <select asp-for="AcademicDegreeId" class="form-control" asp-items="ViewBag.AcademicDegrees">
+                <option value="">Не выбрано</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="AcademicStatId"></label>
+            <select asp-for="AcademicStatId" class="form-control" asp-items="ViewBag.AcademicStats">
+                <option value="">Не выбрано</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DateStartWorking"></label>
+            <input asp-for="DateStartWorking" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DateStartWorkingSpec"></label>
+            <input asp-for="DateStartWorkingSpec" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>

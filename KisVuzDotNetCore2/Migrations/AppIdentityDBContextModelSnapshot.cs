@@ -20,19 +20,69 @@ namespace KisVuzDotNetCore2.Migrations
                 .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.AcademicDegree", b =>
+                {
+                    b.Property<int>("AcademicDegreeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AcademicDegreeGroupId");
+
+                    b.Property<string>("AcademicDegreeName");
+
+                    b.HasKey("AcademicDegreeId");
+
+                    b.HasIndex("AcademicDegreeGroupId");
+
+                    b.ToTable("AcademicDegrees");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.AcademicDegreeGroup", b =>
+                {
+                    b.Property<int>("AcademicDegreeGroupId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AcademicDegreeGroupName");
+
+                    b.HasKey("AcademicDegreeGroupId");
+
+                    b.ToTable("AcademicDegreeGroups");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.AcademicStat", b =>
+                {
+                    b.Property<int>("AcademicStatId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AcademicStatName");
+
+                    b.HasKey("AcademicStatId");
+
+                    b.ToTable("AcademicStats");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("AcademicDegreeId");
+
+                    b.Property<int?>("AcademicStatId");
+
                     b.Property<int>("AccessFailedCount");
 
                     b.Property<byte[]>("AppUserPhoto");
 
-                    b.Property<DateTime>("Birthdate");
+                    b.Property<DateTime?>("Birthdate");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<DateTime?>("DateStartWorking");
+
+                    b.Property<DateTime?>("DateStartWorkingSpec");
+
+                    b.Property<int?>("EduLevelGroupId");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -69,6 +119,12 @@ namespace KisVuzDotNetCore2.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AcademicDegreeId");
+
+                    b.HasIndex("AcademicStatId");
+
+                    b.HasIndex("EduLevelGroupId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -276,6 +332,18 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("EduYearBeginningTrainings");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.EduLevelGroup", b =>
+                {
+                    b.Property<int>("EduLevelGroupId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("EduLevelGroupName");
+
+                    b.HasKey("EduLevelGroupId");
+
+                    b.ToTable("EduLevelGroups");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.FileDataType", b =>
                 {
                     b.Property<int>("FileDataTypeId")
@@ -372,6 +440,24 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("EduNapravlId");
 
                     b.ToTable("Vacants");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Qualification", b =>
+                {
+                    b.Property<int>("QualificationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<string>("NapravlName");
+
+                    b.Property<string>("QualificationName");
+
+                    b.HasKey("QualificationId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Qualifications");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Address", b =>
@@ -735,6 +821,29 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.AcademicDegree", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.AcademicDegreeGroup", "AcademicDegreeGroup")
+                        .WithMany("AcademicDegrees")
+                        .HasForeignKey("AcademicDegreeGroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.AppUser", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.AcademicDegree", "AcademicDegree")
+                        .WithMany()
+                        .HasForeignKey("AcademicDegreeId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.AcademicStat", "AcademicStat")
+                        .WithMany()
+                        .HasForeignKey("AcademicStatId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.EduLevelGroup", "EduLevelGroup")
+                        .WithMany()
+                        .HasForeignKey("EduLevelGroupId");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduAccred", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "EduAccredFile")
@@ -846,6 +955,13 @@ namespace KisVuzDotNetCore2.Migrations
                         .WithMany()
                         .HasForeignKey("EduNapravlId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Qualification", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser")
+                        .WithMany("Qualifications")
+                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Email", b =>

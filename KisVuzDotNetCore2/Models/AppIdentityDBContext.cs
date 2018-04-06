@@ -28,6 +28,11 @@ namespace KisVuzDotNetCore2.Models
 
         #region Образовательная деятельность (Education)
         /// <summary>
+        /// Обобщенные уровни образования
+        /// </summary>
+        public DbSet<EduLevelGroup> EduLevelGroups { get; set; }
+
+        /// <summary>
         /// Уровни образования
         /// </summary>
         public DbSet<EduLevel> EduLevels { get; set; }
@@ -180,6 +185,30 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<Vacant> Vacants { get; set; }
         #endregion
 
+        #region Настройки пользователя
+        /// <summary>
+        /// Группы ученых степеней
+        /// </summary>
+        public DbSet<AcademicDegreeGroup> AcademicDegreeGroups { get; set; }
+
+        /// <summary>
+        /// Ученые степени
+        /// </summary>
+        public DbSet<AcademicDegree> AcademicDegrees { get; set; }
+               
+
+
+        /// <summary>
+        /// Ученые звания
+        /// </summary>
+        public DbSet<AcademicStat> AcademicStats { get; set; }
+
+        /// <summary>
+        /// Квалификации и направления подготовки
+        /// </summary>
+        public DbSet<Qualification> Qualifications { get; set; }
+        #endregion
+
         #endregion
 
         /// <summary>
@@ -191,6 +220,7 @@ namespace KisVuzDotNetCore2.Models
         public static async Task InitDatabase(IServiceProvider serviceProvider, IConfiguration configuration)
         {
             await CreateAdminAccount(serviceProvider, configuration);
+            await CreateUserData(serviceProvider, configuration);
             await CreateEducationData(serviceProvider, configuration);
             await CreateStructData(serviceProvider, configuration);
             await CreateFilesData(serviceProvider, configuration);
@@ -235,6 +265,108 @@ namespace KisVuzDotNetCore2.Models
                 }
             }
         }
+
+        /// <summary>
+        /// Инициализация таблиц, связанных с пользователем
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static async Task CreateUserData(IServiceProvider serviceProvider, IConfiguration configuration)
+        {
+            using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                AppIdentityDBContext context = serviceScope.ServiceProvider.GetService<AppIdentityDBContext>();
+
+                #region Инициализация таблицы "Группы ученых степеней"
+                if (!await context.AcademicDegreeGroups.AnyAsync())
+                {
+                    AcademicDegreeGroup AcademicDegreeGroup1 = new AcademicDegreeGroup
+                    {
+                        AcademicDegreeGroupId=1,
+                        AcademicDegreeGroupName="Кандидаты наук"
+                    };
+
+                    AcademicDegreeGroup AcademicDegreeGroup2 = new AcademicDegreeGroup
+                    {
+                        AcademicDegreeGroupId = 2,
+                        AcademicDegreeGroupName = "Доктора наук"
+                    };
+
+                    await context.AcademicDegreeGroups.AddRangeAsync(
+                        AcademicDegreeGroup1,
+                        AcademicDegreeGroup2
+                    );
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
+                #region Инициализация таблицы "Ученые степени"
+                if (!await context.AcademicDegrees.AnyAsync())
+                {
+                    AcademicDegree AcademicDegree1 = new AcademicDegree
+                    {
+                        AcademicDegreeId = 1,
+                        AcademicDegreeGroupId = 1,
+                        AcademicDegreeName = "Кандидат технических наук"
+                    };
+
+                    AcademicDegree AcademicDegree2 = new AcademicDegree
+                    {
+                        AcademicDegreeId = 2,
+                        AcademicDegreeGroupId = 1,
+                        AcademicDegreeName = "Кандидат сельскохозяйственных наук"
+                    };
+
+                    AcademicDegree AcademicDegree3 = new AcademicDegree
+                    {
+                        AcademicDegreeId = 3,
+                        AcademicDegreeGroupId = 2,
+                        AcademicDegreeName = "Доктор технических наук"
+                    };
+
+                    AcademicDegree AcademicDegree4 = new AcademicDegree
+                    {
+                        AcademicDegreeId = 4,
+                        AcademicDegreeGroupId = 2,
+                        AcademicDegreeName = "Доктор сельскохозяйственных наук"
+                    };
+
+                    await context.AcademicDegrees.AddRangeAsync(
+                        AcademicDegree1,
+                        AcademicDegree2,
+                        AcademicDegree3,
+                        AcademicDegree4
+                    );
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
+                #region Инициализация таблицы "Ученые звания"
+                if (!await context.AcademicStats.AnyAsync())
+                {
+                    AcademicStat AcademicStat1 = new AcademicStat
+                    {
+                        AcademicStatId = 1,
+                        AcademicStatName = "Доцент"
+                    };
+
+                    AcademicStat AcademicStat2 = new AcademicStat
+                    {
+                        AcademicStatId = 2,
+                        AcademicStatName = "Профессор"
+                    };
+
+                    await context.AcademicStats.AddRangeAsync(
+                        AcademicStat1,
+                        AcademicStat2
+                    );
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+            }
+        }
+
 
         /// <summary>
         /// Заполнение сведений об образовательном процессе
@@ -298,6 +430,27 @@ namespace KisVuzDotNetCore2.Models
                     };
 
                     await context.EduKurses.AddRangeAsync(EduKurs1, EduKurs2, EduKurs3, EduKurs4, EduKurs5);
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
+                #region Инициализация таблицы "Обобщенные уровни образования"
+                if (!await context.EduLevelGroups.AnyAsync())
+                {
+                    EduLevelGroup eduLevelGroup1Spo = new EduLevelGroup
+                    {
+                        EduLevelGroupId = 1,
+                        EduLevelGroupName = "Среднее профессиональное образование"
+                    };
+
+                    EduLevelGroup eduLevelGroup2Vo = new EduLevelGroup
+                    {
+                        EduLevelGroupId = 2,
+                        EduLevelGroupName = "Высшее образование"
+                    };
+
+                    await context.EduLevelGroups.AddRangeAsync(eduLevelGroup1Spo,
+                        eduLevelGroup2Vo);
                     await context.SaveChangesAsync();
                 }
                 #endregion

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,12 +16,14 @@ namespace KisVuzDotNetCore2.Controllers
 {
     public class UserProfileController:Controller
     {
+        private AppIdentityDBContext context;
         private UserManager<AppUser> userManager;
         private RoleManager<IdentityRole> roleManager;
         private Task<AppUser> CurrentUser => userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
-        public UserProfileController(UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr)
+        public UserProfileController(AppIdentityDBContext ctx, UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr)
         {
+            context = ctx;
             userManager = userMgr;
             roleManager = roleMgr;  
         }
@@ -43,6 +47,16 @@ namespace KisVuzDotNetCore2.Controllers
             profile.FirstName = user.FirstName;
             profile.Patronymic = user.Patronymic;
             profile.Birthdate = user.Birthdate;
+            profile.EduLevelGroupId = user.EduLevelGroupId;
+            profile.AcademicDegreeId = user.AcademicDegreeId;
+            profile.AcademicStatId = user.AcademicStatId;
+            profile.DateStartWorking = user.DateStartWorking;
+            profile.DateStartWorkingSpec = user.DateStartWorkingSpec;
+
+            ViewData["EduLevelGroups"] = new SelectList(context.EduLevelGroups, "EduLevelGroupId", "EduLevelGroupName", user.EduLevelGroupId);
+            ViewData["AcademicDegrees"] = new SelectList(context.AcademicDegrees, "AcademicDegreeId", "AcademicDegreeName", user.AcademicDegreeId);
+            ViewData["AcademicStats"] = new SelectList(context.AcademicStats, "AcademicStatId", "AcademicStatName", user.AcademicStatId);
+
             return View(profile);
         }
 
@@ -59,6 +73,11 @@ namespace KisVuzDotNetCore2.Controllers
                 changingUser.FirstName   = user.FirstName;
                 changingUser.Patronymic  = user.Patronymic;
                 changingUser.Birthdate   = user.Birthdate;
+                changingUser.EduLevelGroupId = user.EduLevelGroupId;
+                changingUser.AcademicDegreeId = user.AcademicDegreeId;
+                changingUser.AcademicStatId = user.AcademicStatId;
+                changingUser.DateStartWorking = user.DateStartWorking;
+                changingUser.DateStartWorkingSpec = user.DateStartWorkingSpec;
 
                 if (user.AppUserPhotoFile != null)
                 {
