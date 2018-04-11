@@ -73,6 +73,7 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <summary>
         /// Скан диплома о профессиональной переподготовке
         /// </summary>
+        [Display(Name = "Копия диплома о профессиональной переподготовке")]
         public FileModel ProfessionalRetrainingFile { get; set; }
         [Display(Name = "Скан диплома о профессиональной переподготовке")]
         public int ProfessionalRetrainingFileId { get; set; }
@@ -80,6 +81,7 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <summary>
         /// Аккаунт пользователя
         /// </summary>
+        [Display(Name = "Пользователь")]
         public AppUser AppUser { get; set; }
         [Display(Name = "Аккаунт пользователя")]
         public string AppUserId { get; set; }
