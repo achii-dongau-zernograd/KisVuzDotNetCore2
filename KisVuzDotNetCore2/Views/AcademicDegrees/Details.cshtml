@@ -1,13 +1,12 @@
 ﻿@model KisVuzDotNetCore2.Models.AcademicDegree
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Подробнее об учёной степени";
 }
 
-<h2>Details</h2>
+<h2>Подробнее об учёной степени</h2>
 
 <div>
-    <h4>AcademicDegree</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,11 +19,11 @@
             @Html.DisplayNameFor(model => model.AcademicDegreeGroup)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.AcademicDegreeGroup.AcademicDegreeGroupId)
+            @Html.DisplayFor(model => model.AcademicDegreeGroup.AcademicDegreeGroupName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.AcademicDegreeId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.AcademicDegreeId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index"class="btn btn-default">Отмена</a>
 </div>

@@ -1,12 +1,11 @@
 ﻿@model KisVuzDotNetCore2.Models.Struct.StructSubvisionType
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Добавить тип структурного подразделения";
 }
 
-<h2>Create</h2>
+<h2>Добавить тип структурного подразделения</h2>
 
-<h4>StructSubvisionType</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,14 +17,11 @@
                 <span asp-validation-for="StructSubvisionTypeName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Создать" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

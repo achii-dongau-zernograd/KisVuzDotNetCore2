@@ -47,7 +47,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: AcademicDegrees/Create
         public IActionResult Create()
         {
-            ViewData["AcademicDegreeGroupId"] = new SelectList(_context.AcademicDegreeGroups, "AcademicDegreeGroupId", "AcademicDegreeGroupId");
+            ViewData["AcademicDegreeGroupId"] = new SelectList(_context.AcademicDegreeGroups, "AcademicDegreeGroupId", "AcademicDegreeGroupName");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AcademicDegreeGroupId"] = new SelectList(_context.AcademicDegreeGroups, "AcademicDegreeGroupId", "AcademicDegreeGroupId", academicDegree.AcademicDegreeGroupId);
+            ViewData["AcademicDegreeGroupId"] = new SelectList(_context.AcademicDegreeGroups, "AcademicDegreeGroupId", "AcademicDegreeGroupName", academicDegree.AcademicDegreeGroupId);
             return View(academicDegree);
         }
 
@@ -81,7 +81,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["AcademicDegreeGroupId"] = new SelectList(_context.AcademicDegreeGroups, "AcademicDegreeGroupId", "AcademicDegreeGroupId", academicDegree.AcademicDegreeGroupId);
+            ViewData["AcademicDegreeGroupId"] = new SelectList(_context.AcademicDegreeGroups, "AcademicDegreeGroupId", "AcademicDegreeGroupName", academicDegree.AcademicDegreeGroupId);
             return View(academicDegree);
         }
 

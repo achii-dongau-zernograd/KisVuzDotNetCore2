@@ -1,13 +1,12 @@
 ﻿@model KisVuzDotNetCore2.Models.AcademicDegreeGroup
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Подробнее о группе учёных степеней";
 }
 
-<h2>Details</h2>
+<h2>Подробнее о группе учёных степеней</h2>
 
 <div>
-    <h4>AcademicDegreeGroup</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -19,6 +18,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.AcademicDegreeGroupId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.AcademicDegreeGroupId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" class="btn btn-default">Отмена</a>
 </div>

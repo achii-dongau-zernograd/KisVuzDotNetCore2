@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Struct.StructSubvisionType>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Типы структурных подразделений";
 }
 
-<h2>Index</h2>
+<h2>Типы структурных подразделений</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -25,9 +25,9 @@
                 @Html.DisplayFor(modelItem => item.StructSubvisionTypeName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.StructSubvisionTypeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StructSubvisionTypeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.StructSubvisionTypeId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.StructSubvisionTypeId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.StructSubvisionTypeId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.StructSubvisionTypeId"><span class="text-danger"><span class="glyphicon glyphicon-remove"></span>Удалить</span></a>
             </td>
         </tr>
 }
