@@ -1,12 +1,11 @@
 ﻿@model KisVuzDotNetCore2.Models.AcademicStat
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактировать учёное звание";
 }
 
-<h2>Edit</h2>
+<h2>Редактировать учёное звание</h2>
 
-<h4>AcademicStat</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,14 +18,11 @@
                 <span asp-validation-for="AcademicStatName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
