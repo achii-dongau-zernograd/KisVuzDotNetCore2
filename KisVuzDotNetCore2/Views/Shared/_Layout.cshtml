@@ -41,6 +41,7 @@
                             <li>
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Образование <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
+                                    <li><a asp-controller="EduLevelGroups" asp-action="Index" asp-route-id="">Группы уровней образования</a></li>
                                     <li><a asp-controller="EduLevels" asp-action="Index" asp-route-id="">Уровни образования</a></li>
                                     <li><a asp-controller="EduUgses" asp-action="Index" asp-route-id="">Укрупнённые группы специальностей</a></li>
                                     <li><a asp-controller="EduNapravls" asp-action="Index" asp-route-id="">Направления подготовки / специальности</a></li>
@@ -72,6 +73,7 @@
                                     <li><a asp-controller="FileDataTypeGroups" asp-action="Index">Группы типов файлов</a></li>
                                     <li><a asp-controller="FileDataTypes" asp-action="Index">Типы файлов</a></li>
                                     <li><a asp-controller="Files" asp-action="Index">Файлы</a></li>
+                                    <li><a asp-controller="FileToFileTypes" asp-action="Index">Сопоставление файлов типам файлов</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -83,6 +85,23 @@
                                     <li><a asp-controller="Telephones" asp-action="Index">Телефоны</a></li>
                                     <li><a asp-controller="Faxes" asp-action="Index">Факсы</a></li>
                                     <li><a asp-controller="Rucovodstvo" asp-action="Index">Руководство</a></li>
+                                    <li><a asp-controller="AcademicDegreeGroups" asp-action="Index">Группы учёных степеней</a></li>
+                                    <li><a asp-controller="AcademicDegrees" asp-action="Index">Учёные степени</a></li>
+                                    <li><a asp-controller="AcademicStats" asp-action="Index">Учёные звания</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сведения об образовательной организации <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Rucovodstvo" asp-action="Index">Руководство института</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сотрудники <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Qualifications" asp-action="Index">Квалификации</a></li>
+                                    <li><a asp-controller="RefresherCourses" asp-action="Index">Курсы повышения квалификации</a></li>
+                                    <li><a asp-controller="ProfessionalRetrainings" asp-action="Index">Профессиональная переподготовка</a></li>
                                 </ul>
                             </li>
                         </ul>

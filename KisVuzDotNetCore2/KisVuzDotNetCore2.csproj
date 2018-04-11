@@ -154,6 +154,20 @@
     <Compile Remove="Migrations\20180406122606_init.Designer.cs" />
     <Compile Remove="Migrations\20180406130001_init.cs" />
     <Compile Remove="Migrations\20180406130001_init.Designer.cs" />
+    <Compile Remove="Migrations\20180406130157_init.cs" />
+    <Compile Remove="Migrations\20180406130157_init.Designer.cs" />
+    <Compile Remove="Migrations\20180410080405_qualification.cs" />
+    <Compile Remove="Migrations\20180410080405_qualification.Designer.cs" />
+    <Compile Remove="Migrations\20180410080625_init.cs" />
+    <Compile Remove="Migrations\20180410080625_init.Designer.cs" />
+    <Compile Remove="Migrations\20180410082001_init.cs" />
+    <Compile Remove="Migrations\20180410082001_init.Designer.cs" />
+    <Compile Remove="Migrations\20180410082442_init.cs" />
+    <Compile Remove="Migrations\20180410082442_init.Designer.cs" />
+    <Compile Remove="Migrations\20180410102017_init.cs" />
+    <Compile Remove="Migrations\20180410102017_init.Designer.cs" />
+    <Compile Remove="Migrations\20180410102733_init.cs" />
+    <Compile Remove="Migrations\20180410102733_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -176,6 +190,10 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
 	<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Common\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,39 @@
+﻿@model KisVuzDotNetCore2.Models.Qualification
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Qualification</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NapravlName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NapravlName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.QualificationName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.QualificationName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.Id)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="QualificationId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

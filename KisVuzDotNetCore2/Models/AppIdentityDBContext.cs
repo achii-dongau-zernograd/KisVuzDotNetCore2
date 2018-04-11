@@ -2,6 +2,7 @@
 using KisVuzDotNetCore2.Models.Priem;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Sveden;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -207,6 +208,16 @@ namespace KisVuzDotNetCore2.Models
         /// Квалификации и направления подготовки
         /// </summary>
         public DbSet<Qualification> Qualifications { get; set; }
+
+        /// <summary>
+        /// Профессиональная переподготовка
+        /// </summary>
+        public DbSet<ProfessionalRetraining> ProfessionalRetrainings { get; set; }
+
+        /// <summary>
+        /// Профессиональная переподготовка
+        /// </summary>
+        public DbSet<RefresherCourse> RefresherCourses { get; set; }
         #endregion
 
         #endregion
@@ -2370,10 +2381,17 @@ namespace KisVuzDotNetCore2.Models
                         FileDataTypeGroupName = "Сведения об образовательной организации - Документы"
                     };
 
+                    FileDataTypeGroup fileDataTypeGroup4 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = 4,
+                        FileDataTypeGroupName = "Документы об образовании"
+                    };
+
                     await context.FileDataTypeGroups.AddRangeAsync(
                         fileDataTypeGroup1,
                         fileDataTypeGroup2,
-                        fileDataTypeGroup3
+                        fileDataTypeGroup3,
+                        fileDataTypeGroup4
                     );
                     await context.SaveChangesAsync();
                 }
@@ -2540,6 +2558,86 @@ namespace KisVuzDotNetCore2.Models
                         FileDataTypeGroupId = 3
                     };
 
+                    FileDataType fileDataType21 = new FileDataType
+                    {
+                        FileDataTypeId = 21,
+                        FileDataTypeName = "Удостоверение о повышении квалификации",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 4
+                    };
+
+                    FileDataType fileDataType22 = new FileDataType
+                    {
+                        FileDataTypeId = 22,
+                        FileDataTypeName = "Удостоверение",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 4
+                    };
+
+                    FileDataType fileDataType23 = new FileDataType
+                    {
+                        FileDataTypeId = 23,
+                        FileDataTypeName = "Свидетельство",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 4
+                    };
+
+                    FileDataType fileDataType24 = new FileDataType
+                    {
+                        FileDataTypeId = 24,
+                        FileDataTypeName = "Диплом о профессиональной переподготовке",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 4
+                    };
+
+                    FileDataType fileDataType25 = new FileDataType
+                    {
+                        FileDataTypeId = 25,
+                        FileDataTypeName = "Диплом о среднем профессиональном образовании",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 4
+                    };
+
+                    FileDataType fileDataType26 = new FileDataType
+                    {
+                        FileDataTypeId = 26,
+                        FileDataTypeName = "Диплом о высшем образовании",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 4
+                    };
+
+                    FileDataType fileDataType27 = new FileDataType
+                    {
+                        FileDataTypeId = 27,
+                        FileDataTypeName = "Диплом кандидата наук",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 4
+                    };
+
+                    FileDataType fileDataType28 = new FileDataType
+                    {
+                        FileDataTypeId = 28,
+                        FileDataTypeName = "Диплом доктора наук",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 4
+                    };
+
+                    FileDataType fileDataType29 = new FileDataType
+                    {
+                        FileDataTypeId = 29,
+                        FileDataTypeName = "Аттестат доцента",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 4
+                    };
+
+                    FileDataType fileDataType30 = new FileDataType
+                    {
+                        FileDataTypeId = 30,
+                        FileDataTypeName = "Аттестат профессора",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 4
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -2560,7 +2658,17 @@ namespace KisVuzDotNetCore2.Models
                         fileDataType17,
                         fileDataType18,
                         fileDataType19,
-                        fileDataType20
+                        fileDataType20,
+                        fileDataType21,
+                        fileDataType22,
+                        fileDataType23,
+                        fileDataType24,
+                        fileDataType25,
+                        fileDataType26,
+                        fileDataType27,
+                        fileDataType28,
+                        fileDataType29,
+                        fileDataType30
                         );
                     await context.SaveChangesAsync();
                 }

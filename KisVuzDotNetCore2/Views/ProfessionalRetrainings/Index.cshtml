@@ -1,0 +1,95 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Users.ProfessionalRetraining>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProfessionalRetrainingDiplomRegNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProfessionalRetrainingDiplomNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProfessionalRetrainingProgramName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProfessionalRetrainingHours)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProfessionalRetrainingCity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProfessionalRetrainingInstitition)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProfessionalRetrainingDateStart)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProfessionalRetrainingDateFinish)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProfessionalRetrainingDateIssue)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProfessionalRetrainingFile)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingDiplomRegNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingDiplomNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingProgramName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingInstitition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingDateStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingDateFinish)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingDateIssue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppUser.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingFile.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProfessionalRetrainingId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProfessionalRetrainingId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProfessionalRetrainingId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

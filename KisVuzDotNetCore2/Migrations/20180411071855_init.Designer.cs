@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180406130157_init")]
+    [Migration("20180411071855_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -715,6 +715,76 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("SvedenRucovodstvo");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ProfessionalRetraining", b =>
+                {
+                    b.Property<int>("ProfessionalRetrainingId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<string>("ProfessionalRetrainingCity");
+
+                    b.Property<DateTime>("ProfessionalRetrainingDateFinish");
+
+                    b.Property<DateTime>("ProfessionalRetrainingDateIssue");
+
+                    b.Property<DateTime>("ProfessionalRetrainingDateStart");
+
+                    b.Property<string>("ProfessionalRetrainingDiplomNumber");
+
+                    b.Property<string>("ProfessionalRetrainingDiplomRegNumber");
+
+                    b.Property<int>("ProfessionalRetrainingFileId");
+
+                    b.Property<int>("ProfessionalRetrainingHours");
+
+                    b.Property<string>("ProfessionalRetrainingInstitition");
+
+                    b.Property<string>("ProfessionalRetrainingProgramName");
+
+                    b.HasKey("ProfessionalRetrainingId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("ProfessionalRetrainingFileId");
+
+                    b.ToTable("ProfessionalRetrainings");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.RefresherCourse", b =>
+                {
+                    b.Property<int>("RefresherCourseId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<string>("RefresherCourseCity");
+
+                    b.Property<DateTime>("RefresherCourseDateFinish");
+
+                    b.Property<DateTime>("RefresherCourseDateIssue");
+
+                    b.Property<DateTime>("RefresherCourseDateStart");
+
+                    b.Property<int>("RefresherCourseFileId");
+
+                    b.Property<int>("RefresherCourseHours");
+
+                    b.Property<string>("RefresherCourseInstitition");
+
+                    b.Property<string>("RefresherCourseName");
+
+                    b.Property<string>("RefresherCourseRegNumber");
+
+                    b.HasKey("RefresherCourseId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("RefresherCourseFileId");
+
+                    b.ToTable("RefresherCourses");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -960,7 +1030,7 @@ namespace KisVuzDotNetCore2.Migrations
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Qualification", b =>
                 {
-                    b.HasOne("KisVuzDotNetCore2.Models.AppUser")
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
                         .WithMany("Qualifications")
                         .HasForeignKey("AppUserId");
                 });
@@ -1069,6 +1139,30 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.StructUniversity")
                         .WithMany("Telephones")
                         .HasForeignKey("StructUniversityId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ProfessionalRetraining", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
+                        .WithMany("ProfessionalRetrainings")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "ProfessionalRetrainingFile")
+                        .WithMany()
+                        .HasForeignKey("ProfessionalRetrainingFileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.RefresherCourse", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
+                        .WithMany("RefresherCourses")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "RefresherCourseFile")
+                        .WithMany()
+                        .HasForeignKey("RefresherCourseFileId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

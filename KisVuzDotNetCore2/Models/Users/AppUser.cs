@@ -1,5 +1,6 @@
 ﻿using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Struct;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -81,11 +82,21 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Квалификации
         /// </summary>
-        public List<Qualification> Qualifications { get; set; }        
+        public List<Qualification> Qualifications { get; set; }
+
+        /// <summary>
+        /// Повышение квалификации
+        /// </summary>
+        public List<RefresherCourse> RefresherCourses { get; set; }
+
+        /// <summary>
+        /// Профессиональная переподготовка
+        /// </summary>
+        public List<ProfessionalRetraining> ProfessionalRetrainings { get; set; }
 
         /// <summary>
         /// Занимаемые должности
         /// </summary>
-        //public List<Post> Posts { get; set; }
+        //public List<Post> Posts { get; set; }                
     }
 }

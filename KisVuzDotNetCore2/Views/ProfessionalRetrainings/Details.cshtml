@@ -1,0 +1,84 @@
+﻿@model KisVuzDotNetCore2.Models.Users.ProfessionalRetraining
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ProfessionalRetraining</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfessionalRetrainingDiplomRegNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProfessionalRetrainingDiplomRegNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfessionalRetrainingDiplomNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProfessionalRetrainingDiplomNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfessionalRetrainingProgramName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProfessionalRetrainingProgramName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfessionalRetrainingHours)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProfessionalRetrainingHours)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfessionalRetrainingCity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProfessionalRetrainingCity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfessionalRetrainingInstitition)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProfessionalRetrainingInstitition)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfessionalRetrainingDateStart)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProfessionalRetrainingDateStart)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfessionalRetrainingDateFinish)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProfessionalRetrainingDateFinish)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfessionalRetrainingDateIssue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProfessionalRetrainingDateIssue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfessionalRetrainingFile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProfessionalRetrainingFile.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ProfessionalRetrainingId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

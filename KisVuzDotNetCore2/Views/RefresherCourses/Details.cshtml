@@ -1,0 +1,72 @@
+﻿@model KisVuzDotNetCore2.Models.Users.RefresherCourse
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RefresherCourse</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RefresherCourseRegNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RefresherCourseRegNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RefresherCourseName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RefresherCourseName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RefresherCourseHours)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RefresherCourseHours)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RefresherCourseCity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RefresherCourseCity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RefresherCourseInstitition)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RefresherCourseInstitition)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RefresherCourseDateStart)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RefresherCourseDateStart)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RefresherCourseDateFinish)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RefresherCourseDateFinish)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RefresherCourseDateIssue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RefresherCourseDateIssue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.RefresherCourseId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

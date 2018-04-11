@@ -550,6 +550,41 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProfessionalRetrainings",
+                columns: table => new
+                {
+                    ProfessionalRetrainingId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AppUserId = table.Column<string>(nullable: true),
+                    ProfessionalRetrainingCity = table.Column<string>(nullable: true),
+                    ProfessionalRetrainingDateFinish = table.Column<DateTime>(nullable: false),
+                    ProfessionalRetrainingDateIssue = table.Column<DateTime>(nullable: false),
+                    ProfessionalRetrainingDateStart = table.Column<DateTime>(nullable: false),
+                    ProfessionalRetrainingDiplomNumber = table.Column<string>(nullable: true),
+                    ProfessionalRetrainingDiplomRegNumber = table.Column<string>(nullable: true),
+                    ProfessionalRetrainingFileId = table.Column<int>(nullable: false),
+                    ProfessionalRetrainingHours = table.Column<int>(nullable: false),
+                    ProfessionalRetrainingInstitition = table.Column<string>(nullable: true),
+                    ProfessionalRetrainingProgramName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProfessionalRetrainings", x => x.ProfessionalRetrainingId);
+                    table.ForeignKey(
+                        name: "FK_ProfessionalRetrainings_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ProfessionalRetrainings_Files_ProfessionalRetrainingFileId",
+                        column: x => x.ProfessionalRetrainingFileId,
+                        principalTable: "Files",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Qualifications",
                 columns: table => new
                 {
@@ -568,6 +603,40 @@ namespace KisVuzDotNetCore2.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RefresherCourses",
+                columns: table => new
+                {
+                    RefresherCourseId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AppUserId = table.Column<string>(nullable: true),
+                    RefresherCourseCity = table.Column<string>(nullable: true),
+                    RefresherCourseDateFinish = table.Column<DateTime>(nullable: false),
+                    RefresherCourseDateIssue = table.Column<DateTime>(nullable: false),
+                    RefresherCourseDateStart = table.Column<DateTime>(nullable: false),
+                    RefresherCourseFileId = table.Column<int>(nullable: false),
+                    RefresherCourseHours = table.Column<int>(nullable: false),
+                    RefresherCourseInstitition = table.Column<string>(nullable: true),
+                    RefresherCourseName = table.Column<string>(nullable: true),
+                    RefresherCourseRegNumber = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefresherCourses", x => x.RefresherCourseId);
+                    table.ForeignKey(
+                        name: "FK_RefresherCourses_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RefresherCourses_Files_RefresherCourseFileId",
+                        column: x => x.RefresherCourseFileId,
+                        principalTable: "Files",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1065,9 +1134,29 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "FileModelId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProfessionalRetrainings_AppUserId",
+                table: "ProfessionalRetrainings",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProfessionalRetrainings_ProfessionalRetrainingFileId",
+                table: "ProfessionalRetrainings",
+                column: "ProfessionalRetrainingFileId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Qualifications_AppUserId",
                 table: "Qualifications",
                 column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefresherCourses_AppUserId",
+                table: "RefresherCourses",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefresherCourses_RefresherCourseFileId",
+                table: "RefresherCourses",
+                column: "RefresherCourseFileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StructFacultets_StructInstituteId",
@@ -1185,7 +1274,13 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "FileToFileTypes");
 
             migrationBuilder.DropTable(
+                name: "ProfessionalRetrainings");
+
+            migrationBuilder.DropTable(
                 name: "Qualifications");
+
+            migrationBuilder.DropTable(
+                name: "RefresherCourses");
 
             migrationBuilder.DropTable(
                 name: "SvedenRucovodstvo");

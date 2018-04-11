@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -10,9 +11,9 @@ namespace KisVuzDotNetCore2.Models
         public int QualificationId { get; set; }
 
         /// <summary>
-        /// Наименование направления подготовки
+        /// Наименование направления подготовки (специальности)
         /// </summary>
-        [Display(Name = "Наименование направления подготовки")]
+        [Display(Name = "Наименование направления подготовки (специальности)")]
         public string NapravlName { get; set; }
 
         /// <summary> 
@@ -20,5 +21,11 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         [Display(Name ="Квалификация")]
         public string QualificationName { get; set; }
+
+        /// <summary>
+        /// Аккаунт пользователя
+        /// </summary>
+        public AppUser AppUser { get; set; }
+        public string AppUserId { get; set; }
     }
 }

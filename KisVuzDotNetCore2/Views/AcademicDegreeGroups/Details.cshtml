@@ -1,0 +1,24 @@
+﻿@model KisVuzDotNetCore2.Models.AcademicDegreeGroup
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AcademicDegreeGroup</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AcademicDegreeGroupName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AcademicDegreeGroupName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.AcademicDegreeGroupId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
