@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.EduLevelGroup>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Группы уровней образования";
 }
 
-<h2>Index</h2>
+<h2>Группы уровней образования</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -25,9 +25,9 @@
                 @Html.DisplayFor(modelItem => item.EduLevelGroupName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.EduLevelGroupId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EduLevelGroupId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EduLevelGroupId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.EduLevelGroupId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.EduLevelGroupId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduLevelGroupId">Удалить</a>
             </td>
         </tr>
 }
