@@ -164,12 +164,13 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
             using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 AppIdentityDBContext context = serviceScope.ServiceProvider.GetService<AppIdentityDBContext>();
+                UserManager<AppUser> userManager = serviceScope.ServiceProvider.GetService<UserManager<AppUser>>();
 
-                #region Инициализация таблицы "Группы ученых степеней"
+                #region Заполнение данных первого пользователя
                 if (await context.Users.AnyAsync(u=>u.Email == configuration["Data:AdminUser:Email"]))
                 {
                     var user = await context.Users.FirstOrDefaultAsync(u => u.Email == configuration["Data:AdminUser:Email"]);
-                    if(user.LastName==null)
+                    if(user!=null && user.LastName==null)
                     {
                         user.AcademicDegreeId = 1;
                         user.AcademicStatId = 1;
@@ -181,9 +182,10 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         user.LastName = "Литвинов";
                         user.Patronymic = "Николаевич";
                         user.PhoneNumber = "89185172138";
-                    }                    
 
-                    await context.SaveChangesAsync();
+                        await userManager.UpdateAsync(user);
+
+                    }
                 }
                 #endregion                
             }

@@ -232,14 +232,15 @@ namespace KisVuzDotNetCore2.Models
         public static async Task InitDatabase(IServiceProvider serviceProvider, IConfiguration configuration)
         {
             await InitDatabaseUserData.CreateAdminAccount(serviceProvider, configuration);
-            await InitDatabaseUserData.CreateUserData(serviceProvider, configuration);
-            await InitDatabaseUserData.SettingAdminsProfileData(serviceProvider, configuration);
+            await InitDatabaseUserData.CreateUserData(serviceProvider, configuration);            
 
             await InitDatabaseEducationData.CreateEducationData(serviceProvider, configuration);
             await InitDatabaseStructData.CreateStructData(serviceProvider, configuration);
             await InitDatabaseFilesData.CreateFilesData(serviceProvider, configuration);
             await InitDatabaseEduChislen.CreateEduChislen(serviceProvider, configuration);            
             await InitDatabaseRucovodstvo.CreateRucovodstvo(serviceProvider, configuration);
+
+            await InitDatabaseUserData.SettingAdminsProfileData(serviceProvider, configuration);
         }
     }
 }
