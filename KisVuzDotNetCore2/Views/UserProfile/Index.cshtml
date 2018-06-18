@@ -29,4 +29,7 @@ else
 <p>Телефон: @Model.PhoneNumber  @if (String.IsNullOrWhiteSpace(Model.PhoneNumber))
 {<i>Не указано</i>}</p><br />
 
-<a asp-action="ChangeProfile" class="btn btn-primary">Изменить профиль</a>
+@if (ViewBag.CanEdit)
+{
+    <a asp-action="ChangeProfile" class="btn btn-primary">Изменить профиль</a>
+}

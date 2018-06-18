@@ -182,9 +182,18 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         user.LastName = "Литвинов";
                         user.Patronymic = "Николаевич";
                         user.PhoneNumber = "89185172138";
-
+                        
                         await userManager.UpdateAsync(user);
 
+                        Qualification qualification1 =
+                            new Qualification
+                            {
+                                AppUserId = user.Id,
+                                NapravlName = "Электрификация и автоматизация сельского хозяйства",
+                                QualificationName = "Инженер-электрик"
+                            };
+                        await context.Qualifications.AddAsync(qualification1);
+                        await context.SaveChangesAsync();
                     }
                 }
                 #endregion                
