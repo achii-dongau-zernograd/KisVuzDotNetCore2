@@ -233,6 +233,8 @@ namespace KisVuzDotNetCore2.Models
         {
             await InitDatabaseUserData.CreateAdminAccount(serviceProvider, configuration);
             await InitDatabaseUserData.CreateUserData(serviceProvider, configuration);
+            await InitDatabaseUserData.SettingAdminsProfileData(serviceProvider, configuration);
+
             await InitDatabaseEducationData.CreateEducationData(serviceProvider, configuration);
             await InitDatabaseStructData.CreateStructData(serviceProvider, configuration);
             await InitDatabaseFilesData.CreateFilesData(serviceProvider, configuration);

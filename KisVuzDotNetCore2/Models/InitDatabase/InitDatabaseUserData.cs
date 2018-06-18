@@ -153,5 +153,41 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
             }
         }
 
+        /// <summary>
+        /// Заполнение профилей пользователей
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static async Task SettingAdminsProfileData(IServiceProvider serviceProvider, IConfiguration configuration)
+        {
+            using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                AppIdentityDBContext context = serviceScope.ServiceProvider.GetService<AppIdentityDBContext>();
+
+                #region Инициализация таблицы "Группы ученых степеней"
+                if (await context.Users.AnyAsync(u=>u.Email == configuration["Data:AdminUser:Email"]))
+                {
+                    var user = await context.Users.FirstOrDefaultAsync(u => u.Email == configuration["Data:AdminUser:Email"]);
+                    if(user.LastName==null)
+                    {
+                        user.AcademicDegreeId = 1;
+                        user.AcademicStatId = 1;
+                        user.Birthdate = new DateTime(1983, 4, 5);
+                        user.DateStartWorking = new DateTime(2005, 9, 1);
+                        user.DateStartWorkingSpec = new DateTime(2005, 9, 1);
+                        user.EduLevelGroupId = 2;
+                        user.FirstName = "Владимир";
+                        user.LastName = "Литвинов";
+                        user.Patronymic = "Николаевич";
+                        user.PhoneNumber = "89185172138";
+                    }                    
+
+                    await context.SaveChangesAsync();
+                }
+                #endregion                
+            }
+        }
+
     }
 }
