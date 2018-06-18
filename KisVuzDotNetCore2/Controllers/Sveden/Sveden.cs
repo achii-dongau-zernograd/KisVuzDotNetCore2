@@ -144,6 +144,10 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Employees()
         {
+            var t14rucovodstvo = await _context.SvedenRucovodstvo
+                .ToListAsync();
+            ViewData["t14rucovodstvo"] = t14rucovodstvo;
+
             return View();
         }
 

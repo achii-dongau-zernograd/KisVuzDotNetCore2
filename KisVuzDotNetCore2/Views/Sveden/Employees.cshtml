@@ -1,1 +1,36 @@
-﻿<h1>Руководство. Педагогический (научно-педагогический) состав</h1>
+﻿@{
+    ViewData["Title"] = "Руководство. Педагогический (научно-педагогический) состав";
+}
+
+<h1>Руководство. Педагогический (научно-педагогический) состав</h1>
+
+@{
+    var t14rucovodstvo = (IEnumerable<Rucovodstvo>)ViewData["t14rucovodstvo"];
+    // var t16teachingStaff = (IEnumerable<?????>)ViewData["t16teachingStaff"];
+}
+
+<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Информация об администрации образовательной организации</a>
+<div class="collapse" id="spoiler-1">
+    <div class="well">
+
+        <table itemprop="eduAccred" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Ф.И.О.</th>
+                    <th>Должность</th>
+                    <th>Контактные телефоны</th>
+                    <th>Адреса электронной почты</th>
+                </tr>
+            </thead>
+            @foreach (var item in t14rucovodstvo)
+            {
+                <tr itemprop="rucovodstvo">
+                    <td itemprop="fio">@item.Fio</td>
+                    <td itemprop="post">@item.Post</td>
+                    <td itemprop="telephone">@item.Telephone</td>
+                    <td itemprop="email">@item.Email</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
