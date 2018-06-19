@@ -293,5 +293,70 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
         }
 
 
+        /// <summary>
+        /// Создание учётных записей студентов
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static async Task CreateStudentsAccounts(IServiceProvider serviceProvider, IConfiguration configuration)
+        {
+            using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                UserManager<AppUser> userManager = serviceScope.ServiceProvider.GetService<UserManager<AppUser>>();
+                RoleManager<IdentityRole> roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+
+                string role = "Студенты";
+
+                List<AppUser> appUsers = new List<AppUser>();
+                AppUser user1 = new AppUser
+                {
+                    UserName = "student1",
+                    Email = "student1@example.com",
+                    PasswordHash = "secret",                    
+                    Birthdate = new DateTime(2000, 12, 30),                    
+                    EduLevelGroupId = 1,
+                    FirstName = "Иван",
+                    LastName = "Иванов",
+                    Patronymic = "Иванович",
+                    PhoneNumber = "8928111111",                    
+                };
+
+                AppUser user2 = new AppUser
+                {
+                    UserName = "student2",
+                    Email = "student2@example.com",
+                    PasswordHash = "secret",
+                    Birthdate = new DateTime(2000, 12, 30),
+                    EduLevelGroupId = 1,
+                    FirstName = "Петр",
+                    LastName = "Петров",
+                    Patronymic = "Петрович",
+                    PhoneNumber = "8928222222",
+                };
+
+                appUsers.AddRange(new List<AppUser> { user1, user2 });
+
+                foreach (AppUser user in appUsers)
+                {
+                    if (await userManager.FindByNameAsync(user.UserName) == null)
+                    {
+                        if (await roleManager.FindByNameAsync(role) == null)
+                        {
+                            await roleManager.CreateAsync(new IdentityRole(role));
+                        }
+
+                        IdentityResult result = await userManager.CreateAsync(user, user.PasswordHash);
+                        if (result.Succeeded)
+                        {
+                            await userManager.AddToRoleAsync(user, role);
+                        }
+                    }
+                }
+
+
+            }
+        }
+
     }
 }

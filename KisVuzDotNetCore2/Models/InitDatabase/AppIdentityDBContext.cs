@@ -249,6 +249,7 @@ namespace KisVuzDotNetCore2.Models
         /// <returns></returns>
         public static async Task InitDatabase(IServiceProvider serviceProvider, IConfiguration configuration)
         {
+            await InitDatabaseRoles.CreateRoles(serviceProvider, configuration);
             await InitDatabaseUserData.CreateAdminAccount(serviceProvider, configuration);
             await InitDatabaseUserData.CreateUserData(serviceProvider, configuration);            
 
@@ -261,6 +262,7 @@ namespace KisVuzDotNetCore2.Models
 
             await InitDatabaseUserData.SettingAdminsProfileData(serviceProvider, configuration);
             await InitDatabaseUserData.CreateMainUsersAccounts(serviceProvider, configuration);
+            await InitDatabaseUserData.CreateStudentsAccounts(serviceProvider, configuration);
         }        
 
     }
