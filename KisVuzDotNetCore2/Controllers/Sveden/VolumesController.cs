@@ -25,24 +25,6 @@ namespace KisVuzDotNetCore2.Controllers
             return View(await _context.Volume.ToListAsync());
         }
 
-        // GET: Volumes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var volume = await _context.Volume
-                .SingleOrDefaultAsync(m => m.VolumeId == id);
-            if (volume == null)
-            {
-                return NotFound();
-            }
-
-            return View(volume);
-        }
-
         // GET: Volumes/Create
         public IActionResult Create()
         {

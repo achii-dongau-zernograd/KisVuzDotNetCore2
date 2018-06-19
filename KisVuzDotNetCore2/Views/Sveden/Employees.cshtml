@@ -6,6 +6,7 @@
 
 @{
     var t14rucovodstvo = (IEnumerable<Rucovodstvo>)ViewData["t14rucovodstvo"];
+    var t15rucovodstvoFil = (IEnumerable<RucovodstvoFil>)ViewData["t15rucovodstvoFil"];
     // var t16teachingStaff = (IEnumerable<?????>)ViewData["t16teachingStaff"];
 }
 
@@ -13,7 +14,7 @@
 <div class="collapse" id="spoiler-1">
     <div class="well">
 
-        <table itemprop="eduAccred" class="table table-hover">
+        <table itemprop="rucovodstvo" class="table table-hover">
             <thead>
                 <tr>
                     <th>Ф.И.О.</th>
@@ -30,6 +31,34 @@
                     <td itemprop="telephone">@item.Telephone</td>
                     <td itemprop="email">@item.Email</td>
                 </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Информация о руководителях филиалов образовательной организации</a>
+<div class="collapse" id="spoiler-2">
+    <div class="well">
+
+        <table itemprop="rucovodstvoFil" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Наименование филиала</th>
+                    <th>Ф.И.О.</th>
+                    <th>Должность</th>
+                    <th>Контактные телефоны</th>
+                    <th>Адреса электронной почты</th>
+                </tr>
+            </thead>
+            @foreach (var item in t15rucovodstvoFil)
+            {
+            <tr itemprop="rucovodstvoFil">
+                <td itemprop="nameFil">@item.NameFil</td>
+                <td itemprop="fio">@item.Fio</td>
+                <td itemprop="post">@item.Post</td>
+                <td itemprop="telephone">@item.Telephone</td>
+                <td itemprop="email">@item.Email</td>
+            </tr>
             }
         </table>
     </div>

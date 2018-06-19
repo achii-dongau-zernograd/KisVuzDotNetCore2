@@ -1,0 +1,59 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.RucovodstvoFil>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NameFil)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Post)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Telephone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameFil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Post)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telephone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RucovodstvoFilId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RucovodstvoFilId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RucovodstvoFilId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
