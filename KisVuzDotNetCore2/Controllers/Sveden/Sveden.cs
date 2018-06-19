@@ -185,6 +185,10 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Budget()
         {
+            var t22volume = await _context.Volume
+                .ToListAsync();
+            ViewData["t22volume"] = t22volume;
+
             return View();
         }
 
