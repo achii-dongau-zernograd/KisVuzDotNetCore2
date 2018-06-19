@@ -200,5 +200,95 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
             }
         }
 
+        /// <summary>
+        /// Создание учётных записей основных пользователей
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static async Task CreateMainUsersAccounts(IServiceProvider serviceProvider, IConfiguration configuration)
+        {
+            using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                UserManager<AppUser> userManager = serviceScope.ServiceProvider.GetService<UserManager<AppUser>>();
+                RoleManager<IdentityRole> roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+                                
+                string role = configuration["Data:AdminUser:Role"];
+
+                List<AppUser> appUsers = new List<AppUser>();
+                AppUser user1 = new AppUser
+                {
+                    UserName = "GrachevaNN",
+                    Email = "GrachevaNN@example.com",
+                    PasswordHash= "secret",
+                    AcademicDegreeId=1,
+                    AcademicStatId=1,
+                    Birthdate = new DateTime(1970,12,30),
+                    DateStartWorking = new DateTime(1995, 09, 01),
+                    DateStartWorkingSpec = new DateTime(1995, 09, 01),
+                    EduLevelGroupId=2,
+                    FirstName="Наталья",
+                    LastName="Грачева",
+                    Patronymic="Николаевна",
+                    PhoneNumber="8928123456",
+                    Qualifications=new List<Qualification>
+                    {
+                        new Qualification
+                        {
+                            NapravlName="Прикладная математика",
+                            QualificationName="Математик"
+                        }
+                    }
+                };
+
+                AppUser user2 = new AppUser
+                {
+                    UserName = "RudenkoNB",
+                    Email = "RudenkoNB@example.com",
+                    PasswordHash = "secret",
+                    AcademicDegreeId = 1,
+                    AcademicStatId = 1,
+                    Birthdate = new DateTime(1970, 11, 20),
+                    DateStartWorking = new DateTime(1996, 09, 01),
+                    DateStartWorkingSpec = new DateTime(1997, 05, 5),
+                    EduLevelGroupId = 2,
+                    FirstName = "Нелли",
+                    LastName = "Руденко",
+                    Patronymic = "Борисовна",
+                    PhoneNumber = "8928234567",
+                    Qualifications = new List<Qualification>
+                    {
+                        new Qualification
+                        {
+                            NapravlName="Прикладная математика",
+                            QualificationName="Математик"
+                        }
+                    }
+                };
+
+                appUsers.AddRange(new List<AppUser>{ user1, user2 });
+
+                foreach(AppUser user in appUsers)
+                {
+                    if (await userManager.FindByNameAsync(user.UserName) == null)
+                    {
+                        if (await roleManager.FindByNameAsync(role) == null)
+                        {
+                            await roleManager.CreateAsync(new IdentityRole(role));
+                        }
+
+                        IdentityResult result = await userManager.CreateAsync(user, user.PasswordHash);
+                        if (result.Succeeded)
+                        {
+                            await userManager.AddToRoleAsync(user, role);
+                        }
+                    }
+                }
+
+                
+            }
+        }
+
+
     }
 }

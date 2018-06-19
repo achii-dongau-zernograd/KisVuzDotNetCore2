@@ -27,5 +27,8 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public AppUser AppUser { get; set; }
         public string AppUserId { get; set; }
+
+        public RowStatus RowStatus { get; set; }
+        public int? RowStatusId { get; set; }
     }
 }

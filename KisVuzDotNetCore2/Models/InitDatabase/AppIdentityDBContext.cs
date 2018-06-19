@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using KisVuzDotNetCore2.Models;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -124,6 +125,11 @@ namespace KisVuzDotNetCore2.Models
         #endregion
 
         #region Общие справочники (должности, адреса, телефоны, факсы и пр.)
+        /// <summary>
+        /// Справочник статусов записей
+        /// </summary>
+        public DbSet<RowStatus> RowStatuses { get; set; }
+
         /// <summary>
         /// Справочник должностей
         /// </summary>
@@ -241,6 +247,7 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseRucovodstvo.CreateRucovodstvo(serviceProvider, configuration);
 
             await InitDatabaseUserData.SettingAdminsProfileData(serviceProvider, configuration);
-        }
+            await InitDatabaseUserData.CreateMainUsersAccounts(serviceProvider, configuration);
+        }        
     }
 }

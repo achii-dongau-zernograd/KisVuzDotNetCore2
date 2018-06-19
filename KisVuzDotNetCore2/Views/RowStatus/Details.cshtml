@@ -1,0 +1,24 @@
+﻿@model KisVuzDotNetCore2.Models.RowStatus
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RowStatus</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RowStatusName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RowStatusName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.RowStatusId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

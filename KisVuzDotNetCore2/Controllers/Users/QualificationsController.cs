@@ -19,9 +19,17 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         // GET: Qualifications
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string id)
         {
-            var appIdentityDBContext = _context.Qualifications.Include(q => q.AppUser);
+            // Если задан id, отбираем данные пользователя с AppUserId, равным id
+            if (id != null)
+            {
+                var userQualifications = _context.Qualifications.Where(q=>q.AppUserId==id).Include(q => q.AppUser);
+                return View(await userQualifications.ToListAsync());
+            }
+
+            // Иначе отображаем все данные
+            var appIdentityDBContext = _context.Qualifications.Include(q => q.AppUser);                        
             return View(await appIdentityDBContext.ToListAsync());
         }
 
