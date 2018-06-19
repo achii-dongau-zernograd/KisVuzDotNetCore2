@@ -164,6 +164,12 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<Rucovodstvo> SvedenRucovodstvo { get; set; }
 
         /// <summary>
+        /// Таблица 15. Информация о руководителях филиалов
+        /// образовательной организации
+        /// </summary>
+        public DbSet<KisVuzDotNetCore2.Models.Sveden.RucovodstvoFil> RucovodstvoFil { get; set; }
+
+        /// <summary>
         /// Таблица 22. Объем образовательной деятельности
         /// </summary>
         public DbSet<KisVuzDotNetCore2.Models.Sveden.Volume> Volume { get; set; }
@@ -256,5 +262,6 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseUserData.SettingAdminsProfileData(serviceProvider, configuration);
             await InitDatabaseUserData.CreateMainUsersAccounts(serviceProvider, configuration);
         }        
+
     }
 }

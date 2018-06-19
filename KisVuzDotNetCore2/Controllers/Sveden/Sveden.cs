@@ -14,7 +14,7 @@ namespace KisVuzDotNetCore2.Controllers
 {
     /// <summary>
     /// Контроллер, реализующий отображение раздела
-    /// "Сведеия об образовательной организации"
+    /// "Сведения об образовательной организации"
     /// </summary>
     public class Sveden : Controller
     {
@@ -147,6 +147,10 @@ namespace KisVuzDotNetCore2.Controllers
             var t14rucovodstvo = await _context.SvedenRucovodstvo
                 .ToListAsync();
             ViewData["t14rucovodstvo"] = t14rucovodstvo;
+
+            var t15rucovodstvoFil = await _context.RucovodstvoFil
+                .ToListAsync();
+            ViewData["t15rucovodstvoFil"] = t15rucovodstvoFil;
 
             return View();
         }
