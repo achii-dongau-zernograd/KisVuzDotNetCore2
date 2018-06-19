@@ -190,7 +190,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             {
                                 AppUserId = user.Id,
                                 NapravlName = "Электрификация и автоматизация сельского хозяйства",
-                                QualificationName = "Инженер-электрик"
+                                QualificationName = "Инженер-электрик",
+                                RowStatusId = 2
                             };
                         await context.Qualifications.AddAsync(qualification1);
                         await context.SaveChangesAsync();
@@ -236,7 +237,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         new Qualification
                         {
                             NapravlName="Прикладная математика",
-                            QualificationName="Математик"
+                            QualificationName="Математик",
+                            RowStatusId=2
                         }
                     }
                 };
@@ -261,7 +263,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         new Qualification
                         {
                             NapravlName="Прикладная математика",
-                            QualificationName="Математик"
+                            QualificationName="Математик",
+                            RowStatusId=2
                         }
                     }
                 };
