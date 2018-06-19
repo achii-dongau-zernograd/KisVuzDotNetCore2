@@ -1,0 +1,45 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.Volume
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Volume</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FinBFVolume)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinBFVolume)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinBRVolume)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinBRVolume)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinBMVolume)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinBMVolume)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinPVolume)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinPVolume)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="VolumeId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

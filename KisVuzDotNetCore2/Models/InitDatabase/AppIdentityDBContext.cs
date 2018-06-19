@@ -162,6 +162,11 @@ namespace KisVuzDotNetCore2.Models
         /// образовательной организации
         /// </summary>
         public DbSet<Rucovodstvo> SvedenRucovodstvo { get; set; }
+
+        /// <summary>
+        /// Таблица 22. Объем образовательной деятельности
+        /// </summary>
+        public DbSet<KisVuzDotNetCore2.Models.Sveden.Volume> Volume { get; set; }
         #endregion
 
         #region Файлы
@@ -226,6 +231,7 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<RefresherCourse> RefresherCourses { get; set; }
         #endregion
+
 
         #endregion
 
