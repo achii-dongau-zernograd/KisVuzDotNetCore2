@@ -1,0 +1,73 @@
+﻿@model KisVuzDotNetCore2.Models.Priem.Vacant
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h2>Удаление информации о количестве вакантных мест для приёма (перевода)</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.GetEduNapravlFullName)
+
+
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduKurs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduKurs.EduKursId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
+    </dl>
+
+    <label>Количество вакантных мест для приёма(перевода) на места, финансируемые за счёт: </label>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberBFVacant)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberBFVacant)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberBRVacant)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberBRVacant)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberBMVacant)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberBMVacant)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberPVacant)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberPVacant)
+        </dd>
+
+
+
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="VacantId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

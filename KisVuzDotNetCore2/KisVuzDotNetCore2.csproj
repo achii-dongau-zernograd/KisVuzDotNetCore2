@@ -168,6 +168,8 @@
     <Compile Remove="Migrations\20180410102017_init.Designer.cs" />
     <Compile Remove="Migrations\20180410102733_init.cs" />
     <Compile Remove="Migrations\20180410102733_init.Designer.cs" />
+    <Compile Remove="Migrations\20180620100301_test.cs" />
+    <Compile Remove="Migrations\20180620100301_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -189,6 +191,10 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
 	<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\Priem\" />
   </ItemGroup>
 
 </Project>
