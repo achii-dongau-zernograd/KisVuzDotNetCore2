@@ -168,6 +168,32 @@
     <Compile Remove="Migrations\20180410102017_init.Designer.cs" />
     <Compile Remove="Migrations\20180410102733_init.cs" />
     <Compile Remove="Migrations\20180410102733_init.Designer.cs" />
+    <Compile Remove="Migrations\20180411071855_init.cs" />
+    <Compile Remove="Migrations\20180411071855_init.Designer.cs" />
+    <Compile Remove="Migrations\20180424093721_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180424093721_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180424094503_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180424094503_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180424095238_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180424095238_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180424100352_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180424100352_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180425113946_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180425113946_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180425114241_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180425114241_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180425114811_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180425114811_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180426091611_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180426091611_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180517102452_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180517102452_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180517104838_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180517104838_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180517125127_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180517125127_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180525100952_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180525100952_MigrateDB.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

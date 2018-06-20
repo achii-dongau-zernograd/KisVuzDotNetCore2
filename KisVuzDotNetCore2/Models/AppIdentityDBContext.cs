@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using KisVuzDotNetCore2.Models;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -2943,6 +2944,43 @@ namespace KisVuzDotNetCore2.Models
                     await context.SaveChangesAsync();
                 }
                 #endregion
+
+                #region Инициализация таблицы "Вакантные места"
+                if (!await context.Vacants.AnyAsync())
+                {
+                    Vacant Vacant1 = new Vacant
+                    {
+                        NumberBFVacant = 3,
+                        NumberBMVacant = 4,
+                        NumberBRVacant = 6,
+                        NumberPVacant = 22,
+                        EduFormId = 1,
+                        EduKursId = 1,
+                        EduNapravlId = 1
+                    };
+
+                    await context.Vacants.AddRangeAsync(Vacant1);
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
+                #region Инициализация таблицы "Модель шаблона представления информации по различныфм условиям"
+                if (!await context.PriemExam.AnyAsync())
+                {
+                    PriemExam PriemExam1 = new PriemExam
+                    {
+                       
+                        EduNapravlId = 1
+                    };
+
+                    await context.PriemExam.AddRangeAsync(PriemExam1);
+                    await context.SaveChangesAsync();
+                }
+                #endregion
+
+
+         
+
             }
         }
 
@@ -3418,5 +3456,38 @@ namespace KisVuzDotNetCore2.Models
                 #endregion
             }
         }
+
+        /// <summary>
+        /// Инициализация таблицы "Руководство"
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.Priem.PriemExam> PriemExam { get; set; }
+
+        /// <summary>
+        /// Инициализация таблицы "Руководство"
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.HostelInfo> HostelInfo { get; set; }
+
+        /// <summary>
+        /// Инициализация таблицы "Руководство"
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.priemKolMest> priemKolMest { get; set; }
+
+        /// <summary>
+        /// Инициализация таблицы "Руководство"
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.priemKolTarget> priemKolTarget { get; set; }
+       // public Task PriemExams { get; internal set; }
     }
 }

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.priemKolTarget>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mesta_v_ramkahtQuota_och)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mesta_v_ramkah_zaoch)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mesta_v_ramkah_och_zaoch)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_och)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_zaoch)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_och_zaoch)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_och)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_zaoch)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_och_zaoch)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduNapravl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mesta_v_ramkahtQuota_och)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mesta_v_ramkah_zaoch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mesta_v_ramkah_och_zaoch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mesta_v_pridelah_osoboi_och)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mesta_v_pridelah_osoboi_zaoch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mesta_v_pridelah_osoboi_och_zaoch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mesta_v_pridelah_celevoi_och)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mesta_v_pridelah_celevoi_zaoch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mesta_v_pridelah_celevoi_och_zaoch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravlId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.priemKolTargetId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.priemKolTargetId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.priemKolTargetId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

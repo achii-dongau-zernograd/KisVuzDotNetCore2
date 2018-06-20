@@ -1,0 +1,81 @@
+﻿@model KisVuzDotNetCore2.Models.priemKolMest
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h2>Удаление информации о мест для приема на обучение по различным условиям поступления </h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.priemKolMestQuota_och)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.priemKolMestQuota_och)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.priemKolMestQuota_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.priemKolMestQuota_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.priemKolMestQuota_och_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.priemKolMestQuota_och_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriemKolMestCommon_och)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriemKolMestCommon_och)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriemKolMestCommon_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriemKolMestCommon_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriemKolMestCommon_och_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriemKolMestCommon_och_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriemKolMestPaid_och)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriemKolMestPaid_och)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriemKolMestPaid_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriemKolMestPaid_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriemKolMestPaid_och_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriemKolMestPaid_och_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravlName)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="priemKolMestId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

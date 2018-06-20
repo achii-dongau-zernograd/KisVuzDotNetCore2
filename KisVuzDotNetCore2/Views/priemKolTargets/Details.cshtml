@@ -1,0 +1,78 @@
+﻿@model KisVuzDotNetCore2.Models.priemKolTarget
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>priemKolTarget</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Mesta_v_ramkahtQuota_och)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mesta_v_ramkahtQuota_och)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mesta_v_ramkah_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mesta_v_ramkah_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mesta_v_ramkah_och_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mesta_v_ramkah_och_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_och)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mesta_v_pridelah_osoboi_och)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mesta_v_pridelah_osoboi_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_och_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mesta_v_pridelah_osoboi_och_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_och)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mesta_v_pridelah_celevoi_och)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mesta_v_pridelah_celevoi_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_och_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mesta_v_pridelah_celevoi_och_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravlId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.priemKolTargetId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

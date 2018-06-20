@@ -1,0 +1,45 @@
+﻿@model KisVuzDotNetCore2.Models.Priem.PriemExam
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h2>Удаление информации о шаблоне представления информации по различным условиям</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.VstupIsp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VstupIsp)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MinKol)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MinKol)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FormProv)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FormProv)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravlId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravlName)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="PriemExamId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

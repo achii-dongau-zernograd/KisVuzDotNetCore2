@@ -1,0 +1,67 @@
+﻿@model KisVuzDotNetCore2.Models.Priem.Vacant
+
+@{
+    ViewData["Title"] = "Добавить";
+}
+
+<h2>Добавить информацию о количестве вакантных мест для приёма(перевода) </h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label asp-for="EduNapravlId" class="control-label"></label>
+                    <select asp-for="EduNapravlId" class="form-control" asp-items="ViewBag.GetEduNapravlFullName"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EduKursId" class="control-label"></label>
+                    <select asp-for="EduKursId" class="form-control" asp-items="ViewBag.EduKursId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EduFormId " class="control-label"></label>
+                    <select asp-for="EduFormId" class="form-control" asp-items="ViewBag.EduForms"></select>
+                </div>
+                <label> </label>
+                <label> </label>
+                <label> </label>
+                <label>Количество вакантных мест для приёма(перевода) на места, финансируемые за счёт: </label>
+                <label> </label>
+                <label> </label>
+                <label asp-for="NumberBFVacant" class="control-label"></label>
+                <input asp-for="NumberBFVacant" class="form-control" />
+                <span asp-validation-for="NumberBFVacant" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberBRVacant" class="control-label"></label>
+                <input asp-for="NumberBRVacant" class="form-control" />
+                <span asp-validation-for="NumberBRVacant" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberBMVacant" class="control-label"></label>
+                <input asp-for="NumberBMVacant" class="form-control" />
+                <span asp-validation-for="NumberBMVacant" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberPVacant" class="control-label"></label>
+                <input asp-for="NumberPVacant" class="form-control" />
+                <span asp-validation-for="NumberPVacant" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

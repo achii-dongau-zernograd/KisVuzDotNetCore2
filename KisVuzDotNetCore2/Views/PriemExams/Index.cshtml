@@ -1,0 +1,58 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Priem.PriemExam>
+
+@{
+    ViewData["Title"] = "Шаблон представления информации по различным условиям";
+}
+
+<h2>Шаблон представления информации по различным условиям</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Код
+            </th>
+            <th>
+               @Html.DisplayNameFor(model => model.EduNapravl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VstupIsp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinKol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FormProv)
+            </th>     
+        </tr>
+        <tr>
+            <th>Условия поступления</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@item.EduNapravl.EduNapravlCode</td>
+            <td>@item.EduNapravl.EduNapravlName</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VstupIsp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinKol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormProv)
+            </td>
+          
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PriemExamId">Редактировать</a>
+                <a asp-action="Details" asp-route-id="@item.PriemExamId">Подробнее</a>
+                <a asp-action="Delete" asp-route-id="@item.PriemExamId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

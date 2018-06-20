@@ -412,6 +412,40 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("FileToFileTypes");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.HostelInfo", b =>
+                {
+                    b.Property<int>("HostelInfoId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("NaimenovanPokaz");
+
+                    b.Property<string>("Znachenie");
+
+                    b.HasKey("HostelInfoId");
+
+                    b.ToTable("HostelInfo");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.PriemExam", b =>
+                {
+                    b.Property<int>("PriemExamId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduNapravlId");
+
+                    b.Property<string>("FormProv");
+
+                    b.Property<string>("MinKol");
+
+                    b.Property<string>("VstupIsp");
+
+                    b.HasKey("PriemExamId");
+
+                    b.HasIndex("EduNapravlId");
+
+                    b.ToTable("PriemExam");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.Vacant", b =>
                 {
                     b.Property<int>("VacantId")
@@ -440,6 +474,38 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("EduNapravlId");
 
                     b.ToTable("Vacants");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.priemKolMest", b =>
+                {
+                    b.Property<int>("priemKolMestId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduNapravlId");
+
+                    b.Property<int>("PriemKolMestCommon_och");
+
+                    b.Property<int>("PriemKolMestCommon_och_zaoch");
+
+                    b.Property<int>("PriemKolMestCommon_zaoch");
+
+                    b.Property<int>("PriemKolMestPaid_och");
+
+                    b.Property<int>("PriemKolMestPaid_och_zaoch");
+
+                    b.Property<int>("PriemKolMestPaid_zaoch");
+
+                    b.Property<int>("priemKolMestQuota_och");
+
+                    b.Property<int>("priemKolMestQuota_och_zaoch");
+
+                    b.Property<int>("priemKolMestQuota_zaoch");
+
+                    b.HasKey("priemKolMestId");
+
+                    b.HasIndex("EduNapravlId");
+
+                    b.ToTable("priemKolMest");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Qualification", b =>
@@ -1009,6 +1075,14 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.PriemExam", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
+                        .WithMany()
+                        .HasForeignKey("EduNapravlId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.Vacant", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
@@ -1021,6 +1095,14 @@ namespace KisVuzDotNetCore2.Migrations
                         .HasForeignKey("EduKursId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
+                        .WithMany()
+                        .HasForeignKey("EduNapravlId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.priemKolMest", b =>
+                {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
                         .WithMany()
                         .HasForeignKey("EduNapravlId")

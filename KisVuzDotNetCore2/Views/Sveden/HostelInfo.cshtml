@@ -1,0 +1,36 @@
+﻿
+
+    @{
+        var HostelInfoss = (IEnumerable<HostelInfo>)ViewData["t20HostelInfo"];
+    }
+
+
+<h2>Наличие общежития, интерната, количество жилых помещений в общежитии, интернате для иногородних обучающихся</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               <strong>Наименование показателя</strong>
+            </th>
+            <th>
+                <strong>Значение</strong>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in HostelInfoss)
+        {
+            <tr>
+                <td>
+                   @item.NaimenovanPokaz
+                </td>
+                <td>
+                 @item.Znachenie
+                </td>
+            
+            </tr>
+        }
+    </tbody>
+</table>

@@ -184,13 +184,74 @@ namespace KisVuzDotNetCore2.Controllers
             return View();
         }
 
+   
+
         /// <summary>
         /// Подраздел "Вакантные места для приёма (перевода)"
         /// </summary>
         /// <returns></returns>
         public async Task<IActionResult> Vacant()
         {
+
+
+            var t23vacant = await _context.Vacants
+                .Include(l => l.EduNapravl.EduUgs.EduLevel)
+                .Include(l => l.EduNapravl)
+                .Include(l => l.EduKurs)
+                .Include(l => l.EduForm)
+                .ToListAsync();
+            ViewData["t23vacant"] = t23vacant;
             return View();
         }
+
+        /// <summary>
+        /// Подраздел "Шаблона представления информации по различныфм условиям"
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> PriemExam()
+        {
+          
+               
+            var t25PriemExam=await _context.PriemExam
+                 .Include(l => l.EduNapravl)
+             .ToListAsync();
+            ViewData["t25PriemExam"] = t25PriemExam;
+            return View();
+        }
+
+
+        /// <summary>
+        /// Подраздел "Шаблона представления информации по различныфм условиям"
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> HostelInfo()
+        {
+
+            
+            var t20HostelInfo= await _context.HostelInfo.ToListAsync();
+            ViewData["t20HostelInfo"] = t20HostelInfo;
+            
+       
+            return View();
+        }
+
+
+        /// <summary>
+        /// Подраздел "Информация о количестве мест для приема на обучение по различным условиям поступления"
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> priemKolMest()
+        {
+
+
+            var t24priemKolMest = await _context.priemKolMest
+                .Include(l => l.EduNapravl)
+                .ToListAsync();
+            ViewData["t24priemKolMest"] = t24priemKolMest;
+
+
+            return View();
+        }
+
     }
 }

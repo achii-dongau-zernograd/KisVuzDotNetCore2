@@ -1,1 +1,102 @@
-﻿<h1>Вакантные места для приёма (перевода)</h1>
+﻿
+<h1>Вакантные места для приёма (перевода)</h1>
+@{
+    var vacantist = (IEnumerable<Vacant>)ViewData["t23vacant"];
+}
+<table itemprop="vacant" class="table">
+
+
+    <thead>
+
+
+        <tr>
+
+
+            <th rowspan=2 align=center>Код</th>
+
+            <th rowspan=2 align=center>Наименование</th>
+
+            <th rowspan=2 align=center>Уровень образования</th>
+
+            <th rowspan=2 align=center>Курс</th>
+
+            <th rowspan=2 align=center>Форма обучения (очная/заочная/очно-заочная)</th>
+
+            <th colspan=4 align=center>Количество вакантных мест для приема (перевода) на места, финансируемые за счет</th>
+
+        </tr>
+
+        <tr>
+
+
+            <th align=center>бюджетных ассигнований федерального бюджета</th>
+
+            <th align=center>бюджетов субъектов Российской Федерации</th>
+
+            <th align=center>местных бюджетов</th>
+
+            <th align=center>по договорам об образовании и за счет средств физических и (или) юридических лиц</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+
+        <tr>
+
+
+
+
+
+            <td align=center><strong>1</strong></td>
+
+            <td align=center><strong>2</strong></td>
+
+            <td align=center><strong>3</strong></td>
+
+            <td align=center><strong>4</strong></td>
+
+            <td align=center><strong>5</strong></td>
+
+            <td align=center><strong>6</strong></td>
+
+            <td align=center><strong>7</strong></td>
+
+            <td align=center><strong>8</strong></td>
+
+            <td align=center><strong>9</strong></td>
+
+        </tr>
+
+        @foreach (var item in vacantist)
+        {
+
+            <tr>
+                <td align=center itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
+
+                <td align=center itemprop="eduName">@item.EduNapravl.EduNapravlName </td>
+
+                <td align=center itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+
+                <td align=center itemprop="eduKurs">@item.EduKurs.EduKursNumber</td>
+
+                <td align=center itemprop="eduForm">@item.EduForm.EduFormName</td>
+
+                <td align=center itemprop="numberBFVacant">@item.NumberBFVacant</td>
+
+                <td align=center itemprop="numberBRVacant">@item.NumberBRVacant</td>
+
+                <td align=center itemprop="numberBMVacant">@item.NumberBMVacant</td>
+
+                <td align=center itemprop="numberPVacant">@item.NumberPVacant</td>
+
+            </tr>
+        }
+
+
+
+
+    </tbody>
+</table> 

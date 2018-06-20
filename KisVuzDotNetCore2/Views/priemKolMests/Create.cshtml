@@ -1,0 +1,73 @@
+﻿@model KisVuzDotNetCore2.Models.priemKolMest
+
+@{
+    ViewData["Title"] = "Добавить";
+}
+
+<h2>Добавить информацию  о количестве мест для приема на обучение по различным условиям поступленияе</h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EduNapravlId" class="control-label"></label>
+                <select asp-for="EduNapravlId" class="form-control" asp-items="ViewBag.EduNapravlId"></select>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="priemKolMestQuota_och" class="control-label"></label>
+                <input asp-for="priemKolMestQuota_och" class="form-control" />
+                <span asp-validation-for="priemKolMestQuota_och" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="priemKolMestQuota_zaoch" class="control-label"></label>
+                <input asp-for="priemKolMestQuota_zaoch" class="form-control" />
+                <span asp-validation-for="priemKolMestQuota_zaoch" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="priemKolMestQuota_och_zaoch" class="control-label"></label>
+                <input asp-for="priemKolMestQuota_och_zaoch" class="form-control" />
+                <span asp-validation-for="priemKolMestQuota_och_zaoch" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriemKolMestCommon_och" class="control-label"></label>
+                <input asp-for="PriemKolMestCommon_och" class="form-control" />
+                <span asp-validation-for="PriemKolMestCommon_och" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriemKolMestCommon_zaoch" class="control-label"></label>
+                <input asp-for="PriemKolMestCommon_zaoch" class="form-control" />
+                <span asp-validation-for="PriemKolMestCommon_zaoch" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriemKolMestCommon_och_zaoch" class="control-label"></label>
+                <input asp-for="PriemKolMestCommon_och_zaoch" class="form-control" />
+                <span asp-validation-for="PriemKolMestCommon_och_zaoch" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriemKolMestPaid_och" class="control-label"></label>
+                <input asp-for="PriemKolMestPaid_och" class="form-control" />
+                <span asp-validation-for="PriemKolMestPaid_och" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriemKolMestPaid_zaoch" class="control-label"></label>
+                <input asp-for="PriemKolMestPaid_zaoch" class="form-control" />
+                <span asp-validation-for="PriemKolMestPaid_zaoch" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriemKolMestPaid_och_zaoch" class="control-label"></label>
+                <input asp-for="PriemKolMestPaid_och_zaoch" class="form-control" />
+                <span asp-validation-for="PriemKolMestPaid_och_zaoch" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+

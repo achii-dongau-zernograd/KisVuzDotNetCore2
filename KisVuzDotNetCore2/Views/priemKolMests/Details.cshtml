@@ -1,0 +1,79 @@
+﻿@model KisVuzDotNetCore2.Models.priemKolMest
+
+@{
+    ViewData["Title"] = "Подробнее";
+}
+
+<h2>Подробнее</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.priemKolMestQuota_och)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.priemKolMestQuota_och)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.priemKolMestQuota_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.priemKolMestQuota_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.priemKolMestQuota_och_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.priemKolMestQuota_och_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriemKolMestCommon_och)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriemKolMestCommon_och)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriemKolMestCommon_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriemKolMestCommon_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriemKolMestCommon_och_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriemKolMestCommon_och_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriemKolMestPaid_och)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriemKolMestPaid_och)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriemKolMestPaid_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriemKolMestPaid_zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriemKolMestPaid_och_zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriemKolMestPaid_och_zaoch)
+        </dd>
+       
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravlName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.priemKolMestId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" class="btn btn-default">Отмена</a>
+</div>

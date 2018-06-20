@@ -1,0 +1,41 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.HostelInfo>
+
+@{
+    ViewData["Title"] = "Наличии общежитий, интернатов, количество жилых помещений в общежитиях, интернатов для иногородних обучающихся";
+}
+
+<h2>Информация о наличии общежитий, интернатов, количество жилых помещений в общежитиях, интернатов для иногородних обучающихся</h2>
+
+<p>
+    <a asp-action="Create">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NaimenovanPokaz)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Znachenie)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NaimenovanPokaz)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Znachenie)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.HostelInfoId">Редактировать</a> 
+                <a asp-action="Details" asp-route-id="@item.HostelInfoId">Подробнее</a> 
+                <a asp-action="Delete" asp-route-id="@item.HostelInfoId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

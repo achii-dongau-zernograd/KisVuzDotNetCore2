@@ -1,0 +1,95 @@
+﻿
+@{
+    var priemKolMest = (IEnumerable<priemKolMest>)ViewData["t24priemKolMest"];
+}
+
+<h2>Информация о количестве мест для приема на обучение по различным условиям поступления</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+        <tr>
+            <td rowspan="2">Код</td>
+            <td rowspan="2">Направление подготовки(специальности)</td>
+            <td rowspan="2">Всего</td>
+            <td colspan="6" align="center">Контрольные цифры приёма</td>
+            <td colspan="3"> По договорам о показании платных образовательных услуг</td>
+
+        </tr>
+        <tr>
+            <td colspan="3" align="center">Особая квота</td>
+            <td colspan="3" align="center">Общие условия</td>
+
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Очное</td>
+            <td>Заочное</td>
+            <td>Очно-заочное</td>
+            <td>Очное</td>
+            <td>Заочное</td>
+            <td>Очно-заочное</td>
+            <td>Очное</td>
+            <td>Заочное</td>
+            <td>Очно-заочное</td>
+        </tr>
+
+
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in priemKolMest)
+        {
+            <tr>
+                <td>@item.EduNapravl.EduNapravlCode</td>
+                <td>@item.EduNapravl.EduNapravlName</td>
+                <td>@item.PriemKolMestAll</td>
+                <td>
+                    @item.priemKolMestQuota_och
+                </td>
+                <td>
+                    @item.priemKolMestQuota_zaoch
+                </td>
+                <td>
+                    @item.priemKolMestQuota_och_zaoch
+                </td>
+                <td>
+                    @item.PriemKolMestCommon_och
+                </td>
+                <td>
+                    @item.PriemKolMestCommon_zaoch
+                </td>
+                <td>
+                    @item.PriemKolMestCommon_och_zaoch
+                </td>
+                <td>
+                    @item.PriemKolMestPaid_och
+                </td>
+                <td>
+                    @item.PriemKolMestPaid_zaoch
+                </td>
+                <td>
+                    @item.PriemKolMestPaid_och_zaoch
+                </td>
+
+             
+            </tr>
+        }
+    </tbody>
+</table>
