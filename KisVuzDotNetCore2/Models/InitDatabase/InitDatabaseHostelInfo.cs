@@ -44,7 +44,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     HostelInfo SvedenHostelInfo3 = new HostelInfo
                     {
-                        NameIndicator = "Общая площадь, м2 общежитий, интернатов",
+                        NameIndicator = "Общая площадь общежитий, интернатов, м.кв.",
                         Itemprop = "",
                         Value = "17656,1",
                         Link = ""
@@ -52,7 +52,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     HostelInfo SvedenHostelInfo4 = new HostelInfo
                     {
-                        NameIndicator = "Общая площадь, м2 общежитий, интернатов для использования инвалидами и лицами с ограниченными возможностями здоровья",
+                        NameIndicator = "Общая площадь общежитий, интернатов для использования инвалидами и лицами с ограниченными возможностями здоровья, м.кв.",
                         Itemprop = "",
                         Value = "",
                         Link = ""
@@ -60,7 +60,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     HostelInfo SvedenHostelInfo5 = new HostelInfo
                     {
-                        NameIndicator = "Жилая площадь, м2 общежитий, интернатов",
+                        NameIndicator = "Жилая площадь общежитий, интернатов, м.кв.",
                         Itemprop = "",
                         Value = "10537,1",
                         Link = ""
@@ -68,7 +68,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     HostelInfo SvedenHostelInfo6 = new HostelInfo
                     {
-                        NameIndicator = "Жилая площадь, м2 общежитий, интернатов для использования инвалидами и лицами с ограниченными возможностями здоровья",
+                        NameIndicator = "Жилая площадь общежитий, интернатов для использования инвалидами и лицами с ограниченными возможностями здоровья, м.кв.",
                         Itemprop = "",
                         Value = "",
                         Link = ""
@@ -118,7 +118,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                     {
                         NameIndicator = "Наличие питания (включая буфеты, столовые) (да/нет) в общежитиях, в интернатах для использования инвалидами и лицами с ограниченными возможностями здоровья",
                         Itemprop = "",
-                        Value = "",
+                        Value = "Да",
                         Link = ""
                     };
                     await context.HostelInfo.AddRangeAsync(
