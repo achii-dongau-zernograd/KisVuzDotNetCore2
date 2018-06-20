@@ -1,0 +1,90 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Priem.Vacant>
+
+@{
+    ViewData["Title"] = "Количество вакантных мест";
+}
+
+<h2>Количество вакантных мест</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th rowspan="2">
+                Код
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.EduNapravl)
+            </th>
+            <th rowspan="2">
+                Уровень образования
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.EduKurs)
+            </th>
+            <th rowspan="2">
+                @Html.DisplayNameFor(model => model.EduForm)
+            </th>
+            <th colspan="4">
+                Количество вакантных мест для приёма(перевода) на места, финансируемые за счёт
+            </th>
+            <th rowspan="2">Действия</th>
+        </tr>
+
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberBFVacant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberBRVacant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberBMVacant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberPVacant)
+            </th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EduNapravl.EduNapravlCode</td>
+                <td>@item.EduNapravl.EduNapravlName</td>
+                <td>@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EduKurs.EduKursNumber)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.EduForm.EduFormName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberBFVacant)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberBRVacant)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberBMVacant)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberPVacant)
+                </td>
+
+
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.VacantId">Редактировать</a>
+                    <a asp-action="Details" asp-route-id="@item.VacantId">Подробнее</a>
+                    <a asp-action="Delete" asp-route-id="@item.VacantId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

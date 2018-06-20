@@ -1,0 +1,68 @@
+﻿@model KisVuzDotNetCore2.Models.Priem.Vacant
+
+@{
+    ViewData["Title"] = "Подробнее";
+}
+
+<h2>Подробнее</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.GetEduNapravlFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduKurs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduKurs.EduKursId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
+    </dl>
+
+    <label>Количество вакантных мест для приёма(перевода) на места, финансируемые за счёт: </label>
+
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberBFVacant)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberBFVacant)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberBRVacant)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberBRVacant)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberBMVacant)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberBMVacant)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberPVacant)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberPVacant)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.VacantId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" class="btn btn-default">Отмена</a>
+</div>
