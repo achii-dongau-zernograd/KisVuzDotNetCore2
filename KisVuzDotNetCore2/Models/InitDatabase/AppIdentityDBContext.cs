@@ -259,6 +259,7 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseFilesData.CreateFilesData(serviceProvider, configuration);
             await InitDatabaseEduChislen.CreateEduChislen(serviceProvider, configuration);            
             await InitDatabaseRucovodstvo.CreateRucovodstvo(serviceProvider, configuration);
+            await InitDatabaseHostelInfo.CreateHostelInfo(serviceProvider, configuration);
 
             await InitDatabaseUserData.SettingAdminsProfileData(serviceProvider, configuration);
             await InitDatabaseUserData.CreateMainUsersAccounts(serviceProvider, configuration);
@@ -272,6 +273,5 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Sveden.HostelInfo> HostelInfo { get; set; }
-
     }
 }
