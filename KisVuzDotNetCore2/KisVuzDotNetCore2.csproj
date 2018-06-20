@@ -172,6 +172,8 @@
     <Compile Remove="Migrations\20180620100301_test.Designer.cs" />
     <Compile Remove="Migrations\20180620112352_test.cs" />
     <Compile Remove="Migrations\20180620112352_test.Designer.cs" />
+    <Compile Remove="Migrations\20180620115026_ElectronBiblSystem.cs" />
+    <Compile Remove="Migrations\20180620115026_ElectronBiblSystem.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

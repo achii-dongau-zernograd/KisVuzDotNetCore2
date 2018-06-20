@@ -1,0 +1,58 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.ElectronBiblSystem>
+
+@{
+    ViewData["Title"] = "Электронные библиотечные системы";
+}
+
+<h2>Электронные библиотечные системы</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NameEbs)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberDogovor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateStart)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateEnd)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CopyDogovor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a target="_blank" href="@item.LinkEbs">@item.NameEbs</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberDogovor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CopyDogovor.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ElectronBiblSystemId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.ElectronBiblSystemId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

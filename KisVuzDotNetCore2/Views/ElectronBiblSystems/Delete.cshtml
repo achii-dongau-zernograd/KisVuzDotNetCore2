@@ -1,0 +1,55 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.ElectronBiblSystem
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+
+<h3>Удалить сведения об ЭБС?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameEbs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NameEbs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LinkEbs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LinkEbs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberDogovor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberDogovor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateStart)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateStart)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateEnd)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateEnd)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CopyDogovor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CopyDogovor.Id)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ElectronBiblSystemId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отменить</a>
+    </form>
+</div>

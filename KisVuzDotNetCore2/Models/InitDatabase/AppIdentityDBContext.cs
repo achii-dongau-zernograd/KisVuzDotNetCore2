@@ -263,6 +263,7 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseUserData.SettingAdminsProfileData(serviceProvider, configuration);
             await InitDatabaseUserData.CreateMainUsersAccounts(serviceProvider, configuration);
             await InitDatabaseUserData.CreateStudentsAccounts(serviceProvider, configuration);
+            await InitDatabaseElectronBiblSystem.CreateElectronBiblSystem(serviceProvider, configuration);
         }        
 
         /// <summary>
@@ -272,6 +273,14 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Sveden.HostelInfo> HostelInfo { get; set; }
+
+        /// <summary>
+        /// Инициализация базы данных
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.Sveden.ElectronBiblSystem> ElectronBiblSystem { get; set; }
 
     }
 }

@@ -18,10 +18,12 @@ namespace KisVuzDotNetCore2.Models.Sveden
         public string LinkEbs { get; set; }
         [Display(Name = "Номер договора")]
         public string NumberDogovor { get; set; }
+        [DataType(DataType.Date)]
         [Display(Name = "Дата начала договора")]
         public DateTime DateStart { get; set; }
+        [DataType(DataType.Date)]
         [Display(Name = "Дата окончания договора")]
-        public DateTime DateEnd { get; set; }
+        public DateTime? DateEnd { get; set; }
         [Display(Name = "Копия договора")]
         public FileModel CopyDogovor { get; set; }
         [Display(Name = "Копия договора")]
