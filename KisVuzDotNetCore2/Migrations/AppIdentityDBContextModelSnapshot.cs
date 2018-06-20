@@ -412,20 +412,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("FileToFileTypes");
                 });
 
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.HostelInfo", b =>
-                {
-                    b.Property<int>("HostelInfoId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("NaimenovanPokaz");
-
-                    b.Property<string>("Znachenie");
-
-                    b.HasKey("HostelInfoId");
-
-                    b.ToTable("HostelInfo");
-                });
-
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.PriemExam", b =>
                 {
                     b.Property<int>("PriemExamId")
@@ -508,6 +494,38 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("priemKolMest");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.priemKolTarget", b =>
+                {
+                    b.Property<int>("priemKolTargetId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduNapravlId");
+
+                    b.Property<int>("Mesta_v_pridelah_celevoi_och");
+
+                    b.Property<int>("Mesta_v_pridelah_celevoi_och_zaoch");
+
+                    b.Property<int>("Mesta_v_pridelah_celevoi_zaoch");
+
+                    b.Property<int>("Mesta_v_pridelah_osoboi_och");
+
+                    b.Property<int>("Mesta_v_pridelah_osoboi_och_zaoch");
+
+                    b.Property<int>("Mesta_v_pridelah_osoboi_zaoch");
+
+                    b.Property<int>("Mesta_v_ramkah_och_zaoch");
+
+                    b.Property<int>("Mesta_v_ramkah_zaoch");
+
+                    b.Property<int>("Mesta_v_ramkahtQuota_och");
+
+                    b.HasKey("priemKolTargetId");
+
+                    b.HasIndex("EduNapravlId");
+
+                    b.ToTable("priemKolTarget");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Qualification", b =>
                 {
                     b.Property<int>("QualificationId")
@@ -519,11 +537,27 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<string>("QualificationName");
 
+                    b.Property<int?>("RowStatusId");
+
                     b.HasKey("QualificationId");
 
                     b.HasIndex("AppUserId");
 
+                    b.HasIndex("RowStatusId");
+
                     b.ToTable("Qualifications");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.RowStatus", b =>
+                {
+                    b.Property<int>("RowStatusId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("RowStatusName");
+
+                    b.HasKey("RowStatusId");
+
+                    b.ToTable("RowStatuses");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Address", b =>
@@ -762,6 +796,24 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("Telephones");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.HostelInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Itemprop");
+
+                    b.Property<string>("Link");
+
+                    b.Property<string>("NameIndicator");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HostelInfo");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.Rucovodstvo", b =>
                 {
                     b.Property<int>("RucovodstvoId")
@@ -778,6 +830,44 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("RucovodstvoId");
 
                     b.ToTable("SvedenRucovodstvo");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.RucovodstvoFil", b =>
+                {
+                    b.Property<int>("RucovodstvoFilId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("Fio");
+
+                    b.Property<string>("NameFil");
+
+                    b.Property<string>("Post");
+
+                    b.Property<string>("Telephone");
+
+                    b.HasKey("RucovodstvoFilId");
+
+                    b.ToTable("RucovodstvoFil");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.Volume", b =>
+                {
+                    b.Property<int>("VolumeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double>("FinBFVolume");
+
+                    b.Property<double>("FinBMVolume");
+
+                    b.Property<double>("FinBRVolume");
+
+                    b.Property<double>("FinPVolume");
+
+                    b.HasKey("VolumeId");
+
+                    b.ToTable("Volume");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ProfessionalRetraining", b =>
@@ -1109,11 +1199,23 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.priemKolTarget", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
+                        .WithMany()
+                        .HasForeignKey("EduNapravlId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Qualification", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
                         .WithMany("Qualifications")
                         .HasForeignKey("AppUserId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
+                        .WithMany()
+                        .HasForeignKey("RowStatusId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Email", b =>

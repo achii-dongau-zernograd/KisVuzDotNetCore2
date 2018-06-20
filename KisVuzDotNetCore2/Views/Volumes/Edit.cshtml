@@ -1,0 +1,46 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.Volume
+
+@{
+    ViewData["Title"] = "Редактировать";
+}
+
+<h2>Редактировать</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="VolumeId" />
+            <div class="form-group">
+                <label asp-for="FinBFVolume" class="control-label"></label>
+                <input asp-for="FinBFVolume" class="form-control" />
+                <span asp-validation-for="FinBFVolume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinBRVolume" class="control-label"></label>
+                <input asp-for="FinBRVolume" class="form-control" />
+                <span asp-validation-for="FinBRVolume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinBMVolume" class="control-label"></label>
+                <input asp-for="FinBMVolume" class="form-control" />
+                <span asp-validation-for="FinBMVolume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinPVolume" class="control-label"></label>
+                <input asp-for="FinPVolume" class="form-control" />
+                <span asp-validation-for="FinPVolume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отменить</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

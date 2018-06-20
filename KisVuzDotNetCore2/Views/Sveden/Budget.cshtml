@@ -1,1 +1,34 @@
-﻿<h1>Финансово-хозяйственная деятельность</h1>
+﻿@{
+    ViewData["Title"] = "Объем образовательной деятельности";
+}
+
+<h1>Финансово-хозяйственная деятельность</h1>
+@{
+    var t22volume = (IEnumerable<Volume>)ViewData["t22volume"];
+   }
+
+<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Объем образовательной деятельности</a>
+<div class="collapse" id="spoiler-1">
+    <div class="well">
+
+        <table itemprop="eduAccred" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>за счет бюджетных ассигнований федерального бюджета (тыс. руб.)</th>
+                    <th>за счет  бюджетов субъектов Российской Федерации (тыс. руб.)"</th>
+                    <th>за счет местных бюджетов (тыс. руб.)</th>
+                    <th>по договорам об образовании за счет средств физических и (или) юридических лиц (тыс. руб.)</th>
+                </tr>
+            </thead>
+            @foreach (var item in t22volume)
+            {
+                <tr itemprop="volume">
+                    <td itemprop="finBFVolume">@item.FinBFVolume</td>
+                    <td itemprop="finBRVolume">@item.FinBRVolume</td>
+                    <td itemprop="finBMVolume">@item.FinBMVolume</td>
+                    <td itemprop="finPVolume">@item.FinPVolume</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

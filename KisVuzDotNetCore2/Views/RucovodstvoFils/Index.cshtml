@@ -1,17 +1,20 @@
-﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.Rucovodstvo>
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.RucovodstvoFil>
 
 @{
-    ViewData["Title"] = "Руководство института";
+    ViewData["Title"] = "Руководители филиалов";
 }
 
-<h2>Руководство института</h2>
+<h2>Руководители филиалов</h2>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+    <a asp-action="Create" class="btn btn-primary">Создать</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NameFil)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Fio)
                 </th>
@@ -24,13 +27,15 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
-
-                <th> Действия</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameFil)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Fio)
             </td>
@@ -44,8 +49,8 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.RucovodstvoId">Редактировать</a> |
-                <a asp-action="Delete" asp-route-id="@item.RucovodstvoId">Удалить</a>
+                <a asp-action="Edit" asp-route-id="@item.RucovodstvoFilId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.RucovodstvoFilId">Удалить</a>
             </td>
         </tr>
 }

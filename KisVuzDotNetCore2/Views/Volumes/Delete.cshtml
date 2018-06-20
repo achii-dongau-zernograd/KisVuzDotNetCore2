@@ -1,0 +1,42 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.Volume
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h3>Удалить сведения?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FinBFVolume)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinBFVolume)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinBRVolume)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinBRVolume)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinBMVolume)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinBMVolume)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinPVolume)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinPVolume)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="VolumeId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отменить</a>
+    </form>
+</div>

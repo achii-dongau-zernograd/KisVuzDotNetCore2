@@ -28,11 +28,36 @@ namespace KisVuzDotNetCore2.Controllers
             roleManager = roleMgr;  
         }
 
-        [Authorize]
-        public async Task<IActionResult> Index()
+        
+        public async Task<IActionResult> Index(string id)
         {
-            AppUser currentUser = await CurrentUser;
-            return View(currentUser);
+            AppUser user;
+
+            if (id==null)
+            { 
+                user = await CurrentUser;                
+            }
+            else
+            {
+                user = await userManager.FindByIdAsync(id);
+                if (user == null)
+                    return NotFound();
+            }
+
+            
+            bool canEdit = false;// Флаг разрешения редактирования профиля
+            if(HttpContext.User.Identity.Name != null)
+            {
+                AppUser currentUser = await CurrentUser;
+                if (user.Id == currentUser.Id)
+                {
+                    canEdit = true;
+                }
+            }
+            
+                
+            ViewBag.CanEdit = canEdit;
+            return View(user);
         }
         
         public async Task<IActionResult> ChangeProfile()

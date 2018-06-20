@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@model KisVuzDotNetCore2.Models.HostelInfo
 
 @{
@@ -7,12 +8,24 @@
 <h2>Добавить</h2>
 
 
+=======
+﻿@model KisVuzDotNetCore2.Models.Sveden.HostelInfo
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>HostelInfo</h4>
+>>>>>>> b8a6b4ae3698bf48f45ccaeb99c2989fbe754293
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+<<<<<<< HEAD
                 <label asp-for="NaimenovanPokaz" class="control-label"></label>
                 <input asp-for="NaimenovanPokaz" class="form-control" />
                 <span asp-validation-for="NaimenovanPokaz" class="text-danger"></span>
@@ -26,10 +39,43 @@
                 
                 <input type="submit" value="Добавить" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-default">Отмена</a>
+=======
+                <label asp-for="NameIndicator" class="control-label"></label>
+                <input asp-for="NameIndicator" class="form-control" />
+                <span asp-validation-for="NameIndicator" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Itemprop" class="control-label"></label>
+                <input asp-for="Itemprop" class="form-control" />
+                <span asp-validation-for="Itemprop" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Value" class="control-label"></label>
+                <input asp-for="Value" class="form-control" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Link" class="control-label"></label>
+                <input asp-for="Link" class="form-control" />
+                <span asp-validation-for="Link" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+>>>>>>> b8a6b4ae3698bf48f45ccaeb99c2989fbe754293
             </div>
         </form>
     </div>
 </div>
 
+<<<<<<< HEAD
 
 
+=======
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+>>>>>>> b8a6b4ae3698bf48f45ccaeb99c2989fbe754293

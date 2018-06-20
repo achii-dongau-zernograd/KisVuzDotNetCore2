@@ -12,18 +12,22 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.NapravlName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.QualificationName)
-                </th>
             <th>
-                @Html.DisplayNameFor(model => model.AppUser)
+                @Html.DisplayNameFor(model => model.NapravlName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QualificationName)
+            </th>
+            <th>
+                Пользователь
+            </th>
+            <th>
+                Статус записи
             </th>
             <th>
                 Действия
             </th>
+
         </tr>
     </thead>
     <tbody>
@@ -36,12 +40,16 @@
                 @Html.DisplayFor(modelItem => item.QualificationName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AppUser.Id)
+                <a asp-action="Index" asp-controller="UserProfile" asp-route-id="@item.AppUser.Id">@item.AppUser.LastName @item.AppUser.FirstName @item.AppUser.Patronymic</a>
+            </td>
+            <td>
+                @item.RowStatus?.RowStatusName
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.QualificationId">Редактировать</a> |
                 <a asp-action="Details" asp-route-id="@item.QualificationId">Подробнее</a> |
-                <a asp-action="Delete" asp-route-id="@item.QualificationId">Удалить</a>
+                <a asp-action="Delete" asp-route-id="@item.QualificationId">Удалить</a> | 
+                <a asp-action="Confirm" asp-route-id="@item.QualificationId">Подтвердить</a>
             </td>
         </tr>
 }

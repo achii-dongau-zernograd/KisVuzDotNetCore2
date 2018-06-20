@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace KisVuzDotNetCore2.Migrations
 {
-    public partial class MigrateDB : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -180,14 +180,16 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "HostelInfo",
                 columns: table => new
                 {
-                    HostelInfoId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    NaimenovanPokaz = table.Column<string>(nullable: true),
-                    Znachenie = table.Column<string>(nullable: true)
+                    Itemprop = table.Column<string>(nullable: true),
+                    Link = table.Column<string>(nullable: true),
+                    NameIndicator = table.Column<string>(nullable: true),
+                    Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HostelInfo", x => x.HostelInfoId);
+                    table.PrimaryKey("PK_HostelInfo", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -201,6 +203,36 @@ namespace KisVuzDotNetCore2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Posts", x => x.PostId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RowStatuses",
+                columns: table => new
+                {
+                    RowStatusId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    RowStatusName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RowStatuses", x => x.RowStatusId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RucovodstvoFil",
+                columns: table => new
+                {
+                    RucovodstvoFilId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Email = table.Column<string>(nullable: true),
+                    Fio = table.Column<string>(nullable: true),
+                    NameFil = table.Column<string>(nullable: true),
+                    Post = table.Column<string>(nullable: true),
+                    Telephone = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RucovodstvoFil", x => x.RucovodstvoFilId);
                 });
 
             migrationBuilder.CreateTable(
@@ -230,6 +262,22 @@ namespace KisVuzDotNetCore2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SvedenRucovodstvo", x => x.RucovodstvoId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Volume",
+                columns: table => new
+                {
+                    VolumeId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FinBFVolume = table.Column<double>(nullable: false),
+                    FinBMVolume = table.Column<double>(nullable: false),
+                    FinBRVolume = table.Column<double>(nullable: false),
+                    FinPVolume = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Volume", x => x.VolumeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -606,7 +654,8 @@ namespace KisVuzDotNetCore2.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     AppUserId = table.Column<string>(nullable: true),
                     NapravlName = table.Column<string>(nullable: true),
-                    QualificationName = table.Column<string>(nullable: true)
+                    QualificationName = table.Column<string>(nullable: true),
+                    RowStatusId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -616,6 +665,12 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Qualifications_RowStatuses_RowStatusId",
+                        column: x => x.RowStatusId,
+                        principalTable: "RowStatuses",
+                        principalColumn: "RowStatusId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -873,6 +928,34 @@ namespace KisVuzDotNetCore2.Migrations
                     table.PrimaryKey("PK_priemKolMest", x => x.priemKolMestId);
                     table.ForeignKey(
                         name: "FK_priemKolMest_EduNapravls_EduNapravlId",
+                        column: x => x.EduNapravlId,
+                        principalTable: "EduNapravls",
+                        principalColumn: "EduNapravlId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "priemKolTarget",
+                columns: table => new
+                {
+                    priemKolTargetId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduNapravlId = table.Column<int>(nullable: false),
+                    Mesta_v_pridelah_celevoi_och = table.Column<int>(nullable: false),
+                    Mesta_v_pridelah_celevoi_och_zaoch = table.Column<int>(nullable: false),
+                    Mesta_v_pridelah_celevoi_zaoch = table.Column<int>(nullable: false),
+                    Mesta_v_pridelah_osoboi_och = table.Column<int>(nullable: false),
+                    Mesta_v_pridelah_osoboi_och_zaoch = table.Column<int>(nullable: false),
+                    Mesta_v_pridelah_osoboi_zaoch = table.Column<int>(nullable: false),
+                    Mesta_v_ramkah_och_zaoch = table.Column<int>(nullable: false),
+                    Mesta_v_ramkah_zaoch = table.Column<int>(nullable: false),
+                    Mesta_v_ramkahtQuota_och = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_priemKolTarget", x => x.priemKolTargetId);
+                    table.ForeignKey(
+                        name: "FK_priemKolTarget_EduNapravls_EduNapravlId",
                         column: x => x.EduNapravlId,
                         principalTable: "EduNapravls",
                         principalColumn: "EduNapravlId",
@@ -1208,6 +1291,11 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "EduNapravlId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_priemKolTarget_EduNapravlId",
+                table: "priemKolTarget",
+                column: "EduNapravlId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProfessionalRetrainings_AppUserId",
                 table: "ProfessionalRetrainings",
                 column: "AppUserId");
@@ -1221,6 +1309,11 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "IX_Qualifications_AppUserId",
                 table: "Qualifications",
                 column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Qualifications_RowStatusId",
+                table: "Qualifications",
+                column: "RowStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefresherCourses_AppUserId",
@@ -1357,6 +1450,9 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "priemKolMest");
 
             migrationBuilder.DropTable(
+                name: "priemKolTarget");
+
+            migrationBuilder.DropTable(
                 name: "ProfessionalRetrainings");
 
             migrationBuilder.DropTable(
@@ -1366,6 +1462,9 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "RefresherCourses");
 
             migrationBuilder.DropTable(
+                name: "RucovodstvoFil");
+
+            migrationBuilder.DropTable(
                 name: "SvedenRucovodstvo");
 
             migrationBuilder.DropTable(
@@ -1373,6 +1472,9 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "Vacants");
+
+            migrationBuilder.DropTable(
+                name: "Volume");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -1391,6 +1493,9 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "FileDataTypes");
+
+            migrationBuilder.DropTable(
+                name: "RowStatuses");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

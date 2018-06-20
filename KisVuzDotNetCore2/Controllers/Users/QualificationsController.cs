@@ -19,9 +19,22 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         // GET: Qualifications
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string id)
         {
-            var appIdentityDBContext = _context.Qualifications.Include(q => q.AppUser);
+            // Если задан id, отбираем данные пользователя с AppUserId, равным id
+            if (id != null)
+            {
+                var userQualifications = _context.Qualifications
+                    .Where(q=>q.AppUserId==id)
+                    .Include(q => q.AppUser)
+                    .Include(q => q.RowStatus); ;
+                return View(await userQualifications.ToListAsync());
+            }
+
+            // Иначе отображаем все данные
+            var appIdentityDBContext = _context.Qualifications
+                .Include(q => q.AppUser)
+                .Include(q => q.RowStatus);                        
             return View(await appIdentityDBContext.ToListAsync());
         }
 
@@ -60,6 +73,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             if (ModelState.IsValid)
             {
+                qualification.RowStatusId = 1;
                 _context.Add(qualification);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -101,6 +115,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 try
                 {
+                    qualification.RowStatusId = 1;
                     _context.Update(qualification);
                     await _context.SaveChangesAsync();
                 }
@@ -148,6 +163,20 @@ namespace KisVuzDotNetCore2.Controllers
             var qualification = await _context.Qualifications.SingleOrDefaultAsync(m => m.QualificationId == id);
             _context.Qualifications.Remove(qualification);
             await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        
+        public async Task<IActionResult> Confirm(int id)
+        {
+            var qualification = await _context.Qualifications.SingleOrDefaultAsync(m => m.QualificationId == id);
+
+            if(qualification!=null)
+            {
+                qualification.RowStatusId = 2;                
+                await _context.SaveChangesAsync();
+            }            
+            
             return RedirectToAction(nameof(Index));
         }
 

@@ -10,44 +10,62 @@ using KisVuzDotNetCore2.Models.Sveden;
 
 namespace KisVuzDotNetCore2.Controllers
 {
-    public class RucovodstvoController : Controller
+    public class HostelInfoesController : Controller
     {
         private readonly AppIdentityDBContext _context;
 
-        public RucovodstvoController(AppIdentityDBContext context)
+        public HostelInfoesController(AppIdentityDBContext context)
         {
             _context = context;
         }
 
-        // GET: Rucovodstvo
+        // GET: HostelInfoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SvedenRucovodstvo.ToListAsync());
+            return View(await _context.HostelInfo.ToListAsync());
         }
 
-        // GET: Rucovodstvo/Create
+        // GET: HostelInfoes/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var hostelInfo = await _context.HostelInfo
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (hostelInfo == null)
+            {
+                return NotFound();
+            }
+
+            return View(hostelInfo);
+        }
+
+        // GET: HostelInfoes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Rucovodstvo/Create
+        // POST: HostelInfoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RucovodstvoId,Fio,Post,Telephone,Email")] Rucovodstvo rucovodstvo)
+        public async Task<IActionResult> Create([Bind("Id,NameIndicator,Itemprop,Value,Link")] HostelInfo hostelInfo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(rucovodstvo);
+                _context.Add(hostelInfo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(rucovodstvo);
+            return View(hostelInfo);
         }
 
-        // GET: Rucovodstvo/Edit/5
+        // GET: HostelInfoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -55,22 +73,22 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var rucovodstvo = await _context.SvedenRucovodstvo.SingleOrDefaultAsync(m => m.RucovodstvoId == id);
-            if (rucovodstvo == null)
+            var hostelInfo = await _context.HostelInfo.SingleOrDefaultAsync(m => m.Id == id);
+            if (hostelInfo == null)
             {
                 return NotFound();
             }
-            return View(rucovodstvo);
+            return View(hostelInfo);
         }
 
-        // POST: Rucovodstvo/Edit/5
+        // POST: HostelInfoes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RucovodstvoId,Fio,Post,Telephone,Email")] Rucovodstvo rucovodstvo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NameIndicator,Itemprop,Value,Link")] HostelInfo hostelInfo)
         {
-            if (id != rucovodstvo.RucovodstvoId)
+            if (id != hostelInfo.Id)
             {
                 return NotFound();
             }
@@ -79,12 +97,12 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 try
                 {
-                    _context.Update(rucovodstvo);
+                    _context.Update(hostelInfo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RucovodstvoExists(rucovodstvo.RucovodstvoId))
+                    if (!HostelInfoExists(hostelInfo.Id))
                     {
                         return NotFound();
                     }
@@ -95,10 +113,10 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(rucovodstvo);
+            return View(hostelInfo);
         }
 
-        // GET: Rucovodstvo/Delete/5
+        // GET: HostelInfoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -106,30 +124,30 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var rucovodstvo = await _context.SvedenRucovodstvo
-                .SingleOrDefaultAsync(m => m.RucovodstvoId == id);
-            if (rucovodstvo == null)
+            var hostelInfo = await _context.HostelInfo
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (hostelInfo == null)
             {
                 return NotFound();
             }
 
-            return View(rucovodstvo);
+            return View(hostelInfo);
         }
 
-        // POST: Rucovodstvo/Delete/5
+        // POST: HostelInfoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var rucovodstvo = await _context.SvedenRucovodstvo.SingleOrDefaultAsync(m => m.RucovodstvoId == id);
-            _context.SvedenRucovodstvo.Remove(rucovodstvo);
+            var hostelInfo = await _context.HostelInfo.SingleOrDefaultAsync(m => m.Id == id);
+            _context.HostelInfo.Remove(hostelInfo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RucovodstvoExists(int id)
+        private bool HostelInfoExists(int id)
         {
-            return _context.SvedenRucovodstvo.Any(e => e.RucovodstvoId == id);
+            return _context.HostelInfo.Any(e => e.Id == id);
         }
     }
 }

@@ -1,14 +1,19 @@
-﻿@model KisVuzDotNetCore2.Models.Sveden.Rucovodstvo
+﻿@model KisVuzDotNetCore2.Models.Sveden.RucovodstvoFil
 
 @{
-    ViewData["Title"] = "Сведения о руководителе";
+    ViewData["Title"] = "Удалить";
 }
 
-<h2>Сведения о руководителе</h2>
-
-<div> 
+<h3>Удалить руководителя филиала?</h3>
+<div>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameFil)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NameFil)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Fio)
         </dt>
@@ -34,8 +39,10 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.RucovodstvoId" class="btn btn-primary">Редактировать</a> 
-    <a asp-action="Index" class="btn btn-default">Отменить</a>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="RucovodstvoFilId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
 </div>

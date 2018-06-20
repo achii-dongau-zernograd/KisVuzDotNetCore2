@@ -1,0 +1,59 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.Volume>
+
+@{
+    ViewData["Title"] = "Объем образовательной деятельности";
+}
+
+<h2>Объем образовательной деятельности</h2>
+
+@{
+    var t22volume = (IEnumerable<Volume>)ViewData["t22volume"];
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr><b>Объем образовательной деятельности, финансовое обеспечение которой осуществляется</b></tr>   
+        
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FinBFVolume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FinBRVolume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FinBMVolume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FinPVolume)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinBFVolume)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinBRVolume)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinBMVolume)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinPVolume)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.VolumeId">Редактировать</a> 
+                    <a asp-action="Delete" asp-route-id="@item.VolumeId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

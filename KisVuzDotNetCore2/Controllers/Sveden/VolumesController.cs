@@ -6,65 +6,48 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Sveden;
 
 namespace KisVuzDotNetCore2.Controllers
 {
-    public class HostelInfoesController : Controller
+    public class VolumesController : Controller
     {
         private readonly AppIdentityDBContext _context;
 
-        public HostelInfoesController(AppIdentityDBContext context)
+        public VolumesController(AppIdentityDBContext context)
         {
             _context = context;
         }
 
-        // GET: HostelInfoes
+        // GET: Volumes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.HostelInfo.ToListAsync());
+            return View(await _context.Volume.ToListAsync());
         }
 
-        // GET: HostelInfoes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var hostelInfo = await _context.HostelInfo
-                .SingleOrDefaultAsync(m => m.HostelInfoId == id);
-            if (hostelInfo == null)
-            {
-                return NotFound();
-            }
-
-            return View(hostelInfo);
-        }
-
-        // GET: HostelInfoes/Create
+        // GET: Volumes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: HostelInfoes/Create
+        // POST: Volumes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HostelInfoId,NaimenovanPokaz,Znachenie")] HostelInfo hostelInfo)
+        public async Task<IActionResult> Create([Bind("VolumeId,FinBFVolume,FinBRVolume,FinBMVolume,FinPVolume")] Volume volume)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(hostelInfo);
+                _context.Add(volume);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(hostelInfo);
+            return View(volume);
         }
 
-        // GET: HostelInfoes/Edit/5
+        // GET: Volumes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +55,22 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var hostelInfo = await _context.HostelInfo.SingleOrDefaultAsync(m => m.HostelInfoId == id);
-            if (hostelInfo == null)
+            var volume = await _context.Volume.SingleOrDefaultAsync(m => m.VolumeId == id);
+            if (volume == null)
             {
                 return NotFound();
             }
-            return View(hostelInfo);
+            return View(volume);
         }
 
-        // POST: HostelInfoes/Edit/5
+        // POST: Volumes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HostelInfoId,NaimenovanPokaz,Znachenie")] HostelInfo hostelInfo)
+        public async Task<IActionResult> Edit(int id, [Bind("VolumeId,FinBFVolume,FinBRVolume,FinBMVolume,FinPVolume")] Volume volume)
         {
-            if (id != hostelInfo.HostelInfoId)
+            if (id != volume.VolumeId)
             {
                 return NotFound();
             }
@@ -96,12 +79,12 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 try
                 {
-                    _context.Update(hostelInfo);
+                    _context.Update(volume);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HostelInfoExists(hostelInfo.HostelInfoId))
+                    if (!VolumeExists(volume.VolumeId))
                     {
                         return NotFound();
                     }
@@ -112,10 +95,10 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(hostelInfo);
+            return View(volume);
         }
 
-        // GET: HostelInfoes/Delete/5
+        // GET: Volumes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +106,30 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var hostelInfo = await _context.HostelInfo
-                .SingleOrDefaultAsync(m => m.HostelInfoId == id);
-            if (hostelInfo == null)
+            var volume = await _context.Volume
+                .SingleOrDefaultAsync(m => m.VolumeId == id);
+            if (volume == null)
             {
                 return NotFound();
             }
 
-            return View(hostelInfo);
+            return View(volume);
         }
 
-        // POST: HostelInfoes/Delete/5
+        // POST: Volumes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var hostelInfo = await _context.HostelInfo.SingleOrDefaultAsync(m => m.HostelInfoId == id);
-            _context.HostelInfo.Remove(hostelInfo);
+            var volume = await _context.Volume.SingleOrDefaultAsync(m => m.VolumeId == id);
+            _context.Volume.Remove(volume);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool HostelInfoExists(int id)
+        private bool VolumeExists(int id)
         {
-            return _context.HostelInfo.Any(e => e.HostelInfoId == id);
+            return _context.Volume.Any(e => e.VolumeId == id);
         }
     }
 }

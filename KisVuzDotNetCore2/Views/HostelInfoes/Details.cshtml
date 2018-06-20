@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿@model KisVuzDotNetCore2.Models.HostelInfo
 
 @{
@@ -21,10 +22,52 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Znachenie)
+=======
+﻿@model KisVuzDotNetCore2.Models.Sveden.HostelInfo
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HostelInfo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameIndicator)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NameIndicator)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Itemprop)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Itemprop)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Value)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Value)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Link)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Link)
+>>>>>>> b8a6b4ae3698bf48f45ccaeb99c2989fbe754293
         </dd>
     </dl>
 </div>
 <div>
+<<<<<<< HEAD
     <a asp-action="Edit" asp-route-id="@Model.HostelInfoId">Редактировать</a> 
     <a asp-action="Index" class="btn btn-default">Отмена</a>
+=======
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+>>>>>>> b8a6b4ae3698bf48f45ccaeb99c2989fbe754293
 </div>

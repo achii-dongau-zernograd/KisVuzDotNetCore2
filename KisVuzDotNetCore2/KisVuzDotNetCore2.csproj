@@ -194,6 +194,20 @@
     <Compile Remove="Migrations\20180517125127_MigrateDB.Designer.cs" />
     <Compile Remove="Migrations\20180525100952_MigrateDB.cs" />
     <Compile Remove="Migrations\20180525100952_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180525112037_MigrateDB.cs" />
+    <Compile Remove="Migrations\20180525112037_MigrateDB.Designer.cs" />
+    <Compile Remove="Migrations\20180619070346_Volume.cs" />
+    <Compile Remove="Migrations\20180619070346_Volume.Designer.cs" />
+    <Compile Remove="Migrations\20180619084343_RowStatuses.cs" />
+    <Compile Remove="Migrations\20180619084343_RowStatuses.Designer.cs" />
+    <Compile Remove="Migrations\20180619111818_RucovodstvoFil.cs" />
+    <Compile Remove="Migrations\20180619111818_RucovodstvoFil.Designer.cs" />
+    <Compile Remove="Migrations\20180620100301_test.cs" />
+    <Compile Remove="Migrations\20180620100301_test.Designer.cs" />
+    <Compile Remove="Migrations\20180620111143_HostelInfo.cs" />
+    <Compile Remove="Migrations\20180620111143_HostelInfo.Designer.cs" />
+    <Compile Remove="Migrations\20180620112352_test.cs" />
+    <Compile Remove="Migrations\20180620112352_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -210,7 +224,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
-    <PackageReference Include="VisualStudio.gitignore" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -219,7 +232,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Common\" />
+    <Folder Include="Controllers\Priem\" />
   </ItemGroup>
 
 </Project>

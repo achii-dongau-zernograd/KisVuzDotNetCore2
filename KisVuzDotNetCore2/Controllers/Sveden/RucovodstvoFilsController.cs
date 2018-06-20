@@ -10,44 +10,62 @@ using KisVuzDotNetCore2.Models.Sveden;
 
 namespace KisVuzDotNetCore2.Controllers
 {
-    public class RucovodstvoController : Controller
+    public class RucovodstvoFilsController : Controller
     {
         private readonly AppIdentityDBContext _context;
 
-        public RucovodstvoController(AppIdentityDBContext context)
+        public RucovodstvoFilsController(AppIdentityDBContext context)
         {
             _context = context;
         }
 
-        // GET: Rucovodstvo
+        // GET: RucovodstvoFils
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SvedenRucovodstvo.ToListAsync());
+            return View(await _context.RucovodstvoFil.ToListAsync());
         }
 
-        // GET: Rucovodstvo/Create
+        // GET: RucovodstvoFils/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var rucovodstvoFil = await _context.RucovodstvoFil
+                .SingleOrDefaultAsync(m => m.RucovodstvoFilId == id);
+            if (rucovodstvoFil == null)
+            {
+                return NotFound();
+            }
+
+            return View(rucovodstvoFil);
+        }
+
+        // GET: RucovodstvoFils/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Rucovodstvo/Create
+        // POST: RucovodstvoFils/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RucovodstvoId,Fio,Post,Telephone,Email")] Rucovodstvo rucovodstvo)
+        public async Task<IActionResult> Create([Bind("RucovodstvoFilId,NameFil,Fio,Post,Telephone,Email")] RucovodstvoFil rucovodstvoFil)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(rucovodstvo);
+                _context.Add(rucovodstvoFil);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(rucovodstvo);
+            return View(rucovodstvoFil);
         }
 
-        // GET: Rucovodstvo/Edit/5
+        // GET: RucovodstvoFils/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -55,22 +73,22 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var rucovodstvo = await _context.SvedenRucovodstvo.SingleOrDefaultAsync(m => m.RucovodstvoId == id);
-            if (rucovodstvo == null)
+            var rucovodstvoFil = await _context.RucovodstvoFil.SingleOrDefaultAsync(m => m.RucovodstvoFilId == id);
+            if (rucovodstvoFil == null)
             {
                 return NotFound();
             }
-            return View(rucovodstvo);
+            return View(rucovodstvoFil);
         }
 
-        // POST: Rucovodstvo/Edit/5
+        // POST: RucovodstvoFils/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RucovodstvoId,Fio,Post,Telephone,Email")] Rucovodstvo rucovodstvo)
+        public async Task<IActionResult> Edit(int id, [Bind("RucovodstvoFilId,NameFil,Fio,Post,Telephone,Email")] RucovodstvoFil rucovodstvoFil)
         {
-            if (id != rucovodstvo.RucovodstvoId)
+            if (id != rucovodstvoFil.RucovodstvoFilId)
             {
                 return NotFound();
             }
@@ -79,12 +97,12 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 try
                 {
-                    _context.Update(rucovodstvo);
+                    _context.Update(rucovodstvoFil);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RucovodstvoExists(rucovodstvo.RucovodstvoId))
+                    if (!RucovodstvoFilExists(rucovodstvoFil.RucovodstvoFilId))
                     {
                         return NotFound();
                     }
@@ -95,10 +113,10 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(rucovodstvo);
+            return View(rucovodstvoFil);
         }
 
-        // GET: Rucovodstvo/Delete/5
+        // GET: RucovodstvoFils/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -106,30 +124,30 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var rucovodstvo = await _context.SvedenRucovodstvo
-                .SingleOrDefaultAsync(m => m.RucovodstvoId == id);
-            if (rucovodstvo == null)
+            var rucovodstvoFil = await _context.RucovodstvoFil
+                .SingleOrDefaultAsync(m => m.RucovodstvoFilId == id);
+            if (rucovodstvoFil == null)
             {
                 return NotFound();
             }
 
-            return View(rucovodstvo);
+            return View(rucovodstvoFil);
         }
 
-        // POST: Rucovodstvo/Delete/5
+        // POST: RucovodstvoFils/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var rucovodstvo = await _context.SvedenRucovodstvo.SingleOrDefaultAsync(m => m.RucovodstvoId == id);
-            _context.SvedenRucovodstvo.Remove(rucovodstvo);
+            var rucovodstvoFil = await _context.RucovodstvoFil.SingleOrDefaultAsync(m => m.RucovodstvoFilId == id);
+            _context.RucovodstvoFil.Remove(rucovodstvoFil);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RucovodstvoExists(int id)
+        private bool RucovodstvoFilExists(int id)
         {
-            return _context.SvedenRucovodstvo.Any(e => e.RucovodstvoId == id);
+            return _context.RucovodstvoFil.Any(e => e.RucovodstvoFilId == id);
         }
     }
 }

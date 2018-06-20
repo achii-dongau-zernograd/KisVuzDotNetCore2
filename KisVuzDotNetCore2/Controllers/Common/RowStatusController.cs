@@ -6,48 +6,65 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
-using KisVuzDotNetCore2.Models.Sveden;
 
 namespace KisVuzDotNetCore2.Controllers
 {
-    public class RucovodstvoController : Controller
+    public class RowStatusController : Controller
     {
         private readonly AppIdentityDBContext _context;
 
-        public RucovodstvoController(AppIdentityDBContext context)
+        public RowStatusController(AppIdentityDBContext context)
         {
             _context = context;
         }
 
-        // GET: Rucovodstvo
+        // GET: RowStatus
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SvedenRucovodstvo.ToListAsync());
+            return View(await _context.RowStatuses.ToListAsync());
         }
 
-        // GET: Rucovodstvo/Create
+        // GET: RowStatus/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var rowStatus = await _context.RowStatuses
+                .SingleOrDefaultAsync(m => m.RowStatusId == id);
+            if (rowStatus == null)
+            {
+                return NotFound();
+            }
+
+            return View(rowStatus);
+        }
+
+        // GET: RowStatus/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Rucovodstvo/Create
+        // POST: RowStatus/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RucovodstvoId,Fio,Post,Telephone,Email")] Rucovodstvo rucovodstvo)
+        public async Task<IActionResult> Create([Bind("RowStatusId,RowStatusName")] RowStatus rowStatus)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(rucovodstvo);
+                _context.Add(rowStatus);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(rucovodstvo);
+            return View(rowStatus);
         }
 
-        // GET: Rucovodstvo/Edit/5
+        // GET: RowStatus/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -55,22 +72,22 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var rucovodstvo = await _context.SvedenRucovodstvo.SingleOrDefaultAsync(m => m.RucovodstvoId == id);
-            if (rucovodstvo == null)
+            var rowStatus = await _context.RowStatuses.SingleOrDefaultAsync(m => m.RowStatusId == id);
+            if (rowStatus == null)
             {
                 return NotFound();
             }
-            return View(rucovodstvo);
+            return View(rowStatus);
         }
 
-        // POST: Rucovodstvo/Edit/5
+        // POST: RowStatus/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RucovodstvoId,Fio,Post,Telephone,Email")] Rucovodstvo rucovodstvo)
+        public async Task<IActionResult> Edit(int id, [Bind("RowStatusId,RowStatusName")] RowStatus rowStatus)
         {
-            if (id != rucovodstvo.RucovodstvoId)
+            if (id != rowStatus.RowStatusId)
             {
                 return NotFound();
             }
@@ -79,12 +96,12 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 try
                 {
-                    _context.Update(rucovodstvo);
+                    _context.Update(rowStatus);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RucovodstvoExists(rucovodstvo.RucovodstvoId))
+                    if (!RowStatusExists(rowStatus.RowStatusId))
                     {
                         return NotFound();
                     }
@@ -95,10 +112,10 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(rucovodstvo);
+            return View(rowStatus);
         }
 
-        // GET: Rucovodstvo/Delete/5
+        // GET: RowStatus/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -106,30 +123,30 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var rucovodstvo = await _context.SvedenRucovodstvo
-                .SingleOrDefaultAsync(m => m.RucovodstvoId == id);
-            if (rucovodstvo == null)
+            var rowStatus = await _context.RowStatuses
+                .SingleOrDefaultAsync(m => m.RowStatusId == id);
+            if (rowStatus == null)
             {
                 return NotFound();
             }
 
-            return View(rucovodstvo);
+            return View(rowStatus);
         }
 
-        // POST: Rucovodstvo/Delete/5
+        // POST: RowStatus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var rucovodstvo = await _context.SvedenRucovodstvo.SingleOrDefaultAsync(m => m.RucovodstvoId == id);
-            _context.SvedenRucovodstvo.Remove(rucovodstvo);
+            var rowStatus = await _context.RowStatuses.SingleOrDefaultAsync(m => m.RowStatusId == id);
+            _context.RowStatuses.Remove(rowStatus);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RucovodstvoExists(int id)
+        private bool RowStatusExists(int id)
         {
-            return _context.SvedenRucovodstvo.Any(e => e.RucovodstvoId == id);
+            return _context.RowStatuses.Any(e => e.RowStatusId == id);
         }
     }
 }

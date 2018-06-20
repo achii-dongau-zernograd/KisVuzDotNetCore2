@@ -67,7 +67,8 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                                 
                 fileModel.FileName = Path.GetFileName(uploadedFile.FileName);
-                fileModel.Path = path;
+                //fileModel.Path = path;
+                fileModel.Path = Path.Combine("files", fileName); ;
 
                 if (Path.GetExtension(uploadedFile.FileName)==".pdf")
                 {
@@ -123,7 +124,9 @@ namespace KisVuzDotNetCore2.Controllers
             if (file != null)
             {
                 // Путь к файлу
-                string file_path = file.Path;
+                string[] paths = { _appEnvironment.WebRootPath, file.Path };
+                string path = Path.Combine(paths);
+                string file_path = path;
                 // Тип файла - content-type
                 string file_type = file.ContentType;
                 // Имя файла - необязательно
