@@ -24,7 +24,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Link)
                 </th>
-            <th></th>
+            <th>Действие</th>
         </tr>
     </thead>
     <tbody>
@@ -43,8 +43,7 @@
                 @Html.DisplayFor(modelItem => item.Link)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Подробнее</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a>
                 <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
             </td>
         </tr>
