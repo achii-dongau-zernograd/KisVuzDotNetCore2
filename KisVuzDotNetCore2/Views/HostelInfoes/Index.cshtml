@@ -1,37 +1,18 @@
-<<<<<<< HEAD
-﻿@model IEnumerable<KisVuzDotNetCore2.Models.HostelInfo>
-
-@{
-    ViewData["Title"] = "Наличии общежитий, интернатов, количество жилых помещений в общежитиях, интернатов для иногородних обучающихся";
-}
-
-<h2>Информация о наличии общежитий, интернатов, количество жилых помещений в общежитиях, интернатов для иногородних обучающихся</h2>
-
-<p>
-    <a asp-action="Create">Добавить</a>
-=======
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.HostelInfo>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Наличие общежития, интерната, количество жилых помещений в общежитии, интернате для иногородних обучающихся";
 }
 
-<h2>Index</h2>
+<h2>Наличие общежития, интерната, количество жилых помещений в общежитии, интернате для иногородних обучающихся</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
->>>>>>> b8a6b4ae3698bf48f45ccaeb99c2989fbe754293
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
         <tr>
                 <th>
-<<<<<<< HEAD
-                    @Html.DisplayNameFor(model => model.NaimenovanPokaz)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Znachenie)
-=======
                     @Html.DisplayNameFor(model => model.NameIndicator)
                 </th>
                 <th>
@@ -42,26 +23,14 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Link)
->>>>>>> b8a6b4ae3698bf48f45ccaeb99c2989fbe754293
                 </th>
-            <th></th>
+            <th>Действие</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-<<<<<<< HEAD
-                @Html.DisplayFor(modelItem => item.NaimenovanPokaz)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Znachenie)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.HostelInfoId">Редактировать</a> 
-                <a asp-action="Details" asp-route-id="@item.HostelInfoId">Подробнее</a> 
-                <a asp-action="Delete" asp-route-id="@item.HostelInfoId">Удалить</a>
-=======
                 @Html.DisplayFor(modelItem => item.NameIndicator)
             </td>
             <td>
@@ -74,10 +43,8 @@
                 @Html.DisplayFor(modelItem => item.Link)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
->>>>>>> b8a6b4ae3698bf48f45ccaeb99c2989fbe754293
+                <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
             </td>
         </tr>
 }

@@ -259,10 +259,12 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseFilesData.CreateFilesData(serviceProvider, configuration);
             await InitDatabaseEduChislen.CreateEduChislen(serviceProvider, configuration);            
             await InitDatabaseRucovodstvo.CreateRucovodstvo(serviceProvider, configuration);
+            await InitDatabaseHostelInfo.CreateHostelInfo(serviceProvider, configuration);
 
             await InitDatabaseUserData.SettingAdminsProfileData(serviceProvider, configuration);
             await InitDatabaseUserData.CreateMainUsersAccounts(serviceProvider, configuration);
             await InitDatabaseUserData.CreateStudentsAccounts(serviceProvider, configuration);
+            await InitDatabaseElectronBiblSystem.CreateElectronBiblSystem(serviceProvider, configuration);
         }        
 
         /// <summary>
@@ -272,9 +274,16 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Sveden.HostelInfo> HostelInfo { get; set; }
-
         public DbSet<priemKolTarget> priemKolTarget { get; set; }
         public DbSet<priemKolMest> priemKolMest { get; set; }
         public DbSet<PriemExam> PriemExam { get; set; }
+
+        /// <summary>
+        /// Инициализация базы данных
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.Sveden.ElectronBiblSystem> ElectronBiblSystem { get; set; }
     }
 }

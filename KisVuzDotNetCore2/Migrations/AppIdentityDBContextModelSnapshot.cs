@@ -796,6 +796,30 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("Telephones");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.ElectronBiblSystem", b =>
+                {
+                    b.Property<int>("ElectronBiblSystemId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CopyDogovorId");
+
+                    b.Property<DateTime?>("DateEnd");
+
+                    b.Property<DateTime>("DateStart");
+
+                    b.Property<string>("LinkEbs");
+
+                    b.Property<string>("NameEbs");
+
+                    b.Property<string>("NumberDogovor");
+
+                    b.HasKey("ElectronBiblSystemId");
+
+                    b.HasIndex("CopyDogovorId");
+
+                    b.ToTable("ElectronBiblSystem");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.HostelInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -1322,6 +1346,13 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.StructUniversity")
                         .WithMany("Telephones")
                         .HasForeignKey("StructUniversityId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.ElectronBiblSystem", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "CopyDogovor")
+                        .WithMany()
+                        .HasForeignKey("CopyDogovorId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ProfessionalRetraining", b =>

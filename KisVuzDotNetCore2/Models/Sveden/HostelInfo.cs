@@ -29,7 +29,7 @@ namespace KisVuzDotNetCore2.Models.Sveden
         /// <summary>
         /// Значение
         /// </summary>        
-        [Display(Name = "Value")]
+        [Display(Name = "Значение")]
         public string Value { get; set; }
 
         /// <summary>

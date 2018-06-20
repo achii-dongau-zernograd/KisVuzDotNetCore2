@@ -208,6 +208,12 @@
     <Compile Remove="Migrations\20180620111143_HostelInfo.Designer.cs" />
     <Compile Remove="Migrations\20180620112352_test.cs" />
     <Compile Remove="Migrations\20180620112352_test.Designer.cs" />
+    <Compile Remove="Migrations\20180620115026_ElectronBiblSystem.cs" />
+    <Compile Remove="Migrations\20180620115026_ElectronBiblSystem.Designer.cs" />
+    <Compile Remove="Migrations\20180620131210_init.cs" />
+    <Compile Remove="Migrations\20180620131210_init.Designer.cs" />
+    <Compile Remove="Migrations\20180620133723_Ebs.cs" />
+    <Compile Remove="Migrations\20180620133723_Ebs.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

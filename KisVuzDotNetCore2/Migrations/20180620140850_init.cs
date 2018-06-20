@@ -389,6 +389,30 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ElectronBiblSystem",
+                columns: table => new
+                {
+                    ElectronBiblSystemId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CopyDogovorId = table.Column<int>(nullable: true),
+                    DateEnd = table.Column<DateTime>(nullable: true),
+                    DateStart = table.Column<DateTime>(nullable: false),
+                    LinkEbs = table.Column<string>(nullable: true),
+                    NameEbs = table.Column<string>(nullable: true),
+                    NumberDogovor = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ElectronBiblSystem", x => x.ElectronBiblSystemId);
+                    table.ForeignKey(
+                        name: "FK_ElectronBiblSystem_Files_CopyDogovorId",
+                        column: x => x.CopyDogovorId,
+                        principalTable: "Files",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -1246,6 +1270,11 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "EduLevelId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ElectronBiblSystem_CopyDogovorId",
+                table: "ElectronBiblSystem",
+                column: "CopyDogovorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Emails_StructInstituteId",
                 table: "Emails",
                 column: "StructInstituteId");
@@ -1433,6 +1462,9 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "EduPlans");
+
+            migrationBuilder.DropTable(
+                name: "ElectronBiblSystem");
 
             migrationBuilder.DropTable(
                 name: "Faxes");
