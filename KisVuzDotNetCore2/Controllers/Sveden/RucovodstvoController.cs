@@ -25,24 +25,6 @@ namespace KisVuzDotNetCore2.Controllers
             return View(await _context.SvedenRucovodstvo.ToListAsync());
         }
 
-        // GET: Rucovodstvo/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var rucovodstvo = await _context.SvedenRucovodstvo
-                .SingleOrDefaultAsync(m => m.RucovodstvoId == id);
-            if (rucovodstvo == null)
-            {
-                return NotFound();
-            }
-
-            return View(rucovodstvo);
-        }
-
         // GET: Rucovodstvo/Create
         public IActionResult Create()
         {

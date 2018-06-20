@@ -37,6 +37,6 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="VolumeId" />
         <input type="submit" value="Удалить" class="btn btn-danger" />
-        <input type="submit" value="Отмена" class="btn btn-default" />
+        <a asp-action="Index" class="btn btn-default">Отменить</a>
     </form>
 </div>
