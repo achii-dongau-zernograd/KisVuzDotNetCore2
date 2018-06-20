@@ -25,24 +25,6 @@ namespace KisVuzDotNetCore2.Controllers
             return View(await _context.HostelInfo.ToListAsync());
         }
 
-        // GET: HostelInfoes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var hostelInfo = await _context.HostelInfo
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (hostelInfo == null)
-            {
-                return NotFound();
-            }
-
-            return View(hostelInfo);
-        }
-
         // GET: HostelInfoes/Create
         public IActionResult Create()
         {
