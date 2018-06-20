@@ -265,5 +265,13 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseUserData.CreateStudentsAccounts(serviceProvider, configuration);
         }        
 
+        /// <summary>
+        /// Инициализация базы данных
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.Sveden.HostelInfo> HostelInfo { get; set; }
+
     }
 }
