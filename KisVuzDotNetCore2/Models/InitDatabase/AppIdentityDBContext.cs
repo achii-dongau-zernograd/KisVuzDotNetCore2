@@ -202,6 +202,11 @@ namespace KisVuzDotNetCore2.Models
         /// Кол-во вакантных мест для приема (перевода)
         /// </summary>
         public DbSet<Vacant> Vacants { get; set; }
+
+        /// <summary>
+        /// Информация о количестве поданных заявлений о приеме
+        /// </summary>
+        public DbSet<BlankNum> BlankNums { get; set; }
         #endregion
 
         #region Настройки пользователя

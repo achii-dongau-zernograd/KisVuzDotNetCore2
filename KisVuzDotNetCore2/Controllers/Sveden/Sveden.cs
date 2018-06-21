@@ -171,6 +171,10 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Grants()
         {
+            var t20hostelInfo = await _context.HostelInfo
+                .ToListAsync();
+            ViewData["t20hostelInfo"] = t20hostelInfo;
+
             return View();
         }
 
