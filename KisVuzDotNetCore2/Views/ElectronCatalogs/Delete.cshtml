@@ -1,0 +1,31 @@
+﻿@model KisVuzDotNetCore2.Models.ElectronCatalog
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h3>Удалить информацио о БД электронного каталога?</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameEc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NameEc)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionEc)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionEc)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ElectronCatalogId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отменить</a>
+    </form>
+</div>

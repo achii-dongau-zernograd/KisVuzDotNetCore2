@@ -214,6 +214,12 @@
     <Compile Remove="Migrations\20180620131210_init.Designer.cs" />
     <Compile Remove="Migrations\20180620133723_Ebs.cs" />
     <Compile Remove="Migrations\20180620133723_Ebs.Designer.cs" />
+    <Compile Remove="Migrations\20180621085850_ElectronCatalog.cs" />
+    <Compile Remove="Migrations\20180621085850_ElectronCatalog.Designer.cs" />
+    <Compile Remove="Migrations\20180621091536_elcat.cs" />
+    <Compile Remove="Migrations\20180621091536_elcat.Designer.cs" />
+    <Compile Remove="Migrations\20180621095650_elcat2.cs" />
+    <Compile Remove="Migrations\20180621095650_elcat2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

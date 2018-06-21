@@ -152,6 +152,13 @@ namespace KisVuzDotNetCore2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Preview()
+        {
+            var appIdentityDBContext = _context.ElectronBiblSystem.Include(e => e.CopyDogovor);
+            return View(await appIdentityDBContext.ToListAsync());
+        }
+
+
         private bool ElectronBiblSystemExists(int id)
         {
             return _context.ElectronBiblSystem.Any(e => e.ElectronBiblSystemId == id);
