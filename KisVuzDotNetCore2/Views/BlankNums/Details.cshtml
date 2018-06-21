@@ -1,0 +1,42 @@
+﻿@model KisVuzDotNetCore2.Models.Priem.BlankNum
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BlankNum</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Och)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Och)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OchZaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OchZaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravlId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.BlankNumId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

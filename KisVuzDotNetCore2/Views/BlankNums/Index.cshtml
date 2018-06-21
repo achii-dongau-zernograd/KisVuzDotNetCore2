@@ -1,0 +1,53 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Priem.BlankNum>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Och)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Zaoch)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OchZaoch)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduNapravl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Och)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zaoch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OchZaoch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravlId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BlankNumId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BlankNumId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BlankNumId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
