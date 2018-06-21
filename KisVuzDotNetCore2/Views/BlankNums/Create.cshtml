@@ -1,0 +1,47 @@
+﻿@model KisVuzDotNetCore2.Models.Priem.BlankNum
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>BlankNum</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EduNapravlId" class="control-label"></label>
+                <select asp-for="EduNapravlId" class ="form-control" asp-items="ViewBag.EduNapravlId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Och" class="control-label"></label>
+                <input asp-for="Och" class="form-control" />
+                <span asp-validation-for="Och" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Zaoch" class="control-label"></label>
+                <input asp-for="Zaoch" class="form-control" />
+                <span asp-validation-for="Zaoch" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OchZaoch" class="control-label"></label>
+                <input asp-for="OchZaoch" class="form-control" />
+                <span asp-validation-for="OchZaoch" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

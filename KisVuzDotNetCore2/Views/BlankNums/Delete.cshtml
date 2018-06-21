@@ -1,0 +1,45 @@
+﻿@model KisVuzDotNetCore2.Models.Priem.BlankNum
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>BlankNum</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Och)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Och)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Zaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Zaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OchZaoch)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OchZaoch)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravlId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="BlankNumId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

@@ -13,8 +13,7 @@
 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Информация об администрации образовательной организации</a>
 <div class="collapse" id="spoiler-1">
     <div class="well">
-
-        <table itemprop="rucovodstvo" class="table table-hover">
+       <table itemprop="rucovodstvo" class="table table-hover">
             <thead>
                 <tr>
                     <th>Ф.И.О.</th>
@@ -23,16 +22,16 @@
                     <th>Адреса электронной почты</th>
                 </tr>
             </thead>
-            @foreach (var item in t14rucovodstvo)
-            {
-                <tr itemprop="rucovodstvo">
-                    <td itemprop="fio">@item.Fio</td>
-                    <td itemprop="post">@item.Post</td>
-                    <td itemprop="telephone">@item.Telephone</td>
-                    <td itemprop="email">@item.Email</td>
-                </tr>
-            }
-        </table>
+             @foreach (var item in t14rucovodstvo)
+                {
+                    <tr itemprop="rucovodstvo">
+                        <td itemprop="fio">@item.Fio</td>
+                        <td itemprop="post">@item.Post</td>
+                        <td itemprop="telephone">@item.Telephone</td>
+                        <td itemprop="email">@item.Email</td>
+                    </tr>
+                }
+         </table>
     </div>
 </div>
 
@@ -50,15 +49,26 @@
                     <th>Адреса электронной почты</th>
                 </tr>
             </thead>
-            @foreach (var item in t15rucovodstvoFil)
+
+            @if (t15rucovodstvoFil.Count() == 0)
             {
-            <tr itemprop="rucovodstvoFil">
-                <td itemprop="nameFil">@item.NameFil</td>
-                <td itemprop="fio">@item.Fio</td>
-                <td itemprop="post">@item.Post</td>
-                <td itemprop="telephone">@item.Telephone</td>
-                <td itemprop="email">@item.Email</td>
-            </tr>
+                <tr>
+                    <td colspan="5" class="text-center">
+                        Филиалов нет
+                    </td>
+                </tr>
+            }
+            else
+            { @foreach (var item in t15rucovodstvoFil)
+                {
+                    <tr itemprop="rucovodstvoFil">
+                        <td itemprop="nameFil">@item.NameFil</td>
+                        <td itemprop="fio">@item.Fio</td>
+                        <td itemprop="post">@item.Post</td>
+                        <td itemprop="telephone">@item.Telephone</td>
+                        <td itemprop="email">@item.Email</td>
+                    </tr>
+            }
             }
         </table>
     </div>

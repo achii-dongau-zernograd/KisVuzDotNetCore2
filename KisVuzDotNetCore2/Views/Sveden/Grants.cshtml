@@ -1,1 +1,54 @@
-﻿<h1>Стипендии и иные виды материальной поддержки</h1>
+﻿@{
+    ViewData["Title"] = "Стипендии и иные виды материальной поддержк";
+}
+
+<h1>Стипендии и иные виды материальной поддержки</h1>
+
+@{
+    var t20hostelInfo = (IEnumerable<HostelInfo>)ViewData["t20hostelInfo"];
+}
+
+<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Наличие общежития, интерната, количество жилых помещений в общежитии, интернате для иногородних обучающихся</a>
+<div class="collapse" id="spoiler-1">
+    <div class="well">
+
+        <table itemprop="hostelInfo" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Наименование показателя</th>                    
+                    <th>Значение</th>
+                </tr>
+            </thead>
+            @foreach (var item in t20hostelInfo)
+            {
+            <tr itemprop="hostelInfo">
+                <td>@item.NameIndicator</td>
+                @if (item.Link != String.Empty)
+                {
+
+                    @if (item.Itemprop != String.Empty)
+                    {
+                        <td itemprop="@item.Itemprop"><a href="@item.Link">@item.Value</a></td>
+                    }
+                    else
+                    {
+                        <td><a href="@item.Link">@item.Value</a></td>
+                    }
+                }
+                else
+                {
+                    @if (item.Itemprop != String.Empty)
+                    {
+                        <td itemprop="@item.Itemprop">@item.Value</td>
+                    }
+                    else
+                    {
+                        <td>@item.Value</td>
+                    }
+                    <td>@item.Link</td>
+                }
+            </tr>
+            }
+        </table>
+    </div>
+</div>

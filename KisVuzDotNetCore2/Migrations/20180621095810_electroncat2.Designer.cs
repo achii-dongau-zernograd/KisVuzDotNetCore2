@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20180621095810_electroncat2")]
+    partial class electroncat2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -424,26 +425,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("FileModelId");
 
                     b.ToTable("FileToFileTypes");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.BlankNum", b =>
-                {
-                    b.Property<int>("BlankNumId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("EduNapravlId");
-
-                    b.Property<int>("Och");
-
-                    b.Property<int>("OchZaoch");
-
-                    b.Property<int>("Zaoch");
-
-                    b.HasKey("BlankNumId");
-
-                    b.HasIndex("EduNapravlId");
-
-                    b.ToTable("BlankNums");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.PriemExam", b =>
@@ -1220,14 +1201,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
                         .WithMany("FileToFileTypes")
                         .HasForeignKey("FileModelId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.BlankNum", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
-                        .WithMany()
-                        .HasForeignKey("EduNapravlId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

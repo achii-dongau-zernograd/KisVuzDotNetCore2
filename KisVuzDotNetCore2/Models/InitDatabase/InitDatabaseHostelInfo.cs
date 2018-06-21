@@ -31,7 +31,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         NameIndicator = "Количество общежитий, интернатов",
                         Itemprop = "hostelNum",
                         Value = "5",
-                        Link = ""
+                        Link = "http://ачгаа.рф/sveden/grants"
                     };
 
                     HostelInfo SvedenHostelInfo2 = new HostelInfo

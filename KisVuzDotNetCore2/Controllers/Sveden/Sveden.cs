@@ -162,6 +162,12 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Objects()
         {
+            int NumEbs = _context.ElectronBiblSystem.Count();
+            int NumEbsSobstv= _context.ElectronBiblSystem.Where(ebs=>ebs.NumberDogovor==string.Empty).Count();
+            int NumEbsDogovor = NumEbs - NumEbsSobstv;
+            ViewData["NumEbs"] = NumEbs;
+            ViewData["NumEbsSobstv"] = NumEbsSobstv;
+            ViewData["NumEbsDogovor"] = NumEbsDogovor;
             return View();
         }
 
@@ -171,6 +177,10 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Grants()
         {
+            var t20hostelInfo = await _context.HostelInfo
+                .ToListAsync();
+            ViewData["t20hostelInfo"] = t20hostelInfo;
+
             return View();
         }
 
