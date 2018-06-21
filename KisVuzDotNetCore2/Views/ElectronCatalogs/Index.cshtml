@@ -1,0 +1,41 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.ElectronCatalog>
+
+@{
+    ViewData["Title"] = "База данных электронного каталога";
+}
+
+<h2>База данных электронного каталога</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NameEc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DescriptionEc)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameEc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptionEc)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ElectronCatalogId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.ElectronCatalogId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.ElectronCatalogId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

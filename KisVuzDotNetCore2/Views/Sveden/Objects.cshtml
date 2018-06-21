@@ -2,6 +2,12 @@
     ViewData["Title"] = "Материально-техническое обеспечение и оснащенность образовательного процесса";
 }
 
+@{
+    int NumEbs = (int)ViewData["NumEbs"];
+    int NumEbsSobstv = (int)ViewData["NumEbsSobstv"];
+    int NumEbsDogovor = (int)ViewData["NumEbsDogovor"];
+}
+
 <h1>Материально-техническое обеспечение и оснащенность образовательного процесса</h1>
 
 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о доступе к электронной информационно-образовательной среде, информационным системам и информационно-телекоммуникационным сетям </br> и электронным ресурсам, к которым обеспечивается доступ обучающихся</a>
@@ -26,7 +32,7 @@
                 <tr>
                 <tr>
                     <td>Общее количество ЭБС, к которым имеют доступ обучающиеся (собственных или на договорной основе)</td>
-                    <td itemprop="purposeEbs">2</td>
+                    <td itemprop="purposeEbs"><a asp-controller="ElectronBiblSystems" asp-action="Preview">@NumEbs</a>, в том числе</br> @NumEbsSobstv - собственных,</br> @NumEbsDogovor - на договорной основе</td>
                 <tr>
                 <tr>
                     <td>Наличие собственных электронных образовательных и информационных ресурсов</td>
@@ -42,5 +48,5 @@
                 <tr>
             </table>
         </div>
-        </div>
+    </div>
 </div>

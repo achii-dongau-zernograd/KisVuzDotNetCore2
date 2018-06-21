@@ -265,6 +265,7 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseUserData.CreateMainUsersAccounts(serviceProvider, configuration);
             await InitDatabaseUserData.CreateStudentsAccounts(serviceProvider, configuration);
             await InitDatabaseElectronBiblSystem.CreateElectronBiblSystem(serviceProvider, configuration);
+            await InitDatabaseElectronCatalog.CreateElectronCatalog(serviceProvider, configuration);
         }        
 
         /// <summary>
@@ -279,11 +280,19 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<PriemExam> PriemExam { get; set; }
 
         /// <summary>
-        /// Инициализация базы данных
+        /// Электронные библиотечные системы
         /// </summary>
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Sveden.ElectronBiblSystem> ElectronBiblSystem { get; set; }
+
+        /// <summary>
+        /// База данных электронного каталога
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.ElectronCatalog> ElectronCatalog { get; set; }
     }
 }
