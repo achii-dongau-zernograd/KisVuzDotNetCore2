@@ -217,7 +217,7 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         /// <summary>
-        /// Подраздел "Шаблона представления информации по различныфм условиям"
+        /// Подраздел "Шаблон представления информации по различным условиям поступления"
         /// </summary>
         /// <returns></returns>
         public async Task<IActionResult> PriemExam()

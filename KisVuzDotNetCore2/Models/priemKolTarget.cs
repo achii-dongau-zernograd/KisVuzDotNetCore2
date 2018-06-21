@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Models
 {
-
-
     /// <summary>
-    /// Шаблон представления информации о колличестве мест  для приема на обучения по различным условиям поступления
+    /// Шаблон представления информации о количестве мест для приема на обучения по различным условиям поступления
     /// </summary>
     public class priemKolTarget
     {
@@ -19,94 +17,76 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Наименование
         /// </summary>
-        [Display(Name = "Наименование ")]
+        [Display(Name = "Наименование")]
         public EduNapravl EduNapravl { get; set; }
-        [Display(Name = "Наименование ")]
+        [Display(Name = "Наименование")]
         public int EduNapravlId { get; set; }
 
-
-       
-
-
-       
-
-
         /// <summary>
-        /// Места в приделах целевой квоты очное
+        /// Места в рамках контрольных цифр приема (по общему конкурсу) очное
         /// </summary>
-        [Display(Name = " Особая квота очное ")]
+        [Display(Name = "Места в рамках контрольных цифр приема (по общему конкурсу) очное")]
         public int Mesta_v_ramkahtQuota_och { get; set; }
 
         /// <summary>
-        /// Места в рамках контрольных цифр приема(по общему конкурсу) заочное
+        /// Места в рамках контрольных цифр приема (по общему конкурсу) заочное
         /// </summary>
-        [Display(Name = "Особая квота заочное ")]
+        [Display(Name = "Места в рамках контрольных цифр приема (по общему конкурсу) заочное")]
         public int Mesta_v_ramkah_zaoch { get; set; }
 
         /// <summary>
-        /// Места в рамках контрольных цифр приема(по общему конкурсу) очно-заочное
+        /// Места в рамках контрольных цифр приема (по общему конкурсу) очно-заочное
         /// </summary>
-        [Display(Name = "Особая квота очно-заочное")]
+        [Display(Name = "Места в рамках контрольных цифр приема (по общему конкурсу) очно-заочное")]
         public int Mesta_v_ramkah_och_zaoch { get; set; }
-
-
-
-
+        
 
         /// <summary>
-        ///  Места в приделах особой квоты очное
+        /// Места в пределах особой квоты очное
         /// </summary>
-        [Display(Name = "Общие условия очное")]
+        [Display(Name = "Места в пределах особой квоты очное")]
         public int Mesta_v_pridelah_osoboi_och { get; set; }
 
 
         /// <summary>
-        ///  Места в приделах особой квоты заочное
+        /// Места в пределах особой квоты заочное
         /// </summary>
-        [Display(Name = "Общие условия заочное ")]
+        [Display(Name = "Места в пределах особой квоты заочное")]
         public int Mesta_v_pridelah_osoboi_zaoch { get; set; }
 
         /// <summary>
-        ///  Места в приделах особой квоты  очно-заочное
+        /// Места в пределах особой квоты очно-заочное
         /// </summary>
-        [Display(Name = "Общие условия  очно-заочное")]
+        [Display(Name = "Места в пределах особой квоты очно-заочное")]
         public int Mesta_v_pridelah_osoboi_och_zaoch { get; set; }
 
 
 
 
         /// <summary>
-        /// Места в приделах целевой квоты очное
+        /// Места в пределах целевой квоты очное
         /// </summary>
-        [Display(Name = "По договорам об оказании платных образовательных услуг очное ")]
+        [Display(Name = "Места в пределах целевой квоты очное ")]
         public int Mesta_v_pridelah_celevoi_och { get; set; }
 
         /// <summary>
-        /// Места в приделах целевой квоты заочное
+        /// Места в пределах целевой квоты заочное
         /// </summary>
-        [Display(Name = " По договорам об оказании платных образовательных услуг заочное ")]
+        [Display(Name = "Места в пределах целевой квоты заочное ")]
         public int Mesta_v_pridelah_celevoi_zaoch { get; set; }
 
 
         /// <summary>
-        /// Места в приделах целевой квоты очно-заочное
+        /// Места в пределах целевой квоты очно-заочное
         /// </summary>
-        [Display(Name = "По договорам об оказании платных образовательных услуг очно-заочное ")]
+        [Display(Name = "Места в пределах целевой квоты очно-заочное ")]
         public int Mesta_v_pridelah_celevoi_och_zaoch { get; set; }
-
-
-
-
-
-
-
-
-
+                      
 
         /// <summary>
         /// Всего 
         /// </summary>
-        [Display(Name = "Всего ")]
+        [Display(Name = "Всего")]
         public int Vsego
         {
             get

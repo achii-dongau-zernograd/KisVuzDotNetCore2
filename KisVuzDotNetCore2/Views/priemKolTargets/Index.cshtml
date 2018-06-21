@@ -12,42 +12,58 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mesta_v_ramkahtQuota_och)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mesta_v_ramkah_zaoch)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mesta_v_ramkah_och_zaoch)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_och)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_zaoch)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_och_zaoch)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_och)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_zaoch)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_och_zaoch)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduNapravl.EduNapravlCode)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.EduNapravl)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vsego)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mesta_v_ramkahtQuota_och)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mesta_v_ramkah_zaoch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mesta_v_ramkah_och_zaoch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_och)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_zaoch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_och_zaoch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_och)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_zaoch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_och_zaoch)
+            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravlCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravlName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vsego)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Mesta_v_ramkahtQuota_och)
             </td>
@@ -74,9 +90,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Mesta_v_pridelah_celevoi_och_zaoch)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravlId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.priemKolTargetId">Edit</a> |
