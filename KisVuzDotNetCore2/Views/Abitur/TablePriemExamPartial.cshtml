@@ -1,0 +1,48 @@
+﻿@{
+    var PriemExam = (IEnumerable<PriemExam>)ViewData["PriemExam"];
+}
+
+    <h3>Условия поступления</h3>
+    
+    <table itemprop="priemExam" class="table">
+        <thead>
+            <tr>
+                <th>
+                    Код
+                </th>
+                <th>
+                   Направление подготовки (специальности)
+                </th>
+                <th itemprop="priemExamList">
+                    Вступительные испытания (в порядке приоритета)
+                </th>
+                <th itemprop="priemExamPoints">
+                    Минимальное количество баллов
+                </th>
+                <th itemprop="priemExamForms">
+                    Форма проведения
+                </th>
+            </tr>
+            <tr>
+                <th>Условия поступления</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in PriemExam)
+            {
+                <tr itemprop="priemExam">
+                    <td>@item.EduNapravl.EduNapravlCode</td>
+                    <td>@item.EduNapravl.EduNapravlName</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VstupIsp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MinKol)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FormProv)
+                    </td>                    
+                </tr>
+            }
+        </tbody>
+    </table>

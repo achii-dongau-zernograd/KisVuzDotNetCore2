@@ -1,0 +1,70 @@
+﻿@{
+    var priemKolMest=(IEnumerable<priemKolMest>)ViewData["priemKolMest"];
+}
+
+<h3>Информация о количестве мест для приема на обучение по различным условиям поступления</h3>
+
+<table itemprop="priemKolMest" class="table">
+    <thead>        
+        <tr>
+            <th rowspan="3">Код</th>
+            <th rowspan="3">Направление подготовки(специальности)</th>
+            <th rowspan="3">Всего</th>
+            <th colspan="6" align="center">Контрольные цифры приёма</th>
+            <th colspan="3"> По договорам об оказании платных образовательных услуг</th>
+        </tr>
+        <tr>
+            <th colspan="3" align="center" itemprop="priemKolMestQuota">Особая квота</th>
+            <th colspan="3" align="center" itemprop="priemKolMestCommon">Общие условия</th>
+        <tr>            
+            <th>Очное</th>
+            <th>Заочное</th>
+            <th>Очно-заочное</th>
+            <th>Очное</th>
+            <th>Заочное</th>
+            <th>Очно-заочное</th>
+            <th>Очное</th>
+            <th>Заочное</th>
+            <th>Очно-заочное</th>
+        </tr>       
+    </thead>
+    <tbody>
+        @foreach (var item in priemKolMest)
+        {
+            <tr itemprop="priemKolMest">
+                <td>@item.EduNapravl.EduNapravlCode</td>
+                <td>@item.EduNapravl.EduNapravlName</td>
+                <td>@item.PriemKolMestAll</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.priemKolMestQuota_och)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.priemKolMestQuota_zaoch)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.priemKolMestQuota_och_zaoch)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriemKolMestCommon_och)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriemKolMestCommon_zaoch)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriemKolMestCommon_och_zaoch)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriemKolMestPaid_och)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriemKolMestPaid_zaoch)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriemKolMestPaid_och_zaoch)
+                </td>                
+            </tr>
+        }
+    </tbody>
+</table>
+
+

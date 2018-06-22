@@ -21,17 +21,11 @@ namespace KisVuzDotNetCore2.Models.Priem
         [Display(Name = "Направление подготовки(специальности)")]
         public int EduNapravlId { get; set; }
 
-
-
         /// <summary>
         /// Вступительные испытания (в порядке приоритета)
         /// </summary>
         [Display(Name = "Вступительные испытания (в порядке приоритета) ")]
         public string VstupIsp { get; set; }
-      
-
-
-
 
         /// <summary>
         /// Минимальное количество баллов
@@ -39,13 +33,10 @@ namespace KisVuzDotNetCore2.Models.Priem
         [Display(Name = "Минимальное количество баллов ")]
         public string MinKol { get; set; }
 
-
         /// <summary>
         /// "Форма проведения вступительных испытаний, проводимых организацией самостоятельно"
         /// </summary>
         [Display(Name = "Форма проведения вступительных испытаний, проводимых организацией самостоятельно")]
         public string FormProv { get; set; }
-
-
     }
 }

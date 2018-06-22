@@ -1,59 +1,63 @@
-﻿@model IEnumerable<KisVuzDotNetCore2.Models.priemKolTarget>
-
-@{
-    ViewData["Title"] = "Информация о количестве мест для приёма на обучение по различным условиям поступления";
+﻿@{
+    var priemKolTarget=(IEnumerable<priemKolTarget>)ViewData["priemKolTarget"];
 }
 
-<h2>Информация о количестве мест для приёма на обучение по различным условиям поступления</h2>
+<h3>Информация о количестве мест для приёма на обучение по различным условиям поступления</h3>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Добавить</a>
-</p>
-<table class="table">
+<table itemprop="priemKolTarget" class="table">
     <thead>
         <tr>
+            <th rowspan="2">
+                Код
+            </th>
+            <th rowspan="2">
+                Направление подготовки (специальности)
+            </th>
+            <th rowspan="2">
+                Всего
+            </th>
+            <th colspan="3">
+                Места в рамках контрольных цифр приёма (по общему конкурсу)
+            </th>
+            <th colspan="3">
+                Места в пределах особой квоты
+            </th>
+            <th colspan="3">
+                Места в пределах целевой квоты
+            </th>
+        </tr>
+        <tr>
             <th>
-                @Html.DisplayNameFor(model => model.EduNapravl.EduNapravlCode)
+                Общий Очное
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EduNapravl)
+                Общий Зачное
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Vsego)
+                Общий Очно-заочное
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Mesta_v_ramkahtQuota_och)
+                Квота Очное
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Mesta_v_ramkah_zaoch)
+                Квота Зачное
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Mesta_v_ramkah_och_zaoch)
+                Квота Очно-заочное
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_och)
+                Целевой Очное
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_zaoch)
+                Целевой Заочное
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Mesta_v_pridelah_osoboi_och_zaoch)
+                Целевой Заочное
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_och)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_zaoch)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Mesta_v_pridelah_celevoi_och_zaoch)
-            </th>
-
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in priemKolTarget) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravlCode)
@@ -90,10 +94,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Mesta_v_pridelah_celevoi_och_zaoch)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.priemKolTargetId">Изменить</a> | 
-                <a asp-action="Delete" asp-route-id="@item.priemKolTargetId">Удалить</a>
             </td>
         </tr>
 }
