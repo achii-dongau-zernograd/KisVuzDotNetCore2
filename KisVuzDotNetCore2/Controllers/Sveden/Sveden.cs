@@ -168,6 +168,12 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["NumEbs"] = NumEbs;
             ViewData["NumEbsSobstv"] = NumEbsSobstv;
             ViewData["NumEbsDogovor"] = NumEbsDogovor;
+            int NumEc = _context.ElectronCatalog.Count();
+            ViewData["NumEc"] = NumEc;
+            int NumEoisOwn = _context.ElectronObrazovatInformRes.Where(e=>e.IsSobstv==true).Count();
+            ViewData["NumEoisOwn"] = NumEoisOwn;
+            int NumEoisSide = _context.ElectronObrazovatInformRes.Where(e=>e.IsSobstv==false).Count();
+            ViewData["NumEoisSide"] = NumEoisSide;
             return View();
         }
 

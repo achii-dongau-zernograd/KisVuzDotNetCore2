@@ -144,6 +144,13 @@ namespace KisVuzDotNetCore2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Preview()
+        {
+            var appIdentityDBContext = _context.ElectronCatalog;
+            return View(await appIdentityDBContext.ToListAsync());
+        }
+
+
         private bool ElectronCatalogExists(int id)
         {
             return _context.ElectronCatalog.Any(e => e.ElectronCatalogId == id);

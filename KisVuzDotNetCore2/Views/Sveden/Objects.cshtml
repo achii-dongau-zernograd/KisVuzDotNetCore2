@@ -6,6 +6,9 @@
     int NumEbs = (int)ViewData["NumEbs"];
     int NumEbsSobstv = (int)ViewData["NumEbsSobstv"];
     int NumEbsDogovor = (int)ViewData["NumEbsDogovor"];
+    int NumEc = (int)ViewData["NumEc"];
+    int NumEoisOwn = (int)ViewData["NumEoisOwn"];
+    int NumEoisSide = (int)ViewData["NumEoisSide"];
 }
 
 <h1>Материально-техническое обеспечение и оснащенность образовательного процесса</h1>
@@ -36,15 +39,15 @@
                 <tr>
                 <tr>
                     <td>Наличие собственных электронных образовательных и информационных ресурсов</td>
-                    <td itemprop="eoisOwn">19</td>
+                    <td itemprop="eoisOwn"><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="true">@NumEoisOwn</a></td>
                 <tr>
                 <tr>
                     <td>Наличие сторонних электронных образовательных и информационных ресурсов</td>
-                    <td itemprop="eoisSide">&#8212;</td>
+                    <td itemprop="eoisSide"><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="false">@NumEoisSide</a></td>
                 <tr>
                 <tr>
                     <td>Наличие базы данных электронного каталога</td>
-                    <td itemprop="bdec">1</td>
+                    <td itemprop="bdec"><a asp-controller="ElectronCatalogs" asp-action="Preview">@NumEc</a></td>
                 <tr>
             </table>
         </div>

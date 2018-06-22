@@ -220,6 +220,10 @@
     <Compile Remove="Migrations\20180621091536_elcat.Designer.cs" />
     <Compile Remove="Migrations\20180621095650_elcat2.cs" />
     <Compile Remove="Migrations\20180621095650_elcat2.Designer.cs" />
+    <Compile Remove="Migrations\20180622072901_EoisSobctv2.cs" />
+    <Compile Remove="Migrations\20180622072901_EoisSobctv2.Designer.cs" />
+    <Compile Remove="Migrations\20180622074526_ElectronRes.cs" />
+    <Compile Remove="Migrations\20180622074526_ElectronRes.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

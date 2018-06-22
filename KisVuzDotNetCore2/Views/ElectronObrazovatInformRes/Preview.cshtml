@@ -1,0 +1,42 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.ElectronObrazovatInformRes>
+
+@{
+    ViewData["Title"] = "Электронные образовательные и информационные ресурсы";
+}
+
+<h2>Электронные образовательные и информационные ресурсы</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NameRes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescriptionRes)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @if (string.IsNullOrEmpty(item.LinkRes))
+                {
+                    @item.NameRes
+                }
+                else
+                {
+                    <a target="_blank" href="@item.LinkRes">@item.NameRes</a>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptionRes)
+            </td>
+         </tr>
+        }
+    </tbody>
+</table>

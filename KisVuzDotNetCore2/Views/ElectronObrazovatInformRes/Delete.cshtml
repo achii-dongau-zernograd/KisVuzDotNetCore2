@@ -1,0 +1,49 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.ElectronObrazovatInformRes
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+
+<h3>Удалить информацию об электронном ресурсе?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameRes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NameRes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LinkRes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LinkRes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsSobstv)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsSobstv)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionRes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionRes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Res)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Res.Id)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ElectronObrazovatInformResId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отменить</a>
+    </form>
+</div>

@@ -1,0 +1,48 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.ElectronObrazovatInformRes
+
+@{
+    ViewData["Title"] = "Подробнее";
+}
+
+<h2>Подробнее</h2>
+
+<div>
+    <h4>ElectronObrazovatInformRes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameRes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NameRes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LinkRes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LinkRes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsSobstv)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsSobstv)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionRes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionRes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Res)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Res.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ElectronObrazovatInformResId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" class="btn btn-default">Отменить</a>
+</div>
