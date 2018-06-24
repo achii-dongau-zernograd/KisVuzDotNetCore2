@@ -214,16 +214,24 @@
     <Compile Remove="Migrations\20180620131210_init.Designer.cs" />
     <Compile Remove="Migrations\20180620133723_Ebs.cs" />
     <Compile Remove="Migrations\20180620133723_Ebs.Designer.cs" />
+    <Compile Remove="Migrations\20180620140850_init.cs" />
+    <Compile Remove="Migrations\20180620140850_init.Designer.cs" />
     <Compile Remove="Migrations\20180621085850_ElectronCatalog.cs" />
     <Compile Remove="Migrations\20180621085850_ElectronCatalog.Designer.cs" />
     <Compile Remove="Migrations\20180621091536_elcat.cs" />
     <Compile Remove="Migrations\20180621091536_elcat.Designer.cs" />
     <Compile Remove="Migrations\20180621095650_elcat2.cs" />
     <Compile Remove="Migrations\20180621095650_elcat2.Designer.cs" />
+    <Compile Remove="Migrations\20180621095810_electroncat2.cs" />
+    <Compile Remove="Migrations\20180621095810_electroncat2.Designer.cs" />
+    <Compile Remove="Migrations\20180621100805_BlankNum.cs" />
+    <Compile Remove="Migrations\20180621100805_BlankNum.Designer.cs" />
     <Compile Remove="Migrations\20180622072901_EoisSobctv2.cs" />
     <Compile Remove="Migrations\20180622072901_EoisSobctv2.Designer.cs" />
     <Compile Remove="Migrations\20180622074526_ElectronRes.cs" />
     <Compile Remove="Migrations\20180622074526_ElectronRes.Designer.cs" />
+    <Compile Remove="Migrations\20180622085519_ElectronRes2.cs" />
+    <Compile Remove="Migrations\20180622085519_ElectronRes2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -245,10 +253,6 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
 	<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\Priem\" />
   </ItemGroup>
 
 </Project>

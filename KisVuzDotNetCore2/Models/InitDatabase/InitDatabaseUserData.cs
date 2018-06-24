@@ -358,5 +358,60 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
             }
         }
 
+
+        /// <summary>
+        /// Создание учётных записей отдела кадров
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static async Task CreateOtdelKadrovAccounts(IServiceProvider serviceProvider, IConfiguration configuration)
+        {
+            using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                UserManager<AppUser> userManager = serviceScope.ServiceProvider.GetService<UserManager<AppUser>>();
+                RoleManager<IdentityRole> roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+
+                string role = "Отдел кадров";
+
+                List<AppUser> appUsers = new List<AppUser>();
+                AppUser user1 = new AppUser
+                {
+                    UserName = "kadri1",
+                    Email = "kadri1@example.com",
+                    PasswordHash = "secret",
+                    Birthdate = new DateTime(2000, 12, 30),
+                    EduLevelGroupId = 1,
+                    FirstName = "Иван",
+                    LastName = "Иванов",
+                    Patronymic = "Иванович",
+                    PhoneNumber = "8928111111",
+                };
+                               
+
+                appUsers.AddRange(new List<AppUser> { user1 });
+
+                foreach (AppUser user in appUsers)
+                {
+                    if (await userManager.FindByNameAsync(user.UserName) == null)
+                    {
+                        if (await roleManager.FindByNameAsync(role) == null)
+                        {
+                            await roleManager.CreateAsync(new IdentityRole(role));
+                        }
+
+                        IdentityResult result = await userManager.CreateAsync(user, user.PasswordHash);
+                        if (result.Succeeded)
+                        {
+                            await userManager.AddToRoleAsync(user, role);
+                        }
+                    }
+                }
+
+
+            }
+        }
+
+
     }
 }

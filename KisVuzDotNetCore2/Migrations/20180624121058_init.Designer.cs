@@ -11,8 +11,8 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180621095810_electroncat2")]
-    partial class electroncat2
+    [Migration("20180624121058_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -427,6 +427,26 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("FileToFileTypes");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.BlankNum", b =>
+                {
+                    b.Property<int>("BlankNumId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduNapravlId");
+
+                    b.Property<int>("Och");
+
+                    b.Property<int>("OchZaoch");
+
+                    b.Property<int>("Zaoch");
+
+                    b.HasKey("BlankNumId");
+
+                    b.HasIndex("EduNapravlId");
+
+                    b.ToTable("BlankNums");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.PriemExam", b =>
                 {
                     b.Property<int>("PriemExamId")
@@ -835,6 +855,28 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("ElectronBiblSystem");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.ElectronObrazovatInformRes", b =>
+                {
+                    b.Property<int>("ElectronObrazovatInformResId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DescriptionRes");
+
+                    b.Property<bool>("IsSobstv");
+
+                    b.Property<string>("LinkRes");
+
+                    b.Property<string>("NameRes");
+
+                    b.Property<int?>("ResId");
+
+                    b.HasKey("ElectronObrazovatInformResId");
+
+                    b.HasIndex("ResId");
+
+                    b.ToTable("ElectronObrazovatInformRes");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.HostelInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -1204,6 +1246,14 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.BlankNum", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
+                        .WithMany()
+                        .HasForeignKey("EduNapravlId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.PriemExam", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
@@ -1368,6 +1418,13 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "CopyDogovor")
                         .WithMany()
                         .HasForeignKey("CopyDogovorId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.ElectronObrazovatInformRes", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "Res")
+                        .WithMany()
+                        .HasForeignKey("ResId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ProfessionalRetraining", b =>

@@ -9,12 +9,7 @@
     <img style='width:150px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.AppUserPhoto))" />
 }
 
-<p>@Model.LastName    @if (String.IsNullOrWhiteSpace(Model.LastName))
-{<i>Фамилия не указана</i>}
- @Model.FirstName   @if (String.IsNullOrWhiteSpace(Model.FirstName))
-{<i>Имя не указано</i>}
- @Model.Patronymic  @if (String.IsNullOrWhiteSpace(Model.Patronymic))
-{<i>Отчество не указано</i>}</p><br />
+<h4>@Model.GetFullName</h4>
 
 @if (Model.Birthdate == null || Model.Birthdate.Equals(new DateTime()))
 {
@@ -24,10 +19,37 @@ else
 {
     <p>Дата рождения: @String.Format("{0:dd.MM.yyyy}", Model.Birthdate)</p>
 }
-<br />
 
 <p>Телефон: @Model.PhoneNumber  @if (String.IsNullOrWhiteSpace(Model.PhoneNumber))
 {<i>Не указано</i>}</p><br />
+
+
+@if(Model.EduLevelGroup!=null)
+{
+    <p>Уровень образования: @Model.EduLevelGroup?.EduLevelGroupName</p>
+}
+
+
+@if(Model.Qualifications?.Count()>0)
+{
+    <p>Квалификация:</p>
+    @foreach(Qualification q in Model.Qualifications)
+    {
+        <p>@q.NapravlName - @q.QualificationName</p>
+    }
+}
+
+@if(Model.AcademicDegree!=null)
+{
+    <p>Ученая степень: @Model.AcademicDegree.AcademicDegreeName</p>
+}
+
+@if(Model.AcademicStat!=null)
+{
+    <p>Ученое звание: @Model.AcademicStat.AcademicStatName</p>
+}
+
+
 
 @if (ViewBag.CanEdit)
 {

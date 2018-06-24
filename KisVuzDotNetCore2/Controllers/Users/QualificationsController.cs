@@ -6,36 +6,54 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace KisVuzDotNetCore2.Controllers
 {
+    [Authorize]
     public class QualificationsController : Controller
     {
         private readonly AppIdentityDBContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public QualificationsController(AppIdentityDBContext context)
+        public QualificationsController(AppIdentityDBContext context, UserManager<AppUser> userMgr)
         {
             _context = context;
+            _userManager = userMgr;
         }
 
         // GET: Qualifications
         public async Task<IActionResult> Index(string id)
-        {
-            // Если задан id, отбираем данные пользователя с AppUserId, равным id
+        {            
+            // Если задан id и это id активного пользователя, отбираем данные пользователя с AppUserId, равным id
             if (id != null)
             {
-                var userQualifications = _context.Qualifications
-                    .Where(q=>q.AppUserId==id)
+                AppUser u = await _userManager.FindByNameAsync(User.Identity.Name);
+                if (u == null) return NotFound();
+                if(u.Id==id)
+                {
+                    var userQualifications = _context.Qualifications
+                    .Where(q => q.AppUserId == id)
                     .Include(q => q.AppUser)
-                    .Include(q => q.RowStatus); ;
-                return View(await userQualifications.ToListAsync());
+                    .Include(q => q.RowStatus);
+                    ViewBag.Id = id;
+                    return View(await userQualifications.ToListAsync());
+                }                
             }
 
-            // Иначе отображаем все данные
-            var appIdentityDBContext = _context.Qualifications
+
+            // Отображаем все данные только администраторам и отделу кадров
+            if (User.IsInRole("Администраторы") || User.IsInRole("Отдел кадров"))
+            {
+                var appIdentityDBContext = _context.Qualifications
                 .Include(q => q.AppUser)
-                .Include(q => q.RowStatus);                        
-            return View(await appIdentityDBContext.ToListAsync());
+                .Include(q => q.RowStatus);
+                return View(await appIdentityDBContext.ToListAsync());
+            }
+
+            return RedirectToAction("AccessDenied","Account");
+                
         }
 
         // GET: Qualifications/Details/5
@@ -58,10 +76,22 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         // GET: Qualifications/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(string id)
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
+            if (id == null)
+            {
+                ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName");
+                return View();
+            }
+            else
+            {
+                // Проверяем существование пользователя
+                AppUser user = await _userManager.FindByIdAsync(id);
+                ViewBag.AppUserId = id;
+                return View("CreateByUser");
+            }
+
+            
         }
 
         // POST: Qualifications/Create
@@ -69,16 +99,49 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("QualificationId,NapravlName,QualificationName,AppUserId")] Qualification qualification)
+        public async Task<IActionResult> Create([Bind("QualificationId,NapravlName,QualificationName,AppUserId")] Qualification qualification, bool? ReturnToUsersQualifications)
         {
             if (ModelState.IsValid)
             {
-                qualification.RowStatusId = 1;
-                _context.Add(qualification);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // Если данные введены пользователем, устанавливаем статус "Ожидает подтверждения"
+                if(ReturnToUsersQualifications==true)
+                {
+                    qualification.RowStatusId = 1;
+                }
+                else // иначе, т.е. если данные вводятся администраторами или отделом кадров, устанавливаем статус "Подтверждено"
+                {
+                    qualification.RowStatusId = 2;
+                }
+
+                // Удостоверяемся, что данные изменяют либо администраторы, либо отдел кадров, либо активный пользователь свои собственные данные
+                bool IsAuthorized = false;
+                AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+                if (ReturnToUsersQualifications == true && qualification.AppUserId == user?.Id) IsAuthorized = true;
+                else if (User.IsInRole("Администраторы")) IsAuthorized = true;
+                else if (User.IsInRole("Отдел кадров")) IsAuthorized = true;
+                if (IsAuthorized)
+                {
+                    _context.Add(qualification);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    Unauthorized();
+                }
+                    
+
+                if (ReturnToUsersQualifications == true)
+                {                    
+                    return RedirectToAction(nameof(Index), "Qualifications", new { id = qualification.AppUserId });
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                    
+                }
+                    
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", qualification.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", qualification.AppUserId);
             return View(qualification);
         }
 
@@ -166,7 +229,7 @@ namespace KisVuzDotNetCore2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        
+        [Authorize(Roles = "Отдел кадров, Администраторы")]
         public async Task<IActionResult> Confirm(int id)
         {
             var qualification = await _context.Qualifications.SingleOrDefaultAsync(m => m.QualificationId == id);
@@ -178,6 +241,20 @@ namespace KisVuzDotNetCore2.Controllers
             }            
             
             return RedirectToAction(nameof(Index));
+        }
+
+        /// <summary>
+        /// Подтверждение изменений в пользовательских данных
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Roles = "Отдел кадров, Администраторы")]
+        public async Task<IActionResult> ConfirmWaiting()
+        {            
+            var appIdentityDBContext = _context.Qualifications
+                .Where(q=>q.RowStatusId==1)
+                .Include(q => q.AppUser)
+                .Include(q => q.RowStatus);
+            return View(await appIdentityDBContext.ToListAsync());
         }
 
         private bool QualificationExists(int id)

@@ -32,6 +32,19 @@ namespace KisVuzDotNetCore2.Models
         public string Patronymic { get; set; }
 
         /// <summary>
+        /// ФИО полностью
+        /// </summary>
+        [Display(Name = "ФИО")]
+        public string GetFullName
+        {
+            get
+            {
+                return LastName + " " + FirstName + " " + Patronymic;
+            }
+        }
+
+
+        /// <summary>
         /// Дата рождения
         /// </summary>
         [DataType(DataType.Date)]        

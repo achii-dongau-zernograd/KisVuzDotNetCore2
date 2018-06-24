@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Controllers
 {
+    [Authorize]
     public class UserProfileController:Controller
     {
         private AppIdentityDBContext context;
@@ -54,8 +55,12 @@ namespace KisVuzDotNetCore2.Controllers
                     canEdit = true;
                 }
             }
-            
-                
+
+            user.EduLevelGroup = await context.EduLevelGroups.Where(l => l.EduLevelGroupId == user.EduLevelGroupId).FirstOrDefaultAsync();
+            user.Qualifications = await context.Qualifications.Where(q => q.AppUserId == user.Id).ToListAsync();
+            user.AcademicDegree = await context.AcademicDegrees.Where(d => d.AcademicDegreeId == user.AcademicDegreeId).FirstOrDefaultAsync();
+            user.AcademicStat = await context.AcademicStats.Where(s => s.AcademicStatId == user.AcademicStatId).FirstOrDefaultAsync();
+
             ViewBag.CanEdit = canEdit;
             return View(user);
         }

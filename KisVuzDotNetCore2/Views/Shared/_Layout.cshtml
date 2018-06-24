@@ -107,7 +107,7 @@
                             <li>
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сотрудники <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a asp-controller="Qualifications" asp-action="Index">Квалификации</a></li>
+                                    <li><a asp-controller="Qualifications" asp-action="Index" asp-route-id="">Квалификации</a></li>
                                     <li><a asp-controller="RefresherCourses" asp-action="Index">Курсы повышения квалификации</a></li>
                                     <li><a asp-controller="ProfessionalRetrainings" asp-action="Index">Профессиональная переподготовка</a></li>
                                 </ul>
@@ -127,9 +127,16 @@
                                     <li><a asp-controller="PriemKolTargets" asp-action="Index">Кол-во мест для приёма на обучение  (до 1 июня)</a></li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Отдел кадров <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Qualifications" asp-action="Index" asp-route-id="">Квалификации пользователей</a></li>
+                                    <li><a asp-controller="Qualifications" asp-action="ConfirmWaiting">Подтверждение квалификации пользователей</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
-                    
+
                     <!-- Выпадающий список: Администрирование -->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Администрирование<span class="caret"></span></a>
@@ -139,6 +146,7 @@
                         </ul>
                     </li>
                 </ul>
+                @await Html.PartialAsync("_OtdelKadrovPartial")
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>

@@ -147,6 +147,20 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ElectronCatalog",
+                columns: table => new
+                {
+                    ElectronCatalogId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DescriptionEc = table.Column<string>(nullable: true),
+                    NameEc = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ElectronCatalog", x => x.ElectronCatalogId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FileDataTypeGroups",
                 columns: table => new
                 {
@@ -407,6 +421,29 @@ namespace KisVuzDotNetCore2.Migrations
                     table.ForeignKey(
                         name: "FK_ElectronBiblSystem_Files_CopyDogovorId",
                         column: x => x.CopyDogovorId,
+                        principalTable: "Files",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ElectronObrazovatInformRes",
+                columns: table => new
+                {
+                    ElectronObrazovatInformResId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DescriptionRes = table.Column<string>(nullable: true),
+                    IsSobstv = table.Column<bool>(nullable: false),
+                    LinkRes = table.Column<string>(nullable: true),
+                    NameRes = table.Column<string>(nullable: true),
+                    ResId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ElectronObrazovatInformRes", x => x.ElectronObrazovatInformResId);
+                    table.ForeignKey(
+                        name: "FK_ElectronObrazovatInformRes_Files_ResId",
+                        column: x => x.ResId,
                         principalTable: "Files",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -889,6 +926,28 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BlankNums",
+                columns: table => new
+                {
+                    BlankNumId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduNapravlId = table.Column<int>(nullable: false),
+                    Och = table.Column<int>(nullable: false),
+                    OchZaoch = table.Column<int>(nullable: false),
+                    Zaoch = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlankNums", x => x.BlankNumId);
+                    table.ForeignKey(
+                        name: "FK_BlankNums_EduNapravls_EduNapravlId",
+                        column: x => x.EduNapravlId,
+                        principalTable: "EduNapravls",
+                        principalColumn: "EduNapravlId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EduProfiles",
                 columns: table => new
                 {
@@ -1210,6 +1269,11 @@ namespace KisVuzDotNetCore2.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_BlankNums_EduNapravlId",
+                table: "BlankNums",
+                column: "EduNapravlId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EduAccreds_EduAccredFileId",
                 table: "EduAccreds",
                 column: "EduAccredFileId");
@@ -1273,6 +1337,11 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "IX_ElectronBiblSystem_CopyDogovorId",
                 table: "ElectronBiblSystem",
                 column: "CopyDogovorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ElectronObrazovatInformRes_ResId",
+                table: "ElectronObrazovatInformRes",
+                column: "ResId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Emails_StructInstituteId",
@@ -1458,6 +1527,9 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BlankNums");
+
+            migrationBuilder.DropTable(
                 name: "EduChislens");
 
             migrationBuilder.DropTable(
@@ -1465,6 +1537,12 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "ElectronBiblSystem");
+
+            migrationBuilder.DropTable(
+                name: "ElectronCatalog");
+
+            migrationBuilder.DropTable(
+                name: "ElectronObrazovatInformRes");
 
             migrationBuilder.DropTable(
                 name: "Faxes");
