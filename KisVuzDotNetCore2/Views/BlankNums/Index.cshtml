@@ -4,32 +4,54 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Информация о количестве поданных заявлений о приёме</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
-<table class="table">
+<table itemprop="blankNum" class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Och)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Zaoch)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.OchZaoch)
-                </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EduNapravl)
+            <th rowspan="2">
+                Код
             </th>
-            <th></th>
+            <th rowspan="2">
+                Направление подготовки (специальности)
+            </th>
+            <th rowspan="2">
+                Всего
+            </th>
+            <th colspan="3">
+                Количество поданных заявлений о приёме
+            </th>
+            <th rowspan="2">
+                Действия
+            </th>
+        </tr>
+        <tr>
+            <th>
+                Очное
+            </th>
+            <th>
+                Заочное
+            </th>
+            <th>
+                Очно-заочное
+            </th>            
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr itemprop="blankNum">
+            <td>
+                @item.EduNapravl.EduNapravlCode
+            </td>
+            <td>
+                @item.EduNapravl.EduNapravlName
+            </td>
+            <td>
+                @item.Sum
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Och)
             </td>
@@ -40,12 +62,9 @@
                 @Html.DisplayFor(modelItem => item.OchZaoch)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravlId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.BlankNumId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BlankNumId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BlankNumId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.BlankNumId">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.BlankNumId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.BlankNumId">Удалить</a>
             </td>
         </tr>
 }

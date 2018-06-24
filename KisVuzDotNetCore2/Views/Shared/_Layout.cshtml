@@ -46,10 +46,7 @@
                                     <li><a asp-controller="EduUgses" asp-action="Index" asp-route-id="">Укрупнённые группы специальностей</a></li>
                                     <li><a asp-controller="EduNapravls" asp-action="Index" asp-route-id="">Направления подготовки / специальности</a></li>
                                     <li><a asp-controller="EduProfiles" asp-action="Index" asp-route-id="">Профили подготовки / направленности / специализации</a></li>
-                                    <li class="divider"></li>
-                                    <li><a asp-controller="EduChislens" asp-action="Index">Численность обучающихся по реализуемым образовательным программам</a></li>
-                                    <li><a asp-controller="Vacants" asp-action="Index">Вакантные места для приема (перевода)</a></li>
-                                    <li><a asp-controller="priemKolTargets" asp-action="Index">Информация о количестве мест для приема на обучение по различным условиям поступления</a></li>
+                                    <li class="divider"></li>                                    
                                     <li><a asp-controller="EduForms" asp-action="Index">Формы обучения</a></li>
                                     <li><a asp-controller="EduYears" asp-action="Index">Учебные годы</a></li>
                                     <li><a asp-controller="EduKurses" asp-action="Index">Курсы</a></li>
@@ -85,8 +82,7 @@
                                     <li><a asp-controller="Posts" asp-action="Index">Должности</a></li>
                                     <li><a asp-controller="Emails" asp-action="Index">Адреса электронной почты</a></li>
                                     <li><a asp-controller="Telephones" asp-action="Index">Телефоны</a></li>
-                                    <li><a asp-controller="Faxes" asp-action="Index">Факсы</a></li>
-                                    <li><a asp-controller="Rucovodstvo" asp-action="Index">Руководство</a></li>
+                                    <li><a asp-controller="Faxes" asp-action="Index">Факсы</a></li>                                    
                                     <li><a asp-controller="AcademicDegreeGroups" asp-action="Index">Группы учёных степеней</a></li>
                                     <li><a asp-controller="AcademicDegrees" asp-action="Index">Учёные степени</a></li>
                                     <li><a asp-controller="AcademicStats" asp-action="Index">Учёные звания</a></li>
@@ -96,12 +92,76 @@
                             <li>
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сведения об образовательной организации <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a asp-controller="Rucovodstvo" asp-action="Index">Руководство института</a></li>
-                                    <li><a asp-controller="RucovodstvoFils" asp-action="Index">Руководители филиалов</a></li>
-                                    <li><a asp-controller="Volumes" asp-action="Index">Финансово-хозяйственная деятельность</a></li>
-                                    <li><a asp-controller="Sveden" asp-action="PriemExam">Шаблон представления информации по различным условиям</a></li>
-                                    <li><a asp-controller="Sveden" asp-action="priemKolMest">Шаблон представления информации о количестве мест для приёма на обучение по различным условиям поступления</a></li>
-                                    <li><a asp-controller="HostelInfoes" asp-action="Index">Наличие общежития, интерната, количество жилых помещений в общежитии, интернате для иногородних обучающихся</a></li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Основные сведения <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="StructInstitutes" asp-action="Index">Институты</a></li>
+                                            <li><a asp-controller="Telephones" asp-action="Index">Телефоны</a></li>
+                                            <li><a asp-controller="Faxes" asp-action="Index">Факсы</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Структура и органы управления обр. орг. <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="StructSubvisions" asp-action="Index">Структурные подразделения</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Документы <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="Home" asp-action="Index">-------------</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Образование <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="EduChislens" asp-action="Index">Численность обучающихся по реализуемым образовательным программам</a></li>                                            
+                                            <li><a asp-controller="priemKolTargets" asp-action="Index">Информация о количестве мест для приема на обучение по различным условиям поступления</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Образовательные стандарты <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="EduNapravls" asp-action="Index" asp-route-id="">Направления подготовки / специальности</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Руководство. Педагогический состав <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="Rucovodstvo" asp-action="Index">Руководство института</a></li>
+                                            <li><a asp-controller="RucovodstvoFils" asp-action="Index">Руководители филиалов</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">МТО и оснащенность обр. процесса <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="Home" asp-action="Index">-------------</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Стипендии и иные виды мат. поддержки <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="HostelInfoes" asp-action="Index" title="Наличие общежития, интерната, количество жилых помещений">Наличие общежития, интерната...</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Платные образовательные услуги <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="Home" asp-action="Index">-------------</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Финансово-хозяйственная деятельность <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="Volumes" asp-action="Index">Финансово-хозяйственная деятельность</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Вакантные места для приёма (перевода) <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="Vacants" asp-action="Index">Вакантные места для приема (перевода)</a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
                             <li>
@@ -122,9 +182,10 @@
                             <li>
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Приемная комиссия <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a asp-controller="PriemKolMests" asp-action="Index">Кол-во мест для приёма на обучение (до 1 октября)</a></li>
-                                    <li><a asp-controller="PriemExams" asp-action="Index">Условия поступления</a></li>
-                                    <li><a asp-controller="PriemKolTargets" asp-action="Index">Кол-во мест для приёма на обучение  (до 1 июня)</a></li>
+                                    <li><a asp-controller="PriemKolMests" asp-action="Index">Кол-во мест для приёма на обучение (до 1 октября) (табл. 24)</a></li>
+                                    <li><a asp-controller="PriemExams" asp-action="Index">Условия поступления (табл. 25)</a></li>
+                                    <li><a asp-controller="PriemKolTargets" asp-action="Index">Кол-во мест для приёма на обучение (до 1 июня) (табл. 27)</a></li>
+                                    <li><a asp-controller="BlankNums" asp-action="Index">Кол-во поданных заявлений о приёме (табл. 29)</a></li>
                                 </ul>
                             </li>
                             <li>
