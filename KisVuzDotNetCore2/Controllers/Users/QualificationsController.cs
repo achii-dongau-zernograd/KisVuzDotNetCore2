@@ -240,7 +240,7 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
             }            
             
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ConfirmWaiting));
         }
 
         /// <summary>
