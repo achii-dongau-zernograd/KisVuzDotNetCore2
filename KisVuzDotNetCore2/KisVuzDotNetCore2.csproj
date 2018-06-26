@@ -232,6 +232,8 @@
     <Compile Remove="Migrations\20180622074526_ElectronRes.Designer.cs" />
     <Compile Remove="Migrations\20180622085519_ElectronRes2.cs" />
     <Compile Remove="Migrations\20180622085519_ElectronRes2.Designer.cs" />
+    <Compile Remove="Migrations\20180626073508_PurposeLibr.cs" />
+    <Compile Remove="Migrations\20180626073508_PurposeLibr.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

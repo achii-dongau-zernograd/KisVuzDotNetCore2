@@ -310,5 +310,13 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Sveden.ElectronObrazovatInformRes> ElectronObrazovatInformRes { get; set; }
+       
+        /// <summary>
+        /// Наличие библиотек, объектов спорта, условия поитания и охраны здоровья обучающихся
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.PurposeLibr> PurposeLibr { get; set; }
     }
 }

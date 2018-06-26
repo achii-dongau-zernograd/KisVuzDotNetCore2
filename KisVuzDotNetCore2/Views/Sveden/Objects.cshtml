@@ -9,6 +9,7 @@
     int NumEc = (int)ViewData["NumEc"];
     int NumEoisOwn = (int)ViewData["NumEoisOwn"];
     int NumEoisSide = (int)ViewData["NumEoisSide"];
+    List<PurposeLibr> PurposeLibr = (List<PurposeLibr>)ViewData["PurposeLibrs"];
 }
 
 <h1>Материально-техническое обеспечение и оснащенность образовательного процесса</h1>
@@ -49,6 +50,61 @@
                     <td>Наличие базы данных электронного каталога</td>
                     <td itemprop="bdec"><a asp-controller="ElectronCatalogs" asp-action="Preview">@NumEc</a></td>
                 <tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии библиотек, объектов спорта, условиях питания и охраны здоровья обучающихся</a>
+<div class="collapse" id="spoiler-2">
+    <div class="well">
+
+
+        <div class="sp-body folded">
+           
+            <table class="table" itemprop="purposeLibr">
+                <thead>
+                    <tr>
+                        <th>
+                            Вид помещения
+                        </th>
+                        <th>
+                            Адрес места нахождения
+                        </th>
+                        <th>
+                            Площадь, м.кв.
+                        </th>
+                        <th>
+                            Количество мест
+                        </th>
+                        <th>
+                            Приспособленность для использования инвалидами и лицами с ограниченными возможностями здоровья
+                        </th>
+                       <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in PurposeLibr)
+                    {
+                        <tr itemprop="@item.itemprop">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.VidPom)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Adress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Square)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumberPlaces)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PrisposoblOvz)
+                            </td>                            
+                        </tr>
+                    }
+                </tbody>
             </table>
         </div>
     </div>
