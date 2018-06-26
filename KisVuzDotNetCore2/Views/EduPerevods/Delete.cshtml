@@ -1,0 +1,68 @@
+﻿@model KisVuzDotNetCore2.Models.Priem.EduPerevod
+
+@{
+    ViewData["Title"] = "Удалить запись таблицы Образование (Информация о результатах перевода, восстановления и отчисления)?";
+}
+
+<h2>Удалить запись таблицы Образование (Информация о результатах перевода, восстановления и отчисления)?</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl.EduNapravlCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravlCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl.EduNapravlName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravlName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl.EduUgs.EduLevel.EduLevelName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduUgs.EduLevel.EduLevelName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm.EduFormName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOutPerevod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberOutPerevod)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberToPerevod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberToPerevod)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberResPerevod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberResPerevod)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberExpPerevod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberExpPerevod)
+        </dd>
+
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduPerevodId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

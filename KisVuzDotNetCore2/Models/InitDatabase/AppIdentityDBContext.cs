@@ -286,6 +286,7 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<priemKolTarget> priemKolTarget { get; set; }
         public DbSet<priemKolMest> priemKolMest { get; set; }
         public DbSet<PriemExam> PriemExam { get; set; }
+        public DbSet<EduPerevod> eduPerevod { get; set; }
 
         /// <summary>
         /// Электронные библиотечные системы

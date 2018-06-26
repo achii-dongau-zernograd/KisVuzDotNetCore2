@@ -1,0 +1,78 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Priem.EduPerevod>
+
+@{
+    ViewData["Title"] = "Таблица Образование (Информация о результатах перевода, восстановления и отчисления)";
+}
+
+<h2>Таблица Образование (Информация о результатах перевода, восстановления и отчисления)</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EduNapravl.EduNapravlCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduNapravl.EduNapravlName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduNapravl.EduUgs.EduLevel.EduLevelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduForm.EduFormName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOutPerevod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberToPerevod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberResPerevod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberExpPerevod)
+            </th>
+            <th>
+                Действие
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravlCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravlName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduNapravl.EduUgs.EduLevel.EduLevelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduForm.EduFormId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOutPerevod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberToPerevod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberResPerevod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberExpPerevod)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EduPerevodId">Редактировать</a>
+                <a asp-action="Delete" asp-route-id="@item.EduPerevodId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

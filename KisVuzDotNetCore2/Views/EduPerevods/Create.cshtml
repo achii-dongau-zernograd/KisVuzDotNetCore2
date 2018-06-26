@@ -1,0 +1,49 @@
+﻿@model KisVuzDotNetCore2.Models.Priem.EduPerevod
+
+@{
+    ViewData["Title"] = "Добавить запись таблицы Образование (Информация о результатах перевода, восстановления и отчисления)";
+}
+
+<h2>Добавить запись таблицы Образование (Информация о результатах перевода, восстановления и отчисления)</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EduNapravl.EduNapravlName" class="control-label"></label>
+                <select asp-for="EduNapravlId" class ="form-control" asp-items="ViewBag.EduNapravlId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduForm.EduFormName" class="control-label"></label>
+                <select asp-for="EduFormId" class ="form-control" asp-items="ViewBag.EduFormId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOutPerevod" class="control-label"></label>
+                <input asp-for="NumberOutPerevod" class="form-control" />
+                <span asp-validation-for="NumberOutPerevod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberToPerevod" class="control-label"></label>
+                <input asp-for="NumberToPerevod" class="form-control" />
+                <span asp-validation-for="NumberToPerevod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberResPerevod" class="control-label"></label>
+                <input asp-for="NumberResPerevod" class="form-control" />
+                <span asp-validation-for="NumberResPerevod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberExpPerevod" class="control-label"></label>
+                <input asp-for="NumberExpPerevod" class="form-control" />
+                <span asp-validation-for="NumberExpPerevod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+

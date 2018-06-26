@@ -232,6 +232,8 @@
     <Compile Remove="Migrations\20180622074526_ElectronRes.Designer.cs" />
     <Compile Remove="Migrations\20180622085519_ElectronRes2.cs" />
     <Compile Remove="Migrations\20180622085519_ElectronRes2.Designer.cs" />
+    <Compile Remove="Migrations\20180626113555_EduPerevod.cs" />
+    <Compile Remove="Migrations\20180626113555_EduPerevod.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,6 +7,7 @@
 @{
     var t6eduAccred = (IEnumerable<EduNapravl>)ViewData["t6eduAccred"];
     var t7eduChislen = (IEnumerable<EduChislen>)ViewData["t7eduChislen"];
+    var t9eduPerevod = (IEnumerable<EduPerevod>)ViewData["t9eduPerevod"];
 }
 
 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Информация о сроке действия государственной аккредитации образовательной программы, о языках, на которых осуществляется образование (обучение)</a>
@@ -31,15 +32,15 @@
                 </tr>
             </thead>
             @foreach (var item in t6eduAccred)
-    {
-        <tr itemprop="eduAccred">
-            <td itemprop="eduCode">@item.EduNapravlCode</td>
-            <td itemprop="eduName">@item.EduNapravlName</td>
-            <td itemprop="eduLevel">@item.EduUgs.EduLevel.EduLevelName</td>
-            <td itemprop="dateEnd">@item.EduUgs.EduAccred?.EduAccredDateExpiration.ToString("dd.MM.yyyy")</td>
-            <td itemprop="language">Русский</td>
-        </tr>
-}
+            {
+                <tr itemprop="eduAccred">
+                    <td itemprop="eduCode">@item.EduNapravlCode</td>
+                    <td itemprop="eduName">@item.EduNapravlName</td>
+                    <td itemprop="eduLevel">@item.EduUgs.EduLevel.EduLevelName</td>
+                    <td itemprop="dateEnd">@item.EduUgs.EduAccred?.EduAccredDateExpiration.ToString("dd.MM.yyyy")</td>
+                    <td itemprop="language">Русский</td>
+                </tr>
+            }
         </table>
     </div>
 </div>
@@ -74,19 +75,63 @@
                     <td align=center><strong>8</strong></td>
                 </tr>
             </thead>
-                @foreach (var item in t7eduChislen)
-        {
-            <tr itemprop="eduChislen">
-                <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
-                <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName</td>
-                <td itemprop="eduLevel">@item.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
-                <td itemprop="eduForm">@item.EduForm.EduFormName</td>
-                <td itemprop="NumberBFpriem" align=center>@item.NumberBFpriem</td>
-                <td itemprop="NumberBRpriem" align=center>@item.NumberBRpriem</td>
-                <td itemprop="NumberBMpriem" align=center>@item.NumberBMpriem</td>
-                <td itemprop="NumberPpriem" align=center>@item.NumberPpriem</td>
-            </tr>
-}
+            @foreach (var item in t7eduChislen)
+            {
+                <tr itemprop="eduChislen">
+                    <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
+                    <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName</td>
+                    <td itemprop="eduLevel">@item.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                    <td itemprop="eduForm">@item.EduForm.EduFormName</td>
+                    <td itemprop="NumberBFpriem" align=center>@item.NumberBFpriem</td>
+                    <td itemprop="NumberBRpriem" align=center>@item.NumberBRpriem</td>
+                    <td itemprop="NumberBMpriem" align=center>@item.NumberBMpriem</td>
+                    <td itemprop="NumberPpriem" align=center>@item.NumberPpriem</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Информация о результатах перевода, восстановления и отчисления</a>
+<div class="collapse" id="spoiler-4">
+    <div class="well">
+
+        <table itemprop="eduPerevod" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Наименование специальности, направление подготовки</th>
+                    <th>Уровень образования</th>
+                    <th>Формы обучения</th>
+                    <th>Численность обучающихся, переведенных в другие образовательные организации</th>
+                    <th>Численность обучающихся, переведенных из других образовательных организаций</th>
+                    <th>Численность восстановленных обучающихся</th>
+                    <th>Численность отчисленных обучающихся</th>
+                </tr>
+                <tr>
+                    <td align=center><strong>1</strong></td>
+                    <td align=center><strong>2</strong></td>
+                    <td align=center><strong>3</strong></td>
+                    <td align=center><strong>4</strong></td>
+                    <td align=center><strong>5</strong></td>
+                    <td align=center><strong>6</strong></td>
+                    <td align=center><strong>7</strong></td>
+                    <td align=center><strong>8</strong></td>
+                </tr>
+            </thead>
+            @foreach (var item in t9eduPerevod)
+            {
+                <tr itemprop="eduPerevod">
+                    <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
+                    <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
+                    <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                    <td itemprop="eduForm">@item.EduForm.EduFormName</td>
+                    <td itemprop="NumberOutPerevod" align=center>@item.NumberOutPerevod</td>
+                    <td itemprop="NumberToPerevod" align=center>@item.NumberToPerevod</td>
+                    <td itemprop="NumberResPerevod" align=center>@item.NumberResPerevod</td>
+                    <td itemprop="NumberExpPerevod" align=center>@item.NumberExpPerevod</td>
+                </tr>
+            }
         </table>
     </div>
 </div>
