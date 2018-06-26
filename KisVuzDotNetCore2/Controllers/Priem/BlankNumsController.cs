@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,29 +24,13 @@ namespace KisVuzDotNetCore2.Controllers
             return View(await appIdentityDBContext.ToListAsync());
         }
 
-        // GET: BlankNums/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var blankNum = await _context.BlankNums
-                .Include(b => b.EduNapravl)
-                .SingleOrDefaultAsync(m => m.BlankNumId == id);
-            if (blankNum == null)
-            {
-                return NotFound();
-            }
-
-            return View(blankNum);
-        }
-
         // GET: BlankNums/Create
         public IActionResult Create()
         {
-            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlId");
+            var EduNapravls = _context.EduNapravls
+                .Include(n=>n.EduUgs)
+                .ThenInclude(ugs=>ugs.EduLevel);
+            ViewData["EduNapravlId"] = new SelectList(EduNapravls, "EduNapravlId", "GetEduNapravlFullName");
             return View();
         }
 
@@ -57,7 +39,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlankNumId,EduNapravlId,Och,Zaoch,OchZaoch")] BlankNum blankNum)
+        public async Task<IActionResult> Create(BlankNum blankNum)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +47,10 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlId", blankNum.EduNapravlId);
+            var EduNapravls = _context.EduNapravls
+                .Include(n => n.EduUgs)
+                .ThenInclude(ugs => ugs.EduLevel);
+            ViewData["EduNapravlId"] = new SelectList(EduNapravls, "EduNapravlId", "GetEduNapravlFullName");
             return View(blankNum);
         }
 
@@ -82,7 +67,10 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlId", blankNum.EduNapravlId);
+            var EduNapravls = _context.EduNapravls
+                .Include(n => n.EduUgs)
+                .ThenInclude(ugs => ugs.EduLevel);
+            ViewData["EduNapravlId"] = new SelectList(EduNapravls, "EduNapravlId", "GetEduNapravlFullName");
             return View(blankNum);
         }
 
@@ -91,7 +79,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BlankNumId,EduNapravlId,Och,Zaoch,OchZaoch")] BlankNum blankNum)
+        public async Task<IActionResult> Edit(int id, BlankNum blankNum)
         {
             if (id != blankNum.BlankNumId)
             {
@@ -118,8 +106,11 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlId", blankNum.EduNapravlId);
-            return View(blankNum);
+            var EduNapravls = _context.EduNapravls
+                .Include(n => n.EduUgs)
+                .ThenInclude(ugs => ugs.EduLevel);
+            ViewData["EduNapravlId"] = new SelectList(EduNapravls, "EduNapravlId", "GetEduNapravlFullName");
+            return View();
         }
 
         // GET: BlankNums/Delete/5
@@ -132,6 +123,8 @@ namespace KisVuzDotNetCore2.Controllers
 
             var blankNum = await _context.BlankNums
                 .Include(b => b.EduNapravl)
+                    .ThenInclude(n=>n.EduUgs)
+                        .ThenInclude(u=>u.EduLevel)
                 .SingleOrDefaultAsync(m => m.BlankNumId == id);
             if (blankNum == null)
             {

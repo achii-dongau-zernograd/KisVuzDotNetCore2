@@ -16,6 +16,7 @@ namespace KisVuzDotNetCore2.Controllers
         List<priemKolMest> priemKolMest = new List<priemKolMest>();
         List<PriemExam> PriemExam = new List<PriemExam>();
         List<priemKolTarget> priemKolTarget = new List<priemKolTarget>();
+        List<BlankNum> blankNum = new List<BlankNum>();
 
         private readonly AppIdentityDBContext _context;
 
@@ -37,16 +38,17 @@ namespace KisVuzDotNetCore2.Controllers
         {
             searchTemplate = "среднее";            
             
-            GetDataForTables(ref priemKolMest, ref PriemExam, ref priemKolTarget, searchTemplate);
+            GetDataForTables(ref priemKolMest, ref PriemExam, ref priemKolTarget, ref blankNum, searchTemplate);
 
             ViewData["priemKolMest"] = priemKolMest;
             ViewData["PriemExam"] = PriemExam;
             ViewData["priemKolTarget"] = priemKolTarget;
+            ViewData["blankNum"] = blankNum;
 
             return View();
         }
 
-        private void GetDataForTables(ref List<priemKolMest> priemKolMest, ref List<PriemExam> priemExam, ref List<priemKolTarget> priemKolTarget, string searchTemplate)
+        private void GetDataForTables(ref List<priemKolMest> priemKolMest, ref List<PriemExam> priemExam, ref List<priemKolTarget> priemKolTarget, ref List<BlankNum> blankNum, string searchTemplate)
         {
             priemKolMest =  _context.priemKolMest
                 .Include(p => p.EduNapravl)
@@ -68,6 +70,13 @@ namespace KisVuzDotNetCore2.Controllers
                         .ThenInclude(ugs => ugs.EduLevel)
                 .Where(p => p.EduNapravl.EduUgs.EduLevel.EduLevelName.Contains(searchTemplate))
                 .ToList();
+
+            blankNum=_context.BlankNums
+                .Include(p=> p.EduNapravl)
+                .ThenInclude(n => n.EduUgs)
+                        .ThenInclude(ugs => ugs.EduLevel)
+                .Where(p => p.EduNapravl.EduUgs.EduLevel.EduLevelName.Contains(searchTemplate))
+                .ToList();
         }
 
         /// <summary>
@@ -78,11 +87,12 @@ namespace KisVuzDotNetCore2.Controllers
         {
             searchTemplate = "бакалавриат";
 
-            GetDataForTables(ref priemKolMest, ref PriemExam, ref priemKolTarget, searchTemplate);
+            GetDataForTables(ref priemKolMest, ref PriemExam, ref priemKolTarget, ref blankNum, searchTemplate);
 
             ViewData["priemKolMest"] = priemKolMest;
             ViewData["PriemExam"] = PriemExam;
             ViewData["priemKolTarget"] = priemKolTarget;
+            ViewData["blankNum"] = blankNum;
 
             return View();
         }
@@ -95,11 +105,12 @@ namespace KisVuzDotNetCore2.Controllers
         {
             searchTemplate = "специалитет";
 
-            GetDataForTables(ref priemKolMest, ref PriemExam, ref priemKolTarget, searchTemplate);
+            GetDataForTables(ref priemKolMest, ref PriemExam, ref priemKolTarget, ref blankNum, searchTemplate);
 
             ViewData["priemKolMest"] = priemKolMest;
             ViewData["PriemExam"] = PriemExam;
             ViewData["priemKolTarget"] = priemKolTarget;
+            ViewData["blankNum"] = blankNum;
 
             return View();
         }
@@ -112,11 +123,12 @@ namespace KisVuzDotNetCore2.Controllers
         {
             searchTemplate = "магистратура";
 
-            GetDataForTables(ref priemKolMest, ref PriemExam, ref priemKolTarget, searchTemplate);
+            GetDataForTables(ref priemKolMest, ref PriemExam, ref priemKolTarget, ref blankNum, searchTemplate);
 
             ViewData["priemKolMest"] = priemKolMest;
             ViewData["PriemExam"] = PriemExam;
             ViewData["priemKolTarget"] = priemKolTarget;
+            ViewData["blankNum"] = blankNum;
 
             return View();
         }
@@ -129,11 +141,12 @@ namespace KisVuzDotNetCore2.Controllers
         {
             searchTemplate = "аспирантура";
 
-            GetDataForTables(ref priemKolMest, ref PriemExam, ref priemKolTarget, searchTemplate);
+            GetDataForTables(ref priemKolMest, ref PriemExam, ref priemKolTarget, ref blankNum, searchTemplate);
 
             ViewData["priemKolMest"] = priemKolMest;
             ViewData["PriemExam"] = PriemExam;
             ViewData["priemKolTarget"] = priemKolTarget;
+            ViewData["blankNum"] = blankNum;
 
             return View();
         }
