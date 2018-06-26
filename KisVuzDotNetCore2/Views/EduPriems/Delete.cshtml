@@ -1,0 +1,68 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduPriem
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h3>Удалить информацию о результатах приема?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Код
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravlCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravlName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinBF)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinBF)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinBR)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinBR)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinBM)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinBM)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinPV)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinPV)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SredSum)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SredSum)
+        </dd>
+
+
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduPriemId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>
