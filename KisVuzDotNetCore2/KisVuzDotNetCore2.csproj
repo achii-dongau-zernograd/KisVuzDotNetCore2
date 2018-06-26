@@ -234,6 +234,20 @@
     <Compile Remove="Migrations\20180622085519_ElectronRes2.Designer.cs" />
     <Compile Remove="Migrations\20180626113555_EduPerevod.cs" />
     <Compile Remove="Migrations\20180626113555_EduPerevod.Designer.cs" />
+    <Compile Remove="Migrations\20180624121058_init.cs" />
+    <Compile Remove="Migrations\20180624121058_init.Designer.cs" />
+    <Compile Remove="Migrations\20180626073508_PurposeLibr.cs" />
+    <Compile Remove="Migrations\20180626073508_PurposeLibr.Designer.cs" />
+    <Compile Remove="Migrations\20180626074734_EduPriem1.cs" />
+    <Compile Remove="Migrations\20180626074734_EduPriem1.Designer.cs" />
+    <Compile Remove="Migrations\20180626083003_PurposeLibr.cs" />
+    <Compile Remove="Migrations\20180626083003_PurposeLibr.Designer.cs" />
+    <Compile Remove="Migrations\20180626084440_EduPriem2.cs" />
+    <Compile Remove="Migrations\20180626084440_EduPriem2.Designer.cs" />
+    <Compile Remove="Migrations\20180626113655_EduPerevod.cs" />
+    <Compile Remove="Migrations\20180626113655_EduPerevod.Designer.cs" />
+    <Compile Remove="Migrations\20180626114201_init.cs" />
+    <Compile Remove="Migrations\20180626114201_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

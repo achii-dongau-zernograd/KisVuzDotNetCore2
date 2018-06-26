@@ -311,5 +311,20 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Sveden.ElectronObrazovatInformRes> ElectronObrazovatInformRes { get; set; }
+
+        /// <summary>
+        /// Таблица 8 Информация о результатах приема по каждой профессии,
+        /// специальности СПО, каждому направлению подготовки или
+        /// специальности ВО с различными условиями приема
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.Education.EduPriem> EduPriem { get; set; }
+
+
+        /// <summary>
+        /// Наличие библиотек, объектов спорта, условия питания и охраны здоровья обучающихся
+        public DbSet<KisVuzDotNetCore2.Models.PurposeLibr> PurposeLibr { get; set; }
     }
 }

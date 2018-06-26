@@ -11,8 +11,8 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180624121058_init")]
-    partial class init
+    [Migration("20180626140953_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -271,6 +271,34 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("EduPlans");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduPriem", b =>
+                {
+                    b.Property<int>("EduPriemId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduFormId");
+
+                    b.Property<int>("EduNapravlId");
+
+                    b.Property<string>("FinBF");
+
+                    b.Property<string>("FinBM");
+
+                    b.Property<string>("FinBR");
+
+                    b.Property<string>("FinPV");
+
+                    b.Property<double>("SredSum");
+
+                    b.HasKey("EduPriemId");
+
+                    b.HasIndex("EduFormId");
+
+                    b.HasIndex("EduNapravlId");
+
+                    b.ToTable("EduPriem");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProfile", b =>
                 {
                     b.Property<int>("EduProfileId")
@@ -447,6 +475,32 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("BlankNums");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.EduPerevod", b =>
+                {
+                    b.Property<int>("EduPerevodId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduFormId");
+
+                    b.Property<int>("EduNapravlId");
+
+                    b.Property<string>("NumberExpPerevod");
+
+                    b.Property<string>("NumberOutPerevod");
+
+                    b.Property<string>("NumberResPerevod");
+
+                    b.Property<string>("NumberToPerevod");
+
+                    b.HasKey("EduPerevodId");
+
+                    b.HasIndex("EduFormId");
+
+                    b.HasIndex("EduNapravlId");
+
+                    b.ToTable("eduPerevod");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.PriemExam", b =>
                 {
                     b.Property<int>("PriemExamId")
@@ -559,6 +613,28 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("EduNapravlId");
 
                     b.ToTable("priemKolTarget");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.PurposeLibr", b =>
+                {
+                    b.Property<int>("PurposeLibrId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Adress");
+
+                    b.Property<string>("NumberPlaces");
+
+                    b.Property<string>("PrisposoblOvz");
+
+                    b.Property<string>("Square");
+
+                    b.Property<string>("VidPom");
+
+                    b.Property<string>("itemprop");
+
+                    b.HasKey("PurposeLibrId");
+
+                    b.ToTable("PurposeLibr");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Qualification", b =>
@@ -1205,6 +1281,19 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduPriem", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
+                        .WithMany()
+                        .HasForeignKey("EduFormId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
+                        .WithMany()
+                        .HasForeignKey("EduNapravlId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProfile", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
@@ -1248,6 +1337,19 @@ namespace KisVuzDotNetCore2.Migrations
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.BlankNum", b =>
                 {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
+                        .WithMany()
+                        .HasForeignKey("EduNapravlId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.EduPerevod", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
+                        .WithMany()
+                        .HasForeignKey("EduFormId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
                         .WithMany()
                         .HasForeignKey("EduNapravlId")

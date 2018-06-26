@@ -1,0 +1,54 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduPriem
+
+@{
+    ViewData["Title"] = "Добавить";
+}
+
+<h2>Добавить</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EduNapravlId" class="control-label"></label>
+                <select asp-for="EduNapravlId" class ="form-control" asp-items="ViewBag.EduNapravlId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduFormId" class="control-label"></label>
+                <select asp-for="EduFormId" class ="form-control" asp-items="ViewBag.EduFormId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinBF" class="control-label"></label>
+                <input asp-for="FinBF" class="form-control" />
+                <span asp-validation-for="FinBF" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinBR" class="control-label"></label>
+                <input asp-for="FinBR" class="form-control" />
+                <span asp-validation-for="FinBR" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinBM" class="control-label"></label>
+                <input asp-for="FinBM" class="form-control" />
+                <span asp-validation-for="FinBM" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinPV" class="control-label"></label>
+                <input asp-for="FinPV" class="form-control" />
+                <span asp-validation-for="FinPV" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SredSum" class="control-label"></label>
+                <input asp-for="SredSum" class="form-control" />
+                <span asp-validation-for="SredSum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+

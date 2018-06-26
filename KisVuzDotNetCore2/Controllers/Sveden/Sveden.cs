@@ -121,6 +121,14 @@ namespace KisVuzDotNetCore2.Controllers
                 .ToListAsync();
             ViewData["t7eduChislen"] = t7eduChislen;
 
+            var t8eduPriem = await _context.EduPriem
+                .Include(e => e.EduNapravl)
+                    .ThenInclude(n => n.EduUgs)
+                    .ThenInclude(u => u.EduLevel)
+                .Include(e => e.EduForm)
+                .ToListAsync();
+            ViewData["t8eduPriem"] = t8eduPriem;
+
             var t9eduPerevod = await _context.eduPerevod
                 .Include(c => c.EduNapravl)                    
                     .ThenInclude(u => u.EduUgs)
@@ -182,6 +190,9 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["NumEoisOwn"] = NumEoisOwn;
             int NumEoisSide = _context.ElectronObrazovatInformRes.Where(e=>e.IsSobstv==false).Count();
             ViewData["NumEoisSide"] = NumEoisSide;
+
+            var PurposeLibrs = await _context.PurposeLibr.ToListAsync();
+            ViewData["PurposeLibrs"] = PurposeLibrs;
             return View();
         }
 

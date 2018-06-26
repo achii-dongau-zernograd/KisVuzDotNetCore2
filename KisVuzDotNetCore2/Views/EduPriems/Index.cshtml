@@ -1,0 +1,80 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduPriem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Результаты приема по каждой профессии, специальности СПО, каждому направлению подготовки или специальности высшего образования с различными условиями приема</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    Код
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EduNapravl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EduForm)
+                </th> 
+                 <th>
+                    @Html.DisplayNameFor(model => model.FinBF)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinBR)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinBM)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinPV)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SredSum)
+                </th>
+            
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.EduNapravl.EduNapravlCode
+            </td>
+            <td>
+                @item.EduNapravl.EduNapravlName
+            </td>
+            <td>
+                @item.EduForm.EduFormName
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinBF)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinBR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinBM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinPV)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SredSum)
+            </td>
+
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EduPriemId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduPriemId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

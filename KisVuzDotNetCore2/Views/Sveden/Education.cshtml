@@ -7,6 +7,7 @@
 @{
     var t6eduAccred = (IEnumerable<EduNapravl>)ViewData["t6eduAccred"];
     var t7eduChislen = (IEnumerable<EduChislen>)ViewData["t7eduChislen"];
+    var t8eduPriem = (IEnumerable<EduPriem>)ViewData["t8eduPriem"];
     var t9eduPerevod = (IEnumerable<EduPerevod>)ViewData["t9eduPerevod"];
 }
 
@@ -86,6 +87,56 @@
                     <td itemprop="NumberBRpriem" align=center>@item.NumberBRpriem</td>
                     <td itemprop="NumberBMpriem" align=center>@item.NumberBMpriem</td>
                     <td itemprop="NumberPpriem" align=center>@item.NumberPpriem</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Информация о результатах приема по каждой профессии, специальности среднего профессионального образования (при наличии вступительных испытаний),</br> каждому направлению подготовки или специальности высшего образования с различными условиями приема</a>
+<div class="collapse" id="spoiler-3">
+    <div class="well">
+
+        <table itemprop="eduPriem" class="table table-hover">
+            <thead>
+                <tr>
+                    <th rowspan=2>Код</th>
+                    <th rowspan=2>Наименование специальности, направления подготовки</th>
+                    <th rowspan=2>Уровень образования</th>
+                    <th rowspan=2>Формы обучения</th>
+                    <th colspan=4>Результаты приема обучающихся за счет (количество человек):</th>
+                    <th rowspan=2>Средняя сумма набранных баллов по всем вступительным испытаниям</th>
+                </tr>
+                <tr>
+                    <th>бюджетных ассигнований федерального бюджета</th>
+                    <th>бюджетов субъектов Российской Федерации</th>
+                    <th>местных бюджетов</th>
+                    <th>средств физических и (или) юридических лиц</th>
+                </tr>
+                <tr>
+                    <th align=center>1</th>
+                    <th align=center>2</th>
+                    <th align=center>3</th>
+                    <th align=center>4</th>
+                    <th align=center>5</th>
+                    <th align=center>6</th>
+                    <th align=center>7</th>
+                    <th align=center>8</th>
+                    <th align=center>9</th>
+                </tr>
+            </thead>
+            @foreach (var item in t8eduPriem)
+            {
+                <tr itemprop="eduPriem">
+                    <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
+                    <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
+                    <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                    <td itemprop="eduForm">@item.EduForm.EduFormName</td>
+                    <td itemprop="numberBFpriem">@item.FinBF</td>
+                    <td itemprop="numberBRpriem">@item.FinBR</td>
+                    <td itemprop="numberBMpriem">@item.FinBM</td>
+                    <td itemprop="numberPpriem">@item.FinPV</td>
+                    <td itemprop="scorePriem">@item.SredSum</td>
                 </tr>
             }
         </table>

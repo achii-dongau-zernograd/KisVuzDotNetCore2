@@ -1,0 +1,55 @@
+﻿@model KisVuzDotNetCore2.Models.PurposeLibr
+
+@{
+    ViewData["Title"] = "Редактировать сведения о наличии библиотек, объектов спорта, условиях питания и охраны здоровья обучающихся";
+}
+
+<h2>Редактировать сведения о наличии библиотек, объектов спорта, условиях питания и охраны здоровья обучающихся</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PurposeLibrId" />
+            <div class="form-group">
+                <label asp-for="VidPom" class="control-label"></label>
+                <input asp-for="VidPom" class="form-control" />
+                <span asp-validation-for="VidPom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Adress" class="control-label"></label>
+                <input asp-for="Adress" class="form-control" />
+                <span asp-validation-for="Adress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Square" class="control-label"></label>
+                <input asp-for="Square" class="form-control" />
+                <span asp-validation-for="Square" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberPlaces" class="control-label"></label>
+                <input asp-for="NumberPlaces" class="form-control" />
+                <span asp-validation-for="NumberPlaces" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrisposoblOvz" class="control-label"></label>
+                <input asp-for="PrisposoblOvz" class="form-control" />
+                <span asp-validation-for="PrisposoblOvz" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="itemprop" class="control-label"></label>
+                <input asp-for="itemprop" class="form-control" />
+                <span asp-validation-for="itemprop" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отменить</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
