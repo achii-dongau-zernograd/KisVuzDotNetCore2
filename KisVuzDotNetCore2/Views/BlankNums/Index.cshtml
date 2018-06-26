@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Priem.BlankNum>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Информация о количестве поданных заявлений о приёме";
 }
 
 <h2>Информация о количестве поданных заявлений о приёме</h2>
@@ -62,8 +62,7 @@
                 @Html.DisplayFor(modelItem => item.OchZaoch)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BlankNumId">Изменить</a> |
-                <a asp-action="Details" asp-route-id="@item.BlankNumId">Подробнее</a> |
+                <a asp-action="Edit" asp-route-id="@item.BlankNumId">Изменить</a> 
                 <a asp-action="Delete" asp-route-id="@item.BlankNumId">Удалить</a>
             </td>
         </tr>
