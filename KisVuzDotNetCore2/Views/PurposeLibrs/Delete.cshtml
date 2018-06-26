@@ -1,0 +1,54 @@
+﻿@model KisVuzDotNetCore2.Models.PurposeLibr
+
+@{
+    ViewData["Title"] = "Удалить   сведения о наличии библиотек, объектов спорта, условиях питания и охраны здоровья обучающихся";
+}
+
+<h3>Удалить   сведения о наличии библиотек, объектов спорта, условиях питания и охраны здоровья обучающихся?</h3>
+
+<hr />
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.VidPom)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.VidPom)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Adress)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Adress)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Square)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Square)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.NumberPlaces)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.NumberPlaces)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.PrisposoblOvz)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.PrisposoblOvz)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.itemprop)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.itemprop)
+    </dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="PurposeLibrId" />
+    <input type="submit" value="Удалить" class="btn btn-danger" /> 
+    <a asp-action="Index" class="btn btn-default">Отменить</a>
+</form>
+</div>

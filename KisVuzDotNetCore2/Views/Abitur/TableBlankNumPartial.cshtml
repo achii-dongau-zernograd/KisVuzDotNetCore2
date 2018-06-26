@@ -1,0 +1,60 @@
+﻿@{
+    var blankNum = (IEnumerable<BlankNum>)ViewData["blankNum"];
+}
+
+<h3>Информация о количестве поданных заявлений о приёме</h3>
+
+<table itemprop="blankNum" class="table">
+    <thead>
+        <tr>
+            <th rowspan="2">
+                Код
+            </th>
+            <th rowspan="2">
+                Направление подготовки (специальности)
+            </th>
+            <th rowspan="2">
+                Всего
+            </th>
+            <th colspan="3">
+                Количество поданных заявлений о приёме
+            </th>            
+        </tr>
+        <tr>
+            <th>
+                Очное
+            </th>
+            <th>
+                Заочное
+            </th>
+            <th>
+                Очно-заочное
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in blankNum)
+        {
+            <tr itemprop="blankNum">
+                <td>
+                    @item.EduNapravl.EduNapravlCode
+                </td>
+                <td>
+                    @item.EduNapravl.EduNapravlName
+                </td>
+                <td>
+                    @item.Sum
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Och)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Zaoch)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OchZaoch)
+                </td>                
+            </tr>
+        }
+    </tbody>
+</table>

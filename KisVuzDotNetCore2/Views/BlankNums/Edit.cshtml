@@ -1,12 +1,11 @@
 ﻿@model KisVuzDotNetCore2.Models.Priem.BlankNum
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Изменить количество поданных заявлений о приеме";
 }
 
-<h2>Edit</h2>
+<h2>Изменить количество поданных заявлений о приеме</h2>
 
-<h4>BlankNum</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,7 +13,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="BlankNumId" />
             <div class="form-group">
-                <label asp-for="EduNapravlId" class="control-label"></label>
+                <label asp-for="EduNapravl.EduNapravlName" class="control-label"></label>
                 <select asp-for="EduNapravlId" class="form-control" asp-items="ViewBag.EduNapravlId"></select>
                 <span asp-validation-for="EduNapravlId" class="text-danger"></span>
             </div>
@@ -34,14 +33,11 @@
                 <span asp-validation-for="OchZaoch" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

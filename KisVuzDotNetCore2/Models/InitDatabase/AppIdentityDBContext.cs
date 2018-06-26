@@ -320,5 +320,10 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Education.EduPriem> EduPriem { get; set; }
+
+
+        /// <summary>
+        /// Наличие библиотек, объектов спорта, условия питания и охраны здоровья обучающихся
+        public DbSet<KisVuzDotNetCore2.Models.PurposeLibr> PurposeLibr { get; set; }
     }
 }
