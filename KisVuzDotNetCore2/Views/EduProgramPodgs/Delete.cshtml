@@ -1,0 +1,26 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduProgramPodg
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+
+<h3>Удалить программу подготовки?</h3>
+<div>
+    <h4>EduProgramPodg</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProgramPodgName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProgramPodgName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduProgramPodgId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

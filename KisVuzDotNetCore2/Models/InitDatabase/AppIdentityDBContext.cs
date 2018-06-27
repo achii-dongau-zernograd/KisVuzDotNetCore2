@@ -274,6 +274,15 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseElectronBiblSystem.CreateElectronBiblSystem(serviceProvider, configuration);
             await InitDatabaseElectronCatalog.CreateElectronCatalog(serviceProvider, configuration);
             await InitDatabaseElectronObrazovatInformRes.CreateElectronObrazovatInformRes(serviceProvider, configuration);
+
+
+            await InitDatabaseFormKontrol.CreateFormKontrol(serviceProvider, configuration);
+
+
+
+            await InitDatabaseEduProgramPodg.CreateEduProgramPodg(serviceProvider, configuration);
+
+
         }        
 
         /// <summary>
@@ -321,10 +330,26 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Education.EduPriem> EduPriem { get; set; }
-
-
+        
         /// <summary>
         /// Наличие библиотек, объектов спорта, условия питания и охраны здоровья обучающихся
         public DbSet<KisVuzDotNetCore2.Models.PurposeLibr> PurposeLibr { get; set; }
+
+        /// <summary>
+        /// Таблица FormKontrol
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.Education.FormKontrol> FormKontrol { get; set; }
+
+        /// <summary>
+        /// Таблица EduProgramPodg
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.Education.EduProgramPodg> EduProgramPodg { get; set; }
+        
     }
 }
