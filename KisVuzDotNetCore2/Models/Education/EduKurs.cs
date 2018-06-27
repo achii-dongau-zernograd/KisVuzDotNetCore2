@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models.Education
 {
@@ -12,5 +13,6 @@ namespace KisVuzDotNetCore2.Models.Education
         public int EduKursNumber { get; set; }
         [Display(Name = "Курс (строка)")]
         public string EduKursName { get; set; }
+        public List<Semestr> Semestres { get; set; }
     }
 }
