@@ -28,7 +28,10 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 ViewData["EduLevels"] = _context.EduLevels.Where(l => l.EduLevelId == eduLevelId).ToList();
                 ViewData["EduUgses"] = _context.EduUgses.Where(l=>l.EduLevelId==eduLevelId).ToList();
-                filteredEduNapravls = _context.EduNapravls.Where(n => n.EduUgs.EduLevelId == eduLevelId).Include(e => e.EduUgs);
+                filteredEduNapravls = _context.EduNapravls
+                    .Where(n => n.EduUgs.EduLevelId == eduLevelId)
+                    .Include(e => e.EduUgs)
+                    .Include(e => e.EduQualification);
             }
             else
             {                
@@ -44,13 +47,18 @@ namespace KisVuzDotNetCore2.Controllers
 
                     ViewData["EduLevels"] = _context.EduLevels.Where(l=>l.EduLevelId==eduLevel).ToList();
                     ViewData["EduUgses"] = _context.EduUgses.Where(l => l.EduUgsId == id).ToList();
-                    filteredEduNapravls = _context.EduNapravls.Where(n => n.EduUgsId == id).Include(e => e.EduUgs);
+                    filteredEduNapravls = _context.EduNapravls
+                        .Where(n => n.EduUgsId == id)
+                        .Include(e => e.EduUgs)
+                        .Include(e => e.EduQualification);
                 }
                 else
                 {
                     ViewData["EduLevels"] = _context.EduLevels.ToList();
                     ViewData["EduUgses"] = _context.EduUgses.ToList();
-                    filteredEduNapravls = _context.EduNapravls.Include(e => e.EduUgs);
+                    filteredEduNapravls = _context.EduNapravls
+                        .Include(e => e.EduUgs)
+                        .Include(e => e.EduQualification);
                 }
             }            
             
@@ -116,6 +124,7 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
             ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsName", eduNapravl.EduUgsId);
+            ViewData["EduQualifications"] = new SelectList(_context.EduQualification, "EduQualificationId", "EduQualificationName");
             return View(eduNapravl);
         }
 
@@ -124,7 +133,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EduNapravlId,EduNapravlCode,EduNapravlName,EduUgsId,EduNapravlStandartDocLink")] EduNapravl eduNapravl)
+        public async Task<IActionResult> Edit(int id, EduNapravl eduNapravl)
         {
             if (id != eduNapravl.EduNapravlId)
             {
@@ -152,6 +161,7 @@ namespace KisVuzDotNetCore2.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsName", eduNapravl.EduUgsId);
+            ViewData["EduQualifications"] = new SelectList(_context.EduQualification, "EduQualificationId", "EduQualificationName", eduNapravl.EduQualificationId);
             return View(eduNapravl);
         }
 

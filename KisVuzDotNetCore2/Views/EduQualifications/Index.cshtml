@@ -1,0 +1,34 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduQualification>
+
+@{
+    ViewData["Title"] = "Квалификация";
+}
+
+<h2>Квалификация</h2>
+
+<p>
+    <a asp-action="Create" class=" btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.EduQualificationName)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduQualificationName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EduQualificationId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduQualificationId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,27 @@
+﻿@model KisVuzDotNetCore2.Models.Education.BlokDisciplChastName
+
+@{
+    ViewData["Title"] = "Редактировать наименование части блока дисциплин Учебного плана";
+}
+
+<h2>Редактировать наименование части блока дисциплин Учебного плана</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BlokDisciplChastNameId" />
+            <div class="form-group">
+                <label asp-for="BlokDisciplChastNameName" class="control-label"></label>
+                <input asp-for="BlokDisciplChastNameName" class="form-control" />
+                <span asp-validation-for="BlokDisciplChastNameName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+

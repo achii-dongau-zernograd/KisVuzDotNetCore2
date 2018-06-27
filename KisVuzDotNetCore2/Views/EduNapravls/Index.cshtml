@@ -28,6 +28,9 @@
                     @Html.DisplayNameFor(model => model.EduNapravlStandartDocLink)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.EduQualification)
+                </th>
+                <th>
                     Действия
                 </th>
             </tr>
@@ -36,7 +39,7 @@
             @foreach (var eduUgs in ((IEnumerable<KisVuzDotNetCore2.Models.Education.EduUgs>)ViewData["EduUgses"]).Where(l=>l.EduLevelId==eduLevel.EduLevelId))
             {
                 <tr>
-                    <td colspan="4" class="well text-center text-info">@eduUgs.EduUgsCode - @eduUgs.EduUgsName</td>
+                    <td colspan="5" class="well text-center text-info">@eduUgs.EduUgsCode - @eduUgs.EduUgsName</td>
                 </tr>
                 @foreach (var item in Model.Where(n=>n.EduUgsId==eduUgs.EduUgsId))
                 {
@@ -52,6 +55,9 @@
                             {
                                 <a href="@item.EduNapravlStandartDocLink" target="_blank">Открыть</a>
                             }
+                        </td>
+                        <td>
+                            @item.EduQualification?.EduQualificationName
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.EduNapravlId">Редактировать</a> |

@@ -256,8 +256,9 @@ namespace KisVuzDotNetCore2.Models
         {
             await InitDatabaseRoles.CreateRoles(serviceProvider, configuration);
             await InitDatabaseUserData.CreateAdminAccount(serviceProvider, configuration);
-            await InitDatabaseUserData.CreateUserData(serviceProvider, configuration);            
+            await InitDatabaseUserData.CreateUserData(serviceProvider, configuration);
 
+            await InitDatabaseEduQualification.CreateEduQualification(serviceProvider, configuration);
             await InitDatabaseRowStatuses.CreateRowStatuses(serviceProvider, configuration);
             await InitDatabaseEducationData.CreateEducationData(serviceProvider, configuration);
             await InitDatabaseStructData.CreateStructData(serviceProvider, configuration);
@@ -275,12 +276,13 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseElectronCatalog.CreateElectronCatalog(serviceProvider, configuration);
             await InitDatabaseElectronObrazovatInformRes.CreateElectronObrazovatInformRes(serviceProvider, configuration);
 
-
             await InitDatabaseFormKontrol.CreateFormKontrol(serviceProvider, configuration);
-
-
-
             await InitDatabaseEduProgramPodg.CreateEduProgramPodg(serviceProvider, configuration);
+            await InitDatabaseVidUchebRaboti.CreateVidUchebRaboti(serviceProvider, configuration);
+            await InitDatabaseEduVidDeyats.CreateEduVidDeyats(serviceProvider, configuration);
+            await InitDatabaseBlokDisciplChastName.CreateBlokDisciplChastName(serviceProvider, configuration);
+            await InitDatabaseEduSrok.CreateEduSrok(serviceProvider, configuration);
+            
 
 
         }        
@@ -330,9 +332,10 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Education.EduPriem> EduPriem { get; set; }
-        
+
         /// <summary>
         /// Наличие библиотек, объектов спорта, условия питания и охраны здоровья обучающихся
+        /// </summary>
         public DbSet<KisVuzDotNetCore2.Models.PurposeLibr> PurposeLibr { get; set; }
 
         /// <summary>
@@ -350,6 +353,34 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Education.EduProgramPodg> EduProgramPodg { get; set; }
-        
+
+        /// <summary>
+        /// Виды учебной работы
+        /// </summary>
+        public DbSet<VidUchebRaboti> VidUchebRaboti { get; set; }
+
+        /// <summary>
+        /// Виды деятельности по учебному плану
+        /// </summary>
+        public DbSet<EduVidDeyat> EduVidDeyat { get; set; }
+
+        /// <summary>
+        /// Наименование части блока дисциплин Учебного плана
+        /// Таблица BlokDisciplChastName
+        /// </summary>
+        public DbSet<KisVuzDotNetCore2.Models.Education.BlokDisciplChastName> BlokDisciplChastName { get; set; }
+
+        /// <summary>
+        /// Срок обучения
+        /// Таблица EduSrok
+        /// </summary>
+        public DbSet<KisVuzDotNetCore2.Models.Education.EduSrok> EduSrok { get; set; }
+
+        /// <summary>
+        /// Квалификация
+        /// Таблица EduQualification
+        /// </summary>
+        public DbSet<KisVuzDotNetCore2.Models.Education.EduQualification> EduQualification { get; set; }
+
     }
 }

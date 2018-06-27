@@ -1,24 +1,23 @@
-﻿@model KisVuzDotNetCore2.Models.Education.EduProgramPodg
+﻿@model KisVuzDotNetCore2.Models.Education.EduQualification
 
 @{
     ViewData["Title"] = "Удалить";
 }
 
-
-<h3>Удалить программу подготовки?</h3>
+<h3>Удалить квалификацию?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.EduProgramPodgName)
+            @Html.DisplayNameFor(model => model.EduQualificationName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduProgramPodgName)
+            @Html.DisplayFor(model => model.EduQualificationName)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="EduProgramPodgId" />
+        <input type="hidden" asp-for="EduQualificationId" />
         <input type="submit" value="Удалить" class="btn btn-danger" />
         <a asp-action="Index" class="btn btn-default">Отмена</a>
     </form>
