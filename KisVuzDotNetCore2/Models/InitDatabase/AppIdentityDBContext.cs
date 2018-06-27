@@ -277,7 +277,8 @@ namespace KisVuzDotNetCore2.Models
 
             await InitDatabaseVidUchebRaboti.CreateVidUchebRaboti(serviceProvider, configuration);
             await InitDatabaseEduVidDeyats.CreateEduVidDeyats(serviceProvider, configuration);
-
+            await InitDatabaseBlokDisciplChastName.CreateBlokDisciplChastName(serviceProvider, configuration);
+            await InitDatabaseEduSrok.CreateEduSrok(serviceProvider, configuration);
 
         }        
 
@@ -333,6 +334,7 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<KisVuzDotNetCore2.Models.PurposeLibr> PurposeLibr { get; set; }
 
         /// <summary>
+<<<<<<< HEAD
         /// Виды учебной работы
         /// </summary>
         public DbSet<VidUchebRaboti> VidUchebRaboti { get; set; }
@@ -341,5 +343,15 @@ namespace KisVuzDotNetCore2.Models
         /// Виды деятельности по учебному плану
         /// </summary>
         public DbSet<EduVidDeyat> EduVidDeyat { get; set; }
+=======
+        /// Наименование части блока дисциплин Учебного плана
+        /// Таблица BlokDisciplChastName
+        public DbSet<KisVuzDotNetCore2.Models.Education.BlokDisciplChastName> BlokDisciplChastName { get; set; }
+
+        /// <summary>
+        /// Срок обучения
+        /// Таблица EduSrok
+        public DbSet<KisVuzDotNetCore2.Models.Education.EduSrok> EduSrok { get; set; }
+>>>>>>> 4af17d2b3f1223bb45ada91b99d10bdfdc6d6283
     }
 }

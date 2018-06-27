@@ -1,0 +1,25 @@
+﻿@model KisVuzDotNetCore2.Models.Education.BlokDisciplChastName
+
+@{
+    ViewData["Title"] = "Удалить наименование части блока дисциплин Учебного плана";
+}
+
+<h2>Удалить наименование части блока дисциплин Учебного плана</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BlokDisciplChastNameName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BlokDisciplChastNameName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="BlokDisciplChastNameId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>
