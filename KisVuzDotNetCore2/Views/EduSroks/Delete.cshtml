@@ -1,0 +1,26 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduSrok
+
+@{
+    ViewData["Title"] = "Удалить срок обучения";
+}
+
+<h2>Удалить срок обучения</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduSrokName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduSrokName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduSrokId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>
