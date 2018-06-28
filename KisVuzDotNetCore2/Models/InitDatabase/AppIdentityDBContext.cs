@@ -316,7 +316,7 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.Sveden.ElectronObrazovatInformRes> ElectronObrazovatInformRes { get; set; }
+        public DbSet<ElectronObrazovatInformRes> ElectronObrazovatInformRes { get; set; }
 
         /// <summary>
         /// Таблица 8 Информация о результатах приема по каждой профессии,
@@ -326,15 +326,14 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.Education.EduPriem> EduPriem { get; set; }
+        public DbSet<EduPriem> EduPriem { get; set; }
 
 
         /// <summary>
         /// Наличие библиотек, объектов спорта, условия питания и охраны здоровья обучающихся
-        public DbSet<KisVuzDotNetCore2.Models.PurposeLibr> PurposeLibr { get; set; }
+        public DbSet<PurposeLibr> PurposeLibr { get; set; }
 
         /// <summary>
-<<<<<<< HEAD
         /// Виды учебной работы
         /// </summary>
         public DbSet<VidUchebRaboti> VidUchebRaboti { get; set; }
@@ -343,15 +342,16 @@ namespace KisVuzDotNetCore2.Models
         /// Виды деятельности по учебному плану
         /// </summary>
         public DbSet<EduVidDeyat> EduVidDeyat { get; set; }
-=======
+
+        /// <summary>
         /// Наименование части блока дисциплин Учебного плана
         /// Таблица BlokDisciplChastName
-        public DbSet<KisVuzDotNetCore2.Models.Education.BlokDisciplChastName> BlokDisciplChastName { get; set; }
+        /// </summary>
+        public DbSet<BlokDisciplChastName> BlokDisciplChastName { get; set; }
 
         /// <summary>
         /// Срок обучения
-        /// Таблица EduSrok
-        public DbSet<KisVuzDotNetCore2.Models.Education.EduSrok> EduSrok { get; set; }
->>>>>>> 4af17d2b3f1223bb45ada91b99d10bdfdc6d6283
+        /// </summary>
+        public DbSet<EduSrok> EduSrok { get; set; }
     }
 }
