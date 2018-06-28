@@ -435,6 +435,7 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseEduVidDeyats.CreateEduVidDeyats(serviceProvider, configuration);
             await InitDatabaseBlokDisciplChastName.CreateBlokDisciplChastName(serviceProvider, configuration);
             await InitDatabaseEduSrok.CreateEduSrok(serviceProvider, configuration);
+            await InitDatabaseEduPlans.CreateEduPlans(serviceProvider, configuration);
         }        
 
         /// <summary>
@@ -444,6 +445,14 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Education.BlokDiscipl> BlokDiscipl { get; set; }
+
+        /// <summary>
+        /// Инициализация базы данных
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.Education.BlokDisciplChast> BlokDisciplChast { get; set; }
 
         
     }

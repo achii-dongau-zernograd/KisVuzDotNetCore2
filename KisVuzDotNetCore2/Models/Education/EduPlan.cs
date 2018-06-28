@@ -109,7 +109,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         [Display(Name = "Файл учебного плана")]
         public FileModel EduPlanPdf { get; set; }
-        public int EduPlanPdfId { get; set; }
+        public int? EduPlanPdfId { get; set; }
 
         /// <summary>
         /// Блоки дисциплин

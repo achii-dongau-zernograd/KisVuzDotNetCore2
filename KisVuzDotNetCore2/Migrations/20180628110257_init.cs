@@ -230,6 +230,21 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FilInfo",
+                columns: table => new
+                {
+                    FilInfoId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AddressFil = table.Column<string>(nullable: true),
+                    NameFil = table.Column<string>(nullable: true),
+                    WebsiteFil = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FilInfo", x => x.FilInfoId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "HostelInfo",
                 columns: table => new
                 {
@@ -333,6 +348,24 @@ namespace KisVuzDotNetCore2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SvedenRucovodstvo", x => x.RucovodstvoId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UchredLaw",
+                columns: table => new
+                {
+                    UchredLawId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AddressUchred = table.Column<string>(nullable: true),
+                    FullnameUchred = table.Column<string>(nullable: true),
+                    NameUchred = table.Column<string>(nullable: true),
+                    TelUchred = table.Column<string>(nullable: true),
+                    WebsiteUchred = table.Column<string>(nullable: true),
+                    mailUchred = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UchredLaw", x => x.UchredLawId);
                 });
 
             migrationBuilder.CreateTable(
@@ -1296,7 +1329,7 @@ namespace KisVuzDotNetCore2.Migrations
                     EduPlanId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EduFormId = table.Column<int>(nullable: false),
-                    EduPlanPdfId = table.Column<int>(nullable: false),
+                    EduPlanPdfId = table.Column<int>(nullable: true),
                     EduProfileId = table.Column<int>(nullable: false),
                     EduProgramPodgId = table.Column<int>(nullable: false),
                     EduSrokId = table.Column<int>(nullable: false),
@@ -1319,7 +1352,7 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.EduPlanPdfId,
                         principalTable: "Files",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_EduPlans_EduProfiles_EduProfileId",
                         column: x => x.EduProfileId,
@@ -1352,7 +1385,7 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     BlokDisciplId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    BlokDisciplNameId = table.Column<int>(nullable: true),
+                    BlokDisciplNameId = table.Column<int>(nullable: false),
                     EduPlanId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -1363,7 +1396,7 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.BlokDisciplNameId,
                         principalTable: "BlokDisciplName",
                         principalColumn: "BlokDisciplNameId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BlokDiscipl_EduPlans_EduPlanId",
                         column: x => x.EduPlanId,
@@ -1438,7 +1471,7 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     BlokDisciplChastId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    BlokDisciplChastNameId = table.Column<int>(nullable: true),
+                    BlokDisciplChastNameId = table.Column<int>(nullable: false),
                     BlokDisciplId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -1449,7 +1482,7 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.BlokDisciplChastNameId,
                         principalTable: "BlokDisciplChastName",
                         principalColumn: "BlokDisciplChastNameId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BlokDisciplChast_BlokDiscipl_BlokDisciplId",
                         column: x => x.BlokDisciplId,
@@ -2013,6 +2046,9 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "FileToFileTypes");
 
             migrationBuilder.DropTable(
+                name: "FilInfo");
+
+            migrationBuilder.DropTable(
                 name: "FormKontrol");
 
             migrationBuilder.DropTable(
@@ -2047,6 +2083,9 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "Telephones");
+
+            migrationBuilder.DropTable(
+                name: "UchredLaw");
 
             migrationBuilder.DropTable(
                 name: "Vacants");
