@@ -141,7 +141,7 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("BlokDisciplId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("BlokDisciplNameId");
+                    b.Property<int>("BlokDisciplNameId");
 
                     b.Property<int>("EduPlanId");
 
@@ -580,6 +580,28 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("VidUchebRaboti");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.EduGraduate", b =>
+                {
+                    b.Property<int>("EduGraduateId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduProfileId");
+
+                    b.Property<int>("GraduateNumber");
+
+                    b.Property<int>("GraduateSredBall");
+
+                    b.Property<int>("GraduateYearId");
+
+                    b.HasKey("EduGraduateId");
+
+                    b.HasIndex("EduProfileId");
+
+                    b.HasIndex("GraduateYearId");
+
+                    b.ToTable("EduGraduate");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.EduLevelGroup", b =>
                 {
                     b.Property<int>("EduLevelGroupId")
@@ -672,6 +694,38 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("FileModelId");
 
                     b.ToTable("FileToFileTypes");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.GraduateTrudoustroustvo", b =>
+                {
+                    b.Property<int>("GraduateTrudoustroustvoId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduProfileId");
+
+                    b.Property<int>("GraduateNumberTrudoustroustvo");
+
+                    b.Property<int>("GraduateYearId");
+
+                    b.HasKey("GraduateTrudoustroustvoId");
+
+                    b.HasIndex("EduProfileId");
+
+                    b.HasIndex("GraduateYearId");
+
+                    b.ToTable("GraduateTrudoustroustvo");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.GraduateYear", b =>
+                {
+                    b.Property<int>("GraduateYearId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("GraduateYearName");
+
+                    b.HasKey("GraduateYearId");
+
+                    b.ToTable("GraduateYear");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.BlankNum", b =>
@@ -1488,7 +1542,8 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.BlokDisciplName", "BlokDisciplName")
                         .WithMany()
-                        .HasForeignKey("BlokDisciplNameId");
+                        .HasForeignKey("BlokDisciplNameId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduPlan", "EduPlan")
                         .WithMany("BlokDiscipl")
@@ -1667,6 +1722,19 @@ namespace KisVuzDotNetCore2.Migrations
                         .HasForeignKey("SemestrId");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.EduGraduate", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
+                        .WithMany()
+                        .HasForeignKey("EduProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.GraduateYear", "GraduateYear")
+                        .WithMany()
+                        .HasForeignKey("GraduateYearId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.FileDataType", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.FileDataTypeGroup", "FileDataTypeGroup")
@@ -1685,6 +1753,19 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
                         .WithMany("FileToFileTypes")
                         .HasForeignKey("FileModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.GraduateTrudoustroustvo", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
+                        .WithMany()
+                        .HasForeignKey("EduProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.GraduateYear", "GraduateYearName")
+                        .WithMany()
+                        .HasForeignKey("GraduateYearId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

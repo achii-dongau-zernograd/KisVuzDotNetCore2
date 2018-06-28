@@ -394,6 +394,22 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<RefresherCourse> RefresherCourses { get; set; }
         #endregion
 
+        #region Трудоустройство
+        /// <summary>
+        /// Год выпуска
+        /// </summary>
+        public DbSet<GraduateYear> GraduateYear { get; set; }
+
+        /// <summary>
+        /// Выпуск (результаты защиты ВКР)
+        /// </summary>
+        public DbSet<EduGraduate> EduGraduate { get; set; }
+
+        /// <summary>
+        /// Количество трудоустроенных выпускников
+        /// </summary>
+        public DbSet<GraduateTrudoustroustvo> GraduateTrudoustroustvo { get; set; }
+        #endregion
 
         #endregion
 
