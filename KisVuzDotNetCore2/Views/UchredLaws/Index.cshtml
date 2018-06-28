@@ -1,0 +1,64 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.UchredLaw>
+
+@{
+    ViewData["Title"] = "Сведения об учредителях";
+}
+
+<h2>Сведения об учредителях</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NameUchred)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullnameUchred)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AddressUchred)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TelUchred)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.mailUchred)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WebsiteUchred)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameUchred)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullnameUchred)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressUchred)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelUchred)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mailUchred)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebsiteUchred)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UchredLawId">Редактировать </a> 
+                <a asp-action="Delete" asp-route-id="@item.UchredLawId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

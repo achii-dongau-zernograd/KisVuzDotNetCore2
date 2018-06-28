@@ -16,12 +16,12 @@ namespace KisVuzDotNetCore2.Controllers
     /// Контроллер, реализующий отображение раздела
     /// "Сведения об образовательной организации"
     /// </summary>
-    public class Sveden : Controller
+    public class SvedenController : Controller
     {
         IHostingEnvironment _appEnvironment;
         private readonly AppIdentityDBContext _context;
 
-        public Sveden(IHostingEnvironment appEnvironment, AppIdentityDBContext context)
+        public SvedenController(IHostingEnvironment appEnvironment, AppIdentityDBContext context)
         {
             _appEnvironment = appEnvironment;
             _context = context;
@@ -54,11 +54,28 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["Telephones"] = institute.Telephones;
             ViewData["Faxes"] = institute.Faxes;
             ViewData["Emailes"] = institute.Emailes;
+            #endregion
 
-            #endregion                       
+            #region Таблица 3 "Сведения об учредителях"  
 
+            var t3uchred = await _context.UchredLaw
+                .ToListAsync();
+            ViewData["t3uchred"] = t3uchred;
+
+            
+            #endregion
+
+            #region Таблица 4 "Сведения о филиалах"  
+
+            var t4filInfo = await _context.FilInfo
+                .ToListAsync();
+            ViewData["t4filInfo"] = t4filInfo;
             return View();
+            #endregion
+
         }
+
+
 
         /// <summary>
         /// Подраздел "Структура и органы управления

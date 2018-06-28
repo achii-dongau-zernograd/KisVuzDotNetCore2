@@ -1,8 +1,15 @@
 ﻿<h1>Основные сведения</h1>
 
+@{
+    var t3uchred = (IEnumerable<UchredLaw>)ViewData["t3uchred"];
+    var t4filInfo = (IEnumerable<FilInfo>)ViewData["t4filInfo"];
+
+}
+
+
 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Основные сведения</a>
 <div class="collapse" id="spoiler-1">
-   <div class="well">
+    <div class="well">
         <table class="table">
             <tr>
                 <th>Дата создания образовательной организации</th>
@@ -61,29 +68,32 @@
 <div class="collapse" id="spoiler-2">
     <div class="well">
         <table itemprop="uchredLaw" class="table table-bordered table-hover table-striped">
-            <thead>
-                <tr>
-                    <th>Наименование учредителя</th>
-                    <th>Фамилия, имя, отчество руководителя учредителя (ей) образовательной организации</th>
-                    <th>Адрес местонахождения учредителя(ей)</th>
-                    <th>Контактные телефоны</th>
-                    <th>Адрес электронной почты</th>
-                    <th>Адрес сайта учредителя(ей) в сети "Интернет"</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr itemprop="uchredLaw">
-                    <td itemprop="nameUchred">Министерство сельского хозяйства Российской Федерации (Минсельхоз России)</td>
-                    <td itemprop="fullnameUchred">Министр сельского хозяйства РФ - Ткачев Александр Николаевич</td>
-                    <td itemprop="addressUchred">107139, г. Москва, Орликов переулок, д. 1/11</td>
-                    <td itemprop="telUchred">+7 (495) 607-80-00</td>
-                    <td itemprop="mailUchred">info@mcx.ru</td>
-                    <td itemprop="websiteUchred">http://mcx.ru/</td>
-                </tr>
-            </tbody>
-        </table>
+            <table itemprop="uchredLaw" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Наименование учредителя</th>
+                        <th>Фамилия, имя, отчество руководителя учредителя (ей) образовательной организации</th>
+                        <th>Адрес местонахождения учредителя(ей)</th>
+                        <th>Контактные телефоны</th>
+                        <th>Адрес электронной почты</th>
+                        <th>Адрес сайта учредителя(ей) в сети "Интернет"</th>
+                    </tr>
+                </thead>
+                @foreach (var item in t3uchred)
+                {
+                    <tr itemprop="uchredLaw">
+                        <td itemprop="nameUchred">@item.NameUchred</td>
+                        <td itemprop="fullnameUchred">@item.FullnameUchred</td>
+                        <td itemprop="addressUchred">@item.AddressUchred</td>
+                        <td itemprop="telUchred">@item.TelUchred</td>
+                        <td itemprop="mailUchred">@item.mailUchred</td>
+                        <td itemprop="websiteUchred"><a href="@item.WebsiteUchred">@item.WebsiteUchred</a></td>
+                    </tr>
+                }
+            </table>
     </div>
 </div>
+
 
 <a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о филиалах</a>
 <div class="collapse" id="spoiler-3">
@@ -97,9 +107,25 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td colspan="3" itemprop="nameFil" class="text-center">Филиалов нет</td>
-                </tr>
+                @if (t4filInfo.Count() > 0)
+                {
+                    foreach (var item in t4filInfo)
+                    {
+                        <tr itemprop="filInfo">
+                            <td itemprop="filInfo">@item.NameFil</td>
+                            <td itemprop="addressFil">@item.AddressFil</td>
+                            <td itemprop="websiteFil">@item.WebsiteFil</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr itemprop="filInfo">
+                        <td itemprop="filInfo" colspan="3" align="center">Филиалов нет</td>                        
+                    </tr>
+
+                }
+
             </tbody>
         </table>
     </div>

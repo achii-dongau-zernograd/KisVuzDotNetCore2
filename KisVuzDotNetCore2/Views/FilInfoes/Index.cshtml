@@ -1,0 +1,46 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.FilInfo>
+
+@{
+    ViewData["Title"] = "Сведения о филиалах";
+}
+
+<h2>Сведения о филиалах</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NameFil)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AddressFil)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WebsiteFil)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameFil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressFil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebsiteFil)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FilInfoId">Редактировать</a> 
+                <a asp-action="Delete" asp-route-id="@item.FilInfoId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,56 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.UchredLaw
+
+@{
+    ViewData["Title"] = "Редактировать сведения об учредителе";
+}
+
+<h2>Редактировать сведения об учредителе</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UchredLawId" />
+            <div class="form-group">
+                <label asp-for="NameUchred" class="control-label"></label>
+                <input asp-for="NameUchred" class="form-control" />
+                <span asp-validation-for="NameUchred" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullnameUchred" class="control-label"></label>
+                <input asp-for="FullnameUchred" class="form-control" />
+                <span asp-validation-for="FullnameUchred" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressUchred" class="control-label"></label>
+                <input asp-for="AddressUchred" class="form-control" />
+                <span asp-validation-for="AddressUchred" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TelUchred" class="control-label"></label>
+                <input asp-for="TelUchred" class="form-control" />
+                <span asp-validation-for="TelUchred" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="mailUchred" class="control-label"></label>
+                <input asp-for="mailUchred" class="form-control" />
+                <span asp-validation-for="mailUchred" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WebsiteUchred" class="control-label"></label>
+                <input asp-for="WebsiteUchred" class="form-control" />
+                <span asp-validation-for="WebsiteUchred" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отменить</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

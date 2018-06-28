@@ -274,6 +274,12 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseElectronBiblSystem.CreateElectronBiblSystem(serviceProvider, configuration);
             await InitDatabaseElectronCatalog.CreateElectronCatalog(serviceProvider, configuration);
             await InitDatabaseElectronObrazovatInformRes.CreateElectronObrazovatInformRes(serviceProvider, configuration);
+            await InitDatabaseUchredLaw.CreateUchredLaw(serviceProvider, configuration);
+
+
+
+
+            await InitDatadaseBlokDisciplName.CreateBlokDisciplName(serviceProvider, configuration);
         }        
 
         /// <summary>
@@ -326,5 +332,17 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Наличие библиотек, объектов спорта, условия питания и охраны здоровья обучающихся
         public DbSet<KisVuzDotNetCore2.Models.PurposeLibr> PurposeLibr { get; set; }
+
+        /// <summary>
+        ///Блок дисциплин Учебного плана
+        public DbSet<KisVuzDotNetCore2.Models.Education.BlokDisciplName> BlokDisciplName { get; set; }
+
+        /// <summary>
+        ///Сведения об учредителях
+        public DbSet<KisVuzDotNetCore2.Models.Sveden.UchredLaw> UchredLaw { get; set; }
+
+        /// <summary>
+        ///Сведения о филиалах
+        public DbSet<KisVuzDotNetCore2.Models.Sveden.FilInfo> FilInfo { get; set; }
     }
 }

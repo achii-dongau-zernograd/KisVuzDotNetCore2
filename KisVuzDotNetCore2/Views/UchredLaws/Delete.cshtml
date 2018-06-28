@@ -1,0 +1,56 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.UchredLaw
+
+@{
+    ViewData["Title"] = "Удалить сведения об учредителе";
+}
+
+<h2>Удалить сведения об учредителе</h2>
+
+<div>
+ 
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameUchred)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NameUchred)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FullnameUchred)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FullnameUchred)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressUchred)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddressUchred)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TelUchred)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TelUchred)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.mailUchred)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.mailUchred)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WebsiteUchred)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WebsiteUchred)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="UchredLawId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> 
+        <a asp-action="Index" class="btn btn-default">Отменить</a>
+    </form>
+</div>

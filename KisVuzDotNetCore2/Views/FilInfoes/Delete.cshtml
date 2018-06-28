@@ -1,0 +1,38 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.FilInfo
+
+@{
+    ViewData["Title"] = "Удалить сведения о филиале";
+}
+
+<h3>Удалить сведения о филиале?</h3>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameFil)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NameFil)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressFil)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddressFil)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WebsiteFil)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WebsiteFil)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="FilInfoId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отменить</a>
+
+    </form>
+</div>

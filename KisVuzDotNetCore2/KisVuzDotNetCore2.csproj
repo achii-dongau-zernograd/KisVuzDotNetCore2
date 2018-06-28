@@ -254,6 +254,10 @@
     <Compile Remove="Migrations\20180627063710_UchebPlan.Designer.cs" />
     <Compile Remove="Migrations\20180627063815_init.cs" />
     <Compile Remove="Migrations\20180627063815_init.Designer.cs" />
+    <Compile Remove="Migrations\20180627115123_UchredLaw.cs" />
+    <Compile Remove="Migrations\20180627115123_UchredLaw.Designer.cs" />
+    <Compile Remove="Migrations\20180628064018_FilInfo.cs" />
+    <Compile Remove="Migrations\20180628064018_FilInfo.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

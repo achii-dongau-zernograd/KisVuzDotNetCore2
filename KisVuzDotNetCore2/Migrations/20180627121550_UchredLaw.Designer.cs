@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20180627121550_UchredLaw")]
+    partial class UchredLaw
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1140,22 +1141,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("ResId");
 
                     b.ToTable("ElectronObrazovatInformRes");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.FilInfo", b =>
-                {
-                    b.Property<int>("FilInfoId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddressFil");
-
-                    b.Property<string>("NameFil");
-
-                    b.Property<string>("WebsiteFil");
-
-                    b.HasKey("FilInfoId");
-
-                    b.ToTable("FilInfo");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.HostelInfo", b =>
