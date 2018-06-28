@@ -260,6 +260,16 @@
     <Compile Remove="Migrations\20180627100204_q.Designer.cs" />
     <Compile Remove="Migrations\20180627120558_EduQualification.cs" />
     <Compile Remove="Migrations\20180627120558_EduQualification.Designer.cs" />
+    <Compile Remove="Migrations\20180627133801_init.cs" />
+    <Compile Remove="Migrations\20180627133801_init.Designer.cs" />
+    <Compile Remove="Migrations\20180628071328_Semestr.cs" />
+    <Compile Remove="Migrations\20180628071328_Semestr.Designer.cs" />
+    <Compile Remove="Migrations\20180628071844_init.cs" />
+    <Compile Remove="Migrations\20180628071844_init.Designer.cs" />
+    <Compile Remove="Migrations\20180628072705_init.cs" />
+    <Compile Remove="Migrations\20180628072705_init.Designer.cs" />
+    <Compile Remove="Migrations\20180628073603_init.cs" />
+    <Compile Remove="Migrations\20180628073603_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

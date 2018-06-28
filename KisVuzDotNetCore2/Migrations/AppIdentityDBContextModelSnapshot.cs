@@ -277,15 +277,11 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("EduKursId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("DisciplineId");
-
                     b.Property<string>("EduKursName");
 
                     b.Property<int>("EduKursNumber");
 
                     b.HasKey("EduKursId");
-
-                    b.HasIndex("DisciplineId");
 
                     b.ToTable("EduKurses");
                 });
@@ -333,13 +329,13 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("EduFormId");
 
-                    b.Property<int?>("EduPlanPdfId");
+                    b.Property<int>("EduPlanPdfId");
 
                     b.Property<int>("EduProfileId");
 
-                    b.Property<int?>("EduProgramPodgId");
+                    b.Property<int>("EduProgramPodgId");
 
-                    b.Property<int?>("EduSrokId");
+                    b.Property<int>("EduSrokId");
 
                     b.Property<DateTime>("ProtokolDate");
 
@@ -532,12 +528,30 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("FormKontrol");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.Kurs", b =>
+                {
+                    b.Property<int>("KursId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("DisciplineId");
+
+                    b.Property<int?>("EduKursId");
+
+                    b.HasKey("KursId");
+
+                    b.HasIndex("DisciplineId");
+
+                    b.HasIndex("EduKursId");
+
+                    b.ToTable("Kurs");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.Semestr", b =>
                 {
                     b.Property<int>("SemestrId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("EduKursId");
+                    b.Property<int>("KursId");
 
                     b.Property<string>("SemestrName");
 
@@ -545,7 +559,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasKey("SemestrId");
 
-                    b.HasIndex("EduKursId");
+                    b.HasIndex("KursId");
 
                     b.ToTable("Semestr");
                 });
@@ -1482,13 +1496,6 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduKurs", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.Discipline")
-                        .WithMany("EduKurses")
-                        .HasForeignKey("DisciplineId");
-                });
-
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduNapravl", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduQualification", "EduQualification")
@@ -1511,7 +1518,8 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "EduPlanPdf")
                         .WithMany()
-                        .HasForeignKey("EduPlanPdfId");
+                        .HasForeignKey("EduPlanPdfId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
                         .WithMany("EduPlans")
@@ -1520,11 +1528,13 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduProgramPodg", "EduProgramPodg")
                         .WithMany()
-                        .HasForeignKey("EduProgramPodgId");
+                        .HasForeignKey("EduProgramPodgId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduSrok", "EduSrok")
                         .WithMany()
-                        .HasForeignKey("EduSrokId");
+                        .HasForeignKey("EduSrokId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.StructKaf", "StructKaf")
                         .WithMany()
@@ -1593,11 +1603,23 @@ namespace KisVuzDotNetCore2.Migrations
                         .HasForeignKey("SemestrId");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.Kurs", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.Discipline")
+                        .WithMany("Kurses")
+                        .HasForeignKey("DisciplineId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduKurs", "EduKurs")
+                        .WithMany()
+                        .HasForeignKey("EduKursId");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.Semestr", b =>
                 {
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduKurs")
-                        .WithMany("Semestres")
-                        .HasForeignKey("EduKursId");
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.Kurs", "Kurs")
+                        .WithMany()
+                        .HasForeignKey("KursId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.VidUchebRaboti", b =>

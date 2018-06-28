@@ -41,6 +41,14 @@
                             <li>
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Образование <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Учебные планы<b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="EduPlans" asp-action="Index">Перечень учебных планов</a></li>
+                                            <li><a asp-controller="BlokDiscipls" asp-action="Index">Блоки дисциплин</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="divider"></li>
                                     <li><a asp-controller="EduLevelGroups" asp-action="Index" asp-route-id="">Группы уровней образования</a></li>
                                     <li><a asp-controller="EduLevels" asp-action="Index" asp-route-id="">Уровни образования</a></li>
                                     <li><a asp-controller="EduUgses" asp-action="Index" asp-route-id="">Укрупнённые группы специальностей</a></li>

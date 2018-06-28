@@ -17,5 +17,8 @@ namespace KisVuzDotNetCore2.Models.Education
         public List<FormKontrol> FormKontrols { get; set; }
         [Display(Name = "Вид учебной работы")]
         public List<VidUchebRaboti> VidUchebRaboti { get; set; }
+        public int KursId { get; set; }
+        [Display(Name = "Курс")]
+        public Kurs Kurs { get; set; }
     }
 }

@@ -11,6 +11,6 @@ namespace KisVuzDotNetCore2.Models.Education
         [Display(Name = "Наименование дисциплины")]
         public string DisciplineName { get; set; }
         [Display(Name = "Курс")]
-        public List<EduKurs> EduKurses { get; set; }
+        public List<Kurs> Kurses { get; set; }
     }
 }
