@@ -256,8 +256,9 @@ namespace KisVuzDotNetCore2.Models
         {
             await InitDatabaseRoles.CreateRoles(serviceProvider, configuration);
             await InitDatabaseUserData.CreateAdminAccount(serviceProvider, configuration);
-            await InitDatabaseUserData.CreateUserData(serviceProvider, configuration);            
+            await InitDatabaseUserData.CreateUserData(serviceProvider, configuration);
 
+            await InitDatabaseEduQualification.CreateEduQualification(serviceProvider, configuration);
             await InitDatabaseRowStatuses.CreateRowStatuses(serviceProvider, configuration);
             await InitDatabaseEducationData.CreateEducationData(serviceProvider, configuration);
             await InitDatabaseStructData.CreateStructData(serviceProvider, configuration);
@@ -275,10 +276,14 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseElectronCatalog.CreateElectronCatalog(serviceProvider, configuration);
             await InitDatabaseElectronObrazovatInformRes.CreateElectronObrazovatInformRes(serviceProvider, configuration);
 
+            await InitDatabaseFormKontrol.CreateFormKontrol(serviceProvider, configuration);
+            await InitDatabaseEduProgramPodg.CreateEduProgramPodg(serviceProvider, configuration);
             await InitDatabaseVidUchebRaboti.CreateVidUchebRaboti(serviceProvider, configuration);
             await InitDatabaseEduVidDeyats.CreateEduVidDeyats(serviceProvider, configuration);
             await InitDatabaseBlokDisciplChastName.CreateBlokDisciplChastName(serviceProvider, configuration);
             await InitDatabaseEduSrok.CreateEduSrok(serviceProvider, configuration);
+            
+
 
         }        
 
@@ -288,7 +293,7 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.Sveden.HostelInfo> HostelInfo { get; set; }
+        public DbSet<HostelInfo> HostelInfo { get; set; }
         public DbSet<priemKolTarget> priemKolTarget { get; set; }
         public DbSet<priemKolMest> priemKolMest { get; set; }
         public DbSet<PriemExam> PriemExam { get; set; }
@@ -300,7 +305,7 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.Sveden.ElectronBiblSystem> ElectronBiblSystem { get; set; }
+        public DbSet<ElectronBiblSystem> ElectronBiblSystem { get; set; }
 
         /// <summary>
         /// База данных электронного каталога
@@ -308,7 +313,7 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.ElectronCatalog> ElectronCatalog { get; set; }
+        public DbSet<ElectronCatalog> ElectronCatalog { get; set; }
 
         /// <summary>
         /// Электронные образовательные и информационные ресурсы
@@ -328,10 +333,26 @@ namespace KisVuzDotNetCore2.Models
         /// <returns></returns>
         public DbSet<EduPriem> EduPriem { get; set; }
 
-
         /// <summary>
         /// Наличие библиотек, объектов спорта, условия питания и охраны здоровья обучающихся
+        /// </summary>
         public DbSet<PurposeLibr> PurposeLibr { get; set; }
+
+        /// <summary>
+        /// Таблица FormKontrol
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<FormKontrol> FormKontrol { get; set; }
+
+        /// <summary>
+        /// Таблица EduProgramPodg
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<EduProgramPodg> EduProgramPodg { get; set; }
 
         /// <summary>
         /// Виды учебной работы
@@ -351,7 +372,16 @@ namespace KisVuzDotNetCore2.Models
 
         /// <summary>
         /// Срок обучения
+        /// Таблица EduSrok
         /// </summary>
         public DbSet<EduSrok> EduSrok { get; set; }
+                
+
+        /// <summary>
+        /// Квалификация
+        /// Таблица EduQualification
+        /// </summary>
+        public DbSet<EduQualification> EduQualification { get; set; }
+
     }
 }

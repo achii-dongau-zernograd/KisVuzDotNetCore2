@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180627064928_init")]
+    [Migration("20180627133801_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -314,9 +314,13 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<string>("EduNapravlStandartDocLink");
 
+                    b.Property<int>("EduQualificationId");
+
                     b.Property<int>("EduUgsId");
 
                     b.HasKey("EduNapravlId");
+
+                    b.HasIndex("EduQualificationId");
 
                     b.HasIndex("EduUgsId");
 
@@ -417,6 +421,18 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("EduProgramPodgId");
 
                     b.ToTable("EduProgramPodg");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduQualification", b =>
+                {
+                    b.Property<int>("EduQualificationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("EduQualificationName");
+
+                    b.HasKey("EduQualificationId");
+
+                    b.ToTable("EduQualification");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduSrok", b =>
@@ -1476,6 +1492,11 @@ namespace KisVuzDotNetCore2.Migrations
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduNapravl", b =>
                 {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduQualification", "EduQualification")
+                        .WithMany()
+                        .HasForeignKey("EduQualificationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduUgs", "EduUgs")
                         .WithMany("EduNapravls")
                         .HasForeignKey("EduUgsId")

@@ -61,5 +61,16 @@ namespace KisVuzDotNetCore2.Models.Education
             }
 
         }
+
+        /// <summary>
+        /// Идентификатор записи квалификации
+        /// </summary>
+        public int EduQualificationId { get; set; }
+
+        /// <summary>
+        /// Квалификация по направлению
+        /// </summary>
+        [Display(Name = "Квалификация")]
+        public EduQualification EduQualification { get; set; }
     }
 }
