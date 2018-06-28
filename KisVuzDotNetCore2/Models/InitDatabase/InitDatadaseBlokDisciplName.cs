@@ -29,7 +29,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                     BlokDisciplName BlokDisciplName1 = new BlokDisciplName
                     {
                         BlokDisciplNameId = 1,
-                        BlokDisciplNameName = "Блок 1.Дисциплины (модули)"
+                        BlokDisciplNameName = "Блок 1. Дисциплины (модули)"
                     };
 
                     BlokDisciplName BlokDisciplName2 = new BlokDisciplName
