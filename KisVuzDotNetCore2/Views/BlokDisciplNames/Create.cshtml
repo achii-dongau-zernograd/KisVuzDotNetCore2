@@ -1,12 +1,11 @@
 ﻿@model KisVuzDotNetCore2.Models.Education.BlokDisciplName
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Добавить наименование блока дисциплин";
 }
 
-<h2>Create</h2>
+<h2>Добавить наименование блока дисциплин</h2>
 
-<h4>BlokDisciplName</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,16 +17,13 @@
                 <span asp-validation-for="BlokDisciplNameName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
+    @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
