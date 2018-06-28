@@ -121,9 +121,8 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Education()
         {
-            var t6eduAccred = await _context.EduNapravls
-                .Include(l => l.EduUgs)
-                    .ThenInclude(ugs => ugs.EduAccred)
+            var t6eduAccred = await _context.EduNapravls                
+                .Include(l => l.EduUgs.EduAccred.EduAccredFile)
                 .Include(l => l.EduUgs)
                     .ThenInclude(ugs => ugs.EduLevel)                
                 .ToListAsync();
