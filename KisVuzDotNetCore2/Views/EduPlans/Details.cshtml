@@ -1,0 +1,72 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduPlan
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EduPlan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProtokolNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProtokolNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProtokolDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProtokolDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UtverjdDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UtverjdDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduPlanPdf)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduPlanPdf.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.EduProfileId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProgramPodg)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProgramPodg.EduProgramPodgId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduSrok)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduSrok.EduSrokId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StructKaf)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StructKaf.StructKafId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.EduPlanId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

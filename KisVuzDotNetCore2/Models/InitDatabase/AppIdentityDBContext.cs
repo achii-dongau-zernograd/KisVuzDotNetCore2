@@ -89,6 +89,66 @@ namespace KisVuzDotNetCore2.Models
         /// Курсы
         /// </summary>
         public DbSet<EduKurs> EduKurses { get; set; }
+
+        /// <summary>
+        /// Таблица EduProgramPodg
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<EduProgramPodg> EduProgramPodg { get; set; }
+
+        /// <summary>
+        /// Виды учебной работы
+        /// </summary>
+        public DbSet<VidUchebRaboti> VidUchebRaboti { get; set; }
+
+        /// <summary>
+        /// Виды деятельности по учебному плану
+        /// </summary>
+        public DbSet<EduVidDeyat> EduVidDeyat { get; set; }
+
+        /// <summary>
+        /// Блок дисциплин Учебного плана
+        /// </summary>
+        public DbSet<BlokDisciplName> BlokDisciplName { get; set; }
+
+        /// <summary>
+        /// Наименование части блока дисциплин Учебного плана
+        /// Таблица BlokDisciplChastName
+        /// </summary>
+        public DbSet<BlokDisciplChastName> BlokDisciplChastName { get; set; }
+
+        /// <summary>
+        /// Срок обучения
+        /// Таблица EduSrok
+        /// </summary>
+        public DbSet<EduSrok> EduSrok { get; set; }
+
+
+        /// <summary>
+        /// Квалификация
+        /// Таблица EduQualification
+        /// </summary>
+        public DbSet<EduQualification> EduQualification { get; set; }
+
+        /// <summary>
+        /// Формы контроля
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<FormKontrol> FormKontrol { get; set; }
+
+        /// <summary>
+        /// Семестр
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<Semestr> Semestr { get; set; }
+
+
         #endregion
 
         #region Структура образовательной организации (Struct)
@@ -156,7 +216,38 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<Email> Emails { get; set; }
         #endregion
 
-        #region Сведения об образовательной организации               
+        #region Сведения об образовательной организации
+        /// <summary>
+        /// Таблица 3. Сведения об учредителях
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<UchredLaw> UchredLaw { get; set; }
+
+        /// <summary>
+        /// Таблица 4. Сведения о филиалах
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<FilInfo> FilInfo { get; set; }
+
+        /// <summary>
+        /// Таблица 8 Информация о результатах приема по каждой профессии,
+        /// специальности СПО, каждому направлению подготовки или
+        /// специальности ВО с различными условиями приема
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<EduPriem> EduPriem { get; set; }
+
+        /// <summary>
+        /// Таблица 9. Информация о результатах перевода, восстановления и отчисления
+        /// </summary>
+        public DbSet<EduPerevod> eduPerevod { get; set; }
+
         /// <summary>
         /// Таблица 14. Информация об администрации
         /// образовательной организации
@@ -167,12 +258,72 @@ namespace KisVuzDotNetCore2.Models
         /// Таблица 15. Информация о руководителях филиалов
         /// образовательной организации
         /// </summary>
-        public DbSet<KisVuzDotNetCore2.Models.Sveden.RucovodstvoFil> RucovodstvoFil { get; set; }
+        public DbSet<RucovodstvoFil> RucovodstvoFil { get; set; }
+
+        /// <summary>
+        /// Таблица 18. Наличие библиотек, объектов спорта, условия питания и охраны здоровья обучающихся
+        /// </summary>
+        public DbSet<PurposeLibr> PurposeLibr { get; set; }
+
+        /// <summary>
+        /// Таблица 20. Наличие общежития, интерната,
+        /// количество жилых помещений в общежитии, интернате
+        /// для иногородних обучающихся
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<HostelInfo> HostelInfo { get; set; }
 
         /// <summary>
         /// Таблица 22. Объем образовательной деятельности
         /// </summary>
-        public DbSet<KisVuzDotNetCore2.Models.Sveden.Volume> Volume { get; set; }
+        public DbSet<Volume> Volume { get; set; }
+        #endregion
+
+        #region Абитуриенту
+        /// <summary>
+        /// Таблица 24. Информация о количестве мест для приёма на обучение
+        /// по различным условиям поступления (до 1 октября)
+        /// </summary>
+        public DbSet<priemKolMest> priemKolMest { get; set; }
+
+        /// <summary>
+        /// Таблица 25. Информация по различным условиям поступления (до 1 октября)
+        /// </summary>
+        public DbSet<PriemExam> PriemExam { get; set; }
+
+        /// <summary>
+        /// Таблица 27. Информация о количестве мест для приёма на обучение
+        /// по различным условиям поступления (до 1 июня)
+        /// </summary>
+        public DbSet<priemKolTarget> priemKolTarget { get; set; }
+        #endregion
+
+        #region Электронная информационно-образовательная среда
+        /// <summary>
+        /// Электронные библиотечные системы
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<ElectronBiblSystem> ElectronBiblSystem { get; set; }
+
+        /// <summary>
+        /// База данных электронного каталога
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<ElectronCatalog> ElectronCatalog { get; set; }
+
+        /// <summary>
+        /// Электронные образовательные и информационные ресурсы
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<ElectronObrazovatInformRes> ElectronObrazovatInformRes { get; set; }
         #endregion
 
         #region Файлы
@@ -256,8 +407,9 @@ namespace KisVuzDotNetCore2.Models
         {
             await InitDatabaseRoles.CreateRoles(serviceProvider, configuration);
             await InitDatabaseUserData.CreateAdminAccount(serviceProvider, configuration);
-            await InitDatabaseUserData.CreateUserData(serviceProvider, configuration);            
+            await InitDatabaseUserData.CreateUserData(serviceProvider, configuration);
 
+            await InitDatabaseEduQualification.CreateEduQualification(serviceProvider, configuration);
             await InitDatabaseRowStatuses.CreateRowStatuses(serviceProvider, configuration);
             await InitDatabaseEducationData.CreateEducationData(serviceProvider, configuration);
             await InitDatabaseStructData.CreateStructData(serviceProvider, configuration);
@@ -274,12 +426,15 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseElectronBiblSystem.CreateElectronBiblSystem(serviceProvider, configuration);
             await InitDatabaseElectronCatalog.CreateElectronCatalog(serviceProvider, configuration);
             await InitDatabaseElectronObrazovatInformRes.CreateElectronObrazovatInformRes(serviceProvider, configuration);
+
             await InitDatabaseUchredLaw.CreateUchredLaw(serviceProvider, configuration);
-
-
-
-
             await InitDatadaseBlokDisciplName.CreateBlokDisciplName(serviceProvider, configuration);
+            await InitDatabaseFormKontrol.CreateFormKontrol(serviceProvider, configuration);
+            await InitDatabaseEduProgramPodg.CreateEduProgramPodg(serviceProvider, configuration);
+            await InitDatabaseVidUchebRaboti.CreateVidUchebRaboti(serviceProvider, configuration);
+            await InitDatabaseEduVidDeyats.CreateEduVidDeyats(serviceProvider, configuration);
+            await InitDatabaseBlokDisciplChastName.CreateBlokDisciplChastName(serviceProvider, configuration);
+            await InitDatabaseEduSrok.CreateEduSrok(serviceProvider, configuration);
         }        
 
         /// <summary>
@@ -288,61 +443,8 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.Sveden.HostelInfo> HostelInfo { get; set; }
-        public DbSet<priemKolTarget> priemKolTarget { get; set; }
-        public DbSet<priemKolMest> priemKolMest { get; set; }
-        public DbSet<PriemExam> PriemExam { get; set; }
-        public DbSet<EduPerevod> eduPerevod { get; set; }
+        public DbSet<KisVuzDotNetCore2.Models.Education.BlokDiscipl> BlokDiscipl { get; set; }
 
-        /// <summary>
-        /// Электронные библиотечные системы
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.Sveden.ElectronBiblSystem> ElectronBiblSystem { get; set; }
-
-        /// <summary>
-        /// База данных электронного каталога
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.ElectronCatalog> ElectronCatalog { get; set; }
-
-        /// <summary>
-        /// Электронные образовательные и информационные ресурсы
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.Sveden.ElectronObrazovatInformRes> ElectronObrazovatInformRes { get; set; }
-
-        /// <summary>
-        /// Таблица 8 Информация о результатах приема по каждой профессии,
-        /// специальности СПО, каждому направлению подготовки или
-        /// специальности ВО с различными условиями приема
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.Education.EduPriem> EduPriem { get; set; }
-
-
-        /// <summary>
-        /// Наличие библиотек, объектов спорта, условия питания и охраны здоровья обучающихся
-        public DbSet<KisVuzDotNetCore2.Models.PurposeLibr> PurposeLibr { get; set; }
-
-        /// <summary>
-        ///Блок дисциплин Учебного плана
-        public DbSet<KisVuzDotNetCore2.Models.Education.BlokDisciplName> BlokDisciplName { get; set; }
-
-        /// <summary>
-        ///Сведения об учредителях
-        public DbSet<KisVuzDotNetCore2.Models.Sveden.UchredLaw> UchredLaw { get; set; }
-
-        /// <summary>
-        ///Сведения о филиалах
-        public DbSet<KisVuzDotNetCore2.Models.Sveden.FilInfo> FilInfo { get; set; }
+        
     }
 }

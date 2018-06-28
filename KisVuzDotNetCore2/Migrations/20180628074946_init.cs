@@ -107,6 +107,20 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EduKurses",
+                columns: table => new
+                {
+                    EduKursId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduKursName = table.Column<string>(nullable: true),
+                    EduKursNumber = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EduKurses", x => x.EduKursId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EduLevelGroups",
                 columns: table => new
                 {
@@ -143,6 +157,19 @@ namespace KisVuzDotNetCore2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EduProgramPodg", x => x.EduProgramPodgId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EduQualification",
+                columns: table => new
+                {
+                    EduQualificationId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduQualificationName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EduQualification", x => x.EduQualificationId);
                 });
 
             migrationBuilder.CreateTable(
@@ -892,11 +919,18 @@ namespace KisVuzDotNetCore2.Migrations
                     EduNapravlCode = table.Column<string>(nullable: true),
                     EduNapravlName = table.Column<string>(nullable: true),
                     EduNapravlStandartDocLink = table.Column<string>(nullable: true),
+                    EduQualificationId = table.Column<int>(nullable: false),
                     EduUgsId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EduNapravls", x => x.EduNapravlId);
+                    table.ForeignKey(
+                        name: "FK_EduNapravls_EduQualification_EduQualificationId",
+                        column: x => x.EduQualificationId,
+                        principalTable: "EduQualification",
+                        principalColumn: "EduQualificationId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EduNapravls_EduUgses_EduUgsId",
                         column: x => x.EduUgsId,
@@ -1137,6 +1171,43 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Vacants",
+                columns: table => new
+                {
+                    VacantId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduFormId = table.Column<int>(nullable: false),
+                    EduKursId = table.Column<int>(nullable: false),
+                    EduNapravlId = table.Column<int>(nullable: false),
+                    NumberBFVacant = table.Column<int>(nullable: false),
+                    NumberBMVacant = table.Column<int>(nullable: false),
+                    NumberBRVacant = table.Column<int>(nullable: false),
+                    NumberPVacant = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vacants", x => x.VacantId);
+                    table.ForeignKey(
+                        name: "FK_Vacants_EduForms_EduFormId",
+                        column: x => x.EduFormId,
+                        principalTable: "EduForms",
+                        principalColumn: "EduFormId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Vacants_EduKurses_EduKursId",
+                        column: x => x.EduKursId,
+                        principalTable: "EduKurses",
+                        principalColumn: "EduKursId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Vacants_EduNapravls_EduNapravlId",
+                        column: x => x.EduNapravlId,
+                        principalTable: "EduNapravls",
+                        principalColumn: "EduNapravlId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StructFacultets",
                 columns: table => new
                 {
@@ -1225,10 +1296,10 @@ namespace KisVuzDotNetCore2.Migrations
                     EduPlanId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EduFormId = table.Column<int>(nullable: false),
-                    EduPlanPdfId = table.Column<int>(nullable: true),
+                    EduPlanPdfId = table.Column<int>(nullable: false),
                     EduProfileId = table.Column<int>(nullable: false),
-                    EduProgramPodgId = table.Column<int>(nullable: true),
-                    EduSrokId = table.Column<int>(nullable: true),
+                    EduProgramPodgId = table.Column<int>(nullable: false),
+                    EduSrokId = table.Column<int>(nullable: false),
                     ProtokolDate = table.Column<DateTime>(nullable: false),
                     ProtokolNumber = table.Column<string>(nullable: true),
                     StructKafId = table.Column<int>(nullable: false),
@@ -1248,7 +1319,7 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.EduPlanPdfId,
                         principalTable: "Files",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EduPlans_EduProfiles_EduProfileId",
                         column: x => x.EduProfileId,
@@ -1260,13 +1331,13 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.EduProgramPodgId,
                         principalTable: "EduProgramPodg",
                         principalColumn: "EduProgramPodgId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EduPlans_EduSrok_EduSrokId",
                         column: x => x.EduSrokId,
                         principalTable: "EduSrok",
                         principalColumn: "EduSrokId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EduPlans_StructKafs_StructKafId",
                         column: x => x.StructKafId,
@@ -1409,23 +1480,28 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EduKurses",
+                name: "Kurs",
                 columns: table => new
                 {
-                    EduKursId = table.Column<int>(nullable: false)
+                    KursId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     DisciplineId = table.Column<int>(nullable: true),
-                    EduKursName = table.Column<string>(nullable: true),
-                    EduKursNumber = table.Column<int>(nullable: false)
+                    EduKursId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EduKurses", x => x.EduKursId);
+                    table.PrimaryKey("PK_Kurs", x => x.KursId);
                     table.ForeignKey(
-                        name: "FK_EduKurses_Discipline_DisciplineId",
+                        name: "FK_Kurs_Discipline_DisciplineId",
                         column: x => x.DisciplineId,
                         principalTable: "Discipline",
                         principalColumn: "DisciplineId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Kurs_EduKurses_EduKursId",
+                        column: x => x.EduKursId,
+                        principalTable: "EduKurses",
+                        principalColumn: "EduKursId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -1435,7 +1511,7 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     SemestrId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    EduKursId = table.Column<int>(nullable: true),
+                    KursId = table.Column<int>(nullable: false),
                     SemestrName = table.Column<string>(nullable: true),
                     SemestrNumber = table.Column<int>(nullable: false)
                 },
@@ -1443,47 +1519,10 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     table.PrimaryKey("PK_Semestr", x => x.SemestrId);
                     table.ForeignKey(
-                        name: "FK_Semestr_EduKurses_EduKursId",
-                        column: x => x.EduKursId,
-                        principalTable: "EduKurses",
-                        principalColumn: "EduKursId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Vacants",
-                columns: table => new
-                {
-                    VacantId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    EduFormId = table.Column<int>(nullable: false),
-                    EduKursId = table.Column<int>(nullable: false),
-                    EduNapravlId = table.Column<int>(nullable: false),
-                    NumberBFVacant = table.Column<int>(nullable: false),
-                    NumberBMVacant = table.Column<int>(nullable: false),
-                    NumberBRVacant = table.Column<int>(nullable: false),
-                    NumberPVacant = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vacants", x => x.VacantId);
-                    table.ForeignKey(
-                        name: "FK_Vacants_EduForms_EduFormId",
-                        column: x => x.EduFormId,
-                        principalTable: "EduForms",
-                        principalColumn: "EduFormId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Vacants_EduKurses_EduKursId",
-                        column: x => x.EduKursId,
-                        principalTable: "EduKurses",
-                        principalColumn: "EduKursId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Vacants_EduNapravls_EduNapravlId",
-                        column: x => x.EduNapravlId,
-                        principalTable: "EduNapravls",
-                        principalColumn: "EduNapravlId",
+                        name: "FK_Semestr_Kurs_KursId",
+                        column: x => x.KursId,
+                        principalTable: "Kurs",
+                        principalColumn: "KursId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -1630,9 +1669,9 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "EduProfileId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EduKurses_DisciplineId",
-                table: "EduKurses",
-                column: "DisciplineId");
+                name: "IX_EduNapravls_EduQualificationId",
+                table: "EduNapravls",
+                column: "EduQualificationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EduNapravls_EduUgsId",
@@ -1770,6 +1809,16 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "SemestrId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Kurs_DisciplineId",
+                table: "Kurs",
+                column: "DisciplineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Kurs_EduKursId",
+                table: "Kurs",
+                column: "EduKursId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PriemExam_EduNapravlId",
                 table: "PriemExam",
                 column: "EduNapravlId");
@@ -1815,9 +1864,9 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "RefresherCourseFileId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Semestr_EduKursId",
+                name: "IX_Semestr_KursId",
                 table: "Semestr",
-                column: "EduKursId");
+                column: "KursId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StructFacultets_StructInstituteId",
@@ -2036,13 +2085,16 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "EduLevelGroups");
 
             migrationBuilder.DropTable(
-                name: "EduKurses");
+                name: "Kurs");
 
             migrationBuilder.DropTable(
                 name: "AcademicDegreeGroups");
 
             migrationBuilder.DropTable(
                 name: "Discipline");
+
+            migrationBuilder.DropTable(
+                name: "EduKurses");
 
             migrationBuilder.DropTable(
                 name: "BlokDisciplChast");
@@ -2079,6 +2131,9 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "StructFacultets");
+
+            migrationBuilder.DropTable(
+                name: "EduQualification");
 
             migrationBuilder.DropTable(
                 name: "EduUgses");

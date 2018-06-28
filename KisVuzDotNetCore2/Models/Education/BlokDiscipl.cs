@@ -11,6 +11,7 @@ namespace KisVuzDotNetCore2.Models.Education
         public int BlokDisciplId { get; set; }
         [Display(Name = "Наименование блока дисциплин")]
         public BlokDisciplName BlokDisciplName { get; set; }
+        public int BlokDisciplNameId { get; set; }
         [Display(Name = "Наименование части Блока дисциплин")]
         public List<BlokDisciplChast> BlokDisciplChast { get; set; }
         public int EduPlanId { get; set; }

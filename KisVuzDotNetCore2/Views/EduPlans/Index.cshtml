@@ -1,0 +1,83 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduPlan>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProtokolNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProtokolDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UtverjdDate)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduForm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduPlanPdf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduProfile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduProgramPodg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduSrok)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StructKaf)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProtokolNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProtokolDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UtverjdDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduForm.EduFormId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduPlanPdf.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduProfile.EduProfileId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduProgramPodg.EduProgramPodgId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduSrok.EduSrokId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StructKaf.StructKafId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EduPlanId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.EduPlanId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduPlanId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -29,7 +29,7 @@ namespace KisVuzDotNetCore2.Models.Education
         public EduProfile EduProfile { get; set; }
 
         /// <summary>
-        /// Год начала подготовки
+        /// Годы начала подготовки
         /// </summary>
         [Display(Name = "Год начала подготовки")]
         public List<EduYearBeginningTraining> EduYearBeginningTrainings { get; set; }
@@ -71,6 +71,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         [Display(Name = "Программа подготовки")]
         public EduProgramPodg EduProgramPodg { get; set; }
+        public int EduProgramPodgId { get; set; }
 
         /// <summary>
         /// УИД формы обучения
@@ -89,6 +90,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         [Display(Name = "Срок обучения")]
         public EduSrok EduSrok { get; set; }
+        public int EduSrokId { get; set; }
 
         /// <summary>
         /// Виды деятельности 
@@ -107,15 +109,13 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         [Display(Name = "Файл учебного плана")]
         public FileModel EduPlanPdf { get; set; }
+        public int EduPlanPdfId { get; set; }
 
         /// <summary>
         /// Блоки дисциплин
         /// </summary>
         [Display(Name = "Блоки дисциплин")]
         public List<BlokDiscipl> BlokDiscipl { get; set; }
-
-
-
 
 
     }

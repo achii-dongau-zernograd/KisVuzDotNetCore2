@@ -399,6 +399,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 1,
                             EduNapravlCode = "08.02.09",
                             EduNapravlName = "Монтаж, наладка и эксплуатация электрооборудования промышленных и гражданских зданий",
+                            EduQualificationId = 5,
                             EduNapravlStandartDocLink = @"http://www.edu.ru/db/mo/Data/d_14/m519.pdf",
                             EduUgsId = 1
                         };
@@ -408,6 +409,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 2,
                             EduNapravlCode = "21.02.05",
                             EduNapravlName = "Земельно-имущественные отношения",
+                            EduQualificationId = 6,
                             EduNapravlStandartDocLink = @"http://www.edu.ru/db/mo/Data/d_14/m486.pdf",
                             EduUgsId = 2
                         };
@@ -417,6 +419,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 3,
                             EduNapravlCode = "23.02.03",
                             EduNapravlName = "Техническое обслуживание и ремонт автомобильного транспорта",
+                            EduQualificationId = 5,
                             EduNapravlStandartDocLink = @"http://www.edu.ru/db/mo/Data/d_14/m383.pdf",
                             EduUgsId = 3
                         };
@@ -426,6 +429,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 4,
                             EduNapravlCode = "35.02.08",
                             EduNapravlName = "Электрификация и автоматизация сельского хозяйства",
+                            EduQualificationId = 7,
                             EduNapravlStandartDocLink = @"http://www.edu.ru/db/mo/Data/d_14/m457.pdf",
                             EduUgsId = 4
                         };
@@ -435,6 +439,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 5,
                             EduNapravlCode = "38.02.01",
                             EduNapravlName = "Экономика и бухгалтерский учет (по отраслям)",
+                            EduQualificationId = 8,
                             EduNapravlStandartDocLink = @"http://www.edu.ru/db/mo/Data/d_14/m832.pdf",
                             EduUgsId = 5
                         };
@@ -444,6 +449,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 6,
                             EduNapravlCode = "38.02.04",
                             EduNapravlName = "Коммерция (по отраслям)",
+                            EduQualificationId = 9,
                             EduNapravlStandartDocLink = @"http://www.edu.ru/file/docs/2014/05/58859.pdf",
                             EduUgsId = 5
                         };
@@ -456,6 +462,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 7,
                             EduNapravlCode = "13.03.01",
                             EduNapravlName = "Теплоэнергетика и теплотехника",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/474/?f=%2Fuploadfiles%2Ffgosvob%2F130301.pdf",
                             EduUgsId = 6
                         };
@@ -466,6 +473,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 8,
                             EduNapravlCode = "13.03.02",
                             EduNapravlName = "Электроэнергетика и электротехника",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/436/?f=%2Fuploadfiles%2Ffgosvob%2F130302.pdf",
                             EduUgsId = 6
                         };
@@ -476,6 +484,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 9,
                             EduNapravlCode = "19.03.02",
                             EduNapravlName = "Продукты питания из растительного сырья",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/329/?f=%2Fuploadfiles%2Ffgosvob%2F190302.pdf",
                             EduUgsId = 7
                         };
@@ -486,6 +495,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 10,
                             EduNapravlCode = "20.03.01",
                             EduNapravlName = "Техносферная безопасность",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/560/?f=%2Fuploadfiles%2Ffgosvob%2F200301.pdf",
                             EduUgsId = 8
                         };
@@ -496,6 +506,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 11,
                             EduNapravlCode = "21.03.02",
                             EduNapravlName = "Землеустройство и кадастры",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/472/?f=%2Fuploadfiles%2Ffgosvob%2F210302.pdf",
                             EduUgsId = 9
                         };
@@ -506,6 +517,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 12,
                             EduNapravlCode = "23.03.01",
                             EduNapravlName = "Технология транспортных процессов",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/935/?f=%2Fuploadfiles%2Ffgosvob%2F230301.pdf",
                             EduUgsId = 10
                         };
@@ -516,6 +528,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 13,
                             EduNapravlCode = "23.03.03",
                             EduNapravlName = "Эксплуатация транспортно-технологических машин и комплексов",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/535/?f=%2Fuploadfiles%2Ffgosvob%2F230303.pdf",
                             EduUgsId = 10
                         };
@@ -526,6 +539,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 14,
                             EduNapravlCode = "35.03.04",
                             EduNapravlName = "Агрономия",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/516/?f=%2Fuploadfiles%2Ffgosvob%2F350304.pdf",
                             EduUgsId = 11
                         };
@@ -536,6 +550,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 15,
                             EduNapravlCode = "35.03.06",
                             EduNapravlName = "Агроинженерия",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/486/?f=%2Fuploadfiles%2Ffgosvob%2F350306.pdf",
                             EduUgsId = 11
                         };
@@ -546,6 +561,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 16,
                             EduNapravlCode = "38.03.01",
                             EduNapravlName = "Экономика",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/498/?f=%2Fuploadfiles%2Ffgosvob%2F380301.pdf",
                             EduUgsId = 12
                         };
@@ -556,6 +572,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 17,
                             EduNapravlCode = "38.03.02",
                             EduNapravlName = "Менеджмент",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/545/?f=%2Fuploadfiles%2Ffgosvob%2F380302.pdf",
                             EduUgsId = 12
                         };
@@ -566,6 +583,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 18,
                             EduNapravlCode = "38.03.04",
                             EduNapravlName = "Государственное и муниципальное управление",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/298/?f=%2Fuploadfiles%2Ffgosvob%2F380304_gosmunupr.pdf",
                             EduUgsId = 12
                         };
@@ -576,6 +594,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 19,
                             EduNapravlCode = "44.03.04",
                             EduNapravlName = "Профессиональное обучение",
+                            EduQualificationId = 2,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/473/?f=%2Fuploadfiles%2Ffgosvob%2F440304.pdf",
                             EduUgsId = 13
                         };
@@ -589,6 +608,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 20,
                             EduNapravlCode = "13.04.01",
                             EduNapravlName = "Теплоэнергетика и теплотехника",
+                            EduQualificationId = 3,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/205/?f=%2Fuploadfiles%2Ffgosvom%2F130401.pdf",
                             EduUgsId = 14
                         };
@@ -599,6 +619,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 21,
                             EduNapravlCode = "13.04.02",
                             EduNapravlName = "Электроэнергетика и электротехника",
+                            EduQualificationId = 3,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/206/?f=%2Fuploadfiles%2Ffgosvom%2F130402_Elektroenergetika.pdf",
                             EduUgsId = 14
                         };
@@ -610,6 +631,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 22,
                             EduNapravlCode = "23.04.01",
                             EduNapravlName = "Технология транспортных процессов",
+                            EduQualificationId = 3,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/379/?f=%2Fuploadfiles%2Ffgosvom%2F230401.pdf",
                             EduUgsId = 15
                         };
@@ -620,6 +642,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 23,
                             EduNapravlCode = "23.04.03",
                             EduNapravlName = "Эксплуатация транспортно-технологических машин и комплексов",
+                            EduQualificationId = 3,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/299/?f=%2Fuploadfiles%2Ffgosvom%2F230403.pdf",
                             EduUgsId = 15
                         };
@@ -630,6 +653,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 24,
                             EduNapravlCode = "35.04.04",
                             EduNapravlName = "Агрономия",
+                            EduQualificationId = 3,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/412/?f=%2Fuploadfiles%2Ffgosvom%2F350404.pdf",
                             EduUgsId = 16
                         };
@@ -640,6 +664,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 25,
                             EduNapravlCode = "35.04.06",
                             EduNapravlName = "Агроинженерия",
+                            EduQualificationId = 3,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/461/?f=%2Fuploadfiles%2Ffgosvom%2F350406.pdf",
                             EduUgsId = 16
                         };
@@ -650,6 +675,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 26,
                             EduNapravlCode = "38.04.01",
                             EduNapravlName = "Экономика",
+                            EduQualificationId = 3,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/386/?f=%2Fuploadfiles%2Ffgosvom%2F380401.pdf",
                             EduUgsId = 17
                         };
@@ -660,6 +686,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 27,
                             EduNapravlCode = "38.04.02",
                             EduNapravlName = "Менеджмент",
+                            EduQualificationId = 3,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/361/?f=%2Fuploadfiles%2Ffgosvom%2F380402.pdf",
                             EduUgsId = 17
                         };
@@ -672,6 +699,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 28,
                             EduNapravlCode = "23.05.01",
                             EduNapravlName = "Наземные транспортно–технологические средства",
+                            EduQualificationId = 1,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/747/?f=%2Fuploadfiles%2Ffgosvospec%2F230501.pdf",
                             EduUgsId = 18
                         };
@@ -682,6 +710,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 29,
                             EduNapravlCode = "38.05.01",
                             EduNapravlName = "Экономическая безопасность",
+                            EduQualificationId = 1,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/946/?f=%2Fuploadfiles%2Ffgosvospec%2F380501.pdf",
                             EduUgsId = 19
                         };
@@ -694,6 +723,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 30,
                             EduNapravlCode = "06.06.01",
                             EduNapravlName = "Биологические науки",
+                            EduQualificationId = 4,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/99/?f=%2Fuploadfiles%2Ffgosvoaspism%2F060601.pdf",
                             EduUgsId = 20
                         };
@@ -703,6 +733,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 31,
                             EduNapravlCode = "23.06.01",
                             EduNapravlName = "Техника и технологии наземного транспорта",
+                            EduQualificationId = 4,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/113/?f=%2Fuploadfiles%2Ffgosvoaspism%2F230601.pdf",
                             EduUgsId = 21
                         };
@@ -712,6 +743,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 32,
                             EduNapravlCode = "35.06.01",
                             EduNapravlName = "Сельское хозяйство",
+                            EduQualificationId = 4,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/119/?f=%2Fuploadfiles%2Ffgosvoaspism%2F350601.pdf",
                             EduUgsId = 22
                         };
@@ -721,6 +753,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                             EduNapravlId = 33,
                             EduNapravlCode = "35.06.04",
                             EduNapravlName = "Технологии, средства механизации и энергетическое оборудование в сельском, лесном и рыбном хозяйстве",
+                            EduQualificationId = 4,
                             EduNapravlStandartDocLink = @"http://fgosvo.ru/fgosvo/downloads/120/?f=%2Fuploadfiles%2Ffgosvoaspism%2F350604.pdf",
                             EduUgsId = 22
                         };

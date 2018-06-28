@@ -41,6 +41,14 @@
                             <li>
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Образование <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Учебные планы<b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="EduPlans" asp-action="Index">Перечень учебных планов</a></li>
+                                            <li><a asp-controller="BlokDiscipls" asp-action="Index">Блоки дисциплин</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="divider"></li>
                                     <li><a asp-controller="EduLevelGroups" asp-action="Index" asp-route-id="">Группы уровней образования</a></li>
                                     <li><a asp-controller="EduLevels" asp-action="Index" asp-route-id="">Уровни образования</a></li>
                                     <li><a asp-controller="EduUgses" asp-action="Index" asp-route-id="">Укрупнённые группы специальностей</a></li>
@@ -53,6 +61,13 @@
                                     <li><a asp-controller="EduYearBeginningTrainings" asp-action="Index">Годы начала подготовки</a></li>
                                     <li><a asp-controller="EduAccreds" asp-action="Index">Свидетельства о гос. аккредитации</a></li>
                                     <li><a asp-controller="BlokDisciplNames" asp-action="Index">Блок дисциплин Учебного плана</a></li>
+                                    <li><a asp-controller="FormKontrols" asp-action="Index">Формы контроля</a></li>
+                                    <li><a asp-controller="EduProgramPodgs" asp-action="Index">Программы подготовки</a></li>
+                                    <li><a asp-controller="VidUchebRabotis" asp-action="Index">Виды учебной деятельности</a></li>
+                                    <li><a asp-controller="EduVidDeyats" asp-action="Index">Виды деятельности по учебному плану</a></li>
+                                    <li><a asp-controller="BlokDisciplChastNames" asp-action="Index">Наименование части блока дисциплин Учебного плана</a></li>
+                                    <li><a asp-controller="EduSroks" asp-action="Index">Сроки обучения</a></li>
+                                    <li><a asp-controller="EduQualifications" asp-action="Index">Квалификация</a></li>
                                 </ul>
                             </li>
                             <li>

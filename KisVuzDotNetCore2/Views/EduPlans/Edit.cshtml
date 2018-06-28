@@ -1,0 +1,71 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduPlan
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>EduPlan</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EduPlanId" />
+            <div class="form-group">
+                <label asp-for="EduProfileId" class="control-label"></label>
+                <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfileId"></select>
+                <span asp-validation-for="EduProfileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProtokolNumber" class="control-label"></label>
+                <input asp-for="ProtokolNumber" class="form-control" />
+                <span asp-validation-for="ProtokolNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProtokolDate" class="control-label"></label>
+                <input asp-for="ProtokolDate" class="form-control" />
+                <span asp-validation-for="ProtokolDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UtverjdDate" class="control-label"></label>
+                <input asp-for="UtverjdDate" class="form-control" />
+                <span asp-validation-for="UtverjdDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StructKafId" class="control-label"></label>
+                <select asp-for="StructKafId" class="form-control" asp-items="ViewBag.StructKafId"></select>
+                <span asp-validation-for="StructKafId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduProgramPodgId" class="control-label"></label>
+                <select asp-for="EduProgramPodgId" class="form-control" asp-items="ViewBag.EduProgramPodgId"></select>
+                <span asp-validation-for="EduProgramPodgId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduFormId" class="control-label"></label>
+                <select asp-for="EduFormId" class="form-control" asp-items="ViewBag.EduFormId"></select>
+                <span asp-validation-for="EduFormId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduSrokId" class="control-label"></label>
+                <select asp-for="EduSrokId" class="form-control" asp-items="ViewBag.EduSrokId"></select>
+                <span asp-validation-for="EduSrokId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduPlanPdfId" class="control-label"></label>
+                <select asp-for="EduPlanPdfId" class="form-control" asp-items="ViewBag.EduPlanPdfId"></select>
+                <span asp-validation-for="EduPlanPdfId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

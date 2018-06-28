@@ -24,6 +24,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
         {
             return View(await _context.BlokDisciplName.ToListAsync());
         }
+               
 
         // GET: BlokDisciplNames/Create
         public IActionResult Create()
