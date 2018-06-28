@@ -76,6 +76,7 @@ namespace KisVuzDotNetCore2.Controllers
             var eduNapravl = await _context.EduNapravls
                 .Include(e => e.EduUgs)
                 .Include(e => e.EduUgs.EduLevel)
+                .Include(e=> e.EduQualification)
                 .SingleOrDefaultAsync(m => m.EduNapravlId == id);
             if (eduNapravl == null)
             {
@@ -89,7 +90,7 @@ namespace KisVuzDotNetCore2.Controllers
         public IActionResult Create(int? id)
         {
             ViewData["EduUgsId"] = new SelectList(_context.EduUgses.Include(u => u.EduLevel), "EduUgsId", "EduUgsName", id);
-
+            ViewData["EduQualifications"] = new SelectList(_context.EduQualification, "EduQualificationId", "EduQualificationName", id);
             return View();
         }
 
@@ -107,6 +108,7 @@ namespace KisVuzDotNetCore2.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsName", eduNapravl.EduUgsId);
+            ViewData["EduQualifications"] = new SelectList(_context.EduQualification, "EduQualificationId", "EduQualificationName");
             return View(eduNapravl);
         }
 
@@ -174,7 +176,8 @@ namespace KisVuzDotNetCore2.Controllers
             }
 
             var eduNapravl = await _context.EduNapravls
-                .Include(e => e.EduUgs)
+                .Include(e => e.EduUgs.EduLevel)
+                .Include(e=> e.EduQualification)
                 .SingleOrDefaultAsync(m => m.EduNapravlId == id);
             if (eduNapravl == null)
             {

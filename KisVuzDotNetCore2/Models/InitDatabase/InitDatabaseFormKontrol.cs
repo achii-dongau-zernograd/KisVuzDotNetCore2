@@ -62,7 +62,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                     FormKontrol FormKontrol6 = new FormKontrol
                     {
                         FormKontrolId = 6,
-                        FormKontrolName = "Расчетн-графическая работа"
+                        FormKontrolName = "Расчетно-графическая работа"
                     };
 
                     await context.FormKontrol.AddRangeAsync(
