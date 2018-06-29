@@ -148,7 +148,29 @@ namespace KisVuzDotNetCore2.Models
         /// <returns></returns>
         public DbSet<Semestr> Semestr { get; set; }
 
+        /// <summary>
+        /// Наименование дисциплин
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<DisciplineName> DisciplineNames { get; set; }
 
+        /// <summary>
+        /// Добавление видов деятельности к учебному плану
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<EduPlanEduVidDeyat> EduPlanEduVidDeyats { get; set; }
+
+        /// <summary>
+        /// Добавление годов начала подготовки к учебному плану
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<EduPlanEduYearBeginningTraining> EduPlanEduYearBeginningTraining { get; set; }
         #endregion
 
         #region Структура образовательной организации (Struct)
@@ -436,6 +458,8 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseBlokDisciplChastName.CreateBlokDisciplChastName(serviceProvider, configuration);
             await InitDatabaseEduSrok.CreateEduSrok(serviceProvider, configuration);
             await InitDatabaseEduPlans.CreateEduPlans(serviceProvider, configuration);
+            await InitDatabaseDisciplineName.CreateDisciplineName(serviceProvider, configuration);
+            await InitDatabaseEduPlanEduVidDeyats.CreateEduPlanEduVidDeyats(serviceProvider, configuration);
         }        
 
         /// <summary>
@@ -453,6 +477,16 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Education.BlokDisciplChast> BlokDisciplChast { get; set; }
+
+        /// <summary>
+        /// Инициализация базы данных
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        //public DbSet<KisVuzDotNetCore2.Models.Education.EduPlanEduVidDeyat> EduPlanEduVidDeyat { get; set; }
+
+        
 
         
     }

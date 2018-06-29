@@ -32,7 +32,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Годы начала подготовки
         /// </summary>
         [Display(Name = "Год начала подготовки")]
-        public List<EduYearBeginningTraining> EduYearBeginningTrainings { get; set; }
+        public List<EduPlanEduYearBeginningTraining> EduPlanEduYearBeginningTrainings { get; set; }
 
         /// <summary>
         /// Номер протокола Ученого Совета
@@ -96,7 +96,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Виды деятельности 
         /// </summary>
         [Display(Name = "Виды деятельности по учебному плану")]
-        public List<EduVidDeyat> EduVidDeyat { get; set; }
+        public List<EduPlanEduVidDeyat> EduVidDeyatList { get; set; }
 
         /// <summary>
         /// Учебные годы
@@ -117,6 +117,27 @@ namespace KisVuzDotNetCore2.Models.Education
         [Display(Name = "Блоки дисциплин")]
         public List<BlokDiscipl> BlokDiscipl { get; set; }
 
+        public string EduYearBeginningTrainingsDescription
+        {
+            get
+            {
+                string years = "";
+                if (EduPlanEduYearBeginningTrainings == null) return years;
 
+                foreach (var g in EduPlanEduYearBeginningTrainings)
+                {
+                    years += " - " + g?.EduYearBeginningTraining?.EduYearBeginningTrainingName;
+                }
+                return years;
+            }
+        }
+
+        public string EduPlanDescription
+        {
+            get
+            {
+                return EduProfile?.GetEduProfileFullName +  " - " + EduForm?.EduFormName + EduYearBeginningTrainingsDescription;
+            }
+        }
     }
 }

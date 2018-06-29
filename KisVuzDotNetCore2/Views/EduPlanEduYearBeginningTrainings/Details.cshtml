@@ -1,0 +1,30 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduPlanEduYearBeginningTraining
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EduPlanEduYearBeginningTraining</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduPlan)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduPlan.EduPlanId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduYearBeginningTraining)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduYearBeginningTraining.EduYearBeginningTrainingId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.EduPlanEduYearBeginningTrainingId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

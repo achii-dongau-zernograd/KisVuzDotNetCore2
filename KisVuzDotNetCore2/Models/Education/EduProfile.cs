@@ -36,7 +36,8 @@ namespace KisVuzDotNetCore2.Models.Education
             {
                 return EduNapravl?.EduUgs?.EduLevel?.EduLevelName + " – "
                     + EduNapravl?.EduNapravlCode + " – "
-                    + EduNapravl?.EduNapravlName + " – ";
+                    + EduNapravl?.EduNapravlName + " – "
+                    + EduProfileName;
             }
         }
 
