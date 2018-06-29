@@ -1,0 +1,26 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.EduOPEduYearName
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduOPEduYearNameName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduOPEduYearNameName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduOPEduYearNameId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> 
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

@@ -249,6 +249,26 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<EduPerevod> eduPerevod { get; set; }
 
         /// <summary>
+        /// Таблица 11. Образовательная программа (объём программы по годам)
+        /// </summary>
+        public DbSet<EduOPYear> EduOPYears { get; set; }
+
+        /// <summary>
+        /// Вспомогательная таблица для таблицы 11.
+        /// Наименования годов обучения ("за 1 год обучения" и т.д.)
+        /// </summary>
+        public DbSet<EduOPEduYearName> EduOPEduYearNames { get; set; }
+
+        /// <summary>
+        /// Таблица 12. Образовательная программа (наличие практики)
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<EduPr> EduPr { get; set; }
+
+
+        /// <summary>
         /// Таблица 14. Информация об администрации
         /// образовательной организации
         /// </summary>
@@ -436,6 +456,8 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseBlokDisciplChastName.CreateBlokDisciplChastName(serviceProvider, configuration);
             await InitDatabaseEduSrok.CreateEduSrok(serviceProvider, configuration);
             await InitDatabaseEduPlans.CreateEduPlans(serviceProvider, configuration);
+
+            await InitDatabaseEduOPEduYearNames.CreateEduOPEduYearNames(serviceProvider, configuration);
         }        
 
         /// <summary>
@@ -453,7 +475,6 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Education.BlokDisciplChast> BlokDisciplChast { get; set; }
-
-        
+             
     }
 }
