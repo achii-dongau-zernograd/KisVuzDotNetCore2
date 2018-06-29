@@ -153,6 +153,25 @@ namespace KisVuzDotNetCore2.Controllers
                 .ToListAsync();
             ViewData["t9eduPerevod"] = t9eduPerevod;
 
+
+
+            #region Таблица 11. Образовательная программа (объём программы по годам)
+            var t11eduOPYears = await _context.EduOPYears
+                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)                   
+                .Include(e => e.EduYearBeginningTraining)
+                .Include(e=>e.EduOPEduYearName)
+                .ToListAsync();
+            ViewData["t11eduOPYears"] = t11eduOPYears;
+            #endregion
+
+            #region Таблица 12. Образовательная программа (наличие практики)
+            var t12eduPr = await _context.EduPr
+                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(e => e.EduYearBeginningTraining)                
+                .ToListAsync();
+            ViewData["t12eduPr"] = t12eduPr;
+            #endregion
+
             return View();
         }
 

@@ -1,0 +1,60 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.EduOPYear
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<h2>Редактировать</h2>
+
+<h4>Образовательная программа (объём программы по годам)</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EduOPYearId" />
+            <div class="form-group">
+                <label asp-for="EduProfileId" class="control-label"></label>
+                <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfileId"></select>
+                <span asp-validation-for="EduProfileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsOVZ" /> @Html.DisplayNameFor(model => model.IsOVZ)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduYearBeginningTrainingId" class="control-label"></label>
+                <select asp-for="EduYearBeginningTrainingId" class="form-control" asp-items="ViewBag.EduYearBeginningTrainingId"></select>
+                <span asp-validation-for="EduYearBeginningTrainingId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduOPEduYearNameId" class="control-label"></label>
+                <select asp-for="EduOPEduYearNameId" class="form-control" asp-items="ViewBag.EduOPEduYearNameId"></select>
+                <span asp-validation-for="EduOPEduYearNameId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VOchn" class="control-label"></label>
+                <input asp-for="VOchn" class="form-control" />
+                <span asp-validation-for="VOchn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VOchnZaochn" class="control-label"></label>
+                <input asp-for="VOchnZaochn" class="form-control" />
+                <span asp-validation-for="VOchnZaochn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VZaochn" class="control-label"></label>
+                <input asp-for="VZaochn" class="form-control" />
+                <span asp-validation-for="VZaochn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+

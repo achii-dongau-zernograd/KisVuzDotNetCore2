@@ -2,7 +2,9 @@
 
 namespace KisVuzDotNetCore2.Models.Education
 {
-    // Модель "Год начала подготовки"
+    /// <summary>
+    /// Модель "Год начала подготовки"
+    /// </summary>
     public class EduYearBeginningTraining
     {
         /// <summary>
