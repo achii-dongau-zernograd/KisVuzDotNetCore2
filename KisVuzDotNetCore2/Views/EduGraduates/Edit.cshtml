@@ -1,0 +1,46 @@
+﻿@model KisVuzDotNetCore2.Models.EduGraduate
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>EduGraduate</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EduGraduateId" />
+            <div class="form-group">
+                <label asp-for="EduProfileId" class="control-label"></label>
+                <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfileId"></select>
+                <span asp-validation-for="EduProfileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GraduateYearId" class="control-label"></label>
+                <select asp-for="GraduateYearId" class="form-control" asp-items="ViewBag.GraduateYearId"></select>
+                <span asp-validation-for="GraduateYearId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GraduateNumber" class="control-label"></label>
+                <input asp-for="GraduateNumber" class="form-control" />
+                <span asp-validation-for="GraduateNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GraduateSredBall" class="control-label"></label>
+                <input asp-for="GraduateSredBall" class="form-control" />
+                <span asp-validation-for="GraduateSredBall" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

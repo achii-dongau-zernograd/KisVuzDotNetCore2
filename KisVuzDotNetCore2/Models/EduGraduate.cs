@@ -22,7 +22,7 @@ namespace KisVuzDotNetCore2.Models
         public int GraduateNumber { get; set; }
 
         [Display(Name = "Средний балл защиты выпускников")]
-        public int GraduateSredBall { get; set; }
+        public string GraduateSredBall { get; set; }
 
     }
 }

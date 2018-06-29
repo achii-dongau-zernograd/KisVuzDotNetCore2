@@ -1,0 +1,38 @@
+﻿@model KisVuzDotNetCore2.Models.EduGraduate
+
+@{
+    ViewData["Title"] = "Добавить запись в таблицу Выпуск";
+}
+
+<h2>Добавить запись в таблицу Выпуск</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EduProfileId" class="control-label"></label>
+                <select asp-for="EduProfileId" class ="form-control" asp-items="ViewBag.EduProfileId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="GraduateYearId" class="control-label"></label>
+                <select asp-for="GraduateYearId" class ="form-control" asp-items="ViewBag.GraduateYearId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="GraduateNumber" class="control-label"></label>
+                <input asp-for="GraduateNumber" class="form-control" />
+                <span asp-validation-for="GraduateNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GraduateSredBall" class="control-label"></label>
+                <input asp-for="GraduateSredBall" class="form-control" />
+                <span asp-validation-for="GraduateSredBall" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

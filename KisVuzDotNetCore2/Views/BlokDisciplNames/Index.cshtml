@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.BlokDisciplName>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Наименование блока дисциплин";
 }
 
-<h2>Index</h2>
+<h2>Наименование блока дисциплин</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -25,9 +25,8 @@
                 @Html.DisplayFor(modelItem => item.BlokDisciplNameName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BlokDisciplNameId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BlokDisciplNameId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BlokDisciplNameId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.BlokDisciplNameId">Редактировать  </a> |                
+                <a asp-action="Delete" asp-route-id="@item.BlokDisciplNameId">Удалить</a>
             </td>
         </tr>
 }

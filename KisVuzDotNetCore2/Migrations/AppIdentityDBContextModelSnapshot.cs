@@ -159,7 +159,7 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("BlokDisciplChastId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("BlokDisciplChastNameId");
+                    b.Property<int>("BlokDisciplChastNameId");
 
                     b.Property<int?>("BlokDisciplId");
 
@@ -329,7 +329,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("EduFormId");
 
-                    b.Property<int>("EduPlanPdfId");
+                    b.Property<int?>("EduPlanPdfId");
 
                     b.Property<int>("EduProfileId");
 
@@ -589,7 +589,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("GraduateNumber");
 
-                    b.Property<int>("GraduateSredBall");
+                    b.Property<string>("GraduateSredBall");
 
                     b.Property<int>("GraduateYearId");
 
@@ -1555,7 +1555,8 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.BlokDisciplChastName", "BlokDisciplChastName")
                         .WithMany()
-                        .HasForeignKey("BlokDisciplChastNameId");
+                        .HasForeignKey("BlokDisciplChastNameId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.Education.BlokDiscipl")
                         .WithMany("BlokDisciplChast")
@@ -1611,8 +1612,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "EduPlanPdf")
                         .WithMany()
-                        .HasForeignKey("EduPlanPdfId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EduPlanPdfId");
 
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
                         .WithMany("EduPlans")

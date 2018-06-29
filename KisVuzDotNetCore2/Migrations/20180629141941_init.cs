@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace KisVuzDotNetCore2.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -1317,7 +1317,7 @@ namespace KisVuzDotNetCore2.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EduProfileId = table.Column<int>(nullable: false),
                     GraduateNumber = table.Column<int>(nullable: false),
-                    GraduateSredBall = table.Column<int>(nullable: false),
+                    GraduateSredBall = table.Column<string>(nullable: true),
                     GraduateYearId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -1397,7 +1397,7 @@ namespace KisVuzDotNetCore2.Migrations
                     EduPlanId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EduFormId = table.Column<int>(nullable: false),
-                    EduPlanPdfId = table.Column<int>(nullable: false),
+                    EduPlanPdfId = table.Column<int>(nullable: true),
                     EduProfileId = table.Column<int>(nullable: false),
                     EduProgramPodgId = table.Column<int>(nullable: false),
                     EduSrokId = table.Column<int>(nullable: false),
@@ -1420,7 +1420,7 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.EduPlanPdfId,
                         principalTable: "Files",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_EduPlans_EduProfiles_EduProfileId",
                         column: x => x.EduProfileId,
@@ -1539,7 +1539,7 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     BlokDisciplChastId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    BlokDisciplChastNameId = table.Column<int>(nullable: true),
+                    BlokDisciplChastNameId = table.Column<int>(nullable: false),
                     BlokDisciplId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -1550,7 +1550,7 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.BlokDisciplChastNameId,
                         principalTable: "BlokDisciplChastName",
                         principalColumn: "BlokDisciplChastNameId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BlokDisciplChast_BlokDiscipl_BlokDisciplId",
                         column: x => x.BlokDisciplId,

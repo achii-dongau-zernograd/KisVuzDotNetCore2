@@ -1,0 +1,45 @@
+﻿@model KisVuzDotNetCore2.Models.EduGraduate
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>EduGraduate</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GraduateNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GraduateNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GraduateSredBall)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GraduateSredBall)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.EduProfileId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GraduateYear)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GraduateYear.GraduateYearId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduGraduateId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
