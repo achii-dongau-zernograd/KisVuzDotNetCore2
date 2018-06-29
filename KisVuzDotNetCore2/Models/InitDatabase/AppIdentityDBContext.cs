@@ -148,7 +148,29 @@ namespace KisVuzDotNetCore2.Models
         /// <returns></returns>
         public DbSet<Semestr> Semestr { get; set; }
 
+        /// <summary>
+        /// Наименование дисциплин
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<DisciplineName> DisciplineNames { get; set; }
 
+        /// <summary>
+        /// Добавление видов деятельности к учебному плану
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<EduPlanEduVidDeyat> EduPlanEduVidDeyats { get; set; }
+
+        /// <summary>
+        /// Добавление годов начала подготовки к учебному плану
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<EduPlanEduYearBeginningTraining> EduPlanEduYearBeginningTraining { get; set; }
         #endregion
 
         #region Структура образовательной организации (Struct)
@@ -247,6 +269,26 @@ namespace KisVuzDotNetCore2.Models
         /// Таблица 9. Информация о результатах перевода, восстановления и отчисления
         /// </summary>
         public DbSet<EduPerevod> eduPerevod { get; set; }
+
+        /// <summary>
+        /// Таблица 11. Образовательная программа (объём программы по годам)
+        /// </summary>
+        public DbSet<EduOPYear> EduOPYears { get; set; }
+
+        /// <summary>
+        /// Вспомогательная таблица для таблицы 11.
+        /// Наименования годов обучения ("за 1 год обучения" и т.д.)
+        /// </summary>
+        public DbSet<EduOPEduYearName> EduOPEduYearNames { get; set; }
+
+        /// <summary>
+        /// Таблица 12. Образовательная программа (наличие практики)
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<EduPr> EduPr { get; set; }
+
 
         /// <summary>
         /// Таблица 14. Информация об администрации
@@ -454,6 +496,10 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseEduPlans.CreateEduPlans(serviceProvider, configuration);
 
             await InitDatabaseGraduateYear.CreateGraduateYear(serviceProvider, configuration);
+            await InitDatabaseDisciplineName.CreateDisciplineName(serviceProvider, configuration);
+            await InitDatabaseEduPlanEduVidDeyats.CreateEduPlanEduVidDeyats(serviceProvider, configuration);
+            await InitDatabaseEduOPEduYearNames.CreateEduOPEduYearNames(serviceProvider, configuration);
+
         }        
 
         /// <summary>
@@ -472,6 +518,5 @@ namespace KisVuzDotNetCore2.Models
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Education.BlokDisciplChast> BlokDisciplChast { get; set; }
 
-        
     }
 }

@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models.Education
 {
+    /// <summary>
+    /// Дисциплины по Учебному плану
+    /// </summary>
     public class Discipline
     {
         public int DisciplineId { get; set; }

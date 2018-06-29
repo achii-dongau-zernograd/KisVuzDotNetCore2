@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -14,7 +9,7 @@ namespace KisVuzDotNetCore2.Models
         public string VidPom { get; set; }
         [Display(Name = "Адрес места нахождения")]
         public string Adress { get; set; }
-        [Display(Name = "Площадь, м")]
+        [Display(Name = "Площадь, м.кв.")]
         public string Square { get; set; }
         [Display(Name = "Количество мест")]
         public string NumberPlaces { get; set; }

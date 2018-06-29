@@ -3,7 +3,6 @@
 @{
     var t3uchred = (IEnumerable<UchredLaw>)ViewData["t3uchred"];
     var t4filInfo = (IEnumerable<FilInfo>)ViewData["t4filInfo"];
-
 }
 
 
@@ -66,8 +65,7 @@
 
 <a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об учредителях</a>
 <div class="collapse" id="spoiler-2">
-    <div class="well">
-        <table itemprop="uchredLaw" class="table table-bordered table-hover table-striped">
+    <div class="well">        
             <table itemprop="uchredLaw" class="table table-hover">
                 <thead>
                     <tr>
@@ -112,7 +110,7 @@
                     foreach (var item in t4filInfo)
                     {
                         <tr itemprop="filInfo">
-                            <td itemprop="filInfo">@item.NameFil</td>
+                            <td itemprop="nameFil">@item.NameFil</td>
                             <td itemprop="addressFil">@item.AddressFil</td>
                             <td itemprop="websiteFil">@item.WebsiteFil</td>
                         </tr>
@@ -121,13 +119,10 @@
                 else
                 {
                     <tr itemprop="filInfo">
-                        <td itemprop="filInfo" colspan="3" align="center">Филиалов нет</td>                        
+                        <td itemprop="nameFil" colspan="3" align="center">Филиалов нет</td>                        
                     </tr>
-
                 }
-
             </tbody>
         </table>
     </div>
 </div>
-

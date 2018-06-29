@@ -121,9 +121,8 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Education()
         {
-            var t6eduAccred = await _context.EduNapravls
-                .Include(l => l.EduUgs)
-                    .ThenInclude(ugs => ugs.EduAccred)
+            var t6eduAccred = await _context.EduNapravls                
+                .Include(l => l.EduUgs.EduAccred.EduAccredFile)
                 .Include(l => l.EduUgs)
                     .ThenInclude(ugs => ugs.EduLevel)                
                 .ToListAsync();
@@ -153,6 +152,25 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(f => f.EduForm)
                 .ToListAsync();
             ViewData["t9eduPerevod"] = t9eduPerevod;
+
+
+
+            #region Таблица 11. Образовательная программа (объём программы по годам)
+            var t11eduOPYears = await _context.EduOPYears
+                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)                   
+                .Include(e => e.EduYearBeginningTraining)
+                .Include(e=>e.EduOPEduYearName)
+                .ToListAsync();
+            ViewData["t11eduOPYears"] = t11eduOPYears;
+            #endregion
+
+            #region Таблица 12. Образовательная программа (наличие практики)
+            var t12eduPr = await _context.EduPr
+                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(e => e.EduYearBeginningTraining)                
+                .ToListAsync();
+            ViewData["t12eduPr"] = t12eduPr;
+            #endregion
 
             return View();
         }

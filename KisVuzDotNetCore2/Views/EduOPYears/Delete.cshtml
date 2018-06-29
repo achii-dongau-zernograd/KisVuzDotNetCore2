@@ -1,0 +1,63 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.EduOPYear
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить запись??</h3>
+<div>
+    <h4>Образовательная программа (объём программы по годам)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduYearBeginningTraining)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduYearBeginningTraining.EduYearBeginningTrainingName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduOPEduYearName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduOPEduYearName.EduOPEduYearNameName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsOVZ)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsOVZ)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VOchn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VOchn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VOchnZaochn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VOchnZaochn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VZaochn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VZaochn)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduOPYearId" />
+        <input type="submit" value="Удалить" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

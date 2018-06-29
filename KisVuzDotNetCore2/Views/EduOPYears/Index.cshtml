@@ -1,0 +1,71 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.EduOPYear>
+
+@{
+    ViewData["Title"] = "Образовательная программа (объём программы по годам)";
+}
+
+<h2>Образовательная программа (объём программы по годам)</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EduProfile.GetEduProfileFullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduYearBeginningTraining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduOPEduYearName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsOVZ)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VOchn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VOchnZaochn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VZaochn)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduYearBeginningTraining.EduYearBeginningTrainingName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduOPEduYearName.EduOPEduYearNameName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsOVZ)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VOchn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VOchnZaochn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VZaochn)
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EduOPYearId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduOPYearId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

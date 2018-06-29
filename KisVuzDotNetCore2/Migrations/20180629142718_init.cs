@@ -94,6 +94,19 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DisciplineNames",
+                columns: table => new
+                {
+                    DisciplineNameId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DisciplineNameName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DisciplineNames", x => x.DisciplineNameId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EduForms",
                 columns: table => new
                 {
@@ -147,6 +160,19 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EduOPEduYearNames",
+                columns: table => new
+                {
+                    EduOPEduYearNameId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduOPEduYearNameName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EduOPEduYearNames", x => x.EduOPEduYearNameId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EduProgramPodg",
                 columns: table => new
                 {
@@ -183,6 +209,32 @@ namespace KisVuzDotNetCore2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EduSrok", x => x.EduSrokId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EduVidDeyat",
+                columns: table => new
+                {
+                    EduVidDeyatId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduVidDeyatName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EduVidDeyat", x => x.EduVidDeyatId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EduYearBeginningTrainings",
+                columns: table => new
+                {
+                    EduYearBeginningTrainingId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduYearBeginningTrainingName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EduYearBeginningTrainings", x => x.EduYearBeginningTrainingId);
                 });
 
             migrationBuilder.CreateTable(
@@ -1338,6 +1390,80 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EduOPYears",
+                columns: table => new
+                {
+                    EduOPYearId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduOPEduYearNameId = table.Column<int>(nullable: false),
+                    EduProfileId = table.Column<int>(nullable: false),
+                    EduYearBeginningTrainingId = table.Column<int>(nullable: false),
+                    IsOVZ = table.Column<bool>(nullable: false),
+                    VOchn = table.Column<string>(nullable: true),
+                    VOchnZaochn = table.Column<string>(nullable: true),
+                    VZaochn = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EduOPYears", x => x.EduOPYearId);
+                    table.ForeignKey(
+                        name: "FK_EduOPYears_EduOPEduYearNames_EduOPEduYearNameId",
+                        column: x => x.EduOPEduYearNameId,
+                        principalTable: "EduOPEduYearNames",
+                        principalColumn: "EduOPEduYearNameId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EduOPYears_EduProfiles_EduProfileId",
+                        column: x => x.EduProfileId,
+                        principalTable: "EduProfiles",
+                        principalColumn: "EduProfileId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EduOPYears_EduYearBeginningTrainings_EduYearBeginningTrainingId",
+                        column: x => x.EduYearBeginningTrainingId,
+                        principalTable: "EduYearBeginningTrainings",
+                        principalColumn: "EduYearBeginningTrainingId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EduPr",
+                columns: table => new
+                {
+                    EduPrId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduFormId = table.Column<int>(nullable: false),
+                    EduPrPreddiplomn = table.Column<string>(nullable: true),
+                    EduPrProizv = table.Column<string>(nullable: true),
+                    EduPrUchebn = table.Column<string>(nullable: true),
+                    EduProfileId = table.Column<int>(nullable: false),
+                    EduYearBeginningTrainingId = table.Column<int>(nullable: false),
+                    IsOVZ = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EduPr", x => x.EduPrId);
+                    table.ForeignKey(
+                        name: "FK_EduPr_EduForms_EduFormId",
+                        column: x => x.EduFormId,
+                        principalTable: "EduForms",
+                        principalColumn: "EduFormId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EduPr_EduProfiles_EduProfileId",
+                        column: x => x.EduProfileId,
+                        principalTable: "EduProfiles",
+                        principalColumn: "EduProfileId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EduPr_EduYearBeginningTrainings_EduYearBeginningTrainingId",
+                        column: x => x.EduYearBeginningTrainingId,
+                        principalTable: "EduYearBeginningTrainings",
+                        principalColumn: "EduYearBeginningTrainingId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GraduateTrudoustroustvo",
                 columns: table => new
                 {
@@ -1474,43 +1600,55 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EduVidDeyat",
+                name: "EduPlanEduVidDeyats",
                 columns: table => new
                 {
-                    EduVidDeyatId = table.Column<int>(nullable: false)
+                    EduPlanEduVidDeyatId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    EduPlanId = table.Column<int>(nullable: true),
-                    EduVidDeyatName = table.Column<string>(nullable: true)
+                    EduPlanId = table.Column<int>(nullable: false),
+                    EduVidDeyatId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EduVidDeyat", x => x.EduVidDeyatId);
+                    table.PrimaryKey("PK_EduPlanEduVidDeyats", x => x.EduPlanEduVidDeyatId);
                     table.ForeignKey(
-                        name: "FK_EduVidDeyat_EduPlans_EduPlanId",
+                        name: "FK_EduPlanEduVidDeyats_EduPlans_EduPlanId",
                         column: x => x.EduPlanId,
                         principalTable: "EduPlans",
                         principalColumn: "EduPlanId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EduPlanEduVidDeyats_EduVidDeyat_EduVidDeyatId",
+                        column: x => x.EduVidDeyatId,
+                        principalTable: "EduVidDeyat",
+                        principalColumn: "EduVidDeyatId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "EduYearBeginningTrainings",
+                name: "EduPlanEduYearBeginningTraining",
                 columns: table => new
                 {
-                    EduYearBeginningTrainingId = table.Column<int>(nullable: false)
+                    EduPlanEduYearBeginningTrainingId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    EduPlanId = table.Column<int>(nullable: true),
-                    EduYearBeginningTrainingName = table.Column<string>(nullable: true)
+                    EduPlanId = table.Column<int>(nullable: false),
+                    EduYearBeginningTrainingId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EduYearBeginningTrainings", x => x.EduYearBeginningTrainingId);
+                    table.PrimaryKey("PK_EduPlanEduYearBeginningTraining", x => x.EduPlanEduYearBeginningTrainingId);
                     table.ForeignKey(
-                        name: "FK_EduYearBeginningTrainings_EduPlans_EduPlanId",
+                        name: "FK_EduPlanEduYearBeginningTraining_EduPlans_EduPlanId",
                         column: x => x.EduPlanId,
                         principalTable: "EduPlans",
                         principalColumn: "EduPlanId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EduPlanEduYearBeginningTraining_EduYearBeginningTrainings_EduYearBeginningTrainingId",
+                        column: x => x.EduYearBeginningTrainingId,
+                        principalTable: "EduYearBeginningTrainings",
+                        principalColumn: "EduYearBeginningTrainingId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1790,6 +1928,21 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "EduUgsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EduOPYears_EduOPEduYearNameId",
+                table: "EduOPYears",
+                column: "EduOPEduYearNameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduOPYears_EduProfileId",
+                table: "EduOPYears",
+                column: "EduProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduOPYears_EduYearBeginningTrainingId",
+                table: "EduOPYears",
+                column: "EduYearBeginningTrainingId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_eduPerevod_EduFormId",
                 table: "eduPerevod",
                 column: "EduFormId");
@@ -1798,6 +1951,26 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "IX_eduPerevod_EduNapravlId",
                 table: "eduPerevod",
                 column: "EduNapravlId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduPlanEduVidDeyats_EduPlanId",
+                table: "EduPlanEduVidDeyats",
+                column: "EduPlanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduPlanEduVidDeyats_EduVidDeyatId",
+                table: "EduPlanEduVidDeyats",
+                column: "EduVidDeyatId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduPlanEduYearBeginningTraining_EduPlanId",
+                table: "EduPlanEduYearBeginningTraining",
+                column: "EduPlanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduPlanEduYearBeginningTraining_EduYearBeginningTrainingId",
+                table: "EduPlanEduYearBeginningTraining",
+                column: "EduYearBeginningTrainingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EduPlans_EduFormId",
@@ -1830,6 +2003,21 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "StructKafId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EduPr_EduFormId",
+                table: "EduPr",
+                column: "EduFormId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduPr_EduProfileId",
+                table: "EduPr",
+                column: "EduProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduPr_EduYearBeginningTrainingId",
+                table: "EduPr",
+                column: "EduYearBeginningTrainingId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EduPriem_EduFormId",
                 table: "EduPriem",
                 column: "EduFormId");
@@ -1853,16 +2041,6 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "IX_EduUgses_EduLevelId",
                 table: "EduUgses",
                 column: "EduLevelId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EduVidDeyat_EduPlanId",
-                table: "EduVidDeyat",
-                column: "EduPlanId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EduYearBeginningTrainings_EduPlanId",
-                table: "EduYearBeginningTrainings",
-                column: "EduPlanId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EduYears_EduPlanId",
@@ -2101,22 +2279,31 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "BlankNums");
 
             migrationBuilder.DropTable(
+                name: "DisciplineNames");
+
+            migrationBuilder.DropTable(
                 name: "EduChislens");
 
             migrationBuilder.DropTable(
                 name: "EduGraduate");
 
             migrationBuilder.DropTable(
+                name: "EduOPYears");
+
+            migrationBuilder.DropTable(
                 name: "eduPerevod");
 
             migrationBuilder.DropTable(
+                name: "EduPlanEduVidDeyats");
+
+            migrationBuilder.DropTable(
+                name: "EduPlanEduYearBeginningTraining");
+
+            migrationBuilder.DropTable(
+                name: "EduPr");
+
+            migrationBuilder.DropTable(
                 name: "EduPriem");
-
-            migrationBuilder.DropTable(
-                name: "EduVidDeyat");
-
-            migrationBuilder.DropTable(
-                name: "EduYearBeginningTrainings");
 
             migrationBuilder.DropTable(
                 name: "EduYears");
@@ -2192,6 +2379,15 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "EduOPEduYearNames");
+
+            migrationBuilder.DropTable(
+                name: "EduVidDeyat");
+
+            migrationBuilder.DropTable(
+                name: "EduYearBeginningTrainings");
 
             migrationBuilder.DropTable(
                 name: "FileDataTypes");
