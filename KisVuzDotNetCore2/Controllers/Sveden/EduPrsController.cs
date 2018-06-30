@@ -22,37 +22,18 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: EduPrs
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.EduPr.Include(e => e.EduForm).Include(e => e.EduProfile).Include(e => e.EduYearBeginningTraining);
+            var appIdentityDBContext = _context.EduPr.Include(e => e.EduForm).Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel).Include(e => e.EduYearBeginningTraining);
             return View(await appIdentityDBContext.ToListAsync());
         }
 
-        // GET: EduPrs/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var eduPr = await _context.EduPr
-                .Include(e => e.EduForm)
-                .Include(e => e.EduProfile)
-                .Include(e => e.EduYearBeginningTraining)
-                .SingleOrDefaultAsync(m => m.EduPrId == id);
-            if (eduPr == null)
-            {
-                return NotFound();
-            }
-
-            return View(eduPr);
-        }
+        
 
         // GET: EduPrs/Create
         public IActionResult Create()
         {
-            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormId");
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileId");
-            ViewData["EduYearBeginningTrainingId"] = new SelectList(_context.EduYearBeginningTrainings, "EduYearBeginningTrainingId", "EduYearBeginningTrainingId");
+            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormName");
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p=>p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
+            ViewData["EduYearBeginningTrainingId"] = new SelectList(_context.EduYearBeginningTrainings, "EduYearBeginningTrainingId", "EduYearBeginningTrainingName");
             return View();
         }
 
@@ -69,9 +50,9 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormId", eduPr.EduFormId);
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileId", eduPr.EduProfileId);
-            ViewData["EduYearBeginningTrainingId"] = new SelectList(_context.EduYearBeginningTrainings, "EduYearBeginningTrainingId", "EduYearBeginningTrainingId", eduPr.EduYearBeginningTrainingId);
+            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormName");
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
+            ViewData["EduYearBeginningTrainingId"] = new SelectList(_context.EduYearBeginningTrainings, "EduYearBeginningTrainingId", "EduYearBeginningTrainingName");
             return View(eduPr);
         }
 
@@ -88,9 +69,9 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormId", eduPr.EduFormId);
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileId", eduPr.EduProfileId);
-            ViewData["EduYearBeginningTrainingId"] = new SelectList(_context.EduYearBeginningTrainings, "EduYearBeginningTrainingId", "EduYearBeginningTrainingId", eduPr.EduYearBeginningTrainingId);
+            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormName", eduPr.EduFormId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p=>p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", eduPr.EduProfileId);
+            ViewData["EduYearBeginningTrainingId"] = new SelectList(_context.EduYearBeginningTrainings, "EduYearBeginningTrainingId", "EduYearBeginningTrainingName", eduPr.EduYearBeginningTrainingId);
             return View(eduPr);
         }
 
@@ -126,9 +107,9 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormId", eduPr.EduFormId);
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileId", eduPr.EduProfileId);
-            ViewData["EduYearBeginningTrainingId"] = new SelectList(_context.EduYearBeginningTrainings, "EduYearBeginningTrainingId", "EduYearBeginningTrainingId", eduPr.EduYearBeginningTrainingId);
+            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormName", eduPr.EduFormId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", eduPr.EduProfileId);
+            ViewData["EduYearBeginningTrainingId"] = new SelectList(_context.EduYearBeginningTrainings, "EduYearBeginningTrainingId", "EduYearBeginningTrainingName", eduPr.EduYearBeginningTrainingId);
             return View(eduPr);
         }
 
@@ -142,7 +123,7 @@ namespace KisVuzDotNetCore2.Controllers
 
             var eduPr = await _context.EduPr
                 .Include(e => e.EduForm)
-                .Include(e => e.EduProfile)
+                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduYearBeginningTraining)
                 .SingleOrDefaultAsync(m => m.EduPrId == id);
             if (eduPr == null)
