@@ -172,6 +172,11 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["t12eduPr"] = t12eduPr;
             #endregion
 
+            #region Таблица 13. Образовательная программа (направления и результаты научной (научно-исследовательской) деятельности
+            var t13eduNir = _context.EduNir.Include(n=>n.EduNapravl.EduUgs.EduLevel);
+            ViewData["t13eduNir"] = t13eduNir;
+            #endregion
+
             return View();
         }
 

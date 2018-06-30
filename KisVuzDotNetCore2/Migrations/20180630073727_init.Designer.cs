@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180629142718_init")]
+    [Migration("20180630073727_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1221,6 +1221,42 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("Telephones");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.EduNir", b =>
+                {
+                    b.Property<int>("EduNirId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduNapravlId");
+
+                    b.Property<string>("NirNapravls");
+
+                    b.Property<string>("NumArticles");
+
+                    b.Property<string>("NumArticlesZ");
+
+                    b.Property<string>("NumFinance");
+
+                    b.Property<string>("NumMonograf");
+
+                    b.Property<string>("NumNpr");
+
+                    b.Property<string>("NumPatents");
+
+                    b.Property<string>("NumPatentsZ");
+
+                    b.Property<string>("NumStud");
+
+                    b.Property<string>("NumSvidetelstv");
+
+                    b.Property<string>("NumSvidetelstvZ");
+
+                    b.HasKey("EduNirId");
+
+                    b.HasIndex("EduNapravlId");
+
+                    b.ToTable("EduNir");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.EduOPEduYearName", b =>
                 {
                     b.Property<int>("EduOPEduYearNameId")
@@ -2072,6 +2108,14 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.StructUniversity")
                         .WithMany("Telephones")
                         .HasForeignKey("StructUniversityId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.EduNir", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
+                        .WithMany()
+                        .HasForeignKey("EduNapravlId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.EduOPYear", b =>

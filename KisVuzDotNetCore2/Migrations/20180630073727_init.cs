@@ -1110,6 +1110,36 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EduNir",
+                columns: table => new
+                {
+                    EduNirId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduNapravlId = table.Column<int>(nullable: false),
+                    NirNapravls = table.Column<string>(nullable: true),
+                    NumArticles = table.Column<string>(nullable: true),
+                    NumArticlesZ = table.Column<string>(nullable: true),
+                    NumFinance = table.Column<string>(nullable: true),
+                    NumMonograf = table.Column<string>(nullable: true),
+                    NumNpr = table.Column<string>(nullable: true),
+                    NumPatents = table.Column<string>(nullable: true),
+                    NumPatentsZ = table.Column<string>(nullable: true),
+                    NumStud = table.Column<string>(nullable: true),
+                    NumSvidetelstv = table.Column<string>(nullable: true),
+                    NumSvidetelstvZ = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EduNir", x => x.EduNirId);
+                    table.ForeignKey(
+                        name: "FK_EduNir_EduNapravls_EduNapravlId",
+                        column: x => x.EduNapravlId,
+                        principalTable: "EduNapravls",
+                        principalColumn: "EduNapravlId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "eduPerevod",
                 columns: table => new
                 {
@@ -1928,6 +1958,11 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "EduUgsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EduNir_EduNapravlId",
+                table: "EduNir",
+                column: "EduNapravlId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EduOPYears_EduOPEduYearNameId",
                 table: "EduOPYears",
                 column: "EduOPEduYearNameId");
@@ -2286,6 +2321,9 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "EduGraduate");
+
+            migrationBuilder.DropTable(
+                name: "EduNir");
 
             migrationBuilder.DropTable(
                 name: "EduOPYears");

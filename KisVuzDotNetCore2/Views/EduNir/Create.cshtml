@@ -1,0 +1,81 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.EduNir
+
+@{
+    ViewData["Title"] = "Добавить";
+}
+
+<h2>Добавить</h2>
+
+<h4>Образовательная программа (направления и результаты НИР)</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EduNapravlId" class="control-label"></label>
+                <select asp-for="EduNapravlId" class="form-control" asp-items="ViewBag.EduNapravlId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="NirNapravls" class="control-label"></label>
+                <input asp-for="NirNapravls" class="form-control" />
+                <span asp-validation-for="NirNapravls" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumNpr" class="control-label"></label>
+                <input asp-for="NumNpr" class="form-control" />
+                <span asp-validation-for="NumNpr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumStud" class="control-label"></label>
+                <input asp-for="NumStud" class="form-control" />
+                <span asp-validation-for="NumStud" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumMonograf" class="control-label"></label>
+                <input asp-for="NumMonograf" class="form-control" />
+                <span asp-validation-for="NumMonograf" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumArticles" class="control-label"></label>
+                <input asp-for="NumArticles" class="form-control" />
+                <span asp-validation-for="NumArticles" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumArticlesZ" class="control-label"></label>
+                <input asp-for="NumArticlesZ" class="form-control" />
+                <span asp-validation-for="NumArticlesZ" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumPatents" class="control-label"></label>
+                <input asp-for="NumPatents" class="form-control" />
+                <span asp-validation-for="NumPatents" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumPatentsZ" class="control-label"></label>
+                <input asp-for="NumPatentsZ" class="form-control" />
+                <span asp-validation-for="NumPatentsZ" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumSvidetelstv" class="control-label"></label>
+                <input asp-for="NumSvidetelstv" class="form-control" />
+                <span asp-validation-for="NumSvidetelstv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumSvidetelstvZ" class="control-label"></label>
+                <input asp-for="NumSvidetelstvZ" class="form-control" />
+                <span asp-validation-for="NumSvidetelstvZ" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumFinance" class="control-label"></label>
+                <input asp-for="NumFinance" class="form-control" />
+                <span asp-validation-for="NumFinance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+

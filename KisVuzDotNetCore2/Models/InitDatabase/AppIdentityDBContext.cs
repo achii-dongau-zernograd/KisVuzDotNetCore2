@@ -289,6 +289,13 @@ namespace KisVuzDotNetCore2.Models
         /// <returns></returns>
         public DbSet<EduPr> EduPr { get; set; }
 
+        /// <summary>
+        /// Таблица 13. Образовательная программа (направления и результаты НИР)
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<EduNir> EduNir { get; set; }
 
         /// <summary>
         /// Таблица 14. Информация об администрации
@@ -517,6 +524,6 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Education.BlokDisciplChast> BlokDisciplChast { get; set; }
-
+                
     }
 }
