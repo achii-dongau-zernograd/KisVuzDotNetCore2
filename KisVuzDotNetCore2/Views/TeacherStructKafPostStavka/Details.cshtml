@@ -1,0 +1,48 @@
+﻿@model KisVuzDotNetCore2.Models.Users.TeacherStructKafPostStavka
+
+@{
+    ViewData["Title"] = "Подробнее";
+}
+
+<h2>Подробнее</h2>
+
+<div>
+    <h4>Преподаватель - Кафедра - Должность - Ставка - Дата установления ставки</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Teacher)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Teacher.TeacherFio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StructKaf)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StructKaf.StructSubvision.StructSubvisionName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Post)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.PostName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StavkaDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StavkaDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Stavka)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Stavka)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.TeacherStructKafPostStavkaId" class="btn btn-default">Редактировать</a>
+    <a asp-action="Index" class="btn btn-primary">Назад</a>
+</div>

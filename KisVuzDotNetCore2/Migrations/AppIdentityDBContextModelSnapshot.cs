@@ -1556,6 +1556,70 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("RefresherCourses");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.Teacher", b =>
+                {
+                    b.Property<int>("TeacherId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<string>("TeacherFio");
+
+                    b.HasKey("TeacherId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.TeacherEduProfileDisciplineName", b =>
+                {
+                    b.Property<int>("TeacherEduProfileDisciplineNameId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DisciplineNameId");
+
+                    b.Property<int>("EduProfileId");
+
+                    b.Property<int>("TeacherId");
+
+                    b.HasKey("TeacherEduProfileDisciplineNameId");
+
+                    b.HasIndex("DisciplineNameId");
+
+                    b.HasIndex("EduProfileId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("TeacherEduProfileDisciplineNames");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.TeacherStructKafPostStavka", b =>
+                {
+                    b.Property<int>("TeacherStructKafPostStavkaId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("PostId");
+
+                    b.Property<double>("Stavka");
+
+                    b.Property<DateTime>("StavkaDate");
+
+                    b.Property<int>("StructKafId");
+
+                    b.Property<int>("TeacherId");
+
+                    b.HasKey("TeacherStructKafPostStavkaId");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("StructKafId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("TeacherStructKafPostStavka");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -2188,6 +2252,49 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "RefresherCourseFile")
                         .WithMany()
                         .HasForeignKey("RefresherCourseFileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.Teacher", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.TeacherEduProfileDisciplineName", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.DisciplineName", "DisciplineName")
+                        .WithMany()
+                        .HasForeignKey("DisciplineNameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
+                        .WithMany()
+                        .HasForeignKey("EduProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Users.Teacher", "Teacher")
+                        .WithMany("TeacherEduProfileDisciplineNames")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.TeacherStructKafPostStavka", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructKaf", "StructKaf")
+                        .WithMany("TeacherStructKafPostStavka")
+                        .HasForeignKey("StructKafId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Users.Teacher", "Teacher")
+                        .WithMany("TeacherStructKafPostStavka")
+                        .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

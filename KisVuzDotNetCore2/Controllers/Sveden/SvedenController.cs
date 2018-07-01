@@ -208,6 +208,32 @@ namespace KisVuzDotNetCore2.Controllers
                 .ToListAsync();
             ViewData["t15rucovodstvoFil"] = t15rucovodstvoFil;
 
+            #region Таблица 16. Информация о составе педагогических (научно-педагогических) работников образовательной организации
+            // Перечень образовательных программ, для которых имеются сведения о распределении дисциплин по преподавателям---
+            var eduProfiles = await _context.EduProfiles
+                .Include(p=>p.EduNapravl.EduUgs.EduLevel)
+                .ToListAsync();//Add filter by teacher-disc data---
+            ViewData["eduProfiles"] = eduProfiles;
+
+            var teacherEduProfileDisciplineNames = await _context.TeacherEduProfileDisciplineNames
+                .Include(tpd => tpd.Teacher.AppUser.EduLevelGroup)
+                .Include(tpd => tpd.Teacher.AppUser.Qualifications)
+                .Include(tpd => tpd.Teacher.AppUser.AcademicDegree)
+                .Include(tpd => tpd.Teacher.AppUser.AcademicStat)
+                .Include(tpd => tpd.Teacher.AppUser.ProfessionalRetrainings)
+                .Include(tpd => tpd.Teacher.AppUser.RefresherCourses)
+                .Include(tdp => tdp.Teacher.TeacherStructKafPostStavka)
+                .Include(tpd => tpd.DisciplineName)
+                .ToListAsync();
+            ViewData["teacherEduProfileDisciplineNames"] = teacherEduProfileDisciplineNames;
+
+            var posts = await _context.Posts.ToListAsync();
+            ViewData["posts"] = posts;
+
+            //var rowStatuses = await _context.RowStatuses.ToListAsync();
+            //ViewData["rowStatuses"] = rowStatuses;
+            #endregion
+
             return View();
         }
 

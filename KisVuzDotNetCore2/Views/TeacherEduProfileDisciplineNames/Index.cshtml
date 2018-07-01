@@ -1,0 +1,47 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Users.TeacherEduProfileDisciplineName>
+
+@{
+    ViewData["Title"] = "Преподаватель. Профили - дисциплины";
+}
+
+<h2>Преподаватель. Перечень преподаваемых дисциплин</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Teacher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduProfile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisciplineName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher.TeacherFio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisciplineName.DisciplineNameName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TeacherEduProfileDisciplineNameId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.TeacherEduProfileDisciplineNameId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.TeacherEduProfileDisciplineNameId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

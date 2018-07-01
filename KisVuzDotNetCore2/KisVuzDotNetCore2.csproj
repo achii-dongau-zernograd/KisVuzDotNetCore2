@@ -320,6 +320,18 @@
     <Compile Remove="Migrations\20180629142718_init.Designer.cs" />
     <Compile Remove="Migrations\20180630063427_init.cs" />
     <Compile Remove="Migrations\20180630063427_init.Designer.cs" />
+    <Compile Remove="Migrations\20180630073727_init.cs" />
+    <Compile Remove="Migrations\20180630073727_init.Designer.cs" />
+    <Compile Remove="Migrations\20180630100402_init.cs" />
+    <Compile Remove="Migrations\20180630100402_init.Designer.cs" />
+    <Compile Remove="Migrations\20180630100517_init.cs" />
+    <Compile Remove="Migrations\20180630100517_init.Designer.cs" />
+    <Compile Remove="Migrations\20180630101238_init.cs" />
+    <Compile Remove="Migrations\20180630101238_init.Designer.cs" />
+    <Compile Remove="Migrations\20180701094726_stavka.cs" />
+    <Compile Remove="Migrations\20180701094726_stavka.Designer.cs" />
+    <Compile Remove="Migrations\20180701100347_stavka2.cs" />
+    <Compile Remove="Migrations\20180701100347_stavka2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

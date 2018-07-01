@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Education;
+using KisVuzDotNetCore2.Models.Users;
 using System.Collections.Generic;
 
 namespace KisVuzDotNetCore2.Models.Struct
@@ -17,6 +18,11 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// Учебные планы
         /// </summary>
         public List<EduPlan> EduPlans = new List<EduPlan>();
+
+        /// <summary>
+        /// Преподаватель - Кафедра - Должность - Ставка - Дата установления ставки
+        /// </summary>
+        public List<TeacherStructKafPostStavka> TeacherStructKafPostStavka { get; set; }
 
         ////////// Навигационные свойства ///////////
         /// <summary>
