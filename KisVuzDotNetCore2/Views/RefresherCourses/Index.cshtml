@@ -1,43 +1,43 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Users.RefresherCourse>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Курсы повышения квалификации";
 }
 
-<h2>Index</h2>
+<h2>Курсы повышения квалификации</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.RefresherCourseRegNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RefresherCourseName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RefresherCourseHours)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RefresherCourseCity)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RefresherCourseInstitition)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RefresherCourseDateStart)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RefresherCourseDateFinish)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RefresherCourseDateIssue)
-                </th>
             <th>
                 @Html.DisplayNameFor(model => model.AppUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RefresherCourseRegNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RefresherCourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RefresherCourseHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RefresherCourseCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RefresherCourseInstitition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RefresherCourseDateStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RefresherCourseDateFinish)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RefresherCourseDateIssue)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RefresherCourseFile)
@@ -48,6 +48,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppUser.GetFullName)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RefresherCourseRegNumber)
             </td>
@@ -73,15 +76,12 @@
                 @Html.DisplayFor(modelItem => item.RefresherCourseDateIssue)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AppUser.Id)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.RefresherCourseFile.Id)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.RefresherCourseId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RefresherCourseId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RefresherCourseId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.RefresherCourseId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.RefresherCourseId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.RefresherCourseId">Удалить</a>
             </td>
         </tr>
 }

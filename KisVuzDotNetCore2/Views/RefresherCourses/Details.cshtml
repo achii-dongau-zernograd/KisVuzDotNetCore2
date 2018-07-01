@@ -1,13 +1,13 @@
 ﻿@model KisVuzDotNetCore2.Models.Users.RefresherCourse
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Детализация";
 }
 
-<h2>Details</h2>
+<h2>Детализация</h2>
 
 <div>
-    <h4>RefresherCourse</h4>
+    <h4>Курс повышения квалификации</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -62,7 +62,7 @@
             @Html.DisplayNameFor(model => model.AppUser)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.AppUser.Id)
+            @Html.DisplayFor(model => model.AppUser.GetFullName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.RefresherCourseFile)
@@ -73,6 +73,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.RefresherCourseId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.RefresherCourseId" class="btn btn-default">Редактировать</a>
+    <a asp-action="Index" class="btn btn-primary">Назад</a>
 </div>

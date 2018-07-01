@@ -158,7 +158,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", qualification.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", qualification.AppUserId);
             return View(qualification);
         }
 
@@ -195,7 +195,7 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", qualification.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", qualification.AppUserId);
             return View(qualification);
         }
 

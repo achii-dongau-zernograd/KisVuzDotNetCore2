@@ -49,7 +49,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // GET: RefresherCourses/Create
         public IActionResult Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName");
             ViewData["RefresherCourseFileId"] = new SelectList(_context.Files, "Id", "Id");
             return View();
         }
@@ -67,7 +67,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", refresherCourse.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", refresherCourse.AppUserId);
             ViewData["RefresherCourseFileId"] = new SelectList(_context.Files, "Id", "Id", refresherCourse.RefresherCourseFileId);
             return View(refresherCourse);
         }
@@ -85,7 +85,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", refresherCourse.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", refresherCourse.AppUserId);
             ViewData["RefresherCourseFileId"] = new SelectList(_context.Files, "Id", "Id", refresherCourse.RefresherCourseFileId);
             return View(refresherCourse);
         }
@@ -122,7 +122,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", refresherCourse.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", refresherCourse.AppUserId);
             ViewData["RefresherCourseFileId"] = new SelectList(_context.Files, "Id", "Id", refresherCourse.RefresherCourseFileId);
             return View(refresherCourse);
         }
