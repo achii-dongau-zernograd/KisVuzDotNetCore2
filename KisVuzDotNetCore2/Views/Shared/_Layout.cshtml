@@ -99,7 +99,7 @@
                                     <li><a asp-controller="Posts" asp-action="Index">Должности</a></li>
                                     <li><a asp-controller="Emails" asp-action="Index">Адреса электронной почты</a></li>
                                     <li><a asp-controller="Telephones" asp-action="Index">Телефоны</a></li>
-                                    <li><a asp-controller="Faxes" asp-action="Index">Факсы</a></li>                                    
+                                    <li><a asp-controller="Faxes" asp-action="Index">Факсы</a></li>
                                     <li><a asp-controller="AcademicDegreeGroups" asp-action="Index">Группы учёных степеней</a></li>
                                     <li><a asp-controller="AcademicDegrees" asp-action="Index">Учёные степени</a></li>
                                     <li><a asp-controller="AcademicStats" asp-action="Index">Учёные звания</a></li>
@@ -214,6 +214,13 @@
                                 <ul class="dropdown-menu">
                                     <li><a asp-controller="Qualifications" asp-action="Index" asp-route-id="">Квалификации пользователей</a></li>
                                     <li><a asp-controller="Qualifications" asp-action="ConfirmWaiting">Подтверждение квалификации пользователей</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Материально-техническое обеспечение <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Korpus" asp-action="Index" asp-route-id="">Перечень корпусов</a></li>
                                 </ul>
                             </li>
                         </ul>

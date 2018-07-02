@@ -1,0 +1,40 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.Oborudovanie
+
+@{
+    ViewData["Title"] = "Редактировать данные об оборудовании";
+}
+
+<h2>Редактировать данные об оборудовании</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="OborudovanieId" />
+            <div class="form-group">
+                <label asp-for="PomeshenieId" class="control-label"></label>
+                <select asp-for="PomeshenieId" class="form-control" asp-items="ViewBag.PomeshenieId"></select>
+                <span asp-validation-for="PomeshenieId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OborudovanieName" class="control-label"></label>
+                <input asp-for="OborudovanieName" class="form-control" />
+                <span asp-validation-for="OborudovanieName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OborudovanieCount" class="control-label"></label>
+                <input asp-for="OborudovanieCount" class="form-control" />
+                <span asp-validation-for="OborudovanieCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

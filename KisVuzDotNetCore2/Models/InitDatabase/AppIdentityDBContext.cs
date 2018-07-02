@@ -394,7 +394,49 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<RefresherCourse> RefresherCourses { get; set; }
         #endregion
 
+        #region Материально-техническое обеспечение
 
+        /// <summary>
+        /// Корпус
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<Korpus> Korpus { get; set; }
+
+        /// <summary>
+        /// Корпус
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<Pomeshenie> Pomeshenie { get; set; }
+
+        /// <summary>
+        /// Корпус
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<Oborudovanie> Oborudovanie { get; set; }
+
+        /// <summary>
+        /// Тип помещения (справочник)
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<PomeshenieType> PomeshenieType { get; set; }
+
+        /// <summary>
+        /// Тип помещения (справочник)
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<PomeshenieTypepomesheniya> PomeshenieTypepomesheniya { get; set; }
+
+        #endregion
         #endregion
 
         /// <summary>
@@ -436,6 +478,7 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseBlokDisciplChastName.CreateBlokDisciplChastName(serviceProvider, configuration);
             await InitDatabaseEduSrok.CreateEduSrok(serviceProvider, configuration);
             await InitDatabaseEduPlans.CreateEduPlans(serviceProvider, configuration);
+
         }        
 
         /// <summary>

@@ -1,0 +1,31 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.Korpus
+
+@{
+    ViewData["Title"] = "Удалить данные";
+}
+
+<h3>Удалить данные?</h3>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.KorpusName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.KorpusName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KorpusAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.KorpusAddress.GetAddress)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="KorpusId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

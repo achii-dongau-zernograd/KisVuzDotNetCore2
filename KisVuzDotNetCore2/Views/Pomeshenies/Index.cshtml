@@ -1,0 +1,46 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.Pomeshenie>
+
+@{
+    ViewData["Title"] = "Помещение";
+}
+
+<h2>Помещение</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PomeshenieName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PomeshenieOvz)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Korpus.KorpusName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PomeshenieName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PomeshenieOvz)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Korpus.KorpusName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PomeshenieId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.PomeshenieId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,37 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.Oborudovanie
+
+@{
+    ViewData["Title"] = "Удалить данные об оборудовании";
+}
+
+<h3>Удалить данные об оборудовании?</h3>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OborudovanieName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OborudovanieName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OborudovanieCount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OborudovanieCount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Pomeshenie.PomeshenieName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pomeshenie.PomeshenieId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="OborudovanieId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>
