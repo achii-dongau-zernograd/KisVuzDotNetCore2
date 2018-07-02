@@ -25,7 +25,9 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Аккаунт пользователя
         /// </summary>
+        [Display(Name = "Пользователь")]
         public AppUser AppUser { get; set; }
+        [Display(Name = "Пользователь")]
         public string AppUserId { get; set; }
 
         public RowStatus RowStatus { get; set; }

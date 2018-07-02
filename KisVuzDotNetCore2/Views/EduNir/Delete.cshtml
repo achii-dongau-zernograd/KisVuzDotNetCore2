@@ -1,0 +1,75 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.EduNir
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <h4>Образовательная программа (направления и результаты НИР)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.GetEduNapravlFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NirNapravls)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NirNapravls)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumNpr)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumNpr)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumStud)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumStud)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumMonograf)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumMonograf)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumArticles)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumArticles) / @Html.DisplayFor(model => model.NumArticlesZ)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumPatents)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumPatents) / @Html.DisplayFor(model => model.NumPatentsZ)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumSvidetelstv)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumSvidetelstv) / @Html.DisplayFor(model => model.NumSvidetelstvZ)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumFinance)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumFinance)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduNirId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

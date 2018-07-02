@@ -1,0 +1,71 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.EduPr>
+
+@{
+    ViewData["Title"] = "Образовательная программа (наличие практики)";
+}
+
+<h2>Образовательная программа (наличие практики)</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EduProfile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduYearBeginningTraining)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduForm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsOVZ)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduPrUchebn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduPrProizv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduPrPreddiplomn)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduYearBeginningTraining.EduYearBeginningTrainingName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduForm.EduFormName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsOVZ)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduPrUchebn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduPrProizv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduPrPreddiplomn)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EduPrId">Редактировать</a> |                
+                <a asp-action="Delete" asp-route-id="@item.EduPrId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

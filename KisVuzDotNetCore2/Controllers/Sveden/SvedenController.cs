@@ -153,6 +153,30 @@ namespace KisVuzDotNetCore2.Controllers
                 .ToListAsync();
             ViewData["t9eduPerevod"] = t9eduPerevod;
 
+
+
+            #region Таблица 11. Образовательная программа (объём программы по годам)
+            var t11eduOPYears = await _context.EduOPYears
+                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)                   
+                .Include(e => e.EduYearBeginningTraining)
+                .Include(e=>e.EduOPEduYearName)
+                .ToListAsync();
+            ViewData["t11eduOPYears"] = t11eduOPYears;
+            #endregion
+
+            #region Таблица 12. Образовательная программа (наличие практики)
+            var t12eduPr = await _context.EduPr
+                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(e => e.EduYearBeginningTraining)                
+                .ToListAsync();
+            ViewData["t12eduPr"] = t12eduPr;
+            #endregion
+
+            #region Таблица 13. Образовательная программа (направления и результаты научной (научно-исследовательской) деятельности
+            var t13eduNir = _context.EduNir.Include(n=>n.EduNapravl.EduUgs.EduLevel);
+            ViewData["t13eduNir"] = t13eduNir;
+            #endregion
+
             return View();
         }
 
@@ -183,6 +207,32 @@ namespace KisVuzDotNetCore2.Controllers
             var t15rucovodstvoFil = await _context.RucovodstvoFil
                 .ToListAsync();
             ViewData["t15rucovodstvoFil"] = t15rucovodstvoFil;
+
+            #region Таблица 16. Информация о составе педагогических (научно-педагогических) работников образовательной организации
+            // Перечень образовательных программ, для которых имеются сведения о распределении дисциплин по преподавателям---
+            var eduProfiles = await _context.EduProfiles
+                .Include(p=>p.EduNapravl.EduUgs.EduLevel)
+                .ToListAsync();//Add filter by teacher-disc data---
+            ViewData["eduProfiles"] = eduProfiles;
+
+            var teacherEduProfileDisciplineNames = await _context.TeacherEduProfileDisciplineNames
+                .Include(tpd => tpd.Teacher.AppUser.EduLevelGroup)
+                .Include(tpd => tpd.Teacher.AppUser.Qualifications)
+                .Include(tpd => tpd.Teacher.AppUser.AcademicDegree)
+                .Include(tpd => tpd.Teacher.AppUser.AcademicStat)
+                .Include(tpd => tpd.Teacher.AppUser.ProfessionalRetrainings)
+                .Include(tpd => tpd.Teacher.AppUser.RefresherCourses)
+                .Include(tdp => tdp.Teacher.TeacherStructKafPostStavka)
+                .Include(tpd => tpd.DisciplineName)
+                .ToListAsync();
+            ViewData["teacherEduProfileDisciplineNames"] = teacherEduProfileDisciplineNames;
+
+            var posts = await _context.Posts.ToListAsync();
+            ViewData["posts"] = posts;
+
+            //var rowStatuses = await _context.RowStatuses.ToListAsync();
+            //ViewData["rowStatuses"] = rowStatuses;
+            #endregion
 
             return View();
         }

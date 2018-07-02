@@ -1,0 +1,63 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.EduPr
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <h4>Образовательная программа (наличие практики)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsOVZ)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsOVZ)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduYearBeginningTraining)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduYearBeginningTraining.EduYearBeginningTrainingName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduPrUchebn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduPrUchebn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduPrProizv)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduPrProizv)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduPrPreddiplomn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduPrPreddiplomn)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduPrId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

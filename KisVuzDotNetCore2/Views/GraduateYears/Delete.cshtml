@@ -1,0 +1,25 @@
+﻿@model KisVuzDotNetCore2.Models.GraduateYear
+
+@{
+    ViewData["Title"] = "Удалить год выпуска?";
+}
+
+<h2>Удалить год выпуска?</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GraduateYearName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GraduateYearName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="GraduateYearId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

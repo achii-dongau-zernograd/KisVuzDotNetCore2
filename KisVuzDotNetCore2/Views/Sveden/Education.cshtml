@@ -9,6 +9,9 @@
     var t7eduChislen = (IEnumerable<EduChislen>)ViewData["t7eduChislen"];
     var t8eduPriem = (IEnumerable<EduPriem>)ViewData["t8eduPriem"];
     var t9eduPerevod = (IEnumerable<EduPerevod>)ViewData["t9eduPerevod"];
+    var t11eduOPYears = (IEnumerable<EduOPYear>)ViewData["t11eduOPYears"];
+    var t12eduPr = (IEnumerable<EduPr>)ViewData["t12eduPr"];
+    var t13eduNir=(IEnumerable<EduNir>)ViewData["t13eduNir"];
 }
 
 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Информация о сроке действия государственной аккредитации образовательной программы, о языках, на которых осуществляется образование (обучение)</a>
@@ -182,6 +185,159 @@
                     <td itemprop="NumberResPerevod" align=center>@item.NumberResPerevod</td>
                     <td itemprop="NumberExpPerevod" align=center>@item.NumberExpPerevod</td>
                 </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<a href="#spoiler-5" data-toggle="collapse" class="btn btn-danger btn-block">Информация по образовательным программам, в том числе адаптированным</a>
+<div class="collapse" id="spoiler-5">
+    <div class="well">
+        --- Не реализовано ---
+    </div>
+</div>
+
+<a href="#spoiler-6" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (объём программы по годам)</a>
+<div class="collapse" id="spoiler-6">
+    <div class="well">
+
+        <table itemprop="eduOP" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Наименование специальности, направления подготовки</th>
+                    <th>Год начала подготовки</th>
+                    <th>Профиль программы</th>
+                    <th>Объём программы</th>
+                    <th>Очная форма обучения (зачетные единицы - з.е.)</th>
+                    <th>Очно-заочная форма обучения (з.е.)</th>
+                    <th>Зачная форма обучения (з.е.)</th>
+                </tr>
+                <tr>
+                    <td align=center><strong>1</strong></td>
+                    <td align=center><strong>2</strong></td>
+                    <td align=center><strong>3</strong></td>
+                    <td align=center><strong>4</strong></td>
+                    <td align=center><strong>5</strong></td>
+                    <td align=center><strong>6</strong></td>
+                    <td align=center><strong>7</strong></td>
+                    <td align=center><strong>8</strong></td>
+                </tr>
+            </thead>
+            @foreach (var item in t11eduOPYears)
+            {
+                <tr itemprop="eduOP">
+                    <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
+                    <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName</td>
+                    <td itemprop="">@item.EduYearBeginningTraining.EduYearBeginningTrainingName</td>
+                    <td itemprop="">
+                        @item.EduProfile.EduProfileName @if (item.IsOVZ)
+                        {<i> (Адаптированная ОП)</i>}
+                    </td>
+                    <td itemprop="" align=center>@item.EduOPEduYearName.EduOPEduYearNameName</td>
+                    <td itemprop="" align=center>@item.VOchn</td>
+                    <td itemprop="" align=center>@item.VOchnZaochn</td>
+                    <td itemprop="" align=center>@item.VZaochn</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<a href="#spoiler-7" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (наличие практики)</a>
+<div class="collapse" id="spoiler-7">
+    <div class="well">
+
+        <table itemprop="eduPr" class="table table-hover">
+            <thead>
+                <tr>
+                    <th rowspan="2">Код</th>
+                    <th rowspan="2">Наименование специальности, направления подготовки</th>
+                    <th rowspan="2">Год начала подготовки</th>
+                    <th rowspan="2">Профиль программы</th>
+                    <th rowspan="2">Реализуемы формы обучения</th>
+                    <th colspan="3">Наличие практики (з.е.)</th>                    
+                </tr>
+                <tr>
+                    <th>учебная</th>
+                    <th>производственная</th>
+                    <th>преддипломная практика для выполнения выпускной квалификационной работы</th>
+                </tr>
+                <tr>
+                    <td align=center><strong>1</strong></td>
+                    <td align=center><strong>2</strong></td>
+                    <td align=center><strong>3</strong></td>
+                    <td align=center><strong>4</strong></td>
+                    <td align=center><strong>5</strong></td>
+                    <td align=center><strong>6</strong></td>
+                    <td align=center><strong>7</strong></td>
+                    <td align=center><strong>8</strong></td>
+                </tr>
+            </thead>
+            @foreach (var item in t12eduPr)
+            {
+                <tr itemprop="eduOP">
+                    <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
+                    <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName</td>
+                    <td itemprop="">@item.EduYearBeginningTraining.EduYearBeginningTrainingName</td>
+                    <td itemprop="">
+                        @item.EduProfile.EduProfileName @if (item.IsOVZ)
+                        {<i> (Адаптированная ОП)</i>}
+                    </td>
+                    <td itemprop="" align=center>@item.EduForm.EduFormName</td>
+                    <td itemprop="" align=center>@item.EduPrUchebn</td>
+                    <td itemprop="" align=center>@item.EduPrProizv</td>
+                    <td itemprop="" align=center>@item.EduPrPreddiplomn</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<a href="#spoiler-8" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (направления и результаты научной (научно-исследовательской) деятельности)</a>
+<div class="collapse" id="spoiler-8">
+    <div class="well">
+        <table itemprop="eduNir" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Наименование специальности, направления подготовки</th>
+                    <th>Перечень научных направлений, в рамках которых ведётся научная (научно-исследовательская) деятельность</th>
+                    <th>Количество НПР, принимающих участие в научной (научно-исследовательской) деятельности</th>
+                    <th>Количество студентов, принимающих участие в научной (научно-исследовательской) деятельности</th>
+                    <th>Количество изданных монографий научно-педагогических работников образовательной организации по всем научным направлениям за последний год</th>
+                    <th>Количество изданных и принятых к публикации статей в изданиях, рекомендованных ВАК / зарубежных для публикации научных работ за последний год</th>
+                    <th>Количество патентов, полученных на разработки за последний год: российских / зарубежных</th>
+                    <th>Количество свидетельств о регистрации объекта интеллектуальной собственности, выданных на разработки за последний год: российских / зарубежных</th>
+                    <th>Среднегодовой объём финансирования научных исследований на одного научно-педагогического работника организации (в приведённых к целочисленным значениям ставок)</th>
+                </tr>                
+                <tr>
+                    <td align=center><strong>1</strong></td>
+                    <td align=center><strong>2</strong></td>
+                    <td align=center><strong>3</strong></td>
+                    <td align=center><strong>4</strong></td>
+                    <td align=center><strong>5</strong></td>
+                    <td align=center><strong>6</strong></td>
+                    <td align=center><strong>7</strong></td>
+                    <td align=center><strong>8</strong></td>
+                    <td align=center><strong>9</strong></td>
+                    <td align=center><strong>10</strong></td>
+                </tr>
+            </thead>
+            @foreach (var item in t13eduNir)
+            {
+            <tr itemprop="eduNir">
+                <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
+                <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
+                <td itemprop="perechenNir">@item.NirNapravls</td>
+                <td itemprop="nprNir">@item.NumNpr</td>
+                <td itemprop="studNir" align=center>@item.NumStud</td>
+                <td itemprop="monografNir" align=center>@item.NumMonograf</td>
+                <td itemprop="articleNir" align=center>@item.NumArticles / @item.NumArticlesZ</td>
+                <td align=center><span itemprop="patentRNir">@item.NumPatents</span> / <span itemprop="patentZNir">@item.NumPatentsZ</span></td>
+                <td align=center><span itemprop="svidRNir">@item.NumSvidetelstv</span> / <span itemprop="svidZNir">@item.NumSvidetelstvZ</span></td>
+                <td itemprop="financeNir" align=center>@item.NumFinance</td>
+            </tr>
             }
         </table>
     </div>

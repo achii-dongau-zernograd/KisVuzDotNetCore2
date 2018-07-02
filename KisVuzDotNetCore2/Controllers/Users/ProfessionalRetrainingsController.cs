@@ -22,7 +22,9 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: ProfessionalRetrainings
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.ProfessionalRetrainings.Include(p => p.AppUser).Include(p => p.ProfessionalRetrainingFile);
+            var appIdentityDBContext = _context.ProfessionalRetrainings
+                .Include(p => p.AppUser)
+                .Include(p => p.ProfessionalRetrainingFile);
             return View(await appIdentityDBContext.ToListAsync());
         }
 
@@ -49,7 +51,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: ProfessionalRetrainings/Create
         public IActionResult Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName");
             ViewData["ProfessionalRetrainingFileId"] = new SelectList(_context.Files, "Id", "Id");
             return View();
         }
@@ -67,7 +69,7 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", professionalRetraining.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", professionalRetraining.AppUserId);
             ViewData["ProfessionalRetrainingFileId"] = new SelectList(_context.Files, "Id", "Id", professionalRetraining.ProfessionalRetrainingFileId);
             return View(professionalRetraining);
         }
@@ -85,7 +87,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", professionalRetraining.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", professionalRetraining.AppUserId);
             ViewData["ProfessionalRetrainingFileId"] = new SelectList(_context.Files, "Id", "Id", professionalRetraining.ProfessionalRetrainingFileId);
             return View(professionalRetraining);
         }
@@ -122,7 +124,7 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", professionalRetraining.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", professionalRetraining.AppUserId);
             ViewData["ProfessionalRetrainingFileId"] = new SelectList(_context.Files, "Id", "Id", professionalRetraining.ProfessionalRetrainingFileId);
             return View(professionalRetraining);
         }

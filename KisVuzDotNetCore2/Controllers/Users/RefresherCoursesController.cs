@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Users;
 
-namespace KisVuzDotNetCore2.Controllers
+namespace KisVuzDotNetCore2.Controllers.Users
 {
     public class RefresherCoursesController : Controller
     {
@@ -22,7 +22,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: RefresherCourses
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.RefresherCourses.Include(r => r.AppUser);
+            var appIdentityDBContext = _context.RefresherCourses.Include(r => r.AppUser).Include(r => r.RefresherCourseFile);
             return View(await appIdentityDBContext.ToListAsync());
         }
 
@@ -36,6 +36,7 @@ namespace KisVuzDotNetCore2.Controllers
 
             var refresherCourse = await _context.RefresherCourses
                 .Include(r => r.AppUser)
+                .Include(r => r.RefresherCourseFile)
                 .SingleOrDefaultAsync(m => m.RefresherCourseId == id);
             if (refresherCourse == null)
             {
@@ -48,7 +49,8 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: RefresherCourses/Create
         public IActionResult Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName");
+            ViewData["RefresherCourseFileId"] = new SelectList(_context.Files, "Id", "Id");
             return View();
         }
 
@@ -57,7 +59,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RefresherCourseId,RefresherCourseRegNumber,RefresherCourseName,RefresherCourseHours,RefresherCourseCity,RefresherCourseInstitition,RefresherCourseDateStart,RefresherCourseDateFinish,RefresherCourseDateIssue,AppUserId")] RefresherCourse refresherCourse)
+        public async Task<IActionResult> Create([Bind("RefresherCourseId,RefresherCourseRegNumber,RefresherCourseName,RefresherCourseHours,RefresherCourseCity,RefresherCourseInstitition,RefresherCourseDateStart,RefresherCourseDateFinish,RefresherCourseDateIssue,RefresherCourseFileId,AppUserId")] RefresherCourse refresherCourse)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +67,8 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", refresherCourse.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", refresherCourse.AppUserId);
+            ViewData["RefresherCourseFileId"] = new SelectList(_context.Files, "Id", "Id", refresherCourse.RefresherCourseFileId);
             return View(refresherCourse);
         }
 
@@ -82,7 +85,8 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", refresherCourse.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", refresherCourse.AppUserId);
+            ViewData["RefresherCourseFileId"] = new SelectList(_context.Files, "Id", "Id", refresherCourse.RefresherCourseFileId);
             return View(refresherCourse);
         }
 
@@ -91,7 +95,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RefresherCourseId,RefresherCourseRegNumber,RefresherCourseName,RefresherCourseHours,RefresherCourseCity,RefresherCourseInstitition,RefresherCourseDateStart,RefresherCourseDateFinish,RefresherCourseDateIssue,AppUserId")] RefresherCourse refresherCourse)
+        public async Task<IActionResult> Edit(int id, [Bind("RefresherCourseId,RefresherCourseRegNumber,RefresherCourseName,RefresherCourseHours,RefresherCourseCity,RefresherCourseInstitition,RefresherCourseDateStart,RefresherCourseDateFinish,RefresherCourseDateIssue,RefresherCourseFileId,AppUserId")] RefresherCourse refresherCourse)
         {
             if (id != refresherCourse.RefresherCourseId)
             {
@@ -118,7 +122,8 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", refresherCourse.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", refresherCourse.AppUserId);
+            ViewData["RefresherCourseFileId"] = new SelectList(_context.Files, "Id", "Id", refresherCourse.RefresherCourseFileId);
             return View(refresherCourse);
         }
 
@@ -132,6 +137,7 @@ namespace KisVuzDotNetCore2.Controllers
 
             var refresherCourse = await _context.RefresherCourses
                 .Include(r => r.AppUser)
+                .Include(r => r.RefresherCourseFile)
                 .SingleOrDefaultAsync(m => m.RefresherCourseId == id);
             if (refresherCourse == null)
             {

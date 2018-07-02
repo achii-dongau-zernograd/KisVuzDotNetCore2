@@ -1,0 +1,36 @@
+﻿@model KisVuzDotNetCore2.Models.Users.TeacherEduProfileDisciplineName
+
+@{
+    ViewData["Title"] = "Подробнее";
+}
+
+<h2>Подробнее</h2>
+
+<div>
+    <h4>Преподаватель. Профиль подготовки - преподаваемая дисциплина</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Teacher)
+        </dt>
+        <dd>
+            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.Teacher.AppUserId">@Model.Teacher.TeacherFio</a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DisciplineName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DisciplineName.DisciplineNameName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.TeacherEduProfileDisciplineNameId" class="btn btn-default">Редактировать</a>
+    <a asp-action="Index" class="btn btn-primary">Назад</a>
+</div>

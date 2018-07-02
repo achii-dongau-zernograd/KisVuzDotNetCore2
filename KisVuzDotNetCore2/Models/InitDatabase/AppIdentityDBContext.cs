@@ -92,10 +92,7 @@ namespace KisVuzDotNetCore2.Models
 
         /// <summary>
         /// Таблица EduProgramPodg
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
+        /// </summary>        
         public DbSet<EduProgramPodg> EduProgramPodg { get; set; }
 
         /// <summary>
@@ -135,20 +132,37 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Формы контроля
         /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
         public DbSet<FormKontrol> FormKontrol { get; set; }
 
         /// <summary>
         /// Семестр
         /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
         public DbSet<Semestr> Semestr { get; set; }
 
+        /// <summary>
+        /// Блоки дисциплин учебного плана
+        /// </summary>
+        public DbSet<BlokDiscipl> BlokDiscipl { get; set; }
 
+        /// <summary>
+        /// Части блоков дисциплин учебного плана
+        /// </summary>
+        public DbSet<BlokDisciplChast> BlokDisciplChast { get; set; }
+
+        /// <summary>
+        /// Наименование дисциплин
+        /// </summary>
+        public DbSet<DisciplineName> DisciplineNames { get; set; }
+
+        /// <summary>
+        /// Добавление видов деятельности к учебному плану
+        /// </summary>
+        public DbSet<EduPlanEduVidDeyat> EduPlanEduVidDeyats { get; set; }
+
+        /// <summary>
+        /// Добавление годов начала подготовки к учебному плану
+        /// </summary>
+        public DbSet<EduPlanEduYearBeginningTraining> EduPlanEduYearBeginningTraining { get; set; }
         #endregion
 
         #region Структура образовательной организации (Struct)
@@ -247,6 +261,33 @@ namespace KisVuzDotNetCore2.Models
         /// Таблица 9. Информация о результатах перевода, восстановления и отчисления
         /// </summary>
         public DbSet<EduPerevod> eduPerevod { get; set; }
+
+        /// <summary>
+        /// Таблица 11. Образовательная программа (объём программы по годам)
+        /// </summary>
+        public DbSet<EduOPYear> EduOPYears { get; set; }
+
+        /// <summary>
+        /// Вспомогательная таблица для таблицы 11.
+        /// Наименования годов обучения ("за 1 год обучения" и т.д.)
+        /// </summary>
+        public DbSet<EduOPEduYearName> EduOPEduYearNames { get; set; }
+
+        /// <summary>
+        /// Таблица 12. Образовательная программа (наличие практики)
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<EduPr> EduPr { get; set; }
+
+        /// <summary>
+        /// Таблица 13. Образовательная программа (направления и результаты НИР)
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<EduNir> EduNir { get; set; }
 
         /// <summary>
         /// Таблица 14. Информация об администрации
@@ -392,6 +433,21 @@ namespace KisVuzDotNetCore2.Models
         /// Профессиональная переподготовка
         /// </summary>
         public DbSet<RefresherCourse> RefresherCourses { get; set; }
+
+        /// <summary>
+        /// Преподаватели
+        /// </summary>
+        public DbSet<Teacher> Teachers { get; set; }
+
+        /// <summary>
+        /// Таблица для закрепления за преподавателем профилей подготовки и дисциплин
+        /// </summary>
+        public DbSet<TeacherEduProfileDisciplineName> TeacherEduProfileDisciplineNames { get; set; }
+
+        /// <summary>
+        /// Преподаватель - Кафедра - Должность - Ставка - Дата установления ставки
+        /// </summary>
+        public DbSet<TeacherStructKafPostStavka> TeacherStructKafPostStavka { get; set; }
         #endregion
 
         #region Материально-техническое обеспечение
@@ -435,6 +491,24 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<PomeshenieTypepomesheniya> PomeshenieTypepomesheniya { get; set; }
+
+        #region Трудоустройство
+        /// <summary>
+        /// Год выпуска
+        /// </summary>
+        public DbSet<GraduateYear> GraduateYear { get; set; }
+
+        /// <summary>
+        /// Выпуск (результаты защиты ВКР)
+        /// </summary>
+        public DbSet<EduGraduate> EduGraduate { get; set; }
+
+        /// <summary>
+        /// Количество трудоустроенных выпускников
+        /// </summary>
+        public DbSet<GraduateTrudoustroustvo> GraduateTrudoustroustvo { get; set; }
+        #endregion
+
 
         #endregion
         #endregion
@@ -489,14 +563,12 @@ namespace KisVuzDotNetCore2.Models
         /// <returns></returns>
         public DbSet<KisVuzDotNetCore2.Models.Education.BlokDiscipl> BlokDiscipl { get; set; }
 
-        /// <summary>
-        /// Инициализация базы данных
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.Education.BlokDisciplChast> BlokDisciplChast { get; set; }
 
-        
+            await InitDatabaseGraduateYear.CreateGraduateYear(serviceProvider, configuration);
+            await InitDatabaseDisciplineName.CreateDisciplineName(serviceProvider, configuration);
+            await InitDatabaseEduPlanEduVidDeyats.CreateEduPlanEduVidDeyats(serviceProvider, configuration);
+            await InitDatabaseEduOPEduYearNames.CreateEduOPEduYearNames(serviceProvider, configuration);
+
+        }                
     }
 }

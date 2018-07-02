@@ -1,12 +1,12 @@
 ﻿@model KisVuzDotNetCore2.Models.Users.RefresherCourse
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактирование";
 }
 
-<h2>Edit</h2>
+<h2>Редактирование</h2>
 
-<h4>RefresherCourse</h4>
+<h4>Курс повышения квалификации</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -54,21 +54,19 @@
                 <span asp-validation-for="RefresherCourseDateIssue" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="RefresherCourseFileId" class="control-label"></label>
+                <select asp-for="RefresherCourseFileId" class="form-control" asp-items="ViewBag.RefresherCourseFileId"></select>
+                <span asp-validation-for="RefresherCourseFileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="AppUserId" class="control-label"></label>
                 <select asp-for="AppUserId" class="form-control" asp-items="ViewBag.AppUserId"></select>
                 <span asp-validation-for="AppUserId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

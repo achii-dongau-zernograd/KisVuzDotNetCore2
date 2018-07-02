@@ -1,0 +1,88 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.EduNir>
+
+@{
+    ViewData["Title"] = "Образовательная программа (направления и результаты НИР)";
+}
+
+<h2>Образовательная программа (направления и результаты НИР)</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Код
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduNapravl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NirNapravls)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumNpr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumStud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumMonograf)
+            </th>
+            <th>
+                Количество изданных и принятых к публикации статей за последний год: в изданиях, рекомендованных ВАК / зарубежных
+            </th>
+            <th>
+                Количество патентов, полученных на разработки за последний год: российских / зарубежных
+            </th>
+            <th>
+                Количество свидетельств о регистрации объекта интеллектуальной собственности, выданных на разработки за последний год: российских / зарубежных
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumFinance)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravlCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravlName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NirNapravls)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumNpr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumStud)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumMonograf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumArticles) / @Html.DisplayFor(modelItem => item.NumArticlesZ)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumPatents) / @Html.DisplayFor(modelItem => item.NumPatentsZ)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumSvidetelstv) / @Html.DisplayFor(modelItem => item.NumSvidetelstvZ)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumFinance)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EduNirId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduNirId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

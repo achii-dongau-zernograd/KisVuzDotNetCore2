@@ -47,6 +47,9 @@
                                             <li><a asp-controller="EduPlans" asp-action="Index">Перечень учебных планов</a></li>
                                             <li><a asp-controller="BlokDiscipls" asp-action="Index">Блоки дисциплин</a></li>
                                             <li><a asp-controller="BlokDisciplChasts" asp-action="Index">Части блоков дисциплин</a></li>
+                                            <li><a asp-controller="DisciplineNames" asp-action="Index">Дисциплины</a></li>
+                                            <li><a asp-controller="EduPlanEduVidDeyats" asp-action="Index">Добавление видов деятельности к учебному плану</a></li>
+                                            <li><a asp-controller="EduPlanEduYearBeginningTrainings" asp-action="Index">Добавление годов начала подготовки к учебному плану</a></li>
                                         </ul>
                                     </li>
                                     <li class="divider"></li>
@@ -69,6 +72,13 @@
                                     <li><a asp-controller="BlokDisciplChastNames" asp-action="Index">Наименование части блока дисциплин Учебного плана</a></li>
                                     <li><a asp-controller="EduSroks" asp-action="Index">Сроки обучения</a></li>
                                     <li><a asp-controller="EduQualifications" asp-action="Index">Квалификация</a></li>
+                                    <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Выпуск и трудоустройство<b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="GraduateYears" asp-action="Index">Год выпуска </a></li>
+                                            <li><a asp-controller="EduGraduates" asp-action="Index">Выпуск (результаты защиты ВКР) </a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
                             <li>
@@ -138,6 +148,10 @@
                                             <li><a asp-controller="priemKolTargets" asp-action="Index">Информация о количестве мест для приема на обучение по различным условиям поступления</a></li>
                                             <li><a asp-controller="EduPriems" asp-action="Index">Результаты приема</a></li>
                                             <li><a asp-controller="EduPerevods" asp-action="Index" asp-route-id="">Информация о результатах перевода, восстановления и отчисления</a></li>
+                                            <li><a asp-controller="EduOPEduYearNames" asp-action="Index" asp-route-id="">Вспомогательная таблица выбора годов обучения</a></li>
+                                            <li><a asp-controller="EduOPYears" asp-action="Index" asp-route-id="">Образовательная программа (объём программы по годам)</a></li>
+                                            <li><a asp-controller="EduPrs" asp-action="Index" asp-route-id="">Образовательная программа (наличие практики)</a></li>
+                                            <li><a asp-controller="EduNir" asp-action="Index" asp-route-id="">Образовательная программа (направления и результаты НИР)</a></li>
                                         </ul>
                                     </li>
                                     <li>
@@ -188,6 +202,9 @@
                             <li>
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сотрудники <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
+                                    <li><a asp-controller="Teachers" asp-action="Index" asp-route-id="">Преподаватели</a></li>
+                                    <li><a asp-controller="TeacherEduProfileDisciplineNames" asp-action="Index" asp-route-id="">Преподаватели. Направления - дисциплины</a></li>
+                                    <li><a asp-controller="TeacherStructKafPostStavka" asp-action="Index" asp-route-id="">Преподаватель - Кафедра - Должность - Ставка - Дата установления ставки</a></li>
                                     <li><a asp-controller="Qualifications" asp-action="Index" asp-route-id="">Квалификации</a></li>
                                     <li><a asp-controller="RefresherCourses" asp-action="Index">Курсы повышения квалификации</a></li>
                                     <li><a asp-controller="ProfessionalRetrainings" asp-action="Index">Профессиональная переподготовка</a></li>
@@ -246,6 +263,16 @@
             <div class="navbar-collapse collapse">
 
                 <ul class="nav navbar-nav navbar-right">
+
+                    <!-- Выпадающий список: Электронная информационно-образовательная среда -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Электронная информационно-образовательная среда<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="ElectronBiblSystems" asp-action="Preview">Электронные библиотечные системы</a></li>
+                            <li><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-issobstv="true">Электронные образовательные и информационные ресурсы (собственные)</a></li>
+                            <li><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-issobstv="false">Электронные образовательные и информационные ресурсы (сторонние)</a></li>
+                        </ul>
+                    </li>
 
                     <!-- Выпадающий список: Абитуриенту -->
                     <li class="dropdown">

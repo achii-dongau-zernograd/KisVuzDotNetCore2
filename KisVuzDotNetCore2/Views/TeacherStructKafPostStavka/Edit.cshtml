@@ -1,0 +1,47 @@
+﻿@model KisVuzDotNetCore2.Models.Users.TeacherStructKafPostStavka
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<h2>Редактирование</h2>
+
+<h4>Преподаватель - Кафедра - Должность - Ставка - Дата установления ставки</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TeacherStructKafPostStavkaId" />
+            <div class="form-group">
+                <label asp-for="TeacherId" class="control-label"></label>
+                <select asp-for="TeacherId" class="form-control" asp-items="ViewBag.TeacherId"></select>
+                <span asp-validation-for="TeacherId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StructKafId" class="control-label"></label>
+                <select asp-for="StructKafId" class="form-control" asp-items="ViewBag.StructKafId"></select>
+                <span asp-validation-for="StructKafId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostId" class="control-label"></label>
+                <select asp-for="PostId" class="form-control" asp-items="ViewBag.PostId"></select>
+                <span asp-validation-for="PostId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StavkaDate" class="control-label"></label>
+                <input asp-for="StavkaDate" class="form-control" />
+                <span asp-validation-for="StavkaDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Stavka" class="control-label"></label>
+                <input asp-for="Stavka" class="form-control" />
+                <span asp-validation-for="Stavka" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

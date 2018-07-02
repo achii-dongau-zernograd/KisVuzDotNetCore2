@@ -1,0 +1,37 @@
+﻿@model KisVuzDotNetCore2.Models.Users.TeacherEduProfileDisciplineName
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<h2>Редактирование</h2>
+
+<h4>Преподаватель. Профиль подготовки - преподаваемая дисциплина</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TeacherEduProfileDisciplineNameId" />
+            <div class="form-group">
+                <label asp-for="TeacherId" class="control-label"></label>
+                <select asp-for="TeacherId" class="form-control" asp-items="ViewBag.TeacherId"></select>
+                <span asp-validation-for="TeacherId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduProfileId" class="control-label"></label>
+                <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfileId"></select>
+                <span asp-validation-for="EduProfileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DisciplineNameId" class="control-label"></label>
+                <select asp-for="DisciplineNameId" class="form-control" asp-items="ViewBag.DisciplineNameId"></select>
+                <span asp-validation-for="DisciplineNameId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

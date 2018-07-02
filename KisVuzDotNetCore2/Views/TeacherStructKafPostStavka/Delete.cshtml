@@ -1,0 +1,51 @@
+﻿@model KisVuzDotNetCore2.Models.Users.TeacherStructKafPostStavka
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <h4>Преподаватель - Кафедра - Должность - Ставка - Дата установления ставки</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Teacher)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Teacher.TeacherFio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StructKaf)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StructKaf.StructSubvision.StructSubvisionName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Post)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Post.PostName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StavkaDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StavkaDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Stavka)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Stavka)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="TeacherStructKafPostStavkaId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>
