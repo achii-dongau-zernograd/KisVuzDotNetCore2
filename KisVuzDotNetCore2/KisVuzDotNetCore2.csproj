@@ -336,7 +336,6 @@
     <Compile Remove="Migrations\20180701094726_stavka.Designer.cs" />
     <Compile Remove="Migrations\20180701100347_stavka2.cs" />
     <Compile Remove="Migrations\20180701100347_stavka2.Designer.cs" />
->>>>>>> d7e2b5529ac3ce6165ce201e5ea5cf2156f87a35
   </ItemGroup>
 
   <ItemGroup>

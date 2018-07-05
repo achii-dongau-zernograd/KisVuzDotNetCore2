@@ -492,6 +492,8 @@ namespace KisVuzDotNetCore2.Models
         /// <returns></returns>
         public DbSet<PomeshenieTypepomesheniya> PomeshenieTypepomesheniya { get; set; }
 
+        #endregion
+
         #region Трудоустройство
         /// <summary>
         /// Год выпуска
@@ -510,7 +512,7 @@ namespace KisVuzDotNetCore2.Models
         #endregion
 
 
-        #endregion
+        
         #endregion
 
         /// <summary>
@@ -551,24 +553,13 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseEduVidDeyats.CreateEduVidDeyats(serviceProvider, configuration);
             await InitDatabaseBlokDisciplChastName.CreateBlokDisciplChastName(serviceProvider, configuration);
             await InitDatabaseEduSrok.CreateEduSrok(serviceProvider, configuration);
-            await InitDatabaseEduPlans.CreateEduPlans(serviceProvider, configuration);
-
-        }        
-
-        /// <summary>
-        /// Инициализация базы данных
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.Education.BlokDiscipl> BlokDiscipl { get; set; }
-
-
+            
             await InitDatabaseGraduateYear.CreateGraduateYear(serviceProvider, configuration);
             await InitDatabaseDisciplineName.CreateDisciplineName(serviceProvider, configuration);
             await InitDatabaseEduPlanEduVidDeyats.CreateEduPlanEduVidDeyats(serviceProvider, configuration);
             await InitDatabaseEduOPEduYearNames.CreateEduOPEduYearNames(serviceProvider, configuration);
 
+            //await InitDatabaseKorpus.CreateKorpus(serviceProvider, configuration);
         }                
     }
 }
