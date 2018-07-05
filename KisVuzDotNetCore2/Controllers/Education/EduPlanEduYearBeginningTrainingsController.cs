@@ -50,10 +50,10 @@ namespace KisVuzDotNetCore2.Controllers.Education
         }
 
         // GET: EduPlanEduYearBeginningTrainings/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["EduPlanId"] = new SelectList(_context.EduPlans, "EduPlanId", "EduPlanId");
-            ViewData["EduYearBeginningTrainingId"] = new SelectList(_context.EduYearBeginningTrainings, "EduYearBeginningTrainingId", "EduYearBeginningTrainingId");
+            ViewData["EduPlanId"] = new SelectList(_context.EduPlans, "EduPlanId", "EduPlanDescription", id);
+            ViewData["EduYearBeginningTrainingId"] = new SelectList(_context.EduYearBeginningTrainings, "EduYearBeginningTrainingId", "EduYearBeginningTrainingName", id);
             return View();
         }
 
@@ -62,7 +62,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EduPlanEduYearBeginningTrainingId,EduPlanId,EduYearBeginningTrainingId")] EduPlanEduYearBeginningTraining eduPlanEduYearBeginningTraining)
+        public async Task<IActionResult> Create(EduPlanEduYearBeginningTraining eduPlanEduYearBeginningTraining)
         {
             if (ModelState.IsValid)
             {
@@ -70,8 +70,8 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduPlanId"] = new SelectList(_context.EduPlans, "EduPlanId", "EduPlanId", eduPlanEduYearBeginningTraining.EduPlanId);
-            ViewData["EduYearBeginningTrainingId"] = new SelectList(_context.EduYearBeginningTrainings, "EduYearBeginningTrainingId", "EduYearBeginningTrainingId", eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId);
+            ViewData["EduPlanId"] = new SelectList(_context.EduPlans, "EduPlanId", "EduPlanDescription", eduPlanEduYearBeginningTraining.EduPlanId);
+            ViewData["EduYearBeginningTrainingId"] = new SelectList(_context.EduYearBeginningTrainings, "EduYearBeginningTrainingId", "EduYearBeginningTrainingName");
             return View(eduPlanEduYearBeginningTraining);
         }
 
