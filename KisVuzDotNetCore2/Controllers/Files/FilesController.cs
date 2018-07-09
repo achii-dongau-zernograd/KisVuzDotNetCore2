@@ -68,7 +68,7 @@ namespace KisVuzDotNetCore2.Controllers
                                 
                 fileModel.FileName = Path.GetFileName(uploadedFile.FileName);
                 //fileModel.Path = path;
-                fileModel.Path = Path.Combine("files", fileName); ;
+                fileModel.Path = Path.Combine("files", fileName);
 
                 if (Path.GetExtension(uploadedFile.FileName)==".pdf")
                 {

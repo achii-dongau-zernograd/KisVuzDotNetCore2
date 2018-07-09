@@ -22,7 +22,10 @@ namespace KisVuzDotNetCore2.Controllers.Education
         // GET: BlokDiscipls
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.BlokDiscipl.Include(b => b.BlokDisciplName).Include(b => b.EduPlan);
+            var appIdentityDBContext = _context.BlokDiscipl
+                .Include(b => b.BlokDisciplName)
+                .Include(e => e.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(e => e.EduPlan.EduForm);
             return View(await appIdentityDBContext.ToListAsync());
         }
 

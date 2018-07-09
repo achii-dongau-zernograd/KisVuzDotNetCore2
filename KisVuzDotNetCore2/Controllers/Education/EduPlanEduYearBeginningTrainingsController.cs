@@ -38,7 +38,8 @@ namespace KisVuzDotNetCore2.Controllers.Education
             }
 
             var eduPlanEduYearBeginningTraining = await _context.EduPlanEduYearBeginningTraining
-                .Include(e => e.EduPlan)
+                .Include(e => e.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(e => e.EduPlan.EduForm)
                 .Include(e => e.EduYearBeginningTraining)
                 .SingleOrDefaultAsync(m => m.EduPlanEduYearBeginningTrainingId == id);
             if (eduPlanEduYearBeginningTraining == null)
@@ -139,7 +140,8 @@ namespace KisVuzDotNetCore2.Controllers.Education
             }
 
             var eduPlanEduYearBeginningTraining = await _context.EduPlanEduYearBeginningTraining
-                .Include(e => e.EduPlan)
+                .Include(e => e.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(e => e.EduPlan.EduForm)
                 .Include(e => e.EduYearBeginningTraining)
                 .SingleOrDefaultAsync(m => m.EduPlanEduYearBeginningTrainingId == id);
             if (eduPlanEduYearBeginningTraining == null)

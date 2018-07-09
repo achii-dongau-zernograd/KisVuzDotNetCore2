@@ -1,12 +1,11 @@
 ﻿@model KisVuzDotNetCore2.Models.Education.EduPlanEduYearBeginningTraining
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Удалить";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Удалить год начала подготовки по учебному плану?</h3>
 <div>
     <h4>EduPlanEduYearBeginningTraining</h4>
     <hr />
@@ -15,19 +14,19 @@
             @Html.DisplayNameFor(model => model.EduPlan)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduPlan.EduPlanId)
+            @Html.DisplayFor(model => model.EduPlan.EduPlanDescription)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.EduYearBeginningTraining)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduYearBeginningTraining.EduYearBeginningTrainingId)
+            @Html.DisplayFor(model => model.EduYearBeginningTraining.EduYearBeginningTrainingName)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="EduPlanEduYearBeginningTrainingId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
     </form>
 </div>

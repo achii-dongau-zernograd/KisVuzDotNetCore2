@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KisVuzDotNetCore2.Models.Files;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -52,11 +53,25 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupName = "Документы об образовании"
                     };
 
+                    FileDataTypeGroup fileDataTypeGroup5 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = 5,
+                        FileDataTypeGroupName = "Учебно-программная документация"
+                    };
+
+                    FileDataTypeGroup fileDataTypeGroup6 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = 6,
+                        FileDataTypeGroupName = "Учебно-методическое обеспечение"
+                    };
+
                     await context.FileDataTypeGroups.AddRangeAsync(
                         fileDataTypeGroup1,
                         fileDataTypeGroup2,
                         fileDataTypeGroup3,
-                        fileDataTypeGroup4
+                        fileDataTypeGroup4,
+                        fileDataTypeGroup5,
+                        fileDataTypeGroup6
                     );
                     await context.SaveChangesAsync();
                 }
@@ -303,6 +318,78 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = 4
                     };
 
+                    FileDataType fileDataType31 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.UchebniyPlan,
+                        FileDataTypeName = "Учебный план",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 5
+                    };
+
+                    FileDataType fileDataType32 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.OPOP,
+                        FileDataTypeName = "Основная профессиональная образовательная программа",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 5
+                    };
+
+                    FileDataType fileDataType33 = new FileDataType
+                    {
+                        FileDataTypeId = 33,
+                        FileDataTypeName = "Календарный учебный график",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 5
+                    };
+
+                    FileDataType fileDataType34 = new FileDataType
+                    {
+                        FileDataTypeId = 34,
+                        FileDataTypeName = "Рабочая программа",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 5
+                    };
+
+                    FileDataType fileDataType35 = new FileDataType
+                    {
+                        FileDataTypeId = 35,
+                        FileDataTypeName = "Аннотация рабочей программы",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 5
+                    };
+
+                    FileDataType fileDataType36 = new FileDataType
+                    {
+                        FileDataTypeId = 36,
+                        FileDataTypeName = "Учебное пособие",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 6
+                    };
+
+                    FileDataType fileDataType37 = new FileDataType
+                    {
+                        FileDataTypeId = 37,
+                        FileDataTypeName = "Курс лекций",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 6
+                    };
+
+                    FileDataType fileDataType38 = new FileDataType
+                    {
+                        FileDataTypeId = 38,
+                        FileDataTypeName = "Лабораторный практикум",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 6
+                    };
+
+                    FileDataType fileDataType39 = new FileDataType
+                    {
+                        FileDataTypeId = 39,
+                        FileDataTypeName = "Методические указания",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 6
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -333,7 +420,16 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType27,
                         fileDataType28,
                         fileDataType29,
-                        fileDataType30
+                        fileDataType30,
+                        fileDataType31,
+                        fileDataType32,
+                        fileDataType33,
+                        fileDataType34,
+                        fileDataType35,
+                        fileDataType36,
+                        fileDataType37,
+                        fileDataType38,
+                        fileDataType39
                         );
                     await context.SaveChangesAsync();
                 }

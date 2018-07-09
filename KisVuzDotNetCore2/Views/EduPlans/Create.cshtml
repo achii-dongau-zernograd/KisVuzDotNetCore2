@@ -1,20 +1,20 @@
 ﻿@model KisVuzDotNetCore2.Models.Education.EduPlan
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Добавить";
+    List<EduVidDeyat> eduVidDeyats = (List<EduVidDeyat>)ViewData["EduVidDeyats"];
 }
 
-<h2>Create</h2>
+<h2>Добавить учебный план</h2>
 
-<h4>EduPlan</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="EduProfileId" class="control-label"></label>
-                <select asp-for="EduProfileId" class ="form-control" asp-items="ViewBag.EduProfileId"></select>
+                <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfileId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="ProtokolNumber" class="control-label"></label>
@@ -33,32 +33,36 @@
             </div>
             <div class="form-group">
                 <label asp-for="StructKafId" class="control-label"></label>
-                <select asp-for="StructKafId" class ="form-control" asp-items="ViewBag.StructKafId"></select>
+                <select asp-for="StructKafId" class="form-control" asp-items="ViewBag.StructKafId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="EduProgramPodgId" class="control-label"></label>
-                <select asp-for="EduProgramPodgId" class ="form-control" asp-items="ViewBag.EduProgramPodgId"></select>
+                <select asp-for="EduProgramPodgId" class="form-control" asp-items="ViewBag.EduProgramPodgId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="EduFormId" class="control-label"></label>
-                <select asp-for="EduFormId" class ="form-control" asp-items="ViewBag.EduFormId"></select>
+                <label asp-for="EduForm.EduFormName" class="control-label"></label>
+                <select asp-for="EduFormId" class="form-control" asp-items="ViewBag.EduFormId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="EduSrokId" class="control-label"></label>
-                <select asp-for="EduSrokId" class ="form-control" asp-items="ViewBag.EduSrokId"></select>
+                <label asp-for="EduSrok.EduSrokName" class="control-label"></label>
+                <select asp-for="EduSrokId" class="form-control" asp-items="ViewBag.EduSrokId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="EduPlanPdfId" class="control-label"></label>
-                <select asp-for="EduPlanPdfId" class ="form-control" asp-items="ViewBag.EduPlanPdfId"></select>
+                <label asp-for="EduVidDeyatList" class="control-label"></label>
+                @foreach (var vidDeyat in eduVidDeyats)
+                {
+                    <br /><input type="checkbox" name="EduVidDeyatIds" value="@vidDeyat.EduVidDeyatId" /> @vidDeyat.EduVidDeyatName
+                }
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <label class="control-label">Выберите файл: </label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 

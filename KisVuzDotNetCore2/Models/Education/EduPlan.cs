@@ -71,6 +71,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         [Display(Name = "Программа подготовки")]
         public EduProgramPodg EduProgramPodg { get; set; }
+        [Display(Name = "Программа подготовки")]
         public int EduProgramPodgId { get; set; }
 
         /// <summary>
