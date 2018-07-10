@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Добавить данные о помещении";
+    List<PomeshenieType> pomeshenieTypes = (List<PomeshenieType>)ViewData["PomeshenieType"];
 }
 
 <h2>Добавить данные о помещении</h2>
@@ -13,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="KorpusId" class="control-label"></label>
-                <select asp-for="KorpusId" class ="form-control" asp-items="ViewBag.KorpusId"></select>
+                <select asp-for="KorpusId" class="form-control" asp-items="ViewBag.KorpusId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PomeshenieName" class="control-label"></label>
@@ -25,6 +26,16 @@
                 <input asp-for="PomeshenieOvz" class="form-control" />
                 <span asp-validation-for="PomeshenieOvz" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="PomeshenieTypes" class="control-label"></label>
+                @foreach (var pomeshenieType in pomeshenieTypes)
+                {
+                    <br /><input type="checkbox" name="PomeshenieTypeIds" value="@pomeshenieType.PomeshenieTypeId" /> @pomeshenieType.PomeshenieTypeName
+                }
+            </div>
+
+
             <div class="form-group">
                 <input type="submit" value="Добавить" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-default">Отмена</a>

@@ -29,6 +29,10 @@ namespace KisVuzDotNetCore2.Models.Sveden
         public IActionResult Create()
         {
             ViewData["KorpusId"] = new SelectList(_context.Korpus, "KorpusId", "KorpusName");
+
+            List<PomeshenieType> pomeshenieTypes = _context.PomeshenieType.ToList();
+            ViewData["PomeshenieType"] = pomeshenieTypes;
+
             return View();
         }
 
@@ -37,12 +41,28 @@ namespace KisVuzDotNetCore2.Models.Sveden
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( Pomeshenie pomeshenie)
+        public async Task<IActionResult> Create( Pomeshenie pomeshenie, int[] PomeshenieTypeIds)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(pomeshenie);
                 await _context.SaveChangesAsync();
+
+                if (PomeshenieTypeIds != null)
+                {
+                    var pomeshenieTypes = new List<PomeshenieTypepomesheniya>();
+                    foreach (var PomeshenieTypeId in PomeshenieTypeIds)
+                    {
+                        PomeshenieTypepomesheniya pomeshenieTypepomesheniya = new PomeshenieTypepomesheniya();
+                        pomeshenieTypepomesheniya.PomeshenieId = pomeshenie.PomeshenieId;
+                        pomeshenieTypepomesheniya.PomeshenieTypeId = PomeshenieTypeId;
+                        pomeshenieTypes.Add(pomeshenieTypepomesheniya);
+                    }
+                    await _context.PomeshenieTypepomesheniya.AddRangeAsync(pomeshenieTypes);
+                    await _context.SaveChangesAsync();
+                }
+
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["KorpusId"] = new SelectList(_context.Korpus, "KorpusId", "KorpusName", pomeshenie.KorpusId);

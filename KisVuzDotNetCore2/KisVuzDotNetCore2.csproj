@@ -340,6 +340,10 @@
     <Compile Remove="Migrations\20180701100347_stavka2.Designer.cs" />
     <Compile Remove="Migrations\20180701123606_init.cs" />
     <Compile Remove="Migrations\20180701123606_init.Designer.cs" />
+    <Compile Remove="Migrations\20180710054549_init.cs" />
+    <Compile Remove="Migrations\20180710054549_init.Designer.cs" />
+    <Compile Remove="Migrations\20180710055613_init.cs" />
+    <Compile Remove="Migrations\20180710055613_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

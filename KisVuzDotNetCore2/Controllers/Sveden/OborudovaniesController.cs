@@ -22,7 +22,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: Oborudovanies
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.Oborudovanie.Include(o => o.Pomeshenie);
+            var appIdentityDBContext = _context.Oborudovanie.Include(o => o.Pomeshenie.Korpus);
             return View(await appIdentityDBContext.ToListAsync());
         }
 
@@ -30,7 +30,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: Oborudovanies/Create
         public IActionResult Create()
         {
-            ViewData["PomeshenieId"] = new SelectList(_context.Pomeshenie, "PomeshenieId", "PomeshenieName");
+            ViewData["PomeshenieId"] = new SelectList(_context.Pomeshenie.Include(p=>p.Korpus), "PomeshenieId", "PomeshenieFullName");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["PomeshenieId"] = new SelectList(_context.Pomeshenie, "PomeshenieId", "PomeshenieName", oborudovanie.PomeshenieId);
+            ViewData["PomeshenieId"] = new SelectList(_context.Pomeshenie.Include(p=>p.Korpus), "PomeshenieId", "PomeshenieFullName", oborudovanie.PomeshenieId);
             return View(oborudovanie);
         }
 
@@ -113,7 +113,7 @@ namespace KisVuzDotNetCore2.Controllers
             }
 
             var oborudovanie = await _context.Oborudovanie
-                .Include(o => o.Pomeshenie)
+                .Include(o => o.Pomeshenie.Korpus)
                 .SingleOrDefaultAsync(m => m.OborudovanieId == id);
             if (oborudovanie == null)
             {

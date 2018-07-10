@@ -30,37 +30,49 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                     Oborudovanie OborudovanieName1 = new Oborudovanie
                     {
                         OborudovanieId = 1,
+                        PomeshenieId = 3,
                         OborudovanieName = "Стол",
+                        OborudovanieCount = 8
                     };
 
                     Oborudovanie OborudovanieName2 = new Oborudovanie
                     {
                         OborudovanieId = 2,
+                        PomeshenieId=3,
                         OborudovanieName = "Стул",
+                        OborudovanieCount=16
                     };
 
                     Oborudovanie OborudovanieName3 = new Oborudovanie
                     {
                         OborudovanieId = 3,
+                        PomeshenieId = 3,
                         OborudovanieName = "Доска",
+                        OborudovanieCount = 1
                     };
 
                     Oborudovanie OborudovanieName4 = new Oborudovanie
                     {
                         OborudovanieId = 4,
+                        PomeshenieId = 3,
                         OborudovanieName = "Компьютер",
+                        OborudovanieCount = 6
                     };
 
                     Oborudovanie OborudovanieName5 = new Oborudovanie
                     {
                         OborudovanieId = 5,
+                        PomeshenieId = 3,
                         OborudovanieName = "Проектор",
+                        OborudovanieCount = 1
                     };
 
                     Oborudovanie OborudovanieName6 = new Oborudovanie
                     {
                         OborudovanieId = 6,
+                        PomeshenieId = 5,
                         OborudovanieName = "Стенд",
+                        OborudovanieCount =4
                     };
 
                     await context.Oborudovanie.AddRangeAsync(

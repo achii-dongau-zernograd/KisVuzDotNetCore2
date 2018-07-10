@@ -163,6 +163,11 @@ namespace KisVuzDotNetCore2.Models
         /// Добавление годов начала подготовки к учебному плану
         /// </summary>
         public DbSet<EduPlanEduYearBeginningTraining> EduPlanEduYearBeginningTraining { get; set; }
+
+        /// <summary>
+        /// Календарные учебные графики
+        /// </summary>
+        public DbSet<EduShedule> EduShedules { get; set; }
         #endregion
 
         #region Структура образовательной организации (Struct)
@@ -557,11 +562,11 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseKorpus.CreateKorpus(serviceProvider, configuration);
             await InitDataBasePomeshenieTypes.CreatePomeshenieType(serviceProvider, configuration);           
             await InitDatabasePomeshenie.CreatePomeshenie(serviceProvider, configuration);
-            await InitDataBaseOborudovanie.CreateOborudovanie(serviceProvider, configuration);
-
+            await InitDataBaseOborudovanie.CreateOborudovanie(serviceProvider, configuration);            
 
             await InitDatabaseGraduateYear.CreateGraduateYear(serviceProvider, configuration);
             await InitDatabaseDisciplineName.CreateDisciplineName(serviceProvider, configuration);
+            await InitDatabaseEduPlans.CreateEduPlans(serviceProvider, configuration);
             await InitDatabaseEduPlanEduVidDeyats.CreateEduPlanEduVidDeyats(serviceProvider, configuration);
             await InitDatabaseEduOPEduYearNames.CreateEduOPEduYearNames(serviceProvider, configuration);
 

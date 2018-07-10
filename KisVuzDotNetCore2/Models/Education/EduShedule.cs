@@ -6,7 +6,7 @@ namespace KisVuzDotNetCore2.Models.Education
     /// Модель "Календарный учебный график"
     /// </summary>
     public class EduShedule
-    {        
+    {
         public int EduSheduleId { get; set; }
 
         /// <summary>
@@ -21,17 +21,6 @@ namespace KisVuzDotNetCore2.Models.Education
         public int EduYearId { get; set; }
 
         /// <summary>
-        /// Форма обучения
-        /// </summary>
-        [Display(Name = "Форма обучения")]
-        public EduForm EduForm { get; set; }
-        /// <summary>
-        /// Форма обучения
-        /// </summary>
-        [Display(Name = "Форма обучения")]
-        public int EduFormId { get; set; }
-
-        /// <summary>
         /// Профиль / направленность / специализация
         /// </summary>
         [Display(Name = "Профиль / направленность / специализация")]
@@ -41,6 +30,17 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         [Display(Name = "Профиль / направленность / специализация")]
         public int EduProfileId { get; set; }
+
+        /// <summary>
+        /// Форма обучения
+        /// </summary>
+        [Display(Name = "Форма обучения")]
+        public EduForm EduForm { get; set; }
+        /// <summary>
+        /// Форма обучения
+        /// </summary>
+        [Display(Name = "Форма обучения")]
+        public int EduFormId { get; set; }
 
         /// <summary>
         /// Сканированная копия календарного учебного графика

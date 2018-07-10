@@ -27,5 +27,13 @@ namespace KisVuzDotNetCore2.Models.Sveden
         public string PomeshenieOvz { get; set; }
 
         public List<Oborudovanie> OborudovanieList { get; set; }
+
+        [Display(Name = "Наименование помещения")]
+        public string PomeshenieFullName {
+            get
+            {
+                return Korpus?.KorpusName + " - " + PomeshenieName;
+            }
+        }
     }
 }
