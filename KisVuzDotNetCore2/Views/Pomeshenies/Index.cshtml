@@ -12,12 +12,15 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.PomeshenieName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PomeshenieOvz)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PomeshenieName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PomeshenieTypes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PomeshenieOvz)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Korpus.KorpusName)
             </th>
@@ -29,6 +32,12 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.PomeshenieName)
+            </td>
+            <td>
+                @foreach (var pomType in item.PomeshenieTypes)
+                {
+                    <p>@pomType.PomeshenieType.PomeshenieTypeName</p>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PomeshenieOvz)

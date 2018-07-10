@@ -7,30 +7,42 @@
 <h3>Удалить данные?</h3>
 <div>
       <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PomeshenieName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PomeshenieName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PomeshenieOvz)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PomeshenieOvz)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Korpus.KorpusName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Korpus.KorpusId)
-        </dd>
-    </dl>
+      <dl class="dl-horizontal">
+          <dt>
+              @Html.DisplayNameFor(model => model.PomeshenieName)
+          </dt>
+          <dd>
+              @Html.DisplayFor(model => model.PomeshenieName)
+          </dd>
+          <dt>
+              @Html.DisplayNameFor(model => model.PomeshenieOvz)
+          </dt>
+          <dd>
+              @Html.DisplayFor(model => model.PomeshenieOvz)
+          </dd>
+          <dt>
+              @Html.DisplayNameFor(model => model.Korpus.KorpusName)
+          </dt>
+          <dd>
+              @Html.DisplayFor(model => model.Korpus.KorpusName)
+          </dd>
+          <dt>
+              @Html.DisplayNameFor(model => model.PomeshenieTypes)
+          </dt>
+          <dd>
+              @foreach (var item in Model.PomeshenieTypes)
+              {
+                  <p>
+                      @item.PomeshenieType.PomeshenieTypeName
+                  </p>
+              }
+             
+          </dd>
+      </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="PomeshenieId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> 
+        <input type="submit" value="Удалить" class="btn btn-danger" /> 
         <a asp-action="Index" class="btn btn-default">Отмена</a>
     </form>
 </div>

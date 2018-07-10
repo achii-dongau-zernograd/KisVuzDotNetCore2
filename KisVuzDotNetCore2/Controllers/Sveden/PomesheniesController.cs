@@ -21,8 +21,20 @@ namespace KisVuzDotNetCore2.Models.Sveden
         // GET: Pomeshenies
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.Pomeshenie.Include(p => p.Korpus);
-            return View(await appIdentityDBContext.ToListAsync());
+            var pomeshenies = await _context.Pomeshenie
+                .Include(p => p.Korpus)
+                .Include(p=>p.PomeshenieTypes)
+                .ToListAsync();
+
+            foreach (var pomeshenie in pomeshenies)
+            {
+                foreach (var pomeshenieType in pomeshenie.PomeshenieTypes)
+                {
+                    pomeshenieType.PomeshenieType = await _context.PomeshenieType.SingleOrDefaultAsync(t => t.PomeshenieTypeId == pomeshenieType.PomeshenieTypeId);
+                }
+            }
+
+            return View(pomeshenies);
         }
 
         // GET: Pomeshenies/Create
@@ -132,10 +144,16 @@ namespace KisVuzDotNetCore2.Models.Sveden
 
             var pomeshenie = await _context.Pomeshenie
                 .Include(p => p.Korpus)
+                .Include(p => p.PomeshenieTypes)
                 .SingleOrDefaultAsync(m => m.PomeshenieId == id);
             if (pomeshenie == null)
             {
                 return NotFound();
+            }
+
+            foreach (var pomeshenieType in pomeshenie.PomeshenieTypes)
+            {
+                pomeshenieType.PomeshenieType = await _context.PomeshenieType.SingleOrDefaultAsync(t => t.PomeshenieTypeId == pomeshenieType.PomeshenieTypeId);
             }
 
             return View(pomeshenie);
