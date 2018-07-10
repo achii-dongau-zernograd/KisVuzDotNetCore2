@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.PomeshenieTypepomesheniya>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Помещение - Тип помещения";
 }
 
-<h2>Index</h2>
+<h2>Помещение - Тип помещения</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -25,15 +25,14 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Pomeshenie.PomeshenieId)
+                @Html.DisplayFor(modelItem => item.Pomeshenie.PomeshenieName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PomeshenieType.PomeshenieTypeId)
+                @Html.DisplayFor(modelItem => item.PomeshenieType.PomeshenieTypeName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.PomeshenieTypepomesheniyaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PomeshenieTypepomesheniyaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PomeshenieTypepomesheniyaId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.PomeshenieTypepomesheniyaId">Редактировать</a> |                
+                <a asp-action="Delete" asp-route-id="@item.PomeshenieTypepomesheniyaId">Удалить</a>
             </td>
         </tr>
 }

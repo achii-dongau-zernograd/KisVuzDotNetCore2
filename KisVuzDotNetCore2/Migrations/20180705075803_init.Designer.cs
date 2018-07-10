@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180701123606_init")]
+    [Migration("20180705075803_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1409,6 +1409,88 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("HostelInfo");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.Korpus", b =>
+                {
+                    b.Property<int>("KorpusId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AddressId");
+
+                    b.Property<string>("KorpusName");
+
+                    b.HasKey("KorpusId");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("Korpus");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.Oborudovanie", b =>
+                {
+                    b.Property<int>("OborudovanieId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("OborudovanieCount");
+
+                    b.Property<string>("OborudovanieName");
+
+                    b.Property<int>("PomeshenieId");
+
+                    b.HasKey("OborudovanieId");
+
+                    b.HasIndex("PomeshenieId");
+
+                    b.ToTable("Oborudovanie");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.Pomeshenie", b =>
+                {
+                    b.Property<int>("PomeshenieId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("KorpusId");
+
+                    b.Property<string>("PomeshenieName");
+
+                    b.Property<string>("PomeshenieOvz");
+
+                    b.HasKey("PomeshenieId");
+
+                    b.HasIndex("KorpusId");
+
+                    b.ToTable("Pomeshenie");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.PomeshenieType", b =>
+                {
+                    b.Property<int>("PomeshenieTypeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("PomeshenieTypeName");
+
+                    b.HasKey("PomeshenieTypeId");
+
+                    b.ToTable("PomeshenieType");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.PomeshenieTypepomesheniya", b =>
+                {
+                    b.Property<int>("PomeshenieTypepomesheniyaId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("PomeshenieId");
+
+                    b.Property<int>("PomeshenieTypeId");
+
+                    b.HasKey("PomeshenieTypepomesheniyaId");
+
+                    b.HasIndex("PomeshenieId");
+
+                    b.HasIndex("PomeshenieTypeId");
+
+                    b.ToTable("PomeshenieTypepomesheniya");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.Rucovodstvo", b =>
                 {
                     b.Property<int>("RucovodstvoId")
@@ -2230,6 +2312,43 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "Res")
                         .WithMany()
                         .HasForeignKey("ResId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.Korpus", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.Address", "KorpusAddress")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.Oborudovanie", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Sveden.Pomeshenie", "Pomeshenie")
+                        .WithMany("OborudovanieList")
+                        .HasForeignKey("PomeshenieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.Pomeshenie", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Sveden.Korpus", "Korpus")
+                        .WithMany("Pomesheniya")
+                        .HasForeignKey("KorpusId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.PomeshenieTypepomesheniya", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Sveden.Pomeshenie", "Pomeshenie")
+                        .WithMany("PomeshenieTypes")
+                        .HasForeignKey("PomeshenieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Sveden.PomeshenieType", "PomeshenieType")
+                        .WithMany()
+                        .HasForeignKey("PomeshenieTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ProfessionalRetraining", b =>

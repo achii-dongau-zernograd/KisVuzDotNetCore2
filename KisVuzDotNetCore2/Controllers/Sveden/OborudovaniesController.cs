@@ -26,25 +26,7 @@ namespace KisVuzDotNetCore2.Controllers
             return View(await appIdentityDBContext.ToListAsync());
         }
 
-        // GET: Oborudovanies/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var oborudovanie = await _context.Oborudovanie
-                .Include(o => o.Pomeshenie)
-                .SingleOrDefaultAsync(m => m.OborudovanieId == id);
-            if (oborudovanie == null)
-            {
-                return NotFound();
-            }
-
-            return View(oborudovanie);
-        }
-
+        
         // GET: Oborudovanies/Create
         public IActionResult Create()
         {

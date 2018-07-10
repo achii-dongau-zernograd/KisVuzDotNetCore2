@@ -29,8 +29,8 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: PomeshenieTypepomesheniyas/Create
         public IActionResult Create()
         {
-            ViewData["PomeshenieId"] = new SelectList(_context.Pomeshenie, "PomeshenieId", "PomeshenieId");
-            ViewData["PomeshenieTypeId"] = new SelectList(_context.PomeshenieType, "PomeshenieTypeId", "PomeshenieTypeId");
+            ViewData["PomeshenieId"] = new SelectList(_context.Pomeshenie, "PomeshenieId", "PomeshenieName");
+            ViewData["PomeshenieTypeId"] = new SelectList(_context.PomeshenieType, "PomeshenieTypeId", "PomeshenieTypeName");
             return View();
         }
 
@@ -39,7 +39,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PomeshenieTypepomesheniyaId,PomeshenieId,PomeshenieTypeId")] PomeshenieTypepomesheniya pomeshenieTypepomesheniya)
+        public async Task<IActionResult> Create( PomeshenieTypepomesheniya pomeshenieTypepomesheniya)
         {
             if (ModelState.IsValid)
             {
@@ -47,8 +47,8 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PomeshenieId"] = new SelectList(_context.Pomeshenie, "PomeshenieId", "PomeshenieId", pomeshenieTypepomesheniya.PomeshenieId);
-            ViewData["PomeshenieTypeId"] = new SelectList(_context.PomeshenieType, "PomeshenieTypeId", "PomeshenieTypeId", pomeshenieTypepomesheniya.PomeshenieTypeId);
+            ViewData["PomeshenieId"] = new SelectList(_context.Pomeshenie, "PomeshenieId", "PomeshenieName", pomeshenieTypepomesheniya.PomeshenieId);
+            ViewData["PomeshenieTypeId"] = new SelectList(_context.PomeshenieType, "PomeshenieTypeId", "PomeshenieTypeName", pomeshenieTypepomesheniya.PomeshenieTypeId);
             return View(pomeshenieTypepomesheniya);
         }
 
@@ -65,8 +65,8 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["PomeshenieId"] = new SelectList(_context.Pomeshenie, "PomeshenieId", "PomeshenieId", pomeshenieTypepomesheniya.PomeshenieId);
-            ViewData["PomeshenieTypeId"] = new SelectList(_context.PomeshenieType, "PomeshenieTypeId", "PomeshenieTypeId", pomeshenieTypepomesheniya.PomeshenieTypeId);
+            ViewData["PomeshenieId"] = new SelectList(_context.Pomeshenie, "PomeshenieId", "PomeshenieName", pomeshenieTypepomesheniya.PomeshenieId);
+            ViewData["PomeshenieTypeId"] = new SelectList(_context.PomeshenieType, "PomeshenieTypeId", "PomeshenieTypeName", pomeshenieTypepomesheniya.PomeshenieTypeId);
             return View(pomeshenieTypepomesheniya);
         }
 
@@ -75,7 +75,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PomeshenieTypepomesheniyaId,PomeshenieId,PomeshenieTypeId")] PomeshenieTypepomesheniya pomeshenieTypepomesheniya)
+        public async Task<IActionResult> Edit(int id, PomeshenieTypepomesheniya pomeshenieTypepomesheniya)
         {
             if (id != pomeshenieTypepomesheniya.PomeshenieTypepomesheniyaId)
             {
@@ -102,8 +102,8 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PomeshenieId"] = new SelectList(_context.Pomeshenie, "PomeshenieId", "PomeshenieId", pomeshenieTypepomesheniya.PomeshenieId);
-            ViewData["PomeshenieTypeId"] = new SelectList(_context.PomeshenieType, "PomeshenieTypeId", "PomeshenieTypeId", pomeshenieTypepomesheniya.PomeshenieTypeId);
+            ViewData["PomeshenieId"] = new SelectList(_context.Pomeshenie, "PomeshenieId", "PomeshenieName", pomeshenieTypepomesheniya.PomeshenieId);
+            ViewData["PomeshenieTypeId"] = new SelectList(_context.PomeshenieType, "PomeshenieTypeId", "PomeshenieTypeName", pomeshenieTypepomesheniya.PomeshenieTypeId);
             return View(pomeshenieTypepomesheniya);
         }
 

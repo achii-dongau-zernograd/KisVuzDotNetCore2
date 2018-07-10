@@ -461,7 +461,7 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<Korpus> Korpus { get; set; }
 
         /// <summary>
-        /// Корпус
+        /// Помещение
         /// </summary>
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
@@ -469,7 +469,7 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<Pomeshenie> Pomeshenie { get; set; }
 
         /// <summary>
-        /// Корпус
+        /// Оборудование
         /// </summary>
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
@@ -485,7 +485,7 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<PomeshenieType> PomeshenieType { get; set; }
 
         /// <summary>
-        /// Тип помещения (справочник)
+        /// Помещение - Тип помещения (таблица для связи)
         /// </summary>
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
@@ -553,13 +553,21 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseEduVidDeyats.CreateEduVidDeyats(serviceProvider, configuration);
             await InitDatabaseBlokDisciplChastName.CreateBlokDisciplChastName(serviceProvider, configuration);
             await InitDatabaseEduSrok.CreateEduSrok(serviceProvider, configuration);
-            
+
+            await InitDatabaseKorpus.CreateKorpus(serviceProvider, configuration);
+            await InitDataBasePomeshenieTypes.CreatePomeshenieType(serviceProvider, configuration);           
+            await InitDatabasePomeshenie.CreatePomeshenie(serviceProvider, configuration);
+            await InitDataBaseOborudovanie.CreateOborudovanie(serviceProvider, configuration);
+
+
             await InitDatabaseGraduateYear.CreateGraduateYear(serviceProvider, configuration);
             await InitDatabaseDisciplineName.CreateDisciplineName(serviceProvider, configuration);
             await InitDatabaseEduPlanEduVidDeyats.CreateEduPlanEduVidDeyats(serviceProvider, configuration);
             await InitDatabaseEduOPEduYearNames.CreateEduOPEduYearNames(serviceProvider, configuration);
 
-            //await InitDatabaseKorpus.CreateKorpus(serviceProvider, configuration);
-        }                
+            
+
+
+         }                
     }
 }

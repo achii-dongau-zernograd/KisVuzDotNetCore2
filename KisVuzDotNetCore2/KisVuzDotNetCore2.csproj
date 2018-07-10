@@ -308,6 +308,8 @@
     <Compile Remove="Migrations\20180629064951_DisciplineName.Designer.cs" />
     <Compile Remove="Migrations\20180629072213_init.cs" />
     <Compile Remove="Migrations\20180629072213_init.Designer.cs" />
+    <Compile Remove="Migrations\20180629090247_OborudovaniePomesheni.cs" />
+    <Compile Remove="Migrations\20180629090247_OborudovaniePomesheni.Designer.cs" />
     <Compile Remove="Migrations\20180629111006_init.cs" />
     <Compile Remove="Migrations\20180629111006_init.Designer.cs" />
     <Compile Remove="Migrations\20180629111908_init.cs" />
@@ -336,6 +338,8 @@
     <Compile Remove="Migrations\20180701094726_stavka.Designer.cs" />
     <Compile Remove="Migrations\20180701100347_stavka2.cs" />
     <Compile Remove="Migrations\20180701100347_stavka2.Designer.cs" />
+    <Compile Remove="Migrations\20180701123606_init.cs" />
+    <Compile Remove="Migrations\20180701123606_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
