@@ -326,6 +326,19 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PomeshenieType",
+                columns: table => new
+                {
+                    PomeshenieTypeId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    PomeshenieTypeName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PomeshenieType", x => x.PomeshenieTypeId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Posts",
                 columns: table => new
                 {
@@ -466,6 +479,26 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.AcademicDegreeGroupId,
                         principalTable: "AcademicDegreeGroups",
                         principalColumn: "AcademicDegreeGroupId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Korpus",
+                columns: table => new
+                {
+                    KorpusId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AddressId = table.Column<int>(nullable: false),
+                    KorpusName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Korpus", x => x.KorpusId);
+                    table.ForeignKey(
+                        name: "FK_Korpus_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "AddressId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -655,6 +688,27 @@ namespace KisVuzDotNetCore2.Migrations
                         principalTable: "EduLevelGroups",
                         principalColumn: "EduLevelGroupId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pomeshenie",
+                columns: table => new
+                {
+                    PomeshenieId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    KorpusId = table.Column<int>(nullable: false),
+                    PomeshenieName = table.Column<string>(nullable: true),
+                    PomeshenieOvz = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pomeshenie", x => x.PomeshenieId);
+                    table.ForeignKey(
+                        name: "FK_Pomeshenie_Korpus_KorpusId",
+                        column: x => x.KorpusId,
+                        principalTable: "Korpus",
+                        principalColumn: "KorpusId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -942,6 +996,53 @@ namespace KisVuzDotNetCore2.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Oborudovanie",
+                columns: table => new
+                {
+                    OborudovanieId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    OborudovanieCount = table.Column<int>(nullable: false),
+                    OborudovanieName = table.Column<string>(nullable: true),
+                    PomeshenieId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Oborudovanie", x => x.OborudovanieId);
+                    table.ForeignKey(
+                        name: "FK_Oborudovanie_Pomeshenie_PomeshenieId",
+                        column: x => x.PomeshenieId,
+                        principalTable: "Pomeshenie",
+                        principalColumn: "PomeshenieId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PomeshenieTypepomesheniya",
+                columns: table => new
+                {
+                    PomeshenieTypepomesheniyaId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    PomeshenieId = table.Column<int>(nullable: false),
+                    PomeshenieTypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PomeshenieTypepomesheniya", x => x.PomeshenieTypepomesheniyaId);
+                    table.ForeignKey(
+                        name: "FK_PomeshenieTypepomesheniya_Pomeshenie_PomeshenieId",
+                        column: x => x.PomeshenieId,
+                        principalTable: "Pomeshenie",
+                        principalColumn: "PomeshenieId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PomeshenieTypepomesheniya_PomeshenieType_PomeshenieTypeId",
+                        column: x => x.PomeshenieTypeId,
+                        principalTable: "PomeshenieType",
+                        principalColumn: "PomeshenieTypeId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1816,6 +1917,46 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EduShedules",
+                columns: table => new
+                {
+                    EduSheduleId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduFormId = table.Column<int>(nullable: false),
+                    EduProfileId = table.Column<int>(nullable: false),
+                    EduYearId = table.Column<int>(nullable: false),
+                    FileModelId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EduShedules", x => x.EduSheduleId);
+                    table.ForeignKey(
+                        name: "FK_EduShedules_EduForms_EduFormId",
+                        column: x => x.EduFormId,
+                        principalTable: "EduForms",
+                        principalColumn: "EduFormId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EduShedules_EduProfiles_EduProfileId",
+                        column: x => x.EduProfileId,
+                        principalTable: "EduProfiles",
+                        principalColumn: "EduProfileId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EduShedules_EduYears_EduYearId",
+                        column: x => x.EduYearId,
+                        principalTable: "EduYears",
+                        principalColumn: "EduYearId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EduShedules_Files_FileModelId",
+                        column: x => x.FileModelId,
+                        principalTable: "Files",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Discipline",
                 columns: table => new
                 {
@@ -2156,6 +2297,26 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "EduNapravlId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EduShedules_EduFormId",
+                table: "EduShedules",
+                column: "EduFormId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduShedules_EduProfileId",
+                table: "EduShedules",
+                column: "EduProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduShedules_EduYearId",
+                table: "EduShedules",
+                column: "EduYearId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduShedules_FileModelId",
+                table: "EduShedules",
+                column: "FileModelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EduUgses_EduAccredId",
                 table: "EduUgses",
                 column: "EduAccredId");
@@ -2231,6 +2392,11 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "GraduateYearId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Korpus_AddressId",
+                table: "Korpus",
+                column: "AddressId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Kurs_DisciplineId",
                 table: "Kurs",
                 column: "DisciplineId");
@@ -2239,6 +2405,26 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "IX_Kurs_EduKursId",
                 table: "Kurs",
                 column: "EduKursId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Oborudovanie_PomeshenieId",
+                table: "Oborudovanie",
+                column: "PomeshenieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pomeshenie_KorpusId",
+                table: "Pomeshenie",
+                column: "KorpusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PomeshenieTypepomesheniya_PomeshenieId",
+                table: "PomeshenieTypepomesheniya",
+                column: "PomeshenieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PomeshenieTypepomesheniya_PomeshenieTypeId",
+                table: "PomeshenieTypepomesheniya",
+                column: "PomeshenieTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PriemExam_EduNapravlId",
@@ -2464,7 +2650,7 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "EduPriem");
 
             migrationBuilder.DropTable(
-                name: "EduYears");
+                name: "EduShedules");
 
             migrationBuilder.DropTable(
                 name: "ElectronBiblSystem");
@@ -2492,6 +2678,12 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "HostelInfo");
+
+            migrationBuilder.DropTable(
+                name: "Oborudovanie");
+
+            migrationBuilder.DropTable(
+                name: "PomeshenieTypepomesheniya");
 
             migrationBuilder.DropTable(
                 name: "PriemExam");
@@ -2554,10 +2746,19 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "EduYearBeginningTrainings");
 
             migrationBuilder.DropTable(
+                name: "EduYears");
+
+            migrationBuilder.DropTable(
                 name: "FileDataTypes");
 
             migrationBuilder.DropTable(
                 name: "GraduateYear");
+
+            migrationBuilder.DropTable(
+                name: "Pomeshenie");
+
+            migrationBuilder.DropTable(
+                name: "PomeshenieType");
 
             migrationBuilder.DropTable(
                 name: "RowStatuses");
@@ -2573,6 +2774,9 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "FileDataTypeGroups");
+
+            migrationBuilder.DropTable(
+                name: "Korpus");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

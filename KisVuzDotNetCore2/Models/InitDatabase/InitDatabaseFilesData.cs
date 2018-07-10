@@ -336,7 +336,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType33 = new FileDataType
                     {
-                        FileDataTypeId = 33,
+                        FileDataTypeId = (int)FileDataTypeEnum.KalendarniyUchebniyGraphik,
                         FileDataTypeName = "Календарный учебный график",
                         Itemprop = "",
                         FileDataTypeGroupId = 5

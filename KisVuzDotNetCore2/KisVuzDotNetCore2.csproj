@@ -290,6 +290,10 @@
     <Compile Remove="Migrations\20180628104535_Init.Designer.cs" />
     <Compile Remove="Migrations\20180628103705_init.cs" />
     <Compile Remove="Migrations\20180628103705_init.Designer.cs" />
+    <Compile Remove="Migrations\20180629064435_OborudovaniePomesheni.cs" />
+    <Compile Remove="Migrations\20180629064435_OborudovaniePomesheni.Designer.cs" />
+    <Compile Remove="Migrations\20180629072157_OborudovaniePomesheni.cs" />
+    <Compile Remove="Migrations\20180629072157_OborudovaniePomesheni.Designer.cs" />
     <Compile Remove="Migrations\20180628110005_Init.cs" />
     <Compile Remove="Migrations\20180628110005_Init.Designer.cs" />
     <Compile Remove="Migrations\20180628110257_init.cs" />
@@ -304,6 +308,8 @@
     <Compile Remove="Migrations\20180629064951_DisciplineName.Designer.cs" />
     <Compile Remove="Migrations\20180629072213_init.cs" />
     <Compile Remove="Migrations\20180629072213_init.Designer.cs" />
+    <Compile Remove="Migrations\20180629090247_OborudovaniePomesheni.cs" />
+    <Compile Remove="Migrations\20180629090247_OborudovaniePomesheni.Designer.cs" />
     <Compile Remove="Migrations\20180629111006_init.cs" />
     <Compile Remove="Migrations\20180629111006_init.Designer.cs" />
     <Compile Remove="Migrations\20180629111908_init.cs" />
@@ -332,6 +338,12 @@
     <Compile Remove="Migrations\20180701094726_stavka.Designer.cs" />
     <Compile Remove="Migrations\20180701100347_stavka2.cs" />
     <Compile Remove="Migrations\20180701100347_stavka2.Designer.cs" />
+    <Compile Remove="Migrations\20180701123606_init.cs" />
+    <Compile Remove="Migrations\20180701123606_init.Designer.cs" />
+    <Compile Remove="Migrations\20180710054549_init.cs" />
+    <Compile Remove="Migrations\20180710054549_init.Designer.cs" />
+    <Compile Remove="Migrations\20180710055613_init.cs" />
+    <Compile Remove="Migrations\20180710055613_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduShedule>
+
+@{
+    ViewData["Title"] = "Календарные учебные графики";
+}
+
+<h2>Календарные учебные графики</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EduYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduProfile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduForm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileModel)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduYear.EduYearName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduForm.EduFormName)
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.FileModel.Path))
+                {
+                    <a href="/@item.FileModel.Path">Открыть</a>
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EduSheduleId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.EduSheduleId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduSheduleId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
