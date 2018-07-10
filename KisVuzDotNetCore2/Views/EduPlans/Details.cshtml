@@ -10,6 +10,12 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.ProtokolNumber)
         </dt>
         <dd>
@@ -38,15 +44,9 @@
         </dt>
         <dd>
             @if (Model.EduPlanPdf?.Id != null)
-            {                
+            {
                 <a href="/@Model.EduPlanPdf?.Path">Открыть</a>
             }
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EduProfile)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.EduProgramPodg)
@@ -65,6 +65,17 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.StructKaf.StructSubvision.StructSubvisionName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduVidDeyatList)
+        </dt>
+        <dd>
+            <ul>
+                @foreach (var vidDeyat in Model.EduVidDeyatList)
+                {
+                    <li>@vidDeyat.EduVidDeyat.EduVidDeyatName</li>
+                }
+            </ul>
         </dd>
     </dl>
 </div>

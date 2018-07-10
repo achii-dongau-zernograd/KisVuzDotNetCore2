@@ -54,7 +54,14 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 .Include(e => e.EduProgramPodg)
                 .Include(e => e.EduSrok)
                 .Include(e => e.StructKaf.StructSubvision)
+                .Include(e => e.EduVidDeyatList)
                 .SingleOrDefaultAsync(m => m.EduPlanId == id);
+            // Заполняем навигационное свойство EduVidDeyat списка видов деятельности
+            foreach (var vidDeyat in eduPlan.EduVidDeyatList)
+            {                
+                vidDeyat.EduVidDeyat = await _context.EduVidDeyat.Where(d => d.EduVidDeyatId == vidDeyat.EduVidDeyatId).FirstOrDefaultAsync();
+            }
+
             if (eduPlan == null)
             {
                 return NotFound();
