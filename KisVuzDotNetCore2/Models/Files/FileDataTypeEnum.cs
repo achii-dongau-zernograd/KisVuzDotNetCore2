@@ -12,6 +12,10 @@
         /// <summary>
         /// Основная профессиональная образовательная программа (ОПОП)
         /// </summary>
-        OPOP = 32
+        OPOP = 32,
+        /// <summary>
+        /// Календарный учебный график
+        /// </summary>
+        KalendarniyUchebniyGraphik=33
     }
 }

@@ -478,6 +478,32 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("EduQualification");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduShedule", b =>
+                {
+                    b.Property<int>("EduSheduleId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduFormId");
+
+                    b.Property<int>("EduProfileId");
+
+                    b.Property<int>("EduYearId");
+
+                    b.Property<int>("FileModelId");
+
+                    b.HasKey("EduSheduleId");
+
+                    b.HasIndex("EduFormId");
+
+                    b.HasIndex("EduProfileId");
+
+                    b.HasIndex("EduYearId");
+
+                    b.HasIndex("FileModelId");
+
+                    b.ToTable("EduShedules");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduSrok", b =>
                 {
                     b.Property<int>("EduSrokId")
@@ -1891,6 +1917,29 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
                         .WithMany("EduProfiles")
                         .HasForeignKey("EduNapravlId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduShedule", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
+                        .WithMany()
+                        .HasForeignKey("EduFormId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
+                        .WithMany()
+                        .HasForeignKey("EduProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduYear", "EduYear")
+                        .WithMany()
+                        .HasForeignKey("EduYearId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
+                        .WithMany()
+                        .HasForeignKey("FileModelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

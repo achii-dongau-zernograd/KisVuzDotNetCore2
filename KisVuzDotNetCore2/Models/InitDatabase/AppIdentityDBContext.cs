@@ -163,6 +163,11 @@ namespace KisVuzDotNetCore2.Models
         /// Добавление годов начала подготовки к учебному плану
         /// </summary>
         public DbSet<EduPlanEduYearBeginningTraining> EduPlanEduYearBeginningTraining { get; set; }
+
+        /// <summary>
+        /// Календарные учебные графики
+        /// </summary>
+        public DbSet<EduShedule> EduShedules { get; set; }
         #endregion
 
         #region Структура образовательной организации (Struct)
