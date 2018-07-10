@@ -10,6 +10,53 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProgramPodg)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProgramPodg.EduProgramPodgName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduSrok)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduSrok.EduSrokName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduVidDeyatList)
+        </dt>
+        <dd>
+            <ul>
+                @foreach (var vidDeyat in Model.EduVidDeyatList)
+                {
+                    <li>@vidDeyat.EduVidDeyat.EduVidDeyatName</li>
+                }
+            </ul>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduPlanEduYearBeginningTrainings)
+        </dt>
+        <dd>
+            <ul>
+                @foreach (var eduYearBeginningTraning in Model.EduPlanEduYearBeginningTrainings)
+                {
+                    <li>@eduYearBeginningTraning.EduYearBeginningTraining.EduYearBeginningTrainingName</li>
+                }
+            </ul>
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.ProtokolNumber)
         </dt>
         <dd>
@@ -28,10 +75,10 @@
             @Html.DisplayFor(model => model.UtverjdDate)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EduForm)
+            @Html.DisplayNameFor(model => model.StructKaf)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduForm.EduFormName)
+            @Html.DisplayFor(model => model.StructKaf.StructSubvision.StructSubvisionName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.EduPlanPdf)
@@ -41,30 +88,6 @@
             {
                 <a href="/@Model.EduPlanPdf?.Path">Открыть</a>
             }
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EduProfile)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EduProgramPodg)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EduProgramPodg.EduProgramPodgName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EduSrok)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EduSrok.EduSrokName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StructKaf)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StructKaf.StructSubvision.StructSubvisionName)
         </dd>
     </dl>
     

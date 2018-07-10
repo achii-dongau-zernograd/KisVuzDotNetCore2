@@ -31,7 +31,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <summary>
         /// Годы начала подготовки
         /// </summary>
-        [Display(Name = "Год начала подготовки")]
+        [Display(Name = "Годы начала подготовки")]
         public List<EduPlanEduYearBeginningTraining> EduPlanEduYearBeginningTrainings { get; set; }
 
         /// <summary>

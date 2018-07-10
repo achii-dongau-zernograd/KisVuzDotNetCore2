@@ -13,6 +13,24 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.EduProfile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduProgramPodg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduForm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduSrok)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduVidDeyatList)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduPlanEduYearBeginningTrainings)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ProtokolNumber)
             </th>
             <th>
@@ -22,22 +40,10 @@
                 @Html.DisplayNameFor(model => model.UtverjdDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EduForm)
+                @Html.DisplayNameFor(model => model.StructKaf)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EduPlanPdf)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EduProfile)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EduProgramPodg)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EduSrok)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StructKaf)
             </th>
             <th></th>
         </tr>
@@ -45,6 +51,30 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduProgramPodg.EduProgramPodgName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduForm.EduFormName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduSrok.EduSrokName)
+            </td>
+            <td>
+                @foreach (var eduVidDeyat in item.EduVidDeyatList)
+                {
+                    <p>@eduVidDeyat.EduVidDeyat.EduVidDeyatName</p>
+                }
+            </td>
+            <td>
+                @foreach (var yearBeginningTraining in item.EduPlanEduYearBeginningTrainings)
+                {
+                    <p>@yearBeginningTraining.EduYearBeginningTraining.EduYearBeginningTrainingName</p>
+                }
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProtokolNumber)
             </td>
@@ -55,27 +85,15 @@
                 @Html.DisplayFor(modelItem => item.UtverjdDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EduForm.EduFormName)
+                @Html.DisplayFor(modelItem => item.StructKaf.StructSubvision.StructSubvisionName)
             </td>
             <td>
-                @if (item.EduPlanPdf?.Id!=null)
+                @if (item.EduPlanPdf?.Id != null)
                 {
                     <a asp-controller="Files" asp-action="GetFile" asp-route-id="@item.EduPlanPdf?.Id">Скачать</a>
                     <br />
                     <a href="@item.EduPlanPdf?.Path">Открыть</a>
                 }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduProgramPodg.EduProgramPodgName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EduSrok.EduSrokName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StructKaf.StructSubvision.StructSubvisionName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EduPlanId">Редактировать</a> |

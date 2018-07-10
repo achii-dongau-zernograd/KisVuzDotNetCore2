@@ -29,14 +29,31 @@ namespace KisVuzDotNetCore2.Controllers.Education
         // GET: EduPlans
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.EduPlans
+            var eduPlans = await _context.EduPlans
                 .Include(e => e.EduForm)
                 .Include(e => e.EduPlanPdf)
                 .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduProgramPodg)
                 .Include(e => e.EduSrok)
-                .Include(e => e.StructKaf.StructSubvision);
-            return View(await appIdentityDBContext.ToListAsync());
+                .Include(e => e.StructKaf.StructSubvision)
+                .Include(e => e.EduPlanEduYearBeginningTrainings)
+                .Include(e => e.EduVidDeyatList)
+                .ToListAsync();
+
+            foreach (var eduPlan in eduPlans)
+            {
+                foreach (var eduYearBeginningTraining in eduPlan.EduPlanEduYearBeginningTrainings)
+                {
+                    eduYearBeginningTraining.EduYearBeginningTraining = await _context.EduYearBeginningTrainings.Where(y => y.EduYearBeginningTrainingId == eduYearBeginningTraining.EduYearBeginningTrainingId).SingleOrDefaultAsync();
+                }
+
+                foreach (var eduVidDeyat in eduPlan.EduVidDeyatList)
+                {
+                    eduVidDeyat.EduVidDeyat = await _context.EduVidDeyat.Where(v => v.EduVidDeyatId == eduVidDeyat.EduVidDeyatId).SingleOrDefaultAsync();
+                }
+            }
+
+            return View(eduPlans);
         }
 
         // GET: EduPlans/Details/5
@@ -55,6 +72,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 .Include(e => e.EduSrok)
                 .Include(e => e.StructKaf.StructSubvision)
                 .Include(e => e.EduVidDeyatList)
+                .Include(e => e.EduPlanEduYearBeginningTrainings)
                 .SingleOrDefaultAsync(m => m.EduPlanId == id);
             // Заполняем навигационное свойство EduVidDeyat списка видов деятельности
             foreach (var vidDeyat in eduPlan.EduVidDeyatList)
@@ -66,6 +84,12 @@ namespace KisVuzDotNetCore2.Controllers.Education
             {
                 return NotFound();
             }
+
+            foreach (var eduYearBeginningTraning in eduPlan.EduPlanEduYearBeginningTrainings)
+            {
+                eduYearBeginningTraning.EduYearBeginningTraining = await _context.EduYearBeginningTrainings.SingleOrDefaultAsync(y => y.EduYearBeginningTrainingId == eduYearBeginningTraning.EduYearBeginningTrainingId);
+            }
+
 
             return View(eduPlan);
         }
@@ -82,6 +106,9 @@ namespace KisVuzDotNetCore2.Controllers.Education
             List<EduVidDeyat> eduVidDeyats = _context.EduVidDeyat.ToList();
             ViewData["EduVidDeyats"] = eduVidDeyats;
 
+            List<EduYearBeginningTraining> eduYearBeginningTrainings = _context.EduYearBeginningTrainings.ToList();
+            ViewData["EduYearBeginningTrainings"] = eduYearBeginningTrainings;
+
             return View();
         }
 
@@ -90,7 +117,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EduPlan eduPlan, IFormFile uploadedFile, int[] EduVidDeyatIds)
+        public async Task<IActionResult> Create(EduPlan eduPlan, IFormFile uploadedFile, int[] EduVidDeyatIds, int[] EduYearBeginningTrainingIds)
         {
             if (ModelState.IsValid && uploadedFile!=null)
             {
@@ -114,6 +141,21 @@ namespace KisVuzDotNetCore2.Controllers.Education
                     await _context.SaveChangesAsync();
                 }
 
+                if(EduYearBeginningTrainingIds!=null)
+                {
+                    var eduPlanEduYearBeginningTrainings = new List<EduPlanEduYearBeginningTraining>();
+                    foreach (var EduYearBeginningTrainingId in EduYearBeginningTrainingIds)
+                    {
+                        EduPlanEduYearBeginningTraining eduPlanEduYearBeginningTraining = new EduPlanEduYearBeginningTraining();
+                        eduPlanEduYearBeginningTraining.EduPlanId = eduPlan.EduPlanId;
+                        eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId = EduYearBeginningTrainingId;
+                        eduPlanEduYearBeginningTrainings.Add(eduPlanEduYearBeginningTraining);
+                    }
+                    await _context.EduPlanEduYearBeginningTraining.AddRangeAsync(eduPlanEduYearBeginningTrainings);
+                    await _context.SaveChangesAsync();
+                }
+
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormName", eduPlan.EduFormId);            
@@ -121,6 +163,12 @@ namespace KisVuzDotNetCore2.Controllers.Education
             ViewData["EduProgramPodgId"] = new SelectList(_context.EduProgramPodg, "EduProgramPodgId", "EduProgramPodgName", eduPlan.EduProgramPodgId);
             ViewData["EduSrokId"] = new SelectList(_context.EduSrok, "EduSrokId", "EduSrokName", eduPlan.EduSrokId);
             ViewData["StructKafId"] = new SelectList(_context.StructKafs.Include(k => k.StructSubvision), "StructKafId", "StructSubvision.StructSubvisionName", eduPlan.StructKafId);
+
+            List<EduVidDeyat> eduVidDeyats = _context.EduVidDeyat.ToList();
+            ViewData["EduVidDeyats"] = eduVidDeyats;
+
+            List<EduYearBeginningTraining> eduYearBeginningTrainings = _context.EduYearBeginningTrainings.ToList();
+            ViewData["EduYearBeginningTrainings"] = eduYearBeginningTrainings;
             return View(eduPlan);
         }
 
@@ -134,20 +182,26 @@ namespace KisVuzDotNetCore2.Controllers.Education
 
             var eduPlan = await _context.EduPlans
                 .Include(p=>p.EduPlanPdf)
+                .Include(p=>p.EduVidDeyatList)
+                .Include(p=>p.EduPlanEduYearBeginningTrainings)
                 .SingleOrDefaultAsync(m => m.EduPlanId == id);
             if (eduPlan == null)
             {
                 return NotFound();
             }
 
-            
-
             ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormName", eduPlan.EduFormId);
-            //ViewData["EduPlanPdfId"] = new SelectList(_context.Files, "Id", "Id", eduPlan.EduPlanPdfId);            
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p=> p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", eduPlan.EduProfileId);
             ViewData["EduProgramPodgId"] = new SelectList(_context.EduProgramPodg, "EduProgramPodgId", "EduProgramPodgName", eduPlan.EduProgramPodgId);
             ViewData["EduSrokId"] = new SelectList(_context.EduSrok, "EduSrokId", "EduSrokName", eduPlan.EduSrokId);
             ViewData["StructKafId"] = new SelectList(_context.StructKafs.Include(k=> k.StructSubvision), "StructKafId", "StructSubvision.StructSubvisionName", eduPlan.StructKafId);
+
+            List<EduVidDeyat> eduVidDeyats = _context.EduVidDeyat.ToList();
+            ViewData["EduVidDeyats"] = eduVidDeyats;
+
+            List<EduYearBeginningTraining> eduYearBeginningTrainings = _context.EduYearBeginningTrainings.ToList();
+            ViewData["EduYearBeginningTrainings"] = eduYearBeginningTrainings;
+
             return View(eduPlan);
         }
 
@@ -156,7 +210,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, EduPlan eduPlan, IFormFile uploadedFile)
+        public async Task<IActionResult> Edit(int id, EduPlan eduPlan, IFormFile uploadedFile, int[] EduVidDeyatIds, int[] EduYearBeginningTrainingIds)
         {
             if (id != eduPlan.EduPlanId)
             {
@@ -179,6 +233,40 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 {
                     _context.Update(eduPlan);
                     await _context.SaveChangesAsync();
+
+                    if (EduVidDeyatIds != null)
+                    {
+                        _context.EduPlanEduVidDeyats.RemoveRange(_context.EduPlanEduVidDeyats.Where(v=>v.EduPlanId == eduPlan.EduPlanId));
+                        await _context.SaveChangesAsync();
+
+                        var eduPlanEduVidDeyats = new List<EduPlanEduVidDeyat>();
+                        foreach (var EduVidDeyatId in EduVidDeyatIds)
+                        {
+                            EduPlanEduVidDeyat eduPlanEduVidDeyat = new EduPlanEduVidDeyat();
+                            eduPlanEduVidDeyat.EduPlanId = eduPlan.EduPlanId;
+                            eduPlanEduVidDeyat.EduVidDeyatId = EduVidDeyatId;
+                            eduPlanEduVidDeyats.Add(eduPlanEduVidDeyat);
+                        }
+                        await _context.EduPlanEduVidDeyats.AddRangeAsync(eduPlanEduVidDeyats);
+                        await _context.SaveChangesAsync();
+                    }
+
+                    if (EduYearBeginningTrainingIds != null)
+                    {
+                        _context.EduPlanEduYearBeginningTraining.RemoveRange(_context.EduPlanEduYearBeginningTraining.Where(y => y.EduPlanId == eduPlan.EduPlanId));
+                        await _context.SaveChangesAsync();
+
+                        var eduPlanEduYearBeginningTrainings = new List<EduPlanEduYearBeginningTraining>();
+                        foreach (var EduYearBeginningTrainingId in EduYearBeginningTrainingIds)
+                        {
+                            EduPlanEduYearBeginningTraining eduPlanEduYearBeginningTraining = new EduPlanEduYearBeginningTraining();
+                            eduPlanEduYearBeginningTraining.EduPlanId = eduPlan.EduPlanId;
+                            eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId = EduYearBeginningTrainingId;
+                            eduPlanEduYearBeginningTrainings.Add(eduPlanEduYearBeginningTraining);
+                        }
+                        await _context.EduPlanEduYearBeginningTraining.AddRangeAsync(eduPlanEduYearBeginningTrainings);
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -198,7 +286,8 @@ namespace KisVuzDotNetCore2.Controllers.Education
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileId", eduPlan.EduProfileId);
             ViewData["EduProgramPodgId"] = new SelectList(_context.EduProgramPodg, "EduProgramPodgId", "EduProgramPodgId", eduPlan.EduProgramPodgId);
             ViewData["EduSrokId"] = new SelectList(_context.EduSrok, "EduSrokId", "EduSrokId", eduPlan.EduSrokId);
-            ViewData["StructKafId"] = new SelectList(_context.StructKafs, "StructKafId", "StructKafId", eduPlan.StructKafId);
+            ViewData["StructKafId"] = new SelectList(_context.StructKafs, "StructKafId", "StructKafId", eduPlan.StructKafId);                       
+
             return View(eduPlan);
         }
 
@@ -217,13 +306,27 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 .Include(e => e.EduProgramPodg)
                 .Include(e => e.EduSrok)
                 .Include(e => e.StructKaf.StructSubvision)
+                .Include(e => e.EduVidDeyatList)
+                .Include(e => e.EduPlanEduYearBeginningTrainings)
                 .SingleOrDefaultAsync(m => m.EduPlanId == id);
+
+            foreach (var vidDeyat in eduPlan.EduVidDeyatList)
+            {
+                vidDeyat.EduVidDeyat = await _context.EduVidDeyat.Where(d => d.EduVidDeyatId == vidDeyat.EduVidDeyatId).FirstOrDefaultAsync();
+            }
+
+            foreach (var eduYearBeginningTraning in eduPlan.EduPlanEduYearBeginningTrainings)
+            {
+                eduYearBeginningTraning.EduYearBeginningTraining = await _context.EduYearBeginningTrainings.SingleOrDefaultAsync(y => y.EduYearBeginningTrainingId == eduYearBeginningTraning.EduYearBeginningTrainingId);
+            }
+
             if (eduPlan == null)
             {
                 return NotFound();
             }
 
             return View(eduPlan);
+
         }
 
         // POST: EduPlans/Delete/5

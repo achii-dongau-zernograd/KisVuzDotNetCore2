@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Добавить";
     List<EduVidDeyat> eduVidDeyats = (List<EduVidDeyat>)ViewData["EduVidDeyats"];
+    List<EduYearBeginningTraining> eduYearBeginningTrainings = (List<EduYearBeginningTraining>)ViewData["EduYearBeginningTrainings"];
 }
 
 <h2>Добавить учебный план</h2>
@@ -15,25 +16,6 @@
             <div class="form-group">
                 <label asp-for="EduProfileId" class="control-label"></label>
                 <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfileId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProtokolNumber" class="control-label"></label>
-                <input asp-for="ProtokolNumber" class="form-control" />
-                <span asp-validation-for="ProtokolNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProtokolDate" class="control-label"></label>
-                <input asp-for="ProtokolDate" class="form-control" />
-                <span asp-validation-for="ProtokolDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UtverjdDate" class="control-label"></label>
-                <input asp-for="UtverjdDate" class="form-control" />
-                <span asp-validation-for="UtverjdDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StructKafId" class="control-label"></label>
-                <select asp-for="StructKafId" class="form-control" asp-items="ViewBag.StructKafId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="EduProgramPodgId" class="control-label"></label>
@@ -53,6 +35,32 @@
                 {
                     <br /><input type="checkbox" name="EduVidDeyatIds" value="@vidDeyat.EduVidDeyatId" /> @vidDeyat.EduVidDeyatName
                 }
+            </div>
+            <div class="form-group">
+                <label asp-for="EduPlanEduYearBeginningTrainings" class="control-label"></label>
+                @foreach (var yearBeginningTraining in eduYearBeginningTrainings)
+                {
+                    <br /><input type="checkbox" name="EduYearBeginningTrainingIds" value="@yearBeginningTraining.EduYearBeginningTrainingId" /> @yearBeginningTraining.EduYearBeginningTrainingName
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="ProtokolNumber" class="control-label"></label>
+                <input asp-for="ProtokolNumber" class="form-control" />
+                <span asp-validation-for="ProtokolNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProtokolDate" class="control-label"></label>
+                <input asp-for="ProtokolDate" class="form-control" />
+                <span asp-validation-for="ProtokolDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UtverjdDate" class="control-label"></label>
+                <input asp-for="UtverjdDate" class="form-control" />
+                <span asp-validation-for="UtverjdDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StructKafId" class="control-label"></label>
+                <select asp-for="StructKafId" class="form-control" asp-items="ViewBag.StructKafId"></select>
             </div>
             <div class="form-group">
                 <label class="control-label">Выберите файл: </label>
