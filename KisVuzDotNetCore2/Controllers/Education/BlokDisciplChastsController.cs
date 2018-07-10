@@ -46,9 +46,9 @@ namespace KisVuzDotNetCore2.Controllers.Education
         }
 
         // GET: BlokDisciplChasts/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["BlokDisciplChastNameId"] = new SelectList(_context.BlokDisciplChastName, "BlokDisciplChastNameId", "BlokDisciplChastNameId");
+            ViewData["BlokDisciplChastNameId"] = new SelectList(_context.BlokDisciplChastName, "BlokDisciplChastNameId", "BlokDisciplChastNameName", id);
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlokDisciplChastId,BlokDisciplChastNameId")] BlokDisciplChast blokDisciplChast)
+        public async Task<IActionResult> Create(BlokDisciplChast blokDisciplChast)
         {
             if (ModelState.IsValid)
             {

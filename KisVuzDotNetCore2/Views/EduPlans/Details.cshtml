@@ -1,15 +1,20 @@
 ﻿@model KisVuzDotNetCore2.Models.Education.EduPlan
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Подробнее";
 }
 
-<h2>Details</h2>
+<h2>Подробнее</h2>
 
 <div>
-    <h4>EduPlan</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ProtokolNumber)
         </dt>
@@ -32,41 +37,49 @@
             @Html.DisplayNameFor(model => model.EduForm)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduForm.EduFormId)
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.EduPlanPdf)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduPlanPdf.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EduProfile)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EduProfile.EduProfileId)
+            @if (Model.EduPlanPdf?.Id != null)
+            {
+                <a href="/@Model.EduPlanPdf?.Path">Открыть</a>
+            }
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.EduProgramPodg)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduProgramPodg.EduProgramPodgId)
+            @Html.DisplayFor(model => model.EduProgramPodg.EduProgramPodgName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.EduSrok)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduSrok.EduSrokId)
+            @Html.DisplayFor(model => model.EduSrok.EduSrokName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.StructKaf)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.StructKaf.StructKafId)
+            @Html.DisplayFor(model => model.StructKaf.StructSubvision.StructSubvisionName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduVidDeyatList)
+        </dt>
+        <dd>
+            <ul>
+                @foreach (var vidDeyat in Model.EduVidDeyatList)
+                {
+                    <li>@vidDeyat.EduVidDeyat.EduVidDeyatName</li>
+                }
+            </ul>
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.EduPlanId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.EduPlanId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" class="btn btn-default">Отмена</a>
 </div>

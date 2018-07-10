@@ -12,15 +12,15 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProtokolNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProtokolDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UtverjdDate)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProtokolNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProtokolDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UtverjdDate)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.EduForm)
             </th>
@@ -55,22 +55,27 @@
                 @Html.DisplayFor(modelItem => item.UtverjdDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EduForm.EduFormId)
+                @Html.DisplayFor(modelItem => item.EduForm.EduFormName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EduPlanPdf.Id)
+                @if (item.EduPlanPdf?.Id!=null)
+                {
+                    <a asp-controller="Files" asp-action="GetFile" asp-route-id="@item.EduPlanPdf?.Id">Скачать</a>
+                    <br />
+                    <a href="@item.EduPlanPdf?.Path">Открыть</a>
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EduProfile.EduProfileId)
+                @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EduProgramPodg.EduProgramPodgId)
+                @Html.DisplayFor(modelItem => item.EduProgramPodg.EduProgramPodgName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EduSrok.EduSrokId)
+                @Html.DisplayFor(modelItem => item.EduSrok.EduSrokName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StructKaf.StructKafId)
+                @Html.DisplayFor(modelItem => item.StructKaf.StructSubvision.StructSubvisionName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EduPlanId">Редактировать</a> |

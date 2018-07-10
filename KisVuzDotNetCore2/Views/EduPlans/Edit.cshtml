@@ -1,16 +1,16 @@
 ﻿@model KisVuzDotNetCore2.Models.Education.EduPlan
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактировать";
 }
 
-<h2>Edit</h2>
+<h2>Редактировать учебный план</h2>
 
-<h4>EduPlan</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="EduPlanId" />
             <div class="form-group">
@@ -39,33 +39,35 @@
                 <span asp-validation-for="StructKafId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EduProgramPodgId" class="control-label"></label>
+                <label asp-for="EduProgramPodg.EduProgramPodgName" class="control-label"></label>
                 <select asp-for="EduProgramPodgId" class="form-control" asp-items="ViewBag.EduProgramPodgId"></select>
                 <span asp-validation-for="EduProgramPodgId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EduFormId" class="control-label"></label>
+                <label asp-for="EduForm.EduFormName" class="control-label"></label>
                 <select asp-for="EduFormId" class="form-control" asp-items="ViewBag.EduFormId"></select>
                 <span asp-validation-for="EduFormId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EduSrokId" class="control-label"></label>
+                <label asp-for="EduSrok.EduSrokName" class="control-label"></label>
                 <select asp-for="EduSrokId" class="form-control" asp-items="ViewBag.EduSrokId"></select>
                 <span asp-validation-for="EduSrokId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EduPlanPdfId" class="control-label"></label>
-                <select asp-for="EduPlanPdfId" class="form-control" asp-items="ViewBag.EduPlanPdfId"></select>
-                <span asp-validation-for="EduPlanPdfId" class="text-danger"></span>
+                <label asp-for="EduPlanPdf" class="control-label"></label>                
+                <input asp-for="EduPlanPdfId" class="hidden"></input>
+                <a href="/@Model.EduPlanPdf?.Path" class="control-label">@Model.EduPlanPdf?.FileName</a>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <label class="control-label">Для замены выберите файл: </label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
