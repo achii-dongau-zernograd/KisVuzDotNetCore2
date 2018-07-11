@@ -19,6 +19,12 @@
                 @Html.DisplayNameFor(model => model.EduProgramPodg)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.EduProgramEduForms)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduProgramEduYears)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DateUtverjd)
             </th>
             <th>
@@ -43,6 +49,22 @@
                 @Html.DisplayFor(modelItem => item.EduProgramPodg.EduProgramPodgName)
             </td>
             <td>
+                <ul>
+                    @foreach (var eduProgramEduForm in item.EduProgramEduForms)
+                    {
+                        <li>@eduProgramEduForm.EduForm?.EduFormName</li>
+                    }
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    @foreach (var eduProgramEduYear in item.EduProgramEduYears)
+                    {
+                        <li>@eduProgramEduYear.EduYear?.EduYearName</li>
+                    }
+                </ul>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.DateUtverjd)
             </td>
             <td>
@@ -52,10 +74,10 @@
                 @Html.DisplayFor(modelItem => item.UsingElAndDistEduTech)
             </td>
             <td>
-                @if(item.FileModel?.Path!=null)
+                @if (item.FileModel?.Path != null)
                 {
-                <a href="/@item.FileModel?.Path">Открыть</a>
-                }                
+                    <a href="/@item.FileModel?.Path">Открыть</a>
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EduProgramId">Редактировать</a> |

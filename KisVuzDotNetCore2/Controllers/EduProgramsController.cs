@@ -28,11 +28,24 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: EduPrograms
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.EduPrograms
+            var eduPrograms = _context.EduPrograms
                 .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduProgramPodg)
-                .Include(e => e.FileModel);
-            return View(await appIdentityDBContext.ToListAsync());
+                .Include(e => e.FileModel)
+                .Include(e => e.EduProgramEduForms)
+                .Include(e => e.EduProgramEduYears);
+            foreach (var eduProgram in eduPrograms)
+            {
+                foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+                {
+                    eduProgramEduForm.EduForm = await _context.EduForms.SingleOrDefaultAsync(f=>f.EduFormId== eduProgramEduForm.EduFormId);
+                }
+                foreach (var eduProgramEduYear in eduProgram.EduProgramEduYears)
+                {
+                    eduProgramEduYear.EduYear = await _context.EduYears.SingleOrDefaultAsync(f => f.EduYearId == eduProgramEduYear.EduYearId);
+                }
+            }
+            return View(await eduPrograms.ToListAsync());
         }
 
         // GET: EduPrograms/Details/5
@@ -47,10 +60,21 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduProgramPodg)
                 .Include(e => e.FileModel)
+                .Include(e => e.EduProgramEduForms)
+                .Include(e => e.EduProgramEduYears)
                 .SingleOrDefaultAsync(m => m.EduProgramId == id);
             if (eduProgram == null)
             {
                 return NotFound();
+            }
+
+            foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+            {
+                eduProgramEduForm.EduForm = await _context.EduForms.SingleOrDefaultAsync(f => f.EduFormId == eduProgramEduForm.EduFormId);
+            }
+            foreach (var eduProgramEduYear in eduProgram.EduProgramEduYears)
+            {
+                eduProgramEduYear.EduYear = await _context.EduYears.SingleOrDefaultAsync(f => f.EduYearId == eduProgramEduYear.EduYearId);
             }
 
             return View(eduProgram);
@@ -59,6 +83,9 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: EduPrograms/Create
         public IActionResult Create()
         {
+            ViewBag.EduForms = _context.EduForms;
+            ViewBag.EduYears = _context.EduYears;
+
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p=>p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
             ViewData["EduProgramPodgId"] = new SelectList(_context.EduProgramPodg, "EduProgramPodgId", "EduProgramPodgName");
             //ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Id");
@@ -70,7 +97,10 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EduProgramId,EduProfileId,EduProgramPodgId,IsAdopt,UsingElAndDistEduTech,DateUtverjd")] EduProgram eduProgram, IFormFile uploadedFile)
+        public async Task<IActionResult> Create([Bind("EduProgramId,EduProfileId,EduProgramPodgId,IsAdopt,UsingElAndDistEduTech,DateUtverjd")] EduProgram eduProgram,
+            IFormFile uploadedFile,
+            int[] eduFormIds,
+            int[] eduYearIds)
         {
             if (ModelState.IsValid && uploadedFile!=null)
             {
@@ -78,6 +108,39 @@ namespace KisVuzDotNetCore2.Controllers
                 eduProgram.FileModelId = fileModel.Id;
                 _context.Add(eduProgram);
                 await _context.SaveChangesAsync();
+
+                if(eduFormIds!=null)
+                {
+                    var eduProgramEduFormList = new List<EduProgramEduForm>();
+                    foreach (int eduFormId in eduFormIds)
+                    {
+                        EduProgramEduForm eduProgramEduForm = new EduProgramEduForm
+                        {
+                            EduProgramId = eduProgram.EduProgramId,
+                            EduFormId = eduFormId
+                        };
+                        eduProgramEduFormList.Add(eduProgramEduForm);
+                    }
+                    await _context.EduProgramEduForms.AddRangeAsync(eduProgramEduFormList);
+                    await _context.SaveChangesAsync();
+                }
+
+                if (eduYearIds != null)
+                {
+                    var eduProgramEduYearList = new List<EduProgramEduYear>();
+                    foreach (int eduYearId in eduYearIds)
+                    {
+                        EduProgramEduYear eduProgramEduYear = new EduProgramEduYear
+                        {
+                            EduProgramId = eduProgram.EduProgramId,
+                            EduYearId = eduYearId
+                        };
+                        eduProgramEduYearList.Add(eduProgramEduYear);
+                    }
+                    await _context.EduProgramEduYears.AddRangeAsync(eduProgramEduYearList);
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", eduProgram.EduProfileId);
@@ -94,11 +157,17 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var eduProgram = await _context.EduPrograms.Include(p=>p.FileModel).SingleOrDefaultAsync(m => m.EduProgramId == id);
+            var eduProgram = await _context.EduPrograms
+                .Include(p=>p.FileModel)
+                .Include(p=>p.EduProgramEduForms)
+                .Include(p=>p.EduProgramEduYears)
+                .SingleOrDefaultAsync(m => m.EduProgramId == id);
             if (eduProgram == null)
             {
                 return NotFound();
             }
+            ViewBag.EduForms = _context.EduForms;
+            ViewBag.EduYears = _context.EduYears;
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p=>p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", eduProgram.EduProfileId);
             ViewData["EduProgramPodgId"] = new SelectList(_context.EduProgramPodg, "EduProgramPodgId", "EduProgramPodgName", eduProgram.EduProgramPodgId);
             //ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Id", eduProgram.FileModelId);
@@ -110,7 +179,10 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EduProgramId,EduProfileId,EduProgramPodgId,IsAdopt,UsingElAndDistEduTech,FileModelId,DateUtverjd")] EduProgram eduProgram, IFormFile uploadedFile)
+        public async Task<IActionResult> Edit(int id, [Bind("EduProgramId,EduProfileId,EduProgramPodgId,IsAdopt,UsingElAndDistEduTech,FileModelId,DateUtverjd")] EduProgram eduProgram,
+            IFormFile uploadedFile,
+            int[] eduFormIds,
+            int[] eduYearIds)
         {
             if (id != eduProgram.EduProgramId)
             {
@@ -133,6 +205,44 @@ namespace KisVuzDotNetCore2.Controllers
 
                     _context.Update(eduProgram);
                     await _context.SaveChangesAsync();
+
+                    if (eduFormIds != null)
+                    {
+                        _context.EduProgramEduForms.RemoveRange(_context.EduProgramEduForms.Where(f=>f.EduProgramId == eduProgram.EduProgramId));
+                        await _context.SaveChangesAsync();
+
+                        var eduProgramEduFormList = new List<EduProgramEduForm>();
+                        foreach (int eduFormId in eduFormIds)
+                        {
+                            EduProgramEduForm eduProgramEduForm = new EduProgramEduForm
+                            {
+                                EduProgramId = eduProgram.EduProgramId,
+                                EduFormId = eduFormId
+                            };
+                            eduProgramEduFormList.Add(eduProgramEduForm);
+                        }
+                        await _context.EduProgramEduForms.AddRangeAsync(eduProgramEduFormList);
+                        await _context.SaveChangesAsync();
+                    }
+
+                    if (eduYearIds != null)
+                    {
+                        _context.EduProgramEduYears.RemoveRange(_context.EduProgramEduYears.Where(f => f.EduProgramId == eduProgram.EduProgramId));
+                        await _context.SaveChangesAsync();
+
+                        var eduProgramEduYearList = new List<EduProgramEduYear>();
+                        foreach (int eduYearId in eduYearIds)
+                        {
+                            EduProgramEduYear eduProgramEduYear = new EduProgramEduYear
+                            {
+                                EduProgramId = eduProgram.EduProgramId,
+                                EduYearId = eduYearId
+                            };
+                            eduProgramEduYearList.Add(eduProgramEduYear);
+                        }
+                        await _context.EduProgramEduYears.AddRangeAsync(eduProgramEduYearList);
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -165,10 +275,22 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduProgramPodg)
                 .Include(e => e.FileModel)
+                .Include(e => e.EduProgramEduForms)
+                .Include(e => e.EduProgramEduYears)
                 .SingleOrDefaultAsync(m => m.EduProgramId == id);
             if (eduProgram == null)
             {
                 return NotFound();
+            }
+
+            foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+            {
+                eduProgramEduForm.EduForm = await _context.EduForms.SingleOrDefaultAsync(f => f.EduFormId == eduProgramEduForm.EduFormId);
+            }
+
+            foreach (var eduProgramEduYear in eduProgram.EduProgramEduYears)
+            {
+                eduProgramEduYear.EduYear = await _context.EduYears.SingleOrDefaultAsync(f => f.EduYearId == eduProgramEduYear.EduYearId);
             }
 
             return View(eduProgram);
@@ -181,6 +303,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             var eduProgram = await _context.EduPrograms.SingleOrDefaultAsync(m => m.EduProgramId == id);
             _context.EduPrograms.Remove(eduProgram);
+            Files.RemoveFile(_context, _appEnvironment, eduProgram?.FileModelId);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

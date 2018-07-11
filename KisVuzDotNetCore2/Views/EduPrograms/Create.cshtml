@@ -38,6 +38,20 @@
                 <span asp-validation-for="UsingElAndDistEduTech" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">Формы обучения</label>
+                @foreach (EduForm eduForm in ViewBag.EduForms)
+                {
+                    <br /><input type="checkbox" name="eduFormIds" value="@eduForm.EduFormId"> @eduForm.EduFormName
+                }
+            </div>
+            <div class="form-group">
+                <label class="control-label">Учебные годы</label>
+                @foreach (EduYear eduYear in ViewBag.EduYears)
+                {
+                    <br /><input type="checkbox" name="eduYearIds" value="@eduYear.EduYearId"> @eduYear.EduYearName
+                }
+            </div>
+            <div class="form-group">
                 <label asp-for="FileModelId" class="control-label"></label>
                 <input type="file" name="uploadedFile" />
             </div>

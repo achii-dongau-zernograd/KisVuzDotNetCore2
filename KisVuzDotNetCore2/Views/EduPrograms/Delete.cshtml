@@ -24,6 +24,24 @@
             @Html.DisplayFor(model => model.EduProgramPodg.EduProgramPodgName)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.EduProgramEduForms)
+        </dt>
+        <dd>
+            @foreach (var item in Model.EduProgramEduForms)
+            {
+                <p>@item.EduForm.EduFormName</p>
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProgramEduYears)
+        </dt>
+        <dd>
+            @foreach (var item in Model.EduProgramEduYears)
+            {
+                <p>@item.EduYear.EduYearName</p>
+            }
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.DateUtverjd)
         </dt>
         <dd>
