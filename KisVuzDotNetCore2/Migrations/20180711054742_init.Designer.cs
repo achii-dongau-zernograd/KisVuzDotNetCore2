@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180710120614_init")]
+    [Migration("20180711054742_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -453,6 +453,70 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("EduNapravlId");
 
                     b.ToTable("EduProfiles");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProgram", b =>
+                {
+                    b.Property<int>("EduProgramId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DateUtverjd");
+
+                    b.Property<int>("EduProfileId");
+
+                    b.Property<int>("EduProgramPodgId");
+
+                    b.Property<int>("FileModelId");
+
+                    b.Property<bool>("IsAdopt");
+
+                    b.Property<string>("UsingElAndDistEduTech");
+
+                    b.HasKey("EduProgramId");
+
+                    b.HasIndex("EduProfileId");
+
+                    b.HasIndex("EduProgramPodgId");
+
+                    b.HasIndex("FileModelId");
+
+                    b.ToTable("EduPrograms");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProgramEduForm", b =>
+                {
+                    b.Property<int>("EduProgramEduFormId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduFormId");
+
+                    b.Property<int>("EduProgramId");
+
+                    b.HasKey("EduProgramEduFormId");
+
+                    b.HasIndex("EduFormId");
+
+                    b.HasIndex("EduProgramId");
+
+                    b.ToTable("EduProgramEduForms");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProgramEduYear", b =>
+                {
+                    b.Property<int>("EduProgramEduYearId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduProgramId");
+
+                    b.Property<int>("EduYearId");
+
+                    b.HasKey("EduProgramEduYearId");
+
+                    b.HasIndex("EduProgramId");
+
+                    b.HasIndex("EduYearId");
+
+                    b.ToTable("EduProgramEduYears");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProgramPodg", b =>
@@ -2000,6 +2064,50 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
                         .WithMany("EduProfiles")
                         .HasForeignKey("EduNapravlId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProgram", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
+                        .WithMany()
+                        .HasForeignKey("EduProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProgramPodg", "EduProgramPodg")
+                        .WithMany()
+                        .HasForeignKey("EduProgramPodgId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
+                        .WithMany()
+                        .HasForeignKey("FileModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProgramEduForm", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
+                        .WithMany()
+                        .HasForeignKey("EduFormId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProgram", "EduProgram")
+                        .WithMany("EduForms")
+                        .HasForeignKey("EduProgramId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProgramEduYear", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProgram", "EduProgram")
+                        .WithMany("EduProgramEduYears")
+                        .HasForeignKey("EduProgramId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduYear", "EduYear")
+                        .WithMany()
+                        .HasForeignKey("EduYearId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

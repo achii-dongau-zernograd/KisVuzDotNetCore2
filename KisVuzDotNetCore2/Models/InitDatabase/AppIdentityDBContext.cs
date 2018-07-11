@@ -168,6 +168,21 @@ namespace KisVuzDotNetCore2.Models
         /// Календарные учебные графики
         /// </summary>
         public DbSet<EduShedule> EduShedules { get; set; }
+
+        /// <summary>
+        /// Образовательные программы
+        /// </summary>
+        public DbSet<EduProgram> EduPrograms { get; set; }
+
+        /// <summary>
+        /// Таблица для реализации отношения М:М между таблицами EduPrograms и EduForms
+        /// </summary>
+        public DbSet<EduProgramEduForm> EduProgramEduForms { get; set; }
+
+        /// <summary>
+        /// Таблица для реализации отношения М:М между таблицами EduPrograms и EduYears
+        /// </summary>
+        public DbSet<EduProgramEduYear> EduProgramEduYears { get; set; }
         #endregion
 
         #region Структура образовательной организации (Struct)
