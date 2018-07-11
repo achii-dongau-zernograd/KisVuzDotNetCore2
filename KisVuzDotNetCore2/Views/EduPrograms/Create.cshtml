@@ -1,0 +1,50 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduProgram
+
+@{
+    ViewData["Title"] = "Добавление";
+}
+
+<h2>Добавление</h2>
+
+<h4>Образовательная программа</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EduProfileId" class="control-label"></label>
+                <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfileId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduProgramPodgId" class="control-label"></label>
+                <select asp-for="EduProgramPodgId" class="form-control" asp-items="ViewBag.EduProgramPodgId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateUtverjd" class="control-label"></label>
+                <input asp-for="DateUtverjd" class="form-control" />
+                <span asp-validation-for="DateUtverjd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsAdopt" /> @Html.DisplayNameFor(model => model.IsAdopt)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsingElAndDistEduTech" class="control-label"></label>
+                <input asp-for="UsingElAndDistEduTech" class="form-control" />
+                <span asp-validation-for="UsingElAndDistEduTech" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                <input type="file" name="uploadedFile" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
