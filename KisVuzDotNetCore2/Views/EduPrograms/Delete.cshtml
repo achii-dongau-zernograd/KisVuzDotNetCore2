@@ -1,0 +1,75 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduProgram
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <h4>Образовательная программа</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProgramPodg)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProgramPodg.EduProgramPodgName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProgramEduForms)
+        </dt>
+        <dd>
+            @foreach (var item in Model.EduProgramEduForms)
+            {
+                <p>@item.EduForm.EduFormName</p>
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProgramEduYears)
+        </dt>
+        <dd>
+            @foreach (var item in Model.EduProgramEduYears)
+            {
+                <p>@item.EduYear.EduYearName</p>
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateUtverjd)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateUtverjd)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAdopt)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsAdopt)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UsingElAndDistEduTech)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UsingElAndDistEduTech)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModel)
+        </dt>
+        <dd>
+            <a href="/@Model.FileModel.Path">Открыть</a>
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduProgramId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

@@ -80,6 +80,17 @@
             @Html.DisplayFor(model => model.StructKaf.StructSubvision.StructSubvisionName)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.EduPlanEduYears)
+        </dt>
+        <dd>
+            <ul>
+                @foreach (var eduYear in Model.EduPlanEduYears)
+                {
+                    <li>@eduYear.EduYear.EduYearName</li>
+                }
+            </ul>
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.EduPlanPdf)
         </dt>
         <dd>

@@ -121,13 +121,16 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Education()
         {
+            #region Таблица 6. Инфоормация о сроке действия государственной аккредитации            
             var t6eduAccred = await _context.EduNapravls                
                 .Include(l => l.EduUgs.EduAccred.EduAccredFile)
                 .Include(l => l.EduUgs)
                     .ThenInclude(ugs => ugs.EduLevel)                
                 .ToListAsync();
             ViewData["t6eduAccred"] = t6eduAccred;
+            #endregion
 
+            #region Таблица 7. Инфоормация о численности обучающихся            
             var t7eduChislen = await _context.EduChislens
                 .Include(c => c.EduProfile)
                     .ThenInclude(n => n.EduNapravl)
@@ -136,7 +139,9 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include (f =>f.EduForm)
                 .ToListAsync();
             ViewData["t7eduChislen"] = t7eduChislen;
+            #endregion
 
+            #region Таблица 8. Инфоормация о результатах приема            
             var t8eduPriem = await _context.EduPriem
                 .Include(e => e.EduNapravl)
                     .ThenInclude(n => n.EduUgs)
@@ -144,7 +149,9 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(e => e.EduForm)
                 .ToListAsync();
             ViewData["t8eduPriem"] = t8eduPriem;
+            #endregion
 
+            #region Таблица 9. Инфоормация о результатах перевода, восстановления и отчисления            
             var t9eduPerevod = await _context.eduPerevod
                 .Include(c => c.EduNapravl)                    
                     .ThenInclude(u => u.EduUgs)
@@ -152,8 +159,35 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(f => f.EduForm)
                 .ToListAsync();
             ViewData["t9eduPerevod"] = t9eduPerevod;
+            #endregion
 
+            #region Таблица 10. Инфоормация по образовательным программам
+            var eduPrograms = await _context.EduPrograms
+                .Include(p => p.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(p => p.EduProgramEduForms)
+                .Include(p => p.EduProgramEduYears)
+                .Include(p => p.EduProgramPodg)
+                .Include(p => p.FileModel).ToListAsync();
+            foreach (var eduProgram in eduPrograms)
+            {
+                foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+                {
+                    eduProgramEduForm.EduForm = await _context.EduForms.SingleOrDefaultAsync(f => f.EduFormId == eduProgramEduForm.EduFormId);
+                }
+                foreach (var eduProgramEduYear in eduProgram.EduProgramEduYears)
+                {
+                    eduProgramEduYear.EduYear = await _context.EduYears.SingleOrDefaultAsync(f => f.EduYearId == eduProgramEduYear.EduYearId);
+                }
+            }
+            ViewData["t10eduPrograms"] = eduPrograms;
 
+            var eduShedules = await _context.EduShedules
+                .Include(s=>s.EduForm)
+                .Include(s=>s.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(s=>s.FileModel)
+                .ToListAsync();
+            ViewData["eduShedules"] = eduShedules;
+            #endregion
 
             #region Таблица 11. Образовательная программа (объём программы по годам)
             var t11eduOPYears = await _context.EduOPYears

@@ -1,4 +1,4 @@
-﻿@model KisVuzDotNetCore2.Models.Education.EduPlanEduVidDeyat
+﻿@model KisVuzDotNetCore2.Models.Education.EduPlanEduYear
 
 @{
     ViewData["Title"] = "Подробнее";
@@ -16,14 +16,14 @@
             @Html.DisplayFor(model => model.EduPlan.EduPlanDescription)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EduVidDeyat)
+            @Html.DisplayNameFor(model => model.EduYear)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduVidDeyat.EduVidDeyatName)
+            @Html.DisplayFor(model => model.EduYear.EduYearName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.EduPlanEduVidDeyatId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Edit" asp-route-id="@Model.EduPlanEduYearId" class="btn btn-primary">Редактировать</a>
     <a asp-action="Index" class="btn btn-default">Отмена</a>
 </div>

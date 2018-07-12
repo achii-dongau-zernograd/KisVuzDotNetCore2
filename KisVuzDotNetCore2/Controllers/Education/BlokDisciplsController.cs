@@ -20,13 +20,33 @@ namespace KisVuzDotNetCore2.Controllers.Education
         }
 
         // GET: BlokDiscipls
-        public async Task<IActionResult> Index()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">УИД учебного плана</param>
+        /// <returns></returns>
+        public async Task<IActionResult> Index(int? id)
         {
-            var appIdentityDBContext = _context.BlokDiscipl
+            if (id==null)
+            {
+                var appIdentityDBContext = _context.BlokDiscipl
                 .Include(b => b.BlokDisciplName)
                 .Include(e => e.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduPlan.EduForm);
-            return View(await appIdentityDBContext.ToListAsync());
+
+                return View(await appIdentityDBContext.ToListAsync());
+            }
+            else
+            {
+                var appIdentityDBContext = _context.BlokDiscipl
+                .Include(b => b.BlokDisciplName)
+                .Include(e => e.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(e => e.EduPlan.EduForm)
+                .Where(b => b.EduPlanId == id);
+                ViewBag.EduPlanId = id;
+                return View(await appIdentityDBContext.ToListAsync());
+            }
+            
         }
 
         // GET: BlokDiscipls/Details/5
@@ -39,7 +59,8 @@ namespace KisVuzDotNetCore2.Controllers.Education
 
             var blokDiscipl = await _context.BlokDiscipl
                 .Include(b => b.BlokDisciplName)
-                .Include(b => b.EduPlan)
+                .Include(e => e.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(e => e.EduPlan.EduForm)
                 .SingleOrDefaultAsync(m => m.BlokDisciplId == id);
             if (blokDiscipl == null)
             {
@@ -50,10 +71,20 @@ namespace KisVuzDotNetCore2.Controllers.Education
         }
 
         // GET: BlokDiscipls/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
-            ViewData["BlokDisciplNameId"] = new SelectList(_context.Set<BlokDisciplName>(), "BlokDisciplNameId", "BlokDisciplNameId");
-            ViewData["EduPlanId"] = new SelectList(_context.EduPlans, "EduPlanId", "EduPlanId");
+            if (id != null)
+            {
+                ViewBag.EduPlanId = id;
+            }
+            else
+            {
+                var EduPlans = _context.EduPlans
+                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(e => e.EduForm);                
+                ViewData["EduPlans"] = new SelectList(EduPlans, "EduPlanId", "EduPlanDescription", id);                
+            }
+            ViewData["BlokDisciplNameId"] = new SelectList(_context.Set<BlokDisciplName>(), "BlokDisciplNameId", "BlokDisciplNameName");
             return View();
         }
 
@@ -62,12 +93,18 @@ namespace KisVuzDotNetCore2.Controllers.Education
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlokDisciplId,BlokDisciplNameId,EduPlanId")] BlokDiscipl blokDiscipl)
+        public async Task<IActionResult> Create([Bind("BlokDisciplId,BlokDisciplNameId,EduPlanId")] BlokDiscipl blokDiscipl, int? EduPlanIdFilter)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(blokDiscipl);
                 await _context.SaveChangesAsync();
+
+                if(EduPlanIdFilter!=null)
+                {
+                    return RedirectToAction(nameof(Index), new { id = EduPlanIdFilter });
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BlokDisciplNameId"] = new SelectList(_context.Set<BlokDisciplName>(), "BlokDisciplNameId", "BlokDisciplNameId", blokDiscipl.BlokDisciplNameId);
@@ -88,8 +125,12 @@ namespace KisVuzDotNetCore2.Controllers.Education
             {
                 return NotFound();
             }
-            ViewData["BlokDisciplNameId"] = new SelectList(_context.Set<BlokDisciplName>(), "BlokDisciplNameId", "BlokDisciplNameId", blokDiscipl.BlokDisciplNameId);
-            ViewData["EduPlanId"] = new SelectList(_context.EduPlans, "EduPlanId", "EduPlanId", blokDiscipl.EduPlanId);
+
+            var EduPlans = _context.EduPlans
+               .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
+               .Include(e => e.EduForm);
+            ViewData["BlokDisciplNameId"] = new SelectList(_context.Set<BlokDisciplName>(), "BlokDisciplNameId", "BlokDisciplNameName", blokDiscipl.BlokDisciplNameId);
+            ViewData["EduPlanId"] = new SelectList(EduPlans, "EduPlanId", "EduPlanDescription", blokDiscipl.EduPlanId);
             return View(blokDiscipl);
         }
 
@@ -140,7 +181,8 @@ namespace KisVuzDotNetCore2.Controllers.Education
 
             var blokDiscipl = await _context.BlokDiscipl
                 .Include(b => b.BlokDisciplName)
-                .Include(b => b.EduPlan)
+                .Include(e => e.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(e => e.EduPlan.EduForm)
                 .SingleOrDefaultAsync(m => m.BlokDisciplId == id);
             if (blokDiscipl == null)
             {

@@ -76,7 +76,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Реализуемые формы обучения
         /// </summary>
         [Display(Name = "Реализуемые формы обучения")]
-        public List<EduProgramEduForm> EduForms { get; set; }
+        public List<EduProgramEduForm> EduProgramEduForms { get; set; }
 
         /// <summary>
         /// Учебные годы

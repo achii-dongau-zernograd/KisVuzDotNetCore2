@@ -1,0 +1,90 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduProgram
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<h2>Редактирование</h2>
+
+<h4>Образовательная программа</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EduProgramId" />
+            <div class="form-group">
+                <label asp-for="EduProfileId" class="control-label"></label>
+                <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfileId"></select>
+                <span asp-validation-for="EduProfileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduProgramPodgId" class="control-label"></label>
+                <select asp-for="EduProgramPodgId" class="form-control" asp-items="ViewBag.EduProgramPodgId"></select>
+                <span asp-validation-for="EduProgramPodgId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateUtverjd" class="control-label"></label>
+                <input asp-for="DateUtverjd" class="form-control" />
+                <span asp-validation-for="DateUtverjd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsAdopt" /> @Html.DisplayNameFor(model => model.IsAdopt)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsingElAndDistEduTech" class="control-label"></label>
+                <input asp-for="UsingElAndDistEduTech" class="form-control" />
+                <span asp-validation-for="UsingElAndDistEduTech" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Формы обучения</label>
+                @foreach (EduForm eduForm in ViewBag.EduForms)
+                {
+                    string Checked = "";
+                    @foreach (var eduProgramEduForm in Model.EduProgramEduForms)
+                    {
+                        if(eduProgramEduForm.EduFormId== eduForm.EduFormId)
+                        {
+                            Checked = "checked";
+                            break;
+                        }
+                    }
+                    <br /><input type="checkbox" @Checked name="eduFormIds" value="@eduForm.EduFormId"> @eduForm.EduFormName
+                }
+            </div>
+            <div class="form-group">
+                <label class="control-label">Учебные годы</label>
+                @foreach (EduYear eduYear in ViewBag.EduYears)
+                {
+                    string Checked = "";
+                    @foreach (var eduProgramEduYear in Model.EduProgramEduYears)
+                    {
+                        if (eduProgramEduYear.EduYearId == eduYear.EduYearId)
+                        {
+                            Checked = "checked";
+                            break;
+                        }
+                    }
+                    <br /><input type="checkbox" @Checked name="eduYearIds" value="@eduYear.EduYearId"> @eduYear.EduYearName
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                <input asp-for="FileModelId" class="hidden" />
+                <a href="/@Model.FileModel?.Path" class="control-label">@Model.FileModel?.FileName</a>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Для замены выберите файл: </label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

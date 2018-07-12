@@ -1280,7 +1280,13 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         EduYearName = "2017-2018"
                     };
 
-                    await context.EduYears.AddRangeAsync(new EduYear[] { eduYear1718 });
+                    EduYear eduYear1819 = new EduYear
+                    {
+                        EduYearId = 2,
+                        EduYearName = "2018-2019"
+                    };
+
+                    await context.EduYears.AddRangeAsync(new EduYear[] { eduYear1718, eduYear1819 });
                     await context.SaveChangesAsync();
                 }
                 #endregion

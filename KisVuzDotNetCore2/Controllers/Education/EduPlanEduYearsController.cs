@@ -10,27 +10,26 @@ using KisVuzDotNetCore2.Models.Education;
 
 namespace KisVuzDotNetCore2.Controllers.Education
 {
-    public class EduPlanEduVidDeyatsController : Controller
+    public class EduPlanEduYearsController : Controller
     {
         private readonly AppIdentityDBContext _context;
 
-        public EduPlanEduVidDeyatsController(AppIdentityDBContext context)
+        public EduPlanEduYearsController(AppIdentityDBContext context)
         {
             _context = context;
         }
 
-        // GET: EduPlanEduVidDeyats
+        // GET: EduPlanEduYears
         public async Task<IActionResult> Index()
-        {                        
-            var appIdentityDBContext = _context.EduPlanEduVidDeyats
-                .Include(e => e.EduPlan.EduPlanEduYearBeginningTrainings)
+        {
+            var appIdentityDBContext = _context.EduPlanEduYears
                 .Include(e => e.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Include(e=> e.EduPlan.EduForm)
-                .Include(e => e.EduVidDeyat);
+                .Include(e => e.EduPlan.EduForm)
+                .Include(e => e.EduYear);
             return View(await appIdentityDBContext.ToListAsync());
         }
 
-        // GET: EduPlanEduVidDeyats/Details/5
+        // GET: EduPlanEduYears/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,50 +37,49 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 return NotFound();
             }
 
-            var eduPlanEduVidDeyat = await _context.EduPlanEduVidDeyats
+            var eduPlanEduYear = await _context.EduPlanEduYears
                 .Include(e => e.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduPlan.EduForm)
-                .Include(e => e.EduVidDeyat)
-                .SingleOrDefaultAsync(m => m.EduPlanEduVidDeyatId == id);
-            if (eduPlanEduVidDeyat == null)
+                .Include(e => e.EduYear)
+                .SingleOrDefaultAsync(m => m.EduPlanEduYearId == id);
+            if (eduPlanEduYear == null)
             {
                 return NotFound();
             }
 
-            return View(eduPlanEduVidDeyat);
+            return View(eduPlanEduYear);
         }
 
-        // GET: EduPlanEduVidDeyats/Create
+        // GET: EduPlanEduYears/Create
         public IActionResult Create(int? id)
         {
             var EduPlans = _context.EduPlans
                 .Include(p => p.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(p => p.EduForm);
-                //.Include(p=> p.EduPlanEduYearBeginningTrainings);
             ViewData["EduPlanId"] = new SelectList(EduPlans, "EduPlanId", "EduPlanDescription", id);
-            ViewData["EduVidDeyatId"] = new SelectList(_context.EduVidDeyat, "EduVidDeyatId", "EduVidDeyatName", id);
+            ViewData["EduYearId"] = new SelectList(_context.EduYears, "EduYearId", "EduYearName", id);
             return View();
         }
 
-        // POST: EduPlanEduVidDeyats/Create
+        // POST: EduPlanEduYears/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EduPlanEduVidDeyat eduPlanEduVidDeyat)
+        public async Task<IActionResult> Create(EduPlanEduYear eduPlanEduYear)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(eduPlanEduVidDeyat);
+                _context.Add(eduPlanEduYear);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduPlanId"] = new SelectList(_context.EduPlans, "EduPlanId", "EduPlanId", eduPlanEduVidDeyat.EduPlanId);
-            ViewData["EduVidDeyatId"] = new SelectList(_context.EduVidDeyat, "EduVidDeyatId", "EduVidDeyatId", eduPlanEduVidDeyat.EduVidDeyatId);
-            return View(eduPlanEduVidDeyat);
+            ViewData["EduPlanId"] = new SelectList(_context.EduPlans, "EduPlanId", "EduPlanDescription", eduPlanEduYear.EduPlanId);
+            ViewData["EduYearId"] = new SelectList(_context.EduYears, "EduYearId", "EduYearName", eduPlanEduYear.EduYearId);
+            return View(eduPlanEduYear);
         }
 
-        // GET: EduPlanEduVidDeyats/Edit/5
+        // GET: EduPlanEduYears/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -89,27 +87,27 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 return NotFound();
             }
 
-            var eduPlanEduVidDeyat = await _context.EduPlanEduVidDeyats.SingleOrDefaultAsync(m => m.EduPlanEduVidDeyatId == id);
-            if (eduPlanEduVidDeyat == null)
+            var eduPlanEduYear = await _context.EduPlanEduYears.SingleOrDefaultAsync(m => m.EduPlanEduYearId == id);
+            if (eduPlanEduYear == null)
             {
                 return NotFound();
             }
             var EduPlans = _context.EduPlans
                 .Include(p => p.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(p => p.EduForm);
-            ViewData["EduPlanId"] = new SelectList(EduPlans, "EduPlanId", "EduPlanDescription", eduPlanEduVidDeyat.EduPlanId);
-            ViewData["EduVidDeyatId"] = new SelectList(_context.EduVidDeyat, "EduVidDeyatId", "EduVidDeyatName", eduPlanEduVidDeyat.EduVidDeyatId);
-            return View(eduPlanEduVidDeyat);
+            ViewData["EduPlanId"] = new SelectList(EduPlans, "EduPlanId", "EduPlanDescription", eduPlanEduYear.EduPlanId);
+            ViewData["EduYearId"] = new SelectList(_context.EduYears, "EduYearId", "EduYearName", eduPlanEduYear.EduYearId);
+            return View(eduPlanEduYear);
         }
 
-        // POST: EduPlanEduVidDeyats/Edit/5
+        // POST: EduPlanEduYears/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EduPlanEduVidDeyatId,EduPlanId,EduVidDeyatId")] EduPlanEduVidDeyat eduPlanEduVidDeyat)
+        public async Task<IActionResult> Edit(int id, [Bind("EduPlanEduYearId,EduPlanId,EduYearId")] EduPlanEduYear eduPlanEduYear)
         {
-            if (id != eduPlanEduVidDeyat.EduPlanEduVidDeyatId)
+            if (id != eduPlanEduYear.EduPlanEduYearId)
             {
                 return NotFound();
             }
@@ -118,12 +116,12 @@ namespace KisVuzDotNetCore2.Controllers.Education
             {
                 try
                 {
-                    _context.Update(eduPlanEduVidDeyat);
+                    _context.Update(eduPlanEduYear);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EduPlanEduVidDeyatExists(eduPlanEduVidDeyat.EduPlanEduVidDeyatId))
+                    if (!EduPlanEduYearExists(eduPlanEduYear.EduPlanEduYearId))
                     {
                         return NotFound();
                     }
@@ -134,15 +132,12 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 }
                 return RedirectToAction(nameof(Index));
             }
-            var EduPlans = _context.EduPlans
-                .Include(p => p.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Include(p => p.EduForm);
-            ViewData["EduPlanId"] = new SelectList(EduPlans, "EduPlanId", "EduPlanDescription", eduPlanEduVidDeyat.EduPlanId);
-            ViewData["EduVidDeyatId"] = new SelectList(_context.EduVidDeyat, "EduVidDeyatId", "EduVidDeyatName", eduPlanEduVidDeyat.EduVidDeyatId);
-            return View(eduPlanEduVidDeyat);
+            ViewData["EduPlanId"] = new SelectList(_context.EduPlans, "EduPlanId", "EduPlanId", eduPlanEduYear.EduPlanId);
+            ViewData["EduYearId"] = new SelectList(_context.EduYears, "EduYearId", "EduYearId", eduPlanEduYear.EduYearId);
+            return View(eduPlanEduYear);
         }
 
-        // GET: EduPlanEduVidDeyats/Delete/5
+        // GET: EduPlanEduYears/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -150,33 +145,33 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 return NotFound();
             }
 
-            var eduPlanEduVidDeyat = await _context.EduPlanEduVidDeyats
+            var eduPlanEduYear = await _context.EduPlanEduYears
                 .Include(e => e.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduPlan.EduForm)
-                .Include(e => e.EduVidDeyat)
-                .SingleOrDefaultAsync(m => m.EduPlanEduVidDeyatId == id);
-            if (eduPlanEduVidDeyat == null)
+                .Include(e => e.EduYear)
+                .SingleOrDefaultAsync(m => m.EduPlanEduYearId == id);
+            if (eduPlanEduYear == null)
             {
                 return NotFound();
             }
 
-            return View(eduPlanEduVidDeyat);
+            return View(eduPlanEduYear);
         }
 
-        // POST: EduPlanEduVidDeyats/Delete/5
+        // POST: EduPlanEduYears/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var eduPlanEduVidDeyat = await _context.EduPlanEduVidDeyats.SingleOrDefaultAsync(m => m.EduPlanEduVidDeyatId == id);
-            _context.EduPlanEduVidDeyats.Remove(eduPlanEduVidDeyat);
+            var eduPlanEduYear = await _context.EduPlanEduYears.SingleOrDefaultAsync(m => m.EduPlanEduYearId == id);
+            _context.EduPlanEduYears.Remove(eduPlanEduYear);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EduPlanEduVidDeyatExists(int id)
+        private bool EduPlanEduYearExists(int id)
         {
-            return _context.EduPlanEduVidDeyats.Any(e => e.EduPlanEduVidDeyatId == id);
+            return _context.EduPlanEduYears.Any(e => e.EduPlanEduYearId == id);
         }
     }
 }

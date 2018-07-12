@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180711054742_init")]
+    [Migration("20180712082748_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -206,11 +206,13 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<string>("DisciplineCode");
 
-                    b.Property<string>("DisciplineName");
+                    b.Property<int>("DisciplineNameId");
 
                     b.HasKey("DisciplineId");
 
                     b.HasIndex("BlokDisciplChastId");
+
+                    b.HasIndex("DisciplineNameId");
 
                     b.ToTable("Discipline");
                 });
@@ -391,6 +393,24 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("EduVidDeyatId");
 
                     b.ToTable("EduPlanEduVidDeyats");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduPlanEduYear", b =>
+                {
+                    b.Property<int>("EduPlanEduYearId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduPlanId");
+
+                    b.Property<int>("EduYearId");
+
+                    b.HasKey("EduPlanEduYearId");
+
+                    b.HasIndex("EduPlanId");
+
+                    b.HasIndex("EduYearId");
+
+                    b.ToTable("EduPlanEduYears");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduPlanEduYearBeginningTraining", b =>
@@ -620,13 +640,9 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("EduYearId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("EduPlanId");
-
                     b.Property<string>("EduYearName");
 
                     b.HasKey("EduYearId");
-
-                    b.HasIndex("EduPlanId");
 
                     b.ToTable("EduYears");
                 });
@@ -1659,6 +1675,148 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("Volume");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.Author", b =>
+                {
+                    b.Property<int>("AuthorId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AppUserId");
+
+                    b.Property<string>("AppUserId1");
+
+                    b.Property<string>("AuthorName");
+
+                    b.HasKey("AuthorId");
+
+                    b.HasIndex("AppUserId1");
+
+                    b.ToTable("Author");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobie", b =>
+                {
+                    b.Property<int>("UchPosobieId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("BiblOpisanie");
+
+                    b.Property<int>("FileModelId");
+
+                    b.Property<string>("GodIzdaniya");
+
+                    b.Property<int?>("UchPosobieFormaIzdaniyaId");
+
+                    b.Property<string>("UchPosobieName");
+
+                    b.Property<int?>("UchPosobieVidId");
+
+                    b.HasKey("UchPosobieId");
+
+                    b.HasIndex("FileModelId");
+
+                    b.HasIndex("UchPosobieFormaIzdaniyaId");
+
+                    b.HasIndex("UchPosobieVidId");
+
+                    b.ToTable("UchPosobie");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieAuthor", b =>
+                {
+                    b.Property<int>("UchPosobieAuthorId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AuthorId");
+
+                    b.Property<int>("UchPosobieId");
+
+                    b.HasKey("UchPosobieAuthorId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("UchPosobieId");
+
+                    b.ToTable("UchPosobieAuthor");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieDisciplineName", b =>
+                {
+                    b.Property<int>("UchPosobieDisciplineNameId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DisciplineNameId");
+
+                    b.Property<int>("UchPosobieId");
+
+                    b.HasKey("UchPosobieDisciplineNameId");
+
+                    b.HasIndex("DisciplineNameId");
+
+                    b.HasIndex("UchPosobieId");
+
+                    b.ToTable("UchPosobieDisciplineName");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieEduForm", b =>
+                {
+                    b.Property<int>("UchPosobieEduFormId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduFormId");
+
+                    b.Property<int>("UchPosobieId");
+
+                    b.HasKey("UchPosobieEduFormId");
+
+                    b.HasIndex("EduFormId");
+
+                    b.HasIndex("UchPosobieId");
+
+                    b.ToTable("UchPosobieEduForm");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieEduNapravl", b =>
+                {
+                    b.Property<int>("UchPosobieEduNapravlId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduNapravlId");
+
+                    b.Property<int>("UchPosobieId");
+
+                    b.HasKey("UchPosobieEduNapravlId");
+
+                    b.HasIndex("EduNapravlId");
+
+                    b.HasIndex("UchPosobieId");
+
+                    b.ToTable("UchPosobieEduNapravl");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieFormaIzdaniya", b =>
+                {
+                    b.Property<int>("UchPosobieFormaIzdaniyaId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("UchPosobieFormaIzdaniyaName");
+
+                    b.HasKey("UchPosobieFormaIzdaniyaId");
+
+                    b.ToTable("UchPosobieFormaIzdaniya");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieVid", b =>
+                {
+                    b.Property<int>("UchPosobieVidId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("UchPosobieVidName");
+
+                    b.HasKey("UchPosobieVidId");
+
+                    b.ToTable("UchPosobieVid");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ProfessionalRetraining", b =>
                 {
                     b.Property<int>("ProfessionalRetrainingId")
@@ -1953,6 +2111,11 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Education.BlokDisciplChast")
                         .WithMany("Disciplines")
                         .HasForeignKey("BlokDisciplChastId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.DisciplineName", "DisciplineName")
+                        .WithMany()
+                        .HasForeignKey("DisciplineNameId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduAccred", b =>
@@ -2033,6 +2196,19 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduPlanEduYear", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduPlan", "EduPlan")
+                        .WithMany("EduPlanEduYears")
+                        .HasForeignKey("EduPlanId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduYear", "EduYear")
+                        .WithMany()
+                        .HasForeignKey("EduYearId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduPlanEduYearBeginningTraining", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduPlan", "EduPlan")
@@ -2093,7 +2269,7 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduProgram", "EduProgram")
-                        .WithMany("EduForms")
+                        .WithMany("EduProgramEduForms")
                         .HasForeignKey("EduProgramId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -2144,13 +2320,6 @@ namespace KisVuzDotNetCore2.Migrations
                         .WithMany("EduUgses")
                         .HasForeignKey("EduLevelId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduYear", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduPlan")
-                        .WithMany("EduYears")
-                        .HasForeignKey("EduPlanId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.FormKontrol", b =>
@@ -2505,6 +2674,81 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Sveden.PomeshenieType", "PomeshenieType")
                         .WithMany()
                         .HasForeignKey("PomeshenieTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.Author", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId1");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobie", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
+                        .WithMany()
+                        .HasForeignKey("FileModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieFormaIzdaniya", "UchPosobieFormaIzdaniya")
+                        .WithMany()
+                        .HasForeignKey("UchPosobieFormaIzdaniyaId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieVid", "UchPosobieVid")
+                        .WithMany()
+                        .HasForeignKey("UchPosobieVidId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieAuthor", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.UchPosobiya.Author", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobie", "UchPosobie")
+                        .WithMany("UchPosobieAuthors")
+                        .HasForeignKey("UchPosobieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieDisciplineName", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.DisciplineName", "DisciplineName")
+                        .WithMany()
+                        .HasForeignKey("DisciplineNameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobie", "UchPosobie")
+                        .WithMany("UchPosobieDisciplineNames")
+                        .HasForeignKey("UchPosobieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieEduForm", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
+                        .WithMany()
+                        .HasForeignKey("EduFormId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobie", "UchPosobieName")
+                        .WithMany("EduForms")
+                        .HasForeignKey("UchPosobieId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieEduNapravl", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
+                        .WithMany()
+                        .HasForeignKey("EduNapravlId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobie", "UchPosobie")
+                        .WithMany("EduNapravls")
+                        .HasForeignKey("UchPosobieId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

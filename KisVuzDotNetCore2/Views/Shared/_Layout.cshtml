@@ -42,14 +42,23 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Образование <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li>
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Образовательные программы<b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a asp-controller="EduPrograms" asp-action="Index">Перечень образовательных программ</a></li>
+                                            <li><a asp-controller="EduProgramEduForms" asp-action="Index">Перечень образовательных программ - Формы обучения</a></li>
+                                            <li><a asp-controller="EduProgramEduYears" asp-action="Index">Перечень образовательных программ - Учебные годы</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Учебные планы<b class="caret"></b></a>
                                         <ul class="dropdown-menu">
                                             <li><a asp-controller="EduPlans" asp-action="Index">Перечень учебных планов</a></li>
-                                            <li><a asp-controller="BlokDiscipls" asp-action="Index">Блоки дисциплин</a></li>
+                                            <li><a asp-controller="BlokDiscipls" asp-action="Index" asp-route-id="">Блоки дисциплин</a></li>
                                             <li><a asp-controller="BlokDisciplChasts" asp-action="Index">Части блоков дисциплин</a></li>
                                             <li><a asp-controller="DisciplineNames" asp-action="Index">Дисциплины</a></li>
                                             <li><a asp-controller="EduPlanEduVidDeyats" asp-action="Index">Добавление видов деятельности к учебному плану</a></li>
                                             <li><a asp-controller="EduPlanEduYearBeginningTrainings" asp-action="Index">Добавление годов начала подготовки к учебному плану</a></li>
+                                            <li><a asp-controller="EduPlanEduYears" asp-action="Index">Добавление учебных годов к учебному плану</a></li>
                                         </ul>
                                     </li>
                                     <li><a asp-controller="EduShedules" asp-action="Index" asp-route-id="">Календарные учебные графики</a></li>

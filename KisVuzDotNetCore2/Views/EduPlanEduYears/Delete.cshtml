@@ -1,12 +1,13 @@
-﻿@model KisVuzDotNetCore2.Models.Education.EduPlanEduYearBeginningTraining
+﻿@model KisVuzDotNetCore2.Models.Education.EduPlanEduYear
 
 @{
     ViewData["Title"] = "Удалить";
 }
 
 
-<h3>Удалить год начала подготовки по учебному плану?</h3>
+<h3>Удалить учебный год?</h3>
 <div>
+    <h4>EduPlanEduYear</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -16,15 +17,15 @@
             @Html.DisplayFor(model => model.EduPlan.EduPlanDescription)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EduYearBeginningTraining)
+            @Html.DisplayNameFor(model => model.EduYear)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduYearBeginningTraining.EduYearBeginningTrainingName)
+            @Html.DisplayFor(model => model.EduYear.EduYearName)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="EduPlanEduYearBeginningTrainingId" />
+        <input type="hidden" asp-for="EduPlanEduYearId" />
         <input type="submit" value="Удалить" class="btn btn-danger" />
         <a asp-action="Index" class="btn btn-default">Отмена</a>
     </form>

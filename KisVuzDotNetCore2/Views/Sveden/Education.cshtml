@@ -9,6 +9,8 @@
     var t7eduChislen = (IEnumerable<EduChislen>)ViewData["t7eduChislen"];
     var t8eduPriem = (IEnumerable<EduPriem>)ViewData["t8eduPriem"];
     var t9eduPerevod = (IEnumerable<EduPerevod>)ViewData["t9eduPerevod"];
+    var t10eduPrograms = (IEnumerable<EduProgram>)ViewData["t10eduPrograms"];
+    var eduShedules = (IEnumerable<EduShedule>)ViewData["eduShedules"];
     var t11eduOPYears = (IEnumerable<EduOPYear>)ViewData["t11eduOPYears"];
     var t12eduPr = (IEnumerable<EduPr>)ViewData["t12eduPr"];
     var t13eduNir=(IEnumerable<EduNir>)ViewData["t13eduNir"];
@@ -190,10 +192,85 @@
     </div>
 </div>
 
-<a href="#spoiler-5" data-toggle="collapse" class="btn btn-danger btn-block">Информация по образовательным программам, в том числе адаптированным</a>
+<a href="#spoiler-5" data-toggle="collapse" class="btn btn-primary btn-block">Информация по образовательным программам, в том числе адаптированным</a>
 <div class="collapse" id="spoiler-5">
     <div class="well">
-        --- Не реализовано ---
+        <table itemprop="eduOP" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Наименование специальности, направления подготовки</th>
+                    <th>Уровень образования</th>
+                    <th>Реализуемые формы обучения</th>
+                    <th>Ссылка на описание образовательной программы с приложением её копии</th>
+                    <th>Ссылка на учебный план с приложением его копии</th>
+                    <th>Ссылка на аннотации к рабочим программам дисциплин (по каждой дисциплине в составе образовательной программы) с приложением их копий</th>
+                    <th>Ссылка на календарный учебный график с приложением его копии</th>
+                    <th>Ссылка на методические и иные документы, разработанные образовательной организацией для обеспечения образовательного процесса</th>
+                    <th>Использование при реализации образовательных программ электронного обучения и дистанционных образовательных технологий</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                    <th>8</th>
+                    <th>9</th>
+                    <th>10</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var eduProgram in t10eduPrograms)
+                {
+                    string opMain = "opMain";
+                    string educationPlan = "educationPlan";
+                    string educationAnnotation = "educationAnnotation";
+                    string educationShedule = "educationShedule";
+                    string methodology = "methodology";
+                    string eduEl = "eduEl";
+                    if(eduProgram.IsAdopt)
+                    {
+                        opMain = "adOpMain";
+                        educationPlan = "adEducationPlan";
+                        educationAnnotation = "adEducationAnnotation";
+                        educationShedule = "adEducationShedule";
+                        methodology = "adMethodology";
+                        eduEl = "adEduEl";
+                    }
+                <tr itemprop="eduOP">
+                    <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
+                    <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName)</td>
+                    <td itemprop="eduLevel">@eduProgram.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName<br />(@eduProgram.EduProgramPodg.EduProgramPodgName)</td>
+                    <td itemprop="eduForm">
+                        @foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+                        {
+                            @eduProgramEduForm.EduForm.EduFormName<br />
+                        }
+                    </td>
+                    <td itemprop="@opMain">
+                        @if (eduProgram.IsAdopt)
+                        {
+                        <i>Адаптированная ОП</i><br>
+                        }
+                        <a href="/@eduProgram.FileModel.Path">Открыть</a>
+                    </td>
+                    <td itemprop="@educationPlan">----Учебный план----</td>
+                    <td itemprop="@educationAnnotation">----Аннотации----</td>
+                    <td itemprop="@educationShedule">
+                        @foreach (var eduShedule in eduShedules.Where(s=>s.EduProfileId == eduProgram.EduProfileId))
+                        {
+                        <a href="/@eduShedule.FileModel.Path">@eduShedule.EduForm.EduFormName (@eduShedule.EduYear.EduYearName уч.год.)</a>
+                        }
+                    </td>
+                    <td itemprop="@methodology">----Метод----</td>
+                    <td itemprop="@eduEl">@eduProgram.UsingElAndDistEduTech</td>
+                </tr>                    
+                }
+            </tbody>
+        </table>        
     </div>
 </div>
 

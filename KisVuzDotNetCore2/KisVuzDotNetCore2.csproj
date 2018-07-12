@@ -346,6 +346,10 @@
     <Compile Remove="Migrations\20180710055613_init.Designer.cs" />
     <Compile Remove="Migrations\20180710120614_init.cs" />
     <Compile Remove="Migrations\20180710120614_init.Designer.cs" />
+    <Compile Remove="Migrations\20180711054742_init.cs" />
+    <Compile Remove="Migrations\20180711054742_init.Designer.cs" />
+    <Compile Remove="Migrations\20180711110844_DisciplineName.cs" />
+    <Compile Remove="Migrations\20180711110844_DisciplineName.Designer.cs" />
     <Compile Remove="Migrations\20180711115516_Posobiya.cs" />
     <Compile Remove="Migrations\20180711115516_Posobiya.Designer.cs" />
     <Compile Remove="Migrations\20180711121918_Posobiya.cs" />
@@ -358,6 +362,12 @@
     <Compile Remove="Migrations\20180712071325_posobie.Designer.cs" />
     <Compile Remove="Migrations\20180712071934_posobie.cs" />
     <Compile Remove="Migrations\20180712071934_posobie.Designer.cs" />
+    <Compile Remove="Migrations\20180711063157_EduPlanEduYear.cs" />
+    <Compile Remove="Migrations\20180711063157_EduPlanEduYear.Designer.cs" />
+    <Compile Remove="Migrations\20180711063650_EduPlanEduYear.cs" />
+    <Compile Remove="Migrations\20180711063650_EduPlanEduYear.Designer.cs" />
+    <Compile Remove="Migrations\20180712072544_posobie.cs" />
+    <Compile Remove="Migrations\20180712072544_posobie.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

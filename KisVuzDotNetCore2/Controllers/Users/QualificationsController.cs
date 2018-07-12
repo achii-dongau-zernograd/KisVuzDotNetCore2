@@ -146,7 +146,7 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         // GET: Qualifications/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, bool? ReturnToUsersQualifications)
         {
             if (id == null)
             {

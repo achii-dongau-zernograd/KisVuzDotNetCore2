@@ -4,6 +4,7 @@
     ViewData["Title"] = "Редактировать";
     List<EduVidDeyat> eduVidDeyats = (List<EduVidDeyat>)ViewData["EduVidDeyats"];
     List<EduYearBeginningTraining> eduYearBeginningTrainings = (List<EduYearBeginningTraining>)ViewData["EduYearBeginningTrainings"];
+    List<EduYear> eduYears = (List<EduYear>)ViewData["EduYears"];
 }
 
 <h2>Редактировать учебный план</h2>
@@ -92,7 +93,22 @@
                 <input asp-for="EduPlanPdfId" class="hidden">
                 <a href="/@Model.EduPlanPdf?.Path" class="control-label">@Model.EduPlanPdf?.FileName</a>
             </div>
-
+            <div class="form-group">
+                <label asp-for="EduPlanEduYears" class="control-label"></label>
+                @foreach (var eduYear in eduYears)
+                {
+                    string CheckedYear = "";
+                    @foreach (var eduYearChoosed in Model.EduPlanEduYears)
+                    {
+                        if (eduYear.EduYearId == eduYearChoosed.EduYearId)
+                        {
+                            CheckedYear = "checked";
+                            break;
+                        }
+                    }
+                    <br /><input type="checkbox" @CheckedYear name="EduPlanEduYearIds" value="@eduYear.EduYearId" /> @eduYear.EduYearName
+                }
+            </div>
             <div class="form-group">
                 <label class="control-label">Для замены выберите файл: </label>
                 <input type="file" name="uploadedFile" class="form-control" />

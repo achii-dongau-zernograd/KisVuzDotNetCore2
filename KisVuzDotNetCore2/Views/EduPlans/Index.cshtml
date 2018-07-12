@@ -43,6 +43,12 @@
                 @Html.DisplayNameFor(model => model.StructKaf)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.EduPlanEduYears)
+            </th>
+            <th>
+                Содержание учебного плана
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.EduPlanPdf)
             </th>
             <th></th>
@@ -86,6 +92,15 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StructKaf.StructSubvision.StructSubvisionName)
+            </td>
+            <td>
+               @foreach (var eduYear in item.EduPlanEduYears)
+               {
+                   <p>@eduYear.EduYear.EduYearName</p>
+               }
+            </td>
+            <td>
+                <a asp-controller="BlokDiscipls" asp-action="index" asp-route-id="@item.EduPlanId">Открыть</a>
             </td>
             <td>
                 @if (item.EduPlanPdf?.Id != null)
