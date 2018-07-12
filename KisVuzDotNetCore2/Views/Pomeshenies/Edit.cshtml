@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Редактировать данные";
+    List<PomeshenieType> pomeshenieTypes = (List<PomeshenieType>)ViewData["PomeshenieType"];
 }
 
 <h2>Редактировать данные</h2>
@@ -27,6 +28,25 @@
                 <input asp-for="PomeshenieOvz" class="form-control" />
                 <span asp-validation-for="PomeshenieOvz" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="PomeshenieTypes" class="control-label"></label>
+                @foreach (var pomeshenieType in pomeshenieTypes)
+                {
+                    string Checked = "";
+                    @foreach (var pomeshenieTypeChoosed in Model.PomeshenieTypes)
+                    {
+                        if (pomeshenieType.PomeshenieTypeId== pomeshenieTypeChoosed.PomeshenieTypeId)
+                        {
+                            Checked = "checked";
+                            break;
+                        }
+                    }
+
+                    <br /><input type="checkbox" @Checked name="PomeshenieTypeIds" value="@pomeshenieType.PomeshenieTypeId" /> @pomeshenieType.PomeshenieTypeName
+                }
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Сохранить" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-default">Отмена</a>

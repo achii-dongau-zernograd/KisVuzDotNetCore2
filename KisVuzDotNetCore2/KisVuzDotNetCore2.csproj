@@ -346,6 +346,18 @@
     <Compile Remove="Migrations\20180710055613_init.Designer.cs" />
     <Compile Remove="Migrations\20180710120614_init.cs" />
     <Compile Remove="Migrations\20180710120614_init.Designer.cs" />
+    <Compile Remove="Migrations\20180711115516_Posobiya.cs" />
+    <Compile Remove="Migrations\20180711115516_Posobiya.Designer.cs" />
+    <Compile Remove="Migrations\20180711121918_Posobiya.cs" />
+    <Compile Remove="Migrations\20180711121918_Posobiya.Designer.cs" />
+    <Compile Remove="Migrations\20180712064324_posobie.cs" />
+    <Compile Remove="Migrations\20180712064324_posobie.Designer.cs" />
+    <Compile Remove="Migrations\20180712065849_posobie.cs" />
+    <Compile Remove="Migrations\20180712065849_posobie.Designer.cs" />
+    <Compile Remove="Migrations\20180712071325_posobie.cs" />
+    <Compile Remove="Migrations\20180712071325_posobie.Designer.cs" />
+    <Compile Remove="Migrations\20180712071934_posobie.cs" />
+    <Compile Remove="Migrations\20180712071934_posobie.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

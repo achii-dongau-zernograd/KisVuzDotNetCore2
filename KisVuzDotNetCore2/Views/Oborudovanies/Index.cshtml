@@ -1,7 +1,8 @@
-﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.Oborudovanie>
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.Korpus>
 
 @{
     ViewData["Title"] = "Оборудование";
+    int i = 1;
 }
 
 <h2>Оборудование</h2>
@@ -9,23 +10,36 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.OborudovanieName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.OborudovanieCount)
-                </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pomeshenie.PomeshenieName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
+
+@foreach (var korpus in Model)
+{    
+        <a href="#spoiler-@i" data-toggle="collapse" class="btn btn-primary btn-block">@korpus.KorpusName</a>
+        <div class="collapse" id="spoiler-@i">
+            @{i = i + 1;}
+            <div class="well">
+                @foreach (var pomeshenie in korpus.Pomesheniya)
+                {
+                    <a href="#spoiler-@i" data-toggle="collapse" class="btn btn-primary btn-block">@pomeshenie.PomeshenieName</a>
+                    <div class="collapse" id="spoiler-@i">
+                        @{i = i + 1;}
+                        <div class="well">
+                            
+                            <table class="table">
+                             <thead>
+                               <tr>
+                                    <th>
+                                      Наименование оборудования
+                                     </th>
+                                    <th>
+                                       Количество оборудования
+                                    </th>
+                                  
+                                    <th></th>
+                                </tr>
+                            </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in pomeshenie.OborudovanieList)
+{
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.OborudovanieName)
@@ -33,9 +47,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.OborudovanieCount)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pomeshenie.PomeshenieFullName)
-            </td>
+           
             <td>
                 <a asp-action="Edit" asp-route-id="@item.OborudovanieId">Редактировать</a> |
                 <a asp-action="Delete" asp-route-id="@item.OborudovanieId">Удалить</a>
@@ -44,3 +56,12 @@
 }
     </tbody>
 </table>
+
+               
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>            
+}
+

@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.UchPosobiya;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -531,8 +532,74 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<GraduateTrudoustroustvo> GraduateTrudoustroustvo { get; set; }
         #endregion
 
+        #region Учебные пособия
 
-        
+        /// <summary>
+        /// Авторы учебных пособий
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<Author> Author { get; set; }
+
+        /// <summary>
+        /// Таблица Учебное пособие
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<UchPosobie> UchPosobie { get; set; }
+
+        /// <summary>
+        /// Связующая таблица между UchPosobie (учебное пособие) и  DisciplineName (наименованиея дисциплин)
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<UchPosobieDisciplineName> UchPosobieDisciplineName { get; set; }
+
+        /// <summary>
+        /// Связующая таблица между UchPosobie (учебное пособие) и  EduForm (форма обучения)
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<UchPosobieEduForm> UchPosobieEduForm { get; set; }
+
+        /// <summary>
+        /// Связующая таблица между UchPosobie (учебными пособиями) и EduNapravl (направлениями)
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<UchPosobieEduNapravl> UchPosobieEduNapravl { get; set; }
+
+        /// <summary>
+        /// Справочник "Форма издания учебного пособия"
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<UchPosobieFormaIzdaniya> UchPosobieFormaIzdaniya { get; set; }
+
+        /// <summary>
+        /// Справочник "Вид учебного пособия"
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<UchPosobieVid> UchPosobieVid { get; set; }
+
+        /// <summary>
+        /// Связь между Uchposobie (учебное пособие) и Author (автор)
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<UchPosobieAuthor> UchPosobieAuthor { get; set; }
+
+        #endregion
+
         #endregion
 
         /// <summary>
