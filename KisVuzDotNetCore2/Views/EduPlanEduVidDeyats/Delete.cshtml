@@ -13,19 +13,19 @@
             @Html.DisplayNameFor(model => model.EduPlan)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduPlan.EduPlanId)
+            @Html.DisplayFor(model => model.EduPlan.EduPlanDescription)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.EduVidDeyat)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduVidDeyat.EduVidDeyatId)
+            @Html.DisplayFor(model => model.EduVidDeyat.EduVidDeyatName)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="EduPlanEduVidDeyatId" />
-        <input type="submit" value="Delete" class="btn btn-danger" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
         <a asp-action="Index" class="btn btn-default">Отмена</a>
     </form>
 </div>

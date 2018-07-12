@@ -183,6 +183,12 @@ namespace KisVuzDotNetCore2.Models
         /// Таблица для реализации отношения М:М между таблицами EduPrograms и EduYears
         /// </summary>
         public DbSet<EduProgramEduYear> EduProgramEduYears { get; set; }
+
+        /// <summary>
+        /// Таблица для реализации отношения М:М между таблицами EduPlans и EduYears
+        /// </summary>
+        public DbSet<EduPlanEduYear> EduPlanEduYears { get; set; }
+
         #endregion
 
         #region Структура образовательной организации (Struct)

@@ -99,12 +99,7 @@ namespace KisVuzDotNetCore2.Models.Education
         [Display(Name = "Виды деятельности по учебному плану")]
         public List<EduPlanEduVidDeyat> EduVidDeyatList { get; set; }
 
-        /// <summary>
-        /// Учебные годы
-        /// </summary>
-        [Display(Name = "Учебные годы")]
-        public List<EduYear> EduYears { get; set; }
-
+       
         /// <summary>
         /// Файл учебного плана (.pdf)
         /// </summary>
@@ -117,6 +112,13 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         [Display(Name = "Блоки дисциплин")]
         public List<BlokDiscipl> BlokDiscipl { get; set; }
+
+        /// <summary>
+        /// Переходная таблица EduPlanEduYear
+        /// </summary>
+        [Display(Name = "Учебные годы")]
+        public List<EduPlanEduYear> EduPlanEduYears { get; set; }
+
 
         public string EduYearBeginningTrainingsDescription
         {
