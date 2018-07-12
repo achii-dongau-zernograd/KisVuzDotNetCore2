@@ -1,0 +1,41 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduProgramEduForm>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EduForm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduProgram)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduForm.EduFormId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduProgram.EduProgramId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EduProgramEduFormId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.EduProgramEduFormId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduProgramEduFormId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

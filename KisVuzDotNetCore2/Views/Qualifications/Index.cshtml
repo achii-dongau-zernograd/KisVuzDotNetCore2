@@ -61,11 +61,17 @@ else
                     @item.RowStatus?.RowStatusName
                 </td>
                 <td>
-                    @if ((ViewBag.Id == null )|| (ViewBag.Id != null && item.RowStatus?.RowStatusId == 1))
+                    @if (ViewBag.Id == null)
                     {
                         <a asp-action="Edit" asp-route-id="@item.QualificationId">Редактировать</a> <text> | </text>
                         <a asp-action="Details" asp-route-id="@item.QualificationId">Подробнее</a> <text> | </text>
                         <a asp-action="Delete" asp-route-id="@item.QualificationId">Удалить</a>
+                    }
+                    @if (ViewBag.Id != null && item.RowStatus?.RowStatusId == 1)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.QualificationId" asp-route-return-to-users-qualifications="true">Редактировать</a> <text> | </text>
+                        <a asp-action="Details" asp-route-id="@item.QualificationId" asp-route-return-to-users-qualifications="true">Подробнее</a> <text> | </text>
+                        <a asp-action="Delete" asp-route-id="@item.QualificationId" asp-route-return-to-users-qualifications="true">Удалить</a>
                     }
                 </td>
             </tr>
