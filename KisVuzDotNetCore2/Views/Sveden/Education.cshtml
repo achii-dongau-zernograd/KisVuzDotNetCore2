@@ -11,6 +11,7 @@
     var t9eduPerevod = (IEnumerable<EduPerevod>)ViewData["t9eduPerevod"];
     var t10eduPrograms = (IEnumerable<EduProgram>)ViewData["t10eduPrograms"];
     var eduShedules = (IEnumerable<EduShedule>)ViewData["eduShedules"];
+    var eduPlans = (IEnumerable<EduPlan>)ViewData["eduPlans"];
     var t11eduOPYears = (IEnumerable<EduOPYear>)ViewData["t11eduOPYears"];
     var t12eduPr = (IEnumerable<EduPr>)ViewData["t12eduPr"];
     var t13eduNir=(IEnumerable<EduNir>)ViewData["t13eduNir"];
@@ -257,12 +258,17 @@
                         }
                         <a href="/@eduProgram.FileModel.Path">Открыть</a>
                     </td>
-                    <td itemprop="@educationPlan">----Учебный план----</td>
+                    <td itemprop="@educationPlan">
+                        @foreach(var eduPlan in eduPlans.Where(p=>p.EduProfileId==eduProgram.EduProfileId))
+                        { 
+                        <a href="/@eduPlan.EduPlanPdf?.Path">Открыть (@eduPlan.EduForm.EduFormName)</a><br />
+                        }
+                    </td>
                     <td itemprop="@educationAnnotation">----Аннотации----</td>
                     <td itemprop="@educationShedule">
                         @foreach (var eduShedule in eduShedules.Where(s=>s.EduProfileId == eduProgram.EduProfileId))
                         {
-                        <a href="/@eduShedule.FileModel.Path">@eduShedule.EduForm.EduFormName (@eduShedule.EduYear.EduYearName уч.год.)</a>
+                        <a href="/@eduShedule.FileModel?.Path">@eduShedule.EduForm?.EduFormName (@eduShedule.EduYear?.EduYearName уч.год.)</a>
                         }
                     </td>
                     <td itemprop="@methodology">----Метод----</td>

@@ -339,6 +339,19 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "LinkTypes",
+                columns: table => new
+                {
+                    LinkTypeId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    LinkTypeName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LinkTypes", x => x.LinkTypeId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PomeshenieType",
                 columns: table => new
                 {
@@ -1247,6 +1260,34 @@ namespace KisVuzDotNetCore2.Migrations
                         principalTable: "StructUniversities",
                         principalColumn: "StructUniversityId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InstituteLinks",
+                columns: table => new
+                {
+                    InstituteLinkId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    InstituteLinkDescription = table.Column<string>(nullable: true),
+                    InstituteLinkLink = table.Column<string>(nullable: true),
+                    LinkTypeId = table.Column<int>(nullable: false),
+                    StructInstituteId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InstituteLinks", x => x.InstituteLinkId);
+                    table.ForeignKey(
+                        name: "FK_InstituteLinks_LinkTypes_LinkTypeId",
+                        column: x => x.LinkTypeId,
+                        principalTable: "LinkTypes",
+                        principalColumn: "LinkTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InstituteLinks_StructInstitutes_StructInstituteId",
+                        column: x => x.StructInstituteId,
+                        principalTable: "StructInstitutes",
+                        principalColumn: "StructInstituteId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -2742,6 +2783,16 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "GraduateYearId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InstituteLinks_LinkTypeId",
+                table: "InstituteLinks",
+                column: "LinkTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstituteLinks_StructInstituteId",
+                table: "InstituteLinks",
+                column: "StructInstituteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Korpus_AddressId",
                 table: "Korpus",
                 column: "AddressId");
@@ -3094,6 +3145,9 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "HostelInfo");
 
             migrationBuilder.DropTable(
+                name: "InstituteLinks");
+
+            migrationBuilder.DropTable(
                 name: "Oborudovanie");
 
             migrationBuilder.DropTable(
@@ -3182,6 +3236,9 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "GraduateYear");
+
+            migrationBuilder.DropTable(
+                name: "LinkTypes");
 
             migrationBuilder.DropTable(
                 name: "Pomeshenie");

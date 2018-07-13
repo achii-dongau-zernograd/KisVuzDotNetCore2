@@ -120,7 +120,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType6 = new FileDataType
                     {
-                        FileDataTypeId = 6,
+                        FileDataTypeId = (int)FileDataTypeEnum.PlanFinansovoHozyaystvennoyDeyatelnosti,
                         FileDataTypeName = "План финансово-хозяйственной деятельности образовательной организации",
                         Itemprop = "finPlanDocLink",
                         FileDataTypeGroupId = 3

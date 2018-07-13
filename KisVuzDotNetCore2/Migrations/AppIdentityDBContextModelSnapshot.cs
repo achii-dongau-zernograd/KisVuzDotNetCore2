@@ -1156,6 +1156,40 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("Faxes");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.InstituteLink", b =>
+                {
+                    b.Property<int>("InstituteLinkId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("InstituteLinkDescription");
+
+                    b.Property<string>("InstituteLinkLink");
+
+                    b.Property<int>("LinkTypeId");
+
+                    b.Property<int>("StructInstituteId");
+
+                    b.HasKey("InstituteLinkId");
+
+                    b.HasIndex("LinkTypeId");
+
+                    b.HasIndex("StructInstituteId");
+
+                    b.ToTable("InstituteLinks");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.LinkType", b =>
+                {
+                    b.Property<int>("LinkTypeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("LinkTypeName");
+
+                    b.HasKey("LinkTypeId");
+
+                    b.ToTable("LinkTypes");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Post", b =>
                 {
                     b.Property<int>("PostId")
@@ -2495,6 +2529,19 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.StructUniversity")
                         .WithMany("Faxes")
                         .HasForeignKey("StructUniversityId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.InstituteLink", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.LinkType", "LinkType")
+                        .WithMany()
+                        .HasForeignKey("LinkTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructInstitute", "StructInstitute")
+                        .WithMany()
+                        .HasForeignKey("StructInstituteId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.StructFacultet", b =>
