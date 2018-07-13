@@ -348,12 +348,38 @@
     <Compile Remove="Migrations\20180710120614_init.Designer.cs" />
     <Compile Remove="Migrations\20180711054742_init.cs" />
     <Compile Remove="Migrations\20180711054742_init.Designer.cs" />
+    <Compile Remove="Migrations\20180711110844_DisciplineName.cs" />
+    <Compile Remove="Migrations\20180711110844_DisciplineName.Designer.cs" />
+    <Compile Remove="Migrations\20180711115516_Posobiya.cs" />
+    <Compile Remove="Migrations\20180711115516_Posobiya.Designer.cs" />
+    <Compile Remove="Migrations\20180711121918_Posobiya.cs" />
+    <Compile Remove="Migrations\20180711121918_Posobiya.Designer.cs" />
+    <Compile Remove="Migrations\20180712064324_posobie.cs" />
+    <Compile Remove="Migrations\20180712064324_posobie.Designer.cs" />
+    <Compile Remove="Migrations\20180712065849_posobie.cs" />
+    <Compile Remove="Migrations\20180712065849_posobie.Designer.cs" />
+    <Compile Remove="Migrations\20180712071325_posobie.cs" />
+    <Compile Remove="Migrations\20180712071325_posobie.Designer.cs" />
+    <Compile Remove="Migrations\20180712071934_posobie.cs" />
+    <Compile Remove="Migrations\20180712071934_posobie.Designer.cs" />
     <Compile Remove="Migrations\20180711063157_EduPlanEduYear.cs" />
     <Compile Remove="Migrations\20180711063157_EduPlanEduYear.Designer.cs" />
     <Compile Remove="Migrations\20180711063650_EduPlanEduYear.cs" />
     <Compile Remove="Migrations\20180711063650_EduPlanEduYear.Designer.cs" />
     <Compile Remove="Migrations\20180711110844_DisciplineName.cs" />
     <Compile Remove="Migrations\20180711110844_DisciplineName.Designer.cs" />
+    <Compile Remove="Migrations\20180712072544_posobie.cs" />
+    <Compile Remove="Migrations\20180712072544_posobie.Designer.cs" />
+    <Compile Remove="Migrations\20180712082748_init.cs" />
+    <Compile Remove="Migrations\20180712082748_init.Designer.cs" />
+    <Compile Remove="Migrations\20180713080128_init.cs" />
+    <Compile Remove="Migrations\20180713080128_init.Designer.cs" />
+    <Compile Remove="Migrations\20180713080935_init.cs" />
+    <Compile Remove="Migrations\20180713080935_init.Designer.cs" />
+    <Compile Remove="Migrations\20180713081526_init.cs" />
+    <Compile Remove="Migrations\20180713081526_init.Designer.cs" />
+    <Compile Remove="Migrations\20180713081835_init.cs" />
+    <Compile Remove="Migrations\20180713081835_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

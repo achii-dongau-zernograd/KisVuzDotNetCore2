@@ -22,8 +22,17 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: Oborudovanies
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.Oborudovanie.Include(o => o.Pomeshenie.Korpus);
-            return View(await appIdentityDBContext.ToListAsync());
+            //var appIdentityDBContext = _context.Oborudovanie.Include(o => o.Pomeshenie.Korpus);
+            //return View(await appIdentityDBContext.ToListAsync());
+            var korpuses = _context.Korpus.Include(o => o.Pomesheniya);
+            foreach (var korpus in korpuses)
+            {
+                foreach (var pomeshenie in korpus.Pomesheniya)
+                {
+                    pomeshenie.OborudovanieList = await _context.Oborudovanie.Where(o => o.PomeshenieId == pomeshenie.PomeshenieId).ToListAsync();
+                }
+            }
+            return View(await korpuses.ToListAsync());
         }
 
         

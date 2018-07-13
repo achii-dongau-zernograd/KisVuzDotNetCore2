@@ -5,7 +5,8 @@
 <h1>Финансово-хозяйственная деятельность</h1>
 @{
     var t22volume = (IEnumerable<Volume>)ViewData["t22volume"];
-   }
+    var planFinansovoHozyaystvennoyDeyatelnosti=(FileDataType)ViewData["planFinansovoHozyaystvennoyDeyatelnosti"];
+}
 
 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Объем образовательной деятельности</a>
 <div class="collapse" id="spoiler-1">
@@ -30,5 +31,16 @@
                 </tr>
             }
         </table>
+    </div>
+</div>
+
+
+<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">План финансово-хозяйственной деятельности</a>
+<div class="collapse" id="spoiler-2">
+    <div class="well">
+        @foreach (var ftft in planFinansovoHozyaystvennoyDeyatelnosti.FileToFileTypes)
+        {
+            <p><a itemprop="@ftft.FileDataType.Itemprop" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+        }
     </div>
 </div>

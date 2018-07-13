@@ -1,5 +1,6 @@
 ﻿using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Education;
+using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Struct;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -182,11 +183,22 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["t10eduPrograms"] = eduPrograms;
 
             var eduShedules = await _context.EduShedules
-                .Include(s=>s.EduForm)
-                .Include(s=>s.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Include(s=>s.FileModel)
+                .Include(s => s.EduForm)
+                .Include(s => s.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(s => s.FileModel)
+                .Include(s => s.EduYear)
                 .ToListAsync();
             ViewData["eduShedules"] = eduShedules;
+
+            var eduPlans = await _context.EduPlans
+                .Include(p => p.EduForm)
+                .Include(p => p.EduPlanEduYears)
+                .Include(p => p.EduPlanPdf)
+                .Include(p => p.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(p => p.EduProgramPodg)
+                .Include(p => p.EduSrok)
+                .ToListAsync();
+            ViewData["eduPlans"] = eduPlans;
             #endregion
 
             #region Таблица 11. Образовательная программа (объём программы по годам)
@@ -327,6 +339,13 @@ namespace KisVuzDotNetCore2.Controllers
             var t22volume = await _context.Volume
                 .ToListAsync();
             ViewData["t22volume"] = t22volume;
+
+            var planFinansovoHozyaystvennoyDeyatelnosti = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.PlanFinansovoHozyaystvennoyDeyatelnosti)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["planFinansovoHozyaystvennoyDeyatelnosti"] = planFinansovoHozyaystvennoyDeyatelnosti;
 
             return View();
         }

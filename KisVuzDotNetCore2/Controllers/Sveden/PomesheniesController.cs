@@ -89,12 +89,19 @@ namespace KisVuzDotNetCore2.Models.Sveden
                 return NotFound();
             }
 
-            var pomeshenie = await _context.Pomeshenie.SingleOrDefaultAsync(m => m.PomeshenieId == id);
+            var pomeshenie = await _context.Pomeshenie
+                .Include(p => p.PomeshenieTypes)
+                .SingleOrDefaultAsync(m => m.PomeshenieId == id);
             if (pomeshenie == null)
             {
                 return NotFound();
             }
+            
             ViewData["KorpusId"] = new SelectList(_context.Korpus, "KorpusId", "KorpusName", pomeshenie.KorpusId);
+            
+            List<PomeshenieType> pomeshenieTypes = _context.PomeshenieType.ToList();
+            ViewData["PomeshenieType"] = pomeshenieTypes;
+
             return View(pomeshenie);
         }
 
@@ -103,7 +110,7 @@ namespace KisVuzDotNetCore2.Models.Sveden
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Pomeshenie pomeshenie)
+        public async Task<IActionResult> Edit(int id, Pomeshenie pomeshenie, int[] PomeshenieTypeIds)
         {
             if (id != pomeshenie.PomeshenieId)
             {
@@ -116,6 +123,24 @@ namespace KisVuzDotNetCore2.Models.Sveden
                 {
                     _context.Update(pomeshenie);
                     await _context.SaveChangesAsync();
+
+                    if (PomeshenieTypeIds != null)
+                    {
+                        _context.PomeshenieTypepomesheniya.RemoveRange(_context.PomeshenieTypepomesheniya.Where(v => v.PomeshenieId == pomeshenie.PomeshenieId));
+                        await _context.SaveChangesAsync();
+
+                        var pomeshenieTypes = new List<PomeshenieTypepomesheniya>();
+                        foreach (var PomeshenieTypeId in PomeshenieTypeIds)
+                        {
+                            PomeshenieTypepomesheniya pomeshenieTypepomesheniya = new PomeshenieTypepomesheniya();
+                            pomeshenieTypepomesheniya.PomeshenieId = pomeshenie.PomeshenieId;
+                            pomeshenieTypepomesheniya.PomeshenieTypeId = PomeshenieTypeId;
+                            pomeshenieTypes.Add(pomeshenieTypepomesheniya);
+                        }
+                        await _context.PomeshenieTypepomesheniya.AddRangeAsync(pomeshenieTypes);
+                        await _context.SaveChangesAsync();
+                    }
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {

@@ -6,6 +6,10 @@
     public enum FileDataTypeEnum
     {
         /// <summary>
+        /// План финансово-хозяйственной деятельности
+        /// </summary>
+        PlanFinansovoHozyaystvennoyDeyatelnosti=6,
+        /// <summary>
         /// Учебный план
         /// </summary>
         UchebniyPlan=31,
