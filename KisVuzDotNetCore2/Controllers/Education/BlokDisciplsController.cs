@@ -50,7 +50,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
         }
 
         // GET: BlokDiscipls/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, int? eduplanid)
         {
             if (id == null)
             {
@@ -66,7 +66,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
             {
                 return NotFound();
             }
-
+            ViewBag.EduPlanId = eduplanid;
             return View(blokDiscipl);
         }
 
@@ -113,9 +113,9 @@ namespace KisVuzDotNetCore2.Controllers.Education
         }
 
         // GET: BlokDiscipls/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, int? eduplanid)
         {
-            if (id == null)
+            if (id == null || eduplanid == null)
             {
                 return NotFound();
             }
@@ -130,7 +130,8 @@ namespace KisVuzDotNetCore2.Controllers.Education
                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
                .Include(e => e.EduForm);
             ViewData["BlokDisciplNameId"] = new SelectList(_context.Set<BlokDisciplName>(), "BlokDisciplNameId", "BlokDisciplNameName", blokDiscipl.BlokDisciplNameId);
-            ViewData["EduPlanId"] = new SelectList(EduPlans, "EduPlanId", "EduPlanDescription", blokDiscipl.EduPlanId);
+            ViewData["EduPlans"] = new SelectList(EduPlans, "EduPlanId", "EduPlanDescription", blokDiscipl.EduPlanId);
+            ViewBag.EduPlanId = eduplanid;
             return View(blokDiscipl);
         }
 
@@ -139,7 +140,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BlokDisciplId,BlokDisciplNameId,EduPlanId")] BlokDiscipl blokDiscipl)
+        public async Task<IActionResult> Edit(int id, [Bind("BlokDisciplId,BlokDisciplNameId,EduPlanId")] BlokDiscipl blokDiscipl, int? eduplanid)
         {
             if (id != blokDiscipl.BlokDisciplId)
             {
@@ -164,7 +165,14 @@ namespace KisVuzDotNetCore2.Controllers.Education
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                if (eduplanid == null)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index), new { id = eduplanid});
+                }
             }
             ViewData["BlokDisciplNameId"] = new SelectList(_context.Set<BlokDisciplName>(), "BlokDisciplNameId", "BlokDisciplNameId", blokDiscipl.BlokDisciplNameId);
             ViewData["EduPlanId"] = new SelectList(_context.EduPlans, "EduPlanId", "EduPlanId", blokDiscipl.EduPlanId);
@@ -172,7 +180,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
         }
 
         // GET: BlokDiscipls/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, int? eduplanid)
         {
             if (id == null)
             {
@@ -188,19 +196,26 @@ namespace KisVuzDotNetCore2.Controllers.Education
             {
                 return NotFound();
             }
-
+            ViewBag.EduPlanId = eduplanid;
             return View(blokDiscipl);
         }
 
         // POST: BlokDiscipls/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, int? eduplanid)
         {
             var blokDiscipl = await _context.BlokDiscipl.SingleOrDefaultAsync(m => m.BlokDisciplId == id);
             _context.BlokDiscipl.Remove(blokDiscipl);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (eduplanid==null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index),new { id = eduplanid }); ;
+            }
         }
 
         private bool BlokDisciplExists(int id)

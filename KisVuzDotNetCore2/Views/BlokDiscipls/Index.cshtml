@@ -18,25 +18,31 @@
             <th>
                 @Html.DisplayNameFor(model => model.EduPlan)
             </th>
+            <th>
+                Содержание блока дисциплин
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BlokDisciplName.BlokDisciplNameName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EduPlan.EduPlanDescription)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.BlokDisciplId">Редактировать</a> |
-                    <a asp-action="Details" asp-route-id="@item.BlokDisciplId">Подробнее</a> |
-                    <a asp-action="Delete" asp-route-id="@item.BlokDisciplId">Удалить</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BlokDisciplName.BlokDisciplNameName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduPlan.EduPlanDescription)
+            </td>
+            <td>
+                <a asp-controller="BlokDisciplChasts" asp-action="index" asp-route-id="@item.BlokDisciplId">Открыть</a>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BlokDisciplId" asp-route-eduplanid="@ViewBag.EduPlanId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.BlokDisciplId" asp-route-eduplanid="@ViewBag.EduPlanId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.BlokDisciplId" asp-route-eduplanid="@ViewBag.EduPlanId">Удалить</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

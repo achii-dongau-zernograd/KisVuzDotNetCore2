@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Education;
 
-namespace KisVuzDotNetCore2.Controllers.Education
+namespace KisVuzDotNetCore2.Controllers
 {
     public class BlokDisciplChastsController : Controller
     {
@@ -20,14 +20,29 @@ namespace KisVuzDotNetCore2.Controllers.Education
         }
 
         // GET: BlokDisciplChasts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            var appIdentityDBContext = _context.BlokDisciplChast.Include(b => b.BlokDisciplChastName);
-            return View(await appIdentityDBContext.ToListAsync());
+            if (id!=null)
+            {
+                var appIdentityDBContext = _context.BlokDisciplChast
+                    .Include(b => b.BlokDiscipl.BlokDisciplName)
+                    .Include(b => b.BlokDisciplChastName)
+                    .Where(b=> b.BlokDisciplId==id);
+                ViewBag.BlokDisciplId = id;
+                return View(await appIdentityDBContext.ToListAsync());
+            }
+            else
+            {
+                var appIdentityDBContext = _context.BlokDisciplChast
+                    .Include(b => b.BlokDiscipl.BlokDisciplName)
+                    .Include(b => b.BlokDisciplChastName);
+                return View(await appIdentityDBContext.ToListAsync());
+            }
+            
         }
 
         // GET: BlokDisciplChasts/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, int? blokdisciplid)
         {
             if (id == null)
             {
@@ -35,6 +50,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
             }
 
             var blokDisciplChast = await _context.BlokDisciplChast
+                .Include(b => b.BlokDiscipl.BlokDisciplName)
                 .Include(b => b.BlokDisciplChastName)
                 .SingleOrDefaultAsync(m => m.BlokDisciplChastId == id);
             if (blokDisciplChast == null)
@@ -42,13 +58,23 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 return NotFound();
             }
 
+            ViewBag.BlokDisciplId = blokdisciplid;
             return View(blokDisciplChast);
         }
 
         // GET: BlokDisciplChasts/Create
-        public IActionResult Create(int? id)
+        public IActionResult Create(int? blokdisciplid)
         {
-            ViewData["BlokDisciplChastNameId"] = new SelectList(_context.BlokDisciplChastName, "BlokDisciplChastNameId", "BlokDisciplChastNameName", id);
+            if (blokdisciplid != null)
+            {
+                ViewBag.blokdisciplid = blokdisciplid;
+            }
+            else
+            {
+                ViewData["BlokDisciplId"] = new SelectList(_context.BlokDiscipl, "BlokDisciplId", "BlokDisciplName");
+            }
+
+            ViewData["BlokDisciplChastNameId"] = new SelectList(_context.BlokDisciplChastName, "BlokDisciplChastNameId", "BlokDisciplChastNameName");
             return View();
         }
 
@@ -57,22 +83,23 @@ namespace KisVuzDotNetCore2.Controllers.Education
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(BlokDisciplChast blokDisciplChast)
+        public async Task<IActionResult> Create([Bind("BlokDisciplChastId,BlokDisciplId,BlokDisciplChastNameId")] BlokDisciplChast blokDisciplChast)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(blokDisciplChast);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),new { id = blokDisciplChast.BlokDisciplId});
             }
+            ViewData["BlokDisciplId"] = new SelectList(_context.BlokDiscipl, "BlokDisciplId", "BlokDisciplId", blokDisciplChast.BlokDisciplId);
             ViewData["BlokDisciplChastNameId"] = new SelectList(_context.BlokDisciplChastName, "BlokDisciplChastNameId", "BlokDisciplChastNameId", blokDisciplChast.BlokDisciplChastNameId);
             return View(blokDisciplChast);
         }
 
         // GET: BlokDisciplChasts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, int? blokdisciplid)
         {
-            if (id == null)
+            if (id == null || blokdisciplid == null)
             {
                 return NotFound();
             }
@@ -82,7 +109,8 @@ namespace KisVuzDotNetCore2.Controllers.Education
             {
                 return NotFound();
             }
-            ViewData["BlokDisciplChastNameId"] = new SelectList(_context.BlokDisciplChastName, "BlokDisciplChastNameId", "BlokDisciplChastNameId", blokDisciplChast.BlokDisciplChastNameId);
+            ViewData["BlokDisciplChastNameId"] = new SelectList(_context.BlokDisciplChastName, "BlokDisciplChastNameId", "BlokDisciplChastNameName", blokDisciplChast.BlokDisciplChastNameId);
+            ViewBag.BlokDisciplId = blokdisciplid;
             return View(blokDisciplChast);
         }
 
@@ -91,7 +119,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BlokDisciplChastId,BlokDisciplChastNameId")] BlokDisciplChast blokDisciplChast)
+        public async Task<IActionResult> Edit(int id, [Bind("BlokDisciplChastId,BlokDisciplId,BlokDisciplChastNameId")] BlokDisciplChast blokDisciplChast, int? blokdisciplid)
         {
             if (id != blokDisciplChast.BlokDisciplChastId)
             {
@@ -116,14 +144,15 @@ namespace KisVuzDotNetCore2.Controllers.Education
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { id = blokdisciplid});
             }
+            ViewData["BlokDisciplId"] = new SelectList(_context.BlokDiscipl, "BlokDisciplId", "BlokDisciplId", blokDisciplChast.BlokDisciplId);
             ViewData["BlokDisciplChastNameId"] = new SelectList(_context.BlokDisciplChastName, "BlokDisciplChastNameId", "BlokDisciplChastNameId", blokDisciplChast.BlokDisciplChastNameId);
             return View(blokDisciplChast);
         }
 
         // GET: BlokDisciplChasts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, int? blokdisciplid)
         {
             if (id == null)
             {
@@ -131,6 +160,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
             }
 
             var blokDisciplChast = await _context.BlokDisciplChast
+                .Include(b => b.BlokDiscipl.BlokDisciplName)
                 .Include(b => b.BlokDisciplChastName)
                 .SingleOrDefaultAsync(m => m.BlokDisciplChastId == id);
             if (blokDisciplChast == null)
@@ -138,6 +168,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 return NotFound();
             }
 
+            ViewBag.BlokDisciplId = blokdisciplid;
             return View(blokDisciplChast);
         }
 
@@ -149,7 +180,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
             var blokDisciplChast = await _context.BlokDisciplChast.SingleOrDefaultAsync(m => m.BlokDisciplChastId == id);
             _context.BlokDisciplChast.Remove(blokDisciplChast);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { id= blokDisciplChast.BlokDisciplId});
         }
 
         private bool BlokDisciplChastExists(int id)

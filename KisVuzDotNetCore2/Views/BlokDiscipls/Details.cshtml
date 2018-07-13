@@ -24,6 +24,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.BlokDisciplId" class="btn btn-primary">Редактировать</a>
-    <a asp-action="Index" class="btn btn-default">Отмена</a>
+    <a asp-action="Edit" asp-route-id="@Model.BlokDisciplId" asp-route-eduplanid="@ViewBag.EduPlanId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" asp-route-id="@ViewBag.EduPlanId" class="btn btn-default">Отмена</a>
 </div>

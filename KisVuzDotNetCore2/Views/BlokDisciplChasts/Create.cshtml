@@ -4,23 +4,39 @@
     ViewData["Title"] = "Добавить";
 }
 
-<h2>Добавить часть блока дисциплины</h2>
+<h2>Добавить</h2>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="BlokDisciplChastName" class="control-label"></label>
-                <select asp-for="BlokDisciplChastNameId" class ="form-control" asp-items="ViewBag.BlokDisciplChastNameId"></select>
+                <select asp-for="BlokDisciplChastNameId" class="form-control" asp-items="ViewBag.BlokDisciplChastNameId"></select>
+            </div>
+            <div class="form-group">
+                @if (ViewBag.blokdisciplid != null)
+                {
+                    <input type="hidden" name="BlokDisciplId" value="@ViewBag.blokdisciplid" />
+
+                }
+                else
+                {
+                    <label asp-for="BlokDisciplId" class="control-label"></label>
+                    <select asp-for="BlokDisciplId" class="form-control" asp-items="ViewBag.BlokDisciplId"></select>
+
+                }
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Добавить" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-default">Отмена</a>
+                <a asp-action="Index" asp-route-id="@ViewBag.BlokDisciplId" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>
 </div>
+
 
 

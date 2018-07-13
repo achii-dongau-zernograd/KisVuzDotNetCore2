@@ -161,7 +161,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("BlokDisciplChastNameId");
 
-                    b.Property<int?>("BlokDisciplId");
+                    b.Property<int>("BlokDisciplId");
 
                     b.HasKey("BlokDisciplChastId");
 
@@ -1958,9 +1958,10 @@ namespace KisVuzDotNetCore2.Migrations
                         .HasForeignKey("BlokDisciplChastNameId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.BlokDiscipl")
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.BlokDiscipl", "BlokDiscipl")
                         .WithMany("BlokDisciplChast")
-                        .HasForeignKey("BlokDisciplId");
+                        .HasForeignKey("BlokDisciplId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.Discipline", b =>
@@ -2126,7 +2127,7 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduProgram", "EduProgram")
-                        .WithMany("EduForms")
+                        .WithMany("EduProgramEduForms")
                         .HasForeignKey("EduProgramId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

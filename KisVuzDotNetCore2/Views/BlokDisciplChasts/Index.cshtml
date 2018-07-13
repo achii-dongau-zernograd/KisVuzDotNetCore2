@@ -1,19 +1,25 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.BlokDisciplChast>
 
 @{
-    ViewData["Title"] = "Части блоков дисциплин";
+    ViewData["Title"] = "Части блока дисциплин";
 }
 
-<h2>Части блоков дисциплин</h2>
+<h2>Части блока дисциплин</h2>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+    <a asp-action="Create" class="btn btn-primary" asp-route-blokdisciplid="@ViewBag.BlokDisciplId">Добавить</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.BlokDiscipl)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.BlokDisciplChastName)
+            </th>
+            <th>
+                Содержание части блока дисциплин
             </th>
             <th></th>
         </tr>
@@ -22,12 +28,18 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.BlokDiscipl.BlokDisciplName.BlokDisciplNameName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.BlokDisciplChastName.BlokDisciplChastNameName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BlokDisciplChastId">Редактировать</a> |
-                <a asp-action="Details" asp-route-id="@item.BlokDisciplChastId">Подробнее</a> |
-                <a asp-action="Delete" asp-route-id="@item.BlokDisciplChastId">Удалить</a>
+                <a asp-controller="Discipline" asp-action="index" asp-route-id="@item.BlokDisciplChastId">Открыть</a>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BlokDisciplChastId" asp-route-blokdisciplid="@ViewBag.BlokDisciplId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.BlokDisciplChastId" asp-route-blokdisciplid="@ViewBag.BlokDisciplId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.BlokDisciplChastId" asp-route-blokdisciplid="@ViewBag.BlokDisciplId">Удалить</a>
             </td>
         </tr>
 }
