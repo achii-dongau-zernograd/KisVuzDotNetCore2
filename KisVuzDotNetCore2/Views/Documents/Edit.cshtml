@@ -1,0 +1,36 @@
+﻿@model FileModel
+@{
+    ViewData["Title"] = "Редактирование";
+    var doctype = (FileDataTypeEnum)ViewData["doctype"];
+}
+
+<h2>Редактирование</h2>
+
+<h4>Документ</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="doctype" value="@doctype" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Загруженный файл</label>
+                <input asp-for="Id" class="hidden" />
+                <br /><a href="/@Model?.Path" class="control-label">@Model?.FileName</a>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Для замены выберите файл: </label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" asp-route-doctype="@doctype" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

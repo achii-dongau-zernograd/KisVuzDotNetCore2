@@ -1,0 +1,46 @@
+﻿@model KisVuzDotNetCore2.Models.Struct.InstituteLink
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>InstituteLink</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="InstituteLinkId" />
+            <div class="form-group">
+                <label asp-for="StructInstituteId" class="control-label"></label>
+                <select asp-for="StructInstituteId" class="form-control" asp-items="ViewBag.StructInstituteId"></select>
+                <span asp-validation-for="StructInstituteId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LinkTypeId" class="control-label"></label>
+                <select asp-for="LinkTypeId" class="form-control" asp-items="ViewBag.LinkTypeId"></select>
+                <span asp-validation-for="LinkTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InstituteLinkLink" class="control-label"></label>
+                <input asp-for="InstituteLinkLink" class="form-control" />
+                <span asp-validation-for="InstituteLinkLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InstituteLinkDescription" class="control-label"></label>
+                <input asp-for="InstituteLinkDescription" class="form-control" />
+                <span asp-validation-for="InstituteLinkDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

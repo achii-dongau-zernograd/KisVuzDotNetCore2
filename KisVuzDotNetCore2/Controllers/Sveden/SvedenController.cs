@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Struct;
@@ -314,6 +315,20 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Grants()
         {
+            var StipendiiFederalGrant = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.StipendiiFederalGrant)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["StipendiiFederalGrant"] = StipendiiFederalGrant;
+
+            var StipendiiLocalGrant = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.StipendiiLocalGrant)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["StipendiiLocalGrant"] = StipendiiLocalGrant;
+
             var t20hostelInfo = await _context.HostelInfo
                 .ToListAsync();
             ViewData["t20hostelInfo"] = t20hostelInfo;
@@ -327,6 +342,27 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Paid_edu()
         {
+            var ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug"] = ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug;
+
+            var DocumentObUtverjdeniiStoimostiObucheniya = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.DocumentObUtverjdeniiStoimostiObucheniya)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["DocumentObUtverjdeniiStoimostiObucheniya"] = DocumentObUtverjdeniiStoimostiObucheniya;
+
+            var PoryadokOkazaniyaPlatnihObrazovatelnihUslug = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.PoryadokOkazaniyaPlatnihObrazovatelnihUslug)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["PoryadokOkazaniyaPlatnihObrazovatelnihUslug"] = PoryadokOkazaniyaPlatnihObrazovatelnihUslug;
+
             return View();
         }
 
@@ -340,12 +376,22 @@ namespace KisVuzDotNetCore2.Controllers
                 .ToListAsync();
             ViewData["t22volume"] = t22volume;
 
+            var InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv"] = InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv;
+
             var planFinansovoHozyaystvennoyDeyatelnosti = await _context.FileDataTypes
                 .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.PlanFinansovoHozyaystvennoyDeyatelnosti)
                 .Include(fdt => fdt.FileToFileTypes)
                         .ThenInclude(ftft => ftft.FileModel)
                 .FirstOrDefaultAsync();
             ViewData["planFinansovoHozyaystvennoyDeyatelnosti"] = planFinansovoHozyaystvennoyDeyatelnosti;
+
+            var busGovRuLink = await _context.InstituteLinks.FirstOrDefaultAsync(l => l.StructInstituteId == 1 && l.LinkTypeId == (int)LinkTypesEnum.BusGovRu);
+            ViewData["busGovRuLink"] = busGovRuLink;
 
             return View();
         }

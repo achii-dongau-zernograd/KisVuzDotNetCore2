@@ -123,7 +123,8 @@
                                     <li><a asp-controller="AcademicDegreeGroups" asp-action="Index">Группы учёных степеней</a></li>
                                     <li><a asp-controller="AcademicDegrees" asp-action="Index">Учёные степени</a></li>
                                     <li><a asp-controller="AcademicStats" asp-action="Index">Учёные звания</a></li>
-
+                                    <li><a asp-controller="LinkTypes" asp-action="Index">Типы веб-ресурсов</a></li>
+                                    <li><a asp-controller="InstituteLinks" asp-action="Index">Веб-ресурсы институтов</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -148,7 +149,24 @@
                                     <li>
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Документы <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                            <li><a asp-controller="Home" asp-action="Index">-------------</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="UstavObrazovatelnoyOrganizatsii">Устав образовательной организации</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LicenziyaNaOsushestvlenieObrazovatelnoyDeyatelnosti">Лицензия на осуществление образовательной деятельности</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="SvidetelstvoOGosudarstvennoyAccreditatsii">Свидетельство о государственной аккредитации (с приложениями)</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PlanFinansovoHozyaystvennoyDeyatelnosti">План финансово-хозяйственной деятельности образовательной организации</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LocalnieNormativnieActiReglamentiruyushiePravilaPriemaObuchaushihsya">Локальные нормативные акты, регламентирующие правила приема обучающихся</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LocalnieNormativnieActiReglamentiruyushieRejimZanyatiyObuchaushihsya">Локальные нормативные акты, регламентирующие режим занятий обучающихся</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LocalnieNormativnieActiReglamentiruyushieTekushiyKontrolIPromAttestObuchaushihsya">Локальные нормативные акты, регламентирующие формы, периодичность и порядок текущего контроля успеваемости и промежуточной аттестации обучающихся</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LocalnieNormativnieActiReglamentiruyushiePerevodOtchislenieIVosstanovlenieObuchaushihsya">Локальные нормативные акты, регламентирующие порядок и основания перевода, отчисления и восстановления обучающихся</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LocalnieNormativnieActiReglamentiruyushieOtnosheniyaSNesovershennoletnimiObuchayushimisya">Локальные нормативные акты, регламентирующие порядок оформления возникновения, приостановления и прекращения отношений между образовательной организацией, обучающимися и (или) родителями (законными представителями) несовершеннолетних обучающихся</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PravilaVnutrennegoRasporyadkaObuchaushihsya">Правила внутреннего распорядка обучающихся</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PravilaVnutrennegoTrudovogoRasporyadka">Правила внутреннего трудового распорядка</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="KollektivniyDogovor">Коллективный договор</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="OtchetORezultatahSamoobsledovaniya">Отчет о результатах самообследования</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PoryadokOkazaniyaPlatnihObrazovatelnihUslug">Документ о порядке оказания платных образовательных услуг</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug">Образец договора об оказании платных образовательных услуг</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="DocumentObUtverjdeniiStoimostiObucheniya">Документ об утверждении стоимости обучения по каждой образовательной программе</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PredpisaniyaOrganovNadzora">Предписания органов, осуществляющих государственный контроль (надзор) в сфере образования</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="OtchetiObIspolneniiPredpisaniyOrganovNadzora">Отчеты об исполнении предписаний органов, осуществляющих государственный контроль (надзор) в сфере образования</a></li>
                                         </ul>
                                     </li>
                                     <li>
@@ -186,13 +204,17 @@
                                     <li>
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Стипендии и иные виды мат. поддержки <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="StipendiiFederalGrant">Федеральные нормативные акты, регламентирующие наличие и условия предоставления стипендии</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="StipendiiLocalGrant">Локальные нормативные акты, регламентирующие наличие и условия предоставления стипендии</a></li>
                                             <li><a asp-controller="HostelInfoes" asp-action="Index" title="Наличие общежития, интерната, количество жилых помещений">Наличие общежития, интерната...</a></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Платные образовательные услуги <b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a asp-controller="Home" asp-action="Index">-------------</a></li>
+                                        <ul class="dropdown-menu">                                            
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug">Образец договора об оказании платных образовательных услуг</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="DocumentObUtverjdeniiStoimostiObucheniya">Документ об утверждении стоимости обучения по каждой образовательной программе</a></li>
+                                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PoryadokOkazaniyaPlatnihObrazovatelnihUslug">Документ о порядке оказания платных образовательных услуг</a></li>
                                         </ul>
                                     </li>
                                     <li>
@@ -241,6 +263,17 @@
                                 <ul class="dropdown-menu">
                                     <li><a asp-controller="Qualifications" asp-action="Index" asp-route-id="">Квалификации пользователей</a></li>
                                     <li><a asp-controller="Qualifications" asp-action="ConfirmWaiting">Подтверждение квалификации пользователей</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Бухгалтерия <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Volumes" asp-action="Index" asp-route-id="">Объём образовательной деятельности</a></li>
+                                    <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv">Информация о поступлении и расходовании финансовых и материальных средств</a></li>
+                                    <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PlanFinansovoHozyaystvennoyDeyatelnosti">План финансово-хозяйственной деятельности</a></li>
+                                    <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PoryadokOkazaniyaPlatnihObrazovatelnihUslug">Документ о порядке оказания платных образовательных услуг</a></li>
+                                    <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug">Образец договора об оказании платных образовательных услуг</a></li>
+                                    <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="DocumentObUtverjdeniiStoimostiObucheniya">Документ об утверждении стоимости обучения по каждой образовательной программе</a></li>
                                 </ul>
                             </li>
 

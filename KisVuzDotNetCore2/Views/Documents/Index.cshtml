@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Документы";
+    var fileToFileTypes = (List<FileToFileType>)ViewData["fileToFileTypes"];
+    var doctype = (FileDataTypeEnum)ViewData["doctype"];
+    string doctypeCaption = "";
+    switch (doctype)
+    {
+        case FileDataTypeEnum.UstavObrazovatelnoyOrganizatsii:
+            doctypeCaption = "Устав образовательной организации";
+            break;
+        case FileDataTypeEnum.LicenziyaNaOsushestvlenieObrazovatelnoyDeyatelnosti:
+            doctypeCaption = "Лицензия на осуществление образовательной деятельности";
+            break;
+        case FileDataTypeEnum.SvidetelstvoOGosudarstvennoyAccreditatsii:
+            doctypeCaption = "Свидетельство о государственной аккредитации (с приложениями)";
+            break;
+        case FileDataTypeEnum.PlanFinansovoHozyaystvennoyDeyatelnosti:
+            doctypeCaption = "План финансово-хозяйственной деятельности";
+            break;
+        case FileDataTypeEnum.LocalnieNormativnieActiReglamentiruyushiePravilaPriemaObuchaushihsya:
+            doctypeCaption = "Локальные нормативные акты, регламентирующие правила приема обучающихся";
+            break;
+        case FileDataTypeEnum.LocalnieNormativnieActiReglamentiruyushieRejimZanyatiyObuchaushihsya:
+            doctypeCaption = "Локальные нормативные акты, регламентирующие режим занятий обучающихся";
+            break;
+        case FileDataTypeEnum.LocalnieNormativnieActiReglamentiruyushieTekushiyKontrolIPromAttestObuchaushihsya:
+            doctypeCaption = "Локальные нормативные акты, регламентирующие формы, периодичность и порядок текущего контроля успеваемости и промежуточной аттестации обучающихся";
+            break;
+        case FileDataTypeEnum.LocalnieNormativnieActiReglamentiruyushiePerevodOtchislenieIVosstanovlenieObuchaushihsya:
+            doctypeCaption = "Локальные нормативные акты, регламентирующие порядок и основания перевода, отчисления и восстановления обучающихся";
+            break;
+        case FileDataTypeEnum.LocalnieNormativnieActiReglamentiruyushieOtnosheniyaSNesovershennoletnimiObuchayushimisya:
+            doctypeCaption = "Локальные нормативные акты, регламентирующие порядок оформления возникновения, приостановления и прекращения отношений между образовательной организацией, обучающимися и (или) родителями (законными представителями) несовершеннолетних обучающихся";
+            break;
+        case FileDataTypeEnum.PravilaVnutrennegoRasporyadkaObuchaushihsya:
+            doctypeCaption = "Правила внутреннего распорядка обучающихся";
+            break;
+        case FileDataTypeEnum.PravilaVnutrennegoTrudovogoRasporyadka:
+            doctypeCaption = "Правила внутреннего трудового распорядка";
+            break;
+        case FileDataTypeEnum.KollektivniyDogovor:
+            doctypeCaption = "Коллективный договор";
+            break;
+        case FileDataTypeEnum.OtchetORezultatahSamoobsledovaniya:
+            doctypeCaption = "Отчет о результатах самообследования";
+            break;
+        case FileDataTypeEnum.PoryadokOkazaniyaPlatnihObrazovatelnihUslug:
+            doctypeCaption = "Документ о порядке оказания платных образовательных услуг";
+            break;
+        case FileDataTypeEnum.ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug:
+            doctypeCaption = "Образец договора об оказании платных образовательных услуг";
+            break;
+        case FileDataTypeEnum.DocumentObUtverjdeniiStoimostiObucheniya:
+            doctypeCaption = "Документ об утверждении стоимости обучения по каждой образовательной программе";
+            break;
+        case FileDataTypeEnum.PredpisaniyaOrganovNadzora:
+            doctypeCaption = "Предписания органов, осуществляющих государственный контроль (надзор) в сфере образования";
+            break;
+        case FileDataTypeEnum.OtchetiObIspolneniiPredpisaniyOrganovNadzora:
+            doctypeCaption = "Отчеты об исполнении предписаний органов, осуществляющих государственный контроль (надзор) в сфере образования";
+            break;
+        case FileDataTypeEnum.InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv:
+            doctypeCaption = "Информация о поступлении и расходовании финансовых и материальных средств";
+            break;
+
+        case FileDataTypeEnum.StipendiiFederalGrant:
+            doctypeCaption = "Федеральные нормативные акты, регламентирующие наличие и условия предоставления стипендии";
+            break;
+        case FileDataTypeEnum.StipendiiLocalGrant:
+            doctypeCaption = "Локальные нормативные акты, регламентирующие наличие и условия предоставления стипендии";
+            break;
+    }
+}
+
+<h2>Документы</h2>
+<h3>@doctypeCaption</h3>
+
+<p>
+    <a asp-action="Create" asp-route-doctype="@doctype" class="btn btn-primary">Добавить</a>
+</p>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Документ</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ftft in fileToFileTypes)
+        {
+        <tr>
+            <td>
+                <a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@ftft.FileModel.Id" asp-route-doctype="@doctype">Редактировать</a> | <a asp-action="Delete" asp-route-id="@ftft.FileModel.Id" asp-route-doctype="@doctype">Удалить</a>
+            </td>
+        </tr>
+        }        
+    </tbody>
+</table>
+

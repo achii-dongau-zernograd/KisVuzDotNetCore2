@@ -667,10 +667,10 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseEduPlans.CreateEduPlans(serviceProvider, configuration);
             await InitDatabaseEduPlanEduVidDeyats.CreateEduPlanEduVidDeyats(serviceProvider, configuration);
             await InitDatabaseEduOPEduYearNames.CreateEduOPEduYearNames(serviceProvider, configuration);
+            await InitDatabaseLinkTypes.CreateLinkTypes(serviceProvider, configuration);
+            await InitDatabaseInstituteLinks.CreateInstituteLinks(serviceProvider, configuration);
 
-            
 
-
-         }                
+        }                
     }
 }
