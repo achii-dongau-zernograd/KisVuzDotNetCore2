@@ -1,1 +1,38 @@
-﻿<h1>Платные образовательные услуги</h1>
+﻿@{
+    var ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug = (FileDataType)ViewData["ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug"];
+    var DocumentObUtverjdeniiStoimostiObucheniya = (FileDataType)ViewData["DocumentObUtverjdeniiStoimostiObucheniya"];
+    var PoryadokOkazaniyaPlatnihObrazovatelnihUslug = (FileDataType)ViewData["PoryadokOkazaniyaPlatnihObrazovatelnihUslug"];
+
+}
+
+<h1>Платные образовательные услуги</h1>
+
+<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Образец договора об оказании платных образовательных услуг</a>
+<div class="collapse" id="spoiler-1">
+    <div class="well">
+        @foreach (var ftft in ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug.FileToFileTypes)
+        {
+            <p><a itemprop="@ftft.FileDataType.Itemprop" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+        }
+    </div>
+</div>
+
+<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Документы об утверждении стоимости обучения по каждой образовательной программе</a>
+<div class="collapse" id="spoiler-2">
+    <div class="well">
+        @foreach (var ftft in DocumentObUtverjdeniiStoimostiObucheniya.FileToFileTypes)
+        {
+            <p><a itemprop="@ftft.FileDataType.Itemprop" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+        }
+    </div>
+</div>
+
+<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Порядок оказания платных образовательных услуг</a>
+<div class="collapse" id="spoiler-3">
+    <div class="well">
+        @foreach (var ftft in PoryadokOkazaniyaPlatnihObrazovatelnihUslug.FileToFileTypes)
+        {
+            <p><a itemprop="paidEdu" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+        }
+    </div>
+</div>

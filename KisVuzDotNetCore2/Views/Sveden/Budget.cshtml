@@ -5,13 +5,16 @@
 <h1>Финансово-хозяйственная деятельность</h1>
 @{
     var t22volume = (IEnumerable<Volume>)ViewData["t22volume"];
-   }
+    var InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv = (FileDataType)ViewData["InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv"];
+    var planFinansovoHozyaystvennoyDeyatelnosti = (FileDataType)ViewData["planFinansovoHozyaystvennoyDeyatelnosti"];
+    var busGovRuLink = (InstituteLink)ViewData["busGovRuLink"];
+}
 
 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Объем образовательной деятельности</a>
 <div class="collapse" id="spoiler-1">
     <div class="well">
 
-        <table itemprop="eduAccred" class="table table-hover">
+        <table itemprop="volume" class="table table-hover">
             <thead>
                 <tr>
                     <th>за счет бюджетных ассигнований федерального бюджета (тыс. руб.)</th>
@@ -30,5 +33,32 @@
                 </tr>
             }
         </table>
+    </div>
+</div>
+
+<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Информация о поступлении и расходовании финансовых и материальных средств</a>
+<div class="collapse" id="spoiler-2">
+    <div class="well">
+        @foreach (var ftft in InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv.FileToFileTypes)
+        {
+            <p><a itemprop="@ftft.FileDataType.Itemprop" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+        }
+    </div>
+</div>
+
+<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">План финансово-хозяйственной деятельности</a>
+<div class="collapse" id="spoiler-3">
+    <div class="well">
+        @foreach (var ftft in planFinansovoHozyaystvennoyDeyatelnosti.FileToFileTypes)
+        {
+            <p><a itemprop="planFinRec" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+        }
+    </div>
+</div>
+
+<a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">@busGovRuLink?.InstituteLinkDescription</a>
+<div class="collapse" id="spoiler-4">
+    <div class="well">
+        <a itemprop="busgovFinRec" href="@busGovRuLink?.InstituteLinkLink">@busGovRuLink?.InstituteLinkDescription</a>
     </div>
 </div>

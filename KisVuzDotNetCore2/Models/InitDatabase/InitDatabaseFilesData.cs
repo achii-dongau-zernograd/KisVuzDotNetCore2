@@ -65,13 +65,27 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupName = "Учебно-методическое обеспечение"
                     };
 
+                    FileDataTypeGroup fileDataTypeGroup7 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = 7,
+                        FileDataTypeGroupName = "Сведения об образовательной организации - Финансово-хозяйственная деятельность"
+                    };
+
+                    FileDataTypeGroup fileDataTypeGroup8 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = 8,
+                        FileDataTypeGroupName = "Сведения об образовательной организации - Стипендии и иные виды материальной поддержки"
+                    };
+
                     await context.FileDataTypeGroups.AddRangeAsync(
                         fileDataTypeGroup1,
                         fileDataTypeGroup2,
                         fileDataTypeGroup3,
                         fileDataTypeGroup4,
                         fileDataTypeGroup5,
-                        fileDataTypeGroup6
+                        fileDataTypeGroup6,
+                        fileDataTypeGroup7,
+                        fileDataTypeGroup8
                     );
                     await context.SaveChangesAsync();
                 }
@@ -96,7 +110,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType3 = new FileDataType
                     {
-                        FileDataTypeId = 3,
+                        FileDataTypeId = (int)FileDataTypeEnum.UstavObrazovatelnoyOrganizatsii,
                         FileDataTypeName = "Устав образовательной организации",
                         Itemprop = "ustavDocLink",
                         FileDataTypeGroupId = 3
@@ -104,7 +118,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType4 = new FileDataType
                     {
-                        FileDataTypeId = 4,
+                        FileDataTypeId = (int)FileDataTypeEnum.LicenziyaNaOsushestvlenieObrazovatelnoyDeyatelnosti,
                         FileDataTypeName = "Лицензия на осуществление образовательной деятельности",
                         Itemprop = "licenseDocLink",
                         FileDataTypeGroupId = 3
@@ -112,7 +126,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType5 = new FileDataType
                     {
-                        FileDataTypeId = 5,
+                        FileDataTypeId = (int)FileDataTypeEnum.SvidetelstvoOGosudarstvennoyAccreditatsii,
                         FileDataTypeName = "Свидетельство о государственной аккредитации (с приложениями)",
                         Itemprop = "accreditationDocLink",
                         FileDataTypeGroupId = 3
@@ -120,7 +134,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType6 = new FileDataType
                     {
-                        FileDataTypeId = 6,
+                        FileDataTypeId = (int)FileDataTypeEnum.PlanFinansovoHozyaystvennoyDeyatelnosti,
                         FileDataTypeName = "План финансово-хозяйственной деятельности образовательной организации",
                         Itemprop = "finPlanDocLink",
                         FileDataTypeGroupId = 3
@@ -128,7 +142,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType7 = new FileDataType
                     {
-                        FileDataTypeId = 7,
+                        FileDataTypeId = (int)FileDataTypeEnum.LocalnieNormativnieActiReglamentiruyushiePravilaPriemaObuchaushihsya,
                         FileDataTypeName = "Локальные нормативные акты, регламентирующие правила приема обучающихся",
                         Itemprop = "priemDocLink",
                         FileDataTypeGroupId = 3
@@ -136,7 +150,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType8 = new FileDataType
                     {
-                        FileDataTypeId = 8,
+                        FileDataTypeId = (int)FileDataTypeEnum.LocalnieNormativnieActiReglamentiruyushieRejimZanyatiyObuchaushihsya,
                         FileDataTypeName = "Локальные нормативные акты, регламентирующие режим занятий обучающихся",
                         Itemprop = "modeDocLink",
                         FileDataTypeGroupId = 3
@@ -144,7 +158,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType9 = new FileDataType
                     {
-                        FileDataTypeId = 9,
+                        FileDataTypeId = (int)FileDataTypeEnum.LocalnieNormativnieActiReglamentiruyushieTekushiyKontrolIPromAttestObuchaushihsya,
                         FileDataTypeName = "Локальные нормативные акты, регламентирующие формы, периодичность и порядок текущего контроля успеваемости и промежуточной аттестации обучающихся",
                         Itemprop = "tek_KontrolDocLink",
                         FileDataTypeGroupId = 3
@@ -152,7 +166,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType10 = new FileDataType
                     {
-                        FileDataTypeId = 10,
+                        FileDataTypeId = (int)FileDataTypeEnum.LocalnieNormativnieActiReglamentiruyushiePerevodOtchislenieIVosstanovlenieObuchaushihsya,
                         FileDataTypeName = "Локальные нормативные акты, регламентирующие порядок и основания перевода, отчисления и восстановления обучающихся",
                         Itemprop = "perevodDocLink",
                         FileDataTypeGroupId = 3
@@ -160,7 +174,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType11 = new FileDataType
                     {
-                        FileDataTypeId = 11,
+                        FileDataTypeId = (int)FileDataTypeEnum.LocalnieNormativnieActiReglamentiruyushieOtnosheniyaSNesovershennoletnimiObuchayushimisya,
                         FileDataTypeName = "Локальные нормативные акты, регламентирующие порядок оформления возникновения, приостановления и прекращения отношений между образовательной организацией, обучающимися и (или) родителями (законными представителями) несовершеннолетних обучающихся",
                         Itemprop = "vozDocLink",
                         FileDataTypeGroupId = 3
@@ -168,7 +182,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType12 = new FileDataType
                     {
-                        FileDataTypeId = 12,
+                        FileDataTypeId = (int)FileDataTypeEnum.PravilaVnutrennegoRasporyadkaObuchaushihsya,
                         FileDataTypeName = "Правила внутреннего распорядка обучающихся",
                         Itemprop = "localActStud",
                         FileDataTypeGroupId = 3
@@ -176,7 +190,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType13 = new FileDataType
                     {
-                        FileDataTypeId = 13,
+                        FileDataTypeId = (int)FileDataTypeEnum.PravilaVnutrennegoTrudovogoRasporyadka,
                         FileDataTypeName = "Правила внутреннего трудового распорядка",
                         Itemprop = "localActOrder",
                         FileDataTypeGroupId = 3
@@ -184,7 +198,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType14 = new FileDataType
                     {
-                        FileDataTypeId = 14,
+                        FileDataTypeId = (int)FileDataTypeEnum.KollektivniyDogovor,
                         FileDataTypeName = "Коллективный договор",
                         Itemprop = "localActCollec",
                         FileDataTypeGroupId = 3
@@ -192,7 +206,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType15 = new FileDataType
                     {
-                        FileDataTypeId = 15,
+                        FileDataTypeId = (int)FileDataTypeEnum.OtchetORezultatahSamoobsledovaniya,
                         FileDataTypeName = "Отчет о результатах самообследования",
                         Itemprop = "reportEduDocLink",
                         FileDataTypeGroupId = 3
@@ -200,7 +214,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType16 = new FileDataType
                     {
-                        FileDataTypeId = 16,
+                        FileDataTypeId = (int)FileDataTypeEnum.PoryadokOkazaniyaPlatnihObrazovatelnihUslug,
                         FileDataTypeName = "Документ о порядке оказания платных образовательных услуг",
                         Itemprop = "paidEduDocLink",
                         FileDataTypeGroupId = 3
@@ -208,7 +222,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType17 = new FileDataType
                     {
-                        FileDataTypeId = 17,
+                        FileDataTypeId = (int)FileDataTypeEnum.ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug,
                         FileDataTypeName = "Образец договора об оказании платных образовательных услуг",
                         Itemprop = "paidEduDogDocLink",
                         FileDataTypeGroupId = 3
@@ -216,7 +230,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType18 = new FileDataType
                     {
-                        FileDataTypeId = 18,
+                        FileDataTypeId = (int)FileDataTypeEnum.DocumentObUtverjdeniiStoimostiObucheniya,
                         FileDataTypeName = "Документ об утверждении стоимости обучения по каждой образовательной программе",
                         Itemprop = "paidEduStoimDocLink",
                         FileDataTypeGroupId = 3
@@ -224,7 +238,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType19 = new FileDataType
                     {
-                        FileDataTypeId = 19,
+                        FileDataTypeId = (int)FileDataTypeEnum.PredpisaniyaOrganovNadzora,
                         FileDataTypeName = "Предписания органов, осуществляющих государственный контроль (надзор) в сфере образования",
                         Itemprop = "prescriptionDocLink",
                         FileDataTypeGroupId = 3
@@ -232,7 +246,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType20 = new FileDataType
                     {
-                        FileDataTypeId = 20,
+                        FileDataTypeId = (int)FileDataTypeEnum.OtchetiObIspolneniiPredpisaniyOrganovNadzora,
                         FileDataTypeName = "Отчеты об исполнении предписаний органов, осуществляющих государственный контроль (надзор) в сфере образования",
                         Itemprop = "prescriptionOtchetDocLink",
                         FileDataTypeGroupId = 3
@@ -390,6 +404,30 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = 6
                     };
 
+                    FileDataType fileDataType40 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv,
+                        FileDataTypeName = "Информация о поступлении и расходовании финансовых и материальных средств",
+                        Itemprop = "finRec",
+                        FileDataTypeGroupId = 7
+                    };
+
+                    FileDataType fileDataType41 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.StipendiiFederalGrant,
+                        FileDataTypeName = "Федеральный нормативный акт, регламентирующий наличие и условия предоставления стипендии",
+                        Itemprop = "federalGrant",
+                        FileDataTypeGroupId = 8
+                    };
+
+                    FileDataType fileDataType42 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.StipendiiLocalGrant,
+                        FileDataTypeName = "Локальный нормативный акт, регламентирующий наличие и условия предоставления стипендии",
+                        Itemprop = "localGrant",
+                        FileDataTypeGroupId = 8
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -429,7 +467,10 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType36,
                         fileDataType37,
                         fileDataType38,
-                        fileDataType39
+                        fileDataType39,
+                        fileDataType40,
+                        fileDataType41,
+                        fileDataType42
                         );
                     await context.SaveChangesAsync();
                 }

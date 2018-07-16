@@ -1,0 +1,53 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Struct.InstituteLink>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.InstituteLinkLink)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InstituteLinkDescription)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StructInstitute)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstituteLinkLink)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstituteLinkDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LinkType.LinkTypeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StructInstitute.StructInstituteId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.InstituteLinkId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.InstituteLinkId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.InstituteLinkId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

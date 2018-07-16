@@ -255,6 +255,16 @@ namespace KisVuzDotNetCore2.Models
         /// Адреса электронной почты
         /// </summary>
         public DbSet<Email> Emails { get; set; }
+
+        /// <summary>
+        /// Ссылки на информацию об институте на сторонних веб-сайтах
+        /// </summary>
+        public DbSet<InstituteLink> InstituteLinks { get; set; }
+
+        /// <summary>
+        /// Справочник типов веб-ресурсов
+        /// </summary>
+        public DbSet<LinkType> LinkTypes { get; set; }
         #endregion
 
         #region Сведения об образовательной организации
@@ -661,10 +671,10 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseEduPlans.CreateEduPlans(serviceProvider, configuration);
             await InitDatabaseEduPlanEduVidDeyats.CreateEduPlanEduVidDeyats(serviceProvider, configuration);
             await InitDatabaseEduOPEduYearNames.CreateEduOPEduYearNames(serviceProvider, configuration);
+            await InitDatabaseLinkTypes.CreateLinkTypes(serviceProvider, configuration);
+            await InitDatabaseInstituteLinks.CreateInstituteLinks(serviceProvider, configuration);
 
-            
 
-
-         }                
+        }                
     }
 }

@@ -25,7 +25,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="BlokDisciplId" />
-        <input type="submit" value="Удалить" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-default">Отмена</a>
+        <input type="submit" asp-route-eduplanid="@ViewBag.EduPlanId" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" asp-route-id="@ViewBag.EduPlanId" class="btn btn-default">Отмена</a>
     </form>
 </div>

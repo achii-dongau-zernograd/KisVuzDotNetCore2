@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Добавление";
+    var doctype = (FileDataTypeEnum)ViewData["doctype"];
+}
+
+<h2>Добавление документа</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Наименование</label>
+                <input name="fileName" class="form-control" />                
+            </div>
+            <div class="form-group">
+                <label class="control-label">Документ</label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" asp-route-doctype="@doctype" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" asp-route-doctype="@doctype" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+

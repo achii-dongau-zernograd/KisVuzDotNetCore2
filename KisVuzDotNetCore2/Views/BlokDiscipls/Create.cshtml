@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Добавить" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-default">Отмена</a>
+                <a asp-action="Index" asp-route-id="@ViewBag.EduPlanId" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>
