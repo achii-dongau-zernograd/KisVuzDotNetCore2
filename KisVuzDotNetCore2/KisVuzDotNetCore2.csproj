@@ -380,6 +380,8 @@
     <Compile Remove="Migrations\20180713081526_init.Designer.cs" />
     <Compile Remove="Migrations\20180713081835_init.cs" />
     <Compile Remove="Migrations\20180713081835_init.Designer.cs" />
+    <Compile Remove="Migrations\20180713135823_init.cs" />
+    <Compile Remove="Migrations\20180713135823_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

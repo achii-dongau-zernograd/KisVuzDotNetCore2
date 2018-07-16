@@ -849,7 +849,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("EduProfileId");
 
-                    b.Property<int>("GraduateNumberTrudoustroustvo");
+                    b.Property<int>("GraduateTrudoustroustvoNumber");
 
                     b.Property<int>("GraduateYearId");
 

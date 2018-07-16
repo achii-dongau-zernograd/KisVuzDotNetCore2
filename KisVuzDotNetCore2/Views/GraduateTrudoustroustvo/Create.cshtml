@@ -1,10 +1,10 @@
-﻿@model KisVuzDotNetCore2.Models.EduGraduate
+﻿@model KisVuzDotNetCore2.Models.GraduateTrudoustroustvo
 
 @{
-    ViewData["Title"] = "Добавить запись в таблицу Выпуск (результаты защиты ВКР)";
+    ViewData["Title"] = "Добавить трудоустройство";
 }
 
-<h2>Добавить запись в таблицу Выпуск</h2>
+<h2>Добавить трудоустройство</h2>
 
 <hr />
 <div class="row">
@@ -16,18 +16,13 @@
                 <select asp-for="EduProfileId" class ="form-control" asp-items="ViewBag.EduProfileId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="GraduateYear.GraduateYearName" class="control-label"></label>
+                <label asp-for="GraduateYearName" class="control-label"></label>
                 <select asp-for="GraduateYearId" class ="form-control" asp-items="ViewBag.GraduateYearId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="GraduateNumber" class="control-label"></label>
-                <input asp-for="GraduateNumber" class="form-control" />
-                <span asp-validation-for="GraduateNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GraduateSredBall" class="control-label"></label>
-                <input asp-for="GraduateSredBall" class="form-control" />
-                <span asp-validation-for="GraduateSredBall" class="text-danger"></span>
+                <label asp-for="GraduateTrudoustroustvoNumber" class="control-label"></label>
+                <input asp-for="GraduateTrudoustroustvoNumber" class="form-control" />
+                <span asp-validation-for="GraduateTrudoustroustvoNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Добавить" class="btn btn-primary" />

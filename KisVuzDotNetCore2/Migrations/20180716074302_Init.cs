@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace KisVuzDotNetCore2.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -1938,7 +1938,7 @@ namespace KisVuzDotNetCore2.Migrations
                     GraduateTrudoustroustvoId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EduProfileId = table.Column<int>(nullable: false),
-                    GraduateNumberTrudoustroustvo = table.Column<int>(nullable: false),
+                    GraduateTrudoustroustvoNumber = table.Column<int>(nullable: false),
                     GraduateYearId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
