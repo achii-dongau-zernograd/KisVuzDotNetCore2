@@ -21,7 +21,9 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: GraduateTrudoustroustvo
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.GraduateTrudoustroustvo.Include(g => g.EduProfile).Include(g => g.GraduateYearName);
+            var appIdentityDBContext = _context.GraduateTrudoustroustvo
+                .Include(g => g.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(g => g.GraduateYearName);
             return View(await appIdentityDBContext.ToListAsync());
         }
 
@@ -34,7 +36,7 @@ namespace KisVuzDotNetCore2.Controllers
             }
 
             var graduateTrudoustroustvo = await _context.GraduateTrudoustroustvo
-                .Include(g => g.EduProfile)
+                .Include(g => g.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(g => g.GraduateYearName)
                 .SingleOrDefaultAsync(m => m.GraduateTrudoustroustvoId == id);
             if (graduateTrudoustroustvo == null)
@@ -48,7 +50,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: GraduateTrudoustroustvo/Create
         public IActionResult Create()
         {
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileName");
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p=>p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
             ViewData["GraduateYearId"] = new SelectList(_context.GraduateYear, "GraduateYearId", "GraduateYearName");
             return View();
         }
@@ -66,7 +68,7 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileName", graduateTrudoustroustvo.EduProfileId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", graduateTrudoustroustvo.EduProfileId);
             ViewData["GraduateYearId"] = new SelectList(_context.GraduateYear, "GraduateYearId", "GraduateYearName", graduateTrudoustroustvo.GraduateYearId);
             return View(graduateTrudoustroustvo);
         }
@@ -84,7 +86,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileName", graduateTrudoustroustvo.EduProfileId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", graduateTrudoustroustvo.EduProfileId);
             ViewData["GraduateYearId"] = new SelectList(_context.GraduateYear, "GraduateYearId", "GraduateYearName", graduateTrudoustroustvo.GraduateYearId);
             return View(graduateTrudoustroustvo);
         }
@@ -121,7 +123,7 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileName", graduateTrudoustroustvo.EduProfileId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", graduateTrudoustroustvo.EduProfileId);
             ViewData["GraduateYearId"] = new SelectList(_context.GraduateYear, "GraduateYearId", "GraduateYearName", graduateTrudoustroustvo.GraduateYearId);
             return View(graduateTrudoustroustvo);
         }
@@ -135,7 +137,7 @@ namespace KisVuzDotNetCore2.Controllers
             }
 
             var graduateTrudoustroustvo = await _context.GraduateTrudoustroustvo
-                .Include(g => g.EduProfile)
+                .Include(g => g.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(g => g.GraduateYearName)
                 .SingleOrDefaultAsync(m => m.GraduateTrudoustroustvoId == id);
             if (graduateTrudoustroustvo == null)

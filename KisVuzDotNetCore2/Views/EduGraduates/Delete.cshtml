@@ -10,6 +10,18 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GraduateYear)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GraduateYear.GraduateYearName)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.GraduateNumber)
         </dt>
         <dd>
@@ -20,18 +32,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.GraduateSredBall)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EduProfile)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EduProfile.EduProfileName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.GraduateYear)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.GraduateYear.GraduateYearName)
         </dd>
     </dl>
     

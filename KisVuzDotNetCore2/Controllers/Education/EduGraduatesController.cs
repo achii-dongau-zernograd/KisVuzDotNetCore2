@@ -21,14 +21,16 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: EduGraduates
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.EduGraduate.Include(e => e.EduProfile).Include(e => e.GraduateYear);
+            var appIdentityDBContext = _context.EduGraduate
+                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(e => e.GraduateYear);
             return View(await appIdentityDBContext.ToListAsync());
         }
 
         // GET: EduGraduates/Create
         public IActionResult Create()
         {
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileName");
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p=>p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
             ViewData["GraduateYearId"] = new SelectList(_context.GraduateYear, "GraduateYearId", "GraduateYearName");
             return View();
         }
@@ -46,7 +48,7 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileName", eduGraduate.EduProfileId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", eduGraduate.EduProfileId);
             ViewData["GraduateYearId"] = new SelectList(_context.GraduateYear, "GraduateYearId", "GraduateYearName", eduGraduate.GraduateYearId);
             return View(eduGraduate);
         }
@@ -64,7 +66,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileName", eduGraduate.EduProfileId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", eduGraduate.EduProfileId);
             ViewData["GraduateYearId"] = new SelectList(_context.GraduateYear, "GraduateYearId", "GraduateYearName", eduGraduate.GraduateYearId);
             return View(eduGraduate);
         }
@@ -101,7 +103,7 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileName", eduGraduate.EduProfileId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", eduGraduate.EduProfileId);
             ViewData["GraduateYearId"] = new SelectList(_context.GraduateYear, "GraduateYearId", "GraduateYearName", eduGraduate.GraduateYearId);
             return View(eduGraduate);
         }
@@ -115,7 +117,7 @@ namespace KisVuzDotNetCore2.Controllers
             }
 
             var eduGraduate = await _context.EduGraduate
-                .Include(e => e.EduProfile)
+                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.GraduateYear)
                 .SingleOrDefaultAsync(m => m.EduGraduateId == id);
             if (eduGraduate == null)

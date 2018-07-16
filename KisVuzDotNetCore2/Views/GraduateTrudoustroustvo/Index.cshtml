@@ -27,19 +27,19 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.OrderBy(m=>m.GraduateYearId).ThenBy(m=>m.EduProfileId)) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.GraduateYearName.GraduateYearName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EduProfile.EduProfileName)
+                @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GraduateTrudoustroustvoNumber)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.GraduateTrudoustroustvoId">Редактировать</a>
+                <a asp-action="Edit" asp-route-id="@item.GraduateTrudoustroustvoId">Редактировать</a> |
                 <a asp-action="Delete" asp-route-id="@item.GraduateTrudoustroustvoId">Удалить</a>
             </td>
         </tr>
