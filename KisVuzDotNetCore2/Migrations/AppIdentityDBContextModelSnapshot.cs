@@ -879,7 +879,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("EduProfileId");
 
-                    b.Property<int>("GraduateNumberTrudoustroustvo");
+                    b.Property<int>("GraduateTrudoustroustvoNumber");
 
                     b.Property<int>("GraduateYearId");
 
@@ -1743,15 +1743,13 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("AuthorId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AppUserId");
-
-                    b.Property<string>("AppUserId1");
+                    b.Property<string>("AppUserId");
 
                     b.Property<string>("AuthorName");
 
                     b.HasKey("AuthorId");
 
-                    b.HasIndex("AppUserId1");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Author");
                 });
@@ -1767,7 +1765,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<string>("GodIzdaniya");
 
-                    b.Property<int?>("UchPosobieFormaIzdaniyaId");
+                    b.Property<int>("UchPosobieFormaIzdaniyaId");
 
                     b.Property<string>("UchPosobieName");
 
@@ -2772,7 +2770,7 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
                         .WithMany()
-                        .HasForeignKey("AppUserId1");
+                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobie", b =>
@@ -2784,7 +2782,8 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasOne("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieFormaIzdaniya", "UchPosobieFormaIzdaniya")
                         .WithMany()
-                        .HasForeignKey("UchPosobieFormaIzdaniyaId");
+                        .HasForeignKey("UchPosobieFormaIzdaniyaId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieVid", "UchPosobieVid")
                         .WithMany()
@@ -2794,7 +2793,7 @@ namespace KisVuzDotNetCore2.Migrations
             modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieAuthor", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.UchPosobiya.Author", "Author")
-                        .WithMany()
+                        .WithMany("UchPosobieAuthors")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade);
 

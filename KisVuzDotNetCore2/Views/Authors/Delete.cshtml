@@ -1,0 +1,30 @@
+﻿@model KisVuzDotNetCore2.Models.UchPosobiya.Author
+
+@{
+    ViewData["Title"] = "Удалить данные";
+}
+
+<h3>Удалить данны?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AuthorName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AuthorName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUserId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.GetFullName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="AuthorId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> 
+        <a asp-action="Index" class="btn btn-default">Отменить</a>
+    </form>
+</div>

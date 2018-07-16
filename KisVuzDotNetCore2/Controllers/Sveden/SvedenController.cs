@@ -329,6 +329,20 @@ namespace KisVuzDotNetCore2.Controllers
                 .FirstOrDefaultAsync();
             ViewData["StipendiiLocalGrant"] = StipendiiLocalGrant;
 
+
+            // Годы выпуска
+            var GraduateYear = await _context.GraduateYear.ToListAsync();
+            ViewData["GraduateYear"] = GraduateYear;
+
+            // Количество выпускников
+            var EduGraduate = await _context.EduGraduate.Include(g=>g.EduProfile.EduNapravl.EduUgs.EduLevel).ToListAsync();
+            ViewData["EduGraduate"] = EduGraduate;
+
+            // Количество трудоустроенных выпускников
+            var GraduateTrudoustroustvo = await _context.GraduateTrudoustroustvo.Include(g => g.EduProfile.EduNapravl.EduUgs.EduLevel).ToListAsync();
+            ViewData["GraduateTrudoustroustvo"] = GraduateTrudoustroustvo;
+
+
             var t20hostelInfo = await _context.HostelInfo
                 .ToListAsync();
             ViewData["t20hostelInfo"] = t20hostelInfo;

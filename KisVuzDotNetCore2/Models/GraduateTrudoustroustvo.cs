@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models
 {
+    /// <summary>
+    /// Модель "Трудоустройство"
+    /// </summary>
     public class GraduateTrudoustroustvo
     {
         /// <summary>
@@ -19,6 +22,6 @@ namespace KisVuzDotNetCore2.Models
         public int GraduateYearId { get; set; }
 
         [Display(Name = "Количество трудоустроенных выпускников")]
-        public int GraduateNumberTrudoustroustvo { get; set; }
+        public int GraduateTrudoustroustvoNumber { get; set; }
     }
 }

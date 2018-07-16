@@ -67,11 +67,14 @@ namespace KisVuzDotNetCore2.Models.UchPosobiya
         /// Форма издания
         /// </summary>
         [Display(Name = "Форма издания")]
+        public int UchPosobieFormaIzdaniyaId { get; set; }
+        [Display(Name = "Форма издания")]
         public UchPosobieFormaIzdaniya UchPosobieFormaIzdaniya { get; set; }
 
         /// <summary>
         /// .pdf файл пособия
         /// </summary>
+        [Display(Name = ".pdf файл пособия")]
         public int FileModelId { get; set; }
         [Display(Name = ".pdf файл пособия")]
         public FileModel FileModel { get; set; }

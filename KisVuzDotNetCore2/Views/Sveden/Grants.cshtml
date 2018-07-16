@@ -2,6 +2,9 @@
     ViewData["Title"] = "Стипендии и иные виды материальной поддержк";
     var StipendiiFederalGrant = (FileDataType)ViewData["StipendiiFederalGrant"];
     var StipendiiLocalGrant = (FileDataType)ViewData["StipendiiLocalGrant"];
+    var GraduateYear = (List<GraduateYear>)ViewData["GraduateYear"];
+    var EduGraduate = (List<EduGraduate>)ViewData["EduGraduate"];
+    var GraduateTrudoustroustvo = (List<GraduateTrudoustroustvo>)ViewData["GraduateTrudoustroustvo"];
 }
 
 <h1>Стипендии и иные виды материальной поддержки</h1>
@@ -81,5 +84,48 @@
                 </tr>
             }
         </table>
+    </div>
+</div>
+
+
+<a href="#spoiler-5" data-toggle="collapse" class="btn btn-primary btn-block">Информация о трудоустройстве выпускников</a>
+<div class="collapse" id="spoiler-5">
+    <div class="well">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th rowspan="2">Код</th>
+                    <th rowspan="2">Наименование профессии, специальности, направления подготовки</th>
+                    <th colspan="2">год </th>
+                    <th colspan="2">год </th>
+                    <th colspan="2">год </th>
+                </tr>
+                <tr>
+                    <th>Кол-во выпускников</th>
+                    <th>Кол-во трудоустроенных выпускников</th>
+                    <th>Кол-во выпускников</th>
+                    <th>Кол-во трудоустроенных выпускников</th>
+                    <th>Кол-во выпускников</th>
+                    <th>Кол-во трудоустроенных выпускников</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var graduateG in EduGraduate.OrderBy(g => g.EduProfileId).GroupBy(g => g.EduProfileId))
+                {
+                <tr>
+                    <td>@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlCode</td>
+                    <td>@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlName (@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduProfileName)</td>
+                    @foreach (var graduate in graduateG.OrderByDescending(g => g.GraduateYearId))
+                    {
+                        <td>@graduate.GraduateNumber</td>
+                        <td>@graduate.GraduateYear.GraduateYearName</td>
+                    }
+                </tr>
+                }
+
+            </tbody>
+        </table>
+
     </div>
 </div>

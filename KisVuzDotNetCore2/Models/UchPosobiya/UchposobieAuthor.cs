@@ -20,16 +20,18 @@ namespace KisVuzDotNetCore2.Models.UchPosobiya
         /// <summary>
         /// Автор пособия
         /// </summary>
+        [Display(Name = "Автор")]
         public int AuthorId { get; set; }
         /// <summary>
         /// Автор пособия
         /// </summary>
-        [Display(Name = "Учебное пособие")]
+        [Display(Name = "Автор")]
         public Author Author { get; set; }
 
         /// <summary>
         /// Учебное пособие
         /// </summary>
+        [Display(Name = "Учебное пособие")]
         public int UchPosobieId { get; set; }
         /// <summary>
         /// Учебное пособие

@@ -1,0 +1,37 @@
+﻿@model KisVuzDotNetCore2.Models.GraduateTrudoustroustvo
+
+@{
+    ViewData["Title"] = "Удалить запись?";
+}
+
+<h2>Удалить запись?</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GraduateYearName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GraduateYearName.GraduateYearName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GraduateTrudoustroustvoNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GraduateTrudoustroustvoNumber)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="GraduateTrudoustroustvoId" />
+        <input type="submit" value="Удалить" class="btn btn-danger"/>
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>
