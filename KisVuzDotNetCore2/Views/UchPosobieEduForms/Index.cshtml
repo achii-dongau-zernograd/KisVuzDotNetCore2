@@ -1,0 +1,40 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieEduForm>
+
+@{
+    ViewData["Title"] = "Учебное пособие - Форма обучения";
+}
+
+<h2>Учебное пособие - Форма обучения</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EduForm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UchPosobieName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduForm.EduFormName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UchPosobieName.UchPosobieName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UchPosobieEduFormId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.UchPosobieEduFormId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

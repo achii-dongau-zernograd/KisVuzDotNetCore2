@@ -16,6 +16,7 @@ namespace KisVuzDotNetCore2.Models.UchPosobiya
         /// <summary>
         /// Форма обучения
         /// </summary>
+        [Display(Name = "Форма обучения")]
         public int EduFormId { get; set; }
         /// <summary>
         /// Форма обучения
@@ -26,6 +27,7 @@ namespace KisVuzDotNetCore2.Models.UchPosobiya
         /// <summary>
         /// Учебное пособие
         /// </summary>
+        [Display(Name = "Учебное пособие")]
         public int UchPosobieId { get; set; }
         /// <summary>
         /// Учебное пособие

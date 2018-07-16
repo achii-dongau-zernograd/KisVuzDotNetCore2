@@ -1,0 +1,33 @@
+﻿@model KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieEduNapravl
+
+@{
+    ViewData["Title"] = "Добавить учебное пособие и направление подготовки";
+}
+
+<h2>Добавить учебное пособие и направление подготовки</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UchPosobieId" class="control-label"></label>
+                <select asp-for="UchPosobieId" class ="form-control" asp-items="ViewBag.UchPosobieId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduNapravlId" class="control-label"></label>
+                <select asp-for="EduNapravlId" class ="form-control" asp-items="ViewBag.EduNapravlId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отменить</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

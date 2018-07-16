@@ -650,7 +650,11 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseKorpus.CreateKorpus(serviceProvider, configuration);
             await InitDataBasePomeshenieTypes.CreatePomeshenieType(serviceProvider, configuration);           
             await InitDatabasePomeshenie.CreatePomeshenie(serviceProvider, configuration);
-            await InitDataBaseOborudovanie.CreateOborudovanie(serviceProvider, configuration);            
+            await InitDataBaseOborudovanie.CreateOborudovanie(serviceProvider, configuration);
+
+            await InitDatabaseAuthor.CreateAuthor(serviceProvider, configuration);
+            await InitDatabaseUchPosobieFormaIzdaniya.CreateUchPosobieFormaIzdaniya(serviceProvider, configuration);
+            await InitDatabaseUchPosobieVid.CreateUchPosobieVid(serviceProvider, configuration);
 
             await InitDatabaseGraduateYear.CreateGraduateYear(serviceProvider, configuration);
             await InitDatabaseDisciplineName.CreateDisciplineName(serviceProvider, configuration);

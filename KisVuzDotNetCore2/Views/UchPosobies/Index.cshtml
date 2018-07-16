@@ -1,0 +1,59 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.UchPosobiya.UchPosobie>
+
+@{
+    ViewData["Title"] = "Учебные пособия";
+}
+
+<h2>Учебные пособия</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.GodIzdaniya)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UchPosobieName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BiblOpisanie)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UchPosobieFormaIzdaniya)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GodIzdaniya)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UchPosobieName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BiblOpisanie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileModel.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UchPosobieFormaIzdaniya.UchPosobieFormaIzdaniyaId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UchPosobieId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.UchPosobieId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.UchPosobieId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
