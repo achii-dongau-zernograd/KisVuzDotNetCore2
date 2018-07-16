@@ -1,0 +1,47 @@
+﻿@model KisVuzDotNetCore2.Models.UchPosobiya.UchPosobie
+
+@{
+    ViewData["Title"] = "Добавить учебное пособие";
+}
+
+<h2>Добавить учебное пособие</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="GodIzdaniya" class="control-label"></label>
+                <input asp-for="GodIzdaniya" class="form-control" />
+                <span asp-validation-for="GodIzdaniya" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UchPosobieName" class="control-label"></label>
+                <input asp-for="UchPosobieName" class="form-control" />
+                <span asp-validation-for="UchPosobieName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BiblOpisanie" class="control-label"></label>
+                <input asp-for="BiblOpisanie" class="form-control" />
+                <span asp-validation-for="BiblOpisanie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UchPosobieFormaIzdaniyaId" class="control-label"></label>
+                <select asp-for="UchPosobieFormaIzdaniyaId" class ="form-control" asp-items="ViewBag.UchPosobieFormaIzdaniyaId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                <select asp-for="FileModelId" class ="form-control" asp-items="ViewBag.FileModelId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отменить</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

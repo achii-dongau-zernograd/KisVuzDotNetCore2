@@ -372,6 +372,14 @@
     <Compile Remove="Migrations\20180712072544_posobie.Designer.cs" />
     <Compile Remove="Migrations\20180712082748_init.cs" />
     <Compile Remove="Migrations\20180712082748_init.Designer.cs" />
+    <Compile Remove="Migrations\20180712112216_init.cs" />
+    <Compile Remove="Migrations\20180712112216_init.Designer.cs" />
+    <Compile Remove="Migrations\20180712112800_qw.cs" />
+    <Compile Remove="Migrations\20180712112800_qw.Designer.cs" />
+    <Compile Remove="Migrations\20180712124548_qw.cs" />
+    <Compile Remove="Migrations\20180712124548_qw.Designer.cs" />
+    <Compile Remove="Migrations\20180712125243_qw.cs" />
+    <Compile Remove="Migrations\20180712125243_qw.Designer.cs" />
     <Compile Remove="Migrations\20180713080128_init.cs" />
     <Compile Remove="Migrations\20180713080128_init.Designer.cs" />
     <Compile Remove="Migrations\20180713080935_init.cs" />
@@ -382,6 +390,10 @@
     <Compile Remove="Migrations\20180713081835_init.Designer.cs" />
     <Compile Remove="Migrations\20180713135823_init.cs" />
     <Compile Remove="Migrations\20180713135823_init.Designer.cs" />
+    <Compile Remove="Migrations\20180716074302_Init.cs" />
+    <Compile Remove="Migrations\20180716074302_Init.Designer.cs" />
+    <Compile Remove="Migrations\20180716114008_init.cs" />
+    <Compile Remove="Migrations\20180716114008_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

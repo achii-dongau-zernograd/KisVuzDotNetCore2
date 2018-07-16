@@ -1,0 +1,31 @@
+﻿@model KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieEduForm
+
+@{
+    ViewData["Title"] = "Удалить данные об учебном пособии и форме обучения";
+}
+
+<h3>Удалить данные об учебном пособии и форме обучения?</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UchPosobieName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UchPosobieName.UchPosobieName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="UchPosobieEduFormId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отменить</a>
+    </form>
+</div>

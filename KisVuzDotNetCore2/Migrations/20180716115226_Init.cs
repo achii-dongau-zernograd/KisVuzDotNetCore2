@@ -698,7 +698,7 @@ namespace KisVuzDotNetCore2.Migrations
                     BiblOpisanie = table.Column<string>(nullable: true),
                     FileModelId = table.Column<int>(nullable: false),
                     GodIzdaniya = table.Column<string>(nullable: true),
-                    UchPosobieFormaIzdaniyaId = table.Column<int>(nullable: true),
+                    UchPosobieFormaIzdaniyaId = table.Column<int>(nullable: false),
                     UchPosobieName = table.Column<string>(nullable: true),
                     UchPosobieVidId = table.Column<int>(nullable: true)
                 },
@@ -716,7 +716,7 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.UchPosobieFormaIzdaniyaId,
                         principalTable: "UchPosobieFormaIzdaniya",
                         principalColumn: "UchPosobieFormaIzdaniyaId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UchPosobie_UchPosobieVid_UchPosobieVidId",
                         column: x => x.UchPosobieVidId,
@@ -1027,16 +1027,15 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     AuthorId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    AppUserId = table.Column<int>(nullable: true),
-                    AppUserId1 = table.Column<string>(nullable: true),
+                    AppUserId = table.Column<string>(nullable: true),
                     AuthorName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Author", x => x.AuthorId);
                     table.ForeignKey(
-                        name: "FK_Author_AspNetUsers_AppUserId1",
-                        column: x => x.AppUserId1,
+                        name: "FK_Author_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -2463,9 +2462,9 @@ namespace KisVuzDotNetCore2.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Author_AppUserId1",
+                name: "IX_Author_AppUserId",
                 table: "Author",
-                column: "AppUserId1");
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BlankNums_EduNapravlId",
