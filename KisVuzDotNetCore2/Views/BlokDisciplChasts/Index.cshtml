@@ -34,12 +34,12 @@
                 @Html.DisplayFor(modelItem => item.BlokDisciplChastName.BlokDisciplChastNameName)
             </td>
             <td>
-                <a asp-controller="Discipline" asp-action="index" asp-route-id="@item.BlokDisciplChastId">Открыть</a>
+                <a asp-controller="Disciplines" asp-action="index" asp-route-BlokDisciplChastId="@item.BlokDisciplChastId">Открыть</a>
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BlokDisciplChastId" asp-route-blokdisciplid="@ViewBag.BlokDisciplId">Редактировать</a> |
-                <a asp-action="Details" asp-route-id="@item.BlokDisciplChastId" asp-route-blokdisciplid="@ViewBag.BlokDisciplId">Подробнее</a> |
-                <a asp-action="Delete" asp-route-id="@item.BlokDisciplChastId" asp-route-blokdisciplid="@ViewBag.BlokDisciplId">Удалить</a>
+                <a asp-action="Edit" asp-route-Id="@item.BlokDisciplChastId" asp-route-blokdisciplid="@ViewBag.BlokDisciplId">Редактировать</a> |
+                <a asp-action="Details" asp-route-Id="@item.BlokDisciplChastId" asp-route-blokdisciplid="@ViewBag.BlokDisciplId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-Id="@item.BlokDisciplChastId" asp-route-blokdisciplid="@ViewBag.BlokDisciplId">Удалить</a>
             </td>
         </tr>
 }

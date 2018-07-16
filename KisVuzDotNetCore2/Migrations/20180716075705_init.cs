@@ -426,6 +426,20 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SemestrName",
+                columns: table => new
+                {
+                    SemestrNameId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    SemestrNameName = table.Column<string>(nullable: true),
+                    SemestrNameNumber = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SemestrName", x => x.SemestrNameId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StructSubvisionTypes",
                 columns: table => new
                 {
@@ -496,6 +510,19 @@ namespace KisVuzDotNetCore2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UchredLaw", x => x.UchredLawId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VidUchebRabotiNames",
+                columns: table => new
+                {
+                    VidUchebRabotiNameId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    VidUchebRabotiNameName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VidUchebRabotiNames", x => x.VidUchebRabotiNameId);
                 });
 
             migrationBuilder.CreateTable(
@@ -2292,26 +2319,26 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Discipline",
+                name: "Disciplines",
                 columns: table => new
                 {
                     DisciplineId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    BlokDisciplChastId = table.Column<int>(nullable: true),
+                    BlokDisciplChastId = table.Column<int>(nullable: false),
                     DisciplineCode = table.Column<string>(nullable: true),
                     DisciplineNameId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Discipline", x => x.DisciplineId);
+                    table.PrimaryKey("PK_Disciplines", x => x.DisciplineId);
                     table.ForeignKey(
-                        name: "FK_Discipline_BlokDisciplChast_BlokDisciplChastId",
+                        name: "FK_Disciplines_BlokDisciplChast_BlokDisciplChastId",
                         column: x => x.BlokDisciplChastId,
                         principalTable: "BlokDisciplChast",
                         principalColumn: "BlokDisciplChastId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Discipline_DisciplineNames_DisciplineNameId",
+                        name: "FK_Disciplines_DisciplineNames_DisciplineNameId",
                         column: x => x.DisciplineNameId,
                         principalTable: "DisciplineNames",
                         principalColumn: "DisciplineNameId",
@@ -2319,29 +2346,29 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Kurs",
+                name: "Kurses",
                 columns: table => new
                 {
                     KursId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    DisciplineId = table.Column<int>(nullable: true),
-                    EduKursId = table.Column<int>(nullable: true)
+                    DisciplineId = table.Column<int>(nullable: false),
+                    EduKursId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Kurs", x => x.KursId);
+                    table.PrimaryKey("PK_Kurses", x => x.KursId);
                     table.ForeignKey(
-                        name: "FK_Kurs_Discipline_DisciplineId",
+                        name: "FK_Kurses_Disciplines_DisciplineId",
                         column: x => x.DisciplineId,
-                        principalTable: "Discipline",
+                        principalTable: "Disciplines",
                         principalColumn: "DisciplineId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Kurs_EduKurses_EduKursId",
+                        name: "FK_Kurses_EduKurses_EduKursId",
                         column: x => x.EduKursId,
                         principalTable: "EduKurses",
                         principalColumn: "EduKursId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -2351,17 +2378,22 @@ namespace KisVuzDotNetCore2.Migrations
                     SemestrId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     KursId = table.Column<int>(nullable: false),
-                    SemestrName = table.Column<string>(nullable: true),
-                    SemestrNumber = table.Column<int>(nullable: false)
+                    SemestrNameId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Semestr", x => x.SemestrId);
                     table.ForeignKey(
-                        name: "FK_Semestr_Kurs_KursId",
+                        name: "FK_Semestr_Kurses_KursId",
                         column: x => x.KursId,
-                        principalTable: "Kurs",
+                        principalTable: "Kurses",
                         principalColumn: "KursId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Semestr_SemestrName_SemestrNameId",
+                        column: x => x.SemestrNameId,
+                        principalTable: "SemestrName",
+                        principalColumn: "SemestrNameId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -2386,23 +2418,30 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VidUchebRaboti",
+                name: "SemestrVidUchebRaboti",
                 columns: table => new
                 {
-                    VidUchebRabotiId = table.Column<int>(nullable: false)
+                    SemestrVidUchebRabotiId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    SemestrId = table.Column<int>(nullable: true),
-                    VidUchebRabotiName = table.Column<string>(nullable: true)
+                    Hour = table.Column<int>(nullable: false),
+                    SemestrId = table.Column<int>(nullable: false),
+                    VidUchebRabotiNameId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VidUchebRaboti", x => x.VidUchebRabotiId);
+                    table.PrimaryKey("PK_SemestrVidUchebRaboti", x => x.SemestrVidUchebRabotiId);
                     table.ForeignKey(
-                        name: "FK_VidUchebRaboti_Semestr_SemestrId",
+                        name: "FK_SemestrVidUchebRaboti_Semestr_SemestrId",
                         column: x => x.SemestrId,
                         principalTable: "Semestr",
                         principalColumn: "SemestrId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SemestrVidUchebRaboti_VidUchebRabotiNames_VidUchebRabotiNameId",
+                        column: x => x.VidUchebRabotiNameId,
+                        principalTable: "VidUchebRabotiNames",
+                        principalColumn: "VidUchebRabotiNameId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -2493,13 +2532,13 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "BlokDisciplId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Discipline_BlokDisciplChastId",
-                table: "Discipline",
+                name: "IX_Disciplines_BlokDisciplChastId",
+                table: "Disciplines",
                 column: "BlokDisciplChastId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Discipline_DisciplineNameId",
-                table: "Discipline",
+                name: "IX_Disciplines_DisciplineNameId",
+                table: "Disciplines",
                 column: "DisciplineNameId");
 
             migrationBuilder.CreateIndex(
@@ -2798,13 +2837,13 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Kurs_DisciplineId",
-                table: "Kurs",
+                name: "IX_Kurses_DisciplineId",
+                table: "Kurses",
                 column: "DisciplineId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Kurs_EduKursId",
-                table: "Kurs",
+                name: "IX_Kurses_EduKursId",
+                table: "Kurses",
                 column: "EduKursId");
 
             migrationBuilder.CreateIndex(
@@ -2876,6 +2915,21 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "IX_Semestr_KursId",
                 table: "Semestr",
                 column: "KursId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Semestr_SemestrNameId",
+                table: "Semestr",
+                column: "SemestrNameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SemestrVidUchebRaboti_SemestrId",
+                table: "SemestrVidUchebRaboti",
+                column: "SemestrId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SemestrVidUchebRaboti_VidUchebRabotiNameId",
+                table: "SemestrVidUchebRaboti",
+                column: "VidUchebRabotiNameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StructFacultets_StructInstituteId",
@@ -3051,11 +3105,6 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "IX_Vacants_EduNapravlId",
                 table: "Vacants",
                 column: "EduNapravlId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VidUchebRaboti_SemestrId",
-                table: "VidUchebRaboti",
-                column: "SemestrId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -3178,6 +3227,9 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "RucovodstvoFil");
 
             migrationBuilder.DropTable(
+                name: "SemestrVidUchebRaboti");
+
+            migrationBuilder.DropTable(
                 name: "SvedenRucovodstvo");
 
             migrationBuilder.DropTable(
@@ -3206,9 +3258,6 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "Vacants");
-
-            migrationBuilder.DropTable(
-                name: "VidUchebRaboti");
 
             migrationBuilder.DropTable(
                 name: "Volume");
@@ -3250,6 +3299,12 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "RowStatuses");
 
             migrationBuilder.DropTable(
+                name: "Semestr");
+
+            migrationBuilder.DropTable(
+                name: "VidUchebRabotiNames");
+
+            migrationBuilder.DropTable(
                 name: "Teachers");
 
             migrationBuilder.DropTable(
@@ -3259,13 +3314,16 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "UchPosobie");
 
             migrationBuilder.DropTable(
-                name: "Semestr");
-
-            migrationBuilder.DropTable(
                 name: "FileDataTypeGroups");
 
             migrationBuilder.DropTable(
                 name: "Korpus");
+
+            migrationBuilder.DropTable(
+                name: "Kurses");
+
+            migrationBuilder.DropTable(
+                name: "SemestrName");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
@@ -3277,7 +3335,10 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "UchPosobieVid");
 
             migrationBuilder.DropTable(
-                name: "Kurs");
+                name: "Disciplines");
+
+            migrationBuilder.DropTable(
+                name: "EduKurses");
 
             migrationBuilder.DropTable(
                 name: "AcademicDegrees");
@@ -3289,19 +3350,13 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "EduLevelGroups");
 
             migrationBuilder.DropTable(
-                name: "Discipline");
-
-            migrationBuilder.DropTable(
-                name: "EduKurses");
-
-            migrationBuilder.DropTable(
-                name: "AcademicDegreeGroups");
-
-            migrationBuilder.DropTable(
                 name: "BlokDisciplChast");
 
             migrationBuilder.DropTable(
                 name: "DisciplineNames");
+
+            migrationBuilder.DropTable(
+                name: "AcademicDegreeGroups");
 
             migrationBuilder.DropTable(
                 name: "BlokDisciplChastName");

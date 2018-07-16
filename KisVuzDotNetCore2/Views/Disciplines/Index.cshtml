@@ -1,0 +1,48 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.Discipline>
+
+@{
+    ViewData["Title"] = "Дисциплины по учебному плану";
+}
+
+<h2>Дисциплины по учебному плану</h2>
+
+<p>
+    <a asp-action="Create" asp-route-BlokDisciplChastId="@ViewBag.BlokDisciplChastId" class="btn btn-primary">Добавить дисциплину</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DisciplineCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisciplineName)
+            </th>
+            <th>
+                Курсы
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisciplineCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisciplineName.DisciplineNameName)
+            </td>
+            
+            <td>
+                <a asp-controller="Kurses" asp-action="index" asp-route-id="@item.DisciplineId">Открыть</a>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-BlokDisciplChastId="@item.BlokDisciplChastId" asp-route-id="@item.DisciplineId">Редактировать</a> |
+                <a asp-action="Details"  asp-route-BlokDisciplChastId="@item.BlokDisciplChastId" asp-route-id="@item.DisciplineId">Подробнее</a> |
+                <a asp-action="Delete"  asp-route-BlokDisciplChastId="@item.BlokDisciplChastId" asp-route-id="@item.DisciplineId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

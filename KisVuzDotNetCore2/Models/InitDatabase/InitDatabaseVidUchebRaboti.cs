@@ -12,7 +12,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
     /// <summary>
     /// Инициализация таблицы "Виды учебной работы"
     /// </summary>
-    public class InitDatabaseVidUchebRaboti
+    public class InitDatabaseVidUchebRabotiName
     {
         /// <summary>
         /// Инициализация таблицы "Виды учебной работы"
@@ -20,51 +20,51 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static async Task CreateVidUchebRaboti(IServiceProvider serviceProvider, IConfiguration configuration)
+        public static async Task CreateVidUchebRabotiNames(IServiceProvider serviceProvider, IConfiguration configuration)
         {
             using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 AppIdentityDBContext context = serviceScope.ServiceProvider.GetService<AppIdentityDBContext>();
 
                 #region Инициализация таблицы "Виды учебной работы"
-                if (!await context.VidUchebRaboti.AnyAsync())
+                if (!await context.VidUchebRabotiNames.AnyAsync())
                 {
-                    VidUchebRaboti VidUchebRaboti1 = new VidUchebRaboti
+                    VidUchebRabotiName VidUchebRabotiName1 = new VidUchebRabotiName
                     {
-                        VidUchebRabotiId = 1,
-                        VidUchebRabotiName = "Лекции"
+                        VidUchebRabotiNameId = 1,
+                        VidUchebRabotiNameName = "Лекции"
                     };
 
-                    VidUchebRaboti VidUchebRaboti2 = new VidUchebRaboti
+                    VidUchebRabotiName VidUchebRabotiName2 = new VidUchebRabotiName
                     {
-                        VidUchebRabotiId = 2,
-                        VidUchebRabotiName = "Лабораторные работы"
+                        VidUchebRabotiNameId = 2,
+                        VidUchebRabotiNameName = "Лабораторные работы"
                     };
 
-                    VidUchebRaboti VidUchebRaboti3 = new VidUchebRaboti
+                    VidUchebRabotiName VidUchebRabotiName3 = new VidUchebRabotiName
                     {
-                        VidUchebRabotiId = 3,
-                        VidUchebRabotiName = "Практические занятия"
+                        VidUchebRabotiNameId = 3,
+                        VidUchebRabotiNameName = "Практические занятия"
                     };
 
-                    VidUchebRaboti VidUchebRaboti4 = new VidUchebRaboti
+                    VidUchebRabotiName VidUchebRabotiName4 = new VidUchebRabotiName
                     {
-                        VidUchebRabotiId = 4,
-                        VidUchebRabotiName = "Самостоятельная работа"
+                        VidUchebRabotiNameId = 4,
+                        VidUchebRabotiNameName = "Самостоятельная работа"
                     };
 
-                    VidUchebRaboti VidUchebRaboti5 = new VidUchebRaboti
+                    VidUchebRabotiName VidUchebRabotiName5 = new VidUchebRabotiName
                     {
-                        VidUchebRabotiId = 5,
-                        VidUchebRabotiName = "Контроль"
+                        VidUchebRabotiNameId = 5,
+                        VidUchebRabotiNameName = "Контроль"
                     };
 
-                    await context.VidUchebRaboti.AddRangeAsync(
-                        VidUchebRaboti1,
-                        VidUchebRaboti2,
-                        VidUchebRaboti3,
-                        VidUchebRaboti4,
-                        VidUchebRaboti5
+                    await context.VidUchebRabotiNames.AddRangeAsync(
+                        VidUchebRabotiName1,
+                        VidUchebRabotiName2,
+                        VidUchebRabotiName3,
+                        VidUchebRabotiName4,
+                        VidUchebRabotiName5
                     );
                     await context.SaveChangesAsync();
                 }
