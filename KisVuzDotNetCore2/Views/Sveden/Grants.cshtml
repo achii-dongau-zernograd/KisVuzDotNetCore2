@@ -92,14 +92,14 @@
 <div class="collapse" id="spoiler-5">
     <div class="well">
 
-        <table class="table table-hover">
+        <table itemprop="graduateJob" class="table table-hover">
             <thead>
                 <tr>
                     <th rowspan="2">Код</th>
                     <th rowspan="2">Наименование профессии, специальности, направления подготовки</th>
-                    <th colspan="2">год </th>
-                    <th colspan="2">год </th>
-                    <th colspan="2">год </th>
+                    <th colspan="2">@GraduateYear[GraduateYear.Count - 1].GraduateYearName</th>
+                    <th colspan="2">@GraduateYear[GraduateYear.Count - 2].GraduateYearName</th>
+                    <th colspan="2">@GraduateYear[GraduateYear.Count - 3].GraduateYearName</th>
                 </tr>
                 <tr>
                     <th>Кол-во выпускников</th>
@@ -113,14 +113,38 @@
             <tbody>
                 @foreach (var graduateG in EduGraduate.OrderBy(g => g.EduProfileId).GroupBy(g => g.EduProfileId))
                 {
-                <tr>
+                <tr itemprop="graduateJob">
                     <td>@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlCode</td>
                     <td>@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlName (@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduProfileName)</td>
-                    @foreach (var graduate in graduateG.OrderByDescending(g => g.GraduateYearId))
+                    @foreach (var graduateYear in GraduateYear.TakeLast(3).OrderByDescending(y => y.GraduateYearId))
                     {
-                        <td>@graduate.GraduateNumber</td>
-                        <td>@graduate.GraduateYear.GraduateYearName</td>
+                        bool IsFounded = false;
+                        foreach (var graduate in graduateG.Where(g => g.GraduateYearId == graduateYear.GraduateYearId))
+                        {
+                            IsFounded = true;
+                            <td>@graduate.GraduateNumber</td>
+
+                            int? trud = GraduateTrudoustroustvo.Where(t => t.EduProfileId == graduateG.Key && t.GraduateYearId == graduateYear.GraduateYearId).FirstOrDefault()?.GraduateTrudoustroustvoNumber;
+                            if(trud>0)
+                            {
+                            <td>@trud</td>
+                            }
+                            else
+                            {
+                            <td>-</td>    
+                            }
+
+                            break;
+                        }
+
+                        if (!IsFounded)
+                        {
+                            <td>-</td>
+                            <td>-</td>
+                        }
                     }
+
+
                 </tr>
                 }
 
