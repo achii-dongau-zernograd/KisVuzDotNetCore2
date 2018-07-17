@@ -1,0 +1,41 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.SemestrVidUchebRaboti>
+
+@{
+    ViewData["Title"] = "Виды учебной работы";
+}
+
+<h2>Виды учебной работы</h2>
+
+<p>
+    <a asp-action="Create" asp-route-SemestrId="@ViewBag.SemestrId" class="btn btn-primary">Добавить вид учебной работы</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Hour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VidUchebRabotiName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VidUchebRabotiName.VidUchebRabotiNameName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-SemestrId="@item.SemestrId" asp-route-id="@item.SemestrVidUchebRabotiId">Редактировать</a> |
+                <a asp-action="Details" asp-route-SemestrId="@item.SemestrId" asp-route-id="@item.SemestrVidUchebRabotiId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-SemestrId="@item.SemestrId" asp-route-id="@item.SemestrVidUchebRabotiId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

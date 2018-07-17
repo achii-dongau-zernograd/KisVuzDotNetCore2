@@ -1,4 +1,4 @@
-﻿@model KisVuzDotNetCore2.Models.Education.FormKontrol
+﻿@model KisVuzDotNetCore2.Models.Education.FormKontrolName
 
 @{
     ViewData["Title"] = "Редактировать";
@@ -11,11 +11,11 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="FormKontrolId" />
+            <input type="hidden" asp-for="FormKontrolNameId" />
             <div class="form-group">
-                <label asp-for="FormKontrolName" class="control-label"></label>
-                <input asp-for="FormKontrolName" class="form-control" />
-                <span asp-validation-for="FormKontrolName" class="text-danger"></span>
+                <label asp-for="FormKontrolNameName" class="control-label"></label>
+                <input asp-for="FormKontrolNameName" class="form-control" />
+                <span asp-validation-for="FormKontrolNameName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Сохранить" class="btn btn-primary" />

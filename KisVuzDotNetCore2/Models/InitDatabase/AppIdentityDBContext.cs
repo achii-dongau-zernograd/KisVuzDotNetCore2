@@ -133,12 +133,12 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Формы контроля
         /// </summary>
-        public DbSet<FormKontrol> FormKontrol { get; set; }
+        public DbSet<FormKontrolName> FormKontrolNames { get; set; }
 
         /// <summary>
-        /// Семестр
+        /// Семестры (справочник)
         /// </summary>
-        public DbSet<Semestr> Semestr { get; set; }
+        public DbSet<SemestrName> SemestrNames { get; set; }
 
         /// <summary>
         /// Блоки дисциплин учебного плана
@@ -196,6 +196,11 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<Discipline> Disciplines { get; set; }
 
         /// <summary>
+        /// Аннотации к рабочим программам дисциплин в составе учебного плана
+        /// </summary>
+        public DbSet<EduAnnotation> EduAnnotations { get; set; }
+
+        /// <summary>
         /// Курсы, на которых ведётся дисциплина в составе учебного плана
         /// </summary>
         public DbSet<Kurs> Kurses { get; set; }
@@ -209,6 +214,11 @@ namespace KisVuzDotNetCore2.Models
         /// Таблица для реализации отношения М:М между таблицами Semestr и VidUchebRabotiName
         /// </summary>
         public DbSet<SemestrVidUchebRaboti> SemestrVidUchebRaboti { get; set; }
+
+        /// <summary>
+        /// Таблица для реализации отношения М:М между таблицами Semestr и FormKontrolName
+        /// </summary>
+        public DbSet<SemestrFormKontrolName> SemestrFormKontrolName { get; set; }
         #endregion
 
         #region Структура образовательной организации (Struct)
@@ -674,7 +684,7 @@ namespace KisVuzDotNetCore2.Models
 
             await InitDatabaseUchredLaw.CreateUchredLaw(serviceProvider, configuration);
             await InitDatadaseBlokDisciplName.CreateBlokDisciplName(serviceProvider, configuration);
-            await InitDatabaseFormKontrol.CreateFormKontrol(serviceProvider, configuration);
+            await InitDatabaseFormKontrolName.CreateFormKontrolName(serviceProvider, configuration);
             await InitDatabaseEduProgramPodg.CreateEduProgramPodg(serviceProvider, configuration);
             await InitDatabaseVidUchebRabotiName.CreateVidUchebRabotiNames(serviceProvider, configuration);
             await InitDatabaseEduVidDeyats.CreateEduVidDeyats(serviceProvider, configuration);
@@ -699,6 +709,7 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseInstituteLinks.CreateInstituteLinks(serviceProvider, configuration);
 
             await InitDatabaseNirTema.CreateNirTema(serviceProvider, configuration);
+            await InitDatabaseSemestrName.CreateSemestrName(serviceProvider, configuration);
         }                
         /// <summary>
         /// Инициализация базы данных

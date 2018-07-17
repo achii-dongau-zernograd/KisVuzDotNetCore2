@@ -404,6 +404,22 @@
     <Compile Remove="Migrations\20180716140810_init.Designer.cs" />
     <Compile Remove="Migrations\20180717095210_Init.cs" />
     <Compile Remove="Migrations\20180717095210_Init.Designer.cs" />
+    <Compile Remove="Migrations\20180717074352_annotation.cs" />
+    <Compile Remove="Migrations\20180717074352_annotation.Designer.cs" />
+    <Compile Remove="Migrations\20180717094020_init.cs" />
+    <Compile Remove="Migrations\20180717094020_init.Designer.cs" />
+    <Compile Remove="Migrations\20180717104355_Init.cs" />
+    <Compile Remove="Migrations\20180717104355_Init.Designer.cs" />
+    <Compile Remove="Migrations\20180717111213_init.cs" />
+    <Compile Remove="Migrations\20180717111213_init.Designer.cs" />
+    <Compile Remove="Migrations\20180717113226_init.cs" />
+    <Compile Remove="Migrations\20180717113226_init.Designer.cs" />
+    <Compile Remove="Migrations\20180717122732_init.cs" />
+    <Compile Remove="Migrations\20180717122732_init.Designer.cs" />
+    <Compile Remove="Migrations\20180717133908_init.cs" />
+    <Compile Remove="Migrations\20180717133908_init.Designer.cs" />
+    <Compile Remove="Migrations\20180717134221_init.cs" />
+    <Compile Remove="Migrations\20180717134221_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

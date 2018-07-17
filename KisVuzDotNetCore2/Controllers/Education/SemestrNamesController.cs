@@ -10,44 +10,62 @@ using KisVuzDotNetCore2.Models.Education;
 
 namespace KisVuzDotNetCore2.Controllers.Education
 {
-    public class FormKontrolsController : Controller
+    public class SemestrNamesController : Controller
     {
         private readonly AppIdentityDBContext _context;
 
-        public FormKontrolsController(AppIdentityDBContext context)
+        public SemestrNamesController(AppIdentityDBContext context)
         {
             _context = context;
         }
 
-        // GET: FormKontrols
+        // GET: SemestrNames
         public async Task<IActionResult> Index()
         {
-            return View(await _context.FormKontrol.ToListAsync());
+            return View(await _context.SemestrNames.ToListAsync());
         }
-                
-        // GET: FormKontrols/Create
+
+        // GET: SemestrNames/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var semestrName = await _context.SemestrNames
+                .SingleOrDefaultAsync(m => m.SemestrNameId == id);
+            if (semestrName == null)
+            {
+                return NotFound();
+            }
+
+            return View(semestrName);
+        }
+
+        // GET: SemestrNames/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: FormKontrols/Create
+        // POST: SemestrNames/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FormKontrolId,FormKontrolName")] FormKontrol formKontrol)
+        public async Task<IActionResult> Create(SemestrName semestrName)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(formKontrol);
+                _context.Add(semestrName);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(formKontrol);
+            return View(semestrName);
         }
 
-        // GET: FormKontrols/Edit/5
+        // GET: SemestrNames/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -55,22 +73,22 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 return NotFound();
             }
 
-            var formKontrol = await _context.FormKontrol.SingleOrDefaultAsync(m => m.FormKontrolId == id);
-            if (formKontrol == null)
+            var semestrName = await _context.SemestrNames.SingleOrDefaultAsync(m => m.SemestrNameId == id);
+            if (semestrName == null)
             {
                 return NotFound();
             }
-            return View(formKontrol);
+            return View(semestrName);
         }
 
-        // POST: FormKontrols/Edit/5
+        // POST: SemestrNames/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FormKontrolId,FormKontrolName")] FormKontrol formKontrol)
+        public async Task<IActionResult> Edit(int id, [Bind("SemestrNameId,SemestrNameNumber,SemestrNameName")] SemestrName semestrName)
         {
-            if (id != formKontrol.FormKontrolId)
+            if (id != semestrName.SemestrNameId)
             {
                 return NotFound();
             }
@@ -79,12 +97,12 @@ namespace KisVuzDotNetCore2.Controllers.Education
             {
                 try
                 {
-                    _context.Update(formKontrol);
+                    _context.Update(semestrName);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FormKontrolExists(formKontrol.FormKontrolId))
+                    if (!SemestrNameExists(semestrName.SemestrNameId))
                     {
                         return NotFound();
                     }
@@ -95,10 +113,10 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(formKontrol);
+            return View(semestrName);
         }
 
-        // GET: FormKontrols/Delete/5
+        // GET: SemestrNames/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -106,30 +124,30 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 return NotFound();
             }
 
-            var formKontrol = await _context.FormKontrol
-                .SingleOrDefaultAsync(m => m.FormKontrolId == id);
-            if (formKontrol == null)
+            var semestrName = await _context.SemestrNames
+                .SingleOrDefaultAsync(m => m.SemestrNameId == id);
+            if (semestrName == null)
             {
                 return NotFound();
             }
 
-            return View(formKontrol);
+            return View(semestrName);
         }
 
-        // POST: FormKontrols/Delete/5
+        // POST: SemestrNames/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var formKontrol = await _context.FormKontrol.SingleOrDefaultAsync(m => m.FormKontrolId == id);
-            _context.FormKontrol.Remove(formKontrol);
+            var semestrName = await _context.SemestrNames.SingleOrDefaultAsync(m => m.SemestrNameId == id);
+            _context.SemestrNames.Remove(semestrName);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FormKontrolExists(int id)
+        private bool SemestrNameExists(int id)
         {
-            return _context.FormKontrol.Any(e => e.FormKontrolId == id);
+            return _context.SemestrNames.Any(e => e.SemestrNameId == id);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.FormKontrol>
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.FormKontrolName>
 
 @{
     ViewData["Title"] = "Формы контроля";
@@ -13,7 +13,7 @@
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.FormKontrolName)
+                    @Html.DisplayNameFor(model => model.FormKontrolNameName)
                 </th>
             <th></th>
         </tr>
@@ -22,11 +22,11 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FormKontrolName)
+                @Html.DisplayFor(modelItem => item.FormKontrolNameName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FormKontrolId">Редактировать</a> |
-                <a asp-action="Delete" asp-route-id="@item.FormKontrolId">Удалить</a>
+                <a asp-action="Edit" asp-route-id="@item.FormKontrolNameId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.FormKontrolNameId">Удалить</a>
             </td>
         </tr>
 }

@@ -5,10 +5,10 @@ namespace KisVuzDotNetCore2.Models.Education
     /// <summary>
     /// Формы контроля
     /// </summary>
-    public class FormKontrol
+    public class FormKontrolName
     {
-        public int FormKontrolId { get; set; }
+        public int FormKontrolNameId { get; set; }
         [Display(Name = "Форма контроля")]
-        public string FormKontrolName { get; set; }
+        public string FormKontrolNameName { get; set; }
     }
 }

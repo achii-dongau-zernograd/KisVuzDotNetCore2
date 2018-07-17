@@ -1,0 +1,25 @@
+﻿@model KisVuzDotNetCore2.Models.Education.Kurs
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+
+<h3>Удалить курс?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduKurs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduKurs.EduKursId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="KursId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" asp-route-DisciplineId="@ViewBag.DisciplineId" class="btn btn-default">Отмена</a>
+    </form>
+</div>

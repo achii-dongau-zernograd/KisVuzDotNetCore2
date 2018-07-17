@@ -12,7 +12,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
     /// <summary>
     /// Инициализация таблицы "Формы контроля"
     /// </summary>
-    public class InitDatabaseFormKontrol
+    public class InitDatabaseFormKontrolName
     {
         /// <summary>
         /// Инициализация таблицы "Формы контроля"
@@ -20,58 +20,58 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
         /// <param name="serviceProvider"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static async Task CreateFormKontrol(IServiceProvider serviceProvider, IConfiguration configuration)
+        public static async Task CreateFormKontrolName(IServiceProvider serviceProvider, IConfiguration configuration)
         {
             using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 AppIdentityDBContext context = serviceScope.ServiceProvider.GetService<AppIdentityDBContext>();
 
                 #region Инициализация таблицы "Формы контроля"
-                if (!await context.FormKontrol.AnyAsync())
+                if (!await context.FormKontrolNames.AnyAsync())
                 {
-                    FormKontrol FormKontrol1 = new FormKontrol
+                    FormKontrolName FormKontrolName1 = new FormKontrolName
                     {
-                        FormKontrolId = 1,
-                        FormKontrolName = "Экзамен"
+                        FormKontrolNameId = 1,
+                        FormKontrolNameName = "Экзамен"
                     };
 
-                    FormKontrol FormKontrol2 = new FormKontrol
+                    FormKontrolName FormKontrolName2 = new FormKontrolName
                     {
-                        FormKontrolId = 2,
-                        FormKontrolName = "Зачет"
+                        FormKontrolNameId = 2,
+                        FormKontrolNameName = "Зачет"
                     };
 
-                    FormKontrol FormKontrol3 = new FormKontrol
+                    FormKontrolName FormKontrolName3 = new FormKontrolName
                     {
-                        FormKontrolId = 3,
-                        FormKontrolName = "Зачет с оценкой"
+                        FormKontrolNameId = 3,
+                        FormKontrolNameName = "Зачет с оценкой"
                     };
 
-                    FormKontrol FormKontrol4 = new FormKontrol
+                    FormKontrolName FormKontrolName4 = new FormKontrolName
                     {
-                        FormKontrolId = 4,
-                        FormKontrolName = "Курсовой проект"
+                        FormKontrolNameId = 4,
+                        FormKontrolNameName = "Курсовой проект"
                     };
 
-                    FormKontrol FormKontrol5 = new FormKontrol
+                    FormKontrolName FormKontrolName5 = new FormKontrolName
                     {
-                        FormKontrolId = 5,
-                        FormKontrolName = "Курсовая работа"
+                        FormKontrolNameId = 5,
+                        FormKontrolNameName = "Курсовая работа"
                     };
 
-                    FormKontrol FormKontrol6 = new FormKontrol
+                    FormKontrolName FormKontrolName6 = new FormKontrolName
                     {
-                        FormKontrolId = 6,
-                        FormKontrolName = "Расче-графическая работа"
+                        FormKontrolNameId = 6,
+                        FormKontrolNameName = "Расчетно-графическая работа"
                     };
 
-                    await context.FormKontrol.AddRangeAsync(
-                        FormKontrol1,
-                        FormKontrol2,
-                        FormKontrol3,
-                        FormKontrol4,
-                        FormKontrol5,
-                        FormKontrol6
+                    await context.FormKontrolNames.AddRangeAsync(
+                        FormKontrolName1,
+                        FormKontrolName2,
+                        FormKontrolName3,
+                        FormKontrolName4,
+                        FormKontrolName5,
+                        FormKontrolName6
                     );
                     await context.SaveChangesAsync();
                 }
