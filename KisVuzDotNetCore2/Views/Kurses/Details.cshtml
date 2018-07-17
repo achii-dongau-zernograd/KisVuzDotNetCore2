@@ -1,0 +1,23 @@
+﻿@model KisVuzDotNetCore2.Models.Education.Kurs
+
+@{
+    ViewData["Title"] = "Подробнее";
+}
+
+<h2>Подробнее</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduKurs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduKurs.EduKursNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-DisciplineId="@ViewBag.DisciplineId" asp-route-id="@Model.KursId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" asp-route-DisciplineId="@ViewBag.DisciplineId" class="btn btn-default">Отмена</a>
+</div>

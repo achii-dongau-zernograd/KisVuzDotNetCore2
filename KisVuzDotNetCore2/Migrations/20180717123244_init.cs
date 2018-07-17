@@ -310,6 +310,19 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FormKontrolNames",
+                columns: table => new
+                {
+                    FormKontrolNameId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FormKontrolNameName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FormKontrolNames", x => x.FormKontrolNameId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GraduateYear",
                 columns: table => new
                 {
@@ -426,7 +439,7 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SemestrName",
+                name: "SemestrNames",
                 columns: table => new
                 {
                     SemestrNameId = table.Column<int>(nullable: false)
@@ -436,7 +449,7 @@ namespace KisVuzDotNetCore2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SemestrName", x => x.SemestrNameId);
+                    table.PrimaryKey("PK_SemestrNames", x => x.SemestrNameId);
                 });
 
             migrationBuilder.CreateTable(
@@ -2371,7 +2384,7 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Semestr",
+                name: "Semestres",
                 columns: table => new
                 {
                     SemestrId = table.Column<int>(nullable: false)
@@ -2381,39 +2394,45 @@ namespace KisVuzDotNetCore2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Semestr", x => x.SemestrId);
+                    table.PrimaryKey("PK_Semestres", x => x.SemestrId);
                     table.ForeignKey(
-                        name: "FK_Semestr_Kurses_KursId",
+                        name: "FK_Semestres_Kurses_KursId",
                         column: x => x.KursId,
                         principalTable: "Kurses",
                         principalColumn: "KursId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Semestr_SemestrName_SemestrNameId",
+                        name: "FK_Semestres_SemestrNames_SemestrNameId",
                         column: x => x.SemestrNameId,
-                        principalTable: "SemestrName",
+                        principalTable: "SemestrNames",
                         principalColumn: "SemestrNameId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FormKontrol",
+                name: "SemestrFormKontrolName",
                 columns: table => new
                 {
-                    FormKontrolId = table.Column<int>(nullable: false)
+                    SemestrFormKontrolNameId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FormKontrolName = table.Column<string>(nullable: true),
-                    SemestrId = table.Column<int>(nullable: true)
+                    FormKontrolNameId = table.Column<int>(nullable: false),
+                    SemestrId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FormKontrol", x => x.FormKontrolId);
+                    table.PrimaryKey("PK_SemestrFormKontrolName", x => x.SemestrFormKontrolNameId);
                     table.ForeignKey(
-                        name: "FK_FormKontrol_Semestr_SemestrId",
+                        name: "FK_SemestrFormKontrolName_FormKontrolNames_FormKontrolNameId",
+                        column: x => x.FormKontrolNameId,
+                        principalTable: "FormKontrolNames",
+                        principalColumn: "FormKontrolNameId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SemestrFormKontrolName_Semestres_SemestrId",
                         column: x => x.SemestrId,
-                        principalTable: "Semestr",
+                        principalTable: "Semestres",
                         principalColumn: "SemestrId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -2430,9 +2449,9 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     table.PrimaryKey("PK_SemestrVidUchebRaboti", x => x.SemestrVidUchebRabotiId);
                     table.ForeignKey(
-                        name: "FK_SemestrVidUchebRaboti_Semestr_SemestrId",
+                        name: "FK_SemestrVidUchebRaboti_Semestres_SemestrId",
                         column: x => x.SemestrId,
-                        principalTable: "Semestr",
+                        principalTable: "Semestres",
                         principalColumn: "SemestrId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -2806,11 +2825,6 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "FileModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FormKontrol_SemestrId",
-                table: "FormKontrol",
-                column: "SemestrId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_GraduateTrudoustroustvo_EduProfileId",
                 table: "GraduateTrudoustroustvo",
                 column: "EduProfileId");
@@ -2911,14 +2925,24 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "RefresherCourseFileId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Semestr_KursId",
-                table: "Semestr",
+                name: "IX_Semestres_KursId",
+                table: "Semestres",
                 column: "KursId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Semestr_SemestrNameId",
-                table: "Semestr",
+                name: "IX_Semestres_SemestrNameId",
+                table: "Semestres",
                 column: "SemestrNameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SemestrFormKontrolName_FormKontrolNameId",
+                table: "SemestrFormKontrolName",
+                column: "FormKontrolNameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SemestrFormKontrolName_SemestrId",
+                table: "SemestrFormKontrolName",
+                column: "SemestrId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SemestrVidUchebRaboti_SemestrId",
@@ -3184,9 +3208,6 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "FilInfo");
 
             migrationBuilder.DropTable(
-                name: "FormKontrol");
-
-            migrationBuilder.DropTable(
                 name: "GraduateTrudoustroustvo");
 
             migrationBuilder.DropTable(
@@ -3224,6 +3245,9 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "RucovodstvoFil");
+
+            migrationBuilder.DropTable(
+                name: "SemestrFormKontrolName");
 
             migrationBuilder.DropTable(
                 name: "SemestrVidUchebRaboti");
@@ -3298,7 +3322,10 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "RowStatuses");
 
             migrationBuilder.DropTable(
-                name: "Semestr");
+                name: "FormKontrolNames");
+
+            migrationBuilder.DropTable(
+                name: "Semestres");
 
             migrationBuilder.DropTable(
                 name: "VidUchebRabotiNames");
@@ -3322,7 +3349,7 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "Kurses");
 
             migrationBuilder.DropTable(
-                name: "SemestrName");
+                name: "SemestrNames");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

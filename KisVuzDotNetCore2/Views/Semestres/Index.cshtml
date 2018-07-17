@@ -1,0 +1,47 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.Semestr>
+
+@{
+    ViewData["Title"] = "Семестры";
+}
+
+<h2>Семестры</h2>
+
+<p>
+    <a asp-action="Create" asp-route-KursId="@ViewBag.KursId" class="btn btn-primary">Добавить семестр</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SemestrName)
+            </th>
+            <th>
+                Виды учебной работы
+            </th>
+            <th>
+                Формы контроля
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SemestrName.SemestrNameNumber)
+            </td>
+            <td>
+                <a asp-controller="SemestrVidUchebRabotis" asp-action="index" asp-route-SemestrId="@item.SemestrId">Открыть</a>
+            </td>
+            <td>
+                <a asp-controller="SemestrFormKontrolNames" asp-action="index" asp-route-SemestrId="@item.SemestrId">Открыть</a>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-KursId="@item.KursId" asp-route-id="@item.SemestrId">Редактировать</a> |
+                <a asp-action="Details" asp-route-KursId="@item.KursId" asp-route-id="@item.SemestrId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-KursId="@item.KursId" asp-route-id="@item.SemestrId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

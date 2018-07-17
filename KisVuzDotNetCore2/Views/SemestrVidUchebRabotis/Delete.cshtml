@@ -1,0 +1,30 @@
+﻿@model KisVuzDotNetCore2.Models.Education.SemestrVidUchebRaboti
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h3>Удалить форму контроля?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Hour)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Hour)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VidUchebRabotiName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VidUchebRabotiName.VidUchebRabotiNameName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="SemestrVidUchebRabotiId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" asp-route-SemestrId="@ViewBag.SemestrId" class="btn btn-default">Отмена</a>
+    </form>
+</div>

@@ -1,0 +1,26 @@
+﻿@model KisVuzDotNetCore2.Models.Education.Semestr
+
+@{
+    ViewData["Title"] = "Добавить";
+}
+
+<h2>Добавить семестр</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SemestrName.SemestrNameNumber" class="control-label"></label>
+                <select asp-for="SemestrNameId" class ="form-control" asp-items="ViewBag.SemestrNameId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" asp-route-KursId="@ViewBag.KursId" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" asp-route-KursId="@ViewBag.KursId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
