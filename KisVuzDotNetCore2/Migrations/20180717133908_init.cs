@@ -2345,6 +2345,32 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EduAnnotations",
+                columns: table => new
+                {
+                    EduAnnotationId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DisciplineId = table.Column<int>(nullable: false),
+                    FileModelId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EduAnnotations", x => x.EduAnnotationId);
+                    table.ForeignKey(
+                        name: "FK_EduAnnotations_Disciplines_DisciplineId",
+                        column: x => x.DisciplineId,
+                        principalTable: "Disciplines",
+                        principalColumn: "DisciplineId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EduAnnotations_Files_FileModelId",
+                        column: x => x.FileModelId,
+                        principalTable: "Files",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Kurses",
                 columns: table => new
                 {
@@ -2544,6 +2570,16 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "IX_EduAccreds_EduAccredFileId",
                 table: "EduAccreds",
                 column: "EduAccredFileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduAnnotations_DisciplineId",
+                table: "EduAnnotations",
+                column: "DisciplineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EduAnnotations_FileModelId",
+                table: "EduAnnotations",
+                column: "FileModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EduChislens_EduFormId",
@@ -3125,6 +3161,9 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "BlankNums");
+
+            migrationBuilder.DropTable(
+                name: "EduAnnotations");
 
             migrationBuilder.DropTable(
                 name: "EduChislens");

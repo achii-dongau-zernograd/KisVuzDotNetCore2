@@ -248,6 +248,24 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("EduAccreds");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduAnnotation", b =>
+                {
+                    b.Property<int>("EduAnnotationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DisciplineId");
+
+                    b.Property<int>("FileModelId");
+
+                    b.HasKey("EduAnnotationId");
+
+                    b.HasIndex("DisciplineId");
+
+                    b.HasIndex("FileModelId");
+
+                    b.ToTable("EduAnnotations");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduChislen", b =>
                 {
                     b.Property<int>("EduChislenId")
@@ -2186,6 +2204,19 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "EduAccredFile")
                         .WithMany()
                         .HasForeignKey("EduAccredFileId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduAnnotation", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.Discipline", "Discipline")
+                        .WithMany()
+                        .HasForeignKey("DisciplineId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
+                        .WithMany()
+                        .HasForeignKey("FileModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduChislen", b =>

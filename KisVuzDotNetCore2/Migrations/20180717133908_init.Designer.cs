@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180716140810_init")]
+    [Migration("20180717133908_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -247,6 +247,24 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("EduAccredFileId");
 
                     b.ToTable("EduAccreds");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduAnnotation", b =>
+                {
+                    b.Property<int>("EduAnnotationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DisciplineId");
+
+                    b.Property<int>("FileModelId");
+
+                    b.HasKey("EduAnnotationId");
+
+                    b.HasIndex("DisciplineId");
+
+                    b.HasIndex("FileModelId");
+
+                    b.ToTable("EduAnnotations");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduChislen", b =>
@@ -2187,6 +2205,19 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "EduAccredFile")
                         .WithMany()
                         .HasForeignKey("EduAccredFileId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduAnnotation", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.Discipline", "Discipline")
+                        .WithMany()
+                        .HasForeignKey("DisciplineId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
+                        .WithMany()
+                        .HasForeignKey("FileModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduChislen", b =>
