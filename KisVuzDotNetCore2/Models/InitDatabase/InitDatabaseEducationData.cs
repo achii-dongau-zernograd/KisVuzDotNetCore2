@@ -75,6 +75,12 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         EduKursName = "Пятый курс"
                     };
 
+                    EduKurs EduKurs6 = new EduKurs
+                    {
+                        EduKursNumber = 6,
+                        EduKursName = "Шестой курс"
+                    };
+
                     await context.EduKurses.AddRangeAsync(EduKurs1, EduKurs2, EduKurs3, EduKurs4, EduKurs5);
                     await context.SaveChangesAsync();
                 }

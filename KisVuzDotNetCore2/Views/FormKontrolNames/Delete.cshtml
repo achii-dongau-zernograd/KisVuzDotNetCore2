@@ -1,4 +1,4 @@
-﻿@model KisVuzDotNetCore2.Models.Education.FormKontrol
+﻿@model KisVuzDotNetCore2.Models.Education.FormKontrolName
 
 @{
     ViewData["Title"] = "Удалить";
@@ -10,15 +10,15 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FormKontrolName)
+            @Html.DisplayNameFor(model => model.FormKontrolNameName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.FormKontrolName)
+            @Html.DisplayFor(model => model.FormKontrolNameName)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="FormKontrolId" />
+        <input type="hidden" asp-for="FormKontrolNameId" />
         <input type="submit" value="Удалить" class="btn btn-danger" />
         <a asp-action="Index" class="btn btn-default">Отменить</a>
     </form>

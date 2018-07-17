@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180717133908_init")]
+    [Migration("20180717134221_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -677,20 +677,16 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("EduYearBeginningTrainings");
                 });
 
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.FormKontrol", b =>
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.FormKontrolName", b =>
                 {
-                    b.Property<int>("FormKontrolId")
+                    b.Property<int>("FormKontrolNameId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("FormKontrolName");
+                    b.Property<string>("FormKontrolNameName");
 
-                    b.Property<int?>("SemestrId");
+                    b.HasKey("FormKontrolNameId");
 
-                    b.HasKey("FormKontrolId");
-
-                    b.HasIndex("SemestrId");
-
-                    b.ToTable("FormKontrol");
+                    b.ToTable("FormKontrolNames");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.Kurs", b =>
@@ -726,7 +722,25 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasIndex("SemestrNameId");
 
-                    b.ToTable("Semestr");
+                    b.ToTable("Semestres");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.SemestrFormKontrolName", b =>
+                {
+                    b.Property<int>("SemestrFormKontrolNameId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("FormKontrolNameId");
+
+                    b.Property<int>("SemestrId");
+
+                    b.HasKey("SemestrFormKontrolNameId");
+
+                    b.HasIndex("FormKontrolNameId");
+
+                    b.HasIndex("SemestrId");
+
+                    b.ToTable("SemestrFormKontrolName");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.SemestrName", b =>
@@ -740,7 +754,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasKey("SemestrNameId");
 
-                    b.ToTable("SemestrName");
+                    b.ToTable("SemestrNames");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.SemestrVidUchebRaboti", b =>
@@ -2417,13 +2431,6 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.FormKontrol", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.Semestr")
-                        .WithMany("FormKontrols")
-                        .HasForeignKey("SemestrId");
-                });
-
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.Kurs", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.Discipline", "Discipline")
@@ -2447,6 +2454,19 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Education.SemestrName", "SemestrName")
                         .WithMany()
                         .HasForeignKey("SemestrNameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.SemestrFormKontrolName", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.FormKontrolName", "FormKontrolName")
+                        .WithMany()
+                        .HasForeignKey("FormKontrolNameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.Semestr", "Semestr")
+                        .WithMany("SemestrFormKontrolName")
+                        .HasForeignKey("SemestrId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

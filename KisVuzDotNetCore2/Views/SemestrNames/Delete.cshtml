@@ -1,34 +1,30 @@
-﻿@model KisVuzDotNetCore2.Models.Education.EduKurs
+﻿@model KisVuzDotNetCore2.Models.Education.SemestrName
 
 @{
     ViewData["Title"] = "Удалить";
 }
 
-<h2>Удаление курса</h2>
-
-
+<h3>Удалить семестр?</h3>
 <div>
-    
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.EduKursNumber)
+            @Html.DisplayNameFor(model => model.SemestrNameNumber)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduKursNumber)
+            @Html.DisplayFor(model => model.SemestrNameNumber)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EduKursName)
+            @Html.DisplayNameFor(model => model.SemestrNameName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EduKursName)
+            @Html.DisplayFor(model => model.SemestrNameName)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="EduKursId" />
+        <input type="hidden" asp-for="SemestrNameId" />
         <input type="submit" value="Удалить" class="btn btn-danger" />
         <a asp-action="Index" class="btn btn-default">Отмена</a>
-        
     </form>
 </div>
