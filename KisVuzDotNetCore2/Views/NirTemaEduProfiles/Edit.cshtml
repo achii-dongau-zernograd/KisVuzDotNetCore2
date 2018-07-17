@@ -1,0 +1,31 @@
+﻿@model KisVuzDotNetCore2.Models.NirTemaEduProfile
+
+@{
+    ViewData["Title"] = "Редактировать тематику НИР - профиль подготовки";
+}
+
+<h2>Редактировать тематику НИР - профиль подготовки</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="NirTemaEduProfileId" />
+            <div class="form-group">
+                <label asp-for="NirTema.NirTemaName" class="control-label"></label>
+                <select asp-for="NirTemaId" class="form-control" asp-items="ViewBag.NirTemaId"></select>
+                <span asp-validation-for="NirTemaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduProfile.EduProfileName" class="control-label"></label>
+                <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfileId"></select>
+                <span asp-validation-for="EduProfileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

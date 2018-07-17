@@ -904,6 +904,36 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("GraduateYear");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.NirTema", b =>
+                {
+                    b.Property<int>("NirTemaId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("NirTemaName");
+
+                    b.HasKey("NirTemaId");
+
+                    b.ToTable("NirTema");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.NirTemaEduProfile", b =>
+                {
+                    b.Property<int>("NirTemaEduProfileId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduProfileId");
+
+                    b.Property<int>("NirTemaId");
+
+                    b.HasKey("NirTemaEduProfileId");
+
+                    b.HasIndex("EduProfileId");
+
+                    b.HasIndex("NirTemaId");
+
+                    b.ToTable("NirTemaEduProfile");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.BlankNum", b =>
                 {
                     b.Property<int>("BlankNumId")
@@ -2475,6 +2505,19 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.GraduateYear", "GraduateYearName")
                         .WithMany()
                         .HasForeignKey("GraduateYearId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.NirTemaEduProfile", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
+                        .WithMany("NirTemaEduProfileList")
+                        .HasForeignKey("EduProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.NirTema", "NirTema")
+                        .WithMany("NirTemaEduProfileList")
+                        .HasForeignKey("NirTemaId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -11,8 +11,8 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180716140810_init")]
-    partial class init
+    [Migration("20180717104355_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -903,6 +903,36 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("GraduateYearId");
 
                     b.ToTable("GraduateYear");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.NirTema", b =>
+                {
+                    b.Property<int>("NirTemaId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("NirTemaName");
+
+                    b.HasKey("NirTemaId");
+
+                    b.ToTable("NirTema");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.NirTemaEduProfile", b =>
+                {
+                    b.Property<int>("NirTemaEduProfileId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduProfileId");
+
+                    b.Property<int>("NirTemaId");
+
+                    b.HasKey("NirTemaEduProfileId");
+
+                    b.HasIndex("EduProfileId");
+
+                    b.HasIndex("NirTemaId");
+
+                    b.ToTable("NirTemaEduProfile");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.BlankNum", b =>
@@ -2476,6 +2506,19 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.GraduateYear", "GraduateYearName")
                         .WithMany()
                         .HasForeignKey("GraduateYearId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.NirTemaEduProfile", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
+                        .WithMany("NirTemaEduProfileList")
+                        .HasForeignKey("EduProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.NirTema", "NirTema")
+                        .WithMany("NirTemaEduProfileList")
+                        .HasForeignKey("NirTemaId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

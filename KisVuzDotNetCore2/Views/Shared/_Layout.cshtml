@@ -82,7 +82,7 @@
                                     <li><a asp-controller="EduVidDeyats" asp-action="Index">Виды деятельности по учебному плану</a></li>
                                     <li><a asp-controller="BlokDisciplChastNames" asp-action="Index">Наименование части блока дисциплин Учебного плана</a></li>
                                     <li><a asp-controller="EduSroks" asp-action="Index">Сроки обучения</a></li>
-                                    <li><a asp-controller="EduQualifications" asp-action="Index">Квалификация</a></li>
+                                    <li><a asp-controller="EduQualifications" asp-action="Index">Квалификация</a></li>                                    
                                     <li>
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Выпуск и трудоустройство<b class="caret"></b></a>
                                         <ul class="dropdown-menu">
@@ -213,7 +213,7 @@
                                     </li>
                                     <li>
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Платные образовательные услуги <b class="caret"></b></a>
-                                        <ul class="dropdown-menu">                                            
+                                        <ul class="dropdown-menu">
                                             <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug">Образец договора об оказании платных образовательных услуг</a></li>
                                             <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="DocumentObUtverjdeniiStoimostiObucheniya">Документ об утверждении стоимости обучения по каждой образовательной программе</a></li>
                                             <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PoryadokOkazaniyaPlatnihObrazovatelnihUslug">Документ о порядке оказания платных образовательных услуг</a></li>
@@ -301,9 +301,15 @@
                                     <li><a asp-controller="UchPosobieEduNapravls" asp-action="Index" asp-route-id="">Связь между UchPosobie (учебными пособиями) и EduNapravl (направлениями)</a></li>
                                     <li><a asp-controller="UchPosobieFormaIzdaniyas" asp-action="Index" asp-route-id="">Справочник "Форма издания учебного пособия"</a></li>
                                     <li><a asp-controller="UchPosobieVids" asp-action="Index" asp-route-id="">Справочник "Вид учебного пособия"</a></li>
-                                  </ul>
+                                </ul>
                             </li>
-
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Научно-исследовательская работа<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="NirTemas" asp-action="Index">Темы НИР</a></li>
+                                    <li><a asp-controller="NirTemaEduProfiles" asp-action="Index">Тема НИР - профиль подготовки</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
 

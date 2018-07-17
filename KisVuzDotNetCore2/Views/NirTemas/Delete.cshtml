@@ -1,0 +1,25 @@
+﻿@model KisVuzDotNetCore2.Models.NirTema
+
+@{
+    ViewData["Title"] = "Удалить тему НИР?";
+}
+
+<h2>Удалить тему НИР?</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NirTemaName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NirTemaName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="NirTemaId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

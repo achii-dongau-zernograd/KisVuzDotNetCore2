@@ -400,6 +400,10 @@
     <Compile Remove="Migrations\20180716075705_init.Designer.cs" />
     <Compile Remove="Migrations\20180716114008_init.cs" />
     <Compile Remove="Migrations\20180716114008_init.Designer.cs" />
+    <Compile Remove="Migrations\20180716140810_init.cs" />
+    <Compile Remove="Migrations\20180716140810_init.Designer.cs" />
+    <Compile Remove="Migrations\20180717095210_Init.cs" />
+    <Compile Remove="Migrations\20180717095210_Init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

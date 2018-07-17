@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace KisVuzDotNetCore2.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -349,6 +349,19 @@ namespace KisVuzDotNetCore2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LinkTypes", x => x.LinkTypeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NirTema",
+                columns: table => new
+                {
+                    NirTemaId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    NirTemaName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NirTema", x => x.NirTemaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -1985,6 +1998,32 @@ namespace KisVuzDotNetCore2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "NirTemaEduProfile",
+                columns: table => new
+                {
+                    NirTemaEduProfileId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EduProfileId = table.Column<int>(nullable: false),
+                    NirTemaId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NirTemaEduProfile", x => x.NirTemaEduProfileId);
+                    table.ForeignKey(
+                        name: "FK_NirTemaEduProfile_EduProfiles_EduProfileId",
+                        column: x => x.EduProfileId,
+                        principalTable: "EduProfiles",
+                        principalColumn: "EduProfileId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NirTemaEduProfile_NirTema_NirTemaId",
+                        column: x => x.NirTemaId,
+                        principalTable: "NirTema",
+                        principalColumn: "NirTemaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TeacherEduProfileDisciplineNames",
                 columns: table => new
                 {
@@ -2846,6 +2885,16 @@ namespace KisVuzDotNetCore2.Migrations
                 column: "EduKursId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_NirTemaEduProfile_EduProfileId",
+                table: "NirTemaEduProfile",
+                column: "EduProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NirTemaEduProfile_NirTemaId",
+                table: "NirTemaEduProfile",
+                column: "NirTemaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Oborudovanie_PomeshenieId",
                 table: "Oborudovanie",
                 column: "PomeshenieId");
@@ -3196,6 +3245,9 @@ namespace KisVuzDotNetCore2.Migrations
                 name: "InstituteLinks");
 
             migrationBuilder.DropTable(
+                name: "NirTemaEduProfile");
+
+            migrationBuilder.DropTable(
                 name: "Oborudovanie");
 
             migrationBuilder.DropTable(
@@ -3287,6 +3339,9 @@ namespace KisVuzDotNetCore2.Migrations
 
             migrationBuilder.DropTable(
                 name: "LinkTypes");
+
+            migrationBuilder.DropTable(
+                name: "NirTema");
 
             migrationBuilder.DropTable(
                 name: "Pomeshenie");
