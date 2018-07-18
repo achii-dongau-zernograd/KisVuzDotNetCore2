@@ -50,6 +50,9 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         {
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(m => m.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
             ViewData["NirTemaId"] = new SelectList(_context.NirTema, "NirTemaId", "NirTemaName");
+
+            
+
             return View();
         }
 
@@ -68,6 +71,9 @@ namespace KisVuzDotNetCore2.Controllers.Nir
             }
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(m => m.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", nirTemaEduProfile.EduProfileId);
             ViewData["NirTemaId"] = new SelectList(_context.NirTema, "NirTemaId", "NirTemaName", nirTemaEduProfile.NirTemaId);
+
+            
+
             return View(nirTemaEduProfile);
         }
 

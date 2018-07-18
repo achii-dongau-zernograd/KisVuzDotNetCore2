@@ -650,7 +650,15 @@ namespace KisVuzDotNetCore2.Models
         /// Тема НИР
         /// </summary>
         public DbSet<NirTema> NirTema { get; set; }
+        /// <summary>
+        /// Инициализация базы данных
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<KisVuzDotNetCore2.Models.NirTemaEduProfile> NirTemaEduProfile { get; set; }
         #endregion
+
         #endregion
         /// <summary>
         /// Инициализация базы данных
@@ -711,12 +719,6 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseNirTema.CreateNirTema(serviceProvider, configuration);
             await InitDatabaseSemestrName.CreateSemestrName(serviceProvider, configuration);
         }                
-        /// <summary>
-        /// Инициализация базы данных
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.NirTemaEduProfile> NirTemaEduProfile { get; set; }
+        
     }
 }

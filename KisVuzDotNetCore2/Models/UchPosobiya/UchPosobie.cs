@@ -25,6 +25,8 @@ namespace KisVuzDotNetCore2.Models.UchPosobiya
         /// Вид учебного пособия
         /// </summary>
         [Display(Name = "Вид учебного пособия")]
+        public int UchPosobieVidId { get; set; }
+        [Display(Name = "Вид учебного пособия")]
         public UchPosobieVid UchPosobieVid { get; set; }
 
         /// <summary>

@@ -2,13 +2,14 @@
 
 @{
     ViewData["Title"] = "Добавить тему НИР";
+    List<EduProfile> eduProfiles = (List<EduProfile>)ViewData["EduProfiles"];
 }
 
 <h2>Добавить тему НИР</h2>
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -16,6 +17,15 @@
                 <input asp-for="NirTemaName" class="form-control" />
                 <span asp-validation-for="NirTemaName" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label class="control-label">Профили подготовки</label>
+                @foreach (var eduProfile in eduProfiles)
+                {
+                    <br /><input type="checkbox" name="EduProfileIds" value="@eduProfile.EduProfileId" /> @eduProfile.GetEduProfileFullName
+                }
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Добавить" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-default">Отмена</a>

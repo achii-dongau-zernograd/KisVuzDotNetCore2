@@ -15,6 +15,17 @@
         <dd>
             @Html.DisplayFor(model => model.NirTemaName)
         </dd>
+        <dt>
+            Профили подготовки
+        </dt>
+        <dd>
+            <ul>
+                @foreach (var NirTemaEduProfile in Model.NirTemaEduProfileList)
+                {
+                    <li>@NirTemaEduProfile.EduProfile.GetEduProfileFullName</li>
+                }
+            </ul>
+        </dd>
     </dl>
     
     <form asp-action="Delete">
