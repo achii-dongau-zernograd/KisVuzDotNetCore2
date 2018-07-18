@@ -13,7 +13,6 @@
     var t20hostelInfo = (IEnumerable<HostelInfo>)ViewData["t20hostelInfo"];
 }
 
-
 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Информация о наличии и условиях предоставления стипендии</a>
 <div class="collapse" id="spoiler-1">
     <div class="well">
@@ -114,8 +113,8 @@
                 @foreach (var graduateG in EduGraduate.OrderBy(g => g.EduProfileId).GroupBy(g => g.EduProfileId))
                 {
                 <tr itemprop="graduateJob">
-                    <td>@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlCode</td>
-                    <td>@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlName (@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduProfileName)</td>
+                    <td itemprop="eduCode">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlCode</td>
+                    <td itemprop="eduName">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlName (@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduProfileName)</td>
                     @foreach (var graduateYear in GraduateYear.TakeLast(3).OrderByDescending(y => y.GraduateYearId))
                     {
                         bool IsFounded = false;
@@ -127,7 +126,7 @@
                             int? trud = GraduateTrudoustroustvo.Where(t => t.EduProfileId == graduateG.Key && t.GraduateYearId == graduateYear.GraduateYearId).FirstOrDefault()?.GraduateTrudoustroustvoNumber;
                             if(trud>0)
                             {
-                            <td>@trud</td>
+                            <td itemprop="graduateJob">@trud</td>
                             }
                             else
                             {

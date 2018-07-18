@@ -1,0 +1,90 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduAnnotation>
+
+@{
+    ViewData["Title"] = "Аннотации";
+    var eduLevels = (IEnumerable<EduLevel>)ViewData["eduLevels"];
+    int spoilerCounter = 1;
+}
+
+<h2>Аннотации к рабочим программам дисциплин</h2>
+
+@if (ViewBag.EduPlanId >= 0)
+{
+    <p>
+        <a asp-action="Create" asp-route-EduPlanId="@ViewBag.EduPlanId" class="btn btn-primary">Добавить аннотацию</a>
+    </p>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Код дисциплины</th>
+                <th>Наименование дисциплины</th>
+                <th>Аннотация</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Discipline.DisciplineCode
+                    </td>
+                    <td>
+                        @item.Discipline.DisciplineName.DisciplineNameName
+                    </td>
+                    <td>
+                        <a href="/@item.FileModel.Path">Открыть</a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.EduAnnotationId" asp-route-EduPlanId="@ViewBag.EduPlanId">Редактировать</a> |
+                        <a asp-action="Details" asp-route-id="@item.EduAnnotationId" asp-route-EduPlanId="@ViewBag.EduPlanId">Подробнее</a> |
+                        <a asp-action="Delete" asp-route-id="@item.EduAnnotationId" asp-route-EduPlanId="@ViewBag.EduPlanId">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h3>Необходимо выбрать учебный план</h3>
+    foreach (var eduLevel in eduLevels)
+    {
+        <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduLevel.EduLevelName</a>
+        <div class="collapse" id="spoiler-@spoilerCounter">
+            <div class="well">
+                @{spoilerCounter++;}
+                @foreach (var ugs in eduLevel.EduUgses)
+                {
+                    foreach (var eduNapravl in ugs.EduNapravls)
+                    {
+                        <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduNapravl.EduNapravlCode - @eduNapravl.EduNapravlName</a>
+                        <div class="collapse" id="spoiler-@spoilerCounter">
+                            <div class="well">
+                                @{spoilerCounter++;}
+                                @foreach (var eduProfile in eduNapravl.EduProfiles)
+                                {
+                                <ul>@eduProfile.EduProfileName
+                                    @foreach (var eduPlan in eduProfile.EduPlans)
+                                    {
+                                    <li>                                        
+                                        @foreach (var yearBT in eduPlan.EduPlanEduYearBeginningTrainings)
+                                        {
+                                            <span>@yearBT.EduYearBeginningTraining.EduYearBeginningTrainingName</span>
+                                        }
+                                        <a href="/@eduPlan.EduPlanPdf?.Path" target="_blank">Открыть учебный план</a>
+                                        <a asp-route-EduPlanId="@eduPlan.EduPlanId">Выбрать</a>
+                                    </li>
+                                    }
+                                </ul>
+                                }
+                            </div>
+                        </div>                        
+                    }
+                }
+            </div>
+        </div>
+    }
+}

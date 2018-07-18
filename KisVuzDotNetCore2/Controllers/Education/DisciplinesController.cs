@@ -91,7 +91,8 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { BlokDisciplChastId});
             }
-            ViewData["BlokDisciplChastId"] = new SelectList(_context.BlokDisciplChast, "BlokDisciplChastId", "BlokDisciplChastId", discipline.BlokDisciplChastId);
+
+            ViewBag.BlokDisciplChastId = BlokDisciplChastId;
             ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames, "DisciplineNameId", "DisciplineNameId", discipline.DisciplineNameId);
             return View(discipline);
         }
@@ -146,7 +147,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 }
                 return RedirectToAction(nameof(Index), new { BlokDisciplChastId});
             }
-            ViewData["BlokDisciplChastId"] = new SelectList(_context.BlokDisciplChast, "BlokDisciplChastId", "BlokDisciplChastId", discipline.BlokDisciplChastId);
+           
             ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames, "DisciplineNameId", "DisciplineNameId", discipline.DisciplineNameId);
             return View(discipline);
         }
@@ -180,7 +181,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
             var discipline = await _context.Disciplines.SingleOrDefaultAsync(m => m.DisciplineId == id);
             _context.Disciplines.Remove(discipline);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index), new { id = discipline.BlokDisciplChastId});
+            return RedirectToAction(nameof(Index), new { BlokDisciplChastId = discipline.BlokDisciplChastId });
         }
 
         private bool DisciplineExists(int id)

@@ -1,0 +1,23 @@
+﻿@model KisVuzDotNetCore2.Models.NirTema
+
+@{
+    ViewData["Title"] = "Подробнее о теме НИР";
+}
+
+<h2>Подробнее о теме НИР</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NirTemaName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NirTemaName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.NirTemaId">Редактировать</a>
+    <a asp-action="Index" class="btn btn-primary">Отмена</a>
+</div>

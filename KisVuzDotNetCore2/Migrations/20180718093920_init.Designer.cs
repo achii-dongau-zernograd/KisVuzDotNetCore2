@@ -11,8 +11,8 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180718072512_uchpos")]
-    partial class uchpos
+    [Migration("20180718093920_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -247,6 +247,24 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("EduAccredFileId");
 
                     b.ToTable("EduAccreds");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduAnnotation", b =>
+                {
+                    b.Property<int>("EduAnnotationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DisciplineId");
+
+                    b.Property<int>("FileModelId");
+
+                    b.HasKey("EduAnnotationId");
+
+                    b.HasIndex("DisciplineId");
+
+                    b.HasIndex("FileModelId");
+
+                    b.ToTable("EduAnnotations");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduChislen", b =>
@@ -659,20 +677,16 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("EduYearBeginningTrainings");
                 });
 
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.FormKontrol", b =>
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.FormKontrolName", b =>
                 {
-                    b.Property<int>("FormKontrolId")
+                    b.Property<int>("FormKontrolNameId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("FormKontrolName");
+                    b.Property<string>("FormKontrolNameName");
 
-                    b.Property<int?>("SemestrId");
+                    b.HasKey("FormKontrolNameId");
 
-                    b.HasKey("FormKontrolId");
-
-                    b.HasIndex("SemestrId");
-
-                    b.ToTable("FormKontrol");
+                    b.ToTable("FormKontrolNames");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.Kurs", b =>
@@ -708,7 +722,25 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasIndex("SemestrNameId");
 
-                    b.ToTable("Semestr");
+                    b.ToTable("Semestres");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.SemestrFormKontrolName", b =>
+                {
+                    b.Property<int>("SemestrFormKontrolNameId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("FormKontrolNameId");
+
+                    b.Property<int>("SemestrId");
+
+                    b.HasKey("SemestrFormKontrolNameId");
+
+                    b.HasIndex("FormKontrolNameId");
+
+                    b.HasIndex("SemestrId");
+
+                    b.ToTable("SemestrFormKontrolName");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.SemestrName", b =>
@@ -722,7 +754,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasKey("SemestrNameId");
 
-                    b.ToTable("SemestrName");
+                    b.ToTable("SemestrNames");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.SemestrVidUchebRaboti", b =>
@@ -903,6 +935,36 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("GraduateYearId");
 
                     b.ToTable("GraduateYear");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.NirTema", b =>
+                {
+                    b.Property<int>("NirTemaId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("NirTemaName");
+
+                    b.HasKey("NirTemaId");
+
+                    b.ToTable("NirTema");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.NirTemaEduProfile", b =>
+                {
+                    b.Property<int>("NirTemaEduProfileId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduProfileId");
+
+                    b.Property<int>("NirTemaId");
+
+                    b.HasKey("NirTemaEduProfileId");
+
+                    b.HasIndex("EduProfileId");
+
+                    b.HasIndex("NirTemaId");
+
+                    b.ToTable("NirTemaEduProfile");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Priem.BlankNum", b =>
@@ -2189,6 +2251,19 @@ namespace KisVuzDotNetCore2.Migrations
                         .HasForeignKey("EduAccredFileId");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduAnnotation", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.Discipline", "Discipline")
+                        .WithMany()
+                        .HasForeignKey("DisciplineId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
+                        .WithMany()
+                        .HasForeignKey("FileModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduChislen", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
@@ -2386,13 +2461,6 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.FormKontrol", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.Semestr")
-                        .WithMany("FormKontrols")
-                        .HasForeignKey("SemestrId");
-                });
-
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.Kurs", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Education.Discipline", "Discipline")
@@ -2416,6 +2484,19 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Education.SemestrName", "SemestrName")
                         .WithMany()
                         .HasForeignKey("SemestrNameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.SemestrFormKontrolName", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.FormKontrolName", "FormKontrolName")
+                        .WithMany()
+                        .HasForeignKey("FormKontrolNameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.Semestr", "Semestr")
+                        .WithMany("SemestrFormKontrolName")
+                        .HasForeignKey("SemestrId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -2476,6 +2557,19 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.GraduateYear", "GraduateYearName")
                         .WithMany()
                         .HasForeignKey("GraduateYearId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.NirTemaEduProfile", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
+                        .WithMany("NirTemaEduProfileList")
+                        .HasForeignKey("EduProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.NirTema", "NirTema")
+                        .WithMany("NirTemaEduProfileList")
+                        .HasForeignKey("NirTemaId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

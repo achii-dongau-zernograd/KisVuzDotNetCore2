@@ -1,0 +1,26 @@
+﻿@model KisVuzDotNetCore2.Models.NirTema
+
+@{
+    ViewData["Title"] = "Редактировать тему НИР";
+}
+
+<h2>Редактировать тему НИР</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="NirTemaId" />
+            <div class="form-group">
+                <label asp-for="NirTemaName" class="control-label"></label>
+                <input asp-for="NirTemaName" class="form-control" />
+                <span asp-validation-for="NirTemaName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿@model KisVuzDotNetCore2.Models.NirTemaEduProfile
+
+@{
+    ViewData["Title"] = "Подробнее о тематике НИР - профилю подготовки";
+}
+
+<h2>Подробнее о тематике НИР - профилю подготовки</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile.EduProfileName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NirTema.NirTemaName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NirTema.NirTemaName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.NirTemaEduProfileId" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" class="btn btn-default">Отмена</a>
+</div>

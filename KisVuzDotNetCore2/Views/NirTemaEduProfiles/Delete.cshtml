@@ -1,0 +1,31 @@
+﻿@model KisVuzDotNetCore2.Models.NirTemaEduProfile
+
+@{
+    ViewData["Title"] = "Удалить тематику НИР - профиль подготовки?";
+}
+
+<h2>Удалить тематику НИР - профиль подготовки?</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile.EduProfileName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NirTema.NirTemaName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NirTema.NirTemaName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="NirTemaEduProfileId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

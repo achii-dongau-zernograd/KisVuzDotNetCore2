@@ -52,6 +52,11 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Объект направления подготовки,
         /// которому принадлежит данный профиль
         /// </summary>
-        public EduNapravl EduNapravl { get; set; }        
+        public EduNapravl EduNapravl { get; set; }
+
+        /// <summary>
+        /// Темы НИР
+        /// </summary>
+        public List<NirTemaEduProfile> NirTemaEduProfileList { get; set; }        
     }
 }
