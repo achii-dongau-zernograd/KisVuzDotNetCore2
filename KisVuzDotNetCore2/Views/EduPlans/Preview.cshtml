@@ -1,0 +1,139 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduPlan
+
+@{
+    ViewData["Title"] = "Просмотр учебного плана";
+}
+
+
+<div>
+    <hr />
+    <h3 class="text-center text-uppercase">
+        <b>Направление: @Model.EduProfile.EduNapravl.EduNapravlCode @Model.EduProfile.EduNapravl.EduNapravlName</b>
+    </h3>
+    <h3 class="text-center">
+        <b>Профиль подготовки: @Model.EduProfile.EduProfileName</b>
+    </h3>
+    <table class="table table-condensed table-striped">
+        <tr>
+            <td colspan="2">План одобрен Ученым советом института @Html.DisplayFor(model => model.ProtokolDate). Протокол № @Html.DisplayFor(model => model.ProtokolNumber)</td>
+        </tr>
+
+        <tr>
+            <td colspan="2">Дата утверждения  @Html.DisplayFor(model => model.UtverjdDate)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduProgramPodg)</td>
+            <td>@Html.DisplayFor(model => model.EduProgramPodg.EduProgramPodgName)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduForm)</td>
+            <td>@Html.DisplayFor(model => model.EduForm.EduFormName)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduSrok)</td>
+            <td>@Html.DisplayFor(model => model.EduSrok.EduSrokName)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduVidDeyatList)</td>
+            <td>
+                <ul>
+                    @foreach (var vidDeyat in Model.EduVidDeyatList)
+                    {
+                        <li>@vidDeyat.EduVidDeyat.EduVidDeyatName</li>
+                    }
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduPlanEduYearBeginningTrainings)</td>
+            <td>
+                <ul>
+                    @foreach (var eduYearBeginningTraining in Model.EduPlanEduYearBeginningTrainings)
+                    {
+                        <li>@eduYearBeginningTraining.EduYearBeginningTraining.EduYearBeginningTrainingName</li>
+                    }
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.StructKaf)</td>
+            <td>@Html.DisplayFor(model => model.StructKaf.StructSubvision.StructSubvisionName)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduPlanEduYears)</td>
+            <td>
+                <ul>
+                    @foreach (var eduYear in Model.EduPlanEduYears)
+                    {
+                        <li>@eduYear.EduYear.EduYearName</li>
+                    }
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduPlanPdf)</td>
+            <td>
+                @if (Model.EduPlanPdf?.Id != null)
+                {
+                    <a href="/@Model.EduPlanPdf?.Path">Открыть</a>
+                }
+            </td>
+        </tr>
+    </table>
+    <br>
+    <p>
+        <strong>Содержание учебного плана</strong>
+        <ul>
+            @foreach (var blokDiscipl in Model.BlokDiscipl)
+            {
+        <p><strong><u>@blokDiscipl.BlokDisciplName.BlokDisciplNameName</u></strong></p>
+        @foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
+        {
+            <p style="text-indent: 3%">Часть: @blokDisciplChast.BlokDisciplChastName.BlokDisciplChastNameName</p>
+
+            @foreach (var discipline in blokDisciplChast.Disciplines)
+            {
+                <p style="text-indent: 5%"><strong>@discipline.DisciplineCode @discipline.DisciplineName.DisciplineNameName</strong></p>
+
+                @foreach (var kurs in discipline.Kurses)
+                {
+                    <p style="text-indent: 8%"><u>@kurs.EduKurs.EduKursNumber курс</u></p>
+
+                    @foreach (var semestr in kurs.Semestres)
+                    {
+                        <p style="text-indent: 11%"><u>Семестр @semestr.SemestrName.SemestrNameNumber</u></p>
+
+                        <p style="text-indent: 14%">Формы контроля</p>
+                        @foreach (var semestrFormKontrolName in semestr.SemestrFormKontrolName)
+                        {
+                            <p style="text-indent: 17%">@semestrFormKontrolName.FormKontrolName.FormKontrolNameName</p>
+                        }
+
+                        <p style="text-indent: 14%">Виды деятельности</p>
+                        @foreach (var semestrVidUchebRaboti in semestr.SemestrVidUchebRaboti)
+                        {
+                            <p style="text-indent: 17%">@semestrVidUchebRaboti.VidUchebRabotiName.VidUchebRabotiNameName @semestrVidUchebRaboti.Hour</p>
+                        }
+
+
+                    }
+                }
+            }
+        }
+        <p></p>
+    }
+            
+
+
+       </div>
+<div>
+    <a asp-action="Index" class="btn btn-primary">К списку учебных планов</a>
+</div>

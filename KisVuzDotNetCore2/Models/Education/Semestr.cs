@@ -20,9 +20,9 @@ namespace KisVuzDotNetCore2.Models.Education
         public List<SemestrFormKontrolName> SemestrFormKontrolName { get; set; }
 
         /// <summary>
-        /// Семестр по учебному плану
+        /// Виды учебной работы по учебному плану для текущего семестра
         /// </summary>
-        [Display(Name = "Семестр")]
+        [Display(Name = "Виды учебной работы по учебному плану для текущего семестра")]
         public List<SemestrVidUchebRaboti> SemestrVidUchebRaboti { get; set; }
 
         /// <summary>

@@ -16,6 +16,9 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Вид учебной работы по учебному плану
         /// </summary>
         public int VidUchebRabotiNameId { get; set; }
+        /// <summary>
+        /// Вид учебной работы по учебному плану
+        /// </summary>
         [Display(Name = "Вид учебной работы")]
         public VidUchebRabotiName VidUchebRabotiName { get; set; }
 

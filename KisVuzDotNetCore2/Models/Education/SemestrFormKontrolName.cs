@@ -20,6 +20,9 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Формы контроля по учебному плану
         /// </summary>
         public int FormKontrolNameId { get; set; }
+        /// <summary>
+        /// Формы контроля по учебному плану
+        /// </summary>
         [Display(Name = "Формы контроля")]
         public FormKontrolName FormKontrolName { get; set; }
 

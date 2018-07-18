@@ -412,5 +412,67 @@ namespace KisVuzDotNetCore2.Controllers.Education
         {
             return _context.EduPlans.Any(e => e.EduPlanId == id);
         }
+
+        // Get: EduPlans/Preview/id
+        public async Task<IActionResult> Preview(int id)
+        {
+            var eduPlan = await _context.EduPlans
+                .Include(e => e.EduForm)
+                .Include(e => e.EduPlanPdf)
+                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(e => e.EduProgramPodg)
+                .Include(e => e.EduSrok)
+                .Include(e => e.StructKaf.StructSubvision)
+                .Include(e => e.EduVidDeyatList)
+                    .ThenInclude(v => v.EduVidDeyat)
+                .Include(e => e.EduPlanEduYearBeginningTrainings)
+                    .ThenInclude(y => y.EduYearBeginningTraining)
+                .Include(e => e.EduPlanEduYears)
+                    .ThenInclude(y => y.EduYear)
+                .Include(e => e.BlokDiscipl)
+                    .ThenInclude(b => b.BlokDisciplName)
+                .Include(e => e.BlokDiscipl)
+                    .ThenInclude(b => b.BlokDisciplChast)
+                        .ThenInclude(c => c.BlokDisciplChastName)
+                .Include(e => e.BlokDiscipl)
+                    .ThenInclude(b => b.BlokDisciplChast)
+                        .ThenInclude(c => c.Disciplines)
+                            .ThenInclude(d => d.Kurses)
+                                .ThenInclude(k => k.Semestres)
+                                    .ThenInclude(s => s.SemestrName)
+                .Include(e => e.BlokDiscipl)
+                    .ThenInclude(b => b.BlokDisciplChast)
+                        .ThenInclude(c => c.Disciplines)
+                            .ThenInclude(d => d.Kurses)
+                                .ThenInclude(k => k.Semestres)
+                                    .ThenInclude(s => s.SemestrVidUchebRaboti)
+                                        .ThenInclude(u => u.VidUchebRabotiName)
+                .Include(e => e.BlokDiscipl)
+                    .ThenInclude(b => b.BlokDisciplChast)
+                        .ThenInclude(c => c.Disciplines)
+                            .ThenInclude(d => d.Kurses)
+                                .ThenInclude(k => k.EduKurs)
+                 .Include(e => e.BlokDiscipl)
+                    .ThenInclude(b => b.BlokDisciplChast)
+                        .ThenInclude(c => c.Disciplines)
+                            .ThenInclude(d => d.Kurses)
+                                .ThenInclude(k => k.Semestres)
+                                    .ThenInclude(s => s.SemestrFormKontrolName)
+                                        .ThenInclude(f => f.FormKontrolName)
+                 .Include(e => e.BlokDiscipl)
+                    .ThenInclude(b => b.BlokDisciplChast)
+                        .ThenInclude(c => c.Disciplines)
+                            .ThenInclude(d=>d.DisciplineName)
+                 .SingleOrDefaultAsync(e => e.EduPlanId == id);
+                
+            if(eduPlan == null)
+            {
+                return NotFound();
+            }
+
+            return View(eduPlan);
+
+                 
+        }
     }
 }

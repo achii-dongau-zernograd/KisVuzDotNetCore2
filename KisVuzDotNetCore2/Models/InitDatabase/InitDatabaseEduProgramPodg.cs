@@ -53,11 +53,18 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         EduProgramPodgName = "Прикладная магистратура"
                     };
 
+                    EduProgramPodg EduProgramPodg5 = new EduProgramPodg
+                    {
+                        EduProgramPodgId = 5,
+                        EduProgramPodgName = "Нет"
+                    };
+
                     await context.EduProgramPodg.AddRangeAsync(
                         EduProgramPodg1,
                         EduProgramPodg2,
                         EduProgramPodg3,
-                        EduProgramPodg4
+                        EduProgramPodg4,
+                        EduProgramPodg5
                     );
                     await context.SaveChangesAsync();
                 }

@@ -1,0 +1,32 @@
+﻿@model KisVuzDotNetCore2.Models.Education.SemestrFormKontrolName
+
+@{
+    ViewData["Title"] = "Редактировать";
+}
+
+<h2>Редактировать</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SemestrFormKontrolNameId" />
+            <div class="form-group">
+                <label asp-for="FormKontrolNameId" class="control-label"></label>
+                <select asp-for="FormKontrolNameId" class="form-control" asp-items="ViewBag.FormKontrolNameId"></select>
+                <span asp-validation-for="FormKontrolNameId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="SemestrId" value="@ViewBag.SemestrId" />
+
+            </div>
+            <div class="form-group">
+                <input type="submit" asp-route-SemestrId="@ViewBag.SemestrId" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" asp-route-SemestrId="@ViewBag.SemestrId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
