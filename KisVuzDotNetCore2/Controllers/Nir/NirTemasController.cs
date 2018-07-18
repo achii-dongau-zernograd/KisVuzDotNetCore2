@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Education;
 
 namespace KisVuzDotNetCore2.Controllers.Nir
 {
@@ -45,6 +46,11 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         // GET: NirTemas/Create
         public IActionResult Create()
         {
+            List<EduProfile> EduProfiles = _context.EduProfiles
+                .Include(p=>p.EduNapravl.EduUgs.EduLevel)
+                .ToList();
+            ViewData["EduProfiles"] = EduProfiles;
+
             return View();
         }
 
@@ -53,14 +59,35 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NirTemaId,NirTemaName")] NirTema nirTema)
+        public async Task<IActionResult> Create([Bind("NirTemaId,NirTemaName")] NirTema nirTema, int[] EduProfileIds)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(nirTema);
                 await _context.SaveChangesAsync();
+
+                if (EduProfileIds != null)
+                {
+                    var NirTemaEduProfile = new List<NirTemaEduProfile>();
+                    foreach (var EduProfileId in EduProfileIds)
+                    {
+                        NirTemaEduProfile nirTemaEduProfile = new NirTemaEduProfile();
+                        nirTemaEduProfile.EduProfileId = EduProfileId;
+                        nirTemaEduProfile.NirTemaId = nirTema.NirTemaId;
+                        NirTemaEduProfile.Add(nirTemaEduProfile);
+                    }
+                    await _context.NirTemaEduProfile.AddRangeAsync(NirTemaEduProfile);
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
+
+            List<EduProfile> EduProfiles = _context.EduProfiles
+                .Include(p => p.EduNapravl.EduUgs.EduLevel)
+                .ToList();
+            ViewData["EduProfiles"] = EduProfiles;
+
             return View(nirTema);
         }
 
