@@ -38,8 +38,7 @@
                         <a href="/@item.FileModel.Path">Открыть</a>
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.EduAnnotationId" asp-route-EduPlanId="@ViewBag.EduPlanId">Редактировать</a> |
-                        <a asp-action="Details" asp-route-id="@item.EduAnnotationId" asp-route-EduPlanId="@ViewBag.EduPlanId">Подробнее</a> |
+                        <a asp-action="Edit" asp-route-id="@item.EduAnnotationId" asp-route-EduPlanId="@ViewBag.EduPlanId">Редактировать</a> |                        
                         <a asp-action="Delete" asp-route-id="@item.EduAnnotationId" asp-route-EduPlanId="@ViewBag.EduPlanId">Удалить</a>
                     </td>
                 </tr>
@@ -66,7 +65,12 @@ else
                                 @{spoilerCounter++;}
                                 @foreach (var eduProfile in eduNapravl.EduProfiles)
                                 {
-                                <ul>@eduProfile.EduProfileName
+                                    <strong>@eduProfile.EduProfileName</strong>
+                                    <ul>
+                                    @if(eduProfile.EduPlans.Count==0)
+                                    {
+                                        <li>Учебные планы отсутствуют</li>
+                                    }
                                     @foreach (var eduPlan in eduProfile.EduPlans)
                                     {
                                     <li>                                        
@@ -75,7 +79,7 @@ else
                                             <span>@yearBT.EduYearBeginningTraining.EduYearBeginningTrainingName</span>
                                         }
                                         <a href="/@eduPlan.EduPlanPdf?.Path" target="_blank">Открыть учебный план</a>
-                                        <a asp-route-EduPlanId="@eduPlan.EduPlanId">Выбрать</a>
+                                        <a asp-route-EduPlanId="@eduPlan.EduPlanId" class="btn btn-primary"> Добавить аннотации</a>
                                     </li>
                                     }
                                 </ul>

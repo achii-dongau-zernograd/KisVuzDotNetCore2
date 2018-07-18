@@ -358,7 +358,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType34 = new FileDataType
                     {
-                        FileDataTypeId = 34,
+                        FileDataTypeId = (int)FileDataTypeEnum.RabProgrammaDisciplini,
                         FileDataTypeName = "Рабочая программа",
                         Itemprop = "",
                         FileDataTypeGroupId = 5
@@ -366,7 +366,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType35 = new FileDataType
                     {
-                        FileDataTypeId = 35,
+                        FileDataTypeId = (int)FileDataTypeEnum.Annotation,
                         FileDataTypeName = "Аннотация рабочей программы",
                         Itemprop = "",
                         FileDataTypeGroupId = 5
