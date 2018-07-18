@@ -29,13 +29,13 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                     UchPosobieVid UchPosobieVidName1 = new UchPosobieVid
                     {
                         UchPosobieVidId = 1,
-                        UchPosobieVidName = "Курс лекций",
+                        UchPosobieVidName = "Учебное пособие",
                     };
 
                     UchPosobieVid UchPosobieVidName2 = new UchPosobieVid
                     {
                         UchPosobieVidId = 2,
-                        UchPosobieVidName = "Сборник задач",
+                        UchPosobieVidName = "Курс лекций",
                     };
 
                     UchPosobieVid UchPosobieVidName3 = new UchPosobieVid
@@ -44,10 +44,17 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         UchPosobieVidName = "Лабораторный практикум",
                     };
 
+                    UchPosobieVid UchPosobieVidName4 = new UchPosobieVid
+                    {
+                        UchPosobieVidId = 4,
+                        UchPosobieVidName = "Методические указания",
+                    };
+
                     await context.UchPosobieVid.AddRangeAsync(
                         UchPosobieVidName1,
                         UchPosobieVidName2,
-                        UchPosobieVidName3
+                        UchPosobieVidName3,
+                        UchPosobieVidName4
                     );
 
                     await context.SaveChangesAsync();

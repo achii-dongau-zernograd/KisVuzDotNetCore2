@@ -402,6 +402,8 @@
     <Compile Remove="Migrations\20180716114008_init.Designer.cs" />
     <Compile Remove="Migrations\20180716140810_init.cs" />
     <Compile Remove="Migrations\20180716140810_init.Designer.cs" />
+    <Compile Remove="Migrations\20180717091835_uchpos.cs" />
+    <Compile Remove="Migrations\20180717091835_uchpos.Designer.cs" />
     <Compile Remove="Migrations\20180717095210_Init.cs" />
     <Compile Remove="Migrations\20180717095210_Init.Designer.cs" />
     <Compile Remove="Migrations\20180717074352_annotation.cs" />
@@ -420,6 +422,14 @@
     <Compile Remove="Migrations\20180717133908_init.Designer.cs" />
     <Compile Remove="Migrations\20180717134221_init.cs" />
     <Compile Remove="Migrations\20180717134221_init.Designer.cs" />
+    <Compile Remove="Migrations\20180717135539_init.cs" />
+    <Compile Remove="Migrations\20180717135539_init.Designer.cs" />
+    <Compile Remove="Migrations\20180718072512_uchpos.cs" />
+    <Compile Remove="Migrations\20180718072512_uchpos.Designer.cs" />
+    <Compile Remove="Migrations\20180718093647_UchPosobie.cs" />
+    <Compile Remove="Migrations\20180718093647_UchPosobie.Designer.cs" />
+    <Compile Remove="Migrations\20180718093830_UchPosobie.cs" />
+    <Compile Remove="Migrations\20180718093830_UchPosobie.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -374,7 +374,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType36 = new FileDataType
                     {
-                        FileDataTypeId = 36,
+                        FileDataTypeId = (int)FileDataTypeEnum.UchebnoePosobie,
                         FileDataTypeName = "Учебное пособие",
                         Itemprop = "",
                         FileDataTypeGroupId = 6
@@ -382,7 +382,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType37 = new FileDataType
                     {
-                        FileDataTypeId = 37,
+                        FileDataTypeId = (int)FileDataTypeEnum.KursLekcii,
                         FileDataTypeName = "Курс лекций",
                         Itemprop = "",
                         FileDataTypeGroupId = 6
@@ -390,7 +390,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType38 = new FileDataType
                     {
-                        FileDataTypeId = 38,
+                        FileDataTypeId = (int)FileDataTypeEnum.LaboratorniiPraktikum,
                         FileDataTypeName = "Лабораторный практикум",
                         Itemprop = "",
                         FileDataTypeGroupId = 6
@@ -398,7 +398,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType39 = new FileDataType
                     {
-                        FileDataTypeId = 39,
+                        FileDataTypeId = (int)FileDataTypeEnum.MetodicheskieUkazaniya,
                         FileDataTypeName = "Методические указания",
                         Itemprop = "",
                         FileDataTypeGroupId = 6
