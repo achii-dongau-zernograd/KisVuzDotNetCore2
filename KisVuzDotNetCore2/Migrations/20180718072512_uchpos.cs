@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace KisVuzDotNetCore2.Migrations
 {
-    public partial class init : Migration
+    public partial class uchpos : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -727,7 +727,7 @@ namespace KisVuzDotNetCore2.Migrations
                     GodIzdaniya = table.Column<string>(nullable: true),
                     UchPosobieFormaIzdaniyaId = table.Column<int>(nullable: false),
                     UchPosobieName = table.Column<string>(nullable: true),
-                    UchPosobieVidId = table.Column<int>(nullable: true)
+                    UchPosobieVidId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -749,7 +749,7 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.UchPosobieVidId,
                         principalTable: "UchPosobieVid",
                         principalColumn: "UchPosobieVidId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

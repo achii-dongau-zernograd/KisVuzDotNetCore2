@@ -400,6 +400,10 @@
     <Compile Remove="Migrations\20180716075705_init.Designer.cs" />
     <Compile Remove="Migrations\20180716114008_init.cs" />
     <Compile Remove="Migrations\20180716114008_init.Designer.cs" />
+    <Compile Remove="Migrations\20180716140810_init.cs" />
+    <Compile Remove="Migrations\20180716140810_init.Designer.cs" />
+    <Compile Remove="Migrations\20180717091835_uchpos.cs" />
+    <Compile Remove="Migrations\20180717091835_uchpos.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -421,6 +425,10 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.2" />
 	<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

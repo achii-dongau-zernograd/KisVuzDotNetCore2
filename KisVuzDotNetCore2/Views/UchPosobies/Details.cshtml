@@ -1,13 +1,13 @@
 ﻿@model KisVuzDotNetCore2.Models.UchPosobiya.UchPosobie
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Подробнее об учебном пособии";
 }
 
-<h2>Details</h2>
+<h2>Подробнее об учебном пособии</h2>
 
 <div>
-    <h4>UchPosobie</h4>
+    
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -38,11 +38,23 @@
             @Html.DisplayNameFor(model => model.UchPosobieFormaIzdaniya)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.UchPosobieFormaIzdaniya.UchPosobieFormaIzdaniyaId)
+            @Html.DisplayFor(model => model.UchPosobieFormaIzdaniya.UchPosobieFormaIzdaniyaName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UchPosobieVid)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UchPosobieVid.UchPosobieVidName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModel)
+        </dt>
+        <dd>
+            <a href="/@Model.FileModel.Path">Открыть</a>
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.UchPosobieId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.UchPosobieId"  class="btn btn-primary">Редактировать</a> 
+    <a asp-action="Index" class="btn btn-default">Отмена</a>
 </div>
