@@ -90,6 +90,29 @@
         /// </summary>
         KalendarniyUchebniyGraphik=33,
         /// <summary>
+        /// Рабочая программа дисциплины
+        /// </summary>
+        RabProgrammaDisciplini = 34,
+        /// <summary>
+        /// Аннотация к рабочей программе
+        /// </summary>
+        Annotation = 35,
+        /// Учебное пособие
+        /// </summary>
+        UchebnoePosobie = 36,
+        /// <summary>
+        /// Курс лекций
+        /// </summary>
+        KursLekcii = 37,
+        /// <summary>
+        /// Лабораторный практикум
+        /// </summary>
+        LaboratorniiPraktikum = 38,
+        /// <summary>
+        /// Методические указания
+        /// </summary>
+        MetodicheskieUkazaniya = 39,
+        /// <summary>
         /// Информация о поступлении и расходовании финансовых и материальных средств
         /// </summary>
         InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv = 40,
@@ -100,6 +123,6 @@
         /// <summary>
         /// Локальный нормативный акт, регламентирующий наличие и условия предоставления стипендии
         /// </summary>
-        StipendiiLocalGrant = 42        
+        StipendiiLocalGrant = 42
     }
 }

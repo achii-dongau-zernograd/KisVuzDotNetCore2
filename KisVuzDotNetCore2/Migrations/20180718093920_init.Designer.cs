@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180717135539_init")]
+    [Migration("20180718093920_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1832,7 +1832,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<string>("UchPosobieName");
 
-                    b.Property<int?>("UchPosobieVidId");
+                    b.Property<int>("UchPosobieVidId");
 
                     b.HasKey("UchPosobieId");
 
@@ -2882,7 +2882,8 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasOne("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieVid", "UchPosobieVid")
                         .WithMany()
-                        .HasForeignKey("UchPosobieVidId");
+                        .HasForeignKey("UchPosobieVidId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieAuthor", b =>

@@ -27,6 +27,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.UchPosobieFormaIzdaniya)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UchPosobieVid)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -43,10 +46,13 @@
                 @Html.DisplayFor(modelItem => item.BiblOpisanie)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FileModel.Id)
+                <a href="/@item.FileModel.Path">Открыть</a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UchPosobieFormaIzdaniya.UchPosobieFormaIzdaniyaId)
+                @Html.DisplayFor(modelItem => item.UchPosobieFormaIzdaniya.UchPosobieFormaIzdaniyaName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UchPosobieVid.UchPosobieVidName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.UchPosobieId">Редактировать</a> |
