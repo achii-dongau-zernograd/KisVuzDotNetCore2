@@ -2,11 +2,11 @@
 
 @{
     ViewData["Title"] = "Просмотр учебного плана";
+    int spoilerCounter = 1;
 }
 
 
 <div>
-    <hr />
     <h3 class="text-center text-uppercase">
         <b>Направление: @Model.EduProfile.EduNapravl.EduNapravlCode @Model.EduProfile.EduNapravl.EduNapravlName</b>
     </h3>
@@ -88,52 +88,91 @@
             </td>
         </tr>
     </table>
-    <br>
-    <p>
-        <strong>Содержание учебного плана</strong>
-        <ul>
+
+    <br />
+    <h3>Содержание учебного плана</h3>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Код дисциплины</th>
+                <th>Наименование и содержание дисциплины</th>
+                <th>Аннотация</th>
+                <th>Рабочая программа</th>
+                <th>Фонд оценочных средств</th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var blokDiscipl in Model.BlokDiscipl)
             {
-        <p><strong><u>@blokDiscipl.BlokDisciplName.BlokDisciplNameName</u></strong></p>
-        @foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
-        {
-            <p style="text-indent: 3%">Часть: @blokDisciplChast.BlokDisciplChastName.BlokDisciplChastNameName</p>
-
-            @foreach (var discipline in blokDisciplChast.Disciplines)
-            {
-                <p style="text-indent: 5%"><strong>@discipline.DisciplineCode @discipline.DisciplineName.DisciplineNameName</strong></p>
-
-                @foreach (var kurs in discipline.Kurses)
+                <tr class="info">
+                    <td colspan="5"><strong>@blokDiscipl.BlokDisciplName.BlokDisciplNameName</strong></td>
+                </tr>
+                @foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
                 {
-                    <p style="text-indent: 8%"><u>@kurs.EduKurs.EduKursNumber курс</u></p>
+                    <tr class="active">
+                        <td colspan="5">@blokDisciplChast.BlokDisciplChastName.BlokDisciplChastNameName часть</td>
+                    </tr>
 
-                    @foreach (var semestr in kurs.Semestres)
+                    @foreach (var discipline in blokDisciplChast.Disciplines)
                     {
-                        <p style="text-indent: 11%"><u>Семестр @semestr.SemestrName.SemestrNameNumber</u></p>
+                        <tr>
+                            <td>@discipline.DisciplineCode</td>
+                            <td>
+                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse"><strong>@discipline.DisciplineName.DisciplineNameName</strong></a>
+                                <div class="collapse" id="spoiler-@spoilerCounter">
+                                    @{ spoilerCounter++;}
+                                    <div class="well">
+                                        @foreach (var kurs in discipline.Kurses)
+                                        {
 
-                        <p style="text-indent: 14%">Формы контроля</p>
-                        @foreach (var semestrFormKontrolName in semestr.SemestrFormKontrolName)
-                        {
-                            <p style="text-indent: 17%">@semestrFormKontrolName.FormKontrolName.FormKontrolNameName</p>
-                        }
+                                            @foreach (var semestr in kurs.Semestres)
+                                            {
 
-                        <p style="text-indent: 14%">Виды деятельности</p>
-                        @foreach (var semestrVidUchebRaboti in semestr.SemestrVidUchebRaboti)
-                        {
-                            <p style="text-indent: 17%">@semestrVidUchebRaboti.VidUchebRabotiName.VidUchebRabotiNameName @semestrVidUchebRaboti.Hour</p>
-                        }
+                                                <p><strong>@kurs.EduKurs.EduKursNumber курс. Семестр @semestr.SemestrName.SemestrNameNumber</strong></p>
+                                                <p>Формы контроля:</p>
+                                                <ul>
+                                                    @foreach (var semestrFormKontrolName in semestr.SemestrFormKontrolName)
+                                                    {
+                                                        <li>@semestrFormKontrolName.FormKontrolName.FormKontrolNameName</li>
+                                                    }
+                                                </ul>
+                                                <p>Виды деятельности:</p>
+                                                <ul>
+                                                    @foreach (var semestrVidUchebRaboti in semestr.SemestrVidUchebRaboti)
+                                                    {
+                                                        <li>@semestrVidUchebRaboti.VidUchebRabotiName.VidUchebRabotiNameName: @semestrVidUchebRaboti.Hour ч. </li>
+                                                    }
+                                                </ul>
 
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </td>
 
+                            <td>
+                                @foreach (var annotation in discipline.EduAnnotations)
+                                {
+                                    <a href="/@annotation.FileModel.Path">Открыть</a>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var rabProgram in discipline.RabPrograms)
+                                {
+                                    <a href="/@rabProgram.FileModel.Path">Открыть</a>
+                                }
+                            </td>
+                            <td>Открыть</td>
+                        </tr>
                     }
                 }
             }
-        }
-        <p></p>
-    }
-            
 
+        </tbody>
+    </table>
+</div>
 
-       </div>
 <div>
     <a asp-action="Index" class="btn btn-primary">К списку учебных планов</a>
 </div>

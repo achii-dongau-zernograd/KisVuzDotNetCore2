@@ -3,14 +3,14 @@
 namespace KisVuzDotNetCore2.Models.Education
 {
     /// <summary>
-    /// Модель "Аннотация к рабочей программе дисциплины"
+    /// Модель "Рабочая программа дисциплины"
     /// </summary>
-    public class EduAnnotation
+    public class RabProgram
     {
         /// <summary>
         /// УИД аннотации
         /// </summary>
-        public int EduAnnotationId { get; set; }
+        public int RabProgramId { get; set; }
 
         /// <summary>
         /// Дисциплина
@@ -24,14 +24,14 @@ namespace KisVuzDotNetCore2.Models.Education
         public int DisciplineId { get; set; }
 
         /// <summary>
-        /// Файл аннотации
+        /// Файл рабочей программы
         /// </summary>
-        [Display(Name = "Файл аннотации")]
+        [Display(Name = "Файл рабочей программы")]
         public FileModel FileModel { get; set; }
         /// <summary>
-        /// Файл аннотации
+        /// Файл рабочей программы
         /// </summary>
-        [Display(Name = "Файл аннотации")]
+        [Display(Name = "Файл рабочей программы")]
         public int FileModelId { get; set; }
     }
 }

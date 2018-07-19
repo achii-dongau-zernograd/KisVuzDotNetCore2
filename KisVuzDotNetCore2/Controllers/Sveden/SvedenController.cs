@@ -198,8 +198,17 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(p => p.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(p => p.EduProgramPodg)
                 .Include(p => p.EduSrok)
+                .Include(e => e.BlokDiscipl)
+                    .ThenInclude(b => b.BlokDisciplChast)
+                        .ThenInclude(c => c.Disciplines)
+                            .ThenInclude(d => d.EduAnnotations)
+                                .ThenInclude(a => a.FileModel)
+                .Include(e => e.BlokDiscipl)
+                    .ThenInclude(b => b.BlokDisciplChast)
+                        .ThenInclude(c => c.Disciplines)
+                            .ThenInclude(d=>d.DisciplineName)
                 .ToListAsync();
-            ViewData["eduPlans"] = eduPlans;
+            ViewData["eduPlans"] = eduPlans;                        
             #endregion
 
             #region Таблица 11. Образовательная программа (объём программы по годам)

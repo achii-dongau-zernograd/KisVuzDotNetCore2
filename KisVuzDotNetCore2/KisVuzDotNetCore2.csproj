@@ -430,6 +430,8 @@
     <Compile Remove="Migrations\20180718093647_UchPosobie.Designer.cs" />
     <Compile Remove="Migrations\20180718093830_UchPosobie.cs" />
     <Compile Remove="Migrations\20180718093830_UchPosobie.Designer.cs" />
+    <Compile Remove="Migrations\20180719051950_rabprograms.cs" />
+    <Compile Remove="Migrations\20180719051950_rabprograms.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

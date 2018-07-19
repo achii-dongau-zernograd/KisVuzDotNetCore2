@@ -1,24 +1,25 @@
 ﻿@{
-    ViewData["Title"] = "Образования";
-}
+    ViewData["Title"] = "Образование";
 
-<h1>Образование</h1>
-
-@{
     var t6eduAccred = (IEnumerable<EduNapravl>)ViewData["t6eduAccred"];
     var t7eduChislen = (IEnumerable<EduChislen>)ViewData["t7eduChislen"];
     var t8eduPriem = (IEnumerable<EduPriem>)ViewData["t8eduPriem"];
     var t9eduPerevod = (IEnumerable<EduPerevod>)ViewData["t9eduPerevod"];
     var t10eduPrograms = (IEnumerable<EduProgram>)ViewData["t10eduPrograms"];
     var eduShedules = (IEnumerable<EduShedule>)ViewData["eduShedules"];
-    var eduPlans = (IEnumerable<EduPlan>)ViewData["eduPlans"];
+    var eduPlans = (IEnumerable<EduPlan>)ViewData["eduPlans"];    
     var t11eduOPYears = (IEnumerable<EduOPYear>)ViewData["t11eduOPYears"];
     var t12eduPr = (IEnumerable<EduPr>)ViewData["t12eduPr"];
-    var t13eduNir=(IEnumerable<EduNir>)ViewData["t13eduNir"];
+    var t13eduNir = (IEnumerable<EduNir>)ViewData["t13eduNir"];
+
+    int spoilerCounter = 1;
 }
 
-<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Информация о сроке действия государственной аккредитации образовательной программы, о языках, на которых осуществляется образование (обучение)</a>
-<div class="collapse" id="spoiler-1">
+<h1>Образование</h1>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о сроке действия государственной аккредитации образовательной программы, о языках, на которых осуществляется образование (обучение)</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
     <div class="well">
 
         <table itemprop="eduAccred" class="table table-hover">
@@ -52,8 +53,9 @@
     </div>
 </div>
 
-<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Информация о численности обучающихся по реализуемым образовательным программам за счет бюджетных ассигнований федерального бюджета,</br> бюджетов субъектов Российской Федерации, местных бюджетов и по договорам об образовании за счет средств физических и (или) юридических лиц</a>
-<div class="collapse" id="spoiler-2">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о численности обучающихся по реализуемым образовательным программам за счет бюджетных ассигнований федерального бюджета,</br> бюджетов субъектов Российской Федерации, местных бюджетов и по договорам об образовании за счет средств физических и (или) юридических лиц</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
     <div class="well">
 
         <table itemprop="eduChislen" class="table table-hover">
@@ -99,8 +101,9 @@
     </div>
 </div>
 
-<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Информация о результатах приема по каждой профессии, специальности среднего профессионального образования (при наличии вступительных испытаний),</br> каждому направлению подготовки или специальности высшего образования с различными условиями приема</a>
-<div class="collapse" id="spoiler-3">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о результатах приема по каждой профессии, специальности среднего профессионального образования (при наличии вступительных испытаний),</br> каждому направлению подготовки или специальности высшего образования с различными условиями приема</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
     <div class="well">
 
         <table itemprop="eduPriem" class="table table-hover">
@@ -149,8 +152,9 @@
     </div>
 </div>
 
-<a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Информация о результатах перевода, восстановления и отчисления</a>
-<div class="collapse" id="spoiler-4">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о результатах перевода, восстановления и отчисления</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
     <div class="well">
 
         <table itemprop="eduPerevod" class="table table-hover">
@@ -193,8 +197,9 @@
     </div>
 </div>
 
-<a href="#spoiler-5" data-toggle="collapse" class="btn btn-primary btn-block">Информация по образовательным программам, в том числе адаптированным</a>
-<div class="collapse" id="spoiler-5">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация по образовательным программам, в том числе адаптированным</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
     <div class="well">
         <table itemprop="eduOP" class="table table-hover">
             <thead>
@@ -232,7 +237,7 @@
                     string educationShedule = "educationShedule";
                     string methodology = "methodology";
                     string eduEl = "eduEl";
-                    if(eduProgram.IsAdopt)
+                    if (eduProgram.IsAdopt)
                     {
                         opMain = "adOpMain";
                         educationPlan = "adEducationPlan";
@@ -241,47 +246,95 @@
                         methodology = "adMethodology";
                         eduEl = "adEduEl";
                     }
-                <tr itemprop="eduOP">
-                    <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
-                    <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName)</td>
-                    <td itemprop="eduLevel">@eduProgram.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName<br />(@eduProgram.EduProgramPodg.EduProgramPodgName)</td>
-                    <td itemprop="eduForm">
-                        @foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
-                        {
-                            @eduProgramEduForm.EduForm.EduFormName<br />
-                        }
-                    </td>
-                    <td itemprop="@opMain">
-                        @if (eduProgram.IsAdopt)
-                        {
-                        <i>Адаптированная ОП</i><br>
-                        }
-                        <a href="/@eduProgram.FileModel.Path">Открыть</a>
-                    </td>
-                    <td itemprop="@educationPlan">
-                        @foreach(var eduPlan in eduPlans.Where(p=>p.EduProfileId==eduProgram.EduProfileId))
-                        { 
-                        <a href="/@eduPlan.EduPlanPdf?.Path">Открыть (@eduPlan.EduForm.EduFormName)</a><br />
-                        }
-                    </td>
-                    <td itemprop="@educationAnnotation">----Аннотации----</td>
-                    <td itemprop="@educationShedule">
-                        @foreach (var eduShedule in eduShedules.Where(s=>s.EduProfileId == eduProgram.EduProfileId))
-                        {
-                        <a href="/@eduShedule.FileModel?.Path">@eduShedule.EduForm?.EduFormName (@eduShedule.EduYear?.EduYearName уч.год.)</a>
-                        }
-                    </td>
-                    <td itemprop="@methodology">----Метод----</td>
-                    <td itemprop="@eduEl">@eduProgram.UsingElAndDistEduTech</td>
-                </tr>                    
+                    <tr itemprop="eduOP">
+                        <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
+                        <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName)</td>
+                        <td itemprop="eduLevel">@eduProgram.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName<br />(@eduProgram.EduProgramPodg.EduProgramPodgName)</td>
+                        <td itemprop="eduForm">
+                            @foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+                            {
+                                @eduProgramEduForm.EduForm.EduFormName<br />
+                            }
+                        </td>
+                        <td itemprop="@opMain">
+                            @if (eduProgram.IsAdopt)
+                            {
+                                <i>Адаптированная ОП</i><br>
+                            }
+                            <a href="/@eduProgram.FileModel.Path">Открыть</a>
+                        </td>
+                        <td itemprop="@educationPlan">
+                            @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
+                            {
+                                <a href="/@eduPlan.EduPlanPdf?.Path">Открыть (@eduPlan.EduForm.EduFormName)</a><br />
+                            }
+                        </td>
+                        <td itemprop="@educationAnnotation">
+
+
+                            @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
+                            {
+                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Открыть</a>
+                                <div class="collapse" id="spoiler-@spoilerCounter">
+                                    @{spoilerCounter++;}
+                                    <div class="well">
+                                        <ul>
+                                            @foreach (var blokDiscipl in eduPlan.BlokDiscipl)
+                                            {
+                                                foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
+                                                {
+                                                    foreach (var discipline in blokDisciplChast.Disciplines)
+                                                    {
+                                                        foreach (var eduAnnotation in discipline.EduAnnotations)
+                                                        {
+                                                            <li><a href="/@eduAnnotation.FileModel.Path">@discipline.DisciplineCode @discipline.DisciplineName.DisciplineNameName</a></li>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+
+
+                        </td>
+                        <td itemprop="@educationShedule">
+                            @foreach (var eduShedule in eduShedules.Where(s => s.EduProfileId == eduProgram.EduProfileId))
+                            {
+                                <a href="/@eduShedule.FileModel?.Path">@eduShedule.EduForm?.EduFormName (@eduShedule.EduYear?.EduYearName уч.год.)</a>
+                            }
+                        </td>
+                        <td itemprop="@methodology">
+                            <ul>
+                                <li>
+                                    <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Рабочие программы и фонды оценочных средств</a>
+                                    <div class="collapse" id="spoiler-@spoilerCounter">
+                                        @{spoilerCounter++;}
+                                        <div class="well">
+                                            @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
+                                            {
+                                                <p><a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId">Открыть (@eduPlan.EduForm.EduFormName)</a></p>
+                                            }
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a asp-controller="UchPosobies" asp-action="Preview" asp-route-id="@eduProgram.EduProfile.EduNapravlId">Учебные пособия</a>
+                                </li>
+                            </ul>
+                        </td>
+                        <td itemprop="@eduEl">@eduProgram.UsingElAndDistEduTech</td>
+                    </tr>
                 }
             </tbody>
-        </table>        
+        </table>
     </div>
 </div>
 
-<a href="#spoiler-6" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (объём программы по годам)</a>
-<div class="collapse" id="spoiler-6">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (объём программы по годам)</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
     <div class="well">
 
         <table itemprop="eduOP" class="table table-hover">
@@ -327,8 +380,9 @@
     </div>
 </div>
 
-<a href="#spoiler-7" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (наличие практики)</a>
-<div class="collapse" id="spoiler-7">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (наличие практики)</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
     <div class="well">
 
         <table itemprop="eduPr" class="table table-hover">
@@ -339,7 +393,7 @@
                     <th rowspan="2">Год начала подготовки</th>
                     <th rowspan="2">Профиль программы</th>
                     <th rowspan="2">Реализуемы формы обучения</th>
-                    <th colspan="3">Наличие практики (з.е.)</th>                    
+                    <th colspan="3">Наличие практики (з.е.)</th>
                 </tr>
                 <tr>
                     <th>учебная</th>
@@ -377,8 +431,9 @@
     </div>
 </div>
 
-<a href="#spoiler-8" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (направления и результаты научной (научно-исследовательской) деятельности)</a>
-<div class="collapse" id="spoiler-8">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (направления и результаты научной (научно-исследовательской) деятельности)</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
     <div class="well">
         <table itemprop="eduNir" class="table table-hover">
             <thead>
@@ -393,7 +448,7 @@
                     <th>Количество патентов, полученных на разработки за последний год: российских / зарубежных</th>
                     <th>Количество свидетельств о регистрации объекта интеллектуальной собственности, выданных на разработки за последний год: российских / зарубежных</th>
                     <th>Среднегодовой объём финансирования научных исследований на одного научно-педагогического работника организации (в приведённых к целочисленным значениям ставок)</th>
-                </tr>                
+                </tr>
                 <tr>
                     <td align=center><strong>1</strong></td>
                     <td align=center><strong>2</strong></td>
@@ -409,18 +464,18 @@
             </thead>
             @foreach (var item in t13eduNir)
             {
-            <tr itemprop="eduNir">
-                <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
-                <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
-                <td itemprop="perechenNir">@item.NirNapravls</td>
-                <td itemprop="nprNir">@item.NumNpr</td>
-                <td itemprop="studNir" align=center>@item.NumStud</td>
-                <td itemprop="monografNir" align=center>@item.NumMonograf</td>
-                <td itemprop="articleNir" align=center>@item.NumArticles / @item.NumArticlesZ</td>
-                <td align=center><span itemprop="patentRNir">@item.NumPatents</span> / <span itemprop="patentZNir">@item.NumPatentsZ</span></td>
-                <td align=center><span itemprop="svidRNir">@item.NumSvidetelstv</span> / <span itemprop="svidZNir">@item.NumSvidetelstvZ</span></td>
-                <td itemprop="financeNir" align=center>@item.NumFinance</td>
-            </tr>
+                <tr itemprop="eduNir">
+                    <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
+                    <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
+                    <td itemprop="perechenNir">@item.NirNapravls</td>
+                    <td itemprop="nprNir">@item.NumNpr</td>
+                    <td itemprop="studNir" align=center>@item.NumStud</td>
+                    <td itemprop="monografNir" align=center>@item.NumMonograf</td>
+                    <td itemprop="articleNir" align=center>@item.NumArticles / @item.NumArticlesZ</td>
+                    <td align=center><span itemprop="patentRNir">@item.NumPatents</span> / <span itemprop="patentZNir">@item.NumPatentsZ</span></td>
+                    <td align=center><span itemprop="svidRNir">@item.NumSvidetelstv</span> / <span itemprop="svidZNir">@item.NumSvidetelstvZ</span></td>
+                    <td itemprop="financeNir" align=center>@item.NumFinance</td>
+                </tr>
             }
         </table>
     </div>

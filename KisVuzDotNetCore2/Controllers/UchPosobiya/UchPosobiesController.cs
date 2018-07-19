@@ -35,6 +35,46 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
             return View(await appIdentityDBContext.ToListAsync());
         }
 
+        /// <summary>
+        /// Передаёт в представление Preview объект, содержащий
+        /// учебные пособия, изданные для направления подготовки id
+        /// </summary>
+        /// <param name="id">Идентификатор направления подготовки</param>
+        /// <returns></returns>
+        public async Task<IActionResult> Preview(int? id)
+        {
+            if(id==null)
+            {
+                return NotFound();
+            }
+
+            int EduNapravlId = (int)id;
+            var uchPosList = await _context.UchPosobieEduNapravl
+                .Where(pn => pn.EduNapravlId == EduNapravlId)
+                .Include(pn=>pn.EduNapravl)
+                .Include(pn => pn.UchPosobie.UchPosobieFormaIzdaniya)
+                .Include(pn=>pn.UchPosobie.FileModel)
+                .Include(pn => pn.UchPosobie.UchPosobieAuthors)
+                .Include(pn => pn.UchPosobie.UchPosobieDisciplineNames)
+                    .ThenInclude(pd=>pd.DisciplineName)
+                .Include(pn => pn.UchPosobie.UchPosobieVid)
+                .ToListAsync();
+
+            var eduNapravl = await _context.EduNapravls.SingleOrDefaultAsync(n => n.EduNapravlId == EduNapravlId);
+            if(eduNapravl!=null)
+            {
+                ViewBag.NapravlCaption = eduNapravl.EduNapravlCode + " - " + eduNapravl.EduNapravlName;
+            }
+
+            var uchPosobieFormaIzdaniya = await _context.UchPosobieFormaIzdaniya.ToListAsync();
+            ViewBag.uchPosobieFormaIzdaniya = uchPosobieFormaIzdaniya;
+
+            var uchPosVidList = await _context.UchPosobieVid.ToListAsync();
+            ViewBag.uchPosVidList = uchPosVidList;            
+
+            return View(uchPosList);
+        }
+
         // GET: UchPosobies/Details/5
         public async Task<IActionResult> Details(int? id)
         {

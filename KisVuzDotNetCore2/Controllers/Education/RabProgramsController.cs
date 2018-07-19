@@ -7,40 +7,40 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Education;
-using Microsoft.AspNetCore.Http;
-using KisVuzDotNetCore2.Models.Files;
 using Microsoft.AspNetCore.Hosting;
+using KisVuzDotNetCore2.Models.Files;
+using Microsoft.AspNetCore.Http;
 
 namespace KisVuzDotNetCore2.Controllers.Education
 {
-    public class EduAnnotationsController : Controller
+    public class RabProgramsController : Controller
     {
         private readonly AppIdentityDBContext _context;
         private readonly IHostingEnvironment _appEnvironment;
 
-        public EduAnnotationsController(AppIdentityDBContext context,
+        public RabProgramsController(AppIdentityDBContext context,
             IHostingEnvironment appEnvironment)
         {
             _context = context;
             _appEnvironment = appEnvironment;
         }
 
-        // GET: EduAnnotations
+        // GET: RabPrograms
         public async Task<IActionResult> Index(int? EduPlanId)
         {
-            var eduAnnotationsAll= _context.EduAnnotations
+            var eduRabProgramsAll = _context.RabPrograms
                 .Include(e => e.Discipline.BlokDisciplChast.BlokDiscipl.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.Discipline.DisciplineName)
                 .Include(e => e.FileModel);
 
-            if (EduPlanId==null)
+            if (EduPlanId == null)
             {
                 var eduLevels = await _context.EduLevels
                     .Include(l => l.EduUgses)
                         .ThenInclude(u => u.EduNapravls)
                             .ThenInclude(n => n.EduProfiles)
-                                .ThenInclude(p => p.EduPlans)                                
-                                    .ThenInclude(plan=>plan.EduPlanEduYearBeginningTrainings)
+                                .ThenInclude(p => p.EduPlans)
+                                    .ThenInclude(plan => plan.EduPlanEduYearBeginningTrainings)
                                         .ThenInclude(year => year.EduYearBeginningTraining)
                      .Include(l => l.EduUgses)
                         .ThenInclude(u => u.EduNapravls)
@@ -48,113 +48,24 @@ namespace KisVuzDotNetCore2.Controllers.Education
                                 .ThenInclude(p => p.EduPlans)
                                     .ThenInclude(plan => plan.EduPlanPdf)
                      .ToListAsync();
-                
+
                 ViewData["eduLevels"] = eduLevels;
-                return View(await eduAnnotationsAll.ToListAsync());
+                return View(await eduRabProgramsAll.ToListAsync());
             }
             else
             {
-                var eduAnnotationsForEduPlanId = await eduAnnotationsAll
-                    .Where(a=>a.Discipline.BlokDisciplChast.BlokDiscipl.EduPlanId == EduPlanId)
+                var edueduRabProgramsAllForEduPlanId = await eduRabProgramsAll
+                    .Where(a => a.Discipline.BlokDisciplChast.BlokDiscipl.EduPlanId == EduPlanId)
                     .ToListAsync();
                 ViewBag.EduPlanId = EduPlanId;
-                return View(eduAnnotationsForEduPlanId);
+                return View(edueduRabProgramsAllForEduPlanId);
             }
-            
-        }                
+        }
+                
 
-        // GET: EduAnnotations/Create
+        // GET: RabPrograms/Create
         public IActionResult Create(int? EduPlanId)
         {
-            if(EduPlanId==null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            var eduPlans = _context.EduPlans                
-                .Where(p => p.EduPlanId == EduPlanId)
-                .Include(p=>p.BlokDiscipl)
-                    .ThenInclude(bd=>bd.BlokDisciplChast)
-                        .ThenInclude(bdc => bdc.Disciplines)
-                            .ThenInclude(d => d.DisciplineName);
-            List<Discipline> disciplinesByEduPlan=new List<Discipline>();
-            foreach (var plan in eduPlans)
-            {
-                foreach (var blokDiscipl in plan.BlokDiscipl)
-                {
-                    foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
-                    {
-                        foreach (var discipline in blokDisciplChast.Disciplines)
-                        {
-                            disciplinesByEduPlan.Add(discipline);
-                        }
-                    }
-                }
-            }
-
-            ViewData["DisciplineId"] = new SelectList(disciplinesByEduPlan, "DisciplineId", "DisciplineName.DisciplineNameName");
-            ViewBag.EduPlanId = EduPlanId;
-            return View();
-        }
-
-        // POST: EduAnnotations/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EduAnnotationId,DisciplineId,FileModelId")] EduAnnotation eduAnnotation, IFormFile uploadedFile, int? EduPlanId)
-        {
-            if (ModelState.IsValid && uploadedFile!=null)
-            {
-                FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Аннотация", FileDataTypeEnum.Annotation);
-                eduAnnotation.FileModelId = fileModel.Id;
-                _context.Add(eduAnnotation);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index),new { EduPlanId });
-            }
-
-            var eduPlans = _context.EduPlans
-                .Where(p => p.EduPlanId == EduPlanId)
-                .Include(p => p.BlokDiscipl)
-                    .ThenInclude(bd => bd.BlokDisciplChast)
-                        .ThenInclude(bdc => bdc.Disciplines)
-                            .ThenInclude(d => d.DisciplineName);
-            List<Discipline> disciplinesByEduPlan = new List<Discipline>();
-            foreach (var plan in eduPlans)
-            {
-                foreach (var blokDiscipl in plan.BlokDiscipl)
-                {
-                    foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
-                    {
-                        foreach (var discipline in blokDisciplChast.Disciplines)
-                        {
-                            disciplinesByEduPlan.Add(discipline);
-                        }
-                    }
-                }
-            }
-
-            ViewData["DisciplineId"] = new SelectList(disciplinesByEduPlan, "DisciplineId", "DisciplineName.DisciplineNameName");
-            ViewBag.EduPlanId = EduPlanId;
-
-            return View(eduAnnotation);
-        }
-
-        // GET: EduAnnotations/Edit/5
-        public async Task<IActionResult> Edit(int? id, int? EduPlanId)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var eduAnnotation = await _context.EduAnnotations
-                .Include(a=>a.FileModel)
-                .SingleOrDefaultAsync(a => a.EduAnnotationId == id);
-            if (eduAnnotation == null)
-            {
-                return NotFound();
-            }
-
             if (EduPlanId == null)
             {
                 return RedirectToAction(nameof(Index));
@@ -182,21 +93,108 @@ namespace KisVuzDotNetCore2.Controllers.Education
 
             ViewData["DisciplineId"] = new SelectList(disciplinesByEduPlan, "DisciplineId", "DisciplineName.DisciplineNameName");
             ViewBag.EduPlanId = EduPlanId;
-
-            return View(eduAnnotation);
+            return View();
         }
 
-        // POST: EduAnnotations/Edit/5
+        // POST: RabPrograms/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("RabProgramId,DisciplineId,FileModelId")] RabProgram rabProgram, IFormFile uploadedFile, int? EduPlanId)
+        {
+            if (ModelState.IsValid && uploadedFile != null)
+            {
+                FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Рабочая программа", FileDataTypeEnum.RabProgrammaDisciplini);
+                rabProgram.FileModelId = fileModel.Id;
+                _context.Add(rabProgram);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index), new { EduPlanId });
+            }
+
+            var eduPlans = _context.EduPlans
+                .Where(p => p.EduPlanId == EduPlanId)
+                .Include(p => p.BlokDiscipl)
+                    .ThenInclude(bd => bd.BlokDisciplChast)
+                        .ThenInclude(bdc => bdc.Disciplines)
+                            .ThenInclude(d => d.DisciplineName);
+            List<Discipline> disciplinesByEduPlan = new List<Discipline>();
+            foreach (var plan in eduPlans)
+            {
+                foreach (var blokDiscipl in plan.BlokDiscipl)
+                {
+                    foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
+                    {
+                        foreach (var discipline in blokDisciplChast.Disciplines)
+                        {
+                            disciplinesByEduPlan.Add(discipline);
+                        }
+                    }
+                }
+            }
+
+            ViewData["DisciplineId"] = new SelectList(disciplinesByEduPlan, "DisciplineId", "DisciplineName.DisciplineNameName");
+            ViewBag.EduPlanId = EduPlanId;
+
+            return View(rabProgram);
+        }
+
+        // GET: RabPrograms/Edit/5
+        public async Task<IActionResult> Edit(int? id, int? EduPlanId)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var rabProgram = await _context.RabPrograms
+                .Include(rp => rp.FileModel)
+                .SingleOrDefaultAsync(m => m.RabProgramId == id);
+            if (rabProgram == null)
+            {
+                return NotFound();
+            }
+            if (EduPlanId == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            var eduPlans = _context.EduPlans
+                .Where(p => p.EduPlanId == EduPlanId)
+                .Include(p => p.BlokDiscipl)
+                    .ThenInclude(bd => bd.BlokDisciplChast)
+                        .ThenInclude(bdc => bdc.Disciplines)
+                            .ThenInclude(d => d.DisciplineName);
+            List<Discipline> disciplinesByEduPlan = new List<Discipline>();
+            foreach (var plan in eduPlans)
+            {
+                foreach (var blokDiscipl in plan.BlokDiscipl)
+                {
+                    foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
+                    {
+                        foreach (var discipline in blokDisciplChast.Disciplines)
+                        {
+                            disciplinesByEduPlan.Add(discipline);
+                        }
+                    }
+                }
+            }
+
+            ViewData["DisciplineId"] = new SelectList(disciplinesByEduPlan, "DisciplineId", "DisciplineName.DisciplineNameName");
+            ViewBag.EduPlanId = EduPlanId;
+            return View(rabProgram);
+        }
+
+        // POST: RabPrograms/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,
-            [Bind("EduAnnotationId,DisciplineId,FileModelId")] EduAnnotation eduAnnotation,
+            [Bind("RabProgramId,DisciplineId,FileModelId")] RabProgram rabProgram,
             IFormFile uploadedFile,
             int? EduPlanId)
         {
-            if (id != eduAnnotation.EduAnnotationId)
+            if (id != rabProgram.RabProgramId)
             {
                 return NotFound();
             }
@@ -205,22 +203,22 @@ namespace KisVuzDotNetCore2.Controllers.Education
             {
                 if (uploadedFile != null)
                 {
-                    FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Аннотация", FileDataTypeEnum.Annotation);
+                    FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Рабочая программа", FileDataTypeEnum.RabProgrammaDisciplini);
                     await _context.SaveChangesAsync();
-                    int? fileToRemoveId = eduAnnotation.FileModelId;
-                    eduAnnotation.FileModelId = fileModel.Id;
+                    int? fileToRemoveId = rabProgram.FileModelId;
+                    rabProgram.FileModelId = fileModel.Id;
                     await _context.SaveChangesAsync();
                     Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
                 }
 
                 try
                 {
-                    _context.Update(eduAnnotation);
+                    _context.Update(rabProgram);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EduAnnotationExists(eduAnnotation.EduAnnotationId))
+                    if (!RabProgramExists(rabProgram.RabProgramId))
                     {
                         return NotFound();
                     }
@@ -229,14 +227,14 @@ namespace KisVuzDotNetCore2.Controllers.Education
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index),new { EduPlanId });
+                return RedirectToAction(nameof(Index), new { EduPlanId });
             }
-            ViewData["DisciplineId"] = new SelectList(_context.Disciplines, "DisciplineId", "DisciplineId", eduAnnotation.DisciplineId);
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Id", eduAnnotation.FileModelId);
-            return View(eduAnnotation);
+            ViewData["DisciplineId"] = new SelectList(_context.Disciplines, "DisciplineId", "DisciplineId", rabProgram.DisciplineId);
+            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Id", rabProgram.FileModelId);
+            return View(rabProgram);
         }
 
-        // GET: EduAnnotations/Delete/5
+        // GET: RabPrograms/Delete/5
         public async Task<IActionResult> Delete(int? id, int? EduPlanId)
         {
             if (id == null)
@@ -244,33 +242,33 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 return NotFound();
             }
 
-            var eduAnnotation = await _context.EduAnnotations
-                .Include(e => e.Discipline.DisciplineName)
-                .Include(e => e.FileModel)
-                .SingleOrDefaultAsync(m => m.EduAnnotationId == id);
-            if (eduAnnotation == null)
+            var rabProgram = await _context.RabPrograms
+                .Include(r => r.Discipline.DisciplineName)
+                .Include(r => r.FileModel)
+                .SingleOrDefaultAsync(m => m.RabProgramId == id);
+            if (rabProgram == null)
             {
                 return NotFound();
             }
 
             ViewBag.EduPlanId = EduPlanId;
-            return View(eduAnnotation);
+            return View(rabProgram);
         }
 
-        // POST: EduAnnotations/Delete/5
+        // POST: RabPrograms/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id, int? EduPlanId)
         {
-            var eduAnnotation = await _context.EduAnnotations.SingleOrDefaultAsync(m => m.EduAnnotationId == id);
-            _context.EduAnnotations.Remove(eduAnnotation);
+            var rabProgram = await _context.RabPrograms.SingleOrDefaultAsync(m => m.RabProgramId == id);
+            _context.RabPrograms.Remove(rabProgram);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index), new { EduPlanId });
         }
 
-        private bool EduAnnotationExists(int id)
+        private bool RabProgramExists(int id)
         {
-            return _context.EduAnnotations.Any(e => e.EduAnnotationId == id);
+            return _context.RabPrograms.Any(e => e.RabProgramId == id);
         }
     }
 }

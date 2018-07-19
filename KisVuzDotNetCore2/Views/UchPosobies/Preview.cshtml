@@ -1,0 +1,85 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.UchPosobiya.UchPosobieEduNapravl>
+
+@{
+    ViewData["Title"] = "Учебные пособия";
+    var uchPosobieFormaIzdaniyaList = (IEnumerable<UchPosobieFormaIzdaniya>)ViewBag.uchPosobieFormaIzdaniya;
+    var uchPosobieVidList = (IEnumerable<UchPosobieVid>)ViewBag.uchPosVidList;
+    int spoilerCounter = 1;
+}
+
+<h2>Учебные пособия</h2>
+<h3>@ViewBag.NapravlCaption</h3>
+
+@if (Model.Count() == 0)
+{
+    <h4>Учебные пособия отсутствуют</h4>
+}
+
+@foreach (var formIzd in uchPosobieFormaIzdaniyaList)
+{
+    var uchPosformIzdList = Model
+            .Where(m => m.UchPosobie.UchPosobieFormaIzdaniya.UchPosobieFormaIzdaniyaId == formIzd.UchPosobieFormaIzdaniyaId);
+    if (uchPosformIzdList.Any())
+    {
+        <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Форма издания: @formIzd.UchPosobieFormaIzdaniyaName</a>
+        <div class="collapse" id="spoiler-@spoilerCounter">
+            @{spoilerCounter++;}
+            <div class="well">
+                @foreach (var uchPosobieVid in uchPosobieVidList)
+                {
+                    var uchPosList = Model
+                        .Where(m =>
+                        m.UchPosobie.UchPosobieVid.UchPosobieVidId == uchPosobieVid.UchPosobieVidId
+                        &&
+                        m.UchPosobie.UchPosobieFormaIzdaniya.UchPosobieFormaIzdaniyaId == formIzd.UchPosobieFormaIzdaniyaId);
+                    if (uchPosList.Any())
+                    {
+                        <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Вид учебного пособия: @uchPosobieVid.UchPosobieVidName</a>
+                        <div class="collapse" id="spoiler-@spoilerCounter">
+                            @{spoilerCounter++;}
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UchPosobie.BiblOpisanie)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.UchPosobie)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+
+                                @foreach (var item in uchPosList)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.UchPosobie.BiblOpisanie
+                                        </td>
+                                        <td>
+                                            <a href="/@item.UchPosobie.FileModel.Path">Открыть</a>
+                                        </td>
+                                    </tr>
+                                }
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    }
+
+}
+
+
+
+
+

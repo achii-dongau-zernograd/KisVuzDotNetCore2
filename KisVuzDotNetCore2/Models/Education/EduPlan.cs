@@ -61,9 +61,9 @@ namespace KisVuzDotNetCore2.Models.Education
         public int StructKafId { get; set; }
 
         /// <summary>
-        /// Выпускающая кафедры
+        /// Выпускающая кафедра
         /// </summary>
-        [Display(Name = "Выпускающая кафедры")]
+        [Display(Name = "Выпускающая кафедра")]
         public StructKaf StructKaf { get; set; }
 
         /// <summary>

@@ -201,6 +201,14 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<EduAnnotation> EduAnnotations { get; set; }
 
         /// <summary>
+        /// Рабочие программы
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public DbSet<RabProgram> RabPrograms { get; set; }
+
+        /// <summary>
         /// Курсы, на которых ведётся дисциплина в составе учебного плана
         /// </summary>
         public DbSet<Kurs> Kurses { get; set; }
@@ -719,6 +727,6 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseNirTema.CreateNirTema(serviceProvider, configuration);
             await InitDatabaseSemestrName.CreateSemestrName(serviceProvider, configuration);
         }                
-        
+    
     }
 }

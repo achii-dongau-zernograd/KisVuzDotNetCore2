@@ -40,5 +40,15 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         [Display(Name = "Курс")]
         public List<Kurs> Kurses { get; set; }
+
+        /// <summary>
+        /// Аннотации
+        /// </summary>
+        public List<EduAnnotation> EduAnnotations { get; set; }
+
+        /// <summary>
+        /// Рабочие программы
+        /// </summary>
+        public List<RabProgram> RabPrograms { get; set; }
     }
 }
