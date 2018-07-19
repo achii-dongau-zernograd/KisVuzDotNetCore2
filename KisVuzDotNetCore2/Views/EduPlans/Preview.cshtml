@@ -163,7 +163,12 @@
                                     <a href="/@rabProgram.FileModel.Path">Открыть</a>
                                 }
                             </td>
-                            <td>Открыть</td>
+                            <td>
+                                @foreach (var fondOcenochnihSredstv in discipline.FondOcenochnihSredstvList)
+                                {
+                                    <a href="/@fondOcenochnihSredstv.FileModel.Path">Открыть</a>
+                                }
+                            </td>
                         </tr>
                     }
                 }

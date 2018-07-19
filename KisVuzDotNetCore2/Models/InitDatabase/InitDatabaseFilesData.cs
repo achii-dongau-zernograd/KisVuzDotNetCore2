@@ -370,7 +370,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeName = "Аннотация рабочей программы",
                         Itemprop = "",
                         FileDataTypeGroupId = 5
-                    };
+                    };                                     
 
                     FileDataType fileDataType36 = new FileDataType
                     {
@@ -428,6 +428,14 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = 8
                     };
 
+                    FileDataType fileDataType43 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.FondOcenochnihSredstv,
+                        FileDataTypeName = "Фонд оценочных средств",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 5
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -470,7 +478,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType39,
                         fileDataType40,
                         fileDataType41,
-                        fileDataType42
+                        fileDataType42,
+                        fileDataType43
                         );
                     await context.SaveChangesAsync();
                 }

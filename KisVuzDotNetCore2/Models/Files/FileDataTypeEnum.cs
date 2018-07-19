@@ -123,6 +123,10 @@
         /// <summary>
         /// Локальный нормативный акт, регламентирующий наличие и условия предоставления стипендии
         /// </summary>
-        StipendiiLocalGrant = 42
+        StipendiiLocalGrant = 42,
+        /// <summary>
+        /// Фонд оценочных средств
+        /// </summary>
+        FondOcenochnihSredstv = 43
     }
 }

@@ -50,5 +50,10 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Рабочие программы
         /// </summary>
         public List<RabProgram> RabPrograms { get; set; }
+
+        /// <summary>
+        /// Фонды оценочных средств
+        /// </summary>
+        public List<FondOcenochnihSredstv> FondOcenochnihSredstvList { get; set; }
     }
 }

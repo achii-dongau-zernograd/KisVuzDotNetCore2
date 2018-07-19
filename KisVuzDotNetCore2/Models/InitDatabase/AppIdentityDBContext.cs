@@ -202,11 +202,13 @@ namespace KisVuzDotNetCore2.Models
 
         /// <summary>
         /// Рабочие программы
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
+        /// </summary>        
         public DbSet<RabProgram> RabPrograms { get; set; }
+
+        /// <summary>
+        /// Фонды оценочных средств
+        /// </summary>
+        public DbSet<FondOcenochnihSredstv> FondOcenochnihSredstvs { get; set; }
 
         /// <summary>
         /// Курсы, на которых ведётся дисциплина в составе учебного плана
