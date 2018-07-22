@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models.Education
 {
+    /// <summary>
+    /// Модель отношения М:М между учебным планом и учебным годом
+    /// </summary>
     public class EduPlanEduYear
     {
         /// <summary>
@@ -33,5 +36,10 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Преподаватели-дисциплины по учебному плану в учебном году
         /// </summary>
         public List<TeacherDiscipline> TeacherDisciplines;
+
+        /// <summary>
+        /// Дисциплины-помещения по учебному плану в учебном году
+        /// </summary>
+        public List<DisciplinePomeshenie> DisciplinePomeshenies { get; set; }
     }
 }

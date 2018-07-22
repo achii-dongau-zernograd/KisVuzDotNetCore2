@@ -101,18 +101,19 @@
                 <th>Рабочая программа</th>
                 <th>Фонд оценочных средств</th>
                 <th>Преподаватели</th>
+                <th>Учебные кабинеты</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var blokDiscipl in Model.BlokDiscipl)
             {
                 <tr class="info">
-                    <td colspan="6"><strong>@blokDiscipl.BlokDisciplName.BlokDisciplNameName</strong></td>
+                    <td colspan="7"><strong>@blokDiscipl.BlokDisciplName.BlokDisciplNameName</strong></td>
                 </tr>
                 @foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
                 {
                     <tr class="active">
-                        <td colspan="6">@blokDisciplChast.BlokDisciplChastName.BlokDisciplChastNameName часть</td>
+                        <td colspan="7">@blokDisciplChast.BlokDisciplChastName.BlokDisciplChastNameName часть</td>
                     </tr>
 
                     @foreach (var discipline in blokDisciplChast.Disciplines)
@@ -179,6 +180,19 @@
                                         @foreach (var teacherDiscipline in teacherDisciplineG)
                                         {
                                         <li><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacherDiscipline.Teacher.AppUserId">@teacherDiscipline.Teacher.TeacherFio</a></li>
+                                        }
+                                    </ul>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var DisciplinePomeshenieG in discipline.DisciplinePomeshenies?.GroupBy(td=>td.EduPlanEduYear?.EduYearId))
+                                {
+                                    var eduYearName = DisciplinePomeshenieG.FirstOrDefault().EduPlanEduYear?.EduYear?.EduYearName;
+                                    <p><strong>@eduYearName уч.год</strong></p>
+                                    <ul>
+                                        @foreach (var disciplinePomeshenie in DisciplinePomeshenieG)
+                                        {
+                                        <li><a asp-controller="Oborudovanies" asp-action="Preview" asp-route-id="@disciplinePomeshenie.Pomeshenie.PomeshenieId">@disciplinePomeshenie.Pomeshenie.PomeshenieName</a></li>
                                         }
                                     </ul>
                                 }

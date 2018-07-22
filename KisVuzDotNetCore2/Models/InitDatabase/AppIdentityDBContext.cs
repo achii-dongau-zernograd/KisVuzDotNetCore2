@@ -201,6 +201,11 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<Discipline> Disciplines { get; set; }
 
         /// <summary>
+        /// Помещения, в которых ведутся дисциплины в составе учебного плана в учебном году
+        /// </summary>
+        public DbSet<DisciplinePomeshenie> DisciplinePomeshenies { get; set; }
+
+        /// <summary>
         /// Аннотации к рабочим программам дисциплин в составе учебного плана
         /// </summary>
         public DbSet<EduAnnotation> EduAnnotations { get; set; }

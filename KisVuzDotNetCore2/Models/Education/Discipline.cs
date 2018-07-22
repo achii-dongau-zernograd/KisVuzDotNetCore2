@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace KisVuzDotNetCore2.Models.Education
 {
     /// <summary>
-    /// Дисциплины по Учебному плану
+    /// Дисциплина по Учебному плану
     /// </summary>
     public class Discipline
     {
@@ -61,5 +61,10 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Преподаватели, ведущие дисциплину (для заполнения таблицы 16 "Информация о составе педагогических работников")
         /// </summary>
         public List<TeacherDiscipline> TeacherDisciplines { get; set; }
+
+        /// <summary>
+        /// Помещения, в которых проводится дисциплина
+        /// </summary>
+        public List<DisciplinePomeshenie> DisciplinePomeshenies { get; set; }
     }
 }

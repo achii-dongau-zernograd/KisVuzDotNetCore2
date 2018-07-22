@@ -340,6 +340,21 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Objects()
         {
+            #region Таблица 17. Сведения о наличии оборудованных учебных кабинетов
+
+            int currentEduYear = (await _context.AppSettings.SingleOrDefaultAsync(s => s.AppSettingId == (int)AppSettingTypesEnum.CurrentEduYear)).AppSettingValue;
+
+            var disciplinePomeshenie = await _context.DisciplinePomeshenies
+                .Include(p => p.Discipline.DisciplineName)
+                .Include(p => p.EduPlanEduYear.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(p => p.Pomeshenie.Korpus)
+                .Include(p => p.Pomeshenie.OborudovanieList)
+                .Where(p => p.EduPlanEduYear.EduYearId == currentEduYear).ToListAsync();
+
+            ViewData["disciplinePomeshenie"] = disciplinePomeshenie;
+
+            #endregion
+
             int NumEbs = _context.ElectronBiblSystem.Count();
             int NumEbsSobstv= _context.ElectronBiblSystem.Where(ebs=>ebs.NumberDogovor==string.Empty).Count();
             int NumEbsDogovor = NumEbs - NumEbsSobstv;

@@ -35,6 +35,39 @@ namespace KisVuzDotNetCore2.Controllers
             return View(await korpuses.ToListAsync());
         }
 
+        /// <summary>
+        /// Перечень оборудования, расположенного в помещении
+        /// </summary>
+        /// <param name="id">УИД помещения</param>
+        /// <returns></returns>
+        public async Task<IActionResult> Preview(int? id)
+        {
+            if(id==null)
+            {
+                return NotFound();
+            }
+
+            // Проверяем существование помещения
+            var pomeshenie = await _context.Pomeshenie.Include(p => p.Korpus).SingleOrDefaultAsync(p => p.PomeshenieId == id);
+            if(pomeshenie==null)
+            {
+                return NotFound();
+            }
+
+            var oborudovanie = await _context.Oborudovanie
+                .Include(o => o.Pomeshenie.Korpus)
+                .Where(o=>o.PomeshenieId==id)
+                .ToListAsync();
+
+            if (oborudovanie == null)
+            {
+                return NotFound();
+            }
+                        
+            ViewBag.Pomeshenie = pomeshenie;
+
+            return View(oborudovanie);
+        }
         
         // GET: Oborudovanies/Create
         public IActionResult Create()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KisVuzDotNetCore2.Models.Education;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace KisVuzDotNetCore2.Models.Sveden
     {
         public int PomeshenieId { get; set; }
 
+        /// <summary>
+        /// Корпус
+        /// </summary>
         public Korpus Korpus { get; set; }
         [Display(Name = "Наименование корпуса")]
         public int KorpusId { get; set; }
@@ -26,7 +30,15 @@ namespace KisVuzDotNetCore2.Models.Sveden
         [Display(Name = "Приспособленность помещений для использования инвалидами и лицами с ОВЗ")]
         public string PomeshenieOvz { get; set; }
 
+        /// <summary>
+        /// Оборудование, размещенное в помещении
+        /// </summary>
         public List<Oborudovanie> OborudovanieList { get; set; }
+
+        /// <summary>
+        /// Дисциплины, преподаваемые в помещении
+        /// </summary>
+        public List<DisciplinePomeshenie> DisciplinePomeshenies { get; set; }
 
         [Display(Name = "Наименование помещения")]
         public string PomeshenieFullName {

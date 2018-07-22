@@ -10,12 +10,113 @@
     int NumEoisOwn = (int)ViewData["NumEoisOwn"];
     int NumEoisSide = (int)ViewData["NumEoisSide"];
     List<PurposeLibr> PurposeLibr = (List<PurposeLibr>)ViewData["PurposeLibrs"];
+    List<DisciplinePomeshenie> disciplinePomeshenie = (List<DisciplinePomeshenie>)ViewData["disciplinePomeshenie"];
 }
 
 <h1>Материально-техническое обеспечение и оснащенность образовательного процесса</h1>
 
-<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о доступе к электронной информационно-образовательной среде, информационным системам и информационно-телекоммуникационным сетям </br> и электронным ресурсам, к которым обеспечивается доступ обучающихся</a>
+<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии оборудованных учебных кабинетов, объектов для проведения практических занятий</a>
 <div class="collapse" id="spoiler-1">
+    <div class="well">
+
+        <table itemprop="purposeCab" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Наименование специальности, направления подготовки</th>
+                    <th>Наименование дисциплины (модуля), практик в соответствии с учебным планом</th>
+                    <th>Наименование специальных помещений и помещений для самостоятельной работы</th>
+                    <th>Оснащенность специальных помещений и помещений для самостоятельной работы</th>
+                    <th>Приспособленность помещений для использования инвалидами и лицами с ограниченными возможностями здоровья</th>
+                </tr>                
+            </thead>
+            <tbody>
+                @foreach (var disciplinePomeshenieG in disciplinePomeshenie.GroupBy(dp => dp.EduPlanEduYear.EduPlan.EduProfileId))
+                {
+                    foreach (var discPomeshenie in disciplinePomeshenieG)
+                    {
+                        <tr itemprop="purposeCab">
+                            <td itemprop="eduCode">@discPomeshenie.EduPlanEduYear.EduPlan.EduProfile.EduNapravl.EduNapravlCode</td>
+                            <td itemprop="eduName">@discPomeshenie.EduPlanEduYear.EduPlan.EduProfile.EduNapravl.EduNapravlName (@discPomeshenie.EduPlanEduYear.EduPlan.EduProfile.EduProfileName)</td>
+                            <td>@discPomeshenie.Discipline.DisciplineName.DisciplineNameName</td>
+                            <td>@discPomeshenie.Pomeshenie.PomeshenieFullName</td>
+                            <td itemprop="purposePrac purposePracOvz"><ul>
+                                @foreach (var oborudovanie in discPomeshenie.Pomeshenie.OborudovanieList)                                
+                                {
+                                    <li>@oborudovanie.OborudovanieName (@oborudovanie.OborudovanieCount шт.)</li>
+                                }
+                                </ul>
+                            </td>
+                            <td itemprop="purposeCabOvz">@discPomeshenie.Pomeshenie.PomeshenieOvz</td>
+                        </tr>
+                    }
+
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии библиотек, объектов спорта, условиях питания и охраны здоровья обучающихся</a>
+<div class="collapse" id="spoiler-2">
+    <div class="well">
+
+
+        <div class="sp-body folded">
+
+            <table class="table" itemprop="purposeLibr">
+                <thead>
+                    <tr>
+                        <th>
+                            Вид помещения
+                        </th>
+                        <th>
+                            Адрес места нахождения
+                        </th>
+                        <th>
+                            Площадь, м.кв.
+                        </th>
+                        <th>
+                            Количество мест
+                        </th>
+                        <th>
+                            Приспособленность для использования инвалидами и лицами с ограниченными возможностями здоровья
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in PurposeLibr)
+                    {
+                        <tr itemprop="@item.itemprop">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.VidPom)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Adress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Square)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumberPlaces)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PrisposoblOvz)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о доступе к электронной информационно-образовательной среде, информационным системам и информационно-телекоммуникационным сетям </br> и электронным ресурсам, к которым обеспечивается доступ обучающихся</a>
+<div class="collapse" id="spoiler-3">
     <div class="well">
 
 
@@ -50,61 +151,6 @@
                     <td>Наличие базы данных электронного каталога</td>
                     <td itemprop="bdec"><a asp-controller="ElectronCatalogs" asp-action="Preview">@NumEc</a></td>
                 <tr>
-            </table>
-        </div>
-    </div>
-</div>
-
-<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии библиотек, объектов спорта, условиях питания и охраны здоровья обучающихся</a>
-<div class="collapse" id="spoiler-2">
-    <div class="well">
-
-
-        <div class="sp-body folded">
-           
-            <table class="table" itemprop="purposeLibr">
-                <thead>
-                    <tr>
-                        <th>
-                            Вид помещения
-                        </th>
-                        <th>
-                            Адрес места нахождения
-                        </th>
-                        <th>
-                            Площадь, м.кв.
-                        </th>
-                        <th>
-                            Количество мест
-                        </th>
-                        <th>
-                            Приспособленность для использования инвалидами и лицами с ограниченными возможностями здоровья
-                        </th>
-                       <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in PurposeLibr)
-                    {
-                        <tr itemprop="@item.itemprop">
-                            <td>
-                                @Html.DisplayFor(modelItem => item.VidPom)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Adress)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Square)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NumberPlaces)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PrisposoblOvz)
-                            </td>                            
-                        </tr>
-                    }
-                </tbody>
             </table>
         </div>
     </div>

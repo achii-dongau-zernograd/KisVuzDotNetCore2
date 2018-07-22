@@ -1,0 +1,48 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.DisciplinePomeshenie>
+
+@{
+    ViewData["Title"] = "Дисциплина - помещение";
+    string eduYear = "";
+    var yearGroupped = Model.GroupBy(m => m.EduPlanEduYear.EduYear.EduYearName);
+    foreach (var g in yearGroupped)
+    {
+        eduYear += @g.Key + " ";
+    }
+}
+
+<h2>Закрепление помещений за дисциплинами учебного плана в @eduYear учебном году 
+<a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@ViewBag.EduPlanId">(учебный план)</a></h2>
+
+<p>
+    <a asp-action="Create" asp-route-EduYearId="@ViewBag.EduYearId" asp-route-EduPlanId="@ViewBag.EduPlanId" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Discipline)
+            </th>            
+            <th>
+                @Html.DisplayNameFor(model => model.Pomeshenie)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discipline.DisciplineName.DisciplineNameName)
+                </td>                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pomeshenie.PomeshenieFullName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DisciplinePomeshenieId">Редактировать</a> |
+                    <a asp-action="Delete" asp-route-id="@item.DisciplinePomeshenieId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

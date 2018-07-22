@@ -1,0 +1,35 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.Oborudovanie>
+
+@{
+    ViewData["Title"] = "Оборудование";
+    var Pomeshenie = (Pomeshenie)ViewBag.Pomeshenie;
+}
+
+<h2>Оснащённость помещения</h2>
+<h3>@Pomeshenie.Korpus.KorpusName</h3>
+<h3>@Pomeshenie.PomeshenieName</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OborudovanieName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OborudovanieCount)
+                </th>            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OborudovanieName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OborudovanieCount)
+            </td>                  
+        </tr>
+}
+    </tbody>
+</table>
