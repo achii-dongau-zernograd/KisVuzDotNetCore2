@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using KisVuzDotNetCore2.Models.Users;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models.Education
@@ -55,5 +56,10 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Фонды оценочных средств
         /// </summary>
         public List<FondOcenochnihSredstv> FondOcenochnihSredstvList { get; set; }
+
+        /// <summary>
+        /// Преподаватели, ведущие дисциплину (для заполнения таблицы 16 "Информация о составе педагогических работников")
+        /// </summary>
+        public List<TeacherDiscipline> TeacherDisciplines { get; set; }
     }
 }

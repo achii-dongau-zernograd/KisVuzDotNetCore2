@@ -432,6 +432,12 @@
     <Compile Remove="Migrations\20180718093830_UchPosobie.Designer.cs" />
     <Compile Remove="Migrations\20180719051950_rabprograms.cs" />
     <Compile Remove="Migrations\20180719051950_rabprograms.Designer.cs" />
+    <Compile Remove="Migrations\20180721085042_teacherDisc.cs" />
+    <Compile Remove="Migrations\20180721085042_teacherDisc.Designer.cs" />
+    <Compile Remove="Migrations\20180721091605_t.cs" />
+    <Compile Remove="Migrations\20180721091605_t.Designer.cs" />
+    <Compile Remove="Migrations\20180722072716_settings.cs" />
+    <Compile Remove="Migrations\20180722072716_settings.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

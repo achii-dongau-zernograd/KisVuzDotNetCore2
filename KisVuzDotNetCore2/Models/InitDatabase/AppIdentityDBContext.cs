@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.UchPosobiya;
+using KisVuzDotNetCore2.Models.Common;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -29,6 +30,10 @@ namespace KisVuzDotNetCore2.Models
         }
         #endregion
         #region Таблицы
+
+        #region Общие (Common)
+        public DbSet<AppSetting> AppSettings { get; set; }
+        #endregion
 
         #region Образовательная деятельность (Education)
         /// <summary>
@@ -476,7 +481,7 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<BlankNum> BlankNums { get; set; }
         #endregion
-
+        
         #region Настройки пользователя
         /// <summary>
         /// Группы ученых степеней
@@ -524,6 +529,11 @@ namespace KisVuzDotNetCore2.Models
         /// Преподаватель - Кафедра - Должность - Ставка - Дата установления ставки
         /// </summary>
         public DbSet<TeacherStructKafPostStavka> TeacherStructKafPostStavka { get; set; }
+
+        /// <summary>
+        /// Таблица для закрепления за преподавателем дисциплин по учебному плану (по учебным годам)
+        /// </summary>
+        public DbSet<TeacherDiscipline> TeacherDisciplines { get; set; }
         #endregion
 
         #region Материально-техническое обеспечение
@@ -728,6 +738,8 @@ namespace KisVuzDotNetCore2.Models
 
             await InitDatabaseNirTema.CreateNirTema(serviceProvider, configuration);
             await InitDatabaseSemestrName.CreateSemestrName(serviceProvider, configuration);
+
+            await InitDatabaseAppSettings.CreateAppSettings(serviceProvider, configuration);
         }                
     
     }

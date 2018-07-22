@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20180721085616_teacherDisc")]
+    partial class teacherDisc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,20 +135,6 @@ namespace KisVuzDotNetCore2.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.AppSetting", b =>
-                {
-                    b.Property<int>("AppSettingId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AppSettingName");
-
-                    b.Property<int>("AppSettingValue");
-
-                    b.HasKey("AppSettingId");
-
-                    b.ToTable("AppSettings");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.BlokDiscipl", b =>
@@ -3073,7 +3060,7 @@ namespace KisVuzDotNetCore2.Migrations
                         .HasForeignKey("DisciplineId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduPlanEduYear", "EduPlanEduYear")
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduPlanEduYear", "EduYear")
                         .WithMany()
                         .HasForeignKey("EduPlanEduYearId")
                         .OnDelete(DeleteBehavior.Cascade);

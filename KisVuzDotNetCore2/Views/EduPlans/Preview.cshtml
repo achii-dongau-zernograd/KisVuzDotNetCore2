@@ -100,18 +100,19 @@
                 <th>Аннотация</th>
                 <th>Рабочая программа</th>
                 <th>Фонд оценочных средств</th>
+                <th>Преподаватели</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var blokDiscipl in Model.BlokDiscipl)
             {
                 <tr class="info">
-                    <td colspan="5"><strong>@blokDiscipl.BlokDisciplName.BlokDisciplNameName</strong></td>
+                    <td colspan="6"><strong>@blokDiscipl.BlokDisciplName.BlokDisciplNameName</strong></td>
                 </tr>
                 @foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
                 {
                     <tr class="active">
-                        <td colspan="5">@blokDisciplChast.BlokDisciplChastName.BlokDisciplChastNameName часть</td>
+                        <td colspan="6">@blokDisciplChast.BlokDisciplChastName.BlokDisciplChastNameName часть</td>
                     </tr>
 
                     @foreach (var discipline in blokDisciplChast.Disciplines)
@@ -167,6 +168,19 @@
                                 @foreach (var fondOcenochnihSredstv in discipline.FondOcenochnihSredstvList)
                                 {
                                     <a href="/@fondOcenochnihSredstv.FileModel.Path">Открыть</a>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var teacherDisciplineG in discipline.TeacherDisciplines.GroupBy(td=>td.EduPlanEduYear.EduYearId))
+                                {
+                                    var eduYearName = teacherDisciplineG.FirstOrDefault().EduPlanEduYear.EduYear.EduYearName;
+                                    <p><strong>@eduYearName уч.год</strong></p>
+                                    <ul>
+                                        @foreach (var teacherDiscipline in teacherDisciplineG)
+                                        {
+                                        <li><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacherDiscipline.Teacher.AppUserId">@teacherDiscipline.Teacher.TeacherFio</a></li>
+                                        }
+                                    </ul>
                                 }
                             </td>
                         </tr>

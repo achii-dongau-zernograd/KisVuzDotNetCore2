@@ -31,14 +31,15 @@
                                     }
                                     @foreach (var eduPlan in eduProfile.EduPlans)
                                     {
-                                        <li>
+                                        <li>Форма обучения: @eduPlan.EduForm?.EduFormName.
+                                            Годы начала подготовки: 
                                             @foreach (var yearBT in eduPlan.EduPlanEduYearBeginningTrainings)
                                             {
                                                 <span>@yearBT.EduYearBeginningTraining.EduYearBeginningTrainingName</span>
                                             }
                                             
                                             <a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId"> Открыть учебный план</a>
-                                        </li>
+                                        </li>                                        
                                     }
                                 </ul>
                             }

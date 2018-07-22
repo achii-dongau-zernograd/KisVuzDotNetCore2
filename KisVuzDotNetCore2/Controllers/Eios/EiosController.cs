@@ -34,6 +34,11 @@ namespace KisVuzDotNetCore2.Controllers.Eios
                             .ThenInclude(n => n.EduProfiles)
                                 .ThenInclude(p => p.EduPlans)
                                     .ThenInclude(plan => plan.EduPlanPdf)
+                     .Include(l => l.EduUgses)
+                        .ThenInclude(u => u.EduNapravls)
+                            .ThenInclude(n => n.EduProfiles)
+                                .ThenInclude(p => p.EduPlans)
+                                    .ThenInclude(plan => plan.EduForm)
                      .ToListAsync();
 
             ViewData["eduLevels"] = eduLevels;

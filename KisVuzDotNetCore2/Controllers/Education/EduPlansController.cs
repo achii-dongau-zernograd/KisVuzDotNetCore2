@@ -478,6 +478,12 @@ namespace KisVuzDotNetCore2.Controllers.Education
                         .ThenInclude(c => c.Disciplines)
                             .ThenInclude(d => d.FondOcenochnihSredstvList)
                                 .ThenInclude(a => a.FileModel)
+                 .Include(e => e.BlokDiscipl)
+                    .ThenInclude(b => b.BlokDisciplChast)
+                        .ThenInclude(c => c.Disciplines)
+                            .ThenInclude(d => d.TeacherDisciplines)
+                                .ThenInclude(td => td.Teacher)
+                                    .ThenInclude(t => t.AppUser)
                  .SingleOrDefaultAsync(e => e.EduPlanId == id);
                 
             if(eduPlan == null)

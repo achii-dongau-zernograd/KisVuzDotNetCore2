@@ -1,0 +1,39 @@
+﻿@model KisVuzDotNetCore2.Models.Users.TeacherDiscipline
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <h4>TeacherDiscipline</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduPlanEduYear.EduYear)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduPlanEduYear.EduYear.EduYearName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Discipline)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Discipline.DisciplineName.DisciplineNameName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Teacher)
+        </dt>
+        <dd>
+            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.Teacher.AppUser.Id">@Model.Teacher.TeacherFio</a>
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="TeacherDisciplineId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" asp-route-EduPlanId="@Model.EduPlanEduYear.EduPlanId" asp-route-EduYearId="@Model.EduPlanEduYear.EduYearId" class="btn btn-default">Отмена</a>
+    </form>
+</div>

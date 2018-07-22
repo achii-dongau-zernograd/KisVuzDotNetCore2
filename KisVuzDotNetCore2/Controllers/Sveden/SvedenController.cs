@@ -3,6 +3,7 @@ using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Struct;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -271,6 +272,48 @@ namespace KisVuzDotNetCore2.Controllers
                 .ToListAsync();//Add filter by teacher-disc data---
             ViewData["eduProfiles"] = eduProfiles;
 
+
+            //////////
+            // Очищаем таблицу TeacherEduProfileDisciplineNames
+            _context.TeacherEduProfileDisciplineNames.RemoveRange(_context.TeacherEduProfileDisciplineNames);
+            await _context.SaveChangesAsync();
+
+            int currentEduYearId = (await _context.AppSettings.SingleOrDefaultAsync(s=>s.AppSettingId==(int)AppSettingTypesEnum.CurrentEduYear)).AppSettingValue;
+            // Группируем TeacherDisciplines по коду профиля EduProfileId
+            var teacherDisciplinesGroupedByEduProfileId = await _context.TeacherDisciplines
+                .Include(td => td.Discipline.DisciplineName)
+                .Include(td => td.EduPlanEduYear.EduPlan)
+                .Where(td=>td.EduPlanEduYear.EduYearId== currentEduYearId)//Фильтр по учебному году 2 - 2018-2019
+                .GroupBy(td=>td.EduPlanEduYear.EduPlan.EduProfileId)
+                .ToListAsync();
+            
+            foreach (var teacherDisciplinesGroupedByEduProfileIdItem in teacherDisciplinesGroupedByEduProfileId)
+            {
+                // Группируем по коду преподавателя
+                foreach(var teacherIdG in teacherDisciplinesGroupedByEduProfileIdItem.GroupBy(g=>g.TeacherId))
+                {
+                    foreach (var teacherDiscipline in teacherIdG)
+                    {                        
+                        var teacherEduProfileDisciplineName = new TeacherEduProfileDisciplineName();
+                        teacherEduProfileDisciplineName.EduProfileId = teacherDisciplinesGroupedByEduProfileIdItem.Key;
+                        teacherEduProfileDisciplineName.TeacherId = teacherIdG.Key;
+                        teacherEduProfileDisciplineName.DisciplineNameId = teacherDiscipline.Discipline.DisciplineNameId;
+
+                        var findedItem = await _context.TeacherEduProfileDisciplineNames.SingleOrDefaultAsync(tepd => 
+                        tepd.EduProfileId == teacherEduProfileDisciplineName.EduProfileId && 
+                        tepd.TeacherId == teacherEduProfileDisciplineName.TeacherId &&
+                        tepd.DisciplineNameId == teacherEduProfileDisciplineName.DisciplineNameId);
+                        if (findedItem==null)
+                        {
+                            await _context.TeacherEduProfileDisciplineNames.AddAsync(teacherEduProfileDisciplineName);
+                            await _context.SaveChangesAsync();
+                        }
+                    }                    
+                }                
+            }
+            
+            //////////
+
             var teacherEduProfileDisciplineNames = await _context.TeacherEduProfileDisciplineNames
                 .Include(tpd => tpd.Teacher.AppUser.EduLevelGroup)
                 .Include(tpd => tpd.Teacher.AppUser.Qualifications)
@@ -282,12 +325,9 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(tpd => tpd.DisciplineName)
                 .ToListAsync();
             ViewData["teacherEduProfileDisciplineNames"] = teacherEduProfileDisciplineNames;
-
+            
             var posts = await _context.Posts.ToListAsync();
-            ViewData["posts"] = posts;
-
-            //var rowStatuses = await _context.RowStatuses.ToListAsync();
-            //ViewData["rowStatuses"] = rowStatuses;
+            ViewData["posts"] = posts;            
             #endregion
 
             return View();

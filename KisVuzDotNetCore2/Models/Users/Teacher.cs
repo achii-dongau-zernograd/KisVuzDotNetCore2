@@ -30,5 +30,10 @@ namespace KisVuzDotNetCore2.Models.Users
         /// Кафедра - Должность - Ставка - Дата установления ставки преподавателя 
         /// </summary>
         public List<TeacherStructKafPostStavka> TeacherStructKafPostStavka { get; set; }
+
+        /// <summary>
+        /// Дисциплины, которые ведёт преподаватель (для заполнения таблицы 16 "Информация о составе педагогических работников")
+        /// </summary>
+        public List<TeacherDiscipline> TeacherDisciplines { get; set; }
     }
 }

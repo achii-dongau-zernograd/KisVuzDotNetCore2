@@ -241,7 +241,8 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сотрудники <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a asp-controller="Teachers" asp-action="Index" asp-route-id="">Преподаватели</a></li>
-                                    <li><a asp-controller="TeacherEduProfileDisciplineNames" asp-action="Index" asp-route-id="">Преподаватели. Направления - дисциплины</a></li>
+                                    <li><a asp-controller="TeacherDisciplines" asp-action="Index" asp-route-id="">Закрепление преподавателей за уч. дисциплинами в уч. году (по уч. плану)</a></li>
+                                    <li><a asp-controller="TeacherEduProfileDisciplineNames" asp-action="Index" asp-route-id="">Преподаватели. Направления - дисциплины (useless)</a></li>
                                     <li><a asp-controller="TeacherStructKafPostStavka" asp-action="Index" asp-route-id="">Преподаватель - Кафедра - Должность - Ставка - Дата установления ставки</a></li>
                                     <li><a asp-controller="Qualifications" asp-action="Index" asp-route-id="">Квалификации</a></li>
                                     <li><a asp-controller="RefresherCourses" asp-action="Index">Курсы повышения квалификации</a></li>
@@ -323,6 +324,7 @@
                         <ul class="dropdown-menu">
                             <li><a asp-area="" asp-controller="UserAdmin" asp-action="Index">Пользователи</a></li>
                             <li><a asp-area="" asp-controller="RoleAdmin" asp-action="Index">Роли</a></li>
+                            <li><a asp-area="" asp-controller="AppSettings" asp-action="Index">Настройки приложения</a></li>
                         </ul>
                     </li>
                 </ul>

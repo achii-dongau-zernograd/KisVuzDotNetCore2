@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using KisVuzDotNetCore2.Models.Users;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models.Education
 {
@@ -26,5 +28,10 @@ namespace KisVuzDotNetCore2.Models.Education
         [Display(Name = "Учебный год")]
         public int EduYearId { get; set; }
 
+        //////////////////////////////////////////////
+        /// <summary>
+        /// Преподаватели-дисциплины по учебному плану в учебном году
+        /// </summary>
+        public List<TeacherDiscipline> TeacherDisciplines;
     }
 }

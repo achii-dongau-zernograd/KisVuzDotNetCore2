@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "Выбор учебного плана";
+    int spoilerCounter = 1;
+    int EduYearId = (int)ViewData["EduYearId"];
+    var eduLevels = (List<EduLevel>)ViewData["eduLevels"];
+}
+
+<h2>Выбор учебного плана</h2>
+
+@foreach (var eduLevel in eduLevels)
+{
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduLevel.EduLevelName</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    <div class="well">
+        @{spoilerCounter++;}
+        @foreach (var ugs in eduLevel.EduUgses)
+            {
+                foreach (var eduNapravl in ugs.EduNapravls)
+                {
+                <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduNapravl.EduNapravlCode - @eduNapravl.EduNapravlName</a>
+                <div class="collapse" id="spoiler-@spoilerCounter">
+                    <div class="well">
+                        @{spoilerCounter++;}
+                        @foreach (var eduProfile in eduNapravl.EduProfiles)
+                                    {
+                                    <strong>@eduProfile.EduProfileName</strong>
+                                    <ul>
+                                        @if (eduProfile.EduPlans.Count == 0)
+                                        {
+                                            <li>Учебные планы отсутствуют</li>
+                                        }
+                                        @foreach (var eduPlan in eduProfile.EduPlans)
+                                        {
+                                        <li>
+                                            @foreach (var yearBT in eduPlan.EduPlanEduYearBeginningTrainings)
+                                            {
+                                            <span>@yearBT.EduYearBeginningTraining.EduYearBeginningTrainingName</span>
+                                            }
+
+                                            <a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId"> Открыть учебный план</a>
+                                            <a asp-action="Index" asp-route-EduYearId="@EduYearId" asp-route-EduPlanId="@eduPlan.EduPlanId" class="btn btn-primary">Выбрать учебный план</a>
+                                        </li>
+                                        }
+                                    </ul>
+                                    }
+                    </div>
+                </div>
+                }
+            }
+    </div>
+</div>
+}

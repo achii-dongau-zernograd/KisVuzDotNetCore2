@@ -1,0 +1,34 @@
+﻿@model KisVuzDotNetCore2.Models.Users.TeacherDiscipline
+
+@{
+    ViewData["Title"] = "Добавление";
+    var eduPlanEduYear = (EduPlanEduYear)ViewBag.eduPlanEduYear;
+}
+
+<h2>Добавление</h2>
+
+<h4>Закрепление преподавателя за дисциплиной в учебном году</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="eduPlanEduYearId" value="@eduPlanEduYear.EduPlanEduYearId" />
+            <div class="form-group">
+                <label class="control-label">Учебный год: @eduPlanEduYear.EduYear.EduYearName</label>     
+            </div>
+            <div class="form-group">
+                <label asp-for="TeacherId" class="control-label"></label>
+                <select asp-for="TeacherId" class ="form-control" asp-items="ViewBag.TeacherId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DisciplineId" class="control-label"></label>
+                <select asp-for="DisciplineId" class ="form-control" asp-items="ViewBag.DisciplineId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" asp-route-EduPlanId="@eduPlanEduYear.EduPlanId" asp-route-EduYearId="@eduPlanEduYear.EduYearId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
