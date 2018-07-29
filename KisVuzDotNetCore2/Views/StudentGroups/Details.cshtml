@@ -1,0 +1,69 @@
+﻿@model KisVuzDotNetCore2.Models.Students.StudentGroup
+
+@{
+    ViewData["Title"] = "Подробнее";
+}
+
+<h2>Детализация</h2>
+
+<div>
+    <h4>Студенческая группа</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentGroupNamePrefix)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StudentGroupNamePrefix)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentGroupNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StudentGroupNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduKurs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduKurs.EduKursId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.EduProfileId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Kurator)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Kurator.TeacherId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StructFacultet)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StructFacultet.StructFacultetId)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (ViewBag.StructFacultetId != null)
+    {
+        <a asp-action="EditByDekanat" asp-route-id="@Model.StudentGroupId" asp-route-StructFacultetId="@ViewBag.StructFacultetId">Редактировать</a> <text>|</text>
+        <a asp-action="StudentGroupsOfFacultet" asp-route-StructFacultetId="@ViewBag.StructFacultetId">Отмена</a>
+    }
+    else
+    {
+        <a asp-action="Edit" asp-route-id="@Model.StudentGroupId">Редактировать</a> <text>|</text>
+        <a asp-action="Index">Отмена</a>
+    }
+
+</div>

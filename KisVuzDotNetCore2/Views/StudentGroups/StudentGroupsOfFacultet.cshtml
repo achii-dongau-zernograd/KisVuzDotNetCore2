@@ -1,0 +1,76 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Students.StudentGroup>
+
+@{
+    ViewData["Title"] = "Студенты факультета";
+    var structFacultet = (StructFacultet)ViewData["structFacultet"];
+    int spoilerCounter = 0;
+}
+
+<h2>@structFacultet.StructSubvision.StructSubvisionName</h2>
+<h2>Студенческие группы</h2>
+
+<p>
+    <a asp-action="CreateByDekanat" asp-route-StructFacultetId="@structFacultet.StructFacultetId" class="btn btn-primary">Добавить группу</a>
+</p>
+
+@foreach (var studentGroupsGroupedByEduProfileId in Model.GroupBy(m => m.EduProfileId))
+{
+    spoilerCounter++;
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@studentGroupsGroupedByEduProfileId.FirstOrDefault().EduProfile.GetEduProfileFullName</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        <div class="well">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EduKurs)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EduForm)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StudentGroupName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Kurator)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Students)
+                        </th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var studentGroup in studentGroupsGroupedByEduProfileId.OrderBy(g=>g.EduKursId))
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => studentGroup.EduKurs.EduKursNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => studentGroup.EduForm.EduFormName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => studentGroup.StudentGroupName)
+                        </td>
+                        <td>
+                            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@studentGroup.Kurator.AppUserId">@studentGroup.Kurator.TeacherFio</a>
+                        </td>
+                        <td>
+                            <a asp-controller="Students" asp-action="Index" asp-route-StudentGroupId="@studentGroup.StudentGroupId" asp-route-StructFacultetId="@structFacultet.StructFacultetId">Открыть</a>
+                        </td>
+                        <td>
+                            <a asp-action="EditByDekanat" asp-route-id="@studentGroup.StudentGroupId" asp-route-StructFacultetId="@structFacultet.StructFacultetId">Редактировать</a> |
+                            <a asp-action="Details" asp-route-id="@studentGroup.StudentGroupId" asp-route-StructFacultetId="@structFacultet.StructFacultetId">Подробнее</a> |
+                            <a asp-action="Delete" asp-route-id="@studentGroup.StudentGroupId" asp-route-StructFacultetId="@structFacultet.StructFacultetId">Удалить</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+

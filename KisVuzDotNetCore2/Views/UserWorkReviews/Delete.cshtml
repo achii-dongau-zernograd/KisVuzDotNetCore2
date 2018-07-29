@@ -1,0 +1,55 @@
+﻿@model KisVuzDotNetCore2.Models.Users.UserWorkReview
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <h4>Рецензия на работу пользователя</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Reviewer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Reviewer.GetFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserWork)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserWork.UserWorkName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserWorkReviewText)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserWorkReviewText)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModel)
+        </dt>
+        <dd>
+            @if (Model.FileModel != null)
+            { <a href="/@Model.FileModel.Path">Открыть</a> }
+            else
+            { <p>-</p> }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserWorkReviewMark)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserWorkReviewMark.UserWorkReviewMarkName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="UserWorkReviewId" />
+        <input type="hidden" name="UserWorkId" value="@Model.UserWorkId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" asp-route-UserWorkId="@Model.UserWorkId" class="btn btn-default">Отмена</a>
+    </form>
+</div>

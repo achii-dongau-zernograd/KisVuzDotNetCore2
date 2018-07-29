@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.UchPosobiya;
 using KisVuzDotNetCore2.Models.Common;
+using KisVuzDotNetCore2.Models.Students;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -224,7 +225,7 @@ namespace KisVuzDotNetCore2.Models
         /// Курсы, на которых ведётся дисциплина в составе учебного плана
         /// </summary>
         public DbSet<Kurs> Kurses { get; set; }
-        
+
         /// <summary>
         /// Семестры, в которых ведётся дисциплина
         /// </summary>
@@ -451,6 +452,26 @@ namespace KisVuzDotNetCore2.Models
         /// <param name="configuration"></param>
         /// <returns></returns>
         public DbSet<ElectronObrazovatInformRes> ElectronObrazovatInformRes { get; set; }
+
+        /// <summary>
+        /// Типы работ пользователя (курсовые, ВКР, эссе и пр.)
+        /// </summary>
+        public DbSet<UserWorkType> UserWorkTypes { get; set; }
+
+        /// <summary>
+        /// Работы пользователя (для сохранения курсовых, ВКР, эссе и пр.)
+        /// </summary>
+        public DbSet<UserWork> UserWorks { get; set; }
+
+        /// <summary>
+        /// Справочник оценок за работы пользователей
+        /// </summary>
+        public DbSet<UserWorkReviewMark> UserWorkReviewMarks { get; set; }
+
+        /// <summary>
+        /// Рецензии и оценки работ пользователей
+        /// </summary>
+        public DbSet<UserWorkReview> UserWorkReviews { get; set; }
         #endregion
 
         #region Файлы
@@ -486,7 +507,7 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<BlankNum> BlankNums { get; set; }
         #endregion
-        
+
         #region Настройки пользователя
         /// <summary>
         /// Группы ученых степеней
@@ -497,7 +518,7 @@ namespace KisVuzDotNetCore2.Models
         /// Ученые степени
         /// </summary>
         public DbSet<AcademicDegree> AcademicDegrees { get; set; }
-               
+
 
 
         /// <summary>
@@ -684,6 +705,39 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<KisVuzDotNetCore2.Models.NirTemaEduProfile> NirTemaEduProfile { get; set; }
         #endregion
 
+        #region Студенты
+        /// <summary>
+        /// Студенты
+        /// </summary>
+        public DbSet<Student> Students { get; set; }
+        /// <summary>
+        /// Студенческие группы
+        /// </summary>
+        public DbSet<StudentGroup> StudentGroups { get; set; }
+
+        /// <summary>
+        /// Справочник наименований отметок по ведомости (хорошо, отлично, зачтено и пр.)
+        /// </summary>
+        public DbSet<VedomostStudentMarkName> VedomostStudentMarkNames { get; set; }
+
+        /// <summary>
+        /// Отметки студентов по ведомости
+        /// </summary>
+        public DbSet<VedomostStudentMark> VedomostStudentMarks { get; set; }
+
+        /// <summary>
+        /// Ведомости
+        /// </summary>
+        public DbSet<Vedomost> Vedomosti { get; set; }
+        #endregion
+
+        #region Сообщения
+        /// <summary>
+        /// Сообщения пользователей друг другу
+        /// </summary>
+        public DbSet<UserMessage> UserMessages { get; set; }
+        #endregion
+
         #endregion
         /// <summary>
         /// Инициализация базы данных
@@ -745,6 +799,10 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseSemestrName.CreateSemestrName(serviceProvider, configuration);
 
             await InitDatabaseAppSettings.CreateAppSettings(serviceProvider, configuration);
+
+            await InitDatabaseVedomostStudentMarkName.CreateVedomostStudentMarkName(serviceProvider, configuration);
+            await InitDatabaseUserWorkType.CreateUserWorkType(serviceProvider, configuration);
+            await InitDatabaseUserWorkReviewMarks.CreateUserWorkReviewMarks(serviceProvider, configuration);
         }                
     
     }

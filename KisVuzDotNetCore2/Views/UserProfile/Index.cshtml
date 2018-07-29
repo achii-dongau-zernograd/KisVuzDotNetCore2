@@ -1,57 +1,237 @@
 ﻿@model AppUser
-<div class="bg-primary panel-body">
-    <h4>Профиль пользователя @Model.UserName (@Model.Email)</h4>
+
+@{
+    var student = (Student)ViewData["student"];
+}
+
+<div class="page-header">
+    <h1>
+        @Model.GetFullName
+
+        @if (ViewBag.CanEdit)
+        {
+            <a asp-action="ChangeProfile" class="btn btn-primary">Изменить профиль</a>
+        }
+        else
+        {
+            <a asp-controller="UserMessages" asp-action="Create" asp-route-UserReceiverId="@Model.Id" a class="btn btn-primary">Отправить сообщение</a>
+        }
+    </h1>
 </div>
 <div asp-validation-summary="All" class="text-danger"></div>
 
-@if (Model.AppUserPhoto != null)
-{
-    <img style='width:150px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.AppUserPhoto))" />
-}
 
-<h4>@Model.GetFullName</h4>
+<div class="row">
+    <div class="col-md-2">
+        @if (Model.AppUserPhoto != null)
+        {
+            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.AppUserPhoto))" class="img-responsive" />
+        }
+        else
+        {
+            <div class="panel panel-default">
+                <h4 class="text-center">Нет фото</h4>
+            </div>            
+        }
+    </div>
+    <div class="col-md-10">
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#common" data-toggle="tab">Общие сведения</a></li>
+            <li><a href="#qualification" data-toggle="tab">Образование и квалификация</a></li>
+            <li><a href="#education" data-toggle="tab">Образовательная деятельность</a></li>
+            <li><a href="#science" data-toggle="tab">Научная деятельность</a></li>
+            <li><a href="#works" data-toggle="tab">Работы пользователя</a></li>
+        </ul>
 
-@if (Model.Birthdate == null || Model.Birthdate.Equals(new DateTime()))
-{
-    <i>Не указано</i>
-}
-else
-{
-    <p>Дата рождения: @String.Format("{0:dd.MM.yyyy}", Model.Birthdate)</p>
-}
+        <div class="tab-content">
+            <div class="tab-pane active" id="common">
+                <br />
 
-<p>Телефон: @Model.PhoneNumber  @if (String.IsNullOrWhiteSpace(Model.PhoneNumber))
-{<i>Не указано</i>}</p><br />
+                @if (Model.Birthdate == null || Model.Birthdate.Equals(new DateTime()))
+                {
+                    <i>Не указано</i>
+                }
+                else
+                {
+                    <p><strong>Дата рождения:</strong> @String.Format("{0:dd.MM.yyyy}", Model.Birthdate)</p>                    
+                }
 
+                <p>
+                    <strong>Телефон:</strong> @Model.PhoneNumber  @if (String.IsNullOrWhiteSpace(Model.PhoneNumber))
+                    {<i>Не указано</i>}
+                </p>
 
-@if(Model.EduLevelGroup!=null)
-{
-    <p>Уровень образования: @Model.EduLevelGroup?.EduLevelGroupName</p>
-}
+                <p><strong>Email:</strong> @Model.Email</p>
+            </div>
+            <div class="tab-pane" id="qualification">
+                <br />
 
-
-@if(Model.Qualifications?.Count()>0)
-{
-    <p>Квалификация:</p>
-    @foreach(Qualification q in Model.Qualifications)
-    {
-        <p>@q.NapravlName - @q.QualificationName</p>
-    }
-}
-
-@if(Model.AcademicDegree!=null)
-{
-    <p>Ученая степень: @Model.AcademicDegree.AcademicDegreeName</p>
-}
-
-@if(Model.AcademicStat!=null)
-{
-    <p>Ученое звание: @Model.AcademicStat.AcademicStatName</p>
-}
+                @if (Model.EduLevelGroup != null)
+                {
+                    <p><strong>Уровень образования:</strong> @Model.EduLevelGroup?.EduLevelGroupName</p>
+                }
 
 
+                @if (Model.Qualifications?.Count() > 0)
+                {
+                    <label>Квалификация:</label>
+                    @foreach (Qualification q in Model.Qualifications)
+                    {
+                        <p>@q.NapravlName - @q.QualificationName</p>
+                    }
+                }
 
-@if (ViewBag.CanEdit)
-{
-    <a asp-action="ChangeProfile" class="btn btn-primary">Изменить профиль</a>
-}
+                @if (Model.AcademicDegree != null)
+                {
+                    <p><strong>Ученая степень:</strong> @Model.AcademicDegree.AcademicDegreeName</p>
+                }
+
+                @if (Model.AcademicStat != null)
+                {
+                    <p><strong>Ученое звание:</strong> @Model.AcademicStat.AcademicStatName</p>
+                }
+
+                @if (Model.ProfessionalRetrainings?.Count() > 0)
+                {
+                    <label>Профессиональная переподготовка:</label>
+                    <ol>
+                        @foreach (var pr in Model.ProfessionalRetrainings)
+                        {
+                            <li>@pr.GetProfessionalRetrainingString</li>
+                        }
+                    </ol>
+                }
+
+                @if (Model.RefresherCourses?.Count() > 0)
+                {
+                    <label>Повышение квалификации:</label>
+                    <ol>
+                        @foreach (var c in Model.RefresherCourses)
+                        {
+                            <li>@c.GetRefresherCourseString</li>
+                        }
+                    </ol>
+                }
+
+            </div>
+            <div class="tab-pane" id="education">
+                <br />
+                @if (student != null)
+                {
+                    <h4>Студент группы @student.StudentGroup.StudentGroupName</h4>
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Факультет</th>
+                            <td>@student.StudentGroup.StructFacultet.StructSubvision.StructSubvisionName</td>
+                        </tr>
+                        <tr>
+                            <th>Направление подготовки (специальность)</th>
+                            <td>@student.StudentGroup.EduProfile.EduNapravl.EduNapravlCode - @student.StudentGroup.EduProfile.EduNapravl.EduNapravlName</td>
+                        </tr>
+                        <tr>
+                            <th>Направленность подготовки (профиль / специализация)</th>
+                            <td>@student.StudentGroup.EduProfile.EduProfileName</td>
+                        </tr>
+                        <tr>
+                            <th>Форма обучения</th>
+                            <td>@student.StudentGroup.EduForm.EduFormName</td>
+                        </tr>
+                        <tr>
+                            <th>Курс</th>
+                            <td>@student.StudentGroup.EduKurs.EduKursNumber</td>
+                        </tr>
+                    </table>
+
+                    <h4>Результаты промежуточной аттестации и результаты освоения программы</h4>
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Семестр</th>
+                                <th>Дисциплина</th>
+                                <th>Отметка</th>
+                            </tr>                            
+                        </thead>
+                            <tbody>
+                                @foreach (var itemG in student.VedomostStudentMarks.OrderBy(m => m.Vedomost.SemestrName.SemestrNameNumber).GroupBy(m => m.Vedomost.EduYear.EduYearName))
+                                {
+                                    <tr>
+                                        <td colspan="3" class="text-center"><strong>@itemG.Key уч. год</strong></td>
+                                    </tr>
+                                    @foreach (var item in itemG)
+                                    {
+                                        <tr>
+                                            <td>@item.Vedomost.SemestrName.SemestrNameNumber семестр</td>
+                                            <td>@item.Vedomost.DisciplineName</td>
+                                            <td>@item.VedomostStudentMarkName.VedomostStudentMarkNameName</td>
+                                        </tr>                                        
+                                    }
+
+                                }
+                            </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h4>Пользователь не является студентом образовательной организации</h4>
+                }
+            </div>
+            <div class="tab-pane" id="science">
+                <br />
+            </div>
+            <div class="tab-pane" id="works">
+                <br />
+                @if ( !(Model.UserWorks?.Any() ?? false) )
+                {
+                    <h4 class="text-center">Работы пользователя отсутствуют</h4>
+                }
+                else
+                {
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Дата размещения</th>
+                                <th>Наименование работы</th>
+                                <th>Описание работы</th>
+                                <th>Файл</th>
+                                <th>Рецензии и оценки</th>
+                            </tr>                            
+                        </thead>
+                            <tbody>
+                                @foreach (var itemG in Model.UserWorks.OrderByDescending(w=>w.DatePosting).GroupBy(w=>w.UserWorkType.UserWorkTypeName))
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-center"><strong>@itemG.Key</strong></td>
+                                    </tr>
+                                    @foreach (var item in itemG)
+                                    {
+                                        <tr>
+                                            <td>@item.DatePosting</td>
+                                            <td>@item.UserWorkName</td>
+                                            <td>@item.UserWorkDescription</td>
+                                            <td><a href="/@item.FileModel.Path">Открыть</a></td>
+                                            <td>
+                                                <a asp-controller="UserWorkReviews" asp-action="Index" asp-route-UserWorkId="@item.UserWorkId">
+                                                    @item.UserWorkReviews.Count рецензии(ий)
+                                                </a>
+                                            </td>
+                                        </tr>                                        
+                                    }
+                                }
+                            </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    $(function () {
+        $('#myTab a:last').tab('show')
+    })
+</script>

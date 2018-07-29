@@ -1,0 +1,38 @@
+﻿@model KisVuzDotNetCore2.Models.Users.UserMessage
+
+@{
+    ViewData["Title"] = "Сообщение";
+}
+
+<h2>Сообщение</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserMessageId" />
+            <div class="form-group">
+                <label asp-for="UserSenderId" class="control-label"></label>
+                <p><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.UserSenderId">@Model.UserSender?.GetFullName</a></p>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserReceiverId" class="control-label"></label>
+                <p><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.UserReceiverId">@Model.UserReceiver?.GetFullName</a></p>
+            </div>            
+            <div class="form-group">
+                <label asp-for="UserMessageText" class="control-label"></label>
+                <input asp-for="UserMessageText" class="form-control" />
+                <span asp-validation-for="UserMessageText" class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <input type="hidden" name="UserSenderId" value="@Model.UserSenderId" />
+                <input type="hidden" name="UserReceiverId" value="@Model.UserReceiverId" />
+                <input type="hidden" name="UserMessageDate" value="@DateTime.Now" />
+                <input type="hidden" name="IsReadedByReceiver" value="false" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

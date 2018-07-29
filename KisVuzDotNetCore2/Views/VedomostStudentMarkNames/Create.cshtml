@@ -1,0 +1,26 @@
+﻿@model KisVuzDotNetCore2.Models.Students.VedomostStudentMarkName
+
+@{
+    ViewData["Title"] = "Добавление";
+}
+
+<h2>Добавление</h2>
+
+<h4>Наименование отметки по ведомости (справочник)</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="VedomostStudentMarkNameName" class="control-label"></label>
+                <input asp-for="VedomostStudentMarkNameName" class="form-control" />
+                <span asp-validation-for="VedomostStudentMarkNameName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

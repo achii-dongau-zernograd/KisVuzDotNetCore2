@@ -1,0 +1,50 @@
+﻿@model KisVuzDotNetCore2.Models.Users.UserMessage
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить сообщение?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserMessageDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserMessageDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserSender)
+        </dt>
+        <dd>
+            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.UserSender.Id">@Model.UserSender.GetFullName</a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserReceiver)
+        </dt>
+        <dd>
+            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.UserReceiver.Id">@Model.UserReceiver.GetFullName</a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserMessageText)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserMessageText)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsReadedByReceiver)
+        </dt>
+        <dd>
+            @if (Model.IsReadedByReceiver == true) { <text>Сообщение прочитано получателем</text> } else { <text>Сообщение не прочитано получателем</text> }
+        </dd>         
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="UserMessageId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

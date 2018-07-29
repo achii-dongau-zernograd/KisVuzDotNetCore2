@@ -77,6 +77,12 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupName = "Сведения об образовательной организации - Стипендии и иные виды материальной поддержки"
                     };
 
+                    FileDataTypeGroup fileDataTypeGroup9 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = 9,
+                        FileDataTypeGroupName = "Работы пользователей"
+                    };
+
                     await context.FileDataTypeGroups.AddRangeAsync(
                         fileDataTypeGroup1,
                         fileDataTypeGroup2,
@@ -85,7 +91,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataTypeGroup5,
                         fileDataTypeGroup6,
                         fileDataTypeGroup7,
-                        fileDataTypeGroup8
+                        fileDataTypeGroup8,
+                        fileDataTypeGroup9
                     );
                     await context.SaveChangesAsync();
                 }
@@ -254,7 +261,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType21 = new FileDataType
                     {
-                        FileDataTypeId = 21,
+                        FileDataTypeId = (int)FileDataTypeEnum.UdostoverenieOPovisheniiKvalifikacii,
                         FileDataTypeName = "Удостоверение о повышении квалификации",
                         Itemprop = "",
                         FileDataTypeGroupId = 4
@@ -278,7 +285,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType24 = new FileDataType
                     {
-                        FileDataTypeId = 24,
+                        FileDataTypeId = (int)FileDataTypeEnum.DiplomOProfessionalnoyPodgotovke,
                         FileDataTypeName = "Диплом о профессиональной переподготовке",
                         Itemprop = "",
                         FileDataTypeGroupId = 4
@@ -436,6 +443,22 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = 5
                     };
 
+                    FileDataType fileDataType44 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.UserWork,
+                        FileDataTypeName = "Работы пользователей",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 44
+                    };
+
+                    FileDataType fileDataType45 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.UserWorkRecenziya,
+                        FileDataTypeName = "Рецензия на работу пользователя",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 45
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -479,7 +502,9 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType40,
                         fileDataType41,
                         fileDataType42,
-                        fileDataType43
+                        fileDataType43,
+                        fileDataType44,
+                        fileDataType45
                         );
                     await context.SaveChangesAsync();
                 }

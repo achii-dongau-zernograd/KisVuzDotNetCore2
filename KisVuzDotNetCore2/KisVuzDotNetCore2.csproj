@@ -438,6 +438,26 @@
     <Compile Remove="Migrations\20180721091605_t.Designer.cs" />
     <Compile Remove="Migrations\20180722072716_settings.cs" />
     <Compile Remove="Migrations\20180722072716_settings.Designer.cs" />
+    <Compile Remove="Migrations\20180724044925_students.cs" />
+    <Compile Remove="Migrations\20180724044925_students.Designer.cs" />
+    <Compile Remove="Migrations\20180726135603_EduProfileAddingListStudentGroups.cs" />
+    <Compile Remove="Migrations\20180726135603_EduProfileAddingListStudentGroups.Designer.cs" />
+    <Compile Remove="Migrations\20180727044858_vedomosti.cs" />
+    <Compile Remove="Migrations\20180727044858_vedomosti.Designer.cs" />
+    <Compile Remove="Migrations\20180727051335_vedomostiEduYearAdding.cs" />
+    <Compile Remove="Migrations\20180727051335_vedomostiEduYearAdding.Designer.cs" />
+    <Compile Remove="Migrations\20180727180707_t.cs" />
+    <Compile Remove="Migrations\20180727180707_t.Designer.cs" />
+    <Compile Remove="Migrations\20180727181819_t.cs" />
+    <Compile Remove="Migrations\20180727181819_t.Designer.cs" />
+    <Compile Remove="Migrations\20180728093502_reviews.cs" />
+    <Compile Remove="Migrations\20180728093502_reviews.Designer.cs" />
+    <Compile Remove="Migrations\20180728093705_reviews.cs" />
+    <Compile Remove="Migrations\20180728093705_reviews.Designer.cs" />
+    <Compile Remove="Migrations\20180728093947_reviews.cs" />
+    <Compile Remove="Migrations\20180728093947_reviews.Designer.cs" />
+    <Compile Remove="Migrations\20180729024217_t.cs" />
+    <Compile Remove="Migrations\20180729024217_t.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

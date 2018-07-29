@@ -1,0 +1,42 @@
+﻿@model KisVuzDotNetCore2.Models.Students.Student
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<h2>Редактирование</h2>
+
+<h4>Студент</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StudentId" />
+            <div class="form-group">
+                <label asp-for="StudentFio" class="control-label"></label>
+                <input asp-for="StudentFio" class="form-control" />
+                <span asp-validation-for="StudentFio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ZachetnayaKnijkaNumber" class="control-label"></label>
+                <input asp-for="ZachetnayaKnijkaNumber" class="form-control" />
+                <span asp-validation-for="ZachetnayaKnijkaNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppUserId" class="control-label"></label>
+                <select asp-for="AppUserId" class="form-control" asp-items="ViewBag.AppUserIds"></select>
+                <span asp-validation-for="AppUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudentGroupId" class="control-label"></label>
+                <select asp-for="StudentGroupId" class="form-control" asp-items="ViewBag.StudentGroupIds"></select>
+                <span asp-validation-for="StudentGroupId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" asp-route-StudentGroupId="@ViewBag.StudentGroupId" asp-route-StructFacultetId="@ViewBag.StructFacultetId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

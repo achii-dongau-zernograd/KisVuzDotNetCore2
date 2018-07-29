@@ -1,4 +1,6 @@
-﻿using KisVuzDotNetCore2.Models;
+﻿using KisVuzDotNetCore2.Controllers.Students;
+using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Students;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -34,6 +36,8 @@ namespace KisVuzDotNetCore2
             services.AddMvc();
             //services.AddMemoryCache();
             services.AddSession();
+
+            services.AddTransient<IStudentRepository,StudentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +53,8 @@ namespace KisVuzDotNetCore2
                 //app.UseExceptionHandler("/Home/Error");
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseStatusCodePages();
 
             app.UseStaticFiles();
 

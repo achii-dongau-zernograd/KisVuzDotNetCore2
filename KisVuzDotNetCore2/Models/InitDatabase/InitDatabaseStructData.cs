@@ -1138,28 +1138,28 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                 {
                     StructFacultet facultetSpo = new StructFacultet
                     {
-                        StructFacultetId = 1,
+                        StructFacultetId = (int)StructFacultetEnum.Spo,
                         StructInstituteId = 1,
                         StructSubvisionId = 15
                     };
 
                     StructFacultet facultetInjTech = new StructFacultet
                     {
-                        StructFacultetId = 2,
+                        StructFacultetId = (int)StructFacultetEnum.InjTech,
                         StructInstituteId = 1,
                         StructSubvisionId = 16
                     };
 
                     StructFacultet facultetEnerg = new StructFacultet
                     {
-                        StructFacultetId = 3,
+                        StructFacultetId = (int)StructFacultetEnum.Energ,
                         StructInstituteId = 1,
                         StructSubvisionId = 17
                     };
 
                     StructFacultet facultetEconom = new StructFacultet
                     {
-                        StructFacultetId = 4,
+                        StructFacultetId = (int)StructFacultetEnum.Econom,
                         StructInstituteId = 1,
                         StructSubvisionId = 18
                     };

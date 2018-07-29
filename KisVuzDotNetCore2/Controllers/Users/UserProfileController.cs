@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -57,9 +58,32 @@ namespace KisVuzDotNetCore2.Controllers
             }
 
             user.EduLevelGroup = await context.EduLevelGroups.Where(l => l.EduLevelGroupId == user.EduLevelGroupId).FirstOrDefaultAsync();
-            user.Qualifications = await context.Qualifications.Where(q => q.AppUserId == user.Id).ToListAsync();
+            user.Qualifications = await context.Qualifications.Where(q => q.AppUserId == user.Id && q.RowStatusId == (int)RowStatusEnum.Confirmed).ToListAsync();
             user.AcademicDegree = await context.AcademicDegrees.Where(d => d.AcademicDegreeId == user.AcademicDegreeId).FirstOrDefaultAsync();
             user.AcademicStat = await context.AcademicStats.Where(s => s.AcademicStatId == user.AcademicStatId).FirstOrDefaultAsync();
+            user.RefresherCourses = await context.RefresherCourses.Where(c=>c.AppUserId == user.Id && c.RowStatusId==(int)RowStatusEnum.Confirmed).ToListAsync();
+            user.ProfessionalRetrainings = await context.ProfessionalRetrainings.Where(c => c.AppUserId == user.Id && c.RowStatusId == (int)RowStatusEnum.Confirmed).ToListAsync();
+            user.UserWorks = await context.UserWorks
+                .Include(w=>w.FileModel)
+                .Include(w=>w.UserWorkType)
+                .Include(w=>w.UserWorkReviews)
+                    .ThenInclude(w=>w.UserWorkReviewMark)
+                .Where(w=>w.AppUserId==user.Id)
+                .ToListAsync();
+
+            var student= await context.Students
+                .Include(s=>s.VedomostStudentMarks)
+                    .ThenInclude(v=>v.VedomostStudentMarkName)
+                .Include(s => s.VedomostStudentMarks)
+                    .ThenInclude(v => v.Vedomost.SemestrName)
+                .Include(s => s.VedomostStudentMarks)
+                    .ThenInclude(v => v.Vedomost.EduYear)
+                .Include(s => s.StudentGroup.EduForm)
+                .Include(s => s.StudentGroup.EduKurs)
+                .Include(s => s.StudentGroup.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(s => s.StudentGroup.StructFacultet.StructSubvision)                
+                .SingleOrDefaultAsync(s=>s.AppUserId==user.Id);
+            ViewData["student"] = student;
 
             ViewBag.CanEdit = canEdit;
             return View(user);

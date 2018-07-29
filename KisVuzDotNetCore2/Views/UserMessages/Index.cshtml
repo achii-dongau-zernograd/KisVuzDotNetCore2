@@ -1,0 +1,70 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Users.UserMessage>
+
+@{
+    ViewData["Title"] = "Сообщения";
+}
+
+<h2>Сообщения</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserMessageDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserSender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserReceiver)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserMessageText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsReadedByReceiver)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserMessageDate)
+            </td>
+            <td>
+                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.UserSender.Id">@item.UserSender.GetFullName</a>
+            </td>
+            <td>
+                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.UserReceiver.Id">@item.UserReceiver.GetFullName</a>               
+            </td>
+            <td>
+                @if (item.IsReadedByReceiver == true)
+                {
+                    <p>@item.UserMessageText</p>
+                }
+                else
+                {
+                    <p><strong>@item.UserMessageText</strong></p>
+                }                
+            </td>
+            <td>
+                @if (item.IsReadedByReceiver == true)
+                {
+                    <p>Сообщение прочитано</p>
+                }
+                else
+                {                    
+                    <a asp-action="ReadMessage" asp-route-id="@item.UserMessageId" class="btn btn-primary">Отметить как прочитанное</a>
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UserMessageId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.UserMessageId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

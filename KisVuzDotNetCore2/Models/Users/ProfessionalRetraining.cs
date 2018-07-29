@@ -92,10 +92,16 @@ namespace KisVuzDotNetCore2.Models.Users
             get
             {
                 return $"Диплом о профессиональной переподготовке {ProfessionalRetrainingDiplomNumber} " +
-                    $"от {ProfessionalRetrainingDateIssue} " +
-                    $"по программе {ProfessionalRetrainingProgramName} ({ProfessionalRetrainingHours} ч)," +
+                    $"от {ProfessionalRetrainingDateIssue.ToString("dd.MM.yyyy")} " +
+                    $"по программе {ProfessionalRetrainingProgramName} ({ProfessionalRetrainingHours} ч), " +
                     $"{ProfessionalRetrainingCity}, {ProfessionalRetrainingDateIssue.Year} г.";
             }
         }
+
+        /// <summary>
+        /// Статус строки (подтверждено / не подтверждено)
+        /// </summary>
+        public RowStatus RowStatus { get; set; }
+        public int? RowStatusId { get; set; }
     }
 }

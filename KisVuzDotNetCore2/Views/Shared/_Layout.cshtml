@@ -130,7 +130,7 @@
                                     <li><a asp-controller="AcademicDegrees" asp-action="Index">Учёные степени</a></li>
                                     <li><a asp-controller="AcademicStats" asp-action="Index">Учёные звания</a></li>
                                     <li><a asp-controller="LinkTypes" asp-action="Index">Типы веб-ресурсов</a></li>
-                                    <li><a asp-controller="InstituteLinks" asp-action="Index">Веб-ресурсы институтов</a></li>
+                                    <li><a asp-controller="InstituteLinks" asp-action="Index">Веб-ресурсы институтов</a></li>                                    
                                 </ul>
                             </li>
                             <li>
@@ -270,6 +270,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a asp-controller="Qualifications" asp-action="Index" asp-route-id="">Квалификации пользователей</a></li>
                                     <li><a asp-controller="Qualifications" asp-action="ConfirmWaiting">Подтверждение квалификации пользователей</a></li>
+                                    <li><a asp-controller="RefresherCourses" asp-action="ConfirmWaiting">Подтверждение повышения квалификации пользователей</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -316,6 +317,31 @@
                                     <li><a asp-controller="NirTemaEduProfiles" asp-action="Index">Тема НИР - профиль подготовки</a></li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Студенты и группы<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Students" asp-action="Index">Студенты</a></li>
+                                    <li><a asp-controller="StudentGroups" asp-action="Index">Студенческие группы</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ведомости<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="VedomostStudentMarkNames" asp-action="Index">Наименования отметок по ведомости (справочник)</a></li>
+                                    <li><a asp-controller="Vedomosti" asp-action="Index">Ведомости</a></li>
+                                    <li><a asp-controller="VedomostStudentMarks" asp-action="Index">Отметки по ведомостям</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Работы пользователей, их рецензии и оценки<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="UserWorks" asp-action="Index">Работы пользователей</a></li>
+                                    <li><a asp-controller="UserWorkReviews" asp-action="Index">Рецензии и оценки работ пользователей</a></li>
+                                    <li class="divider"></li>
+                                    <li><a asp-controller="UserWorkTypes" asp-action="Index">Типы пользовательских работ</a></li>
+                                    <li><a asp-controller="UserWorkReviewMarks" asp-action="Index">Справочник оценок за пользовательские работы</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
 
@@ -330,6 +356,7 @@
                     </li>
                 </ul>
                 @await Html.PartialAsync("_OtdelKadrovPartial")
+                @await Html.PartialAsync("_DekanatPartial")
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
@@ -349,6 +376,7 @@
                             <li><a asp-controller="ElectronBiblSystems" asp-action="Preview">Электронные библиотечные системы</a></li>
                             <li><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-issobstv="true">Электронные образовательные и информационные ресурсы (собственные)</a></li>
                             <li><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-issobstv="false">Электронные образовательные и информационные ресурсы (сторонние)</a></li>
+                            <li><a asp-controller="Eios" asp-action="Portfolio">Электронное портфолио обучающихся</a></li>
                         </ul>
                     </li>
 
@@ -393,7 +421,7 @@
     </nav>
               
    
-        <div class="container body-content">
+        <div class="container-fluid body-content">
             <br />
             <br />
             <br />

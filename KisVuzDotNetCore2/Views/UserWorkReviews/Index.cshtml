@@ -1,0 +1,52 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Users.UserWorkReview>
+
+@{
+    ViewData["Title"] = "Рецензии и оценки";
+}
+
+<h2>Рецензии и оценки</h2>
+
+<p>
+    <a asp-action="Create" asp-route-UserWorkId="@ViewBag.UserWorkId" class="btn btn-primary">Добавить рецензию</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Reviewer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserWorkReviewText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserWorkReviewMark)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.Reviewer.Id">@item.Reviewer.GetFullName</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserWorkReviewText)
+            </td>
+            <td>
+                @if (item.FileModel!=null) {<a href="/@item.FileModel.Path">Открыть</a>} else { <p>-</p> }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserWorkReviewMark.UserWorkReviewMarkName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UserWorkReviewId" asp-route-UserWorkId="@ViewBag.UserWorkId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.UserWorkReviewId" asp-route-UserWorkId="@ViewBag.UserWorkId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

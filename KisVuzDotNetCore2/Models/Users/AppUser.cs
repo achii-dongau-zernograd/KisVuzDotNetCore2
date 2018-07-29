@@ -108,6 +108,11 @@ namespace KisVuzDotNetCore2.Models
         public List<ProfessionalRetraining> ProfessionalRetrainings { get; set; }
 
         /// <summary>
+        /// Работы пользователя
+        /// </summary>
+        public List<UserWork> UserWorks { get; set; }
+        
+        /// <summary>
         /// Занимаемые должности
         /// </summary>
         //public List<Post> Posts { get; set; }                

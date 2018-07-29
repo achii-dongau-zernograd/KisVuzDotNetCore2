@@ -1,0 +1,109 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Users.RefresherCourse>
+
+    @{
+        ViewData["Title"] = "Подтверждение повышения квалификации пользователей";
+    }
+
+    <h2>Подтверждение повышения квалификации пользователей</h2>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RefresherCourseDateIssue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RefresherCourseRegNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RefresherCourseName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RefresherCourseHours)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RefresherCourseInstitition)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RefresherCourseCity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RefresherCourseDateStart)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RefresherCourseDateFinish)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RefresherCourseFile)
+                </th>
+                <th>
+                    Пользователь
+                </th>
+                <th>
+                    Статус записи
+                </th>
+                <th>
+                    Действия
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model.Count()==0)
+            {
+                <tr>
+                    <td colspan="12" class="text-center text-info"><h4>Неподтверждённые повышения квалификации пользователей отсутствуют</h4></td>
+                </tr>
+            }
+            else
+            {
+                
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RefresherCourseDateIssue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RefresherCourseRegNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RefresherCourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RefresherCourseHours)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RefresherCourseInstitition)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RefresherCourseCity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RefresherCourseDateStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RefresherCourseDateFinish)
+                    </td>
+                    <td>
+                        <a href="/@item.RefresherCourseFile.Path">Открыть</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RowStatus.RowStatusName)
+                    </td>
+                    <td>
+                        <a asp-action="Index" asp-controller="UserProfile" asp-route-id="@item.AppUser.Id">@item.AppUser.LastName @item.AppUser.FirstName @item.AppUser.Patronymic</a>
+                    </td>
+                    <td>
+                        @item.RowStatus?.RowStatusName
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.RefresherCourseId">Редактировать</a> |
+                        <a asp-action="Details" asp-route-id="@item.RefresherCourseId">Подробнее</a> |
+                        <a asp-action="Delete" asp-route-id="@item.RefresherCourseId">Удалить</a> |
+                        <a asp-action="Confirm" asp-route-id="@item.RefresherCourseId">Подтвердить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

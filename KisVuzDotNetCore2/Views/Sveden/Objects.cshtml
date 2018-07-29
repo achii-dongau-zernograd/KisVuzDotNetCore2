@@ -35,23 +35,37 @@
                 {
                     foreach (var discPomeshenie in disciplinePomeshenieG)
                     {
-                        <tr itemprop="purposeCab">
+                        string purposeCab = "purposeCabOvz";
+                        string purposePrac = "purposePracOvz";
+                        switch (discPomeshenie.Pomeshenie.PomeshenieOvz)
+                        {
+                            case null:
+                            case "":
+                            case "нет":
+                            case "не приспособлено":
+                                purposeCab = "purposeCab";
+                                purposePrac = "purposePrac";
+                                break;
+
+                        }
+
+                        <tr itemprop="@purposeCab">
                             <td itemprop="eduCode">@discPomeshenie.EduPlanEduYear.EduPlan.EduProfile.EduNapravl.EduNapravlCode</td>
                             <td itemprop="eduName">@discPomeshenie.EduPlanEduYear.EduPlan.EduProfile.EduNapravl.EduNapravlName (@discPomeshenie.EduPlanEduYear.EduPlan.EduProfile.EduProfileName)</td>
                             <td>@discPomeshenie.Discipline.DisciplineName.DisciplineNameName</td>
                             <td>@discPomeshenie.Pomeshenie.PomeshenieFullName</td>
-                            <td itemprop="purposePrac purposePracOvz"><ul>
-                                @foreach (var oborudovanie in discPomeshenie.Pomeshenie.OborudovanieList)                                
-                                {
+                            <td itemprop="@purposePrac"><ul>
+                                @foreach (var oborudovanie in discPomeshenie.Pomeshenie.OborudovanieList)
+                                    {
                                     <li>@oborudovanie.OborudovanieName (@oborudovanie.OborudovanieCount шт.)</li>
                                 }
                                 </ul>
                             </td>
-                            <td itemprop="purposeCabOvz">@discPomeshenie.Pomeshenie.PomeshenieOvz</td>
+                            <td>@discPomeshenie.Pomeshenie.PomeshenieOvz</td>
                         </tr>
                     }
 
-                }
+                 }
 
             </tbody>
         </table>
@@ -90,7 +104,7 @@
                 </thead>
                 <tbody>
                     @foreach (var item in PurposeLibr)
-                    {
+                {
                         <tr itemprop="@item.itemprop">
                             <td>
                                 @Html.DisplayFor(modelItem => item.VidPom)

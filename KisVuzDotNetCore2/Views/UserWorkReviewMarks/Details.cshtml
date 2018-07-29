@@ -1,0 +1,24 @@
+﻿@model KisVuzDotNetCore2.Models.Users.UserWorkReviewMark
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserWorkReviewMark</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserWorkReviewMarkName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserWorkReviewMarkName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.UserWorkReviewMarkId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

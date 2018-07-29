@@ -1,0 +1,118 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Students.Student>
+
+@{
+    ViewData["Title"] = "Index";
+    var studentGroup = (StudentGroup)ViewData["studentGroup"];
+}
+
+
+@if (studentGroup != null)
+{
+
+<h2>Список студентов группы @studentGroup.StudentGroupName</h2>
+
+<p>
+    <a asp-action="CreateStudentWithAccount" asp-route-StudentGroupId="@studentGroup.StudentGroupId" asp-route-StructFacultetId="@ViewBag.StructFacultetId" class="btn btn-primary">Добавить студента в группу</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentFio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZachetnayaKnijkaNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentGroup)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in studentGroup.Students.OrderBy(s=>s.StudentFio)) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentFio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZachetnayaKnijkaNumber)
+            </td>
+            <td>
+                @if (item.AppUserId != null)
+                {
+                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUser.Id">@item.AppUser.GetFullName</a>
+                }
+                else
+                {
+                    <p>Аккаунт пользователя не привязан</p>
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentGroup.StudentGroupName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.StudentId" asp-route-StudentGroupId="@studentGroup.StudentGroupId" asp-route-StructFacultetId="@ViewBag.StructFacultetId" >Редактировать</a> |                
+                <a asp-action="Delete" asp-route-id="@item.StudentId" asp-route-StudentGroupId="@studentGroup.StudentGroupId" asp-route-StructFacultetId="@ViewBag.StructFacultetId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+}
+else if (Model != null)
+{
+
+<h2>Список студентов</h2>
+
+<p>
+    <a asp-action="Create">Добавить студента</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentFio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZachetnayaKnijkaNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentGroup)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentFio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZachetnayaKnijkaNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppUser.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentGroup.StudentGroupId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.StudentId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.StudentId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.StudentId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+}

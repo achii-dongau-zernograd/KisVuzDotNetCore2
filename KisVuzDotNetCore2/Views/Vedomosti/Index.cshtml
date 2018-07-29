@@ -1,0 +1,70 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Students.Vedomost>
+
+@{
+    ViewData["Title"] = "Ведомости";
+}
+
+<h2>Ведомости</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DisciplineName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kurs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SemestrName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentGroup)
+            </th>
+            <th>Список отметок студентов</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisciplineName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduYear.EduYearName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kurs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SemestrName.SemestrNameNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentGroup.StudentGroupName)
+            </td>
+            <td>
+                @if(item.VedomostStudentMarks.Count==0)
+                {
+                    <a asp-action="CreateVedomostStudentMarks" asp-route-id="@item.VedomostId">Сформировать</a>
+                }
+                else
+                {
+                    <a  asp-action="VedomostStudentMarks" asp-route-id="@item.VedomostId">Открыть</a>
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VedomostId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.VedomostId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.VedomostId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

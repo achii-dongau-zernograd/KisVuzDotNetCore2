@@ -1,0 +1,54 @@
+﻿@model KisVuzDotNetCore2.Models.Users.UserWork
+
+@{
+    ViewData["Title"] = "Подробные сведения";
+}
+
+<h2>Подробные сведения</h2>
+
+<div>
+    <h4>Работа пользователя</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserWorkType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserWorkType.UserWorkTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DatePosting)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DatePosting)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserWorkName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserWorkName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserWorkDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserWorkDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModel)
+        </dt>
+        <dd>
+            <a href="/@Model.FileModel.Path">Открыть</a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUser)
+        </dt>
+        <dd>
+            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.AppUserId">@Model.AppUser.GetFullName</a>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.UserWorkId" class="btn btn-default">Редактировать</a>
+    <a asp-action="Index" class="btn btn-primary">Отмена</a>
+</div>

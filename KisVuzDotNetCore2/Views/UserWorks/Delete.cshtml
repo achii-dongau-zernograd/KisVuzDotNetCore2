@@ -1,0 +1,57 @@
+﻿@model KisVuzDotNetCore2.Models.Users.UserWork
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <h4>Работа пользователя</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserWorkType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserWorkType.UserWorkTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DatePosting)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DatePosting)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserWorkName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserWorkName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserWorkDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserWorkDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModel)
+        </dt>
+        <dd>
+            <a href="/@Model.FileModel.Path">Открыть</a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUser)
+        </dt>
+        <dd>
+            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.AppUserId">@Model.AppUser.GetFullName</a>
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="UserWorkId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

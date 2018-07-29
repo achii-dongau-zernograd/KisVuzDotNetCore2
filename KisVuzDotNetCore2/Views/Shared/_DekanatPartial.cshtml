@@ -1,0 +1,42 @@
+﻿@{
+    bool IsDekanatEmployee=false;
+    int structFacultetId = 0;
+    // Определяем, является ли пользователь сотрудником деканата. И если "да", то какого
+    if (User.IsInRole("Деканат факультета ЭиУТ"))
+    {
+        IsDekanatEmployee = true;
+        structFacultetId = (int)StructFacultetEnum.Econom;
+    }
+    else if (User.IsInRole("Деканат факультета СПО"))
+    {
+        IsDekanatEmployee = true;
+        structFacultetId = (int)StructFacultetEnum.Spo;
+    }
+    else if ( User.IsInRole("Деканат инженерно-технологического факультета"))
+    {
+        IsDekanatEmployee = true;
+        structFacultetId = (int)StructFacultetEnum.InjTech;
+    }
+    else if ( User.IsInRole("Деканат энергетического факультета"))
+    {
+        IsDekanatEmployee = true;
+        structFacultetId = (int)StructFacultetEnum.Energ;
+    }
+}
+
+@if (User.IsInRole("Деканат факультета ЭиУТ")
+    || User.IsInRole("Деканат факультета СПО")
+    || User.IsInRole("Деканат инженерно-технологического факультета")
+    || User.IsInRole("Деканат энергетического факультета"))
+{
+<ul class="nav navbar-nav navbar-left">
+    <!-- Выпадающий список -->
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Деканат <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a asp-controller="StudentGroups" asp-action="StudentGroupsOfFacultet" asp-route-StructFacultetId="@structFacultetId" title="Студенческие группы">Студенческие группы</a></li>
+            <li><a asp-controller="Students" asp-action="StudentsOfFacultet" asp-route-StructFacultetId="@structFacultetId" title="Студенты">Студенты</a></li>
+        </ul>
+    </li>
+</ul>
+}

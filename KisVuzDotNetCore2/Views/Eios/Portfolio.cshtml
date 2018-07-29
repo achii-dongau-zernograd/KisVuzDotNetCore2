@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Портфолио";
+    var eduLevels = (IEnumerable<EduLevel>)ViewData["eduLevels"];
+    int spoilerCounter = 0;
+}
+
+<h2>Электронное портфолио обучающихся</h2>
+
+@foreach (var eduLevel in eduLevels)
+{
+    spoilerCounter++;
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduLevel.EduLevelName</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        <div class="well">
+            @foreach (var eduUgs in eduLevel.EduUgses)
+            {
+                @foreach (var eduNapravl in eduUgs.EduNapravls)
+                {
+                    spoilerCounter++;
+                    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduNapravl.EduNapravlCode - @eduNapravl.EduNapravlName</a>
+                    <div class="collapse" id="spoiler-@spoilerCounter">
+                        <div class="well">
+                            @foreach (var eduProfile in eduNapravl.EduProfiles)
+                            {
+                                spoilerCounter++;
+                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduProfile.EduProfileName</a>
+                                <div class="collapse" id="spoiler-@spoilerCounter">
+                                    <div class="well">
+                                        @foreach (var studentGroup in eduProfile.StudentGroups)
+                                        {
+                                            spoilerCounter++;
+                                            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@studentGroup.StudentGroupName</a>
+                                            <div class="collapse" id="spoiler-@spoilerCounter">
+                                                <div class="well">                                                    
+                                                    <ol>
+                                                        @foreach (var student in studentGroup.Students.OrderBy(s=>s.StudentFio))
+                                                        {
+                                                        <li><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@student.AppUserId">@student.StudentFio</a></li>
+                                                        }
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                 }
+            }
+        </div>
+    </div>
+}

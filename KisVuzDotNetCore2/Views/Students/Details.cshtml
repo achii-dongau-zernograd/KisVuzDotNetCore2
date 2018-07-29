@@ -1,0 +1,42 @@
+﻿@model KisVuzDotNetCore2.Models.Students.Student
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentFio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StudentFio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ZachetnayaKnijkaNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ZachetnayaKnijkaNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentGroup)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StudentGroup.StudentGroupId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.StudentId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

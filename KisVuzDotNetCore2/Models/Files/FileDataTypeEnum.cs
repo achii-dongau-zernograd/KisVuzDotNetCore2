@@ -78,6 +78,14 @@
         /// </summary>
         OtchetiObIspolneniiPredpisaniyOrganovNadzora = 20,
         /// <summary>
+        /// Удостоверение о повышении квалификации
+        /// </summary>
+        UdostoverenieOPovisheniiKvalifikacii = 21,
+        /// <summary>
+        /// Диплом о профессиональной переподготовке
+        /// </summary>
+        DiplomOProfessionalnoyPodgotovke = 24,
+        /// <summary>
         /// Учебный план
         /// </summary>
         UchebniyPlan = 31,
@@ -127,6 +135,14 @@
         /// <summary>
         /// Фонд оценочных средств
         /// </summary>
-        FondOcenochnihSredstv = 43
+        FondOcenochnihSredstv = 43,
+        /// <summary>
+        /// Работа пользователя
+        /// </summary>
+        UserWork = 44,
+        /// <summary>
+        ///  Рецензия на работу пользователя
+        /// </summary>
+        UserWorkRecenziya = 45
     }
 }

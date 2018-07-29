@@ -1,0 +1,49 @@
+﻿@model KisVuzDotNetCore2.Models.Users.UserWorkReview
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<h2>Редактирование</h2>
+
+<h4>Рецензия на работу пользователя</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserWorkReviewId" />            
+            <div class="form-group">
+                <label asp-for="UserWorkReviewText" class="control-label"></label>
+                <input asp-for="UserWorkReviewText" class="form-control" />
+                <span asp-validation-for="UserWorkReviewText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                @if (Model.FileModel != null)
+                {
+                    <p>Загружено: <a href="/@Model.FileModel.Path">@Model.FileModel.FileName</a></p>
+                    <p>Для замены выберите новый файл</p>
+                }
+                else
+                {
+                    <p>Рецензия (документ) не загружена.</p>
+                    <p>Для загрузки выберите новый файл или оставьте поле пустым, если загрузка файла не требуется</p>
+                }
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="UserWorkReviewMarkId" class="control-label"></label>
+                <select asp-for="UserWorkReviewMarkId" class="form-control" asp-items="ViewBag.UserWorkReviewMarkId"></select>
+                <span asp-validation-for="UserWorkReviewMarkId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="UserWorkId" value="@ViewBag.UserWorkId" />
+                <input type="hidden" name="ReviewerId" value="@ViewBag.ReviewerId" />
+                <input type="hidden" name="FileModelId" value="@Model.FileModelId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" asp-route-UserWorkId="@ViewBag.UserWorkId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

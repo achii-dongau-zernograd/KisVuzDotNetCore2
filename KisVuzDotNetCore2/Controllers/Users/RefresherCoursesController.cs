@@ -7,23 +7,65 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Users;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using KisVuzDotNetCore2.Models.Files;
+using Microsoft.AspNetCore.Hosting;
+using KisVuzDotNetCore2.Models.Common;
 
 namespace KisVuzDotNetCore2.Controllers.Users
 {
+    [Authorize]
     public class RefresherCoursesController : Controller
     {
         private readonly AppIdentityDBContext _context;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IHostingEnvironment _appEnvironment;
 
-        public RefresherCoursesController(AppIdentityDBContext context)
+        public RefresherCoursesController(AppIdentityDBContext context,
+            UserManager<AppUser> userMgr,
+            IHostingEnvironment appEnvironment
+            )
         {
             _context = context;
+            _userManager = userMgr;
+            _appEnvironment = appEnvironment;
         }
 
         // GET: RefresherCourses
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string id)
         {
-            var appIdentityDBContext = _context.RefresherCourses.Include(r => r.AppUser).Include(r => r.RefresherCourseFile);
-            return View(await appIdentityDBContext.ToListAsync());
+            // Если задан id и это id активного пользователя, отбираем данные пользователя с AppUserId, равным id
+            if (id != null)
+            {
+                AppUser u = await _userManager.FindByNameAsync(User.Identity.Name);
+                if (u == null) return NotFound();
+                if (u.Id == id)
+                {
+                    var userQualifications = _context.RefresherCourses
+                    .Where(r => r.AppUserId == id)
+                    .Include(r => r.AppUser)
+                    .Include(r => r.RefresherCourseFile)
+                    .Include(r => r.RowStatus)
+                    .OrderBy(r => r.RefresherCourseDateIssue);
+                    ViewBag.Id = id;
+                    return View(await userQualifications.ToListAsync());
+                }
+            }
+
+
+            // Отображаем все данные только администраторам и отделу кадров
+            if (User.IsInRole("Администраторы") || User.IsInRole("Отдел кадров"))
+            {
+                var refresherCourses = _context.RefresherCourses
+                .Include(r => r.AppUser)
+                .Include(r => r.RefresherCourseFile)
+                .Include(r => r.RowStatus);
+                return View(await refresherCourses.ToListAsync());
+            }
+
+            return RedirectToAction("AccessDenied", "Account");            
         }
 
         // GET: RefresherCourses/Details/5
@@ -47,10 +89,30 @@ namespace KisVuzDotNetCore2.Controllers.Users
         }
 
         // GET: RefresherCourses/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(string id)
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName");
-            ViewData["RefresherCourseFileId"] = new SelectList(_context.Files, "Id", "Id");
+            if(id==null)
+            {
+                return NotFound();
+            }
+
+            // Поиск пользователя с переданным id
+            AppUser user = await _userManager.FindByIdAsync(id);
+            // Поиск текущего пользователя
+            var CurrentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (user == null || CurrentUser == null)
+            {
+                return NotFound();
+            }
+
+            // Разрешаем доступ только администраторам, отделу кадров и пользователю для создания записи для себя
+            bool IsAuthorized = User.IsInRole("Администраторы") || User.IsInRole("Отдел кадров") || id == CurrentUser.Id;
+            if (!IsAuthorized)
+            {
+                return Unauthorized();
+            }
+
+            ViewBag.AppUserId = user.Id;
             return View();
         }
 
@@ -59,16 +121,19 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RefresherCourseId,RefresherCourseRegNumber,RefresherCourseName,RefresherCourseHours,RefresherCourseCity,RefresherCourseInstitition,RefresherCourseDateStart,RefresherCourseDateFinish,RefresherCourseDateIssue,RefresherCourseFileId,AppUserId")] RefresherCourse refresherCourse)
+        public async Task<IActionResult> Create([Bind("RefresherCourseId,RefresherCourseRegNumber,RefresherCourseName,RefresherCourseHours,RefresherCourseCity,RefresherCourseInstitition,RefresherCourseDateStart,RefresherCourseDateFinish,RefresherCourseDateIssue,AppUserId")] RefresherCourse refresherCourse,
+            IFormFile uploadedFile)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && uploadedFile!=null)
             {
+                FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Удостоверение о повышении квалификации", FileDataTypeEnum.UdostoverenieOPovisheniiKvalifikacii);
+                refresherCourse.RefresherCourseFileId = fileModel.Id;
+                refresherCourse.RowStatusId = (int)RowStatusEnum.NotConfirmed;
                 _context.Add(refresherCourse);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),new { id= refresherCourse.AppUserId });
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", refresherCourse.AppUserId);
-            ViewData["RefresherCourseFileId"] = new SelectList(_context.Files, "Id", "Id", refresherCourse.RefresherCourseFileId);
+            
             return View(refresherCourse);
         }
 
@@ -80,13 +145,29 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 return NotFound();
             }
 
-            var refresherCourse = await _context.RefresherCourses.SingleOrDefaultAsync(m => m.RefresherCourseId == id);
+            var refresherCourse = await _context.RefresherCourses
+                .Include(c=>c.RefresherCourseFile)
+                .SingleOrDefaultAsync(m => m.RefresherCourseId == id);
             if (refresherCourse == null)
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", refresherCourse.AppUserId);
-            ViewData["RefresherCourseFileId"] = new SelectList(_context.Files, "Id", "Id", refresherCourse.RefresherCourseFileId);
+
+            // Поиск текущего пользователя
+            var CurrentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (CurrentUser == null)
+            {
+                return NotFound();
+            }
+            
+            // Разрешаем доступ только администраторам, отделу кадров и пользователю для создания записи для себя
+            bool IsAuthorized = User.IsInRole("Администраторы") || User.IsInRole("Отдел кадров") || refresherCourse.AppUserId == CurrentUser.Id;
+            if (!IsAuthorized)
+            {
+                return Unauthorized();
+            }
+
+            
             return View(refresherCourse);
         }
 
@@ -95,7 +176,8 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RefresherCourseId,RefresherCourseRegNumber,RefresherCourseName,RefresherCourseHours,RefresherCourseCity,RefresherCourseInstitition,RefresherCourseDateStart,RefresherCourseDateFinish,RefresherCourseDateIssue,RefresherCourseFileId,AppUserId")] RefresherCourse refresherCourse)
+        public async Task<IActionResult> Edit(int id, [Bind("RefresherCourseId,RefresherCourseRegNumber,RefresherCourseName,RefresherCourseHours,RefresherCourseCity,RefresherCourseInstitition,RefresherCourseDateStart,RefresherCourseDateFinish,RefresherCourseDateIssue,RefresherCourseFileId,AppUserId")] RefresherCourse refresherCourse,
+            IFormFile uploadedFile)
         {
             if (id != refresherCourse.RefresherCourseId)
             {
@@ -106,6 +188,16 @@ namespace KisVuzDotNetCore2.Controllers.Users
             {
                 try
                 {
+                    if (uploadedFile != null)
+                    {
+                        FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Удостоверение о повышении квалификации", FileDataTypeEnum.UdostoverenieOPovisheniiKvalifikacii);
+                        await _context.SaveChangesAsync();
+                        int? fileToRemoveId = refresherCourse.RefresherCourseFileId;
+                        refresherCourse.RefresherCourseFileId = fileModel.Id;                        
+                        await _context.SaveChangesAsync();
+                        Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+                    }
+                    refresherCourse.RowStatusId = (int)RowStatusEnum.NotConfirmed;
                     _context.Update(refresherCourse);
                     await _context.SaveChangesAsync();
                 }
@@ -120,10 +212,9 @@ namespace KisVuzDotNetCore2.Controllers.Users
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),new { id= refresherCourse.AppUserId });
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", refresherCourse.AppUserId);
-            ViewData["RefresherCourseFileId"] = new SelectList(_context.Files, "Id", "Id", refresherCourse.RefresherCourseFileId);
+            
             return View(refresherCourse);
         }
 
@@ -155,7 +246,36 @@ namespace KisVuzDotNetCore2.Controllers.Users
             var refresherCourse = await _context.RefresherCourses.SingleOrDefaultAsync(m => m.RefresherCourseId == id);
             _context.RefresherCourses.Remove(refresherCourse);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index),new { id = refresherCourse.AppUserId });
+        }
+
+        /// <summary>
+        /// Подтверждение изменений в пользовательских данных
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Roles = "Отдел кадров, Администраторы")]
+        public async Task<IActionResult> ConfirmWaiting()
+        {
+            var appIdentityDBContext = _context.RefresherCourses
+                .Where(q => q.RowStatusId == (int)RowStatusEnum.NotConfirmed)
+                .Include(q => q.AppUser)
+                .Include(q => q.RefresherCourseFile)
+                .Include(q => q.RowStatus);
+            return View(await appIdentityDBContext.ToListAsync());
+        }
+
+        [Authorize(Roles = "Отдел кадров, Администраторы")]
+        public async Task<IActionResult> Confirm(int id)
+        {
+            var refresherCourse = await _context.RefresherCourses.SingleOrDefaultAsync(m => m.RefresherCourseId == id);
+
+            if (refresherCourse != null)
+            {
+                refresherCourse.RowStatusId = 2;
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(ConfirmWaiting));
         }
 
         private bool RefresherCourseExists(int id)

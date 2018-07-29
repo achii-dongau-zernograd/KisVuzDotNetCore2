@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KisVuzDotNetCore2.Models.Students;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -57,6 +58,11 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <summary>
         /// Темы НИР
         /// </summary>
-        public List<NirTemaEduProfile> NirTemaEduProfileList { get; set; }        
+        public List<NirTemaEduProfile> NirTemaEduProfileList { get; set; }
+
+        /// <summary>
+        /// Студенческие группы, обучающиеся по данному профилю подготовки
+        /// </summary>
+        public List<StudentGroup> StudentGroups { get; set; }
     }
 }

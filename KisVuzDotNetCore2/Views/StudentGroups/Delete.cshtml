@@ -1,0 +1,74 @@
+﻿@model KisVuzDotNetCore2.Models.Students.StudentGroup
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <h4>Студенческая группа</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduKurs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduKurs.EduKursNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentGroupNamePrefix)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StudentGroupNamePrefix)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentGroupNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StudentGroupNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Kurator)
+        </dt>
+        <dd>
+            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.Kurator.AppUserId">@Model.Kurator.TeacherFio</a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StructFacultet)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StructFacultet.StructSubvision.StructSubvisionName)
+        </dd>
+    </dl>
+
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="StudentGroupId" />
+        <input type="hidden" name="StructFacultetId" value="@ViewBag.StructFacultetId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        @if (ViewBag.StructFacultetId != null)
+        {
+            <a asp-action="StudentGroupsOfFacultet" asp-route-StructFacultetId="@ViewBag.StructFacultetId" class="btn btn-default">Отмена</a>
+        }
+        else
+        {
+            <a asp-action="Index" class="btn btn-default">Отмена</a>
+        }
+    </form>
+    
+
+</div>

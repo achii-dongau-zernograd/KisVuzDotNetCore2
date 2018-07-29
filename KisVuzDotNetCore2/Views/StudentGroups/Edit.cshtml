@@ -1,0 +1,61 @@
+﻿@model KisVuzDotNetCore2.Models.Students.StudentGroup
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>StudentGroup</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StudentGroupId" />
+            <div class="form-group">
+                <label asp-for="StudentGroupNamePrefix" class="control-label"></label>
+                <input asp-for="StudentGroupNamePrefix" class="form-control" />
+                <span asp-validation-for="StudentGroupNamePrefix" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudentGroupNumber" class="control-label"></label>
+                <input asp-for="StudentGroupNumber" class="form-control" />
+                <span asp-validation-for="StudentGroupNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduProfileId" class="control-label"></label>
+                <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfileId"></select>
+                <span asp-validation-for="EduProfileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduFormId" class="control-label"></label>
+                <select asp-for="EduFormId" class="form-control" asp-items="ViewBag.EduFormId"></select>
+                <span asp-validation-for="EduFormId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduKursId" class="control-label"></label>
+                <select asp-for="EduKursId" class="form-control" asp-items="ViewBag.EduKursId"></select>
+                <span asp-validation-for="EduKursId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StructFacultetId" class="control-label"></label>
+                <select asp-for="StructFacultetId" class="form-control" asp-items="ViewBag.StructFacultetId"></select>
+                <span asp-validation-for="StructFacultetId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KuratorId" class="control-label"></label>
+                <select asp-for="KuratorId" class="form-control" asp-items="ViewBag.KuratorId"></select>
+                <span asp-validation-for="KuratorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,50 @@
+﻿@model KisVuzDotNetCore2.Models.Students.StudentGroup
+
+@{
+    ViewData["Title"] = "Добавление";
+    var structFacultet = (StructFacultet) ViewData["structFacultet"];
+}
+
+<h2>Добавление</h2>
+
+<h4>Студенческая группа</h4>
+<h4>@structFacultet.StructSubvision.StructSubvisionName</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="CreateByDekanat">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EduProfileId" class="control-label"></label>
+                <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfileId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduKursId" class="control-label"></label>
+                <select asp-for="EduKursId" class="form-control" asp-items="ViewBag.EduKursId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduFormId" class="control-label"></label>
+                <select asp-for="EduFormId" class="form-control" asp-items="ViewBag.EduFormId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudentGroupNamePrefix" class="control-label"></label>
+                <input asp-for="StudentGroupNamePrefix" class="form-control" />
+                <span asp-validation-for="StudentGroupNamePrefix" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudentGroupNumber" class="control-label"></label>
+                <input asp-for="StudentGroupNumber" class="form-control" />
+                <span asp-validation-for="StudentGroupNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KuratorId" class="control-label"></label>
+                <select asp-for="KuratorId" class="form-control" asp-items="ViewBag.KuratorId"></select>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="StructFacultetId" value="@structFacultet.StructFacultetId" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="StudentGroupsOfFacultet" asp-route-StructFacultetId="@structFacultet.StructFacultetId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

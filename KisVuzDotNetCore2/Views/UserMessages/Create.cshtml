@@ -1,0 +1,48 @@
+﻿@model KisVuzDotNetCore2.Models.Users.UserMessage
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>UserMessage</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserSenderId" class="control-label"></label>
+                <select asp-for="UserSenderId" class ="form-control" asp-items="ViewBag.UserSenderId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserReceiverId" class="control-label"></label>
+                <select asp-for="UserReceiverId" class ="form-control" asp-items="ViewBag.UserReceiverId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserMessageDate" class="control-label"></label>
+                <input asp-for="UserMessageDate" class="form-control" />
+                <span asp-validation-for="UserMessageDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserMessageText" class="control-label"></label>
+                <input asp-for="UserMessageText" class="form-control" />
+                <span asp-validation-for="UserMessageText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsReadedByReceiver" class="control-label"></label>
+                <input asp-for="IsReadedByReceiver" class="form-control" />
+                <span asp-validation-for="IsReadedByReceiver" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

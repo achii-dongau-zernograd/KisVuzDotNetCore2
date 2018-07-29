@@ -87,11 +87,13 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 // Проверяем существование пользователя
                 AppUser user = await _userManager.FindByIdAsync(id);
+                if(user==null)
+                {
+                    return NotFound();
+                }
                 ViewBag.AppUserId = id;
                 return View("CreateByUser");
-            }
-
-            
+            }            
         }
 
         // POST: Qualifications/Create
@@ -173,7 +175,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-
+            
             if (ModelState.IsValid)
             {
                 try
@@ -227,21 +229,7 @@ namespace KisVuzDotNetCore2.Controllers
             _context.Qualifications.Remove(qualification);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        [Authorize(Roles = "Отдел кадров, Администраторы")]
-        public async Task<IActionResult> Confirm(int id)
-        {
-            var qualification = await _context.Qualifications.SingleOrDefaultAsync(m => m.QualificationId == id);
-
-            if(qualification!=null)
-            {
-                qualification.RowStatusId = 2;                
-                await _context.SaveChangesAsync();
-            }            
-            
-            return RedirectToAction(nameof(ConfirmWaiting));
-        }
+        }               
 
         /// <summary>
         /// Подтверждение изменений в пользовательских данных
@@ -255,6 +243,20 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(q => q.AppUser)
                 .Include(q => q.RowStatus);
             return View(await appIdentityDBContext.ToListAsync());
+        }
+
+        [Authorize(Roles = "Отдел кадров, Администраторы")]
+        public async Task<IActionResult> Confirm(int id)
+        {
+            var qualification = await _context.Qualifications.SingleOrDefaultAsync(m => m.QualificationId == id);
+
+            if (qualification != null)
+            {
+                qualification.RowStatusId = 2;
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(ConfirmWaiting));
         }
 
         private bool QualificationExists(int id)

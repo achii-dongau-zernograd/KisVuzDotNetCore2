@@ -45,5 +45,30 @@ namespace KisVuzDotNetCore2.Controllers.Eios
 
             return View();
         }
+
+        /// <summary>
+        /// Портфолио студентов
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Portfolio()
+        {
+            var eduLevels = await _context.EduLevels
+            .Include(l => l.EduUgses)
+                .ThenInclude(u => u.EduNapravls)
+                    .ThenInclude(n => n.EduProfiles)
+                        .ThenInclude(p=>p.StudentGroups)
+                            .ThenInclude(g=>g.Students)
+                                .ThenInclude(s=>s.AppUser)
+            .Include(l => l.EduUgses)
+                .ThenInclude(u => u.EduNapravls)
+                    .ThenInclude(n => n.EduProfiles)
+                        .ThenInclude(p => p.StudentGroups)
+                            .ThenInclude(g=>g.EduKurs)
+            .ToListAsync();
+
+            ViewData["eduLevels"] = eduLevels;
+
+            return View();
+        }
     }
 }

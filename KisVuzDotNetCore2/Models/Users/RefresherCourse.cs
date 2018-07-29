@@ -86,10 +86,16 @@ namespace KisVuzDotNetCore2.Models.Users
             get
             {
                 return $"Удостоверение о повышении квалификации {RefresherCourseRegNumber} " +
-                    $"от {RefresherCourseDateIssue} " +
-                    $"по программе {RefresherCourseName} ({RefresherCourseHours} ч)," +
+                    $"от {RefresherCourseDateIssue.ToString("dd.MM.yyyy")} " +
+                    $"по программе {RefresherCourseName} ({RefresherCourseHours} ч), " +
                     $"{RefresherCourseCity}, {RefresherCourseDateIssue.Year} г.";
             }
         }
+
+        /// <summary>
+        /// Статус строки (подтверждено / не подтверждено)
+        /// </summary>
+        public RowStatus RowStatus { get; set; }
+        public int? RowStatusId { get; set; }
     }
 }
