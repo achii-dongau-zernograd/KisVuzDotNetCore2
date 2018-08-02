@@ -448,7 +448,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeId = (int)FileDataTypeEnum.UserWork,
                         FileDataTypeName = "Работы пользователей",
                         Itemprop = "",
-                        FileDataTypeGroupId = 44
+                        FileDataTypeGroupId = 9
                     };
 
                     FileDataType fileDataType45 = new FileDataType
@@ -456,7 +456,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeId = (int)FileDataTypeEnum.UserWorkRecenziya,
                         FileDataTypeName = "Рецензия на работу пользователя",
                         Itemprop = "",
-                        FileDataTypeGroupId = 45
+                        FileDataTypeGroupId = 9
                     };
 
                     await context.FileDataTypes.AddRangeAsync(

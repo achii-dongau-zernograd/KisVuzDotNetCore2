@@ -11,8 +11,8 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20180728094439_reviews")]
-    partial class reviews
+    [Migration("20180729140614_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -2291,6 +2291,31 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("TeacherStructKafPostStavka");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserMessage", b =>
+                {
+                    b.Property<int>("UserMessageId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool?>("IsReadedByReceiver");
+
+                    b.Property<DateTime>("UserMessageDate");
+
+                    b.Property<string>("UserMessageText")
+                        .IsRequired();
+
+                    b.Property<string>("UserReceiverId");
+
+                    b.Property<string>("UserSenderId");
+
+                    b.HasKey("UserMessageId");
+
+                    b.HasIndex("UserReceiverId");
+
+                    b.HasIndex("UserSenderId");
+
+                    b.ToTable("UserMessages");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserWork", b =>
                 {
                     b.Property<int>("UserWorkId")
@@ -2324,7 +2349,7 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("UserWorkReviewId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("FileModelId");
+                    b.Property<int?>("FileModelId");
 
                     b.Property<string>("ReviewerId");
 
@@ -3447,10 +3472,21 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserMessage", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "UserReceiver")
+                        .WithMany()
+                        .HasForeignKey("UserReceiverId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "UserSender")
+                        .WithMany()
+                        .HasForeignKey("UserSenderId");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserWork", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
-                        .WithMany()
+                        .WithMany("UserWorks")
                         .HasForeignKey("AppUserId");
 
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
@@ -3467,8 +3503,7 @@ namespace KisVuzDotNetCore2.Migrations
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
                         .WithMany()
-                        .HasForeignKey("FileModelId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("FileModelId");
 
                     b.HasOne("KisVuzDotNetCore2.Models.AppUser", "Reviewer")
                         .WithMany()

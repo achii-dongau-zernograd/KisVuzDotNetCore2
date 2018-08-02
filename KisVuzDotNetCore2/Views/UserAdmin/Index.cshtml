@@ -5,6 +5,7 @@
 
 <table class="table table-condensed table-bordered">
     <tr>
+        <th>ФИО</th>
         <th>ID</th>
         <th>Логин</th>
         <th>Email</th>
@@ -18,9 +19,10 @@
     }
     else
     {
-        foreach (AppUser user in Model)
+        foreach (AppUser user in Model.OrderBy(u=>u.GetFullName))
         {
             <tr>
+                <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@user.Id">@user.GetFullName</a></td>
                 <td>@user.Id</td>
                 <td>@user.UserName</td>
                 <td>@user.Email</td>
