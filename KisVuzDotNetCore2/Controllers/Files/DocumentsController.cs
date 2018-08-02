@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Files;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace KisVuzDotNetCore2.Controllers
     /// <summary>
     /// Контроллер для работы с документами
     /// </summary>
+    [Authorize(Roles = "Администраторы")]
     public class DocumentsController : Controller
     {
         private readonly AppIdentityDBContext _context;

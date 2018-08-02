@@ -228,6 +228,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         {
             var userWork = await _context.UserWorks.SingleOrDefaultAsync(m => m.UserWorkId == id);
             _context.UserWorks.Remove(userWork);
+            Files.RemoveFile(_context,_appEnvironment, userWork.FileModelId);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

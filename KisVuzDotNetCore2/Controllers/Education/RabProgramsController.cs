@@ -10,9 +10,11 @@ using KisVuzDotNetCore2.Models.Education;
 using Microsoft.AspNetCore.Hosting;
 using KisVuzDotNetCore2.Models.Files;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Education
 {
+    [Authorize(Roles = "Администраторы")]
     public class RabProgramsController : Controller
     {
         private readonly AppIdentityDBContext _context;

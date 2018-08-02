@@ -11,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.AspNetCore.Http;
 using KisVuzDotNetCore2.Models.Files;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Users
 {
+    [Authorize]
     public class UserWorkReviewsController : Controller
     {
         private readonly AppIdentityDBContext _context;

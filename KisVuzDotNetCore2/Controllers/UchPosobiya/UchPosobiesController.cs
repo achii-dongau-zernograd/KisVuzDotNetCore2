@@ -10,9 +10,11 @@ using KisVuzDotNetCore2.Models.UchPosobiya;
 using Microsoft.AspNetCore.Http;
 using KisVuzDotNetCore2.Models.Files;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.UchPosobiya
 {
+    [Authorize(Roles = "Администраторы")]
     public class UchPosobiesController : Controller
     {
         private readonly AppIdentityDBContext _context;

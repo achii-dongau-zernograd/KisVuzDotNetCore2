@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Models.Sveden
 {
+    [Authorize(Roles = "Администраторы")]
     public class PomesheniesController : Controller
     {
         private readonly AppIdentityDBContext _context;

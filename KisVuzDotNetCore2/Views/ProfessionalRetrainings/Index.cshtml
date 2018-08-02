@@ -4,10 +4,17 @@
     ViewData["Title"] = "Профессиональная переподготовка";
 }
 
-<h2>Профессиональная переподготовка</h2>
+@if (ViewBag.Id == null)
+{
+    <h2>Профессиональная переподготовка</h2>
+}
+else
+{
+    <h2>Профессиональная переподготовка пользователя @User.Identity.Name</h2>
+}
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+    <a asp-action="Create" asp-route-id="@ViewBag.Id" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -29,49 +36,63 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProfessionalRetrainingInstitition)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AppUser)
-            </th>
+            </th>            
             <th>
                 @Html.DisplayNameFor(model => model.ProfessionalRetrainingFile)
             </th>
+            <th>Статус</th>
+            @if (ViewBag.Id == null)
+            {
+                <th>Пользователь</th>
+            }
             <th>Действия</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingDateIssue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingDiplomNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingProgramName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingHours)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingCity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfessionalRetrainingInstitition)
-            </td>            
-            <td>
-                @Html.DisplayFor(modelItem => item.AppUser.UserName)
-            </td>
-            <td>
-                <a asp-controller="Files" asp-action="GetFile" asp-route-id="@item.ProfessionalRetrainingFile.Id">Открыть</a>                
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProfessionalRetrainingId">Редактировать</a> |
-                <a asp-action="Details" asp-route-id="@item.ProfessionalRetrainingId">Подробнее</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProfessionalRetrainingId">Удалить</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProfessionalRetrainingDateIssue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProfessionalRetrainingDiplomNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProfessionalRetrainingProgramName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProfessionalRetrainingHours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProfessionalRetrainingCity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProfessionalRetrainingInstitition)
+                </td>
+                <td>
+                    <a href="/@item.ProfessionalRetrainingFile.Path">Открыть</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RowStatus.RowStatusName)
+                </td>
+
+                @if (ViewBag.Id == null)
+                {
+                    <td>
+                        <a asp-action="Index" asp-controller="UserProfile" asp-route-id="@item.AppUser?.Id">@item.AppUser?.GetFullName</a>
+                    </td>
+                }
+                
+                <td>                    
+                    @if (ViewBag.Id != null && item.RowStatus?.RowStatusId != (int)RowStatusEnum.Confirmed)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.ProfessionalRetrainingId">Редактировать</a> <text> | </text>
+                        <a asp-action="Details" asp-route-id="@item.ProfessionalRetrainingId">Подробнее</a> <text> | </text>
+                        <a asp-action="Delete" asp-route-id="@item.ProfessionalRetrainingId">Удалить</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

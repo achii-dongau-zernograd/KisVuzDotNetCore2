@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace KisVuzDotNetCore2.Controllers
     /// <summary>
     /// Контроллер управления учётными записями пользователей
     /// </summary>
+    [Authorize(Roles = "Администраторы")]
     public class UserAdminController : Controller
     {
         #region Закрытые поля

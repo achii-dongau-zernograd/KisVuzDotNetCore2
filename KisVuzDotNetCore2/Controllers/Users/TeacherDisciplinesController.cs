@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Users;
 using KisVuzDotNetCore2.Models.Education;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Users
 {
+    [Authorize(Roles = "Администраторы")]
     public class TeacherDisciplinesController : Controller
     {
         private readonly AppIdentityDBContext _context;

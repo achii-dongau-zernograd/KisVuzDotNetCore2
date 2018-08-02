@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace KisVuzDotNetCore2.Controllers
-{
+{    
     public class AbiturController : Controller
     {
         string searchTemplate = "";

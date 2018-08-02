@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using KisVuzDotNetCore2.Models.Files;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Education
 {
+    [Authorize(Roles = "Администраторы")]
     public class EduPlansController : Controller
     {
         private readonly AppIdentityDBContext _context;

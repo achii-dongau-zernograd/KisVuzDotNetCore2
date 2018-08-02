@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Hosting;
 using System;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers
 {
+    [Authorize(Roles = "Администраторы")]
     public class FilesController : Controller
     {
         AppIdentityDBContext _context;

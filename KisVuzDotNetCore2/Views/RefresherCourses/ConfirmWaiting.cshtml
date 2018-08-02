@@ -48,7 +48,7 @@
             </tr>
         </thead>
         <tbody>
-            @if(Model.Count()==0)
+            @if (Model.Count() == 0)
             {
                 <tr>
                     <td colspan="12" class="text-center text-info"><h4>Неподтверждённые повышения квалификации пользователей отсутствуют</h4></td>
@@ -56,54 +56,54 @@
             }
             else
             {
-                
-            }
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RefresherCourseDateIssue)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RefresherCourseRegNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RefresherCourseName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RefresherCourseHours)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RefresherCourseInstitition)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RefresherCourseCity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RefresherCourseDateStart)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RefresherCourseDateFinish)
-                    </td>
-                    <td>
-                        <a href="/@item.RefresherCourseFile.Path">Открыть</a>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RowStatus.RowStatusName)
-                    </td>
-                    <td>
-                        <a asp-action="Index" asp-controller="UserProfile" asp-route-id="@item.AppUser.Id">@item.AppUser.LastName @item.AppUser.FirstName @item.AppUser.Patronymic</a>
-                    </td>
-                    <td>
-                        @item.RowStatus?.RowStatusName
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.RefresherCourseId">Редактировать</a> |
-                        <a asp-action="Details" asp-route-id="@item.RefresherCourseId">Подробнее</a> |
-                        <a asp-action="Delete" asp-route-id="@item.RefresherCourseId">Удалить</a> |
-                        <a asp-action="Confirm" asp-route-id="@item.RefresherCourseId">Подтвердить</a>
-                    </td>
-                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefresherCourseDateIssue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefresherCourseRegNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefresherCourseName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefresherCourseHours)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefresherCourseInstitition)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefresherCourseCity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefresherCourseDateStart)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefresherCourseDateFinish)
+                        </td>
+                        <td>
+                            <a href="/@item.RefresherCourseFile.Path">Открыть</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RowStatus.RowStatusName)
+                        </td>
+                        <td>
+                            <a asp-action="Index" asp-controller="UserProfile" asp-route-id="@item.AppUser.Id">@item.AppUser.LastName @item.AppUser.FirstName @item.AppUser.Patronymic</a>
+                        </td>
+                        <td>
+                            @item.RowStatus?.RowStatusName
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.RefresherCourseId">Редактировать</a> |
+                            <a asp-action="Details" asp-route-id="@item.RefresherCourseId">Подробнее</a> |
+                            <a asp-action="Delete" asp-route-id="@item.RefresherCourseId">Удалить</a> |
+                            <a asp-action="Confirm" asp-route-id="@item.RefresherCourseId">Подтвердить</a>
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>

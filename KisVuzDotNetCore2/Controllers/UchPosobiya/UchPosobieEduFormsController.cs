@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.UchPosobiya;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.UchPosobiya
 {
+    [Authorize(Roles = "Администраторы")]
     public class UchPosobieEduFormsController : Controller
     {
         private readonly AppIdentityDBContext _context;

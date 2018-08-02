@@ -84,7 +84,7 @@
         /// <summary>
         /// Диплом о профессиональной переподготовке
         /// </summary>
-        DiplomOProfessionalnoyPodgotovke = 24,
+        DiplomOProfessionalnoyPerepodgotovke = 24,
         /// <summary>
         /// Учебный план
         /// </summary>

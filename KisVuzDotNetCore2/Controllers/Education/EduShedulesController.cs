@@ -10,9 +10,11 @@ using KisVuzDotNetCore2.Models.Education;
 using Microsoft.AspNetCore.Http;
 using KisVuzDotNetCore2.Models.Files;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers
 {
+    [Authorize(Roles = "Администраторы")]
     public class EduShedulesController : Controller
     {
         private readonly AppIdentityDBContext _context;

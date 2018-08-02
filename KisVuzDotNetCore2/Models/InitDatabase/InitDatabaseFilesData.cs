@@ -285,7 +285,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType24 = new FileDataType
                     {
-                        FileDataTypeId = (int)FileDataTypeEnum.DiplomOProfessionalnoyPodgotovke,
+                        FileDataTypeId = (int)FileDataTypeEnum.DiplomOProfessionalnoyPerepodgotovke,
                         FileDataTypeName = "Диплом о профессиональной переподготовке",
                         Itemprop = "",
                         FileDataTypeGroupId = 4

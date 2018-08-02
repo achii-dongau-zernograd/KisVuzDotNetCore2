@@ -74,11 +74,11 @@
             @Html.DisplayNameFor(model => model.ProfessionalRetrainingFile)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ProfessionalRetrainingFile.Id)
+            <a href="/@Model.ProfessionalRetrainingFile.Path">Открыть</a>
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ProfessionalRetrainingId" class="btn btn-default">Редактировать</a>
-    <a asp-action="Index" class="btn btn-primary">Назад</a>
+    <a asp-action="Index" asp-route-id="@Model.AppUser.Id" class="btn btn-primary">Назад</a>
 </div>

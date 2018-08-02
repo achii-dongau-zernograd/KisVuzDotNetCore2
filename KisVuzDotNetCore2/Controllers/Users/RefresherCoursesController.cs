@@ -124,7 +124,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         public async Task<IActionResult> Create([Bind("RefresherCourseId,RefresherCourseRegNumber,RefresherCourseName,RefresherCourseHours,RefresherCourseCity,RefresherCourseInstitition,RefresherCourseDateStart,RefresherCourseDateFinish,RefresherCourseDateIssue,AppUserId")] RefresherCourse refresherCourse,
             IFormFile uploadedFile)
         {
-            if (ModelState.IsValid && uploadedFile!=null)
+            if (ModelState.IsValid && uploadedFile != null)
             {
                 FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Удостоверение о повышении квалификации", FileDataTypeEnum.UdostoverenieOPovisheniiKvalifikacii);
                 refresherCourse.RefresherCourseFileId = fileModel.Id;
@@ -212,7 +212,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index),new { id= refresherCourse.AppUserId });
+                return RedirectToAction(nameof(Index), new { id = refresherCourse.AppUserId });
             }
             
             return View(refresherCourse);
@@ -245,8 +245,9 @@ namespace KisVuzDotNetCore2.Controllers.Users
         {
             var refresherCourse = await _context.RefresherCourses.SingleOrDefaultAsync(m => m.RefresherCourseId == id);
             _context.RefresherCourses.Remove(refresherCourse);
+            Files.RemoveFile(_context, _appEnvironment, refresherCourse.RefresherCourseFileId);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index),new { id = refresherCourse.AppUserId });
+            return RedirectToAction(nameof(Index), new { id = refresherCourse.AppUserId });
         }
 
         /// <summary>
