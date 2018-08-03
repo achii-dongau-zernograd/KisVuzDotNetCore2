@@ -103,14 +103,14 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                 {
                     FileDataType fileDataType1 = new FileDataType
                     {
-                        FileDataTypeId = 1,
+                        FileDataTypeId = (int)FileDataTypeEnum.PolojenOStructPodrazd,
                         FileDataTypeName = "Положения о структурных подразделениях",
                         FileDataTypeGroupId = 1
                     };
 
                     FileDataType fileDataType2 = new FileDataType
                     {
-                        FileDataTypeId = 2,
+                        FileDataTypeId = (int)FileDataTypeEnum.PolojenObObrazovatDeyat,
                         FileDataTypeName = "Положения об образовательной деятельности",
                         FileDataTypeGroupId = 1
                     };

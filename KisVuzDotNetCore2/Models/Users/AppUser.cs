@@ -1,5 +1,6 @@
 ﻿using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Struct;
+using KisVuzDotNetCore2.Models.Students;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -112,6 +113,16 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public List<UserWork> UserWorks { get; set; }
         
+        /// <summary>
+        /// Отображение пользователя как студента образовательной организации
+        /// </summary>
+        public List<Student> Students { get; set; }
+
+        /// <summary>
+        /// Отображение пользователя как преподавателя образовательной организации
+        /// </summary>
+        public List<Teacher> Teachers { get; set; }
+
         /// <summary>
         /// Занимаемые должности
         /// </summary>

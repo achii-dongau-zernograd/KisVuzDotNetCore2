@@ -45,7 +45,9 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Положение о структурном подразделении</label>
-                <select asp-for="StructStandingOrderId" class="form-control" asp-items="ViewBag.files"></select>
+                <select asp-for="StructStandingOrderId" class="form-control" asp-items="ViewBag.files">
+                    <option value="">Не выбрано</option>
+                </select>
             </div>
 
             <div class="form-group">

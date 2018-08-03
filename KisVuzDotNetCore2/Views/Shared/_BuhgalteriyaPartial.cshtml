@@ -1,0 +1,17 @@
+﻿<ul class="nav navbar-nav navbar-left">
+    @if (User.IsInRole("Бухгалтерия"))
+    {
+    <!-- Выпадающий список -->
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Бухгалтерия <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a asp-controller="Volumes" asp-action="Index" asp-route-id="">Объём образовательной деятельности</a></li>
+            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv">Информация о поступлении и расходовании финансовых и материальных средств</a></li>
+            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PlanFinansovoHozyaystvennoyDeyatelnosti">План финансово-хозяйственной деятельности</a></li>
+            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PoryadokOkazaniyaPlatnihObrazovatelnihUslug">Документ о порядке оказания платных образовательных услуг</a></li>
+            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug">Образец договора об оказании платных образовательных услуг</a></li>
+            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="DocumentObUtverjdeniiStoimostiObucheniya">Документ об утверждении стоимости обучения по каждой образовательной программе</a></li>
+        </ul>
+    </li>
+    }    
+</ul>

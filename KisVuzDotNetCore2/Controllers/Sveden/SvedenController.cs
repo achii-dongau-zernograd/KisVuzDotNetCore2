@@ -114,7 +114,16 @@ namespace KisVuzDotNetCore2.Controllers
                     .ThenInclude(fdt => fdt.FileToFileTypes)
                         .ThenInclude(ftft=>ftft.FileModel)
                 .FirstOrDefaultAsync();
-                //.ToListAsync();
+            //.ToListAsync();
+
+            // Дополнительная информация
+            var polojeniya = await _context.FileDataTypeGroups
+                .Include(g => g.FileDataTypes)
+                    .ThenInclude(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .SingleOrDefaultAsync(g => g.FileDataTypeGroupName == "Положения");
+            ViewData["polojeniya"] = polojeniya;
+
             return View(docs);
         }
 

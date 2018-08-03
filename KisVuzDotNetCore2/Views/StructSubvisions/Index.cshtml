@@ -59,7 +59,7 @@
                     @Html.DisplayFor(modelItem => item.StructSubvisionPostChief.PostName)
                 </td>
                 <td>
-                    <a asp-controller="Files" asp-action="GetFile" asp-route-id="@item.StructStandingOrderId">@Html.DisplayFor(modelItem => item.StructStandingOrder.Name)</a>
+                    <a href="/@item.StructStandingOrder?.Path">@item.StructStandingOrder?.Name</a>
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.StructSubvisionId">Редактировать</a> 

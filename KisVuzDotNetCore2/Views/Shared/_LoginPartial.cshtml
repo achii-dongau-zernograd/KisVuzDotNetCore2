@@ -11,7 +11,7 @@
 
         <!-- Выпадающий список -->
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> @currentUser.GetFullName (@currentUser.Email)<span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> @currentUser.GetFullName <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@UserManager.GetUserId(User)" title="Профиль пользователя"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Профиль</a></li>
                 <li><a asp-controller="Qualifications" asp-action="Index" asp-route-id="@UserManager.GetUserId(User)" title="Квалификация пользователя"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Квалификация</a></li>
@@ -28,6 +28,6 @@
     }
     else
     {
-        <li><a asp-area="" asp-controller="Account" asp-action="Login">Войти</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Войти</a></li>
     }
 </ul>

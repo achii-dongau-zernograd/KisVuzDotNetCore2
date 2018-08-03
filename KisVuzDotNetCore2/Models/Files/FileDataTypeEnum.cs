@@ -6,6 +6,14 @@
     public enum FileDataTypeEnum
     {
         /// <summary>
+        /// Положение о структурном подразделении
+        /// </summary>
+        PolojenOStructPodrazd = 1,
+        /// <summary>
+        /// Положения об образовательной деятельности
+        /// </summary>
+        PolojenObObrazovatDeyat = 2,
+        /// <summary>
         /// Устав образовательной организации
         /// </summary>
         UstavObrazovatelnoyOrganizatsii = 3,
@@ -143,6 +151,6 @@
         /// <summary>
         ///  Рецензия на работу пользователя
         /// </summary>
-        UserWorkRecenziya = 45
+        UserWorkRecenziya = 45        
     }
 }

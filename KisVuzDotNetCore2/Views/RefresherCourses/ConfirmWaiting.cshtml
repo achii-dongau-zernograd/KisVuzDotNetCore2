@@ -86,12 +86,9 @@
                         </td>
                         <td>
                             <a href="/@item.RefresherCourseFile.Path">Открыть</a>
-                        </td>
+                        </td>                        
                         <td>
-                            @Html.DisplayFor(modelItem => item.RowStatus.RowStatusName)
-                        </td>
-                        <td>
-                            <a asp-action="Index" asp-controller="UserProfile" asp-route-id="@item.AppUser.Id">@item.AppUser.LastName @item.AppUser.FirstName @item.AppUser.Patronymic</a>
+                            <a asp-action="Index" asp-controller="UserProfile" asp-route-id="@item.AppUserId">@item.AppUser?.LastName @item.AppUser?.FirstName @item.AppUser?.Patronymic</a>
                         </td>
                         <td>
                             @item.RowStatus?.RowStatusName

@@ -63,19 +63,19 @@
             @Html.DisplayNameFor(model => model.AppUser)
         </dt>
         <dd>
-            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.AppUser.Id">@Model.AppUser.GetFullName</a>
+            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.AppUserId">@Model.AppUser?.GetFullName</a>
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.RefresherCourseFile)
         </dt>
         <dd>
-            <a href="/@Model.RefresherCourseFile.Path">Открыть</a>
+            <a href="/@Model.RefresherCourseFile?.Path">Открыть</a>
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="RefresherCourseId" />
         <input type="submit" value="Удалить" class="btn btn-danger" />
-        <a asp-action="Index" asp-route-id="@Model.AppUser.Id" class="btn btn-default">Отмена</a>
+        <a asp-action="Index" asp-route-id="@Model.AppUserId" class="btn btn-default">Отмена</a>
     </form>
 </div>

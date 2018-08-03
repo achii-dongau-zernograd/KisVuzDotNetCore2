@@ -1,9 +1,13 @@
 ﻿@model FileDataTypeGroup
 
+@{
+    var polojeniya = (FileDataTypeGroup)ViewData["polojeniya"];
+}
+
 <h1>Документы</h1>
 
 @foreach (var fileDataType in Model.FileDataTypes)
-{    
+{
     <a href="#spoiler-@fileDataType.FileDataTypeId" data-toggle="collapse" class="btn btn-primary btn-block">@fileDataType.FileDataTypeName</a>
     <div class="collapse" id="spoiler-@fileDataType.FileDataTypeId">
         <div class="well">
@@ -14,3 +18,20 @@
         </div>
     </div>
 }
+
+<h3>Положения</h3>
+@foreach (var fileDataType in polojeniya.FileDataTypes)
+{
+    <a href="#spoiler-@fileDataType.FileDataTypeId" data-toggle="collapse" class="btn btn-primary btn-block">@fileDataType.FileDataTypeName</a>
+    <div class="collapse" id="spoiler-@fileDataType.FileDataTypeId">
+        <div class="well">
+            @foreach (var ftft in fileDataType.FileToFileTypes)
+            {
+                <p><a itemprop="@ftft.FileDataType.Itemprop" asp-controller="Files" asp-action="GetFile" asp-route-id="@ftft.FileModel.Id">@ftft.FileModel.Name</a></p>
+            }
+        </div>
+    </div>
+}
+
+
+

@@ -19,7 +19,7 @@
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -31,24 +31,6 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">О проекте</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Контакты</a></li>
-
-
-                </ul>
-                @await Html.PartialAsync("_AdminPartial")
-                @await Html.PartialAsync("_OtdelKadrovPartial")
-                @await Html.PartialAsync("_DekanatPartial")
-                @await Html.PartialAsync("_LoginPartial")
-            </div>
-        </div>
-    </nav>
-
-    <nav class="nav navbar navbar-right">
-        <div class="container">
-            <div class="navbar-collapse collapse">
-
-                <ul class="nav navbar-nav navbar-right">
 
                     <!-- Выпадающий список: Электронная информационно-образовательная среда -->
                     <li class="dropdown">
@@ -92,17 +74,36 @@
                             <li><a asp-controller="Sveden" asp-action="Vacant">Вакантные места для приема (перевода)</a></li>
                         </ul>
                     </li>
-                    <li class="slabovid" itemprop="copy">
-                        <a asp-area="" asp-controller="Slabovid" asp-action="Change">
-                            Версия для слабовидящих
-                        </a>
-                    </li>
+
+
+
+
                 </ul>
+
+                @await Html.PartialAsync("_SlabovidMenuButtonPartial")
+                @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
-              
-   
+
+    @inject SignInManager<AppUser> SignInManager
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <nav class="nav navbar navbar-left">
+            <div class="container-fluid">
+                <div class="navbar-collapse collapse">
+                    @await Html.PartialAsync("_AdminPartial")
+                    @await Html.PartialAsync("_OtdelKadrovPartial")
+                    @await Html.PartialAsync("_BuhgalteriyaPartial")
+                    @await Html.PartialAsync("_UchChastPartial")
+                    @await Html.PartialAsync("_DekanatPartial")
+                    @await Html.PartialAsync("_PriemnayaKomissiyaPartial")
+                </div>
+            </div>
+        </nav>
+    }
+
+
         <div class="container-fluid body-content">
             <br />
             <br />
@@ -115,27 +116,27 @@
             </footer>
         </div>
 
-        <environment include="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-        </environment>
-        <environment exclude="Development">
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery"
-                    crossorigin="anonymous"
-                    integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-            </script>
-            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                    crossorigin="anonymous"
-                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-            </script>
-            <script src="~/js/site.min.js" asp-append-version="true"></script>
-        </environment>
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
 
-        @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

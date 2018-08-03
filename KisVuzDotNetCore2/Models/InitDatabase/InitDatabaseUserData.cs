@@ -412,6 +412,123 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
             }
         }
 
+        /// <summary>
+        /// Создание учётных записей бухгалтерии
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static async Task CreateBuhgalteriyaAccounts(IServiceProvider serviceProvider, IConfiguration configuration)
+        {
+            using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                UserManager<AppUser> userManager = serviceScope.ServiceProvider.GetService<UserManager<AppUser>>();
+                RoleManager<IdentityRole> roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
 
+                string role = "Бухгалтерия";
+
+                List<AppUser> appUsers = new List<AppUser>();
+                AppUser user1 = new AppUser
+                {
+                    UserName = "buhgalteriya1@example.com",
+                    Email = "buhgalteriya1@example.com",
+                    PasswordHash = "secret",
+                    //Birthdate = new DateTime(2000, 12, 30),
+                    //EduLevelGroupId = 1,
+                    FirstName = "Бухгалтер",
+                    LastName = "-",
+                    Patronymic = "-",
+                    PhoneNumber = "-",
+                };
+
+
+                appUsers.AddRange(new List<AppUser> { user1 });
+
+                foreach (AppUser user in appUsers)
+                {
+                    if (await userManager.FindByNameAsync(user.UserName) == null)
+                    {
+                        if (await roleManager.FindByNameAsync(role) == null)
+                        {
+                            await roleManager.CreateAsync(new IdentityRole(role));
+                        }
+
+                        IdentityResult result = await userManager.CreateAsync(user, user.PasswordHash);
+                        if (result.Succeeded)
+                        {
+                            await userManager.AddToRoleAsync(user, role);
+                        }
+                    }
+                }
+
+
+            }
+        }
+
+        /// <summary>
+        /// Создание учётных записей учебной части
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static async Task CreateUchChastAccounts(IServiceProvider serviceProvider, IConfiguration configuration)
+        {
+            using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                UserManager<AppUser> userManager = serviceScope.ServiceProvider.GetService<UserManager<AppUser>>();
+                RoleManager<IdentityRole> roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+
+                string role = "Учебная часть";
+
+                List<AppUser> appUsers = new List<AppUser>();
+                AppUser user1 = new AppUser
+                {
+                    UserName = "lashtam2@yandex.ru",
+                    Email = "lashtam2@yandex.ru",
+                    PasswordHash = "secret",
+                    //Birthdate = new DateTime(2000, 12, 30),
+                    EduLevelGroupId = 2,
+                    FirstName = "Тамара",
+                    LastName = "Лашина",
+                    Patronymic = "Ашотовна",
+                    PhoneNumber = "89185715176",
+                };
+
+                AppUser user2 = new AppUser
+                {
+                    UserName = "cool.shipik@mail.ru",
+                    Email = "cool.shipik@mail.ru",
+                    PasswordHash = "secret",
+                    //Birthdate = new DateTime(2000, 12, 30),
+                    EduLevelGroupId = 2,
+                    FirstName = "Людмила",
+                    LastName = "Шипик",
+                    Patronymic = "Юрьевна",
+                    PhoneNumber = "89612896055",
+                };
+
+
+                appUsers.AddRange(new List<AppUser> { user1, user2 });
+
+                foreach (AppUser user in appUsers)
+                {
+                    if (await userManager.FindByNameAsync(user.UserName) == null)
+                    {
+                        if (await roleManager.FindByNameAsync(role) == null)
+                        {
+                            await roleManager.CreateAsync(new IdentityRole(role));
+                        }
+
+                        IdentityResult result = await userManager.CreateAsync(user, user.PasswordHash);
+                        if (result.Succeeded)
+                        {
+                            await userManager.AddToRoleAsync(user, role);
+                        }
+                    }
+                }
+
+
+            }
+        }
     }
 }

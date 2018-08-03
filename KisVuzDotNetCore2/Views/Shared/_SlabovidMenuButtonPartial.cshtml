@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using KisVuzDotNetCore2.Models
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+<ul class="nav navbar-nav navbar-right">
+    <li class="slabovid" itemprop="copy">
+        <a asp-area="" asp-controller="Slabovid" asp-action="Change">
+            Версия для слабовидящих
+        </a>
+    </li>
+</ul>

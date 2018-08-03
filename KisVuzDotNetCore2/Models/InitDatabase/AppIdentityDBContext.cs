@@ -764,6 +764,8 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseUserData.CreateMainUsersAccounts(serviceProvider, configuration);
             await InitDatabaseUserData.CreateStudentsAccounts(serviceProvider, configuration);
             await InitDatabaseUserData.CreateOtdelKadrovAccounts(serviceProvider, configuration);
+            await InitDatabaseUserData.CreateBuhgalteriyaAccounts(serviceProvider, configuration);
+            await InitDatabaseUserData.CreateUchChastAccounts(serviceProvider, configuration);
 
             await InitDatabaseElectronBiblSystem.CreateElectronBiblSystem(serviceProvider, configuration);
             await InitDatabaseElectronCatalog.CreateElectronCatalog(serviceProvider, configuration);

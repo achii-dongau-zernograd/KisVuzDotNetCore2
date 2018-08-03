@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Controllers
@@ -17,23 +18,32 @@ namespace KisVuzDotNetCore2.Controllers
         private IUserValidator<AppUser> userValidator;
         private IPasswordValidator<AppUser> passwordValidator;
         private IPasswordHasher<AppUser> passwordHasher;
+        private AppIdentityDBContext context;
         #endregion
 
         #region Конструктор
         public UserAdminController(UserManager<AppUser> usrMgr,
             IUserValidator<AppUser> userValid,
             IPasswordValidator<AppUser> passValid,
-            IPasswordHasher<AppUser> passwordHash)
+            IPasswordHasher<AppUser> passwordHash,
+            AppIdentityDBContext ctx)
         {
             userManager = usrMgr;
             userValidator = userValid;
             passwordValidator = passValid;
             passwordHasher = passwordHash;
+            context = ctx;
         }
         #endregion
 
         #region Index
-        public ViewResult Index() => View(userManager.Users);
+        public ViewResult Index()
+        {
+            var users = context.Users
+                .Include(u=>u.Students)
+                .Include(u=>u.Teachers);
+            return View(users);
+        }
         #endregion
 
         #region Create
@@ -159,7 +169,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 ModelState.AddModelError("", error.Description);
             }
-        }
+        }        
         #endregion
     }
 }

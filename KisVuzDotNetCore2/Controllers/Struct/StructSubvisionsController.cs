@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Struct;
 using Microsoft.AspNetCore.Authorization;
+using KisVuzDotNetCore2.Models.Files;
 
 namespace KisVuzDotNetCore2.Controllers
 {
@@ -20,6 +21,18 @@ namespace KisVuzDotNetCore2.Controllers
         {
             _context = context;
         }
+
+
+        private async Task<FileDataType> GetFileDataTypePolojenOStructPodrazd()
+        {
+            // Получаем список положений о структурных подразделениях
+            var fileDataType = await _context.FileDataTypes
+                .Include(fdt => fdt.FileToFileTypes)
+                    .ThenInclude(ftft => ftft.FileModel)
+                .SingleOrDefaultAsync(fdt => fdt.FileDataTypeId == (int)FileDataTypeEnum.PolojenOStructPodrazd);
+            return fileDataType;
+        }
+        
 
         // GET: StructSubvisions
         public async Task<IActionResult> Index()
@@ -55,12 +68,12 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         // GET: StructSubvisions/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress");
             ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostName");
             ViewData["StructSubvisionTypes"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeName");            
-            ViewData["files"] = new SelectList(_context.Files, "Id", "Name");
+            ViewData["files"] = new SelectList((await GetFileDataTypePolojenOStructPodrazd()).FileToFileTypes, "FileModelId", "FileModel.Name");
             return View();
         }
 
@@ -80,7 +93,7 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress", structSubvision.StructSubvisionAdressId);
             ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostName", structSubvision.StructSubvisionPostChiefId);
             ViewData["StructSubvisionTypes"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeName", structSubvision.StructSubvisionTypeId);
-            ViewData["files"] = new SelectList(_context.Files, "Id", "Name");
+            ViewData["files"] = new SelectList((await GetFileDataTypePolojenOStructPodrazd()).FileToFileTypes, "FileModelId", "FileModel.Name");
             return View(structSubvision);
         }
 
@@ -100,7 +113,7 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress", structSubvision.StructSubvisionAdressId);
             ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostName", structSubvision.StructSubvisionPostChiefId);
             ViewData["StructSubvisionTypes"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeName", structSubvision.StructSubvisionTypeId);
-            ViewData["files"] = new SelectList(_context.Files, "Id", "Name");
+            ViewData["files"] = new SelectList((await GetFileDataTypePolojenOStructPodrazd()).FileToFileTypes, "FileModelId", "FileModel.Name");
             return View(structSubvision);
         }
 
@@ -139,7 +152,7 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "AddressId", structSubvision.StructSubvisionAdressId);
             ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostId", structSubvision.StructSubvisionPostChiefId);
             ViewData["StructSubvisionTypes"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeId", structSubvision.StructSubvisionTypeId);
-            ViewData["files"] = new SelectList(_context.Files, "Id", "Name");
+            ViewData["files"] = new SelectList((await GetFileDataTypePolojenOStructPodrazd()).FileToFileTypes, "FileModelId", "FileModel.Name");
             return View(structSubvision);
         }
 

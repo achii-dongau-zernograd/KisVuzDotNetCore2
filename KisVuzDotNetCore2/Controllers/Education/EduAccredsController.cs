@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Education;
 using Microsoft.AspNetCore.Authorization;
+using KisVuzDotNetCore2.Models.Files;
 
 namespace KisVuzDotNetCore2.Controllers
 {
@@ -48,9 +49,13 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         // GET: EduAccreds/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["EduAccredFileId"] = new SelectList(_context.Files, "Id", "Name");
+            var fdtEduAccredsFiles = await _context.FileDataTypes
+                .Include(fdt=>fdt.FileToFileTypes)
+                    .ThenInclude(ftft=>ftft.FileModel)
+                .SingleOrDefaultAsync(f=>f.FileDataTypeId==(int)FileDataTypeEnum.SvidetelstvoOGosudarstvennoyAccreditatsii);
+            ViewData["EduAccredFileId"] = new SelectList(fdtEduAccredsFiles.FileToFileTypes, "FileModelId", "FileModel.Name");
             return View();
         }
 
@@ -84,7 +89,13 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["EduAccredFileId"] = new SelectList(_context.Files, "Id", "Name", eduAccred.EduAccredFileId);
+
+            var fdtEduAccredsFiles = await _context.FileDataTypes
+                .Include(fdt => fdt.FileToFileTypes)
+                    .ThenInclude(ftft => ftft.FileModel)
+                .SingleOrDefaultAsync(f => f.FileDataTypeId == (int)FileDataTypeEnum.SvidetelstvoOGosudarstvennoyAccreditatsii);
+            ViewData["EduAccredFileId"] = new SelectList(fdtEduAccredsFiles.FileToFileTypes, "FileModelId", "FileModel.Name");
+
             return View(eduAccred);
         }
 
