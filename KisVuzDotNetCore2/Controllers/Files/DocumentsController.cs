@@ -15,7 +15,7 @@ namespace KisVuzDotNetCore2.Controllers
     /// <summary>
     /// Контроллер для работы с документами
     /// </summary>
-    [Authorize(Roles = "Администраторы")]
+    [Authorize(Roles = "Администраторы, Бухгалтерия, Учебная часть")]
     public class DocumentsController : Controller
     {
         private readonly AppIdentityDBContext _context;
