@@ -416,6 +416,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
         }
 
         // Get: EduPlans/Preview/id
+        [AllowAnonymous]
         public async Task<IActionResult> Preview(int id)
         {
             var eduPlan = await _context.EduPlans
