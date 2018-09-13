@@ -37,14 +37,13 @@
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Студенты и группы<b class="caret"></b></a>
                 <ul class="dropdown-menu">
+                    <li><a asp-controller="StudentGroups" asp-action="StudentGroupsOfFacultet" asp-route-StructFacultetId="@structFacultetId">Студенческие группы</a></li>
                     <li><a asp-controller="Students" asp-action="Index">Студенты</a></li>
-                    <li><a asp-controller="StudentGroups" asp-action="Index">Студенческие группы</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ведомости<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a asp-controller="VedomostStudentMarkNames" asp-action="Index">Наименования отметок по ведомости (справочник)</a></li>
+                <ul class="dropdown-menu">                    
                     <li><a asp-controller="Vedomosti" asp-action="Index">Ведомости</a></li>
                     <li><a asp-controller="VedomostStudentMarks" asp-action="Index">Отметки по ведомостям</a></li>
                 </ul>

@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Students;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
@@ -16,7 +17,7 @@ namespace KisVuzDotNetCore2.Models.Students
         /// <summary>
         /// Список студентов
         /// </summary>
-        IIncludableQueryable<Student, StudentGroup> Students { get; }
+        IIncludableQueryable<Student, EduKurs> Students { get; }
 
         /// <summary>
         /// Студенческие группы

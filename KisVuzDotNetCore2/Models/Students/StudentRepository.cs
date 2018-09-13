@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Students;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
@@ -25,9 +26,9 @@ namespace KisVuzDotNetCore2.Models.Students
         /// <summary>
         /// Список студентов
         /// </summary>
-        public IIncludableQueryable<Student, StudentGroup> Students => _context.Students
+        public IIncludableQueryable<Student, EduKurs> Students => _context.Students
             .Include(s => s.AppUser)
-            .Include(s => s.StudentGroup);
+            .Include(s => s.StudentGroup.EduKurs);
 
         public IIncludableQueryable<StudentGroup, AppUser> StudentGroups => _context.StudentGroups
                 .Include(g => g.EduForm)

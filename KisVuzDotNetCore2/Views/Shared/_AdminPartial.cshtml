@@ -5,7 +5,7 @@
     <li>
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Настройки <b class="caret"></b></a>
         <ul class="dropdown-menu">
-            
+
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Структура <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -42,7 +42,7 @@
                     <li><a asp-controller="InstituteLinks" asp-action="Index">Веб-ресурсы институтов</a></li>
                 </ul>
             </li>
-            
+
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сотрудники <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -54,6 +54,29 @@
                     <li><a asp-controller="RefresherCourses" asp-action="Index">Курсы повышения квалификации</a></li>
                     <li><a asp-controller="ProfessionalRetrainings" asp-action="Index">Профессиональная переподготовка</a></li>
                 </ul>
+            </li>
+
+            <li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Студенты и успеваемость <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Студенты и группы<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="Students" asp-action="Index">Студенты</a></li>
+                            <li><a asp-controller="StudentGroups" asp-action="Index">Студенческие группы</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ведомости<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="VedomostStudentMarkNames" asp-action="Index">Наименования отметок по ведомости (справочник)</a></li>
+                            <li><a asp-controller="Vedomosti" asp-action="Index">Ведомости</a></li>
+                            <li><a asp-controller="VedomostStudentMarks" asp-action="Index">Отметки по ведомостям</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Электронная информационно-образовательная среда <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -61,8 +84,8 @@
                     <li><a asp-controller="ElectronCatalogs" asp-action="Index">База данных электронного каталога</a></li>
                     <li><a asp-controller="ElectronObrazovatInformRes" asp-action="Index">Электронные образовательные и электронные ресурсы</a></li>
                 </ul>
-            </li>            
-            
+            </li>
+
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Материально-техническое обеспечение <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -94,8 +117,8 @@
                     <li><a asp-controller="NirTemas" asp-action="Index">Темы НИР</a></li>
                     <li><a asp-controller="NirTemaEduProfiles" asp-action="Index">Тема НИР - профиль подготовки</a></li>
                 </ul>
-            </li>            
-            
+            </li>
+
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Работы пользователей, их рецензии и оценки<b class="caret"></b></a>
                 <ul class="dropdown-menu">

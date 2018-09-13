@@ -103,11 +103,11 @@ namespace KisVuzDotNetCore2.Controllers.Students
         // GET: StudentGroups/Create
         public IActionResult Create()
         {
-            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormId");
-            ViewData["EduKursId"] = new SelectList(_context.EduKurses, "EduKursId", "EduKursId");
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileId");
-            ViewData["KuratorId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherId");
-            ViewData["StructFacultetId"] = new SelectList(_context.StructFacultets, "StructFacultetId", "StructFacultetId");
+            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormName");
+            ViewData["EduKursId"] = new SelectList(_context.EduKurses, "EduKursId", "EduKursName");
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p=>p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
+            ViewData["KuratorId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherFio");
+            ViewData["StructFacultetId"] = new SelectList(_context.StructFacultets.Include(sf=>sf.StructSubvision), "StructFacultetId", "StructSubvision.StructSubvisionName");
             return View();
         }
 
@@ -163,7 +163,7 @@ namespace KisVuzDotNetCore2.Controllers.Students
             }
             ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormId", studentGroup.EduFormId);
             ViewData["EduKursId"] = new SelectList(_context.EduKurses, "EduKursId", "EduKursId", studentGroup.EduKursId);
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileId", studentGroup.EduProfileId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", studentGroup.EduProfileId);
             ViewData["KuratorId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherId", studentGroup.KuratorId);
             ViewData["StructFacultetId"] = new SelectList(_context.StructFacultets, "StructFacultetId", "StructFacultetId", studentGroup.StructFacultetId);
             return View(studentGroup);
@@ -182,11 +182,11 @@ namespace KisVuzDotNetCore2.Controllers.Students
             {
                 return NotFound();
             }
-            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormId", studentGroup.EduFormId);
-            ViewData["EduKursId"] = new SelectList(_context.EduKurses, "EduKursId", "EduKursId", studentGroup.EduKursId);
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileId", studentGroup.EduProfileId);
-            ViewData["KuratorId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherId", studentGroup.KuratorId);
-            ViewData["StructFacultetId"] = new SelectList(_context.StructFacultets, "StructFacultetId", "StructFacultetId", studentGroup.StructFacultetId);
+            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormName", studentGroup.EduFormId);
+            ViewData["EduKursId"] = new SelectList(_context.EduKurses, "EduKursId", "EduKursName", studentGroup.EduKursId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p=>p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", studentGroup.EduProfileId);
+            ViewData["KuratorId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherFio", studentGroup.KuratorId);
+            ViewData["StructFacultetId"] = new SelectList(_context.StructFacultets.Include(f=>f.StructSubvision), "StructFacultetId", "StructSubvision.StructSubvisionName", studentGroup.StructFacultetId);
             return View(studentGroup);
         }
 
