@@ -43,6 +43,20 @@ namespace KisVuzDotNetCore2.Controllers.Students
             return View(_studentRepository.Students);
         }
 
+        /// <summary>
+        /// Списки студентов курируемых групп куратора
+        /// </summary>
+        /// <param name="StudentGroupId"></param>
+        /// <param name="StructFacultetId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> StudentsOfKuratorByGroups()
+        {            
+            var studentGroupsOfKurator = await _studentRepository.GetStudentGroupsOfKuratorByUserNameAsync(User.Identity.Name);
+            if (studentGroupsOfKurator == null) return NotFound();            
+
+            return View(studentGroupsOfKurator);
+        }
+
         // GET: Students/Details/5
         public async Task<IActionResult> Details(int? id)
         {

@@ -31,5 +31,12 @@ namespace KisVuzDotNetCore2.Models.Students
         Task<StudentGroup> GetStudentGroupByIdAsync(int? studentGroupId);
         Task<Student> AddStudentAsync(Student student);
         Task<Student> GetStudentByIdAsync(int? studentId);
+
+        /// <summary>
+        /// Возвращает курируемые группы пользователя с заданным именем
+        /// </summary>
+        /// <param name="userName">Имя пользователя</param>
+        /// <returns></returns>
+        Task<List<StudentGroup>> GetStudentGroupsOfKuratorByUserNameAsync(string userName);
     }
 }

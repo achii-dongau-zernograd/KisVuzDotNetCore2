@@ -508,6 +508,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Shared\_KuratorPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_YurotdelPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

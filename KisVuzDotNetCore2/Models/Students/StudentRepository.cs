@@ -75,5 +75,32 @@ namespace KisVuzDotNetCore2.Models.Students
                 .SingleOrDefaultAsync(g=>g.StudentGroupId == studentGroupId);
             return studentGroup;
         }
+
+        /// <summary>
+        /// Возвращает курируемые группы пользователя с заданным именем
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<List<StudentGroup>> GetStudentGroupsOfKuratorByUserNameAsync(string userName)
+        {
+            var user = await _context.Users
+                .Include(u=>u.Teachers)
+                    .ThenInclude(t=>t.StudentGroupsOfKurator)
+                        .ThenInclude(g=>g.Students)
+                .Include(u => u.Teachers)
+                    .ThenInclude(t => t.StudentGroupsOfKurator)
+                        .ThenInclude(g => g.EduKurs)
+                .Where(u => u.UserName == userName)
+                .SingleOrDefaultAsync() as AppUser;
+
+            var studentGroupList = new List<StudentGroup>();
+
+            foreach (var teacher in user.Teachers)
+            {
+                studentGroupList.AddRange(teacher.StudentGroupsOfKurator);
+            }
+
+            return studentGroupList;
+        }
     }
 }

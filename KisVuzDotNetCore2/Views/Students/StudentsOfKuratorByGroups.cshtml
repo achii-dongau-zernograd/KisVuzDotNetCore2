@@ -1,0 +1,57 @@
+﻿@model List<StudentGroup>
+
+@{
+    ViewData["Title"] = "Группы, закреплённые за куратором";
+}
+
+<h2>Группы, закреплённые за куратором</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ФИО студента
+            </th>
+            <th>
+                Номер зачетной книжки
+            </th>
+            <th>
+                Аккаунт
+            </th>
+            <th>
+                Группа
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var studentGroup in Model)
+{
+    foreach (var student in studentGroup.Students)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => student.StudentFio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => student.ZachetnayaKnijkaNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => student.AppUser.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => student.StudentGroup.StudentGroupId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@student.StudentId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@student.StudentId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@student.StudentId">Delete</a>
+            </td>
+        </tr>
+    }
+}
+    </tbody>
+</table>
