@@ -33,20 +33,8 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Куратор <span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><a asp-controller="Students" asp-action="StudentsOfKuratorByGroups">Курируемые группы</a></li>
-                <li>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Студенты и группы<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a asp-controller="Students" asp-action="Index">Студенты</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ведомости<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a asp-controller="Vedomosti" asp-action="Index">Ведомости</a></li>
-                        <li><a asp-controller="VedomostStudentMarks" asp-action="Index">Отметки по ведомостям</a></li>
-                    </ul>
-                </li>
+                <li><a asp-controller="Students" asp-action="StudentsOfKuratorByGroups">Списки студентов</a></li>                
+                <li><a asp-controller="VedomostiOfKurator" asp-action="Index">Ведомости</a></li>
             </ul>
         </li>
     </ul>

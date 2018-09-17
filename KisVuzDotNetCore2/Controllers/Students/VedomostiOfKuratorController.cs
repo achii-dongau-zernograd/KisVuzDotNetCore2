@@ -11,69 +11,37 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers
 {
-    [Authorize(Roles = "Администраторы")]
-    public class VedomostiController : Controller
+    [Authorize(Roles = "Администраторы, Преподаватели")]
+    public class VedomostiOfKuratorController : Controller
     {
         private readonly AppIdentityDBContext _context;
+        private IStudentRepository _studentRepository;
 
-        public VedomostiController(AppIdentityDBContext context)
+        public VedomostiOfKuratorController(AppIdentityDBContext context,
+            IStudentRepository studentRepository)
         {
             _context = context;
+            _studentRepository = studentRepository;
         }
 
         // GET: Vedomosti
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.Vedomosti
-                .Include(v => v.EduYear)
-                .Include(v => v.SemestrName)
-                .Include(v => v.StudentGroup.EduKurs)
-                .Include(v => v.VedomostStudentMarks);
-            return View(await appIdentityDBContext.ToListAsync());
-        }
+            // Курируемые группы
+            var studentGroupsOfKurator = await _studentRepository.GetStudentGroupsOfKuratorByUserNameAsync(User.Identity.Name);
+            if (studentGroupsOfKurator == null) return NotFound();                       
 
-        /// <summary>
-        /// Ведомости курируемых куратором групп по группам
-        /// </summary>
-        /// <returns></returns>
-        [Authorize(Roles ="Преподаватели")]
-        public async Task<IActionResult> VedomostiOfKuratorByGroups()
-        {
-            var appIdentityDBContext = _context.Vedomosti
-                .Include(v => v.EduYear)
-                .Include(v => v.SemestrName)
-                .Include(v => v.StudentGroup.EduKurs)
-                .Include(v => v.VedomostStudentMarks);
-            return View(await appIdentityDBContext.ToListAsync());
-        }
-
-        // GET: Vedomosti/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var vedomost = await _context.Vedomosti
-                .Include(v => v.EduYear)
-                .Include(v => v.SemestrName)
-                .Include(v => v.StudentGroup)
-                .SingleOrDefaultAsync(m => m.VedomostId == id);
-            if (vedomost == null)
-            {
-                return NotFound();
-            }
-
-            return View(vedomost);
-        }
-
+            return View(studentGroupsOfKurator);            
+        }        
+        
         // GET: Vedomosti/Create
-        public IActionResult Create()
+        public IActionResult Create(int StudentGroupId)
         {
+            if (StudentGroupId == 0) return NotFound();
+
             ViewData["EduYearId"] = new SelectList(_context.EduYears, "EduYearId", "EduYearName");
             ViewData["SemestrNameId"] = new SelectList(_context.SemestrNames, "SemestrNameId", "SemestrNameName");
-            ViewData["StudentGroupId"] = new SelectList(_context.StudentGroups.Include(g=>g.EduKurs), "StudentGroupId", "StudentGroupName");
+            ViewData["StudentGroupId"] = StudentGroupId;
             return View();
         }
 

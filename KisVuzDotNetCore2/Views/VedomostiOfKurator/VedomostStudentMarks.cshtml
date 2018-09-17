@@ -1,0 +1,46 @@
+﻿@model KisVuzDotNetCore2.Models.Students.Vedomost
+
+@{
+    ViewData["Title"] = "Ведомость. Отметки студентов";
+}
+
+<h2>Ведомость группы @Model.StudentGroup.StudentGroupName</h2>
+<h3>Курс @Model.Kurs. Семестр @Model.SemestrName.SemestrNameNumber</h3>
+<h3>Дисциплина: @Model.DisciplineName</h3>
+
+<p>
+    <a asp-controller="VedomostStudentMarks" asp-action="Create" asp-route-VedomostId="@Model.VedomostId" class="btn btn-primary">Добавить строку в ведомость</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ФИО студента
+            </th>
+            <th>
+                Оценка
+            </th>            
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.VedomostStudentMarks) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.StudentFio)
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.VedomostStudentMarkName.VedomostStudentMarkNameName)
+            </td>
+            <td>
+                <a asp-controller="VedomostStudentMarks" asp-action="Edit" asp-route-id="@item.VedomostStudentMarkId" asp-route-VedomostId="@Model.VedomostId">Редактировать</a> |                
+                <a asp-controller="VedomostStudentMarks" asp-action="Delete" asp-route-id="@item.VedomostStudentMarkId" asp-route-VedomostId="@Model.VedomostId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Index" class="btn btn-primary">Назад к списку ведомостей</a>
+</p>
