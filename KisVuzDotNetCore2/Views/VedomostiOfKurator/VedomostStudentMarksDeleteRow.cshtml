@@ -1,0 +1,57 @@
+﻿@model KisVuzDotNetCore2.Models.Students.VedomostStudentMark
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Vedomost.EduYear.EduYearName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Vedomost.EduYear.EduYearName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Vedomost.Kurs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Vedomost.Kurs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Vedomost.SemestrName.SemestrNameNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Vedomost.SemestrName.SemestrNameNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Vedomost.DisciplineName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Vedomost.DisciplineName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Student)
+        </dt>
+        <dd>
+            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.Student.AppUserId">@Model.Student.StudentFio</a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VedomostStudentMarkName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VedomostStudentMarkName.VedomostStudentMarkNameName)
+        </dd>
+    </dl>
+    
+    <form asp-action="VedomostStudentMarksDeleteRow">
+        <input type="hidden" asp-for="VedomostStudentMarkId" />
+        <input type="hidden" name="VedomostId" value="@Model.Vedomost.VedomostId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-controller="VedomostiOfKurator" asp-action="VedomostStudentMarks" asp-route-id="@Model.Vedomost.VedomostId" class="btn btn-default">Отмена</a>
+    </form>
+</div>

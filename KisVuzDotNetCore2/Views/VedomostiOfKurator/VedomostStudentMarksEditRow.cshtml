@@ -1,0 +1,30 @@
+﻿@model VedomostStudentMark
+
+@{
+    ViewData["Title"] = "Редактирование";    
+}
+
+<h2>Редактирование записи в ведомости группы @Model.Student.StudentGroup.StudentGroupName</h2>
+<h3>Курс @Model.Vedomost.Kurs. Семестр @Model.Vedomost.SemestrName.SemestrNameNumber</h3>
+<h3>Дисциплина: @Model.Vedomost.DisciplineName</h3>
+<h3>Студент: <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.Student.AppUserId">@Model.Student.StudentFio</a></h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="VedomostStudentMarksEditRow">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="VedomostStudentMarkId" />            
+            <div class="form-group">
+                <label asp-for="VedomostStudentMarkNameId" class="control-label"></label>
+                <select asp-for="VedomostStudentMarkNameId" class="form-control" asp-items="ViewBag.VedomostStudentMarkNameId"></select>
+                <span asp-validation-for="VedomostStudentMarkNameId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="VedomostId" value="@Model.Vedomost.VedomostId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-controller="VedomostiOfKurator" asp-action="VedomostStudentMarks" asp-route-id="@Model.Vedomost.VedomostId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

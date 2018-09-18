@@ -1,0 +1,51 @@
+﻿@model VedomostStudentMark
+
+@{
+    ViewData["Title"] = "Добавление";
+}
+
+<h2>Добавление записи в ведомость группы @ViewBag.vedomost.StudentGroup.StudentGroupName</h2>
+<h3>Курс @ViewBag.vedomost.Kurs. Семестр @ViewBag.vedomost.SemestrName.SemestrNameNumber</h3>
+<h3>Дисциплина: @ViewBag.vedomost.DisciplineName</h3>
+
+<hr />
+
+@if(ViewBag.students==null)
+{
+<div class="row">
+    <div class="col-md-4">                   
+        <div class="form-group">
+            <label class="control-label">Все студенты добавлены!</label>                
+        </div>
+        <div>
+            <a asp-controller="VedomostiOfKurator" asp-action="VedomostStudentMarks" asp-route-id="@Model.VedomostId" class="btn btn-primary">Назад</a>
+        </div>        
+    </div>
+</div>
+}
+else
+{
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="VedomostStudentMarksAddRow">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="VedomostStudentMarkId" />
+            <div class="form-group">
+                <label asp-for="StudentId" class="control-label"></label>
+                <select asp-for="StudentId" class="form-control" asp-items="ViewBag.students"></select>
+                <span asp-validation-for="StudentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VedomostStudentMarkNameId" class="control-label"></label>
+                <select asp-for="VedomostStudentMarkNameId" class="form-control" asp-items="ViewBag.VedomostStudentMarkNameId"></select>
+                <span asp-validation-for="VedomostStudentMarkNameId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="VedomostId" value="@Model.VedomostId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-controller="VedomostiOfKurator" asp-action="VedomostStudentMarks" asp-route-id="@Model.VedomostId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+}

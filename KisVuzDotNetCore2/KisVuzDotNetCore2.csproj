@@ -529,6 +529,15 @@
     <Content Update="Views\VedomostiOfKurator\VedomostStudentMarks.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\VedomostiOfKurator\VedomostStudentMarksAddRow.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\VedomostiOfKurator\VedomostStudentMarksEditRow.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\VedomostiOfKurator\VedomostStudentMarksDeleteRow.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>
