@@ -49,7 +49,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: priemKolTargets/Create
         public IActionResult Create()
         {
-            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlId");
+            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls.Include(n=>n.EduUgs.EduLevel), "EduNapravlId", "GetEduNapravlFullName");
             return View();
         }
 
@@ -83,7 +83,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlId", priemKolTarget.EduNapravlId);
+            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls.Include(n => n.EduUgs.EduLevel), "EduNapravlId", "GetEduNapravlFullName", priemKolTarget.EduNapravlId);
             return View(priemKolTarget);
         }
 
@@ -132,7 +132,7 @@ namespace KisVuzDotNetCore2.Controllers
             }
 
             var priemKolTarget = await _context.priemKolTarget
-                .Include(p => p.EduNapravl)
+                .Include(p => p.EduNapravl.EduUgs.EduLevel)
                 .SingleOrDefaultAsync(m => m.priemKolTargetId == id);
             if (priemKolTarget == null)
             {

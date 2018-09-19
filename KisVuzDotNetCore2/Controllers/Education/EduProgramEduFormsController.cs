@@ -16,6 +16,21 @@ namespace KisVuzDotNetCore2.Controllers
     {
         private readonly AppIdentityDBContext _context;
 
+        /// <summary>
+        /// Возвращает упорядоченный запрос со связанными данными таблицы EduProgramEduForms
+        /// </summary>
+        IOrderedQueryable<EduProgramEduForm> GetEduProgramEduFormsDBTableContext
+        {
+            get
+            {
+               return _context.EduProgramEduForms
+                        .Include(e => e.EduForm)
+                        .Include(e => e.EduProgram.EduProgramPodg)
+                        .Include(e => e.EduProgram.EduProfile.EduNapravl.EduUgs.EduLevel)
+                        .OrderBy(e => e.EduProgram.GetEduProgramFullName);
+            }
+        }
+
         public EduProgramEduFormsController(AppIdentityDBContext context)
         {
             _context = context;
@@ -23,9 +38,8 @@ namespace KisVuzDotNetCore2.Controllers
 
         // GET: EduProgramEduForms
         public async Task<IActionResult> Index()
-        {
-            var appIdentityDBContext = _context.EduProgramEduForms.Include(e => e.EduForm).Include(e => e.EduProgram);
-            return View(await appIdentityDBContext.ToListAsync());
+        {            
+            return View(await GetEduProgramEduFormsDBTableContext.ToListAsync());
         }
 
         // GET: EduProgramEduForms/Details/5
@@ -36,9 +50,7 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var eduProgramEduForm = await _context.EduProgramEduForms
-                .Include(e => e.EduForm)
-                .Include(e => e.EduProgram)
+            var eduProgramEduForm = await GetEduProgramEduFormsDBTableContext
                 .SingleOrDefaultAsync(m => m.EduProgramEduFormId == id);
             if (eduProgramEduForm == null)
             {
@@ -51,8 +63,12 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: EduProgramEduForms/Create
         public IActionResult Create()
         {
-            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormId");
-            ViewData["EduProgramId"] = new SelectList(_context.EduPrograms, "EduProgramId", "EduProgramId");
+            ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormName");
+            ViewData["EduProgramId"] = new SelectList(_context.EduPrograms
+                .Include(p=>p.EduProgramPodg)
+                .Include(p=>p.EduProfile.EduNapravl.EduUgs.EduLevel),
+                "EduProgramId",
+                "GetEduProgramFullName");
             return View();
         }
 

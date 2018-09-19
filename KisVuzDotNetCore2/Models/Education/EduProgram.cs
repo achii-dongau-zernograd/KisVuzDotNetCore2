@@ -83,5 +83,17 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         [Display(Name = "Учебные годы")]
         public List<EduProgramEduYear> EduProgramEduYears { get; set; }
+
+        /// <summary>
+        /// Полное наименование образовательной программы
+        /// </summary>
+        [Display(Name = "Образовательная программа")]
+        public string GetEduProgramFullName
+        {
+            get
+            {
+                return $"{EduProfile?.GetEduProfileFullName} ({EduProgramPodg?.EduProgramPodgName})";
+            }
+        }
     }
 }

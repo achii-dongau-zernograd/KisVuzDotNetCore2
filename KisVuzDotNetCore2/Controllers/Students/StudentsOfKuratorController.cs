@@ -11,95 +11,47 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Students
 {
-    [Authorize(Roles = "Администраторы, Деканат факультета ЭиУТ, Деканат факультета СПО, Деканат инженерно-технологического факультета, Деканат энергетического факультета")]
-    public class StudentsController : Controller
+    [Authorize(Roles = "Администраторы, Преподаватели")]
+    public class StudentsOfKuratorController : Controller
     {
         private readonly AppIdentityDBContext _context;
         private IStudentRepository _studentRepository;
 
         private UserManager<AppUser> userManager;
 
-        public StudentsController(AppIdentityDBContext context,
+        public StudentsOfKuratorController(AppIdentityDBContext context,
             IStudentRepository studentRepository,
             UserManager<AppUser> usrMgr)
         {
             _context = context;
             _studentRepository = studentRepository;
             userManager = usrMgr;
-        }
+        }               
 
-        // GET: Students
-        public async Task<IActionResult> Index(int? StudentGroupId, int? StructFacultetId)
+        /// <summary>
+        /// Списки студентов курируемых групп куратора
+        /// </summary>
+        /// <param name="StudentGroupId"></param>
+        /// <param name="StructFacultetId"></param>
+        /// <returns></returns>        
+        public async Task<IActionResult> Index()
         {
-            if(StudentGroupId!=null)
-            {
-                var studentGroup = await _studentRepository.GetStudentGroupByIdAsync(StudentGroupId);
-                if (studentGroup == null) return NotFound();
-                ViewData["studentGroup"] = studentGroup;
-                ViewBag.StructFacultetId = StructFacultetId;
-                return View();
-            }
-            
-            return View(_studentRepository.Students);
+            if (User.Identity.Name == null) return NotFound();
+            var studentGroupsOfKurator = await _studentRepository.GetStudentGroupsOfKuratorByUserNameAsync(User.Identity.Name);
+            if (studentGroupsOfKurator == null) return NotFound();
+
+            return View(studentGroupsOfKurator);
         }
-
-        
-
-        // GET: Students/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var student = await _context.Students
-                .Include(s => s.AppUser)
-                .Include(s => s.StudentGroup)
-                .SingleOrDefaultAsync(m => m.StudentId == id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-
-            return View(student);
-        }
-
-        // GET: Students/Create
-        public async Task<IActionResult> Create()
-        {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName");
-            ViewData["StudentGroupId"] = new SelectList(_context.StudentGroups.Include(g=>g.EduKurs), "StudentGroupId", "StudentGroupName");
-            return View();
-        }
-
-        // POST: Students/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentId,StudentFio,ZachetnayaKnijkaNumber,AppUserId,StudentGroupId")] Student student)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(student);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", student.AppUserId);
-            ViewData["StudentGroupId"] = new SelectList(_context.StudentGroups, "StudentGroupId", "StudentGroupId", student.StudentGroupId);
-            return View(student);
-        }
+                
 
         #region Создание студента с аккаунтом и добавлением в группу
         // GET: Students/Create
-        public async Task<IActionResult> CreateStudentWithAccount(int? StudentGroupId, int? StructFacultetId)
+        public async Task<IActionResult> CreateStudentWithAccount(int? StudentGroupId)
         {
             if (StudentGroupId == null) return NotFound();            
             var studentGroup = await _studentRepository.GetStudentGroupByIdAsync(StudentGroupId);
             if (studentGroup == null) return NotFound();
-            ViewBag.StudentGroupId = studentGroup.StudentGroupId;
-            ViewBag.StructFacultetId = StructFacultetId;
+            ViewBag.StudentGroupId = studentGroup.StudentGroupId;            
             return View();
         }
 
@@ -108,8 +60,7 @@ namespace KisVuzDotNetCore2.Controllers.Students
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateStudentWithAccount(CreateStudentWithAccountModel student,
-            int? StructFacultetId)
+        public async Task<IActionResult> CreateStudentWithAccount(CreateStudentWithAccountModel student)
         {
             if (ModelState.IsValid)
             {
@@ -135,7 +86,7 @@ namespace KisVuzDotNetCore2.Controllers.Students
                     newStudent.StudentGroupId = student.StudentGroupId;
                     var addedStudent = await _studentRepository.AddStudentAsync(newStudent);
                                         
-                    return RedirectToAction(nameof(Index), new { student.StudentGroupId, StructFacultetId });
+                    return RedirectToAction(nameof(Index));
                 }
                 else
                 {
@@ -146,32 +97,26 @@ namespace KisVuzDotNetCore2.Controllers.Students
                 }                
             }
 
-            ViewBag.StudentGroupId = student.StudentGroupId;
-            ViewBag.StructFacultetId = StructFacultetId;
+            ViewBag.StudentGroupId = student.StudentGroupId;            
             return View(student);
         }
         #endregion
 
         // GET: Students/Edit/5
-        public async Task<IActionResult> Edit(int? id,
-            int? StudentGroupId,
-            int? StructFacultetId)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Students.SingleOrDefaultAsync(m => m.StudentId == id);
+            var student = await _studentRepository.GetStudentByIdAsync(id);
+            
             if (student == null)
             {
                 return NotFound();
             }
 
-            ViewBag.StudentGroupId = StudentGroupId;
-            ViewBag.StructFacultetId = StructFacultetId;
-            ViewData["AppUserIds"] = new SelectList(_context.Users, "Id", "GetFullName", student.AppUserId);
-            ViewData["StudentGroupIds"] = new SelectList(_context.StudentGroups.Include(g=>g.EduKurs), "StudentGroupId", "StudentGroupName", student.StudentGroupId);
             return View(student);
         }
 
@@ -180,9 +125,7 @@ namespace KisVuzDotNetCore2.Controllers.Students
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StudentId,StudentFio,ZachetnayaKnijkaNumber,AppUserId,StudentGroupId")] Student student,
-            int? StudentGroupId,
-            int? StructFacultetId)
+        public async Task<IActionResult> Edit(int id, [Bind("StudentId,StudentFio,ZachetnayaKnijkaNumber,AppUserId,StudentGroupId")] Student student)
         {
             if (id != student.StudentId)
             {
@@ -207,10 +150,9 @@ namespace KisVuzDotNetCore2.Controllers.Students
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index),new { StudentGroupId, StructFacultetId });
+                return RedirectToAction(nameof(Index));
             }
-            ViewBag.StudentGroupId = StudentGroupId;
-            ViewBag.StructFacultetId = StructFacultetId;
+            
             ViewData["AppUserIds"] = new SelectList(_context.Users, "Id", "GetFullName", student.AppUserId);
             ViewData["StudentGroupIds"] = new SelectList(_context.StudentGroups.Include(g => g.EduKurs), "StudentGroupId", "StudentGroupName", student.StudentGroupId);
             return View(student);
@@ -239,9 +181,7 @@ namespace KisVuzDotNetCore2.Controllers.Students
         // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id,
-            int? StudentGroupId,
-            int? StructFacultetId)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var student = await _studentRepository.GetStudentByIdAsync(id);            
 
@@ -272,7 +212,7 @@ namespace KisVuzDotNetCore2.Controllers.Students
                 ModelState.AddModelError("", "Студент не найден");
             }
                         
-            return RedirectToAction(nameof(Index), new { StructFacultetId, StudentGroupId });
+            return RedirectToAction(nameof(Index));
         }
 
         #region Вспомогательные методы

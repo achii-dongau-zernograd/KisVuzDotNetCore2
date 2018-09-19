@@ -1,39 +1,41 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduProgramEduForm>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ОП - Формы обучения";
 }
 
-<h2>Index</h2>
+<h2>Образовательные программы - формы обучения</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.EduProgram)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.EduForm)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EduProgram)
+                Действия
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.EduForm.EduFormId)
+                @Html.DisplayFor(modelItem => item.EduProgram.GetEduProgramFullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EduProgram.EduProgramId)
+                @Html.DisplayFor(modelItem => item.EduForm.EduFormName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.EduProgramEduFormId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EduProgramEduFormId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EduProgramEduFormId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.EduProgramEduFormId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.EduProgramEduFormId">Подробнее</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduProgramEduFormId">Удалить</a>
             </td>
         </tr>
 }

@@ -14,7 +14,7 @@
     <div class="collapse" id="spoiler-@spoilerCounter">
         <div class="well">
             <p>
-                <a asp-action="CreateStudentWithAccount" asp-route-StudentGroupId="@studentGroup.StudentGroupId" asp-route-StructFacultetId="@studentGroup.StructFacultetId" class="btn btn-primary">Создать аккаунт студента и добавить в группу</a>
+                <a asp-action="CreateStudentWithAccount" asp-route-StudentGroupId="@studentGroup.StudentGroupId" class="btn btn-primary">Создать аккаунт студента и добавить в группу</a>
             </p>
             <table class="table">
                 <thead>
@@ -40,8 +40,7 @@
                                 @Html.DisplayFor(modelItem => student.ZachetnayaKnijkaNumber)
                             </td>                            
                             <td>
-                                <a asp-action="Edit" asp-route-id="@student.StudentId">Редактировать</a> |
-                                <a asp-action="Details" asp-route-id="@student.StudentId">Подробнее</a> |
+                                <a asp-action="Edit" asp-route-id="@student.StudentId">Редактировать</a> |                                
                                 <a asp-action="Delete" asp-route-id="@student.StudentId">Удалить</a>
                             </td>
                         </tr>
