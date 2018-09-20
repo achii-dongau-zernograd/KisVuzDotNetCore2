@@ -64,6 +64,8 @@ namespace KisVuzDotNetCore2
 
 	        app.UseAuthentication();
 
+            app.UseRequestLocalization();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
