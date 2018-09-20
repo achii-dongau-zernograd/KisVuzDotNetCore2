@@ -1,0 +1,19 @@
+﻿<ul class="nav navbar-nav navbar-left">
+    @if (User.IsInRole("ЦПОРМ"))
+    {
+    <!-- Выпадающий список -->
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">ЦПОРМ <span class="caret"></span></a>
+        <ul class="dropdown-menu">            
+            <li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Выпуск и трудоустройство<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a asp-controller="GraduateYears" asp-action="Index">Годы выпуска (справочник)</a></li>
+                    <li><a asp-controller="EduGraduates" asp-action="Index">Выпуск (результаты защиты ВКР)</a></li>
+                    <li><a asp-controller="GraduateTrudoustroustvo" asp-action="Index">Трудоустройство</a></li>
+                </ul>
+            </li>            
+        </ul>
+    </li>
+    }    
+</ul>

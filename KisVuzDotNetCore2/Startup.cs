@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Controllers.Students;
+using KisVuzDotNetCore2.Infrastructure;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Students;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +39,7 @@ namespace KisVuzDotNetCore2
             services.AddSession();
 
             services.AddTransient<IStudentRepository,StudentRepository>();
+            services.AddTransient<ISelectListRepository, SelectListRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

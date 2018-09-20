@@ -513,6 +513,15 @@
     <Content Update="Views\Shared\_KuratorPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Shared\_Kancelyariya.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_CPORM.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_ZamDirectoraPoSocRabote.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_YurotdelPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

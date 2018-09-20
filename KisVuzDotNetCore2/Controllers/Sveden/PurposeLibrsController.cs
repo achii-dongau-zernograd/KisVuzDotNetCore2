@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers
 {
-    [Authorize(Roles = "Администраторы")]
+    [Authorize(Roles = "Администраторы, ЗамДиректораПоСоцРаботе")]
     public class PurposeLibrsController : Controller
     {
         private readonly AppIdentityDBContext _context;

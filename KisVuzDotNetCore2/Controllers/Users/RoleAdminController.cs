@@ -23,7 +23,7 @@ namespace KisVuzDotNetCore2.Controllers
             userManager = userMgr;
         }
 
-        public ViewResult Index() => View(roleManager.Roles);
+        public ViewResult Index() => View(roleManager.Roles.OrderBy(r=>r.Name));
 
         public IActionResult Create() => View();
 

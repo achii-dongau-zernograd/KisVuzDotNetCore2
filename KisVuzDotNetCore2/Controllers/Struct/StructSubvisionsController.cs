@@ -12,7 +12,7 @@ using KisVuzDotNetCore2.Models.Files;
 
 namespace KisVuzDotNetCore2.Controllers
 {
-    [Authorize(Roles = "Администраторы")]
+    [Authorize(Roles = "Администраторы, Отдел кадров, Канцелярия")]
     public class StructSubvisionsController : Controller
     {
         private readonly AppIdentityDBContext _context;

@@ -24,7 +24,9 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // GET: Teachers
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.Teachers.Include(t => t.AppUser);
+            var appIdentityDBContext = _context.Teachers
+                .Include(t => t.AppUser)
+                .OrderBy(t => t.TeacherFio);
             return View(await appIdentityDBContext.ToListAsync());
         }
 
