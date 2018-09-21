@@ -1,0 +1,42 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Struct.MetodKomissiyaEduProfile>
+
+@{
+    ViewData["Title"] = "Методкомиссия - Профиль";
+}
+
+<h2>Методкомиссия - Профиль подготовки</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MetodKomissiya)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduProfile)
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MetodKomissiya.MetodKomissiyaName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MetodKomissiyaEduProfileId">Редактировать</a> | 
+                <a asp-action="Delete" asp-route-id="@item.MetodKomissiyaEduProfileId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

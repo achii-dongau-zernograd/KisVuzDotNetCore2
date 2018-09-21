@@ -738,6 +738,23 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<UserMessage> UserMessages { get; set; }
         #endregion
 
+        #region Методкомиссии
+        /// <summary>
+        /// Методкомиссии
+        /// </summary>
+        public DbSet<MetodKomissiya> MetodKomissii { get; set; }
+
+        /// <summary>
+        /// Методкомиссия - Профиль подготовки
+        /// </summary>
+        public DbSet<MetodKomissiyaEduProfile> MetodKomissiyaEduProfiles { get; set; }
+
+        /// <summary>
+        /// Преподаватель - Методкомиссия
+        /// </summary>
+        public DbSet<TeacherMetodKomissiya> TeacherMetodKomissiya { get; set; }
+        #endregion
+
         #endregion
         /// <summary>
         /// Инициализация базы данных

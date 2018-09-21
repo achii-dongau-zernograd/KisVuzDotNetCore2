@@ -1,6 +1,8 @@
 ﻿using KisVuzDotNetCore2.Controllers.Students;
 using KisVuzDotNetCore2.Infrastructure;
 using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Education;
+using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Students;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,6 +41,8 @@ namespace KisVuzDotNetCore2
             services.AddSession();
 
             services.AddTransient<IStudentRepository,StudentRepository>();
+            services.AddTransient<IEduProgramRepository, EduProgramRepository>();
+            services.AddTransient<IMetodKomissiyaRepository, MetodKomissiyaRepository>();
             services.AddTransient<ISelectListRepository, SelectListRepository>();
         }
 
@@ -65,7 +69,7 @@ namespace KisVuzDotNetCore2
 	        app.UseAuthentication();
 
             app.UseRequestLocalization();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

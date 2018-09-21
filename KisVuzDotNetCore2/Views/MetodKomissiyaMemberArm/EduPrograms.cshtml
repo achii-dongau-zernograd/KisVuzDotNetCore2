@@ -1,0 +1,8 @@
+﻿@model IEnumerable<EduProgram>
+
+<h1>Образовательные программы</h1>
+
+@foreach(var eduProgram in Model)
+{
+    <p>@eduProgram.GetEduProgramFullName</p>
+}

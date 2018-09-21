@@ -486,6 +486,8 @@
     <Compile Remove="Migrations\20180803142516_t.Designer.cs" />
     <Compile Remove="Migrations\20180919051852_test.cs" />
     <Compile Remove="Migrations\20180919051852_test.Designer.cs" />
+    <Compile Remove="Migrations\20180921123819_t.cs" />
+    <Compile Remove="Migrations\20180921123819_t.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -41,5 +41,10 @@ namespace KisVuzDotNetCore2.Models.Users
         /// Курируемые группы
         /// </summary>
         public List<StudentGroup> StudentGroupsOfKurator { get; set; }
+
+        /// <summary>
+        /// Методкомиссии, в которые входит преподаватель
+        /// </summary>
+        public List<TeacherMetodKomissiya> TeacherMetodKomissii { get; set; }
     }
 }

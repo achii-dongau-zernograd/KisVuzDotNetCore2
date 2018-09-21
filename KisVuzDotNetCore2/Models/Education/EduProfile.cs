@@ -64,5 +64,10 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Студенческие группы, обучающиеся по данному профилю подготовки
         /// </summary>
         public List<StudentGroup> StudentGroups { get; set; }
+
+        /// <summary>
+        /// Образовательные программы по данному профилю подготовки
+        /// </summary>
+        public List<EduProgram> EduPrograms { get; set; }
     }
 }

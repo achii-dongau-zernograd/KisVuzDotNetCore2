@@ -118,7 +118,6 @@
                     <li><a asp-controller="NirTemaEduProfiles" asp-action="Index">Тема НИР - профиль подготовки</a></li>
                 </ul>
             </li>
-
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Работы пользователей, их рецензии и оценки<b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -127,6 +126,14 @@
                     <li class="divider"></li>
                     <li><a asp-controller="UserWorkTypes" asp-action="Index">Типы пользовательских работ</a></li>
                     <li><a asp-controller="UserWorkReviewMarks" asp-action="Index">Справочник оценок за пользовательские работы</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Методкомиссии<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a asp-controller="MetodKomissii" asp-action="Index">Перечень методкомиссий</a></li>
+                    <li><a asp-controller="MetodKomissiyaEduProfiles" asp-action="Index">Методкомиссия - Профиль подготовки</a></li>
+                    <li><a asp-controller="TeacherMetodKomissiya" asp-action="Index">Методкомиссия - Преподаватели</a></li>
                 </ul>
             </li>
         </ul>
