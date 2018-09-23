@@ -1,8 +1,65 @@
 ﻿@model IEnumerable<EduProgram>
 
+@{
+    int spoilerCounter = 0;
+}
+
 <h1>Образовательные программы</h1>
 
-@foreach(var eduProgram in Model)
+<p>
+    <a asp-action="EduProgramCreate" class="btn btn-primary">Добавить образовательную программу</a>
+</p>
+
+@foreach (var eduProgramGroup in Model.GroupBy(p => p.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName))
 {
-    <p>@eduProgram.GetEduProgramFullName</p>
+    spoilerCounter++;
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduProgramGroup.Key</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        <div class="well">
+            <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Направление подготовки</th>
+                            <th>Профиль подготовки</th>
+                            <th>Программа подготовки</th>
+                            <th>Дата утверждения</th>
+                            <th>Формы обучения</th>
+                            <th>Учебные годы</th>
+                            <th>Копия ОПОП</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var eduProgram in eduProgramGroup)
+                        {
+                            <tr>
+                                <td>@eduProgram.EduProfile.EduNapravl.EduNapravlCode - @eduProgram.EduProfile.EduNapravl.EduNapravlName</td>
+                                <td>@eduProgram.EduProfile.EduProfileName</td>
+                                <td>@eduProgram.EduProgramPodg.EduProgramPodgName</td>
+                                <td>@Html.DisplayFor(modelNapravl => eduProgram.DateUtverjd)</td>
+                                <td>
+                                    @foreach (var eduProgramEduForms in eduProgram.EduProgramEduForms)
+                                    {
+                                        <p>@eduProgramEduForms.EduForm.EduFormName</p>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var eduProgramEduYear in eduProgram.EduProgramEduYears)
+                                    {
+                                        <p>@eduProgramEduYear.EduYear.EduYearName</p>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="/@eduProgram.FileModel.Path">Открыть</a>
+                                </td>
+                                <td>
+                                    <a asp-action="EduProgramEdit" asp-route-EduProgramId="@eduProgram.EduProgramId" class="btn btn-primary">Редактировать</a>
+                                    <a asp-action="EduProgramDelete" asp-route-EduProgramId="@eduProgram.EduProgramId" class="btn btn-danger">Удалить</a>
+                                </td>
+                            </tr>
+                        }
+                     </tbody>
+            </table>
+        </div>
+    </div>
 }
