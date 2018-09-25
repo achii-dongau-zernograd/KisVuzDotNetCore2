@@ -23,6 +23,23 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает список дисциплин,
+        /// содержащих заданную строку
+        /// </summary>
+        /// <param name="disciplineNameSearchString"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListDisciplineNames(string disciplineNameSearchString="")
+        {
+            if (String.IsNullOrWhiteSpace(disciplineNameSearchString)) return null;
+            var disciplineNames = _context.DisciplineNames
+                .Where(n => n.DisciplineNameName.ToLower().Contains(disciplineNameSearchString.ToLower()))
+                .ToList();
+            if (disciplineNames.Count == 0) return null;
+
+            return new SelectList(disciplineNames, "DisciplineNameId", "DisciplineNameName");
+        }
+
+        /// <summary>
         /// Возвращает список форм обучения
         /// </summary>
         /// <returns></returns>

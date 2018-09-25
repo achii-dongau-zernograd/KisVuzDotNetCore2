@@ -42,6 +42,7 @@ namespace KisVuzDotNetCore2
 
             services.AddTransient<IStudentRepository,StudentRepository>();
             services.AddTransient<IEduProgramRepository, EduProgramRepository>();
+            services.AddTransient<IEduPlanRepository, EduPlanRepository>();
             services.AddTransient<IMetodKomissiyaRepository, MetodKomissiyaRepository>();
             services.AddTransient<ISelectListRepository, SelectListRepository>();
         }

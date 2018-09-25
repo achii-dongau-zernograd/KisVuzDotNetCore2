@@ -518,6 +518,9 @@
     <Content Update="Views\MetodKomissiyaMemberArm\EduProgramEdit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\MetodKomissiyaMemberArm\EduPlanPreview.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_KuratorPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

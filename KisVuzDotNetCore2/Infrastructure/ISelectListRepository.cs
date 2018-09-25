@@ -60,6 +60,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="eduProgramPodgId"></param>
         /// <returns></returns>
         SelectList GetSelectListEduProgramPodg(int selectedId = 0);
-        
+
+        /// <summary>
+        /// Возвращает список дисциплин,
+        /// содержащих заданную строку
+        /// </summary>
+        /// <param name="disciplineNameSearchString"></param>
+        /// <returns></returns>
+        SelectList GetSelectListDisciplineNames(string disciplineNameSearchString);
     }
 }

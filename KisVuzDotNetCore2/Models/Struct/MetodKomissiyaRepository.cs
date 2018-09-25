@@ -17,13 +17,16 @@ namespace KisVuzDotNetCore2.Models.Struct
     {
         private readonly AppIdentityDBContext _context;
         private readonly IHostingEnvironment _appEnvironment;
+        private readonly IEduPlanRepository _eduPlanRepository;
 
         public MetodKomissiyaRepository(AppIdentityDBContext context,
-            IHostingEnvironment appEnvironment)
+            IHostingEnvironment appEnvironment,
+            IEduPlanRepository eduPlanRepository)
         {
             _context = context;
-            _appEnvironment=appEnvironment;
-    }
+            _appEnvironment = appEnvironment;
+            _eduPlanRepository = eduPlanRepository;
+        }
 
         /// <summary>
         /// Возвращает образовательную программу по УИД,
@@ -91,8 +94,30 @@ namespace KisVuzDotNetCore2.Models.Struct
                         .ThenInclude(tm => tm.MetodKomissiya)
                             .ThenInclude(m => m.MetodKomissiyaEduProfiles)
                                 .ThenInclude(mp => mp.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Where(u => u.UserName == userName)
-                .SingleOrDefaultAsync();
+                .Include(u => u.Teachers)
+                    .ThenInclude(t => t.TeacherMetodKomissii)
+                        .ThenInclude(tm => tm.MetodKomissiya)
+                            .ThenInclude(m => m.MetodKomissiyaEduProfiles)
+                                .ThenInclude(mp => mp.EduProfile)
+                                    .ThenInclude(p => p.EduPlans)
+                                        .ThenInclude( plan => plan.EduForm)
+                .Include(u => u.Teachers)
+                    .ThenInclude(t => t.TeacherMetodKomissii)
+                        .ThenInclude(tm => tm.MetodKomissiya)
+                            .ThenInclude(m => m.MetodKomissiyaEduProfiles)
+                                .ThenInclude(mp => mp.EduProfile)
+                                    .ThenInclude(p => p.EduPlans)
+                                        .ThenInclude(plan => plan.EduPlanEduYears)
+                                            .ThenInclude(py => py.EduYear)
+                .Include(u => u.Teachers)
+                    .ThenInclude(t => t.TeacherMetodKomissii)
+                        .ThenInclude(tm => tm.MetodKomissiya)
+                            .ThenInclude(m => m.MetodKomissiyaEduProfiles)
+                                .ThenInclude(mp => mp.EduProfile)
+                                    .ThenInclude(p => p.EduPlans)
+                                        .ThenInclude(plan => plan.EduPlanEduYearBeginningTrainings)
+                                            .ThenInclude(py => py.EduYearBeginningTraining)
+                .SingleOrDefaultAsync(u => u.UserName == userName);
 
             return appUser;
         }
@@ -259,6 +284,121 @@ namespace KisVuzDotNetCore2.Models.Struct
                 Files.Files.RemoveFile(_context, _appEnvironment, eduProgram?.FileModelId);
                 await _context.SaveChangesAsync();
             }            
+        }
+
+        /// <summary>
+        /// Возвращает учебный план, если он доступен пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<EduPlan> GetEduPlanByUserNameAsync(int eduPlanId, string userName)
+        {
+            var appUser = await GetAppUserAsync(userName);
+            var eduPlansOfUser = new List<EduPlan>();
+            appUser.Teachers
+                .ForEach(t => t.TeacherMetodKomissii
+                    .ForEach(tm => tm.MetodKomissiya.MetodKomissiyaEduProfiles
+                        .ForEach(mp => mp.EduProfile.EduPlans
+                            .ForEach(ep => eduPlansOfUser.Add(ep)))));
+            var eduPlan = eduPlansOfUser.SingleOrDefault(ep => ep.EduPlanId == eduPlanId);
+            if (eduPlan == null)
+            {
+                return null;
+            }
+
+            EduPlan eduPlanWithFullData = await _eduPlanRepository.GetEduPlanAsync(eduPlan.EduPlanId);
+
+            return eduPlanWithFullData;
+        }
+
+        /// <summary>
+        /// Создаёт структуру учебного плана,
+        /// если он доступен пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task CreateEduPlanStructureByUserNameAsync(int eduPlanId, string userName)
+        {
+            var eduPlan = await GetEduPlanByUserNameAsync(eduPlanId, userName);
+
+            if(eduPlan!=null)
+            {
+                await _eduPlanRepository.CreateEduPlanStructureAsync(eduPlan);
+            }
+        }
+
+        /// <summary>
+        /// Добавляет дисциплину в справочник наименований дисциплин
+        /// </summary>
+        /// <param name="disciplineName"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task CreateDisciplineNameByUserNameAsync(string disciplineName, string userName)
+        {
+            var metodKomissii = await GetMetodKomissiiByUserNameAsync(userName);
+            if(metodKomissii.Count() > 0)
+            {
+                if(_context.DisciplineNames.Where(n => n.DisciplineNameName.ToLower() == disciplineName.ToLower()).Count()>0)
+                {
+                    return;
+                }
+
+                disciplineName = disciplineName.Trim();
+                var disciplineNameNewObject = new DisciplineName { DisciplineNameName = disciplineName };
+                await _context.DisciplineNames.AddAsync(disciplineNameNewObject);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="discipline"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task CreateEduPlanDisciplineByUserNameAsync(int eduPlanId, int blokDisciplChastId, Discipline discipline, string userName)
+        {
+            var eduPlan = await GetEduPlanByUserNameAsync(eduPlanId,userName);
+            if (eduPlan == null) return;
+            
+            await _context.Disciplines.AddAsync(discipline);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Возвращает объект дисциплины,
+        /// если учебный план доступен пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<Discipline> GetDisciplineByUserNameAsync(int eduPlanId, int disciplineId, string userName)
+        {
+            var eduPlan = await GetEduPlanByUserNameAsync(eduPlanId, userName);
+            if (eduPlan == null) return null;
+
+            var discipline = _eduPlanRepository.GetDiscipline(eduPlan, disciplineId);
+            return discipline;
+        }
+
+        /// <summary>
+        /// Удаляет объект дисциплины,
+        /// если учебный план доступен пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveDisciplineByUserNameAsync(int eduPlanId, int disciplineId, string userName)
+        {
+            var discipline = await GetDisciplineByUserNameAsync(eduPlanId, disciplineId, userName);
+            if (discipline == null) return;
+            
+            await _eduPlanRepository.RemoveDiscipline(discipline);
+            
         }
     }
 }

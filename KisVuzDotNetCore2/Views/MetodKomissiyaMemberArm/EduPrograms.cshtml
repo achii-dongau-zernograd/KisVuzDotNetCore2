@@ -25,6 +25,7 @@
                             <th>Дата утверждения</th>
                             <th>Формы обучения</th>
                             <th>Учебные годы</th>
+                            <th>Учебные планы</th>
                             <th>Копия ОПОП</th>
                             <th>Действия</th>
                         </tr>
@@ -38,15 +39,23 @@
                                 <td>@eduProgram.EduProgramPodg.EduProgramPodgName</td>
                                 <td>@Html.DisplayFor(modelNapravl => eduProgram.DateUtverjd)</td>
                                 <td>
-                                    @foreach (var eduProgramEduForms in eduProgram.EduProgramEduForms)
+                                    @foreach (var eduProgramEduForms in eduProgram.EduProgramEduForms.OrderBy(f=>f.EduForm.EduFormName))
                                     {
                                         <p>@eduProgramEduForms.EduForm.EduFormName</p>
                                     }
                                 </td>
                                 <td>
-                                    @foreach (var eduProgramEduYear in eduProgram.EduProgramEduYears)
+                                    @foreach (var eduProgramEduYear in eduProgram.EduProgramEduYears.OrderBy(y=>y.EduYear.EduYearName))
                                     {
                                         <p>@eduProgramEduYear.EduYear.EduYearName</p>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach(var eduPlan in eduProgram.EduProfile.EduPlans.Where(p=>p.EduProgramPodgId == eduProgram.EduProgramPodgId))
+                                    {
+                                        <p>
+                                            <a asp-action="EduPlanPreview" asp-route-id="@eduPlan.EduPlanId">@eduPlan.EduForm.EduFormName</a>
+                                        </p>
                                     }
                                 </td>
                                 <td>

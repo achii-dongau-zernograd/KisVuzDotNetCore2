@@ -1,0 +1,52 @@
+﻿@model KisVuzDotNetCore2.Models.Education.Discipline
+
+<h1>Добавление дисциплины в учебный план</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EduPlanCreateDiscipline">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @{
+                string submitButtonText = "";
+                if (ViewBag.Disciplines == null && ViewBag.DisciplineNameSearchString == null)
+                {
+                    submitButtonText = "Найти дисциплину";
+                    <div class="form-group">
+                        <label class="control-label">Введите часть наименования дисциплины</label>
+                        <input name="DisciplineNameSearchString" value="@ViewBag.DisciplineNameSearchString" class="form-control" />
+                    </div>
+                }
+                else if (ViewBag.Disciplines == null && ViewBag.DisciplineNameSearchString != null)
+                {
+                    submitButtonText = "Добавить дисциплину в справочник";
+                    <div class="form-group">
+                        <label class="control-label">Введите полное наименование дисциплины согласно учебного плана</label>
+                        <input name="DisciplineNameAdding" value="@ViewBag.DisciplineNameSearchString" class="form-control" />                        
+                    </div>
+                }
+                else
+                {
+                    submitButtonText = "Добавить дисциплину в учебный план";
+                    <div class="form-group">
+                        <label asp-for="DisciplineCode" class="control-label"></label>
+                        <input asp-for="DisciplineCode" class="form-control" />
+                        <span asp-validation-for="DisciplineCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">                        
+                        <label class="control-label">Выберите дисциплину из списка: </label>
+                        <select asp-for="DisciplineNameId" class="form-control" asp-items="ViewBag.Disciplines"></select>
+                    </div>
+                }
+            }
+
+            <div class="form-group">
+                <input type="hidden" name="EduPlanId" value="@ViewBag.EduPlanId" />
+                <input type="hidden" name="BlokDisciplChastId" value="@ViewBag.BlokDisciplChastId" />
+                <input type="submit" value="@submitButtonText" class="btn btn-primary" />
+                <a asp-action="EduPlanPreview" asp-route-id="@ViewBag.EduPlanId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

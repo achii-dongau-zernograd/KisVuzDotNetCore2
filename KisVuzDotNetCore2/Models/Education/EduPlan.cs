@@ -118,8 +118,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         [Display(Name = "Учебные годы")]
         public List<EduPlanEduYear> EduPlanEduYears { get; set; }
-
-
+        
         public string EduYearBeginningTrainingsDescription
         {
             get

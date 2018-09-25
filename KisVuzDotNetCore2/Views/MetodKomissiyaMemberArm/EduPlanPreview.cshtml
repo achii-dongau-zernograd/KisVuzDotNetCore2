@@ -1,0 +1,239 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduPlan
+
+@{
+    ViewData["Title"] = "Просмотр учебного плана";
+    int spoilerCounter = 1;
+}
+
+
+<div>
+    <h3 class="text-center text-uppercase">
+        <b>Направление: @Model.EduProfile.EduNapravl.EduNapravlCode @Model.EduProfile.EduNapravl.EduNapravlName</b>
+    </h3>
+    <h3 class="text-center">
+        <b>Профиль подготовки: @Model.EduProfile.EduProfileName</b>
+    </h3>
+    <table class="table table-condensed table-striped">
+        <tr>
+            <td colspan="2">План одобрен Ученым советом института @Html.DisplayFor(model => model.ProtokolDate). Протокол № @Html.DisplayFor(model => model.ProtokolNumber)</td>
+        </tr>
+
+        <tr>
+            <td colspan="2">Дата утверждения  @Html.DisplayFor(model => model.UtverjdDate)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduProgramPodg)</td>
+            <td>@Html.DisplayFor(model => model.EduProgramPodg.EduProgramPodgName)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduForm)</td>
+            <td>@Html.DisplayFor(model => model.EduForm.EduFormName)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduSrok)</td>
+            <td>@Html.DisplayFor(model => model.EduSrok.EduSrokName)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduVidDeyatList)</td>
+            <td>
+                <ul>
+                    @foreach (var vidDeyat in Model.EduVidDeyatList)
+                    {
+                        <li>@vidDeyat.EduVidDeyat.EduVidDeyatName</li>
+                    }
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduPlanEduYearBeginningTrainings)</td>
+            <td>
+                <ul>
+                    @foreach (var eduYearBeginningTraining in Model.EduPlanEduYearBeginningTrainings)
+                    {
+                        <li>@eduYearBeginningTraining.EduYearBeginningTraining.EduYearBeginningTrainingName</li>
+                    }
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.StructKaf)</td>
+            <td>@Html.DisplayFor(model => model.StructKaf.StructSubvision.StructSubvisionName)</td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduPlanEduYears)</td>
+            <td>
+                <ul>
+                    @foreach (var eduYear in Model.EduPlanEduYears)
+                    {
+                        <li>@eduYear.EduYear.EduYearName</li>
+                    }
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.EduPlanPdf)</td>
+            <td>
+                @if (Model.EduPlanPdf?.Id != null)
+                {
+                    <a href="/@Model.EduPlanPdf?.Path">Открыть</a>
+                }
+            </td>
+        </tr>
+    </table>
+
+    <br />
+    <h3>Содержание учебного плана</h3>
+
+    @if (Model.BlokDiscipl.Count == 0)
+    {
+    <div>
+        <form asp-action="CreateEduPlanStructure">
+            <input type="hidden" asp-for="@Model.EduPlanId" />
+            <input type="submit" value="Cформировать структуру учебного плана" class="btn btn-primary" />
+        </form>
+    </div>
+    }
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Код дисциплины</th>
+                <th>Наименование и содержание дисциплины</th>
+                <th>Аннотация</th>
+                <th>Рабочая программа</th>
+                <th>Фонд оценочных средств</th>
+                <th>Преподаватели</th>
+                <th>Учебные кабинеты</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var blokDiscipl in Model.BlokDiscipl)
+            {
+                <tr class="info">
+                    <td colspan="8"><strong>@blokDiscipl.BlokDisciplName.BlokDisciplNameName</strong></td>
+                </tr>
+                @foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
+                {
+                    <tr class="active">
+                        <td colspan="8">
+                            @blokDisciplChast.BlokDisciplChastName.BlokDisciplChastNameName часть
+                            <div>                                
+                                <a asp-action="EduPlanCreateDiscipline"
+                                 asp-route-EduPlanId="@Model.EduPlanId"
+                                 asp-route-BlokDisciplChastId="@blokDisciplChast.BlokDisciplChastId"
+                                 class="btn btn-primary">Добавить дисциплину</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    @foreach (var discipline in blokDisciplChast.Disciplines)
+                    {
+                        <tr>
+                            <td>@discipline.DisciplineCode</td>
+                            <td>
+                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse"><strong>@discipline.DisciplineName.DisciplineNameName</strong></a>
+                                <div class="collapse" id="spoiler-@spoilerCounter">
+                                    @{ spoilerCounter++;}
+                                    <div class="well">
+                                        @foreach (var kurs in discipline.Kurses)
+                                        {
+
+                                            @foreach (var semestr in kurs.Semestres)
+                                            {
+
+                                                <p><strong>@kurs.EduKurs.EduKursNumber курс. Семестр @semestr.SemestrName.SemestrNameNumber</strong></p>
+                                                <p>Формы контроля:</p>
+                                                <ul>
+                                                    @foreach (var semestrFormKontrolName in semestr.SemestrFormKontrolName)
+                                                    {
+                                                        <li>@semestrFormKontrolName.FormKontrolName.FormKontrolNameName</li>
+                                                    }
+                                                </ul>
+                                                <p>Виды деятельности:</p>
+                                                <ul>
+                                                    @foreach (var semestrVidUchebRaboti in semestr.SemestrVidUchebRaboti)
+                                                    {
+                                                        <li>@semestrVidUchebRaboti.VidUchebRabotiName.VidUchebRabotiNameName: @semestrVidUchebRaboti.Hour ч. </li>
+                                                    }
+                                                </ul>
+
+                                            }
+                                        }
+                                    </div>
+                                </div>                                
+                            </td>
+
+                            <td>
+                                @foreach (var annotation in discipline.EduAnnotations)
+                                {
+                                    <a href="/@annotation.FileModel.Path">Открыть</a>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var rabProgram in discipline.RabPrograms)
+                                {
+                                    <a href="/@rabProgram.FileModel.Path">Открыть</a>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var fondOcenochnihSredstv in discipline.FondOcenochnihSredstvList)
+                                {
+                                    <a href="/@fondOcenochnihSredstv.FileModel.Path">Открыть</a>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var teacherDisciplineG in discipline.TeacherDisciplines.GroupBy(td => td.EduPlanEduYear.EduYearId))
+                                {
+                                    var eduYearName = teacherDisciplineG.FirstOrDefault().EduPlanEduYear.EduYear.EduYearName;
+                                    <p><strong>@eduYearName уч.год</strong></p>
+                                    <ul>
+                                        @foreach (var teacherDiscipline in teacherDisciplineG)
+                                        {
+                                            <li><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacherDiscipline.Teacher.AppUserId">@teacherDiscipline.Teacher.TeacherFio</a></li>
+                                        }
+                                    </ul>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var DisciplinePomeshenieG in discipline.DisciplinePomeshenies?.GroupBy(td => td.EduPlanEduYear?.EduYearId))
+                                {
+                                    var eduYearName = DisciplinePomeshenieG.FirstOrDefault().EduPlanEduYear?.EduYear?.EduYearName;
+                                    <p><strong>@eduYearName уч.год</strong></p>
+                                    <ul>
+                                        @foreach (var disciplinePomeshenie in DisciplinePomeshenieG)
+                                        {
+                                            <li><a asp-controller="Oborudovanies" asp-action="Preview" asp-route-id="@disciplinePomeshenie.Pomeshenie.PomeshenieId">@disciplinePomeshenie.Pomeshenie.PomeshenieName</a></li>
+                                        }
+                                    </ul>
+                                }
+                            </td>
+
+                            <td>
+                                <div>
+                                    <a asp-action="EduPlanRemoveDiscipline"
+                                       asp-route-EduPlanId="@Model.EduPlanId"
+                                       asp-route-DisciplineId="@discipline.DisciplineId "
+                                       class="btn btn-danger">Удалить</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a asp-action="EduPrograms" class="btn btn-primary">К списку образовательных программ</a>
+</div>

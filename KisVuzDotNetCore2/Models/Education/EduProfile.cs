@@ -1,4 +1,5 @@
-﻿using KisVuzDotNetCore2.Models.Students;
+﻿using KisVuzDotNetCore2.Models.Struct;
+using KisVuzDotNetCore2.Models.Students;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -69,5 +70,10 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Образовательные программы по данному профилю подготовки
         /// </summary>
         public List<EduProgram> EduPrograms { get; set; }
+
+        /// <summary>
+        /// Список привязок "Методкомиссия - Профиль подготовки"
+        /// </summary>
+        public List<MetodKomissiyaEduProfile> MetodKomissiyaEduProfiles { get; set; }
     }
 }

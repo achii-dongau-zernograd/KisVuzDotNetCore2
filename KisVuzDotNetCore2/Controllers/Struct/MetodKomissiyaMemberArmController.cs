@@ -42,6 +42,96 @@ namespace KisVuzDotNetCore2.Controllers.Struct
         }
 
         /// <summary>
+        /// Учебный план
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> EduPlanPreview(int id)
+        {
+            var eduPlan = await _metodKomissiyaRepository.GetEduPlanByUserNameAsync(id, User.Identity.Name);
+            return View(eduPlan);
+        }
+
+        /// <summary>
+        /// Формирует базовую структуру учебного плана
+        /// (если она ещё не создана)
+        /// </summary>
+        /// <param name="EduPlanId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> CreateEduPlanStructure(int EduPlanId)
+        {
+            await _metodKomissiyaRepository.CreateEduPlanStructureByUserNameAsync(EduPlanId, User.Identity.Name);            
+
+            return RedirectToAction(nameof(EduPlanPreview),new { id = EduPlanId });
+        }
+
+        /// <summary>
+        /// Создание дисциплины в заданном разделе
+        /// </summary>
+        /// <returns></returns>        
+        public IActionResult EduPlanCreateDiscipline(int EduPlanId,
+            int BlokDisciplChastId)
+        {
+            ViewBag.EduPlanId = EduPlanId;
+            ViewBag.BlokDisciplChastId = BlokDisciplChastId;            
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EduPlanCreateDiscipline(int EduPlanId,
+            int BlokDisciplChastId,
+            string DisciplineNameSearchString,
+            string DisciplineNameAdding,
+            Discipline discipline)
+        {
+            if(discipline.DisciplineNameId!=0)
+            {
+                await _metodKomissiyaRepository.CreateEduPlanDisciplineByUserNameAsync(EduPlanId, BlokDisciplChastId, discipline, User.Identity.Name);
+                return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+            }
+
+            if(DisciplineNameAdding!=null)
+            {
+                await _metodKomissiyaRepository.CreateDisciplineNameByUserNameAsync(DisciplineNameAdding, User.Identity.Name);
+                DisciplineNameSearchString = DisciplineNameAdding;
+            }
+
+            ViewBag.EduPlanId = EduPlanId;
+            ViewBag.BlokDisciplChastId = BlokDisciplChastId;
+            ViewBag.DisciplineNameSearchString = DisciplineNameSearchString;
+            ViewBag.Disciplines = _selectListRepository
+                .GetSelectListDisciplineNames(DisciplineNameSearchString);            
+
+            return View();
+        }
+
+        /// <summary>
+        /// Создание дисциплины в заданном разделе
+        /// </summary>
+        /// <returns></returns>        
+        public async Task<IActionResult> EduPlanRemoveDiscipline(int EduPlanId,
+            int DisciplineId)
+        {
+            Discipline discipline = await _metodKomissiyaRepository.GetDisciplineByUserNameAsync(EduPlanId, DisciplineId, User.Identity.Name);
+            if (discipline == null) return NotFound();
+
+            ViewBag.EduPlanId = EduPlanId;
+
+            return View(discipline);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EduPlanRemoveDisciplineConfirmed(int EduPlanId,
+            int DisciplineId)
+        {
+            await _metodKomissiyaRepository.RemoveDisciplineByUserNameAsync(EduPlanId, DisciplineId, User.Identity.Name);                       
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+
+        /// <summary>
         /// Создание образовательной программы, доступной методкомиссии
         /// </summary>
         /// <param name="EduProgramId"></param>
@@ -65,8 +155,8 @@ namespace KisVuzDotNetCore2.Controllers.Struct
         public async Task<IActionResult> EduProgramEdit(int EduProgramId)
         {
             var eduProgram = await _metodKomissiyaRepository.GetEduProgramByUserNameAsync(EduProgramId, User.Identity.Name);
-            ViewBag.EduForms = _context.EduForms;
-            ViewBag.EduYears = _context.EduYears;
+            ViewBag.EduForms = _context.EduForms.OrderBy(f => f.EduFormName);
+            ViewBag.EduYears = _context.EduYears.OrderBy(y => y.EduYearName);
             IEnumerable<MetodKomissiya> metodKomissiiOfUser = await _metodKomissiyaRepository.GetMetodKomissiiByUserNameAsync(User.Identity.Name);
             ViewData["EduProfileId"] = _selectListRepository.GetSelectListEduProfileFullNamesOfMethodicalCommission(metodKomissiiOfUser, eduProgram.EduProfileId);
             ViewData["EduProgramPodgId"] = _selectListRepository.GetSelectListEduProgramPodg(eduProgram.EduProgramPodgId);

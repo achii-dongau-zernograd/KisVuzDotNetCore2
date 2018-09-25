@@ -1,0 +1,33 @@
+﻿@model KisVuzDotNetCore2.Models.Education.Discipline
+
+<h3>Вы действительно хотите удалить дисциплину?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DisciplineCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DisciplineCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BlokDisciplChast)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BlokDisciplChast.BlokDisciplChastName.BlokDisciplChastNameName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DisciplineName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DisciplineName.DisciplineNameName)
+        </dd>
+    </dl>
+    
+    <form asp-action="EduPlanRemoveDisciplineConfirmed">
+        <input type="hidden" name="EduPlanId" value="@ViewBag.EduPlanId" />
+        <input type="hidden" asp-for="DisciplineId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="EduPlanPreview" asp-route-id="@ViewBag.EduPlanId" class="btn btn-default">Отмена</a>
+    </form>
+</div>
