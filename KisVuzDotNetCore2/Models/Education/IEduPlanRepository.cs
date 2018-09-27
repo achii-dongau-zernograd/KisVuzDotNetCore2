@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace KisVuzDotNetCore2.Models.Education
 {
@@ -32,5 +33,42 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <param name="discipline"></param>
         /// <returns></returns>
         Task RemoveDiscipline(Discipline discipline);
+
+        /// <summary>
+        /// Добавление нового или обновление существующего учебного плана
+        /// </summary>
+        /// <param name="eduPlan"></param>
+        /// <param name="uploadedFile"></param>
+        /// <param name="eduVidDeyatIds"></param>
+        /// <param name="eduYearBeginningTrainingIds"></param>
+        /// <param name="eduPlanEduYearIds"></param>
+        /// <returns></returns>
+        Task<EduPlan> CreateEduPlan(EduPlan eduPlan,
+            IFormFile uploadedFile,
+            int[] eduVidDeyatIds,
+            int[] eduYearBeginningTrainingIds,
+            int[] eduPlanEduYearIds);
+
+        /// <summary>
+        /// Удаление учебного плана
+        /// </summary>
+        /// <param name="eduPlan"></param>
+        /// <returns></returns>
+        Task RemoveEduPlanAsync(EduPlan eduPlan);
+
+        /// <summary>
+        /// Добавляет к аннотации загруженный файл
+        /// </summary>
+        /// <param name="eduAnnotation"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<EduAnnotation> UpdateEduAnnotationAsync(EduAnnotation eduAnnotation, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Удаляет аннотацию
+        /// </summary>
+        /// <param name="eduAnnotation"></param>
+        /// <returns></returns>
+        Task RemoveEduAnnotationAsync(EduAnnotation eduAnnotation);
     }
 }

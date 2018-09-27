@@ -83,7 +83,7 @@ namespace KisVuzDotNetCore2.Controllers
         /// Подраздел для представления информации по бакалавриату
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Bachelor()
+        public IActionResult Bachelor()
         {
             searchTemplate = "бакалавриат";
 
@@ -101,7 +101,7 @@ namespace KisVuzDotNetCore2.Controllers
         /// Подраздел для представления информации по специалитету
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Special()
+        public IActionResult Special()
         {
             searchTemplate = "специалитет";
 
@@ -119,7 +119,7 @@ namespace KisVuzDotNetCore2.Controllers
         /// Подраздел для представления информации по магистратуре
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Magistr()
+        public IActionResult Magistr()
         {
             searchTemplate = "магистратура";
 
@@ -137,7 +137,7 @@ namespace KisVuzDotNetCore2.Controllers
         /// Подраздел для представления информации по аспирантуре
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Postgraduate()
+        public IActionResult Postgraduate()
         {
             searchTemplate = "аспирантура";
 

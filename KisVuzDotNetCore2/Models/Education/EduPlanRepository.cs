@@ -1,5 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KisVuzDotNetCore2.Models.Files;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,10 +12,121 @@ namespace KisVuzDotNetCore2.Models.Education
     public class EduPlanRepository : IEduPlanRepository
     {
         private readonly AppIdentityDBContext _context;
+        private readonly IHostingEnvironment _appEnvironment;
+        private readonly IFileModelRepository _fileModelRepository;
 
-        public EduPlanRepository(AppIdentityDBContext context)
+        public EduPlanRepository(AppIdentityDBContext context,
+            IHostingEnvironment appEnvironment,
+            IFileModelRepository fileModelRepository)
         {
             _context = context;
+            _appEnvironment = appEnvironment;
+            _fileModelRepository = fileModelRepository;
+        }
+
+        /// <summary>
+        /// Добавление нового или обновление существующего учебного плана
+        /// </summary>
+        /// <param name="eduPlan"></param>
+        /// <param name="uploadedFile"></param>
+        /// <param name="eduVidDeyatIds"></param>
+        /// <param name="eduYearBeginningTrainingIds"></param>
+        /// <param name="eduPlanEduYearIds"></param>
+        /// <returns></returns>
+        public async Task<EduPlan> CreateEduPlan(EduPlan eduPlan,
+            IFormFile uploadedFile,
+            int[] eduVidDeyatIds,
+            int[] eduYearBeginningTrainingIds,
+            int[] eduPlanEduYearIds)
+        {            
+            if (eduPlan.EduPlanId == 0)
+            {
+                _context.Add(eduPlan);
+            }
+            else
+            {
+                EduPlan eduPlanDbEntry = await GetEduPlanAsync(eduPlan.EduPlanId);
+                eduPlanDbEntry.EduFormId = eduPlan.EduFormId;
+                eduPlanDbEntry.EduSrokId = eduPlan.EduSrokId;
+                eduPlanDbEntry.StructKafId = eduPlan.StructKafId;
+                eduPlanDbEntry.ProtokolNumber = eduPlan.ProtokolNumber;
+                eduPlanDbEntry.ProtokolDate = eduPlan.ProtokolDate;
+                eduPlanDbEntry.UtverjdDate = eduPlan.UtverjdDate;
+                _context.Update(eduPlanDbEntry);
+                eduPlan = eduPlanDbEntry;
+            }
+
+            await _context.SaveChangesAsync();
+
+            if (uploadedFile != null)
+            {
+                FileModel fileModel = await Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Учебный план", FileDataTypeEnum.UchebniyPlan);
+                await _context.SaveChangesAsync();
+                int? fileToRemoveId = eduPlan.EduPlanPdfId;
+                eduPlan.EduPlanPdfId = fileModel.Id;
+                await _context.SaveChangesAsync();
+                Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+            }
+
+            try
+            {
+                if (eduVidDeyatIds != null)
+                {
+                    _context.EduPlanEduVidDeyats.RemoveRange(_context.EduPlanEduVidDeyats.Where(v => v.EduPlanId == eduPlan.EduPlanId));
+                    await _context.SaveChangesAsync();
+
+                    var eduPlanEduVidDeyats = new List<EduPlanEduVidDeyat>();
+                    foreach (var EduVidDeyatId in eduVidDeyatIds)
+                    {
+                        EduPlanEduVidDeyat eduPlanEduVidDeyat = new EduPlanEduVidDeyat();
+                        eduPlanEduVidDeyat.EduPlanId = eduPlan.EduPlanId;
+                        eduPlanEduVidDeyat.EduVidDeyatId = EduVidDeyatId;
+                        eduPlanEduVidDeyats.Add(eduPlanEduVidDeyat);
+                    }
+                    await _context.EduPlanEduVidDeyats.AddRangeAsync(eduPlanEduVidDeyats);
+                    await _context.SaveChangesAsync();
+                }
+
+                if (eduYearBeginningTrainingIds != null)
+                {
+                    _context.EduPlanEduYearBeginningTraining.RemoveRange(_context.EduPlanEduYearBeginningTraining.Where(y => y.EduPlanId == eduPlan.EduPlanId));
+                    await _context.SaveChangesAsync();
+
+                    var eduPlanEduYearBeginningTrainings = new List<EduPlanEduYearBeginningTraining>();
+                    foreach (var EduYearBeginningTrainingId in eduYearBeginningTrainingIds)
+                    {
+                        EduPlanEduYearBeginningTraining eduPlanEduYearBeginningTraining = new EduPlanEduYearBeginningTraining();
+                        eduPlanEduYearBeginningTraining.EduPlanId = eduPlan.EduPlanId;
+                        eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId = EduYearBeginningTrainingId;
+                        eduPlanEduYearBeginningTrainings.Add(eduPlanEduYearBeginningTraining);
+                    }
+                    await _context.EduPlanEduYearBeginningTraining.AddRangeAsync(eduPlanEduYearBeginningTrainings);
+                    await _context.SaveChangesAsync();
+                }
+
+                if (eduPlanEduYearIds != null)
+                {
+                    _context.EduPlanEduYears.RemoveRange(_context.EduPlanEduYears.Where(y => y.EduPlanId == eduPlan.EduPlanId));
+                    await _context.SaveChangesAsync();
+
+                    var eduPlanEduYears = new List<EduPlanEduYear>();
+                    foreach (var EduPlanEduYearId in eduPlanEduYearIds)
+                    {
+                        EduPlanEduYear eduPlanEduYear = new EduPlanEduYear();
+                        eduPlanEduYear.EduPlanId = eduPlan.EduPlanId;
+                        eduPlanEduYear.EduYearId = EduPlanEduYearId;
+                        eduPlanEduYears.Add(eduPlanEduYear);
+                    }
+                    await _context.EduPlanEduYears.AddRangeAsync(eduPlanEduYears);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return eduPlan;
         }
 
         /// <summary>
@@ -180,6 +295,63 @@ namespace KisVuzDotNetCore2.Models.Education
         {
             _context.Disciplines.Remove(discipline);
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет аннотацию
+        /// </summary>
+        /// <param name="eduAnnotation"></param>
+        /// <returns></returns>
+        public async Task RemoveEduAnnotationAsync(EduAnnotation eduAnnotation)
+        {
+            _context.EduAnnotations.Remove(eduAnnotation);
+            
+            await _fileModelRepository.RemoveFileAsync(eduAnnotation.FileModelId);
+
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет учебный план
+        /// </summary>
+        /// <param name="eduPlan"></param>
+        /// <returns></returns>
+        public async Task RemoveEduPlanAsync(EduPlan eduPlan)
+        {            
+            if(eduPlan!=null)
+            {
+                await _fileModelRepository.RemoveFileAsync(eduPlan.EduPlanPdfId);
+                _context.EduPlans.Remove(eduPlan);
+                await _context.SaveChangesAsync();                
+            }
+        }
+
+        /// <summary>
+        /// Добавляет к аннотации загруженный файл
+        /// </summary>
+        /// <param name="eduAnnotation"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<EduAnnotation> UpdateEduAnnotationAsync(EduAnnotation eduAnnotation, IFormFile uploadedFile)
+        {
+            if (eduAnnotation == null || uploadedFile == null) return null;
+            FileModel fileModel = await _fileModelRepository.UploadEduAnnotationAsync(uploadedFile);
+
+            if(eduAnnotation.FileModelId!=0)
+            {
+                await _fileModelRepository.RemoveFileAsync(eduAnnotation.FileModelId);
+            }
+
+            eduAnnotation.FileModel = fileModel;
+            eduAnnotation.FileModelId = fileModel.Id;
+
+            if(eduAnnotation.EduAnnotationId==0)
+            {
+                await _context.EduAnnotations.AddAsync(eduAnnotation);
+            }
+
+            await _context.SaveChangesAsync();
+            return eduAnnotation;
         }
     }
 }

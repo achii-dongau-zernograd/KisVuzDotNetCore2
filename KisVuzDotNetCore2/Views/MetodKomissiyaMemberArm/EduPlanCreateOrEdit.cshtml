@@ -1,0 +1,126 @@
+﻿@model EduPlan
+
+@{
+    ViewData["Title"] = "Добавление / редактирование УП";
+    List<EduVidDeyat> eduVidDeyats = (List<EduVidDeyat>)ViewData["EduVidDeyats"];
+    List<EduYearBeginningTraining> eduYearBeginningTrainings = (List<EduYearBeginningTraining>)ViewData["EduYearBeginningTrainings"];
+    List<EduYear> eduYears = (List<EduYear>)ViewData["EduYears"];
+
+    int eduPlanId = 0;
+    if(ViewBag.EduPlanId!=null)
+    {
+        eduPlanId = (int)ViewBag.EduPlanId;
+    }
+}
+
+<h3>Добавление / редактирование учебного плана</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EduPlanCreateOrEdit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EduFormId" class="control-label"></label>
+                <select asp-for="EduFormId" class="form-control" asp-items="ViewBag.EduFormId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduSrok" class="control-label"></label>
+                <select asp-for="EduSrokId" class="form-control" asp-items="ViewBag.EduSrokId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="StructKaf" class="control-label"></label>
+                <select asp-for="StructKafId" class="form-control" asp-items="ViewBag.StructKafId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProtokolNumber" class="control-label"></label>
+                <input asp-for="ProtokolNumber" class="form-control" />
+                <span asp-validation-for="ProtokolNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProtokolDate" class="control-label"></label>
+                <input asp-for="ProtokolDate" class="form-control" />
+                <span asp-validation-for="ProtokolDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UtverjdDate" class="control-label"></label>
+                <input asp-for="UtverjdDate" class="form-control" />
+                <span asp-validation-for="UtverjdDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduVidDeyatList" class="control-label"></label>
+                @foreach (var vidDeyat in eduVidDeyats)
+                {
+                    string Checked = "";
+                    @if (Model.EduVidDeyatList != null)
+                    {
+                        foreach (var vidDeyatChoosed in Model.EduVidDeyatList)
+                        {
+                            if (vidDeyat.EduVidDeyatId == vidDeyatChoosed.EduVidDeyatId)
+                            {
+                                Checked = "checked";
+                                break;
+                            }
+                        }
+                    }
+                    <br /><input type="checkbox" @Checked name="EduVidDeyatIds" value="@vidDeyat.EduVidDeyatId" /> @vidDeyat.EduVidDeyatName
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="EduPlanEduYearBeginningTrainings" class="control-label"></label>
+                @foreach (var yearBeginningTraining in eduYearBeginningTrainings.OrderBy(y=>y.EduYearBeginningTrainingName))
+                {
+                    string CheckedYear = "";
+                    if (Model.EduPlanEduYearBeginningTrainings != null)
+                    {
+                        @foreach (var yearBeginningTrainingChoosed in Model.EduPlanEduYearBeginningTrainings)
+                        {
+                            if (yearBeginningTraining.EduYearBeginningTrainingId == yearBeginningTrainingChoosed.EduYearBeginningTrainingId)
+                            {
+                                CheckedYear = "checked";
+                                break;
+                            }
+                        }
+                    }
+                    <br /><input type="checkbox" @CheckedYear name="EduYearBeginningTrainingIds" value="@yearBeginningTraining.EduYearBeginningTrainingId" /> @yearBeginningTraining.EduYearBeginningTrainingName
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="EduPlanEduYears" class="control-label"></label>
+                @foreach (var eduYear in eduYears.OrderBy(y=>y.EduYearName))
+                {
+                    string CheckedYear = "";
+                    @if (Model.EduPlanEduYears != null)
+                    {
+                        foreach (var eduYearChoosed in Model.EduPlanEduYears)
+                        {
+                            if (eduYear.EduYearId == eduYearChoosed.EduYearId)
+                            {
+                                CheckedYear = "checked";
+                                break;
+                            }
+                        }
+                    }
+                    <br /><input type="checkbox" @CheckedYear name="EduPlanEduYearIds" value="@eduYear.EduYearId" /> @eduYear.EduYearName
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="EduPlanPdf" class="control-label"></label>
+                <input asp-for="EduPlanPdfId" class="hidden">
+                <a href="/@Model.EduPlanPdf?.Path" class="control-label">@Model.EduPlanPdf?.FileName</a>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Для добавления / замены выберите файл: </label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="EduProgramId" value="@ViewBag.EduProgramId" class="form-control" />
+                <input type="hidden" name="EduPlanId"    value="@eduPlanId" class="form-control" />
+                <input type="hidden" name="EduProgramPodgId" value="@ViewBag.EduProgramPodgId" class="form-control" />
+                <input type="hidden" name="EduProfileId" value="@ViewBag.EduProfileId" class="form-control" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="EduPrograms" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

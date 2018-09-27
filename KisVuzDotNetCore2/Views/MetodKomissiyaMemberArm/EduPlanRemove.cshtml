@@ -1,0 +1,75 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduPlan
+
+<h3>Вы действительно хотите удалить учебный план?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProtokolNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProtokolNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProtokolDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProtokolDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UtverjdDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UtverjdDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduPlanPdf)
+        </dt>
+        <dd>
+            @if (Model.EduPlanPdf != null)
+            {
+                <a href="/@Model.EduPlanPdf?.Path">Открыть</a>
+            }
+            else
+            {
+                <p>-</p>
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProgramPodg)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProgramPodg.EduProgramPodgName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduSrok)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduSrok.EduSrokName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StructKaf)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StructKaf.StructSubvision.StructSubvisionName)
+        </dd>
+    </dl>
+    
+    <form asp-action="EduPlanRemoveConfirmed">
+        <input type="hidden" asp-for="EduPlanId" />
+        <input type="submit" value="Удалить" class="btn btn-primary" />
+        <a asp-action="EduPrograms" class="btn btn-default">Отмена</a>
+    </form>
+</div>

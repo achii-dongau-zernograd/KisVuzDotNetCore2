@@ -400,5 +400,109 @@ namespace KisVuzDotNetCore2.Models.Struct
             await _eduPlanRepository.RemoveDiscipline(discipline);
             
         }
+
+        /// <summary>
+        /// Добавление нового или обновление существующего учебного плана,
+        /// если образовательная программа доступна пользователю
+        /// </summary>
+        /// <param name="eduProgramId"></param>
+        /// <param name="eduPlan"></param>
+        /// <param name="uploadedFile"></param>
+        /// <param name="eduVidDeyatIds"></param>
+        /// <param name="eduYearBeginningTrainingIds"></param>
+        /// <param name="eduPlanEduYearIds"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<EduPlan> CreateEduPlanByUserNameAsync(int eduProgramId,
+            EduPlan eduPlan,
+            IFormFile uploadedFile,
+            int[] eduVidDeyatIds,
+            int[] eduYearBeginningTrainingIds,
+            int[] eduPlanEduYearIds,
+            string userName)
+        {
+            var eduProgram = await GetEduProgramByUserNameAsync(eduProgramId, userName);
+            if (eduProgram == null) return null;
+
+            EduPlan eduPlanDbEntry = await _eduPlanRepository.CreateEduPlan(eduPlan,
+                uploadedFile,
+                eduVidDeyatIds,
+                eduYearBeginningTrainingIds,
+                eduPlanEduYearIds);
+
+            return eduPlanDbEntry;
+        }
+
+        /// <summary>
+        /// Удаляет учебный план, если он доступен пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveEduPlanByUserNameAsync(int eduPlanId, string userName)
+        {
+            var eduPlan = await GetEduPlanByUserNameAsync(eduPlanId, userName);
+            if(eduPlan!=null)
+            {
+                await _eduPlanRepository.RemoveEduPlanAsync(eduPlan);
+            }
+        }
+
+        /// <summary>
+        /// Возвращает объект аннотации дисциплины.
+        /// Если eduAnnotationId равно null,
+        /// создаёт и возвращает новый объект
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="eduAnnotationId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<EduAnnotation> GetEduAnnotationByUserNameAsync(int eduPlanId, int disciplineId, int? eduAnnotationId, string userName)
+        {
+            var discipline = await GetDisciplineByUserNameAsync(eduPlanId, disciplineId, userName);
+            if (discipline == null) return null;
+
+            EduAnnotation eduAnnotation = new EduAnnotation();
+            eduAnnotation.Discipline = discipline;
+            eduAnnotation.DisciplineId = discipline.DisciplineId;
+            if (eduAnnotationId == null || eduAnnotationId == 0) return eduAnnotation;
+
+            eduAnnotation = discipline.EduAnnotations.FirstOrDefault(a => a.EduAnnotationId == eduAnnotationId);
+            if (eduAnnotation == null) return null;
+                        
+            return eduAnnotation;
+        }
+
+        /// <summary>
+        /// Добавляет к аннотации загруженный файл
+        /// </summary>
+        /// <param name="eduAnnotation"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<EduAnnotation> UpdateEduAnnotationAsync(EduAnnotation eduAnnotation, IFormFile uploadedFile)
+        {
+            if (eduAnnotation == null || uploadedFile == null) return null;
+
+            eduAnnotation = await _eduPlanRepository.UpdateEduAnnotationAsync(eduAnnotation, uploadedFile);
+
+            return eduAnnotation;
+        }
+
+        /// <summary>
+        /// Удаляет аннотацию, если она доступна пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="eduAnnotationId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveEduAnnotationByUserNameAsync(int eduPlanId, int disciplineId, int eduAnnotationId, string userName)
+        {
+            EduAnnotation eduAnnotation = await GetEduAnnotationByUserNameAsync(eduPlanId, disciplineId, eduAnnotationId, userName);
+            if (eduAnnotation == null) return;
+
+            await _eduPlanRepository.RemoveEduAnnotationAsync(eduAnnotation);
+        }
     }
 }

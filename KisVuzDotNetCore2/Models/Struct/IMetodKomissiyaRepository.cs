@@ -98,6 +98,23 @@ namespace KisVuzDotNetCore2.Models.Struct
         Task CreateDisciplineNameByUserNameAsync(string disciplineName, string userName);
 
         /// <summary>
+        /// Добавление нового или обновление существующего учебного плана,
+        /// если образовательная программа доступна пользователю
+        /// </summary>
+        /// <param name="eduProgramId"></param>
+        /// <param name="eduPlan"></param>
+        /// <param name="uploadedFile"></param>
+        /// <param name="eduVidDeyatIds"></param>
+        /// <param name="eduYearBeginningTrainingIds"></param>
+        /// <param name="eduPlanEduYearIds"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<EduPlan> CreateEduPlanByUserNameAsync(int eduProgramId, EduPlan eduPlan,
+            IFormFile uploadedFile, int[] eduVidDeyatIds,
+            int[] eduYearBeginningTrainingIds, int[] eduPlanEduYearIds,
+            string userName);
+
+        /// <summary>
         /// Возвращает объект дисциплины,
         /// если учебный план доступен пользователю
         /// </summary>
@@ -116,5 +133,43 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <param name="userName"></param>
         /// <returns></returns>
         Task RemoveDisciplineByUserNameAsync(int eduPlanId, int disciplineId, string userName);
+
+        /// <summary>
+        /// Удаляет учебный план, если он доступен пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task RemoveEduPlanByUserNameAsync(int eduPlanId, string userName);
+
+        /// <summary>
+        /// Возвращает объект аннотации дисциплины.
+        /// Если eduAnnotationId равно null,
+        /// создаёт и возвращает новый объект
+        /// </summary>
+        /// <param name="eduPlanId">УИД учебного плана</param>
+        /// <param name="disciplineId">УИД дисциплины</param>
+        /// <param name="eduAnnotationId">УИД аннотации</param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<EduAnnotation> GetEduAnnotationByUserNameAsync(int eduPlanId, int disciplineId, int? eduAnnotationId, string userName);
+
+        /// <summary>
+        /// Обновление файла аннотации
+        /// </summary>
+        /// <param name="eduAnnotation"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<EduAnnotation> UpdateEduAnnotationAsync(EduAnnotation eduAnnotation, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Удаляет аннотацию, если она доступна пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="eduAnnotationId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task RemoveEduAnnotationByUserNameAsync(int eduPlanId, int disciplineId, int eduAnnotationId, string userName);
     }
 }

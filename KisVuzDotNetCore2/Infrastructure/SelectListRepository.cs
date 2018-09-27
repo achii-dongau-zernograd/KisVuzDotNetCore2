@@ -103,6 +103,16 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает список сроков обучения
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEduSrok(int selectedId = 0)
+        {
+            return new SelectList(_context.EduSrok, "EduSrokId", "EduSrokName", selectedId);
+        }
+
+        /// <summary>
         /// Возвращает список методкомиссий
         /// </summary>
         /// <param name="selectedId"></param>
@@ -110,6 +120,11 @@ namespace KisVuzDotNetCore2.Infrastructure
         public SelectList GetSelectListMetodKomissiyaNames(int selectedId = 0)
         {
             return new SelectList(_context.MetodKomissii, "MetodKomissiyaId", "MetodKomissiyaName", selectedId);
+        }
+
+        public SelectList GetSelectListStructKaf(int selectedId = 0)
+        {
+            return new SelectList(_context.StructKafs.Include(s=>s.StructSubvision), "StructKafId", "StructSubvision.StructSubvisionName", selectedId);
         }
 
         /// <summary>

@@ -52,6 +52,159 @@ namespace KisVuzDotNetCore2.Controllers.Struct
             return View(eduPlan);
         }
 
+        public async Task<IActionResult> EduPlanCreateOrEdit(int EduProgramId, int? EduPlanId)
+        {
+            var eduProgram = await _metodKomissiyaRepository.GetEduProgramByUserNameAsync(EduProgramId, User.Identity.Name);
+            if (eduProgram == null) return NotFound();
+
+            var eduPlan = new EduPlan();
+            if (EduPlanId!=null)
+            {
+                eduPlan = await _metodKomissiyaRepository.GetEduPlanByUserNameAsync((int)EduPlanId,User.Identity.Name);
+                ViewData["EduPlanId"] = EduPlanId;
+            }
+            
+            ViewData["EduFormId"] = _selectListRepository.GetSelectListEduForms();
+            ViewData["EduProfileId"] =  eduProgram.EduProfileId;
+            ViewData["EduProgramId"] = eduProgram.EduProgramId;
+            ViewData["EduProgramPodgId"] = eduProgram.EduProgramPodgId;
+            ViewData["EduSrokId"] = _selectListRepository.GetSelectListEduSrok();
+            ViewData["StructKafId"] = _selectListRepository.GetSelectListStructKaf();
+
+            List<EduVidDeyat> eduVidDeyats = _context.EduVidDeyat.ToList();
+            ViewData["EduVidDeyats"] = eduVidDeyats;
+
+            List<EduYearBeginningTraining> eduYearBeginningTrainings = _context.EduYearBeginningTrainings.ToList();
+            ViewData["EduYearBeginningTrainings"] = eduYearBeginningTrainings;
+
+            List<EduYear> eduYears = _context.EduYears.ToList();
+            ViewData["EduYears"] = eduYears;
+                                    
+
+            return View("EduPlanCreateOrEdit", eduPlan);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EduPlanCreateOrEdit(EduPlan eduPlan,
+            int EduProgramId,
+            IFormFile uploadedFile,
+            int[] EduVidDeyatIds,
+            int[] EduYearBeginningTrainingIds,
+            int[] EduPlanEduYearIds)
+        {
+            if (ModelState.IsValid)
+            {
+                EduPlan eduPlanRepositoryEntry = await _metodKomissiyaRepository
+                    .CreateEduPlanByUserNameAsync(EduProgramId,
+                        eduPlan, uploadedFile, EduVidDeyatIds,
+                        EduYearBeginningTrainingIds, EduPlanEduYearIds,
+                        User.Identity.Name);
+                return RedirectToAction(nameof(EduPrograms));
+            }
+
+            var eduProgram = await _metodKomissiyaRepository.GetEduProgramByUserNameAsync(EduProgramId, User.Identity.Name);
+            if (eduProgram == null) return NotFound();
+
+            ViewData["EduFormId"] = _selectListRepository.GetSelectListEduForms();
+            ViewData["EduProfileId"] = eduProgram.EduProfileId;
+            ViewData["EduProgramPodgId"] = eduProgram.EduProgramPodgId;
+            ViewData["EduSrokId"] = _selectListRepository.GetSelectListEduSrok();
+            ViewData["StructKafId"] = _selectListRepository.GetSelectListStructKaf();
+
+            List<EduVidDeyat> eduVidDeyats = _context.EduVidDeyat.ToList();
+            ViewData["EduVidDeyats"] = eduVidDeyats;
+
+            List<EduYearBeginningTraining> eduYearBeginningTrainings = _context.EduYearBeginningTrainings.ToList();
+            ViewData["EduYearBeginningTrainings"] = eduYearBeginningTrainings;
+
+            List<EduYear> eduYears = _context.EduYears.ToList();
+            ViewData["EduYears"] = eduYears;
+
+            return View(eduPlan);
+        }
+
+        /// <summary>
+        /// Удаляет учебный план
+        /// </summary>
+        /// <param name="EduProgramId"></param>
+        /// <param name="EduPlanId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> EduPlanRemove(int EduPlanId)
+        {                        
+            var eduPlan = await _metodKomissiyaRepository.GetEduPlanByUserNameAsync(EduPlanId, User.Identity.Name);
+            if (eduPlan == null) return NotFound();
+                       
+            return View(eduPlan);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EduPlanRemoveConfirmed(int EduPlanId)
+        {
+            await _metodKomissiyaRepository.RemoveEduPlanByUserNameAsync(EduPlanId, User.Identity.Name);
+            return RedirectToAction(nameof(EduPrograms));
+        }
+
+        /// <summary>
+        /// Добавление / редактирование аннотации учебной дисциплины
+        /// </summary>
+        /// <param name="EduPlanId"></param>
+        /// <param name="DisciplineId"></param>
+        /// <param name="EduAnnotationId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> EduAnnotationCreateOrEdit(int EduPlanId, int DisciplineId, int? EduAnnotationId)
+        {
+            EduAnnotation eduAnnotation = await _metodKomissiyaRepository.GetEduAnnotationByUserNameAsync(EduPlanId, DisciplineId, EduAnnotationId, User.Identity.Name);
+            
+            if (eduAnnotation == null)
+            {
+                return NotFound();
+            }
+            ViewBag.EduPlanId = EduPlanId;
+            return View(eduAnnotation);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EduAnnotationCreateOrEdit(int EduPlanId, int DisciplineId, int? EduAnnotationId, IFormFile uploadedFile)
+        {
+            EduAnnotation eduAnnotation = await _metodKomissiyaRepository.GetEduAnnotationByUserNameAsync(EduPlanId, DisciplineId, EduAnnotationId, User.Identity.Name);
+
+            if (eduAnnotation != null)
+            {
+                await _metodKomissiyaRepository.UpdateEduAnnotationAsync(eduAnnotation, uploadedFile);
+            }
+            
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+
+        /// <summary>
+        /// Удаление аннотации учебной дисциплины
+        /// </summary>
+        /// <param name="EduPlanId"></param>
+        /// <param name="DisciplineId"></param>
+        /// <param name="EduAnnotationId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> EduAnnotationRemove(int EduPlanId, int DisciplineId, int EduAnnotationId)
+        {
+            EduAnnotation eduAnnotation = await _metodKomissiyaRepository.GetEduAnnotationByUserNameAsync(EduPlanId, DisciplineId, EduAnnotationId, User.Identity.Name);
+
+            if (eduAnnotation == null)
+            {
+                return NotFound();
+            }
+            
+            return View(eduAnnotation);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EduAnnotationRemoveConfirmed(int EduPlanId, int DisciplineId, int EduAnnotationId)
+        {
+            await _metodKomissiyaRepository.RemoveEduAnnotationByUserNameAsync(EduPlanId, DisciplineId, EduAnnotationId, User.Identity.Name);
+
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+
         /// <summary>
         /// Формирует базовую структуру учебного плана
         /// (если она ещё не создана)

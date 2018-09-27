@@ -62,6 +62,18 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListEduProgramPodg(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список сроков обучения
+        /// </summary>
+        /// <returns></returns>
+        SelectList GetSelectListEduSrok(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список кафедр
+        /// </summary>
+        /// <returns></returns>
+        SelectList GetSelectListStructKaf(int selectedId = 0);
+
+        /// <summary>
         /// Возвращает список дисциплин,
         /// содержащих заданную строку
         /// </summary>

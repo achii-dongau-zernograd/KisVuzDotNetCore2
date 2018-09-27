@@ -2,6 +2,7 @@
 using KisVuzDotNetCore2.Infrastructure;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Education;
+using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Students;
 using Microsoft.AspNetCore.Builder;
@@ -41,6 +42,7 @@ namespace KisVuzDotNetCore2
             services.AddSession();
 
             services.AddTransient<IStudentRepository,StudentRepository>();
+            services.AddTransient<IFileModelRepository, FileModelRepository>();
             services.AddTransient<IEduProgramRepository, EduProgramRepository>();
             services.AddTransient<IEduPlanRepository, EduPlanRepository>();
             services.AddTransient<IMetodKomissiyaRepository, MetodKomissiyaRepository>();

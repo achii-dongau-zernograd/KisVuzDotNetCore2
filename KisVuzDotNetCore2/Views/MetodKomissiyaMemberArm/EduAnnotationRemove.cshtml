@@ -1,0 +1,28 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduAnnotation
+
+<h3>Вы действительно хотите удалить аннотацию?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">        
+        <dt>
+            @Html.DisplayNameFor(model => model.Discipline)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Discipline.DisciplineName.DisciplineNameName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModel)
+        </dt>
+        <dd>
+            <a href="/@Model.FileModel?.Path">Открыть</a>            
+        </dd>
+    </dl>
+    
+    <form asp-action="EduAnnotationRemoveConfirmed">
+        <input type="hidden" name="EduPlanId" value="@Model.Discipline.BlokDisciplChast.BlokDiscipl.EduPlanId" />
+        <input type="hidden" name="DisciplineId" value="@Model.DisciplineId" />
+        <input type="hidden" asp-for="EduAnnotationId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="EduPlanPreview" asp-route-id="@Model.Discipline.BlokDisciplChast.BlokDiscipl.EduPlanId" class="btn btn-default">Отмена</a>
+    </form>
+</div>
