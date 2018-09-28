@@ -61,6 +61,26 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает файл рабочей программы на диск
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadRabProgramAsync(IFormFile uploadedFile)
+        {
+            return await UploadFileAsync(uploadedFile, "Рабочая программа", FileDataTypeEnum.RabProgrammaDisciplini);
+        }
+
+        /// <summary>
+        /// Загружает файл фонда оценочнгых средств на диск
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadFondOcenochnihSredstvAsync(IFormFile uploadedFile)
+        {
+            return await UploadFileAsync(uploadedFile, "Фонд оценочных средств", FileDataTypeEnum.FondOcenochnihSredstv);
+        }
+
+        /// <summary>
         /// Создаёт объект FileModel и загружает его в папку www/files
         /// </summary>
         /// <param name="_context"></param>

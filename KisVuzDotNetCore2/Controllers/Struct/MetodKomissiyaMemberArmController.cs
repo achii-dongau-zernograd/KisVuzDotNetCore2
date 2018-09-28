@@ -146,6 +146,7 @@ namespace KisVuzDotNetCore2.Controllers.Struct
             return RedirectToAction(nameof(EduPrograms));
         }
 
+        #region Аннотации
         /// <summary>
         /// Добавление / редактирование аннотации учебной дисциплины
         /// </summary>
@@ -204,6 +205,131 @@ namespace KisVuzDotNetCore2.Controllers.Struct
 
             return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
         }
+        #endregion
+
+        #region Рабочие программы
+        /// <summary>
+        /// Добавление / редактирование аннотации учебной дисциплины
+        /// </summary>
+        /// <param name="EduPlanId"></param>
+        /// <param name="DisciplineId"></param>
+        /// <param name="RabProgramId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> RabProgramCreateOrEdit(int EduPlanId, int DisciplineId, int? RabProgramId)
+        {
+            RabProgram rabProgram = await _metodKomissiyaRepository.GetRabProgramByUserNameAsync(EduPlanId, DisciplineId, RabProgramId, User.Identity.Name);
+
+            if (rabProgram == null)
+            {
+                return NotFound();
+            }
+            ViewBag.EduPlanId = EduPlanId;
+            return View(rabProgram);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RabProgramCreateOrEdit(int EduPlanId, int DisciplineId, int? RabProgramId, IFormFile uploadedFile)
+        {
+            RabProgram rabProgram = await _metodKomissiyaRepository.GetRabProgramByUserNameAsync(EduPlanId, DisciplineId, RabProgramId, User.Identity.Name);
+
+            if (rabProgram != null)
+            {
+                await _metodKomissiyaRepository.UpdateRabProgramAsync(rabProgram, uploadedFile);
+            }
+
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+
+        /// <summary>
+        /// Удаление аннотации учебной дисциплины
+        /// </summary>
+        /// <param name="EduPlanId"></param>
+        /// <param name="DisciplineId"></param>
+        /// <param name="RabProgramId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> RabProgramRemove(int EduPlanId, int DisciplineId, int RabProgramId)
+        {
+            RabProgram rabProgram = await _metodKomissiyaRepository.GetRabProgramByUserNameAsync(EduPlanId, DisciplineId, RabProgramId, User.Identity.Name);
+
+            if (rabProgram == null)
+            {
+                return NotFound();
+            }
+
+            return View(rabProgram);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RabProgramRemoveConfirmed(int EduPlanId, int DisciplineId, int RabProgramId)
+        {
+            await _metodKomissiyaRepository.RemoveRabProgramByUserNameAsync(EduPlanId, DisciplineId, RabProgramId, User.Identity.Name);
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+        #endregion
+
+        #region Фонды оценочных средств
+        /// <summary>
+        /// Добавление / редактирование фонда оценочных средств учебной дисциплины
+        /// </summary>
+        /// <param name="EduPlanId"></param>
+        /// <param name="DisciplineId"></param>
+        /// <param name="FondOcenochnihSredstvId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> FondOcenochnihSredstvCreateOrEdit(int EduPlanId,
+            int DisciplineId, int? FondOcenochnihSredstvId)
+        {
+            FondOcenochnihSredstv fondOcenochnihSredstv = await _metodKomissiyaRepository.
+                GetFondOcenochnihSredstvByUserNameAsync(EduPlanId, DisciplineId, FondOcenochnihSredstvId, User.Identity.Name);
+
+            if (fondOcenochnihSredstv == null)
+            {
+                return NotFound();
+            }
+            ViewBag.EduPlanId = EduPlanId;
+            return View(fondOcenochnihSredstv);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FondOcenochnihSredstvCreateOrEdit(int EduPlanId,
+            int DisciplineId, int? FondOcenochnihSredstvId, IFormFile uploadedFile)
+        {
+            FondOcenochnihSredstv fondOcenochnihSredstv = await _metodKomissiyaRepository
+                .GetFondOcenochnihSredstvByUserNameAsync(EduPlanId, DisciplineId, FondOcenochnihSredstvId, User.Identity.Name);
+
+            if (fondOcenochnihSredstv != null)
+            {
+                await _metodKomissiyaRepository.UpdateFondOcenochnihSredstvAsync(fondOcenochnihSredstv, uploadedFile);
+            }
+
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+
+        /// <summary>
+        /// Удаление аннотации учебной дисциплины
+        /// </summary>
+        /// <param name="EduPlanId"></param>
+        /// <param name="DisciplineId"></param>
+        /// <param name="FondOcenochnihSredstvId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> FondOcenochnihSredstvRemove(int EduPlanId, int DisciplineId, int FondOcenochnihSredstvId)
+        {
+            FondOcenochnihSredstv fondOcenochnihSredstv = await _metodKomissiyaRepository.GetFondOcenochnihSredstvByUserNameAsync(EduPlanId, DisciplineId, FondOcenochnihSredstvId, User.Identity.Name);
+
+            if (fondOcenochnihSredstv == null)
+            {
+                return NotFound();
+            }
+
+            return View(fondOcenochnihSredstv);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FondOcenochnihSredstvRemoveConfirmed(int EduPlanId, int DisciplineId, int FondOcenochnihSredstvId)
+        {
+            await _metodKomissiyaRepository.RemoveFondOcenochnihSredstvByUserNameAsync(EduPlanId, DisciplineId, FondOcenochnihSredstvId, User.Identity.Name);
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+        #endregion
 
         /// <summary>
         /// Формирует базовую структуру учебного плана

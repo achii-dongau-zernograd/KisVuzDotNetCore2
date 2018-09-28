@@ -475,6 +475,58 @@ namespace KisVuzDotNetCore2.Models.Struct
         }
 
         /// <summary>
+        /// Возвращает объект рабочей программы дисциплины.
+        /// Если rabProgramId равно null,
+        /// создаёт и возвращает новый объект
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="rabProgramId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<RabProgram> GetRabProgramByUserNameAsync(int eduPlanId, int disciplineId, int? rabProgramId, string userName)
+        {
+            var discipline = await GetDisciplineByUserNameAsync(eduPlanId, disciplineId, userName);
+            if (discipline == null) return null;
+
+            RabProgram rabProgram = new RabProgram();
+            rabProgram.Discipline = discipline;
+            rabProgram.DisciplineId = discipline.DisciplineId;
+            if (rabProgramId == null || rabProgramId == 0) return rabProgram;
+
+            rabProgram = discipline.RabPrograms.FirstOrDefault(a => a.RabProgramId == rabProgramId);
+            if (rabProgram == null) return null;
+
+            return rabProgram;
+        }
+
+        /// <summary>
+        /// Возвращает фонд оценочных средств дисциплины.
+        /// Если fondOcenochnihSredstvId равно null,
+        /// создаёт и возвращает новый объект
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="fondOcenochnihSredstvId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<FondOcenochnihSredstv> GetFondOcenochnihSredstvByUserNameAsync(int eduPlanId, int disciplineId, int? fondOcenochnihSredstvId, string userName)
+        {
+            var discipline = await GetDisciplineByUserNameAsync(eduPlanId, disciplineId, userName);
+            if (discipline == null) return null;
+
+            FondOcenochnihSredstv fondOcenochnihSredstv = new FondOcenochnihSredstv();
+            fondOcenochnihSredstv.Discipline = discipline;
+            fondOcenochnihSredstv.DisciplineId = discipline.DisciplineId;
+            if (fondOcenochnihSredstvId == null || fondOcenochnihSredstvId == 0) return fondOcenochnihSredstv;
+
+            fondOcenochnihSredstv = discipline.FondOcenochnihSredstvList.FirstOrDefault(a => a.FondOcenochnihSredstvId == fondOcenochnihSredstvId);
+            if (fondOcenochnihSredstv == null) return null;
+
+            return fondOcenochnihSredstv;
+        }
+
+        /// <summary>
         /// Добавляет к аннотации загруженный файл
         /// </summary>
         /// <param name="eduAnnotation"></param>
@@ -487,6 +539,32 @@ namespace KisVuzDotNetCore2.Models.Struct
             eduAnnotation = await _eduPlanRepository.UpdateEduAnnotationAsync(eduAnnotation, uploadedFile);
 
             return eduAnnotation;
+        }
+
+        /// <summary>
+        /// Добавляет к рабочей программе загруженный файл
+        /// </summary>
+        /// <param name="rabProgram"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<RabProgram> UpdateRabProgramAsync(RabProgram rabProgram, IFormFile uploadedFile)
+        {
+            if (rabProgram == null || uploadedFile == null) return null;
+            rabProgram = await _eduPlanRepository.UpdateRabProgramAsync(rabProgram, uploadedFile);
+            return rabProgram;
+        }
+
+        /// <summary>
+        /// Добавляет к фонду оценочных средств загруженный файл
+        /// </summary>
+        /// <param name="fondOcenochnihSredstv"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FondOcenochnihSredstv> UpdateFondOcenochnihSredstvAsync(FondOcenochnihSredstv fondOcenochnihSredstv, IFormFile uploadedFile)
+        {
+            if (fondOcenochnihSredstv == null || uploadedFile == null) return null;
+            fondOcenochnihSredstv = await _eduPlanRepository.UpdateFondOcenochnihSredstvAsync(fondOcenochnihSredstv, uploadedFile);
+            return fondOcenochnihSredstv;
         }
 
         /// <summary>
@@ -503,6 +581,38 @@ namespace KisVuzDotNetCore2.Models.Struct
             if (eduAnnotation == null) return;
 
             await _eduPlanRepository.RemoveEduAnnotationAsync(eduAnnotation);
+        }
+
+        /// <summary>
+        /// Удаляет рабочую программу, если она доступна пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="rabProgramId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveRabProgramByUserNameAsync(int eduPlanId, int disciplineId, int rabProgramId, string userName)
+        {
+            RabProgram rabProgram = await GetRabProgramByUserNameAsync(eduPlanId, disciplineId, rabProgramId, userName);
+            if (rabProgram == null) return;
+
+            await _eduPlanRepository.RemoveRabProgramAsync(rabProgram);
+        }
+
+        /// <summary>
+        /// Удаляет фонд оценочных средств, если он доступен пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="fondOcenochnihSredstvId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveFondOcenochnihSredstvByUserNameAsync(int eduPlanId, int disciplineId, int fondOcenochnihSredstvId, string userName)
+        {
+            FondOcenochnihSredstv fondOcenochnihSredstv = await GetFondOcenochnihSredstvByUserNameAsync(eduPlanId, disciplineId, fondOcenochnihSredstvId, userName);
+            if (fondOcenochnihSredstv == null) return;
+
+            await _eduPlanRepository.RemoveFondOcenochnihSredstvAsync(fondOcenochnihSredstv);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace KisVuzDotNetCore2.Controllers
         /// Подраздел для представления информации по СПО
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> SrProf()
+        public IActionResult SrProf()
         {
             searchTemplate = "среднее";            
             

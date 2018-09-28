@@ -8,7 +8,7 @@ namespace KisVuzDotNetCore2.Models.Education
     public class RabProgram
     {
         /// <summary>
-        /// УИД аннотации
+        /// УИД рабочей программы
         /// </summary>
         public int RabProgramId { get; set; }
 

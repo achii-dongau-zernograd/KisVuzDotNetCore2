@@ -512,6 +512,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\MetodKomissiyaMemberArm\FondOcenochnihSredstvCreateOrEdit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\MetodKomissiyaMemberArm\FondOcenochnihSredstvRemove.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\MetodKomissiyaMemberArm\RabProgramRemove.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\MetodKomissiyaMemberArm\RabProgramCreateOrEdit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\MetodKomissiyaMemberArm\EduProgramDelete.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

@@ -65,10 +65,40 @@ namespace KisVuzDotNetCore2.Models.Education
         Task<EduAnnotation> UpdateEduAnnotationAsync(EduAnnotation eduAnnotation, IFormFile uploadedFile);
 
         /// <summary>
+        /// Добавляет к рабочей программе загруженный файл
+        /// </summary>
+        /// <param name="rabProgram"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<RabProgram> UpdateRabProgramAsync(RabProgram rabProgram, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Добавляет к фонду оценочных средств загруженный файл
+        /// </summary>
+        /// <param name="fondOcenochnihSredstv"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FondOcenochnihSredstv> UpdateFondOcenochnihSredstvAsync(FondOcenochnihSredstv fondOcenochnihSredstv, IFormFile uploadedFile);
+
+        /// <summary>
         /// Удаляет аннотацию
         /// </summary>
         /// <param name="eduAnnotation"></param>
         /// <returns></returns>
         Task RemoveEduAnnotationAsync(EduAnnotation eduAnnotation);
+
+        /// <summary>
+        /// Удаляет рабочую программу
+        /// </summary>
+        /// <param name="rabProgram"></param>
+        /// <returns></returns>
+        Task RemoveRabProgramAsync(RabProgram rabProgram);
+
+        /// <summary>
+        /// Удаляет фонд оценочных средств
+        /// </summary>
+        /// <param name="fondOcenochnihSredstv"></param>
+        /// <returns></returns>
+        Task RemoveFondOcenochnihSredstvAsync(FondOcenochnihSredstv fondOcenochnihSredstv);
     }
 }

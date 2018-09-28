@@ -1,0 +1,39 @@
+﻿@model FondOcenochnihSredstv
+
+<h2>Добавление / редактирование фонда оценочных средств</h2>
+<h3>@Model.Discipline.DisciplineCode @Model.Discipline.DisciplineName.DisciplineNameName</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="FondOcenochnihSredstvCreateOrEdit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.FileModel == null)
+            {
+                <div class="form-group">
+                    <label class="control-label">Выберите файл: </label>
+                    <input type="file" name="uploadedFile" class="form-control" />
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label asp-for="FileModelId" class="control-label"></label>
+                    <input asp-for="FileModelId" class="hidden" />
+                    <a href="/@Model.FileModel?.Path" class="control-label">@Model.FileModel?.FileName</a>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Для замены выберите файл: </label>
+                    <input type="file" name="uploadedFile" class="form-control" />
+                </div>
+            }
+            <div class="form-group">
+                <input type="hidden" name="EduPlanId" value="@ViewBag.EduPlanId" />
+                <input type="hidden" asp-for="DisciplineId" />
+                <input type="hidden" asp-for="FondOcenochnihSredstvId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="EduPlanPreview" asp-route-id="@ViewBag.EduPlanId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+

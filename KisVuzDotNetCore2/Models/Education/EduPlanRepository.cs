@@ -304,10 +304,32 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <returns></returns>
         public async Task RemoveEduAnnotationAsync(EduAnnotation eduAnnotation)
         {
-            _context.EduAnnotations.Remove(eduAnnotation);
-            
+            _context.EduAnnotations.Remove(eduAnnotation);            
             await _fileModelRepository.RemoveFileAsync(eduAnnotation.FileModelId);
+            await _context.SaveChangesAsync();
+        }
 
+        /// <summary>
+        /// Удаляет рабочую программу
+        /// </summary>
+        /// <param name="rabProgram"></param>
+        /// <returns></returns>
+        public async Task RemoveRabProgramAsync(RabProgram rabProgram)
+        {
+            _context.RabPrograms.Remove(rabProgram);
+            await _fileModelRepository.RemoveFileAsync(rabProgram.FileModelId);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет фонд оценочных средств
+        /// </summary>
+        /// <param name="fondOcenochnihSredstv"></param>
+        /// <returns></returns>
+        public async Task RemoveFondOcenochnihSredstvAsync(FondOcenochnihSredstv fondOcenochnihSredstv)
+        {
+            _context.FondOcenochnihSredstvs.Remove(fondOcenochnihSredstv);
+            await _fileModelRepository.RemoveFileAsync(fondOcenochnihSredstv.FileModelId);
             await _context.SaveChangesAsync();
         }
 
@@ -352,6 +374,62 @@ namespace KisVuzDotNetCore2.Models.Education
 
             await _context.SaveChangesAsync();
             return eduAnnotation;
+        }
+
+        /// <summary>
+        /// Добавляет к рабочей программе загруженный файл
+        /// </summary>
+        /// <param name="rabProgram"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<RabProgram> UpdateRabProgramAsync(RabProgram rabProgram, IFormFile uploadedFile)
+        {
+            if (rabProgram == null || uploadedFile == null) return null;
+            FileModel fileModel = await _fileModelRepository.UploadRabProgramAsync(uploadedFile);
+
+            if (rabProgram.FileModelId != 0)
+            {
+                await _fileModelRepository.RemoveFileAsync(rabProgram.FileModelId);
+            }
+
+            rabProgram.FileModel = fileModel;
+            rabProgram.FileModelId = fileModel.Id;
+
+            if (rabProgram.RabProgramId == 0)
+            {
+                await _context.RabPrograms.AddAsync(rabProgram);
+            }
+
+            await _context.SaveChangesAsync();
+            return rabProgram;
+        }
+
+        /// <summary>
+        /// Добавляет к фонду оценочных средств загруженный файл
+        /// </summary>
+        /// <param name="fondOcenochnihSredstv"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FondOcenochnihSredstv> UpdateFondOcenochnihSredstvAsync(FondOcenochnihSredstv fondOcenochnihSredstv, IFormFile uploadedFile)
+        {
+            if (fondOcenochnihSredstv == null || uploadedFile == null) return null;
+            FileModel fileModel = await _fileModelRepository.UploadFondOcenochnihSredstvAsync(uploadedFile);
+
+            if (fondOcenochnihSredstv.FileModelId != 0)
+            {
+                await _fileModelRepository.RemoveFileAsync(fondOcenochnihSredstv.FileModelId);
+            }
+
+            fondOcenochnihSredstv.FileModel = fileModel;
+            fondOcenochnihSredstv.FileModelId = fileModel.Id;
+
+            if (fondOcenochnihSredstv.FondOcenochnihSredstvId == 0)
+            {
+                await _context.FondOcenochnihSredstvs.AddAsync(fondOcenochnihSredstv);
+            }
+
+            await _context.SaveChangesAsync();
+            return fondOcenochnihSredstv;
         }
     }
 }

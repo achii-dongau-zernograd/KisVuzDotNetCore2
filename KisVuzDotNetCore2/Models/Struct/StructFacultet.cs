@@ -20,7 +20,7 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <summary>
         /// Кафедры в составе факультета
         /// </summary>
-        public List<StructKaf> StructKafs = new List<StructKaf>();
+        public List<StructKaf> StructKafs { get; set; } = new List<StructKaf>();
 
         ////////// Навигационные свойства ////////////////
         public int StructInstituteId { get; set; }

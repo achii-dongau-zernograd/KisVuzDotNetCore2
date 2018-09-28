@@ -1,0 +1,55 @@
+﻿@model IEnumerable<StructFacultet>
+
+@{
+    int spoilerCounter = 0;
+}
+
+<h1>Электронное портфолио преподавателей</h1>
+
+    @foreach (var facultet in Model.OrderBy(m=>m.StructSubvision.StructSubvisionName))
+    {
+        spoilerCounter++;
+        <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>@facultet.StructSubvision.StructSubvisionName</strong></a>
+        <div class="collapse" id="spoiler-@spoilerCounter">
+            <div class="well">
+                @foreach (var structKaf in facultet.StructKafs.OrderBy(f => f.StructSubvision.StructSubvisionName))
+                {
+                    spoilerCounter++;
+                    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>@structKaf.StructSubvision.StructSubvisionName</strong></a>
+                    <div class="collapse" id="spoiler-@spoilerCounter">
+                        <div class="well">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            ФИО преподавателя
+                                        </th>
+                                        <th>
+                                            Должность
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var teacher in structKaf.TeacherStructKafPostStavka.OrderBy(t => t.Teacher.TeacherFio))
+                                    {
+                                    <tr>
+                                        <td>
+                                            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacher.Teacher.AppUserId ">@teacher.Teacher.TeacherFio</a>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => teacher.Post.PostName)
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                     </div>
+                 }
+
+            </div>
+        </div>
+     }
+             
+

@@ -66,7 +66,7 @@ namespace KisVuzDotNetCore2.Controllers.Students
         }
 
         // GET: Students/Create
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName");
             ViewData["StudentGroupId"] = new SelectList(_context.StudentGroups.Include(g=>g.EduKurs), "StudentGroupId", "StudentGroupName");

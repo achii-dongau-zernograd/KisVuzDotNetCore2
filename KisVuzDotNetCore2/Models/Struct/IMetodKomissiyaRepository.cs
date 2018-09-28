@@ -155,12 +155,52 @@ namespace KisVuzDotNetCore2.Models.Struct
         Task<EduAnnotation> GetEduAnnotationByUserNameAsync(int eduPlanId, int disciplineId, int? eduAnnotationId, string userName);
 
         /// <summary>
+        /// Возвращает объект рабочей программы дисциплины.
+        /// Если rabProgramId равно null,
+        /// создаёт и возвращает новый объект
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="rabProgramId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<RabProgram> GetRabProgramByUserNameAsync(int eduPlanId, int disciplineId, int? rabProgramId, string userName);
+
+        /// <summary>
+        /// Возвращает объект фонд оценочных средств дисциплины.
+        /// Если fondOcenochnihSredstvId равно null,
+        /// создаёт и возвращает новый объект
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="fondOcenochnihSredstvId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<FondOcenochnihSredstv> GetFondOcenochnihSredstvByUserNameAsync(int eduPlanId, int disciplineId, int? fondOcenochnihSredstvId, string userName);
+
+        /// <summary>
         /// Обновление файла аннотации
         /// </summary>
         /// <param name="eduAnnotation"></param>
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task<EduAnnotation> UpdateEduAnnotationAsync(EduAnnotation eduAnnotation, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Обновление файла рабочей программы
+        /// </summary>
+        /// <param name="rabProgram"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<RabProgram> UpdateRabProgramAsync(RabProgram rabProgram, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Обновление фонда оценочных средств
+        /// </summary>
+        /// <param name="fondOcenochnihSredstv"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FondOcenochnihSredstv> UpdateFondOcenochnihSredstvAsync(FondOcenochnihSredstv fondOcenochnihSredstv, IFormFile uploadedFile);
 
         /// <summary>
         /// Удаляет аннотацию, если она доступна пользователю
@@ -171,5 +211,25 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <param name="userName"></param>
         /// <returns></returns>
         Task RemoveEduAnnotationByUserNameAsync(int eduPlanId, int disciplineId, int eduAnnotationId, string userName);
+
+        /// <summary>
+        /// Удаляет рабочую программу, если она доступна пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="rabProgramId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task RemoveRabProgramByUserNameAsync(int eduPlanId, int disciplineId, int rabProgramId, string userName);
+
+        /// <summary>
+        /// Удаляет фонд оценочных средств дисциплины, если она доступна пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="fondOcenochnihSredstvId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task RemoveFondOcenochnihSredstvByUserNameAsync(int eduPlanId, int disciplineId, int fondOcenochnihSredstvId, string userName);
     }
 }

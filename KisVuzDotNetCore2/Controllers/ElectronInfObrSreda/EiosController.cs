@@ -70,5 +70,26 @@ namespace KisVuzDotNetCore2.Controllers.Eios
 
             return View();
         }
+
+        /// <summary>
+        /// Портфолио преподавателей
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> PortfolioPps()
+        {
+            var structFacultets = await _context.StructFacultets
+                .Include(sf => sf.StructSubvision)
+                .Include(sf => sf.StructKafs)
+                    .ThenInclude(sk => sk.TeacherStructKafPostStavka)
+                        .ThenInclude(tsk => tsk.Post)
+                .Include(sf => sf.StructKafs)
+                    .ThenInclude(sk => sk.TeacherStructKafPostStavka)
+                        .ThenInclude(tsk => tsk.Teacher.AppUser)
+                .Include(sf => sf.StructKafs)
+                    .ThenInclude(sk => sk.StructSubvision)                        
+            .ToListAsync();
+
+            return View(structFacultets);
+        }
     }
 }

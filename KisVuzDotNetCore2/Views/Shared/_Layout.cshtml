@@ -38,9 +38,20 @@
                         <ul class="dropdown-menu">
                             <li><a asp-controller="Eios" asp-action="UchPlansRabProgs">Учебные планы, рабочие программы дисциплин (модулей), практик</a></li>
                             <li><a asp-controller="ElectronBiblSystems" asp-action="Preview">Электронные библиотечные системы</a></li>
-                            <li><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-issobstv="true">Электронные образовательные и информационные ресурсы (собственные)</a></li>
-                            <li><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-issobstv="false">Электронные образовательные и информационные ресурсы (сторонние)</a></li>
-                            <li><a asp-controller="Eios" asp-action="Portfolio">Электронное портфолио обучающихся</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Электронные образовательные и информационные ресурсы<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-issobstv="true">Электронные образовательные и информационные ресурсы (собственные)</a></li>
+                                    <li><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-issobstv="false">Электронные образовательные и информационные ресурсы (сторонние)</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Электронное портфолио<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Eios" asp-action="Portfolio">Электронное портфолио обучающихся</a></li>
+                                    <li><a asp-controller="Eios" asp-action="PortfolioPps">Электронное портфолио преподавателей</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
 
