@@ -4,11 +4,16 @@
     <h4>Роли</h4>
 </div>
 
+<p>
+    <br />
+    <a class="btn btn-primary" asp-action="Create">Добавить роль</a>
+    <br /><br />
+</p>
+
 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
 
 <table class="table table-condensed table-bordered">
-    <tr>
-        <th>Id</th>
+    <tr>        
         <th>Наименование роли</th>
         <th>Пользователи</th>
         <th>Действия</th>
@@ -21,8 +26,7 @@
     {
         foreach(var role in Model)
         {
-            <tr>
-                <td>@role.Id</td>
+            <tr>                
                 <td>@role.Name</td>
                 <td identity-role="@role.Id"></td>
                 <td>
@@ -35,5 +39,3 @@
         }
     }
 </table>
-
-<a class="btn btn-primary" asp-action="Create">Создать</a>

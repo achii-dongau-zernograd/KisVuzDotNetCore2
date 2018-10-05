@@ -7,6 +7,7 @@ using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Struct;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -327,6 +328,115 @@ namespace KisVuzDotNetCore2.Controllers.Struct
         public async Task<IActionResult> FondOcenochnihSredstvRemoveConfirmed(int EduPlanId, int DisciplineId, int FondOcenochnihSredstvId)
         {
             await _metodKomissiyaRepository.RemoveFondOcenochnihSredstvByUserNameAsync(EduPlanId, DisciplineId, FondOcenochnihSredstvId, User.Identity.Name);
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+        #endregion
+
+        #region Дисциплина - преподаватель
+        public async Task<IActionResult> TeacherDisciplinesCreateOrEdit(int EduPlanId, int DisciplineId, int EduYearId, int? TeacherDisciplineId)
+        {
+            TeacherDiscipline teacherDiscipline = await _metodKomissiyaRepository
+                .GetTeacherDisciplineByUserNameAsync(EduPlanId, DisciplineId, EduYearId, TeacherDisciplineId, User.Identity.Name);                        
+            
+            ViewBag.EduPlanId = EduPlanId;
+            ViewBag.Teachers = _selectListRepository.GetSelectListTeacherFio();
+            return View(teacherDiscipline);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TeacherDisciplinesCreateOrEditConfirmed(int EduPlanId,
+            int EduYearId, TeacherDiscipline teacherDiscipline)
+        {            
+            TeacherDiscipline teacherDisciplineChanging = await _metodKomissiyaRepository
+                .GetTeacherDisciplineByUserNameAsync(EduPlanId, teacherDiscipline.DisciplineId, EduYearId, teacherDiscipline.TeacherDisciplineId, User.Identity.Name);
+            if(teacherDisciplineChanging!=null)
+            {
+                teacherDisciplineChanging.TeacherId = teacherDiscipline.TeacherId;
+                await _metodKomissiyaRepository.UpdateTeacherDisciplineAsync(teacherDisciplineChanging);
+            }
+                        
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+
+        public async Task<IActionResult> TeacherDisciplinesRemove(int EduPlanId, int DisciplineId, int EduYearId, int TeacherDisciplineId)
+        {
+            TeacherDiscipline teacherDiscipline = await _metodKomissiyaRepository
+                .GetTeacherDisciplineByUserNameAsync(EduPlanId, DisciplineId, EduYearId, TeacherDisciplineId, User.Identity.Name);
+
+            if (teacherDiscipline == null || teacherDiscipline.TeacherDisciplineId == 0) return NotFound();
+
+            ViewBag.EduPlanId = EduPlanId;
+            ViewBag.Teachers = _selectListRepository.GetSelectListTeacherFio();
+            return View(teacherDiscipline);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TeacherDisciplinesRemoveConfirmed(int EduPlanId,
+            int DisciplineId, int EduYearId, int TeacherDisciplineId)
+        {            
+            await _metodKomissiyaRepository.RemoveTeacherDisciplineByUserNameAsync(EduPlanId,
+                DisciplineId, EduYearId, TeacherDisciplineId, User.Identity.Name);
+
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+        #endregion
+
+        #region Дисциплина - Помещение
+        /// <summary>
+        /// Создаё
+        /// </summary>
+        /// <param name="EduPlanId"></param>
+        /// <param name="DisciplineId"></param>
+        /// <param name="EduYearId"></param>
+        /// <param name="DisciplinePomeshenieId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> DisciplinePomesheniesCreateOrEdit(int EduPlanId, int DisciplineId, int EduYearId, int? DisciplinePomeshenieId)
+        {
+            DisciplinePomeshenie disciplinePomeshenie = await _metodKomissiyaRepository
+                .GetDisciplinePomeshenieByUserNameAsync(EduPlanId, DisciplineId, EduYearId, DisciplinePomeshenieId, User.Identity.Name);
+
+            ViewBag.EduPlanId = EduPlanId;
+            ViewBag.Pomesheniya = _selectListRepository.GetSelectListPomesheniya();
+            return View(disciplinePomeshenie);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DisciplinePomesheniesCreateOrEditConfirmed(int EduPlanId,
+            int EduYearId, DisciplinePomeshenie disciplinePomeshenie)
+        {
+            DisciplinePomeshenie disciplinePomeshenieChanging = await _metodKomissiyaRepository
+                .GetDisciplinePomeshenieByUserNameAsync(EduPlanId, disciplinePomeshenie.DisciplineId, EduYearId, disciplinePomeshenie.DisciplinePomeshenieId, User.Identity.Name);
+            if (disciplinePomeshenieChanging != null)
+            {
+                disciplinePomeshenieChanging.PomeshenieId = disciplinePomeshenie.PomeshenieId;
+                await _metodKomissiyaRepository.UpdateDisciplinePomeshenieAsync(disciplinePomeshenieChanging);
+            }
+
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+
+        public async Task<IActionResult> DisciplinePomesheniesRemove(int EduPlanId,
+            int DisciplineId, int EduYearId, int DisciplinePomeshenieId)
+        {
+            DisciplinePomeshenie disciplinePomeshenieChanging = await _metodKomissiyaRepository
+                .GetDisciplinePomeshenieByUserNameAsync(EduPlanId, DisciplineId, EduYearId, DisciplinePomeshenieId, User.Identity.Name);
+
+            if (disciplinePomeshenieChanging == null || disciplinePomeshenieChanging.DisciplinePomeshenieId == 0) return NotFound();
+
+            ViewBag.EduPlanId = EduPlanId;
+            ViewBag.Teachers = _selectListRepository.GetSelectListTeacherFio();
+            return View(disciplinePomeshenieChanging);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DisciplinePomesheniesRemoveConfirmed(int EduPlanId,
+            int DisciplineId, int EduYearId, int DisciplinePomeshenieId)
+        {
+            await _metodKomissiyaRepository.RemoveDisciplinePomeshenieByUserNameAsync(EduPlanId,
+                DisciplineId, EduYearId, DisciplinePomeshenieId, User.Identity.Name);
+
             return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
         }
         #endregion

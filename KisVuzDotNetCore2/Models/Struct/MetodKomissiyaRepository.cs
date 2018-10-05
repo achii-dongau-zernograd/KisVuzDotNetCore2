@@ -1,5 +1,6 @@
 ﻿using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -527,6 +528,44 @@ namespace KisVuzDotNetCore2.Models.Struct
         }
 
         /// <summary>
+        /// Возвращает связку "Преподаватель - Дисциплина",
+        /// если она доступна пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="eduYearId"></param>
+        /// <param name="teacherDisciplineId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<TeacherDiscipline> GetTeacherDisciplineByUserNameAsync(int eduPlanId,
+            int disciplineId, int eduYearId, int? teacherDisciplineId, string userName)
+        {
+            var eduPlan = await GetEduPlanByUserNameAsync(eduPlanId, userName);
+            if (eduPlan == null) return null;
+            var eduPlanEduYear = eduPlan.EduPlanEduYears.FirstOrDefault(y => y.EduYearId == eduYearId);
+
+            var discipline = await GetDisciplineByUserNameAsync(eduPlanId, disciplineId, userName);
+            if (discipline == null) return null;
+
+            TeacherDiscipline teacherDiscipline = _eduPlanRepository
+                .GetTeacherDisciplineByDisciplineAndTeacherDisciplineId(discipline, teacherDisciplineId);
+
+            if (teacherDiscipline == null)
+            {
+                teacherDiscipline = new TeacherDiscipline
+                {
+                    TeacherDisciplineId = teacherDisciplineId ?? 0,
+                    Discipline = discipline,
+                    DisciplineId = disciplineId,
+                    EduPlanEduYear = eduPlanEduYear,
+                    EduPlanEduYearId = eduPlanEduYear.EduPlanEduYearId
+                };
+            }
+
+            return teacherDiscipline;
+        }
+
+        /// <summary>
         /// Добавляет к аннотации загруженный файл
         /// </summary>
         /// <param name="eduAnnotation"></param>
@@ -613,6 +652,97 @@ namespace KisVuzDotNetCore2.Models.Struct
             if (fondOcenochnihSredstv == null) return;
 
             await _eduPlanRepository.RemoveFondOcenochnihSredstvAsync(fondOcenochnihSredstv);
+        }
+
+        /// <summary>
+        /// Обновляет привязку "Преподаватель - Дисциплина"
+        /// </summary>
+        /// <param name="teacherDisciplineChanging"></param>
+        /// <returns></returns>
+        public async Task UpdateTeacherDisciplineAsync(TeacherDiscipline teacherDisciplineChanging)
+        {
+            await _eduPlanRepository.UpdateEduAnnotationAsync(teacherDisciplineChanging);
+        }
+
+        /// <summary>
+        /// Удаляет привязку "Преподаватель - Дисциплина"
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="eduYearId"></param>
+        /// <param name="teacherDisciplineId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveTeacherDisciplineByUserNameAsync(int eduPlanId, int disciplineId, int eduYearId, int teacherDisciplineId, string userName)
+        {
+            TeacherDiscipline teacherDiscipline = await GetTeacherDisciplineByUserNameAsync(eduPlanId, disciplineId, eduYearId, teacherDisciplineId, userName);
+            if (teacherDiscipline == null || teacherDiscipline.TeacherDisciplineId == 0) return;
+
+            await _eduPlanRepository.RemoveTeacherDisciplineAsync(teacherDiscipline);
+        }
+
+        /// <summary>
+        /// Возвращает привязку "Дисциплина - Помещение"
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="eduYearId"></param>
+        /// <param name="disciplinePomeshenieId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<DisciplinePomeshenie> GetDisciplinePomeshenieByUserNameAsync(int eduPlanId, int disciplineId, int eduYearId, int? disciplinePomeshenieId, string userName)
+        {
+            var eduPlan = await GetEduPlanByUserNameAsync(eduPlanId, userName);
+            if (eduPlan == null) return null;
+            var eduPlanEduYear = eduPlan.EduPlanEduYears.FirstOrDefault(y => y.EduYearId == eduYearId);
+
+            var discipline = await GetDisciplineByUserNameAsync(eduPlanId, disciplineId, userName);
+            if (discipline == null) return null;
+
+            DisciplinePomeshenie disciplinePomeshenie = _eduPlanRepository
+                .GetDisciplinePomeshenieByDisciplineAndDisciplinePomeshenieId(discipline, disciplinePomeshenieId);
+
+            if (disciplinePomeshenie == null)
+            {
+                disciplinePomeshenie = new DisciplinePomeshenie
+                {
+                    DisciplinePomeshenieId = disciplinePomeshenieId ?? 0,
+                    Discipline = discipline,
+                    DisciplineId = disciplineId,
+                    EduPlanEduYear = eduPlanEduYear,
+                    EduPlanEduYearId = eduPlanEduYear.EduPlanEduYearId
+                };
+            }
+
+            return disciplinePomeshenie;
+        }
+
+        /// <summary>
+        /// Обновляет привязку "Дисциплина - Помещение"
+        /// </summary>
+        /// <param name="disciplinePomeshenieChanging"></param>
+        /// <returns></returns>
+        public async Task UpdateDisciplinePomeshenieAsync(DisciplinePomeshenie disciplinePomeshenieChanging)
+        {
+            await _eduPlanRepository.UpdateDisciplinePomeshenieAsync(disciplinePomeshenieChanging);
+        }
+
+        /// <summary>
+        /// Удаляет привязку "Дисциплина - Помещение"
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="eduYearId"></param>
+        /// <param name="disciplinePomeshenieId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveDisciplinePomeshenieByUserNameAsync(int eduPlanId,
+            int disciplineId, int eduYearId, int disciplinePomeshenieId, string userName)
+        {
+            DisciplinePomeshenie disciplinePomeshenie = await GetDisciplinePomeshenieByUserNameAsync(eduPlanId, disciplineId, eduYearId, disciplinePomeshenieId, userName);
+            if (disciplinePomeshenie == null || disciplinePomeshenie.DisciplinePomeshenieId == 0) return;
+
+            await _eduPlanRepository.RemoveDisciplinePomeshenieAsync(disciplinePomeshenie);
         }
     }
 }

@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.AppUser)
         </dt>
         <dd>
-            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.AppUser.Id">@Model.AppUser.GetFullName</a>
+            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.AppUser?.Id">@Model.AppUser?.GetFullName</a>
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ProfessionalRetrainingDiplomRegNumber)
@@ -82,6 +82,6 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="ProfessionalRetrainingId" />
         <input type="submit" value="Удалить" class="btn btn-danger" />
-        <a asp-action="Index" asp-route-id="@Model.AppUser.Id" class="btn btn-default">Отмена</a>
+        <a asp-action="Index" asp-route-id="@Model.AppUser?.Id" class="btn btn-default">Отмена</a>
     </form>
 </div>

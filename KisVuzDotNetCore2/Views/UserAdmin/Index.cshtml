@@ -1,12 +1,18 @@
 ﻿@model IEnumerable<AppUser>
 
 <div class="bg-primary panel-body"><h4>Аккаунты пользователей</h4></div>
+
+<div>
+    <br />
+    <a class="btn btn-primary" asp-action="Create">Создать аккаунт</a>
+    <br /><br />
+</div>
+
 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
 
 <table class="table table-condensed table-bordered">
     <tr>
-        <th>ФИО</th>
-        <th>ID</th>
+        <th>ФИО</th>        
         <th>Логин</th>
         <th>Email</th>
         <th>Студент</th>
@@ -24,8 +30,7 @@
         foreach (AppUser user in Model.OrderBy(u=>u.GetFullName))
         {
             <tr>
-                <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@user.Id">@user.GetFullName</a></td>
-                <td>@user.Id</td>
+                <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@user.Id">@user.GetFullName</a></td>                
                 <td>@user.UserName</td>
                 <td>@user.Email</td>
                 <td>
@@ -58,5 +63,3 @@
         }
     }
 </table>
-
-<a class="btn btn-primary" asp-action="Create">Создать аккаунт</a>

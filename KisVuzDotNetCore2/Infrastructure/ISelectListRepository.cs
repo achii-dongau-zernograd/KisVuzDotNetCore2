@@ -80,5 +80,12 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="disciplineNameSearchString"></param>
         /// <returns></returns>
         SelectList GetSelectListDisciplineNames(string disciplineNameSearchString);
+
+        /// <summary>
+        /// Возвращает список помещений
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListPomesheniya(int selectedId = 0);
     }
 }

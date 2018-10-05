@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -430,6 +431,81 @@ namespace KisVuzDotNetCore2.Models.Education
 
             await _context.SaveChangesAsync();
             return fondOcenochnihSredstv;
+        }
+
+        /// <summary>
+        /// Возвращает связку "Преподаватель - Дисциплина"
+        /// </summary>
+        /// <param name="discipline"></param>
+        /// <param name="teacherDisciplineId"></param>
+        /// <returns></returns>
+        public TeacherDiscipline GetTeacherDisciplineByDisciplineAndTeacherDisciplineId(Discipline discipline, int? teacherDisciplineId)
+        {
+            if (discipline == null || teacherDisciplineId == null) return null;
+            TeacherDiscipline teacherDiscipline = discipline.TeacherDisciplines.SingleOrDefault(td => td.TeacherDisciplineId == teacherDisciplineId);
+
+            return teacherDiscipline;
+        }
+
+        /// <summary>
+        /// Обновляет привязку "Преподаватель - Дисциплина"
+        /// </summary>
+        /// <param name="teacherDisciplineChanging"></param>
+        /// <returns></returns>
+        public async Task UpdateEduAnnotationAsync(TeacherDiscipline teacherDisciplineChanging)
+        {
+            _context.TeacherDisciplines.Update(teacherDisciplineChanging);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет привязку "Преподаватель - Дисциплина"
+        /// </summary>
+        /// <param name="teacherDiscipline"></param>
+        /// <returns></returns>
+        public async Task RemoveTeacherDisciplineAsync(TeacherDiscipline teacherDiscipline)
+        {
+            if (teacherDiscipline == null) return;
+            _context.TeacherDisciplines.Remove(teacherDiscipline);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Возвращает привязку "Дисциплина - Помещение"
+        /// </summary>
+        /// <param name="discipline"></param>
+        /// <param name="disciplinePomeshenieId"></param>
+        /// <returns></returns>
+        public DisciplinePomeshenie GetDisciplinePomeshenieByDisciplineAndDisciplinePomeshenieId(Discipline discipline, int? disciplinePomeshenieId)
+        {
+            if (discipline == null || disciplinePomeshenieId == null) return null;
+            DisciplinePomeshenie disciplinePomeshenie = discipline.DisciplinePomeshenies.SingleOrDefault(dp => dp.DisciplinePomeshenieId == disciplinePomeshenieId);
+
+            return disciplinePomeshenie;
+        }
+
+        /// <summary>
+        /// Обновляет привязку "Дисциплина - Помещение"
+        /// </summary>
+        /// <param name="disciplinePomeshenieChanging"></param>
+        /// <returns></returns>
+        public async Task UpdateDisciplinePomeshenieAsync(DisciplinePomeshenie disciplinePomeshenieChanging)
+        {
+            if (disciplinePomeshenieChanging == null) return;
+            _context.DisciplinePomeshenies.Update(disciplinePomeshenieChanging);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет привязку "Дисциплина - Помещение"
+        /// </summary>
+        /// <param name="disciplinePomeshenie"></param>
+        /// <returns></returns>
+        public async Task RemoveDisciplinePomeshenieAsync(DisciplinePomeshenie disciplinePomeshenie)
+        {
+            if (disciplinePomeshenie == null) return;
+            _context.DisciplinePomeshenies.Remove(disciplinePomeshenie);
+            await _context.SaveChangesAsync();
         }
     }
 }

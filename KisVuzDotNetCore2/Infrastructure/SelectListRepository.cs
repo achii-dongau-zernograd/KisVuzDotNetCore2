@@ -122,6 +122,21 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(_context.MetodKomissii, "MetodKomissiyaId", "MetodKomissiyaName", selectedId);
         }
 
+        /// <summary>
+        /// Возвращает список помещений
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListPomesheniya(int selectedId = 0)
+        {
+            return new SelectList(_context.Pomeshenie.OrderBy(p=>p.PomeshenieName), "PomeshenieId", "PomeshenieName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список кафедр
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
         public SelectList GetSelectListStructKaf(int selectedId = 0)
         {
             return new SelectList(_context.StructKafs.Include(s=>s.StructSubvision), "StructKafId", "StructSubvision.StructSubvisionName", selectedId);
@@ -134,7 +149,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <returns></returns>
         public SelectList GetSelectListTeacherFio(int selectedId = 0)
         {
-            return new SelectList(_context.Teachers, "TeacherId", "TeacherFio", selectedId);
+            return new SelectList(_context.Teachers.OrderBy(t=>t.TeacherFio), "TeacherId", "TeacherFio", selectedId);
         }
     }
 }

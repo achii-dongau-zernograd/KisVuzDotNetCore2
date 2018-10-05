@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Common.AppSetting>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Настройки";
 }
 
-<h2>Index</h2>
+<h2>Настройки</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -31,9 +31,8 @@
                 @Html.DisplayFor(modelItem => item.AppSettingValue)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.AppSettingId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AppSettingId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AppSettingId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.AppSettingId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.AppSettingId">Удалить</a>
             </td>
         </tr>
 }

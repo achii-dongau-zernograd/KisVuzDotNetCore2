@@ -12,8 +12,10 @@
     <div class="collapse" id="spoiler-@fileDataType.FileDataTypeId">
         <div class="well">
             @foreach (var ftft in fileDataType.FileToFileTypes)
-            {
-                <p><a itemprop="@ftft.FileDataType.Itemprop" asp-controller="Files" asp-action="GetFile" asp-route-id="@ftft.FileModel.Id">@ftft.FileModel.Name</a></p>
+            {                
+                <p>
+                    <a itemprop="@ftft.FileDataType.Itemprop" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a>
+                </p>
             }
         </div>
     </div>

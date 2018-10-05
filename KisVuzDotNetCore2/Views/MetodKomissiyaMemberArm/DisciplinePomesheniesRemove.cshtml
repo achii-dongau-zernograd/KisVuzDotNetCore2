@@ -1,0 +1,36 @@
+﻿@model DisciplinePomeshenie
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <h4>Дисциплина - Помещение</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Discipline)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Discipline.DisciplineName.DisciplineNameName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduPlanEduYear)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduPlanEduYear.EduYear.EduYearName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Pomeshenie)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pomeshenie.PomeshenieName)
+        </dd>
+    </dl>
+    
+    <form asp-action="DisciplinePomesheniesRemoveConfirmed">
+        <input type="hidden" name="EduPlanId" value="@ViewBag.EduPlanId" />
+        <input type="hidden" name="DisciplineId" value="@Model.DisciplineId" />
+        <input type="hidden" name="EduYearId" value="@Model.EduPlanEduYear.EduYearId" />
+        <input type="hidden" asp-for="DisciplinePomeshenieId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="EduPlanPreview" asp-route-id="@ViewBag.EduPlanId" class="btn btn-primary">Отмена</a>
+    </form>
+</div>

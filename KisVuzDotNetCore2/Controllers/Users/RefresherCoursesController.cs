@@ -133,7 +133,8 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index),new { id= refresherCourse.AppUserId });
             }
-            
+
+            ViewBag.AppUserId = refresherCourse.AppUserId;
             return View(refresherCourse);
         }
 

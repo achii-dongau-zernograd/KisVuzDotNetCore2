@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Http;
 
 namespace KisVuzDotNetCore2.Models.Education
@@ -100,5 +101,49 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <param name="fondOcenochnihSredstv"></param>
         /// <returns></returns>
         Task RemoveFondOcenochnihSredstvAsync(FondOcenochnihSredstv fondOcenochnihSredstv);
+
+        /// <summary>
+        /// Возвращает привязку "Преподаватель - Дисциплина"
+        /// </summary>
+        /// <param name="discipline"></param>
+        /// <param name="teacherDisciplineId"></param>
+        /// <returns></returns>
+        TeacherDiscipline GetTeacherDisciplineByDisciplineAndTeacherDisciplineId(Discipline discipline, int? teacherDisciplineId);
+
+        /// <summary>
+        /// Обновляет привязку "Преподаватель - Дисциплина"
+        /// </summary>
+        /// <param name="teacherDisciplineChanging"></param>
+        /// <returns></returns>
+        Task UpdateEduAnnotationAsync(TeacherDiscipline teacherDisciplineChanging);
+
+        /// <summary>
+        /// Удаляет привязку "Преподаватель - Дисциплина"
+        /// </summary>
+        /// <param name="teacherDiscipline"></param>
+        /// <returns></returns>
+        Task RemoveTeacherDisciplineAsync(TeacherDiscipline teacherDiscipline);
+
+        /// <summary>
+        /// Возвращает привязку "Дисциплина - Помещение"
+        /// </summary>
+        /// <param name="discipline"></param>
+        /// <param name="disciplinePomeshenieId"></param>
+        /// <returns></returns>
+        DisciplinePomeshenie GetDisciplinePomeshenieByDisciplineAndDisciplinePomeshenieId(Discipline discipline, int? disciplinePomeshenieId);
+
+        /// <summary>
+        /// Обновляет привязку "Дисциплина - Помещение"
+        /// </summary>
+        /// <param name="disciplinePomeshenieChanging"></param>
+        /// <returns></returns>
+        Task UpdateDisciplinePomeshenieAsync(DisciplinePomeshenie disciplinePomeshenieChanging);
+
+        /// <summary>
+        /// Удаляет привязку "Дисциплина - Помещение"
+        /// </summary>
+        /// <param name="disciplinePomeshenie"></param>
+        /// <returns></returns>
+        Task RemoveDisciplinePomeshenieAsync(DisciplinePomeshenie disciplinePomeshenie);
     }
 }

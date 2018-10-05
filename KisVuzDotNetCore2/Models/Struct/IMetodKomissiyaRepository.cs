@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Education;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -231,5 +232,64 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <param name="userName"></param>
         /// <returns></returns>
         Task RemoveFondOcenochnihSredstvByUserNameAsync(int eduPlanId, int disciplineId, int fondOcenochnihSredstvId, string userName);
+
+        /// <summary>
+        /// Возвращает связку "Преподаватель - Дисциплина",
+        /// если она доступна пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="eduYearId"></param>
+        /// <param name="teacherDisciplineId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<TeacherDiscipline> GetTeacherDisciplineByUserNameAsync(int eduPlanId, int disciplineId, int eduYearId, int? teacherDisciplineId, string userName);
+
+        /// <summary>
+        /// Обновляет привязку "Преподаватель - Дисциплина"
+        /// </summary>
+        /// <param name="teacherDisciplineChanging"></param>
+        /// <returns></returns>
+        Task UpdateTeacherDisciplineAsync(TeacherDiscipline teacherDisciplineChanging);
+
+        /// <summary>
+        /// Удаляет привязку "Преподаватель - Дисциплина"
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="eduYearId"></param>
+        /// <param name="teacherDisciplineId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task RemoveTeacherDisciplineByUserNameAsync(int eduPlanId, int disciplineId, int eduYearId, int teacherDisciplineId, string userName);
+
+        /// <summary>
+        /// Возвращает привязку "Дисциплина - Помещение"
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="eduYearId"></param>
+        /// <param name="disciplinePomeshenieId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<DisciplinePomeshenie> GetDisciplinePomeshenieByUserNameAsync(int eduPlanId, int disciplineId, int eduYearId, int? disciplinePomeshenieId, string userName);
+
+        /// <summary>
+        /// Обновляет привязку "Дисциплина - Помещение"
+        /// </summary>
+        /// <param name="disciplinePomeshenieChanging"></param>
+        /// <returns></returns>
+        Task UpdateDisciplinePomeshenieAsync(DisciplinePomeshenie disciplinePomeshenieChanging);
+
+        /// <summary>
+        /// Удаляет привязку "Дисциплина - Помещение"
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="eduYearId"></param>
+        /// <param name="disciplinePomeshenieId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task RemoveDisciplinePomeshenieByUserNameAsync(int eduPlanId, int disciplineId, int eduYearId, int disciplinePomeshenieId, string userName);
     }
 }

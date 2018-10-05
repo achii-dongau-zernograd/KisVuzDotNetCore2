@@ -93,7 +93,7 @@
                             <a href="/@item.ProfessionalRetrainingFile.Path">Открыть</a>
                     </td>                    
                     <td>
-                        <a asp-action="Index" asp-controller="UserProfile" asp-route-id="@item.AppUser.Id">@item.AppUser.LastName @item.AppUser.FirstName @item.AppUser.Patronymic</a>
+                        <a asp-action="Index" asp-controller="UserProfile" asp-route-id="@item.AppUser?.Id">@item.AppUser?.GetFullName</a>
                     </td>
                     <td>
                         @item.RowStatus?.RowStatusName
