@@ -1,0 +1,12 @@
+﻿@{    
+    // Определяем, является ли пользователь куратором.
+    if (User.Identity.IsAuthenticated)
+    {
+        <ul class="nav navbar-nav navbar-left">
+            <!-- Выпадающий список -->
+            <li>
+                <a href="https://achii-dongau-zernograd.github.io/KisVuz_Docs/">Справочная система</a>
+            </li>
+        </ul>
+    }
+}

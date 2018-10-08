@@ -38,6 +38,7 @@
                         <ul class="dropdown-menu">
                             <li><a asp-controller="Eios" asp-action="UchPlansRabProgs">Учебные планы, рабочие программы дисциплин (модулей), практик</a></li>
                             <li><a asp-controller="ElectronBiblSystems" asp-action="Preview">Электронные библиотечные системы</a></li>
+                            <li><a asp-controller="ElectronCatalogs" asp-action="Preview">Базы данных электронного каталога</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Электронные образовательные и информационные ресурсы<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -105,16 +106,18 @@
                 <div class="navbar-collapse collapse">
                     @await Html.PartialAsync("_AdminPartial")
                     @await Html.PartialAsync("_OtdelKadrovPartial")
-                    @await Html.PartialAsync("_Kancelyariya")
+                    @await Html.PartialAsync("_KancelyariyaPartial")
                     @await Html.PartialAsync("_BuhgalteriyaPartial")
                     @await Html.PartialAsync("_UchChastPartial")
                     @await Html.PartialAsync("_DekanatPartial")
                     @await Html.PartialAsync("_KuratorPartial")
                     @await Html.PartialAsync("_PriemnayaKomissiyaPartial")
                     @await Html.PartialAsync("_YurotdelPartial")
-                    @await Html.PartialAsync("_CPORM")
-                    @await Html.PartialAsync("_ZamDirectoraPoSocRabote")
+                    @await Html.PartialAsync("_CPORMPartial")
+                    @await Html.PartialAsync("_ZamDirectoraPoSocRabotePartial")
                     @await Component.InvokeAsync("MetodKomissiya")
+                    @await Html.PartialAsync("_BibliotekaPartial")
+                    @await Html.PartialAsync("_DocumentationPartial")
                 </div>
             </div>
         </nav>

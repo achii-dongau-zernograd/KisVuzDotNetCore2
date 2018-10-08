@@ -533,16 +533,22 @@
     <Content Update="Views\MetodKomissiyaMemberArm\EduPlanPreview.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Shared\_DocumentationPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_BibliotekaPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_KuratorPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Shared\_Kancelyariya.cshtml">
+    <Content Update="Views\Shared\_KancelyariyaPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Shared\_CPORM.cshtml">
+    <Content Update="Views\Shared\_CPORMPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Shared\_ZamDirectoraPoSocRabote.cshtml">
+    <Content Update="Views\Shared\_ZamDirectoraPoSocRabotePartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_YurotdelPartial.cshtml">
