@@ -1,0 +1,51 @@
+﻿@model UchPosobieEditViewModel
+
+<h4>Добавление / редактирование учебного пособия</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="UchPosobieCreateOrEdit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UchPosobie.UchPosobieId" />
+            <div class="form-group">
+                <label asp-for="UchPosobie.UchPosobieVidId" class="control-label"></label>
+                <select asp-for="UchPosobie.UchPosobieVidId" class="form-control" asp-items="ViewBag.UchPosobieVidList"></select>
+                <span asp-validation-for="UchPosobie.UchPosobieVidId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UchPosobie.GodIzdaniya" class="control-label"></label>
+                <input asp-for="UchPosobie.GodIzdaniya" class="form-control" />
+                <span asp-validation-for="UchPosobie.GodIzdaniya" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UchPosobie.UchPosobieName" class="control-label"></label>
+                <input asp-for="UchPosobie.UchPosobieName" class="form-control" />
+                <span asp-validation-for="UchPosobie.UchPosobieName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UchPosobie.BiblOpisanie" class="control-label"></label>
+                <input asp-for="UchPosobie.BiblOpisanie" class="form-control" />
+                <span asp-validation-for="UchPosobie.BiblOpisanie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UchPosobie.UchPosobieFormaIzdaniyaId" class="control-label"></label>
+                <select asp-for="UchPosobie.UchPosobieFormaIzdaniyaId" class="form-control" asp-items="ViewBag.UchPosobieFormaIzdaniyaList"></select>
+                <span asp-validation-for="UchPosobie.UchPosobieFormaIzdaniyaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Файл учебного пособия</label>
+                @if (Model.UchPosobie.FileModel != null)
+                {                
+                    <input type="hidden" asp-for="UchPosobie.FileModelId" />
+                    <br /><a href="/@Model.UchPosobie.FileModel.Path">@Model.UchPosobie.FileModel.FileName</a>
+                    <p>Для замена выберите новый файл: </p>
+                }
+                <input type="file" asp-for="FormFile" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

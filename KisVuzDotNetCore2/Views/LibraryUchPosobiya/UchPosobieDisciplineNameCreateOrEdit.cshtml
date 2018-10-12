@@ -1,0 +1,24 @@
+﻿@model UchPosobieDisciplineName
+
+<h4>Учебное пособие - Дисциплина</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UchPosobieDisciplineNameCreateOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UchPosobieDisciplineNameId" />
+            <div class="form-group">
+                <label class="control-label">@Model.UchPosobie.BiblOpisanie</label>                
+            </div>
+            <div class="form-group">
+                <label asp-for="DisciplineNameId" class="control-label"></label>
+                <select asp-for="DisciplineNameId" class="form-control" asp-items="ViewBag.Disciplines"></select>                
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="UchPosobieId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

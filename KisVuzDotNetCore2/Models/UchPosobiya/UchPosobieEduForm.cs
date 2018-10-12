@@ -33,6 +33,6 @@ namespace KisVuzDotNetCore2.Models.UchPosobiya
         /// Учебное пособие
         /// </summary>
         [Display(Name = "Учебное пособие")]
-        public UchPosobie UchPosobieName { get; set; }
+        public UchPosobie UchPosobie { get; set; }
     }
 }

@@ -1,0 +1,24 @@
+﻿@model UchPosobieAuthor
+
+<h4>Добавление / редактирование автора учебного пособия </h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UchPosobieAuthorCreateOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UchPosobieAuthorId" />
+            <div class="form-group">
+                <label asp-for="AuthorId" class="control-label"></label>
+                <select asp-for="AuthorId" class="form-control" asp-items="ViewBag.Authors">
+                    <option selected="selected" value="0">Выберите автора / Нет автора в списке</option>
+                </select>
+                <span asp-validation-for="AuthorId" class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <input type="hidden" asp-for="UchPosobieId" />
+                <input type="submit" value="Выбрать" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

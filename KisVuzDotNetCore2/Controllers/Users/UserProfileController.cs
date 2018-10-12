@@ -71,6 +71,35 @@ namespace KisVuzDotNetCore2.Controllers
                 .Where(w=>w.AppUserId==user.Id)
                 .ToListAsync();
 
+            user.Author = await context.Author
+                .Include(a=>a.UchPosobieAuthors)
+                    .ThenInclude(ua=>ua.UchPosobie)
+                .Include(a => a.UchPosobieAuthors)
+                    .ThenInclude(ua => ua.UchPosobie)
+                        .ThenInclude(u => u.UchPosobieDisciplineNames)
+                    .ThenInclude(ud => ud.DisciplineName)
+                .Include(a => a.UchPosobieAuthors)
+                    .ThenInclude(ua => ua.UchPosobie)
+                        .ThenInclude(u => u.UchPosobieFormaIzdaniya)
+                .Include(a => a.UchPosobieAuthors)
+                    .ThenInclude(ua => ua.UchPosobie)
+                        .ThenInclude(u => u.UchPosobieVid)
+                .Include(a => a.UchPosobieAuthors)
+                    .ThenInclude(ua => ua.UchPosobie)
+                        .ThenInclude(u => u.EduForms)
+                            .ThenInclude(ef => ef.EduForm)
+                .Include(a => a.UchPosobieAuthors)
+                    .ThenInclude(ua => ua.UchPosobie)
+                            .ThenInclude(u => u.EduNapravls)
+                                .ThenInclude(n => n.EduNapravl.EduUgs.EduLevel)
+                .Include(a => a.UchPosobieAuthors)
+                    .ThenInclude(ua => ua.UchPosobie)
+                                .ThenInclude(u => u.FileModel)
+                                    .ThenInclude(fm => fm.FileToFileTypes)
+                                        .ThenInclude(ftft => ftft.FileDataType.FileDataTypeGroup)
+                .Where(a => a.AppUserId == user.Id)
+                .ToListAsync();
+
             var student= await context.Students
                 .Include(s=>s.VedomostStudentMarks)
                     .ThenInclude(v=>v.VedomostStudentMarkName)
@@ -84,6 +113,16 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(s => s.StudentGroup.StructFacultet.StructSubvision)                
                 .SingleOrDefaultAsync(s=>s.AppUserId==user.Id);
             ViewData["student"] = student;
+
+            user.Teachers = await context.Teachers
+                .Include(t=>t.StudentGroupsOfKurator)
+                    .ThenInclude(sg=>sg.EduKurs)
+                .Include(t=>t.TeacherStructKafPostStavka)
+                    .ThenInclude(tsps=>tsps.StructKaf.StructSubvision)
+                .Include(t => t.TeacherStructKafPostStavka)
+                    .ThenInclude(tsps => tsps.Post)
+                .Where(t => t.AppUserId == user.Id)
+                .ToListAsync();
 
             ViewBag.CanEdit = canEdit;
             return View(user);

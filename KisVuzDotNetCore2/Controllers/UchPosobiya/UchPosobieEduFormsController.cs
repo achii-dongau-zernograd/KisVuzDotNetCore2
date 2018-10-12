@@ -24,7 +24,7 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
         // GET: UchPosobieEduForms
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.UchPosobieEduForm.Include(u => u.EduForm).Include(u => u.UchPosobieName);
+            var appIdentityDBContext = _context.UchPosobieEduForm.Include(u => u.EduForm).Include(u => u.UchPosobie);
             return View(await appIdentityDBContext.ToListAsync());
         }
                 
@@ -119,7 +119,7 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
 
             var uchPosobieEduForm = await _context.UchPosobieEduForm
                 .Include(u => u.EduForm)
-                .Include(u => u.UchPosobieName)
+                .Include(u => u.UchPosobie)
                 .SingleOrDefaultAsync(m => m.UchPosobieEduFormId == id);
             if (uchPosobieEduForm == null)
             {

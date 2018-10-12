@@ -1,10 +1,12 @@
 ﻿using KisVuzDotNetCore2.Controllers.Students;
+using KisVuzDotNetCore2.Controllers.UchPosobiya;
 using KisVuzDotNetCore2.Infrastructure;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Students;
+using KisVuzDotNetCore2.Models.UchPosobiya;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -46,6 +48,7 @@ namespace KisVuzDotNetCore2
             services.AddTransient<IEduProgramRepository, EduProgramRepository>();
             services.AddTransient<IEduPlanRepository, EduPlanRepository>();
             services.AddTransient<IMetodKomissiyaRepository, MetodKomissiyaRepository>();
+            services.AddTransient<IUchPosobiyaRepository, UchPosobiyaRepository>();
             services.AddTransient<ISelectListRepository, SelectListRepository>();
         }
 

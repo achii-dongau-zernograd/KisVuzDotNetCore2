@@ -1,0 +1,35 @@
+﻿@model UchPosobieAuthor
+
+<h4>Добавление автора</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddAuthor">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">ФИО автора</label>
+                <input type="text" name="fio" value="@ViewBag.fio" class="form-control" />
+            </div>
+            @if (ViewBag.FindedUsers!=null)
+            {
+                <div class="form-group">
+                    <label class="control-label">Зарегистрированные пользователи</label>
+                    <select name="selectedAppUserId" class="form-control" asp-items="ViewBag.FindedUsers"></select>
+                </div>
+            }
+            <div class="form-group">
+                <input type="hidden" asp-for="UchPosobieId" />
+                <input type="hidden" asp-for="UchPosobieAuthorId" />
+                @if (ViewBag.FindedUsers != null)
+                {
+                    <input type="submit" value="Сохранить" class="btn btn-primary" />
+                }
+                else
+                {
+                    <input type="submit" value="Найти пользователя" class="btn btn-primary" />
+                }                
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

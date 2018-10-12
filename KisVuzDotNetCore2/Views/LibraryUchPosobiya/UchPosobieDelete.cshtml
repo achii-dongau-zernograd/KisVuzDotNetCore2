@@ -1,0 +1,50 @@
+﻿@model KisVuzDotNetCore2.Models.UchPosobiya.UchPosobie
+
+<h3>Вы действительно хотите удалить учебное пособие?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GodIzdaniya)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GodIzdaniya)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UchPosobieName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UchPosobieName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BiblOpisanie)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BiblOpisanie)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModel)
+        </dt>
+        <dd>
+            <a href="/@Model.FileModel.Path">@Model.FileModel.FileName</a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UchPosobieFormaIzdaniya)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UchPosobieFormaIzdaniya.UchPosobieFormaIzdaniyaId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UchPosobieVid)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UchPosobieVid.UchPosobieVidId)
+        </dd>
+    </dl>
+    
+    <form asp-action="UchPosobieDeleteConfirmed">
+        <input type="hidden" asp-for="UchPosobieId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

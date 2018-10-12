@@ -32,7 +32,8 @@
                                             spoilerCounter++;
                                             <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@studentGroup.StudentGroupName</a>
                                             <div class="collapse" id="spoiler-@spoilerCounter">
-                                                <div class="well">                                                    
+                                                <div class="well">
+                                                    <p>Куратор: <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@studentGroup.Kurator.AppUserId">@studentGroup.Kurator.TeacherFio</a></p>
                                                     <ol>
                                                         @foreach (var student in studentGroup.Students.OrderBy(s=>s.StudentFio))
                                                         {

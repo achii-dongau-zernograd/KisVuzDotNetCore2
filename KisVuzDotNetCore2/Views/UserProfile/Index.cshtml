@@ -38,6 +38,7 @@
         <ul class="nav nav-tabs" id="myTab">
             <li class="active"><a href="#common" data-toggle="tab">Общие сведения</a></li>
             <li><a href="#qualification" data-toggle="tab">Образование и квалификация</a></li>
+            <li><a href="#uchPosobiya" data-toggle="tab">Учебные пособия</a></li>
             <li><a href="#education" data-toggle="tab">Образовательная деятельность</a></li>
             <li><a href="#science" data-toggle="tab">Научная деятельность</a></li>
             <li><a href="#works" data-toggle="tab">Работы пользователя</a></li>
@@ -53,7 +54,7 @@
                 }
                 else
                 {
-                    <p><strong>Дата рождения:</strong> @String.Format("{0:dd.MM.yyyy}", Model.Birthdate)</p>                    
+                    <p><strong>Дата рождения:</strong> @String.Format("{0:dd.MM.yyyy}", Model.Birthdate)</p>
                 }
 
                 <p>
@@ -62,6 +63,41 @@
                 </p>
 
                 <p><strong>Email:</strong> @Model.Email</p>
+
+                @if (Model.Teachers != null && Model.Teachers.Count > 0)
+                {
+                    <p>                        
+                        @foreach (var teacher in Model.Teachers)
+                        {
+                            if(teacher.TeacherStructKafPostStavka.Count>0)
+                            {
+                                <strong>Должность: </strong>
+                                <ul>
+                                    @foreach (var teacherStructKafPostStavka in teacher.TeacherStructKafPostStavka)
+                                    {
+                                        <li>@teacherStructKafPostStavka.Post.PostName - @teacherStructKafPostStavka.StructKaf.StructSubvision.StructSubvisionName </li>
+                                    }
+                                </ul>
+                            }                            
+                        }
+                    </p>
+
+                    <p>
+                        @foreach (var teacher in Model.Teachers)
+                        {
+                            if (teacher.StudentGroupsOfKurator.Count > 0)
+                            {
+                                <strong>Куратор: </strong>
+                                <ul>
+                                    @foreach (var studentGroup in teacher.StudentGroupsOfKurator)
+                                    {
+                                        <li>@studentGroup.StudentGroupName </li>
+                                    }
+                                </ul>
+                            }
+                        }
+                    </p>
+                }
             </div>
             <div class="tab-pane" id="qualification">
                 <br />
@@ -70,8 +106,7 @@
                 {
                     <p><strong>Уровень образования:</strong> @Model.EduLevelGroup?.EduLevelGroupName</p>
                 }
-
-
+                
                 @if (Model.Qualifications?.Count() > 0)
                 {
                     <label>Квалификация:</label>
@@ -114,6 +149,27 @@
                 }
 
             </div>
+            <div class="tab-pane" id="uchPosobiya">
+                <br />
+                @if(Model.Author == null)
+                {
+                    <h4>Пользователь не является автором ни одного учебного пособия</h4>
+                }
+                else
+                {
+                    <ol>
+                        @foreach (var author in Model.Author)
+                        {
+                            foreach (var uchPosobieAuthor in author.UchPosobieAuthors.OrderBy(u=>u.UchPosobie.GodIzdaniya))
+                            {
+                                <li>
+                                    <a href="/@uchPosobieAuthor.UchPosobie.FileModel.Path">@uchPosobieAuthor.UchPosobie.UchPosobieName, @uchPosobieAuthor.UchPosobie.GodIzdaniya</a>
+                                </li>
+                            }
+                        }
+                    </ol>
+                }
+            </div>
             <div class="tab-pane" id="education">
                 <br />
                 @if (student != null)
@@ -150,25 +206,25 @@
                                 <th>Семестр</th>
                                 <th>Дисциплина</th>
                                 <th>Отметка</th>
-                            </tr>                            
+                            </tr>
                         </thead>
-                            <tbody>
-                                @foreach (var itemG in student.VedomostStudentMarks.OrderBy(m => m.Vedomost.SemestrName.SemestrNameNumber).GroupBy(m => m.Vedomost.EduYear.EduYearName))
+                        <tbody>
+                            @foreach (var itemG in student.VedomostStudentMarks.OrderBy(m => m.Vedomost.SemestrName.SemestrNameNumber).GroupBy(m => m.Vedomost.EduYear.EduYearName))
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center"><strong>@itemG.Key уч. год</strong></td>
+                                </tr>
+                                @foreach (var item in itemG)
                                 {
                                     <tr>
-                                        <td colspan="3" class="text-center"><strong>@itemG.Key уч. год</strong></td>
+                                        <td>@item.Vedomost.SemestrName.SemestrNameNumber семестр</td>
+                                        <td>@item.Vedomost.DisciplineName</td>
+                                        <td>@item.VedomostStudentMarkName.VedomostStudentMarkNameName</td>
                                     </tr>
-                                    @foreach (var item in itemG)
-                                    {
-                                        <tr>
-                                            <td>@item.Vedomost.SemestrName.SemestrNameNumber семестр</td>
-                                            <td>@item.Vedomost.DisciplineName</td>
-                                            <td>@item.VedomostStudentMarkName.VedomostStudentMarkNameName</td>
-                                        </tr>                                        
-                                    }
-
                                 }
-                            </tbody>
+
+                            }
+                        </tbody>
                     </table>
                 }
                 else
@@ -181,7 +237,7 @@
             </div>
             <div class="tab-pane" id="works">
                 <br />
-                @if ( !(Model.UserWorks?.Any() ?? false) )
+                @if (!(Model.UserWorks?.Any() ?? false))
                 {
                     <h4 class="text-center">Работы пользователя отсутствуют</h4>
                 }
@@ -195,30 +251,30 @@
                                 <th>Описание работы</th>
                                 <th>Файл</th>
                                 <th>Рецензии и оценки</th>
-                            </tr>                            
+                            </tr>
                         </thead>
-                            <tbody>
-                                @foreach (var itemG in Model.UserWorks.OrderByDescending(w=>w.DatePosting).GroupBy(w=>w.UserWorkType.UserWorkTypeName))
+                        <tbody>
+                            @foreach (var itemG in Model.UserWorks.OrderByDescending(w => w.DatePosting).GroupBy(w => w.UserWorkType.UserWorkTypeName))
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center"><strong>@itemG.Key</strong></td>
+                                </tr>
+                                @foreach (var item in itemG)
                                 {
                                     <tr>
-                                        <td colspan="5" class="text-center"><strong>@itemG.Key</strong></td>
+                                        <td>@item.DatePosting</td>
+                                        <td>@item.UserWorkName</td>
+                                        <td>@item.UserWorkDescription</td>
+                                        <td><a href="/@item.FileModel.Path">Открыть</a></td>
+                                        <td>
+                                            <a asp-controller="UserWorkReviews" asp-action="Index" asp-route-UserWorkId="@item.UserWorkId">
+                                                @item.UserWorkReviews.Count рецензии(ий)
+                                            </a>
+                                        </td>
                                     </tr>
-                                    @foreach (var item in itemG)
-                                    {
-                                        <tr>
-                                            <td>@item.DatePosting</td>
-                                            <td>@item.UserWorkName</td>
-                                            <td>@item.UserWorkDescription</td>
-                                            <td><a href="/@item.FileModel.Path">Открыть</a></td>
-                                            <td>
-                                                <a asp-controller="UserWorkReviews" asp-action="Index" asp-route-UserWorkId="@item.UserWorkId">
-                                                    @item.UserWorkReviews.Count рецензии(ий)
-                                                </a>
-                                            </td>
-                                        </tr>                                        
-                                    }
                                 }
-                            </tbody>
+                            }
+                        </tbody>
                     </table>
                 }
             </div>

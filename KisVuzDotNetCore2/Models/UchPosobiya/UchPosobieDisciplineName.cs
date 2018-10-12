@@ -11,13 +11,25 @@ namespace KisVuzDotNetCore2.Models.UchPosobiya
         /// 
         public int UchPosobieDisciplineNameId { get; set; }
 
+        /// <summary>
+        /// УИД учебного пособия
+        /// </summary>
         [Display(Name = "Учебное пособие")]
         public int UchPosobieId { get; set; }
+        /// <summary>
+        /// Учебное пособие
+        /// </summary>
         [Display(Name = "Учебное пособие")]
         public UchPosobie UchPosobie { get; set; }
 
+        /// <summary>
+        /// УИД наименования дисциплины
+        /// </summary>
         [Display(Name = "Наименование дисциплины")]
         public int DisciplineNameId { get; set; }
+        /// <summary>
+        /// Наименование дисциплины
+        /// </summary>
         [Display(Name = "Наименование дисциплины")]
         public DisciplineName DisciplineName { get; set; }
     }

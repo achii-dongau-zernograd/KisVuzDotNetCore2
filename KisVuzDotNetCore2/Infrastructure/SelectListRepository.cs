@@ -23,6 +23,62 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает список пользователей по строке ФИО
+        /// </summary>
+        /// <param name="fio"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAppUsersByFirstName(string fio)
+        {
+            string lastName       = "";
+            string other          = "";
+            string firstNameAbbr  = "";
+            string patronymicAbbr = "";
+            List<AppUser> findedAppUsers;
+
+            string[] lastNameAndOtherList = fio.Split(' ');
+            if(lastNameAndOtherList.Count() > 1)
+            {
+                lastName = lastNameAndOtherList[0];
+                other    = lastNameAndOtherList[1];
+
+                string[] abbreviatures = other.Split('.', StringSplitOptions.RemoveEmptyEntries);
+                int abbreviaturesNum = abbreviatures.Count();
+
+                if(abbreviaturesNum > 0)
+                {
+                    firstNameAbbr  = abbreviatures[0];                    
+                }
+                if (abbreviaturesNum > 1)
+                {
+                    patronymicAbbr = abbreviatures[1];
+                }
+
+                findedAppUsers = _context.Users.Where(u => u.LastName.ToLower().Contains(lastName)).ToList();
+
+                if (!string.IsNullOrWhiteSpace(firstNameAbbr))
+                    findedAppUsers = findedAppUsers.Where(u => u.FirstName.Contains(firstNameAbbr)).ToList();
+                if (!string.IsNullOrWhiteSpace(patronymicAbbr))
+                    findedAppUsers = findedAppUsers.Where(u => u.Patronymic.Contains(patronymicAbbr)).ToList();
+            }
+            else
+            {
+                findedAppUsers = _context.Users.Where(u => u.LastName == fio).ToList();
+            }                       
+
+            return new SelectList(findedAppUsers, "Id", "GetFullName");
+        }
+
+        /// <summary>
+        /// Возвращает список авторов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAuthors(int selectedId = 0)
+        {
+            return new SelectList(_context.Author.Include(a=>a.AppUser), "AuthorId", "AuthorName");
+        }
+
+        /// <summary>
         /// Возвращает список дисциплин,
         /// содержащих заданную строку
         /// </summary>
@@ -37,6 +93,14 @@ namespace KisVuzDotNetCore2.Infrastructure
             if (disciplineNames.Count == 0) return null;
 
             return new SelectList(disciplineNames, "DisciplineNameId", "DisciplineNameName");
+        }
+
+        /// <summary>
+        /// Возвращает список дисциплин
+        /// </summary>        
+        public SelectList GetSelectListDisciplines(int selectedId = 0)
+        {
+            return new SelectList(_context.DisciplineNames, "DisciplineNameId", "DisciplineNameName", selectedId);
         }
 
         /// <summary>
@@ -150,6 +214,27 @@ namespace KisVuzDotNetCore2.Infrastructure
         public SelectList GetSelectListTeacherFio(int selectedId = 0)
         {
             return new SelectList(_context.Teachers.OrderBy(t=>t.TeacherFio), "TeacherId", "TeacherFio", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список форм издания
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListUchPosobieFormaIzdaniya(int selectedId = 0)
+        {
+            return new SelectList(_context.UchPosobieFormaIzdaniya.OrderBy(f => f.UchPosobieFormaIzdaniyaName),
+                "UchPosobieFormaIzdaniyaId", "UchPosobieFormaIzdaniyaName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список видов учебных пособий
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListUchPosobieVid(int selectedId = 0)
+        {
+            return new SelectList(_context.UchPosobieVid.OrderBy(t => t.UchPosobieVidName), "UchPosobieVidId", "UchPosobieVidName", selectedId);
         }
     }
 }

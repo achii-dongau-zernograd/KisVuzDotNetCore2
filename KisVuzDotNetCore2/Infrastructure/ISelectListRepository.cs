@@ -48,6 +48,20 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListTeacherFio(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список форм издания
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListUchPosobieFormaIzdaniya(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список видов учебных пособий
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListUchPosobieVid(int selectedId = 0);
+
+        /// <summary>
         /// Возвращает список форм обучения
         /// </summary>
         /// <param name="selectedId"></param>
@@ -87,5 +101,24 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListPomesheniya(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список помещений
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAuthors(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список пользователей по строке ФИО
+        /// </summary>
+        /// <param name="fio"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAppUsersByFirstName(string fio);
+
+        /// <summary>
+        /// Возвращает список дисциплин
+        /// </summary>
+        SelectList GetSelectListDisciplines(int selectedId = 0);
     }
 }

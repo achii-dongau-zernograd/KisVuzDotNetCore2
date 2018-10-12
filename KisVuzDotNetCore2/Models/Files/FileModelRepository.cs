@@ -51,6 +51,27 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Удаляет объект FileModel и файл на диске
+        /// </summary>
+        /// <param name="fileModel"></param>
+        /// <returns></returns>
+        public async Task RemoveFileModelAsync(FileModel fileModel)
+        {
+            if (fileModel == null) return;
+            _context.Files.Remove(fileModel);
+
+            if (!string.IsNullOrEmpty(fileModel.Path))
+            {
+                string PathToFile = Path.Combine(_appEnvironment.WebRootPath, fileModel.Path);
+
+                if (System.IO.File.Exists(PathToFile))
+                {
+                    System.IO.File.Delete(PathToFile);
+                }
+            }
+        }
+
+        /// <summary>
         /// Загружает файл аннотации на диск
         /// </summary>
         /// <param name="uploadedFile"></param>
@@ -129,5 +150,16 @@ namespace KisVuzDotNetCore2.Models.Files
 
             return fileModel;
         }
+
+        /// <summary>
+        /// Загружает учебное пособие
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadUchPosobieAsync(IFormFile uploadedFile,
+            FileDataTypeEnum fileDataTypeEnum = FileDataTypeEnum.UchebnoePosobie)
+        {            
+            return await UploadFileAsync(uploadedFile, "Учебное пособие", fileDataTypeEnum);
+        }                
     }
 }

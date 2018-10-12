@@ -1,6 +1,7 @@
 ﻿using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Students;
+using KisVuzDotNetCore2.Models.UchPosobiya;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -122,6 +123,11 @@ namespace KisVuzDotNetCore2.Models
         /// Отображение пользователя как преподавателя образовательной организации
         /// </summary>
         public List<Teacher> Teachers { get; set; }
+
+        /// <summary>
+        /// Отображение пользователя как автора учебных пособий
+        /// </summary>
+        public List<Author> Author { get; set; }        
 
         /// <summary>
         /// Занимаемые должности

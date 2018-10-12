@@ -1,0 +1,27 @@
+﻿@model UchPosobieEduForm
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <h4>Учебное пособие - Форма обучения</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UchPosobie)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UchPosobie.BiblOpisanie)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
+    </dl>
+    
+    <form asp-action="UchPosobieEduFormRemoveConfirmed">
+        <input type="hidden" asp-for="UchPosobieEduFormId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>
