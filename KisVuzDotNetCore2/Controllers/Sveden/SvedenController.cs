@@ -267,6 +267,7 @@ namespace KisVuzDotNetCore2.Controllers
         public async Task<IActionResult> Employees()
         {
             var t14rucovodstvo = await _context.SvedenRucovodstvo
+                .Include(r=>r.AppUser)
                 .ToListAsync();
             ViewData["t14rucovodstvo"] = t14rucovodstvo;
 

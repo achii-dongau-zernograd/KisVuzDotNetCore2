@@ -12,20 +12,22 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fio)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Post)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Telephone)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-
-                <th> Действия</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Post)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telephone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppUserId)
+            </th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody>
@@ -42,6 +44,17 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @if (item.AppUserId == null)
+                {
+                    <p>-</p>
+                }
+                else
+                {
+                    <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
+                }
+
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.RucovodstvoId">Редактировать</a> |

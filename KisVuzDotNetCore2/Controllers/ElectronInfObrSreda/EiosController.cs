@@ -23,7 +23,7 @@ namespace KisVuzDotNetCore2.Controllers.Eios
         public async Task<IActionResult> UchPlansRabProgs()
         {
             var eduLevels = await _context.EduLevels
-                    .Include(l => l.EduUgses)
+                     .Include(l => l.EduUgses)
                         .ThenInclude(u => u.EduNapravls)
                             .ThenInclude(n => n.EduProfiles)
                                 .ThenInclude(p => p.EduPlans)

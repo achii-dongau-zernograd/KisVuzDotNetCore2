@@ -20,5 +20,8 @@ namespace KisVuzDotNetCore2.Models.Sveden
         public string Telephone { get; set; }
         [Display(Name = "Электронная почта")]
         public string Email { get; set; }
+        [Display(Name = "Аккаунт пользователя")]
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }
