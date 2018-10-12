@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.EduForm)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UchPosobieName)
+                @Html.DisplayNameFor(model => model.UchPosobie)
             </th>
             <th></th>
         </tr>
@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.EduForm.EduFormName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UchPosobieName.UchPosobieName)
+                @Html.DisplayFor(modelItem => item.UchPosobie.UchPosobieName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.UchPosobieEduFormId">Редактировать</a> |
