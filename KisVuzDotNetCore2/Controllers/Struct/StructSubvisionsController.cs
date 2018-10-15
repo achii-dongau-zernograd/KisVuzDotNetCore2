@@ -9,6 +9,7 @@ using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Struct;
 using Microsoft.AspNetCore.Authorization;
 using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Infrastructure;
 
 namespace KisVuzDotNetCore2.Controllers
 {
@@ -16,10 +17,13 @@ namespace KisVuzDotNetCore2.Controllers
     public class StructSubvisionsController : Controller
     {
         private readonly AppIdentityDBContext _context;
+        private readonly ISelectListRepository _selectListRepository;
 
-        public StructSubvisionsController(AppIdentityDBContext context)
+        public StructSubvisionsController(AppIdentityDBContext context,
+            ISelectListRepository selectListRepository)
         {
             _context = context;
+            _selectListRepository = selectListRepository;
         }
 
 
@@ -114,6 +118,7 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostName", structSubvision.StructSubvisionPostChiefId);
             ViewData["StructSubvisionTypes"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeName", structSubvision.StructSubvisionTypeId);
             ViewData["files"] = new SelectList((await GetFileDataTypePolojenOStructPodrazd()).FileToFileTypes, "FileModelId", "FileModel.Name");
+            ViewBag.Users = _selectListRepository.GetSelectListAppUsers();
             return View(structSubvision);
         }
 

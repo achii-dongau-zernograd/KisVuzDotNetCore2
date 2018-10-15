@@ -44,6 +44,13 @@ namespace KisVuzDotNetCore2.Models.Files
         /// </summary>
         /// <param name="formFile"></param>
         /// <returns></returns>
-        Task<FileModel> UploadUchPosobieAsync(IFormFile formFile, FileDataTypeEnum fileDataTypeEnum);        
+        Task<FileModel> UploadUchPosobieAsync(IFormFile formFile, FileDataTypeEnum fileDataTypeEnum);
+
+        /// <summary>
+        /// Загружает договор с электронной библиотечной системой
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadElectronBiblSystemDogovorAsync(IFormFile uploadedFile);
     }
 }

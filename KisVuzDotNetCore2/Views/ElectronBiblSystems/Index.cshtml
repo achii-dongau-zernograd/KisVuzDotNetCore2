@@ -46,7 +46,10 @@
                 @Html.DisplayFor(modelItem => item.DateEnd)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CopyDogovor.Id)
+                @if (item.CopyDogovor != null)
+                {
+                <a href="/@item.CopyDogovor.Path">Открыть</a>
+                }                
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ElectronBiblSystemId">Редактировать</a> |

@@ -490,6 +490,8 @@
     <Compile Remove="Migrations\20180921123819_t.Designer.cs" />
     <Compile Remove="Migrations\20181009084544_t.cs" />
     <Compile Remove="Migrations\20181009084544_t.Designer.cs" />
+    <Compile Remove="Migrations\20181015092343_structSubvisionPomeshenie.cs" />
+    <Compile Remove="Migrations\20181015092343_structSubvisionPomeshenie.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -548,6 +550,9 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_CPORMPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_ZamDirectoraPoVospRabotePartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_ZamDirectoraPoSocRabotePartial.cshtml">

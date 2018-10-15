@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20181015060230_structSubvisionAccountChief")]
+    partial class structSubvisionAccountChief
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1905,13 +1906,9 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<string>("PomeshenieOvz");
 
-                    b.Property<int?>("StructSubvisionId");
-
                     b.HasKey("PomeshenieId");
 
                     b.HasIndex("KorpusId");
-
-                    b.HasIndex("StructSubvisionId");
 
                     b.ToTable("Pomeshenie");
                 });
@@ -3363,10 +3360,6 @@ namespace KisVuzDotNetCore2.Migrations
                         .WithMany("Pomesheniya")
                         .HasForeignKey("KorpusId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructSubvision", "StructSubvision")
-                        .WithMany("Pomesheniya")
-                        .HasForeignKey("StructSubvisionId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Sveden.PomeshenieTypepomesheniya", b =>

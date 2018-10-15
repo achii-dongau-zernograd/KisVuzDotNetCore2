@@ -75,7 +75,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <returns></returns>
         public SelectList GetSelectListAuthors(int selectedId = 0)
         {
-            return new SelectList(_context.Author.Include(a=>a.AppUser), "AuthorId", "AuthorName");
+            return new SelectList(_context.Author.Include(a=>a.AppUser).OrderBy(a=>a.AuthorName), "AuthorId", "AuthorName");
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// </summary>        
         public SelectList GetSelectListDisciplines(int selectedId = 0)
         {
-            return new SelectList(_context.DisciplineNames, "DisciplineNameId", "DisciplineNameName", selectedId);
+            return new SelectList(_context.DisciplineNames.OrderBy(d=>d.DisciplineNameName), "DisciplineNameId", "DisciplineNameName", selectedId);
         }
 
         /// <summary>
@@ -153,6 +153,16 @@ namespace KisVuzDotNetCore2.Infrastructure
             }
 
             return new SelectList(eduProfiles, "EduProfileId", "GetEduProfileFullName", selectedId);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAppUsers(int selectedId = 0)
+        {
+            return new SelectList(_context.Users, "Id", "GetFullName", selectedId);
         }
 
         /// <summary>
@@ -234,7 +244,19 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <returns></returns>
         public SelectList GetSelectListUchPosobieVid(int selectedId = 0)
         {
-            return new SelectList(_context.UchPosobieVid.OrderBy(t => t.UchPosobieVidName), "UchPosobieVidId", "UchPosobieVidName", selectedId);
+            return new SelectList(_context.UchPosobieVid.OrderBy(t => t.UchPosobieVidName),
+                "UchPosobieVidId", "UchPosobieVidName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список структурных подразделений
+        /// </summary>
+        /// <param name="structSubvisionId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListStructSubvisions(int? structSubvisionId = null)
+        {
+            return new SelectList(_context.StructSubvisions.OrderBy(t => t.StructSubvisionName),
+                "StructSubvisionId", "StructSubvisionName", structSubvisionId);
         }
     }
 }

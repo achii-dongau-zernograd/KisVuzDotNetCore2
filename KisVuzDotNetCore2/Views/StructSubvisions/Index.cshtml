@@ -15,15 +15,15 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.StructSubvisionName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StructSubvisionFioChief)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StructSubvisionSite)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StructSubvisionName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StructSubvisionFioChief)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StructSubvisionSite)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.StructSubvisionAdress)
             </th>
@@ -47,7 +47,14 @@
                     @Html.DisplayFor(modelItem => item.StructSubvisionName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StructSubvisionFioChief)
+                    @if (item.StructSubvisionAccountChiefId == null)
+                    {
+                        @Html.DisplayFor(modelItem => item.StructSubvisionFioChief)
+                    }
+                    else
+                    {
+                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.StructSubvisionAccountChiefId">@item.StructSubvisionFioChief</a>
+                    }
                 </td>
                 <td>
                     <a href="@Html.DisplayFor(modelItem => item.StructSubvisionSite)">@Html.DisplayFor(modelItem => item.StructSubvisionSite)</a>

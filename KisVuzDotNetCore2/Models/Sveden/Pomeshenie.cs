@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Education;
+using KisVuzDotNetCore2.Models.Struct;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -47,5 +48,12 @@ namespace KisVuzDotNetCore2.Models.Sveden
                 return Korpus?.KorpusName + " - " + PomeshenieName;
             }
         }
+
+        /// <summary>
+        /// Структурное подразделение
+        /// </summary>
+        [Display(Name = "Структурное подразделение")]
+        public StructSubvision StructSubvision { get; set; }
+        public int? StructSubvisionId { get; set; }
     }
 }

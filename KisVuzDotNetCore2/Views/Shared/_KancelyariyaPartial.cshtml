@@ -4,9 +4,61 @@
     <!-- Выпадающий список -->
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Канцелярия <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-            <li><a asp-controller="StructSubvisions" asp-action="Index">Структурные подразделения</a></li>
-            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PolojenOStructPodrazd">Документы. Положения о структурных подразделениях</a></li>
+        <ul class="dropdown-menu">            
+            <li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сведения об обр. орг-ции <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Основные сведения <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="StructInstitutes" asp-action="Index">Институты</a></li>
+                            <li><a asp-controller="Telephones" asp-action="Index">Телефоны</a></li>
+                            <li><a asp-controller="Faxes" asp-action="Index">Факсы</a></li>
+                            <li><a asp-controller="UchredLaws" asp-action="Index">Сведения об учредителях</a></li>
+                            <li><a asp-controller="FilInfoes" asp-action="Index">Сведения о филиалах</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Структура и органы управления обр. орг. <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="StructSubvisions" asp-action="Index">Структурные подразделения</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Документы <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="UstavObrazovatelnoyOrganizatsii">Устав образовательной организации</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LicenziyaNaOsushestvlenieObrazovatelnoyDeyatelnosti">Лицензия на осуществление образовательной деятельности</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="SvidetelstvoOGosudarstvennoyAccreditatsii">Свидетельство о государственной аккредитации (с приложениями). Шаг 1</a></li>
+                            <li><a asp-controller="EduAccreds" asp-action="Index">Свидетельство о государственной аккредитации (с приложениями). Шаг 2</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PlanFinansovoHozyaystvennoyDeyatelnosti">План финансово-хозяйственной деятельности образовательной организации</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LocalnieNormativnieActiReglamentiruyushiePravilaPriemaObuchaushihsya">Локальные нормативные акты, регламентирующие правила приема обучающихся</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LocalnieNormativnieActiReglamentiruyushieRejimZanyatiyObuchaushihsya">Локальные нормативные акты, регламентирующие режим занятий обучающихся</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LocalnieNormativnieActiReglamentiruyushieTekushiyKontrolIPromAttestObuchaushihsya">Локальные нормативные акты, регламентирующие формы, периодичность и порядок текущего контроля успеваемости и промежуточной аттестации обучающихся</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LocalnieNormativnieActiReglamentiruyushiePerevodOtchislenieIVosstanovlenieObuchaushihsya">Локальные нормативные акты, регламентирующие порядок и основания перевода, отчисления и восстановления обучающихся</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LocalnieNormativnieActiReglamentiruyushieOtnosheniyaSNesovershennoletnimiObuchayushimisya">Локальные нормативные акты, регламентирующие порядок оформления возникновения, приостановления и прекращения отношений между образовательной организацией, обучающимися и (или) родителями (законными представителями) несовершеннолетних обучающихся</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PravilaVnutrennegoRasporyadkaObuchaushihsya">Правила внутреннего распорядка обучающихся</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PravilaVnutrennegoTrudovogoRasporyadka">Правила внутреннего трудового распорядка</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="KollektivniyDogovor">Коллективный договор</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="OtchetORezultatahSamoobsledovaniya">Отчет о результатах самообследования</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PoryadokOkazaniyaPlatnihObrazovatelnihUslug">Документ о порядке оказания платных образовательных услуг</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug">Образец договора об оказании платных образовательных услуг</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="DocumentObUtverjdeniiStoimostiObucheniya">Документ об утверждении стоимости обучения по каждой образовательной программе</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PredpisaniyaOrganovNadzora">Предписания органов, осуществляющих государственный контроль (надзор) в сфере образования</a></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="OtchetiObIspolneniiPredpisaniyOrganovNadzora">Отчеты об исполнении предписаний органов, осуществляющих государственный контроль (надзор) в сфере образования</a></li>
+                            <li class="divider"></li>
+                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PolojenOStructPodrazd">Положения о структурных подразделениях</a></li>
+                        </ul>
+                    </li>                    
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Руководство. Педагогический состав <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="Rucovodstvo" asp-action="Index">Руководство института</a></li>
+                            <li><a asp-controller="RucovodstvoFils" asp-action="Index">Руководители филиалов</a></li>
+                        </ul>
+                    </li>                    
+                </ul>
+            </li>
         </ul>
     </li>
     }    

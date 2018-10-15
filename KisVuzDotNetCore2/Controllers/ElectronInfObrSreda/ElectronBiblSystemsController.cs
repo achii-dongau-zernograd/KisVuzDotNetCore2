@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Sveden;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using KisVuzDotNetCore2.Models.Files;
 
 namespace KisVuzDotNetCore2.Controllers
 {
@@ -15,10 +17,13 @@ namespace KisVuzDotNetCore2.Controllers
     public class ElectronBiblSystemsController : Controller
     {
         private readonly AppIdentityDBContext _context;
+        private readonly IFileModelRepository _fileModelRepository;
 
-        public ElectronBiblSystemsController(AppIdentityDBContext context)
+        public ElectronBiblSystemsController(AppIdentityDBContext context,
+            IFileModelRepository fileModelRepository)
         {
             _context = context;
+            _fileModelRepository = fileModelRepository;
         }
 
         // GET: ElectronBiblSystems
@@ -79,12 +84,14 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var electronBiblSystem = await _context.ElectronBiblSystem.SingleOrDefaultAsync(m => m.ElectronBiblSystemId == id);
+            var electronBiblSystem = await _context.ElectronBiblSystem
+                .Include(m => m.CopyDogovor)
+                .SingleOrDefaultAsync(m => m.ElectronBiblSystemId == id);
             if (electronBiblSystem == null)
             {
                 return NotFound();
             }
-            ViewData["CopyDogovorId"] = new SelectList(_context.Files, "Id", "Id", electronBiblSystem.CopyDogovorId);
+            
             return View(electronBiblSystem);
         }
 
@@ -93,7 +100,9 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ElectronBiblSystemId,NameEbs,LinkEbs,NumberDogovor,DateStart,DateEnd,CopyDogovorId")] ElectronBiblSystem electronBiblSystem)
+        public async Task<IActionResult> Edit(int id,
+            [Bind("ElectronBiblSystemId,NameEbs,LinkEbs,NumberDogovor,DateStart,DateEnd,CopyDogovorId")] ElectronBiblSystem electronBiblSystem,
+            IFormFile uploadedFile)
         {
             if (id != electronBiblSystem.ElectronBiblSystemId)
             {
@@ -104,6 +113,10 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 try
                 {
+                    if(uploadedFile!=null)
+                    {
+                        var fileModel = await _fileModelRepository.UploadElectronBiblSystemDogovorAsync(uploadedFile);
+                    }
                     _context.Update(electronBiblSystem);
                     await _context.SaveChangesAsync();
                 }
@@ -120,7 +133,7 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CopyDogovorId"] = new SelectList(_context.Files, "Id", "Id", electronBiblSystem.CopyDogovorId);
+            
             return View(electronBiblSystem);
         }
 

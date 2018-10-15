@@ -43,6 +43,7 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
         /// </summary>
         /// <param name="id">Идентификатор направления подготовки</param>
         /// <returns></returns>
+        [AllowAnonymous]
         public async Task<IActionResult> Preview(int? id)
         {
             if(id==null)

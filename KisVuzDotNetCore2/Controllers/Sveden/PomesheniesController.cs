@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using Microsoft.AspNetCore.Authorization;
+using KisVuzDotNetCore2.Infrastructure;
 
 namespace KisVuzDotNetCore2.Models.Sveden
 {
@@ -14,10 +15,13 @@ namespace KisVuzDotNetCore2.Models.Sveden
     public class PomesheniesController : Controller
     {
         private readonly AppIdentityDBContext _context;
+        private readonly ISelectListRepository _selectListRepository;
 
-        public PomesheniesController(AppIdentityDBContext context)
+        public PomesheniesController(AppIdentityDBContext context,
+            ISelectListRepository selectListRepository)
         {
             _context = context;
+            _selectListRepository = selectListRepository;
         }
 
         // GET: Pomeshenies
@@ -25,16 +29,10 @@ namespace KisVuzDotNetCore2.Models.Sveden
         {
             var pomeshenies = await _context.Pomeshenie
                 .Include(p => p.Korpus)
-                .Include(p=>p.PomeshenieTypes)
+                .Include(p => p.PomeshenieTypes)
+                    .ThenInclude(pt => pt.PomeshenieType)
+                .Include(p => p.StructSubvision)
                 .ToListAsync();
-
-            foreach (var pomeshenie in pomeshenies)
-            {
-                foreach (var pomeshenieType in pomeshenie.PomeshenieTypes)
-                {
-                    pomeshenieType.PomeshenieType = await _context.PomeshenieType.SingleOrDefaultAsync(t => t.PomeshenieTypeId == pomeshenieType.PomeshenieTypeId);
-                }
-            }
 
             return View(pomeshenies);
         }
@@ -46,6 +44,7 @@ namespace KisVuzDotNetCore2.Models.Sveden
 
             List<PomeshenieType> pomeshenieTypes = _context.PomeshenieType.ToList();
             ViewData["PomeshenieType"] = pomeshenieTypes;
+            ViewBag.StructSubvisions = _selectListRepository.GetSelectListStructSubvisions();
 
             return View();
         }
@@ -104,6 +103,7 @@ namespace KisVuzDotNetCore2.Models.Sveden
             List<PomeshenieType> pomeshenieTypes = _context.PomeshenieType.ToList();
             ViewData["PomeshenieType"] = pomeshenieTypes;
 
+            ViewBag.StructSubvisions = _selectListRepository.GetSelectListStructSubvisions(pomeshenie.StructSubvisionId);
             return View(pomeshenie);
         }
 

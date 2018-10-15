@@ -11,28 +11,19 @@
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Образовательные программы<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a asp-controller="EduPrograms" asp-action="Index">Перечень образовательных программ</a></li>
-                            <li><a asp-controller="EduProgramEduForms" asp-action="Index">Перечень образовательных программ - Формы обучения</a></li>
-                            <li><a asp-controller="EduProgramEduYears" asp-action="Index">Перечень образовательных программ - Учебные годы</a></li>
+                            <li><a asp-controller="EduPrograms" asp-action="Index">Перечень образовательных программ</a></li>                            
                         </ul>
                     </li>
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Учебные планы<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a asp-controller="EduPlans" asp-action="Index">Перечень учебных планов</a></li>
-                            <li><a asp-controller="BlokDiscipls" asp-action="Index" asp-route-id="">Блоки дисциплин</a></li>
-                            <li><a asp-controller="BlokDisciplChasts" asp-action="Index">Части блоков дисциплин</a></li>
-                            <li><a asp-controller="Disciplines" asp-action="Index">Дисциплины</a></li>
+                            <li><a asp-controller="EduVidDeyats" asp-action="Index">Виды деятельности по учебному плану (справочник)</a></li>
                             <li><a asp-controller="DisciplineNames" asp-action="Index">Дисциплины (справочник)</a></li>
-                            <li><a asp-controller="EduPlanEduVidDeyats" asp-action="Index">Добавление видов деятельности к учебному плану</a></li>
-                            <li><a asp-controller="EduPlanEduYearBeginningTrainings" asp-action="Index">Добавление годов начала подготовки к учебному плану</a></li>
-                            <li><a asp-controller="EduPlanEduYears" asp-action="Index">Добавление учебных годов к учебному плану</a></li>
+                            <li><a asp-controller="BlokDisciplChastNames" asp-action="Index">Наименования частей блоков дисциплин Учебного плана (справочник)</a></li>
                         </ul>
                     </li>
-                    <li><a asp-controller="EduShedules" asp-action="Index" asp-route-id="">Календарные учебные графики</a></li>
-                    <li><a asp-controller="EduAnnotations" asp-action="Index" asp-route-id="">Аннотации к рабочим программам</a></li>
-                    <li><a asp-controller="RabPrograms" asp-action="Index" asp-route-id="">Рабочие программы</a></li>
-                    <li><a asp-controller="FondOcenochnihSredstvs" asp-action="Index" asp-route-id="">Фонды оценочных средств</a></li>
+                    <li><a asp-controller="EduShedules" asp-action="Index" asp-route-id="">Календарные учебные графики</a></li>                    
                     <li class="divider"></li>
                     <li><a asp-controller="EduLevelGroups" asp-action="Index" asp-route-id="">Группы уровней образования</a></li>
                     <li><a asp-controller="EduLevels" asp-action="Index" asp-route-id="">Уровни образования</a></li>
@@ -47,42 +38,15 @@
                     <li><a asp-controller="EduYearBeginningTrainings" asp-action="Index">Годы начала подготовки</a></li>                    
                     <li><a asp-controller="BlokDisciplNames" asp-action="Index">Блок дисциплин Учебного плана</a></li>
                     <li><a asp-controller="FormKontrolNames" asp-action="Index">Формы контроля</a></li>
-                    <li><a asp-controller="EduProgramPodgs" asp-action="Index">Программы подготовки</a></li>
-                    <li><a asp-controller="VidUchebRabotis" asp-action="Index">Виды учебной деятельности</a></li>
-                    <li><a asp-controller="EduVidDeyats" asp-action="Index">Виды деятельности по учебному плану</a></li>
-                    <li><a asp-controller="BlokDisciplChastNames" asp-action="Index">Наименование части блока дисциплин Учебного плана</a></li>
+                    <li><a asp-controller="EduProgramPodgs" asp-action="Index">Программы подготовки</a></li>                                        
                     <li><a asp-controller="EduSroks" asp-action="Index">Сроки обучения</a></li>
-                    <li><a asp-controller="EduQualifications" asp-action="Index">Квалификация</a></li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Выпуск и трудоустройство<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a asp-controller="GraduateYears" asp-action="Index">Годы выпуска (справочник)</a></li>
-                            <li><a asp-controller="EduGraduates" asp-action="Index">Выпуск (результаты защиты ВКР)</a></li>
-                            <li><a asp-controller="GraduateTrudoustroustvo" asp-action="Index">Трудоустройство</a></li>
-                        </ul>
-                    </li>
+                    <li><a asp-controller="EduQualifications" asp-action="Index">Квалификация</a></li>                    
                 </ul>
             </li>
 
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сведения об обр. орг-ции <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Основные сведения <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a asp-controller="StructInstitutes" asp-action="Index">Институты</a></li>
-                            <li><a asp-controller="Telephones" asp-action="Index">Телефоны</a></li>
-                            <li><a asp-controller="Faxes" asp-action="Index">Факсы</a></li>
-                            <li><a asp-controller="UchredLaws" asp-action="Index">Сведения об учредителях</a></li>
-                            <li><a asp-controller="FilInfoes" asp-action="Index">Сведения о филиалах</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Структура и органы управления обр. орг. <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a asp-controller="StructSubvisions" asp-action="Index">Структурные подразделения</a></li>
-                        </ul>
-                    </li>
+                <ul class="dropdown-menu">                    
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Документы <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -127,42 +91,7 @@
                         <ul class="dropdown-menu">
                             <li><a asp-controller="EduNapravls" asp-action="Index" asp-route-id="">Направления подготовки / специальности</a></li>
                         </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Руководство. Педагогический состав <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a asp-controller="Rucovodstvo" asp-action="Index">Руководство института</a></li>
-                            <li><a asp-controller="RucovodstvoFils" asp-action="Index">Руководители филиалов</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">МТО и оснащенность обр. процесса <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a asp-controller="PurposeLibrs" asp-action="Index">Сведения о наличии библиотек, объектов спорта, условиях питания и охраны здоровья обучающихся</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Стипендии и иные виды мат. поддержки <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="StipendiiFederalGrant">Федеральные нормативные акты, регламентирующие наличие и условия предоставления стипендии</a></li>
-                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="StipendiiLocalGrant">Локальные нормативные акты, регламентирующие наличие и условия предоставления стипендии</a></li>
-                            <li><a asp-controller="HostelInfoes" asp-action="Index" title="Наличие общежития, интерната, количество жилых помещений">Наличие общежития, интерната...</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Платные образовательные услуги <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug">Образец договора об оказании платных образовательных услуг</a></li>
-                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="DocumentObUtverjdeniiStoimostiObucheniya">Документ об утверждении стоимости обучения по каждой образовательной программе</a></li>
-                            <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="PoryadokOkazaniyaPlatnihObrazovatelnihUslug">Документ о порядке оказания платных образовательных услуг</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Финансово-хозяйственная деятельность <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a asp-controller="Volumes" asp-action="Index">Финансово-хозяйственная деятельность</a></li>
-                        </ul>
-                    </li>
+                    </li>   
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Вакантные места для приёма (перевода) <b class="caret"></b></a>
                         <ul class="dropdown-menu">

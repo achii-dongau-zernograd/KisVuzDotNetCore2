@@ -82,6 +82,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListEduSrok(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список структурных подразделений
+        /// </summary>
+        /// <param name="structSubvisionId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListStructSubvisions(int? structSubvisionId = null);
+
+        /// <summary>
         /// Возвращает список кафедр
         /// </summary>
         /// <returns></returns>
@@ -108,6 +115,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListAuthors(int selectedId = 0);
+                
 
         /// <summary>
         /// Возвращает список пользователей по строке ФИО
@@ -117,8 +125,14 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListAppUsersByFirstName(string fio);
 
         /// <summary>
+        /// Возвращает список аккаунтов
+        /// </summary>
+        /// <returns></returns>
+        SelectList GetSelectListAppUsers(int selectedId = 0);
+
+        /// <summary>
         /// Возвращает список дисциплин
         /// </summary>
-        SelectList GetSelectListDisciplines(int selectedId = 0);
+        SelectList GetSelectListDisciplines(int selectedId = 0);        
     }
 }

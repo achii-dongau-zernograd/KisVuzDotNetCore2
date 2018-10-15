@@ -151,6 +151,10 @@
         /// <summary>
         ///  Рецензия на работу пользователя
         /// </summary>
-        UserWorkRecenziya = 45        
+        UserWorkRecenziya = 45,
+        /// <summary>
+        /// Договор с электронной библ. системой
+        /// </summary>
+        DogovorElBiblSystem = 46
     }
 }

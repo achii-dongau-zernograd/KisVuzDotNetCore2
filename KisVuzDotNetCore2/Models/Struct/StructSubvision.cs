@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KisVuzDotNetCore2.Models.Sveden;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -36,6 +37,13 @@ namespace KisVuzDotNetCore2.Models.Struct
         public int StructSubvisionPostChiefId { get; set; }
 
         /// <summary>
+        /// Аккаунт руководителя структурного подразделения
+        /// </summary>
+        [Display(Name = "Аккаунт руководителя структурного подразделения")]
+        public AppUser StructSubvisionAccountChief { get; set; }
+        public string StructSubvisionAccountChiefId { get; set; }
+
+        /// <summary>
         /// Адрес местонахождения структурного подразделения
         /// </summary>
         [Display(Name = "Адрес местонахождения структурного подразделения")]
@@ -68,5 +76,11 @@ namespace KisVuzDotNetCore2.Models.Struct
         [Display(Name = "Тип структурного подразделения")]
         public StructSubvisionType StructSubvisionType { get; set; }        
         public int StructSubvisionTypeId { get; set; }
+
+        /// <summary>
+        /// Помещения, закреплённые за структурным подразделением
+        /// </summary>
+        [Display(Name = "Помещения, закреплённые за структурным подразделением")]
+        public List<Pomeshenie> Pomesheniya { get; set; }        
     }
 }

@@ -31,8 +31,15 @@
                         <td itemprop="structOrgUprav">
                             @structSubvision.StructSubvisionName
                         </td>
-                        <td itemprop="fio">
-                            @structSubvision.StructSubvisionFioChief
+                        <td itemprop="fio">                            
+                            @if (structSubvision.StructSubvisionAccountChiefId == null)
+                            {
+                                @Html.DisplayFor(modelItem => structSubvision.StructSubvisionFioChief)
+                            }
+                            else
+                            {
+                                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@structSubvision.StructSubvisionAccountChiefId">@structSubvision.StructSubvisionFioChief</a>
+                            }
                         </td>
                         <td itemprop="post">
                             @structSubvision.StructSubvisionPostChief.PostName

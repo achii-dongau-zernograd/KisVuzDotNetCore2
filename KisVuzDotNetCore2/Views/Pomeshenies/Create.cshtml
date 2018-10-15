@@ -28,6 +28,14 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="StructSubvision" class="control-label"></label>
+                <select asp-for="StructSubvisionId" class="form-control" asp-items="ViewBag.StructSubvisions">
+                    <option value="">Выберите структурное подразделение</option>
+                </select>
+                <span asp-validation-for="StructSubvision" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="PomeshenieTypes" class="control-label"></label>
                 @foreach (var pomeshenieType in pomeshenieTypes)
                 {

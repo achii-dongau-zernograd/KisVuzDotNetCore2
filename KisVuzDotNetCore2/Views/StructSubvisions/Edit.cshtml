@@ -32,6 +32,13 @@
                 <label class="control-label">Наименование должности руководителя структурного подразделения</label>
                 <select asp-for="StructSubvisionPostChiefId" class="form-control" asp-items="ViewBag.StructSubvisionPostChiefId"></select>
                 <span asp-validation-for="StructSubvisionPostChiefId" class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <label class="control-label">Аккаунт руководителя структурного подразделения</label>
+                <select asp-for="StructSubvisionAccountChiefId" class="form-control" asp-items="ViewBag.Users">
+                    <option value="">Выберите аккаун руководителя</option>
+                </select>
+                <span asp-validation-for="StructSubvisionPostChiefId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Адрес местонахождения структурного подразделения</label>

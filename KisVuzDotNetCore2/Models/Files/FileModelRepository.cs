@@ -160,6 +160,16 @@ namespace KisVuzDotNetCore2.Models.Files
             FileDataTypeEnum fileDataTypeEnum = FileDataTypeEnum.UchebnoePosobie)
         {            
             return await UploadFileAsync(uploadedFile, "Учебное пособие", fileDataTypeEnum);
-        }                
+        }
+
+        /// <summary>
+        /// Загружает договор с электронной-библиотечной системой
+        /// </summary>
+        /// <param name="formFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadElectronBiblSystemDogovorAsync(IFormFile uploadedFile)
+        {
+            return await UploadFileAsync(uploadedFile, "Договор с ЭБС", FileDataTypeEnum.DogovorElBiblSystem);
+        }
     }
 }
