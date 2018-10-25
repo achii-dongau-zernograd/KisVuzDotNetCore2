@@ -128,10 +128,6 @@ namespace KisVuzDotNetCore2.Models
         /// Отображение пользователя как автора учебных пособий
         /// </summary>
         public List<Author> Author { get; set; }        
-
-        /// <summary>
-        /// Занимаемые должности
-        /// </summary>
-        //public List<Post> Posts { get; set; }                
+                              
     }
 }

@@ -18,6 +18,14 @@
                 <li><a asp-controller="RefresherCourses" asp-action="Index" asp-route-id="@UserManager.GetUserId(User)" title="Сведения о повышении квалификации пользователя"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Повышение квалификации</a></li>
                 <li><a asp-controller="ProfessionalRetrainings" asp-action="Index" asp-route-id="@UserManager.GetUserId(User)" title="Сведения о профессиональной переподготовке пользователя"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Профессиональная переподготовка</a></li>
                 <li><a asp-controller="UserWorks" asp-action="Index" title="Загрузка работ пользователя (отчеты, курсовые и пр.)"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Работы пользователя</a></li>
+                
+                <!-- Выпадающий список -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span> Научная работа <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a asp-controller="UserProfile" asp-action="Articles">Научные статьи</a></li>                        
+                    </ul>
+                </li>
                 <li role="separator" class="divider"></li>
                 <li><a asp-controller="UserMessages" asp-action="Index" title="Сообщения пользователя"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Сообщения</a></li>
                 <li role="separator" class="divider"></li>

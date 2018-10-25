@@ -16,6 +16,7 @@ using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.UchPosobiya;
 using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Students;
+using KisVuzDotNetCore2.Models.Nir;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -34,6 +35,11 @@ namespace KisVuzDotNetCore2.Models
 
         #region Общие (Common)
         public DbSet<AppSetting> AppSettings { get; set; }
+
+        /// <summary>
+        /// Справочник годов
+        /// </summary>
+        public DbSet<Year> Years { get; set; }
         #endregion
 
         #region Образовательная деятельность (Education)
@@ -691,18 +697,46 @@ namespace KisVuzDotNetCore2.Models
 
         #endregion
 
-        #region Тема НИР
+        #region НИР
         /// <summary>
         /// Тема НИР
         /// </summary>
         public DbSet<NirTema> NirTema { get; set; }
+
         /// <summary>
         /// Инициализация базы данных
+        /// </summary>        
+        public DbSet<NirTemaEduProfile> NirTemaEduProfile { get; set; }
+
+        /// <summary>
+        /// Научные статьи
         /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public DbSet<KisVuzDotNetCore2.Models.NirTemaEduProfile> NirTemaEduProfile { get; set; }
+        public DbSet<Article> Articles { get; set; }
+
+        /// <summary>
+        /// Научные статьи - Авторы
+        /// </summary>
+        public DbSet<ArticleAuthor> ArticleAuthors { get; set; }
+
+        /// <summary>
+        /// Научные статьи - Темы НИР
+        /// </summary>
+        public DbSet<ArticleNirTema> ArticleNirTemas { get; set; }
+
+        /// <summary>
+        /// Научные журналы
+        /// </summary>
+        public DbSet<ScienceJournal> ScienceJournals { get; set; }
+
+        /// <summary>
+        /// Научные журналы - Базы цитирования
+        /// </summary>
+        public DbSet<ScienceJournalCitationBase> ScienceJournalCitationBases { get; set; }
+
+        /// <summary>
+        /// Базы цитирования
+        /// </summary>
+        public DbSet<CitationBase> CitationBases { get; set; }
         #endregion
 
         #region Студенты

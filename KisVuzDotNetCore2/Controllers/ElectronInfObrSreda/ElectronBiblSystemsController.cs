@@ -55,7 +55,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: ElectronBiblSystems/Create
         public IActionResult Create()
         {
-            ViewData["CopyDogovorId"] = new SelectList(_context.Files, "Id", "Id");
+            
             return View();
         }
 
@@ -64,15 +64,24 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ElectronBiblSystemId,NameEbs,LinkEbs,NumberDogovor,DateStart,DateEnd,CopyDogovorId")] ElectronBiblSystem electronBiblSystem)
+        public async Task<IActionResult> Create([Bind("ElectronBiblSystemId,NameEbs,LinkEbs,NumberDogovor,DateStart,DateEnd,CopyDogovorId")] ElectronBiblSystem electronBiblSystem,
+            IFormFile uploadedFile)
         {
             if (ModelState.IsValid)
             {
+                if(uploadedFile!=null)
+                {
+                    var fileModel = await _fileModelRepository.UploadElectronBiblSystemDogovorAsync(uploadedFile);
+                    if(fileModel!=null)
+                    {
+                        electronBiblSystem.CopyDogovorId = fileModel.Id;
+                    }
+                }
                 _context.Add(electronBiblSystem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CopyDogovorId"] = new SelectList(_context.Files, "Id", "Id", electronBiblSystem.CopyDogovorId);
+            
             return View(electronBiblSystem);
         }
 
@@ -115,7 +124,10 @@ namespace KisVuzDotNetCore2.Controllers
                 {
                     if(uploadedFile!=null)
                     {
-                        var fileModel = await _fileModelRepository.UploadElectronBiblSystemDogovorAsync(uploadedFile);
+                        int? fileModelIdToRemove = electronBiblSystem.CopyDogovorId;
+                        var fileModel = await _fileModelRepository.UploadElectronBiblSystemDogovorAsync(uploadedFile);                        
+                        electronBiblSystem.CopyDogovorId = fileModel.Id;
+                        await _fileModelRepository.RemoveFileAsync(fileModelIdToRemove);
                     }
                     _context.Update(electronBiblSystem);
                     await _context.SaveChangesAsync();
@@ -162,7 +174,8 @@ namespace KisVuzDotNetCore2.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var electronBiblSystem = await _context.ElectronBiblSystem.SingleOrDefaultAsync(m => m.ElectronBiblSystemId == id);
-            _context.ElectronBiblSystem.Remove(electronBiblSystem);
+            _context.ElectronBiblSystem.Remove(electronBiblSystem);            
+            await _fileModelRepository.RemoveFileAsync(electronBiblSystem.CopyDogovorId);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

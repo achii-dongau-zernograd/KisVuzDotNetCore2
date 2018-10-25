@@ -160,9 +160,9 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// </summary>
         /// <param name="selectedId"></param>
         /// <returns></returns>
-        public SelectList GetSelectListAppUsers(int selectedId = 0)
+        public SelectList GetSelectListAppUsers(string selectedId)
         {
-            return new SelectList(_context.Users, "Id", "GetFullName", selectedId);
+            return new SelectList(_context.Users.OrderBy(u => u.GetFullName), "Id", "GetFullName", selectedId);
         }
 
         /// <summary>

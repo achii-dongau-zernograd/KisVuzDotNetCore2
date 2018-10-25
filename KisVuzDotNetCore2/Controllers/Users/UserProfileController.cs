@@ -1,5 +1,7 @@
 ﻿using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Users;
 using KisVuzDotNetCore2.Models.Common;
+using KisVuzDotNetCore2.Models.Nir;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -22,15 +24,27 @@ namespace KisVuzDotNetCore2.Controllers
         private UserManager<AppUser> userManager;
         private RoleManager<IdentityRole> roleManager;
         private Task<AppUser> CurrentUser => userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+        private IUserProfileRepository _userProfileRepository;
 
-        public UserProfileController(AppIdentityDBContext ctx, UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr)
+        public UserProfileController(AppIdentityDBContext ctx,
+            UserManager<AppUser> userMgr,
+            RoleManager<IdentityRole> roleMgr,
+            IUserProfileRepository userProfileRepository)
         {
             context = ctx;
             userManager = userMgr;
-            roleManager = roleMgr;  
+            roleManager = roleMgr;
+            _userProfileRepository = userProfileRepository;
         }
 
-        
+        #region Научная работа
+        public async Task<IActionResult> Articles()
+        {
+            List<Article> userArticles = _userProfileRepository.GetArticles(User.Identity.Name);
+            return View(userArticles);
+        }
+        #endregion
+
         public async Task<IActionResult> Index(string id)
         {
             AppUser user;

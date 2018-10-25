@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using KisVuzDotNetCore2.Models.Nir;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models.UchPosobiya
@@ -28,5 +29,11 @@ namespace KisVuzDotNetCore2.Models.UchPosobiya
         /// </summary>
         [Display(Name = "Учебные пособия")]
         public List<UchPosobieAuthor> UchPosobieAuthors { get; set; }
+
+        /// <summary>
+        /// Список научных статей, принадлежащих автору
+        /// </summary>
+        [Display(Name = "Научные статьи")]
+        public List<ArticleAuthor> ArticleAuthors { get; set; }
     }
 }

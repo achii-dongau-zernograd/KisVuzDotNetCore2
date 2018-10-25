@@ -14,8 +14,7 @@
 
 <table class="table table-condensed table-bordered">
     <tr>        
-        <th>Наименование роли</th>
-        <th>Пользователи</th>
+        <th>Наименование роли</th>        
         <th>Действия</th>
     </tr>
     @if(Model.Count()==0)
@@ -28,7 +27,7 @@
         {
             <tr>                
                 <td>@role.Name</td>
-                <td identity-role="@role.Id"></td>
+                
                 <td>
                     <form asp-action="Delete" asp-route-id="@role.Id" method="post">
                         <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@role.Id">Редактировать</a>

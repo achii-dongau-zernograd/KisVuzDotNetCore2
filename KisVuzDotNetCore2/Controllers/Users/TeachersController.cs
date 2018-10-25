@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Authorization;
+using KisVuzDotNetCore2.Infrastructure;
 
 namespace KisVuzDotNetCore2.Controllers.Users
 {
@@ -15,10 +16,13 @@ namespace KisVuzDotNetCore2.Controllers.Users
     public class TeachersController : Controller
     {
         private readonly AppIdentityDBContext _context;
+        private readonly ISelectListRepository _selectListRepository;
 
-        public TeachersController(AppIdentityDBContext context)
+        public TeachersController(AppIdentityDBContext context,
+            ISelectListRepository selectListRepository)
         {
             _context = context;
+            _selectListRepository = selectListRepository;
         }
 
         // GET: Teachers
@@ -52,7 +56,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // GET: Teachers/Create
         public IActionResult Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName");
+            ViewData["AppUserId"] = _selectListRepository.GetSelectListAppUsers();
             return View();
         }
 
@@ -69,7 +73,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", teacher.AppUserId);
+            ViewData["AppUserId"] = _selectListRepository.GetSelectListAppUsers(teacher.AppUserId);
             return View(teacher);
         }
 
@@ -86,7 +90,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", teacher.AppUserId);
+            ViewData["AppUserId"] = _selectListRepository.GetSelectListAppUsers(teacher.AppUserId);
             return View(teacher);
         }
 
@@ -122,7 +126,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", teacher.AppUserId);
+            ViewData["AppUserId"] = _selectListRepository.GetSelectListAppUsers(teacher.AppUserId);
             return View(teacher);
         }
 

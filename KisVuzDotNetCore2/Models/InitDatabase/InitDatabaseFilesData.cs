@@ -83,6 +83,12 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupName = "Работы пользователей"
                     };
 
+                    FileDataTypeGroup fileDataTypeGroup10 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = 10,
+                        FileDataTypeGroupName = "Копии договоров"
+                    };
+
                     await context.FileDataTypeGroups.AddRangeAsync(
                         fileDataTypeGroup1,
                         fileDataTypeGroup2,
@@ -92,7 +98,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataTypeGroup6,
                         fileDataTypeGroup7,
                         fileDataTypeGroup8,
-                        fileDataTypeGroup9
+                        fileDataTypeGroup9,
+                        fileDataTypeGroup10
                     );
                     await context.SaveChangesAsync();
                 }
@@ -459,6 +466,14 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = 9
                     };
 
+                    FileDataType fileDataType46 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.DogovorElBiblSystem,
+                        FileDataTypeName = "Договор с электронной библиотечной системой",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 10
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -504,7 +519,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType42,
                         fileDataType43,
                         fileDataType44,
-                        fileDataType45
+                        fileDataType45,
+                        fileDataType46
                         );
                     await context.SaveChangesAsync();
                 }

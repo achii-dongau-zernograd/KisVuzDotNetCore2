@@ -265,7 +265,7 @@
                                         <td>@item.DatePosting</td>
                                         <td>@item.UserWorkName</td>
                                         <td>@item.UserWorkDescription</td>
-                                        <td><a href="/@item.FileModel.Path">Открыть</a></td>
+                                        <td><a href="/@item.FileModel?.Path">Открыть</a></td>
                                         <td>
                                             <a asp-controller="UserWorkReviews" asp-action="Index" asp-route-UserWorkId="@item.UserWorkId">
                                                 @item.UserWorkReviews.Count рецензии(ий)

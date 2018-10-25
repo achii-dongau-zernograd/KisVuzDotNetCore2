@@ -162,6 +162,21 @@ namespace KisVuzDotNetCore2.Controllers
         }
         #endregion
 
+        #region Редактирование ролей пользователя
+        /// <summary>
+        /// Редактирование ролей пользователя
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> EditUserRoles(string id)
+        {
+            var appUser = await userManager.FindByIdAsync(id);
+            var roles = context.Roles;
+            var userRoles = await userManager.GetRolesAsync(appUser);
+            return View();
+        }
+        #endregion
+
         #region Вспомогательные методы
         private void AddErrorsFromResult(IdentityResult result)
         {

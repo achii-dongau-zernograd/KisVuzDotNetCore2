@@ -7,6 +7,7 @@ using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Students;
 using KisVuzDotNetCore2.Models.UchPosobiya;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -50,6 +51,7 @@ namespace KisVuzDotNetCore2
             services.AddTransient<IMetodKomissiyaRepository, MetodKomissiyaRepository>();
             services.AddTransient<IUchPosobiyaRepository, UchPosobiyaRepository>();
             services.AddTransient<ISelectListRepository, SelectListRepository>();
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

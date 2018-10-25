@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Education;
 using Microsoft.AspNetCore.Authorization;
+using KisVuzDotNetCore2.Infrastructure;
 
 namespace KisVuzDotNetCore2.Controllers
 {
@@ -15,10 +16,13 @@ namespace KisVuzDotNetCore2.Controllers
     public class EduProfilesController : Controller
     {
         private readonly AppIdentityDBContext _context;
+        private readonly ISelectListRepository _selectListRepository;
 
-        public EduProfilesController(AppIdentityDBContext context)
+        public EduProfilesController(AppIdentityDBContext context,
+            ISelectListRepository selectListRepository)
         {
             _context = context;
+            _selectListRepository = selectListRepository;
         }
 
         // GET: EduProfiles
@@ -55,7 +59,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: EduProfiles/Create
         public IActionResult Create(int? id)
         {
-            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlName",id);
+            ViewData["EduNapravlId"] = _selectListRepository.GetSelectListEduNapravlFullNames();
             return View();
         }
 
@@ -72,7 +76,7 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlId", eduProfile.EduNapravlId);
+            ViewData["EduNapravlId"] = _selectListRepository.GetSelectListEduNapravlFullNames(eduProfile.EduNapravlId);
             return View(eduProfile);
         }
 
@@ -89,7 +93,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["EduNapravls"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlName", eduProfile.EduNapravlId);
+            ViewData["EduNapravls"] = _selectListRepository.GetSelectListEduNapravlFullNames(eduProfile.EduNapravlId);
             return View(eduProfile);
         }
 
@@ -125,7 +129,7 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls, "EduNapravlId", "EduNapravlName", eduProfile.EduNapravlId);
+            ViewData["EduNapravlId"] = _selectListRepository.GetSelectListEduNapravlFullNames(eduProfile.EduNapravlId);
             return View(eduProfile);
         }
 

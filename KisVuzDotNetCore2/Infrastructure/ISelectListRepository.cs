@@ -128,7 +128,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// Возвращает список аккаунтов
         /// </summary>
         /// <returns></returns>
-        SelectList GetSelectListAppUsers(int selectedId = 0);
+        SelectList GetSelectListAppUsers(string selectedId = null);
 
         /// <summary>
         /// Возвращает список дисциплин
