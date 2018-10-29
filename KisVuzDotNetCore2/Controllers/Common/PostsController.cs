@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers
 {
-    [Authorize(Roles = "Администраторы")]
+    [Authorize(Roles = "Администраторы, Отдел кадров")]
     public class PostsController : Controller
     {
         private readonly AppIdentityDBContext _context;
@@ -24,7 +24,9 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: Posts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Posts.ToListAsync());
+            return View(await _context.Posts
+                .OrderBy(p=>p.PostName)
+                .ToListAsync());
         }
 
         // GET: Posts/Details/5
