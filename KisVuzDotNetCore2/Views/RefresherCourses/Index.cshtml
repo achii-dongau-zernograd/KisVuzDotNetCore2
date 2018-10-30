@@ -97,7 +97,9 @@ else
                 }
                 
                 <td>                    
-                    @if (ViewBag.Id != null && item.RowStatus?.RowStatusId != (int)RowStatusEnum.Confirmed)
+                    @if (ViewBag.Id != null && item.RowStatus?.RowStatusId != (int)RowStatusEnum.Confirmed
+                        || User.IsInRole("Администраторы")
+                        || User.IsInRole("Отдел кадров"))
                     {
                         <a asp-action="Edit" asp-route-id="@item.RefresherCourseId">Редактировать</a> <text> | </text>
                         <a asp-action="Details" asp-route-id="@item.RefresherCourseId">Подробнее</a> <text> | </text>
