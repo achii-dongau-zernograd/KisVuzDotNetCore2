@@ -1,0 +1,30 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.NirSpecial
+
+@{
+    ViewData["Title"] = "Удаление сведений о специальности научных работников";
+}
+
+<h3>Удалить сведения о специальности научных работников?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NirSpecialCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NirSpecialCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NirSpecialName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NirSpecialName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="NirSpecialId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

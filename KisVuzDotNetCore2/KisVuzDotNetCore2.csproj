@@ -539,6 +539,9 @@
     <Content Update="Views\MetodKomissiyaMemberArm\EduPlanPreview.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Shared\_NichPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_DocumentationPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

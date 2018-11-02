@@ -737,6 +737,17 @@ namespace KisVuzDotNetCore2.Models
         /// Базы цитирования
         /// </summary>
         public DbSet<CitationBase> CitationBases { get; set; }
+
+        /// <summary>
+        /// Статья - Специальность научных работников, согласно номенклатуре
+        /// </summary>
+        public DbSet<ArticleNirSpecial> ArticleNirSpecials { get; set; }
+
+        /// <summary>
+        /// Специальности научных работников, согласно номенклатуре
+        /// </summary>
+        public DbSet<NirSpecial> NirSpecials { get; set; }
+
         #endregion
 
         #region Студенты

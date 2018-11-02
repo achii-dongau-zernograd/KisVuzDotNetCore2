@@ -52,5 +52,12 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task<FileModel> UploadElectronBiblSystemDogovorAsync(IFormFile uploadedFile);
+
+        /// <summary>
+        /// Загружает файл научной статьи
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadArticleAsync(IFormFile uploadedFile);
     }
 }

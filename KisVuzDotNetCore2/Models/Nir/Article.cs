@@ -16,6 +16,7 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// <summary>
         /// Наименование статьи
         /// </summary>
+        [Display(Name = "Наименование статьи")]
         public string ArticleName { get; set; }
 
         /// <summary>
@@ -57,12 +58,17 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// </summary>
         public List<ArticleNirTema> ArticleNirTemas { get; set; }
 
+        /// <summary>
+        /// Список специальностей научных работников, которым соответствует статья
+        /// </summary>
+        public List<ArticleNirSpecial> ArticleNirSpecials { get; set; } = new List<ArticleNirSpecial>();
 
         /// <summary>
         /// .pdf файл статьи
         /// </summary>
         [Display(Name = ".pdf файл статьи")]
         public FileModel FileModel { get; set; }
+        [Display(Name = ".pdf файл статьи")]
         public int FileModelId { get; set; }
     }
 }

@@ -1,0 +1,18 @@
+﻿<ul class="nav navbar-nav navbar-left">
+    @if (User.IsInRole("НИЧ"))
+    {
+    <!-- Выпадающий список -->
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">НИЧ <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a asp-controller="NirTemas" asp-action="Index">Темы НИР</a></li>
+            <li><a asp-controller="ScienceJournals" asp-action="Index">Научные журналы</a></li>
+            <li><a asp-controller="Articles" asp-action="Index">Научные статьи</a></li>
+            <li><a asp-controller="CitationBases" asp-action="Index">Базы цитирования</a></li>
+            <li><a asp-controller="NirSpecials" asp-action="Index">Научные специальности</a></li>
+            <li><a asp-controller="ArticleNirSpecials" asp-action="Index">Статьи - Научные специальности</a></li>
+            <li><a asp-controller="ArticleAuthors" asp-action="Index">Статьи - Авторы</a></li>
+        </ul>
+    </li>
+    }    
+</ul>

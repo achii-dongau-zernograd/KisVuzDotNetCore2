@@ -171,5 +171,15 @@ namespace KisVuzDotNetCore2.Models.Files
         {
             return await UploadFileAsync(uploadedFile, "Договор с ЭБС", FileDataTypeEnum.DogovorElBiblSystem);
         }
+
+        /// <summary>
+        /// Загружает файл научной статьи
+        /// </summary>
+        /// <param name="uploadFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadArticleAsync(IFormFile uploadedFile)
+        {
+            return await UploadFileAsync(uploadedFile, "Научная статья", FileDataTypeEnum.Article);
+        }
     }
 }

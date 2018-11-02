@@ -1,0 +1,33 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.ArticleNirSpecial
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ArticleNirSpecial</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Article)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Article.ArticleId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NirSpecial)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NirSpecial.NirSpecialId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ArticleNirSpecialId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

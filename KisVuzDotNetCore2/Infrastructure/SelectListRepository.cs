@@ -258,5 +258,27 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(_context.StructSubvisions.OrderBy(t => t.StructSubvisionName),
                 "StructSubvisionId", "StructSubvisionName", structSubvisionId);
         }
+
+        /// <summary>
+        /// Возвращает список научных журналов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListScienceJournals(int selectedId = 0)
+        {
+            return new SelectList(_context.ScienceJournals.OrderBy(t => t.ScienceJournalName),
+                "ScienceJournalId", "ScienceJournalName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список специальностей научных работников согласно номенклатуре
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListNirSpecials(int selectedId = 0)
+        {
+            return new SelectList(_context.NirSpecials.OrderBy(t => t.NirSpecialCode),
+                "NirSpecialId", "NirSpecialName", selectedId);
+        }
     }
 }

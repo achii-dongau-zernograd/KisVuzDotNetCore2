@@ -14,6 +14,8 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using KisVuzDotNetCore2.Infrastructure;
+using KisVuzDotNetCore2.Models.Files;
 
 namespace KisVuzDotNetCore2.Controllers
 {
@@ -25,24 +27,58 @@ namespace KisVuzDotNetCore2.Controllers
         private RoleManager<IdentityRole> roleManager;
         private Task<AppUser> CurrentUser => userManager.FindByNameAsync(HttpContext.User.Identity.Name);
         private IUserProfileRepository _userProfileRepository;
+        private ISelectListRepository _selectListRepository;
+        private IFileModelRepository _fileModelRepository;
 
         public UserProfileController(AppIdentityDBContext ctx,
             UserManager<AppUser> userMgr,
             RoleManager<IdentityRole> roleMgr,
-            IUserProfileRepository userProfileRepository)
+            IUserProfileRepository userProfileRepository,
+            ISelectListRepository selectListRepository,
+            IFileModelRepository fileModelRepository)
         {
             context = ctx;
             userManager = userMgr;
             roleManager = roleMgr;
             _userProfileRepository = userProfileRepository;
+            _selectListRepository = selectListRepository;
+            _fileModelRepository = fileModelRepository;
         }
 
         #region Научная работа
-        public async Task<IActionResult> Articles()
+        public IActionResult Articles()
         {
             List<Article> userArticles = _userProfileRepository.GetArticles(User.Identity.Name);
             return View(userArticles);
         }
+
+        public IActionResult CreateOrEditArticle(int? id)
+        {
+            Article article = _userProfileRepository.GetArticle(id, User.Identity.Name);
+            if (article == null) return NotFound();
+
+            ViewBag.ScienceJournals = _selectListRepository.GetSelectListScienceJournals();
+            ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
+            return View(article);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateOrEditArticle(Article article, int AddingNirSpecialId, bool addArticleNirSpecials, IFormFile uploadFile)
+        {
+            if(uploadFile!=null)
+            {
+                FileModel f = await _fileModelRepository.UploadArticleAsync(uploadFile);
+            }
+
+            Article articleEntry = _userProfileRepository.GetArticle(article.ArticleId, User.Identity.Name);
+            if (article == null) return NotFound();
+            
+            ViewBag.ScienceJournals = _selectListRepository.GetSelectListScienceJournals();
+            ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
+            ViewBag.UploadedFile = uploadFile;
+            return View(article);
+        }              
+
         #endregion
 
         public async Task<IActionResult> Index(string id)

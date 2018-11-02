@@ -1,0 +1,27 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.CitationBase
+
+@{
+    ViewData["Title"] = "Редактирование сведений о базе цитирования";
+}
+
+<h2>Редактирование сведений о базе цитирования</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CitationBaseId" />
+            <div class="form-group">
+                <label asp-for="CitationBaseName" class="control-label"></label>
+                <input asp-for="CitationBaseName" class="form-control" />
+                <span asp-validation-for="CitationBaseName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+

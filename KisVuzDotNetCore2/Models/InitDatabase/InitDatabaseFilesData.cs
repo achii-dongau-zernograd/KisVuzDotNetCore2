@@ -89,6 +89,12 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupName = "Копии договоров"
                     };
 
+                    FileDataTypeGroup fileDataTypeGroup11 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = 11,
+                        FileDataTypeGroupName = "Научные труды"
+                    };
+
                     await context.FileDataTypeGroups.AddRangeAsync(
                         fileDataTypeGroup1,
                         fileDataTypeGroup2,
@@ -99,7 +105,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataTypeGroup7,
                         fileDataTypeGroup8,
                         fileDataTypeGroup9,
-                        fileDataTypeGroup10
+                        fileDataTypeGroup10,
+                        fileDataTypeGroup11
                     );
                     await context.SaveChangesAsync();
                 }
@@ -474,6 +481,54 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = 10
                     };
 
+                    FileDataType fileDataType47 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.Article,
+                        FileDataTypeName = "Научная статья",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 11
+                    };
+
+                    FileDataType fileDataType48 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.PatentNaIzobretenie,
+                        FileDataTypeName = "Патент на изобретение",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 11
+                    };
+
+                    FileDataType fileDataType49 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.PatentNaPoleznuyuModel,
+                        FileDataTypeName = "Патент на полезную модель",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 11
+                    };
+
+                    FileDataType fileDataType50 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.SvidetelstvoNaProgrammu,
+                        FileDataTypeName = "Свидетельство на программу",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 11
+                    };
+
+                    FileDataType fileDataType51 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.SvidetelstvoNaBazuDannih,
+                        FileDataTypeName = "Свидетельство на базу данных",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 11
+                    };
+
+                    FileDataType fileDataType52 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.Monografiya,
+                        FileDataTypeName = "Монография",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 11
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -520,7 +575,13 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType43,
                         fileDataType44,
                         fileDataType45,
-                        fileDataType46
+                        fileDataType46,
+                        fileDataType47,
+                        fileDataType48,
+                        fileDataType49,
+                        fileDataType50,
+                        fileDataType51,
+                        fileDataType52
                         );
                     await context.SaveChangesAsync();
                 }

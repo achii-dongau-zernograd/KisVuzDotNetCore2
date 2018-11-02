@@ -1,0 +1,54 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Nir.Article>
+
+<p>
+    <a asp-action="CreateOrEditArticle" class="btn btn-primary">Добавить статью</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScienceJournal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VipuskNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pages)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileModel)
+            </th>
+
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArticleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScienceJournal.ScienceJournalName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VipuskNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pages)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileModel.Id)
+            </td>
+
+            <td>
+                <a asp-action="CreateOrEditArticle" asp-route-id="@item.ArticleId">Редактировать</a> |
+                <a asp-action="DeleteArticle" asp-route-id="@item.ArticleId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -55,6 +55,19 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListUchPosobieFormaIzdaniya(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список специальностей научных работников согласно номенклатуре
+        /// </summary>
+        /// <returns></returns>
+        SelectList GetSelectListNirSpecials(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список научных журналов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListScienceJournals(int selectedId = 0);
+
+        /// <summary>
         /// Возвращает список видов учебных пособий
         /// </summary>
         /// <param name="selectedId"></param>

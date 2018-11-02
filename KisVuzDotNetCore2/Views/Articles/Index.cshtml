@@ -1,0 +1,58 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Nir.Article>
+
+@{
+    ViewData["Title"] = "Научные статьи";
+}
+
+<h2>Научные статьи</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить научную статью</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ArticleName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VipuskNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pages)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScienceJournal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArticleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VipuskNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pages)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileModel.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScienceJournal.ScienceJournalId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ArticleId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.ArticleId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

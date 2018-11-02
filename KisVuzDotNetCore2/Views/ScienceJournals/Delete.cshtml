@@ -1,0 +1,44 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.ScienceJournal
+
+@{
+    ViewData["Title"] = "Удаление сведений о научном журнале";
+}
+
+<h2>Удаление сведений о научном журнале</h2>
+
+<div>
+    <h4>ScienceJournal</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ScienceJournalName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScienceJournalName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsVak)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsVak)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsZarubejn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsZarubejn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ELibraryLink)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ELibraryLink)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ScienceJournalId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index"class="btn btn-primary">Отмена</a>
+    </form>
+</div>

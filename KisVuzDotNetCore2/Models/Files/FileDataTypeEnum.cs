@@ -155,6 +155,30 @@
         /// <summary>
         /// Договор с электронной библ. системой
         /// </summary>
-        DogovorElBiblSystem = 46
+        DogovorElBiblSystem = 46,
+        /// <summary>
+        /// Научная статья
+        /// </summary>
+        Article = 47,
+        /// <summary>
+        /// Патент на изобретение
+        /// </summary>
+        PatentNaIzobretenie = 48,
+        /// <summary>
+        /// Патент на полезную модель
+        /// </summary>
+        PatentNaPoleznuyuModel = 49,
+        /// <summary>
+        /// Свидетельство о регистрации программы для ЭВМ
+        /// </summary>
+        SvidetelstvoNaProgrammu = 50,
+        /// <summary>
+        /// Свидетельство о регистрации базы данных
+        /// </summary>
+        SvidetelstvoNaBazuDannih = 51,
+        /// <summary>
+        /// Монография
+        /// </summary>
+        Monografiya = 52
     }
 }

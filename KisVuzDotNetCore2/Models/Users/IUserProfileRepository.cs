@@ -17,5 +17,13 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="userName"></param>
         /// <returns></returns>
         List<Article> GetArticles(string userName);
+
+        /// <summary>
+        /// Возвращает статью пользователя userName
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Article GetArticle(int? id, string userName);
     }
 }

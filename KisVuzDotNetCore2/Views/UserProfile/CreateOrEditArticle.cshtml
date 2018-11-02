@@ -1,0 +1,68 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.Article
+
+<h4>Добавление (редактирование) научной статьи</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateOrEditArticle" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ArticleId" />
+            <div class="form-group">
+                <label asp-for="ArticleName" class="control-label"></label>
+                <input asp-for="ArticleName" class="form-control" />
+                <span asp-validation-for="ArticleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScienceJournalId" class="control-label"></label>
+                <select asp-for="ScienceJournalId" class="form-control" asp-items="ViewBag.ScienceJournals"></select>
+                <span asp-validation-for="ScienceJournalId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VipuskNumber" class="control-label"></label>
+                <input asp-for="VipuskNumber" class="form-control" />
+                <span asp-validation-for="VipuskNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pages" class="control-label"></label>
+                <input asp-for="Pages" class="form-control" />
+                <span asp-validation-for="Pages" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Научные специальности</label>
+                <select name="AddingNirSpecialId" class="form-control" asp-items="ViewBag.NirSpecials">
+                    @if (Model.ArticleNirSpecials.Count > 0)
+                    {
+                        <option value="0">Выберите научную специальность</option>
+                    }
+                </select>
+                <input type="submit" asp-route-addArticleNirSpecials="true" value="Добавить" class="btn btn-primary btn-block form-control" />
+                <ul class="list-group">
+                    @foreach (var articleNirSpecial in Model.ArticleNirSpecials)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    @articleNirSpecial.NirSpecial.NirSpecialName
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="btn btn-danger btn-block">Удалить</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                <input type="file" name="uploadFile" value="@ViewBag.UploadedFile" class="form-control" />
+                <span asp-validation-for="FileModelId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+

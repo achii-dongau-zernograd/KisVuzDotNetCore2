@@ -1,0 +1,48 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.Article
+
+@{
+    ViewData["Title"] = "Редактирование сведений о научной статье";
+}
+
+<h2>Редактирование сведений о научной статье</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ArticleId" />
+            <div class="form-group">
+                <label asp-for="ArticleName" class="control-label"></label>
+                <input asp-for="ArticleName" class="form-control" />
+                <span asp-validation-for="ArticleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScienceJournalId" class="control-label"></label>
+                <select asp-for="ScienceJournalId" class="form-control" asp-items="ViewBag.ScienceJournalId"></select>
+                <span asp-validation-for="ScienceJournalId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VipuskNumber" class="control-label"></label>
+                <input asp-for="VipuskNumber" class="form-control" />
+                <span asp-validation-for="VipuskNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pages" class="control-label"></label>
+                <input asp-for="Pages" class="form-control" />
+                <span asp-validation-for="Pages" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                <select asp-for="FileModelId" class="form-control" asp-items="ViewBag.FileModelId"></select>
+                <span asp-validation-for="FileModelId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+

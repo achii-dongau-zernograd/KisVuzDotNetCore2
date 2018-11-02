@@ -1,0 +1,37 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.ArticleAuthor
+
+@{
+    ViewData["Title"] = "Удаление соответствия \"Статья - Автор\"";
+}
+
+<h2>Удаление соответствия "Статья - Автор"</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AuthorPart)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AuthorPart)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Article)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Article.ArticleId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Author.AuthorId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ArticleAuthorId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>
