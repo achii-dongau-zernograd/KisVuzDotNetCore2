@@ -13,6 +13,9 @@
                 @Html.DisplayNameFor(model => model.ScienceJournal)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Year.YearName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.VipuskNumber)
             </th>
             <th>
@@ -35,13 +38,16 @@
                 @Html.DisplayFor(modelItem => item.ScienceJournal.ScienceJournalName)
             </td>
             <td>
+                @Html.DisplayFor(model => item.Year.YearName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.VipuskNumber)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Pages)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FileModel.Id)
+                <a href="/@item.FileModel.Path">Открыть @item.FileModel.Id</a>
             </td>
 
             <td>

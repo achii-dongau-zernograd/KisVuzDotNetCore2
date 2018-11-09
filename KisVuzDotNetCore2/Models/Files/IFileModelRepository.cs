@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using KisVuzDotNetCore2.Models.Nir;
 using Microsoft.AspNetCore.Http;
 
 namespace KisVuzDotNetCore2.Models.Files
@@ -56,8 +57,9 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <summary>
         /// Загружает файл научной статьи
         /// </summary>
-        /// <param name="uploadedFile"></param>
+        /// <param name="article">Научная статья</param>
+        /// <param name="uploadedFile">Загружаемый файл</param>
         /// <returns></returns>
-        Task<FileModel> UploadArticleAsync(IFormFile uploadedFile);
+        Task<FileModel> UploadArticleAsync(Article article, IFormFile uploadedFile);
     }
 }

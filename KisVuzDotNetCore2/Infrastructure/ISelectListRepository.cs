@@ -68,6 +68,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListScienceJournals(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список годов
+        /// </summary>
+        /// <param name="yearId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListYears(int? selectedId = 0);
+
+        /// <summary>
         /// Возвращает список видов учебных пособий
         /// </summary>
         /// <param name="selectedId"></param>

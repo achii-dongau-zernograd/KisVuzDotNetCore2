@@ -280,5 +280,16 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(_context.NirSpecials.OrderBy(t => t.NirSpecialCode),
                 "NirSpecialId", "NirSpecialName", selectedId);
         }
+
+        /// <summary>
+        /// Возвращает список годов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListYears(int? selectedId = 0)
+        {
+            return new SelectList(_context.Years.OrderBy(y => y.YearName),
+                "YearId", "YearName", selectedId);
+        }
     }
 }

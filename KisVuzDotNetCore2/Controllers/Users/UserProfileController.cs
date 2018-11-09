@@ -57,26 +57,81 @@ namespace KisVuzDotNetCore2.Controllers
             Article article = _userProfileRepository.GetArticle(id, User.Identity.Name);
             if (article == null) return NotFound();
 
-            ViewBag.ScienceJournals = _selectListRepository.GetSelectListScienceJournals();
+            ViewBag.ScienceJournals = _selectListRepository.GetSelectListScienceJournals(article.ScienceJournalId);
+            ViewBag.Years = _selectListRepository.GetSelectListYears(article.YearId);
             ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
+            
             return View(article);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrEditArticle(Article article, int AddingNirSpecialId, bool addArticleNirSpecials, IFormFile uploadFile)
+        public async Task<IActionResult> CreateOrEditArticle(Article article, int NirSpecialIdAdd, int NirSpecialIdRemove, CreateOrEditNirDataModeEnum mode, IFormFile uploadFile)
         {
             if(uploadFile!=null)
             {
-                FileModel f = await _fileModelRepository.UploadArticleAsync(uploadFile);
-            }
+                FileModel f = await _fileModelRepository.UploadArticleAsync(article, uploadFile);                
+            }                        
 
             Article articleEntry = _userProfileRepository.GetArticle(article.ArticleId, User.Identity.Name);
-            if (article == null) return NotFound();
-            
-            ViewBag.ScienceJournals = _selectListRepository.GetSelectListScienceJournals();
+            if (articleEntry == null)
+            {
+                _userProfileRepository.CreateArticle(article, User.Identity.Name);
+                articleEntry = article;
+            }
+            else
+            {
+                article.ArticleNirSpecials = articleEntry.ArticleNirSpecials;
+                article.ArticleAuthors = articleEntry.ArticleAuthors;
+                article.ArticleNirTemas = articleEntry.ArticleNirTemas;
+                _userProfileRepository.UpdateArticle(articleEntry, article);
+            }
+
+
+            switch (mode)
+            {
+                case CreateOrEditNirDataModeEnum.Saving:
+                    _userProfileRepository.UpdateArticle(articleEntry, article);
+                    return RedirectToAction("Articles");                    
+                case CreateOrEditNirDataModeEnum.AddingAuthor:
+                    break;
+                case CreateOrEditNirDataModeEnum.EditingAuthor:
+                    break;
+                case CreateOrEditNirDataModeEnum.RemovingAuthor:
+                    break;
+                case CreateOrEditNirDataModeEnum.AddingNirSpecial:
+                    if(NirSpecialIdAdd!=0)
+                    {
+                        var isExists = article.ArticleNirSpecials.FirstOrDefault(s => s.NirSpecialId == NirSpecialIdAdd) != null;
+                        if(!isExists)
+                        {
+                            article.ArticleNirSpecials.Add(new ArticleNirSpecial { NirSpecialId = NirSpecialIdAdd });
+                            _userProfileRepository.UpdateArticle(articleEntry, article);
+                        }                       
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.EditingNirSpecial:
+                    break;
+                case CreateOrEditNirDataModeEnum.RemovingNirSpecial:
+                    if (NirSpecialIdRemove != 0)
+                    {
+                        var articleToRemove = article.ArticleNirSpecials.FirstOrDefault(s=>s.NirSpecialId == NirSpecialIdRemove);
+                        if(articleToRemove!=null)
+                        {
+                            article.ArticleNirSpecials.Remove(articleToRemove);
+                            _userProfileRepository.UpdateArticle(articleEntry, article);
+                        }                        
+                    }
+                    break;
+                default:
+                    break;
+            }
+                        
+
+            ViewBag.ScienceJournals = _selectListRepository.GetSelectListScienceJournals(article.ScienceJournalId);
+            ViewBag.Years = _selectListRepository.GetSelectListYears(article.YearId);
             ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
             ViewBag.UploadedFile = uploadFile;
-            return View(article);
+            return View(articleEntry);
         }              
 
         #endregion

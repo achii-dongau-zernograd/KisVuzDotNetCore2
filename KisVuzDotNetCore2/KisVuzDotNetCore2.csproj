@@ -494,6 +494,10 @@
     <Compile Remove="Migrations\20181015092343_structSubvisionPomeshenie.Designer.cs" />
     <Compile Remove="Migrations\20181022135650_articles.cs" />
     <Compile Remove="Migrations\20181022135650_articles.Designer.cs" />
+    <Compile Remove="Migrations\20181109123732_year.cs" />
+    <Compile Remove="Migrations\20181109123732_year.Designer.cs" />
+    <Compile Remove="Migrations\20181109124144_year.cs" />
+    <Compile Remove="Migrations\20181109124144_year.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

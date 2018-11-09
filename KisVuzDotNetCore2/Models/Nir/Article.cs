@@ -40,6 +40,11 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// </summary>
         [Display(Name = "Год публикации статьи")]
         public Year Year { get; set; }
+        /// <summary>
+        /// Год публикации статьи
+        /// </summary>
+        [Display(Name = "Год публикации статьи")]
+        public int? YearId { get; set; }
 
         /// <summary>
         /// Номер выпуска
@@ -69,6 +74,6 @@ namespace KisVuzDotNetCore2.Models.Nir
         [Display(Name = ".pdf файл статьи")]
         public FileModel FileModel { get; set; }
         [Display(Name = ".pdf файл статьи")]
-        public int FileModelId { get; set; }
+        public int FileModelId { get; set; }        
     }
 }

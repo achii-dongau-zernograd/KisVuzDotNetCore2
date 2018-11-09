@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using KisVuzDotNetCore2.Models.Nir;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -35,17 +36,7 @@ namespace KisVuzDotNetCore2.Models.Files
                 var fileModel = await _context.Files.FirstOrDefaultAsync(f => f.Id == fileModelId);
                 if (fileModel != null)
                 {
-                    _context.Files.Remove(fileModel);
-
-                    if (!string.IsNullOrEmpty(fileModel.Path))
-                    {
-                        string PathToFile = Path.Combine(_appEnvironment.WebRootPath, fileModel.Path);
-
-                        if (System.IO.File.Exists(PathToFile))
-                        {
-                            System.IO.File.Delete(PathToFile);
-                        }
-                    }
+                    await RemoveFileModelAsync(fileModel);
                 }
             }            
         }
@@ -173,13 +164,33 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
-        /// Загружает файл научной статьи
+        /// Загружает файл научной статьи (с заменой ранее загруженного)
         /// </summary>
-        /// <param name="uploadFile"></param>
+        /// <param name="article">Научная статья</param>
+        /// <param name="uploadFile">Загружаемый файл</param>
         /// <returns></returns>
-        public async Task<FileModel> UploadArticleAsync(IFormFile uploadedFile)
+        public async Task<FileModel> UploadArticleAsync(Article article,IFormFile uploadedFile)
         {
-            return await UploadFileAsync(uploadedFile, "Научная статья", FileDataTypeEnum.Article);
+            if (article == null || uploadedFile == null) return null;
+
+            FileModel newFileModel = await UploadFileAsync(uploadedFile, "Научная статья", FileDataTypeEnum.Article);
+
+            if (newFileModel != null)
+            {
+                // Проверка наличия ранее загруженного файла
+                if(article.FileModelId > 0)
+                {
+                    await RemoveFileAsync(article.FileModelId);
+                }
+                article.FileModelId = newFileModel.Id;
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                return null;
+            }
+
+            return article.FileModel;
         }
     }
 }

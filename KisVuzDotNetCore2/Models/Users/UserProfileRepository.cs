@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models.Nir;
+using KisVuzDotNetCore2.Models.UchPosobiya;
 using Microsoft.EntityFrameworkCore;
 
 namespace KisVuzDotNetCore2.Models.Users
@@ -18,7 +19,7 @@ namespace KisVuzDotNetCore2.Models.Users
         {
             _context = context;
         }
-
+        
         public AppUser GetAppUser(string userName)
         {
             var appUser = _context.Users
@@ -43,6 +44,14 @@ namespace KisVuzDotNetCore2.Models.Users
                         .ThenInclude(aa => aa.Article)
                             .ThenInclude(aas => aas.ArticleNirSpecials)
                                 .ThenInclude(ns => ns.NirSpecial)
+                .Include(u => u.Author)
+                    .ThenInclude(a => a.ArticleAuthors)
+                        .ThenInclude(aa => aa.Article)
+                            .ThenInclude(a=>a.FileModel)
+                .Include(u => u.Author)
+                    .ThenInclude(a => a.ArticleAuthors)
+                        .ThenInclude(aa => aa.Article)
+                            .ThenInclude(a => a.Year)
                 .SingleOrDefault(u => u.UserName == userName);
 
             return appUser;
@@ -84,6 +93,78 @@ namespace KisVuzDotNetCore2.Models.Users
                             articles.Add(aa.Article)));
 
             return articles;
+        }
+
+        /// <summary>
+        /// Добавляет статью пользователя userName
+        /// </summary>
+        /// <param name="article"></param>
+        /// <param name="userName"></param>
+        public void CreateArticle(Article article, string userName)
+        {
+            if (article.ArticleId != 0) return;
+
+            AppUser appUser = GetAppUser(userName);
+            Author author = appUser.Author.FirstOrDefault();
+            if(author == null)
+            {
+                author = new Author
+                {
+                    AppUserId = appUser.Id,
+                    AuthorName = appUser.GetFullName
+                };
+                _context.Author.Add(author);
+                //_context.SaveChanges();
+            }
+            if (author.AuthorId == 0) return;
+
+            _context.Articles.Add(article);
+
+            ArticleAuthor articleAuthor = new ArticleAuthor
+            {
+                ArticleId = article.ArticleId,
+                AuthorId = author.AuthorId,
+                AuthorPart = 1
+            };
+            _context.ArticleAuthors.Add(articleAuthor);
+            _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Обновляет статью пользователя userName
+        /// </summary>
+        /// <param name="articleEntry"></param>
+        /// <param name="article"></param>        
+        public void UpdateArticle(Article articleEntry, Article article)
+        {
+            articleEntry.ArticleName = article.ArticleName;
+            articleEntry.FileModelId = article.FileModelId;
+            articleEntry.Pages = article.Pages;
+            articleEntry.ScienceJournalId = article.ScienceJournalId;
+            articleEntry.VipuskNumber = article.VipuskNumber;
+            articleEntry.YearId = article.YearId;
+            ////////
+            /// + списки направлений, авторов и пр.
+            if(article.ArticleNirSpecials!=null && article.ArticleNirSpecials.Count > 0)
+            {
+                foreach (var articleNirSpecial in article.ArticleNirSpecials)
+                {
+                    bool isExists = false;
+                    foreach (var articleNirSpecialEntry in articleEntry.ArticleNirSpecials)
+                    {
+                        if(articleNirSpecialEntry.NirSpecialId == articleNirSpecial.NirSpecialId)
+                        {
+                            isExists = true;
+                        }
+                    }
+                    if(!isExists)
+                    {
+                        articleEntry.ArticleNirSpecials.Add(articleNirSpecial);
+                    }
+                }
+            }
+
+            _context.SaveChanges();
         }
     }
 }
