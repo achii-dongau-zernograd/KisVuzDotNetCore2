@@ -1,0 +1,30 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.ScienceJournalCitationBase
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ScienceJournalCitationBase</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CitationBase)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CitationBase.CitationBaseId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScienceJournal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScienceJournal.ScienceJournalId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ScienceJournalCitationBaseId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

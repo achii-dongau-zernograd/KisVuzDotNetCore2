@@ -57,6 +57,7 @@ namespace KisVuzDotNetCore2.Controllers
             Article article = _userProfileRepository.GetArticle(id, User.Identity.Name);
             if (article == null) return NotFound();
 
+            ViewBag.Authors = _selectListRepository.GetSelectListAuthors();
             ViewBag.ScienceJournals = _selectListRepository.GetSelectListScienceJournals(article.ScienceJournalId);
             ViewBag.Years = _selectListRepository.GetSelectListYears(article.YearId);
             ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
@@ -65,21 +66,35 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrEditArticle(Article article, int NirSpecialIdAdd, int NirSpecialIdRemove, CreateOrEditNirDataModeEnum mode, IFormFile uploadFile)
+        public async Task<IActionResult> CreateOrEditArticle(Article article,
+            string AuthorFilter,
+            int AuthorIdAdd, int AuthorIdRemove, decimal AuthorPart,
+            int NirSpecialIdAdd, int NirSpecialIdRemove,
+            CreateOrEditNirDataModeEnum mode, IFormFile uploadFile)
         {
-            if(uploadFile!=null)
-            {
-                FileModel f = await _fileModelRepository.UploadArticleAsync(article, uploadFile);                
-            }                        
+            //if(uploadFile!=null && article.ArticleId==0)
+            //{
+            //    FileModel f = await _fileModelRepository.UploadArticleAsync(article, uploadFile);                
+            //}                        
 
-            Article articleEntry = _userProfileRepository.GetArticle(article.ArticleId, User.Identity.Name);
+            Article articleEntry = _userProfileRepository.GetArticle(article.ArticleId, User.Identity.Name);                       
+
             if (articleEntry == null)
             {
+                if (uploadFile != null)
+                {
+                    FileModel f = await _fileModelRepository.UploadArticleAsync(article, uploadFile);
+                }
                 _userProfileRepository.CreateArticle(article, User.Identity.Name);
                 articleEntry = article;
             }
             else
             {
+                if (uploadFile != null)
+                {
+                    FileModel f = await _fileModelRepository.UploadArticleAsync(articleEntry, uploadFile);
+                    article.FileModelId = articleEntry.FileModelId;
+                }
                 article.ArticleNirSpecials = articleEntry.ArticleNirSpecials;
                 article.ArticleAuthors = articleEntry.ArticleAuthors;
                 article.ArticleNirTemas = articleEntry.ArticleNirTemas;
@@ -93,10 +108,32 @@ namespace KisVuzDotNetCore2.Controllers
                     _userProfileRepository.UpdateArticle(articleEntry, article);
                     return RedirectToAction("Articles");                    
                 case CreateOrEditNirDataModeEnum.AddingAuthor:
+                    if(AuthorIdAdd!=0)
+                    {
+                        var isExists = article.ArticleAuthors.FirstOrDefault(a => a.AuthorId == AuthorIdAdd) != null;
+                        if (!isExists)
+                        {
+                            article.ArticleAuthors.Add(new ArticleAuthor {                                
+                                AuthorId = AuthorIdAdd,
+                                AuthorPart = AuthorPart});
+                            _userProfileRepository.UpdateArticle(articleEntry, article);
+                        }
+                    }
                     break;
                 case CreateOrEditNirDataModeEnum.EditingAuthor:
                     break;
                 case CreateOrEditNirDataModeEnum.RemovingAuthor:
+                    if (AuthorIdRemove != 0)
+                    {
+                        var articleAuthorsToRemove = article.ArticleAuthors.FirstOrDefault(aa => aa.AuthorId == AuthorIdRemove);
+                        if (articleAuthorsToRemove != null)
+                        {
+                            article.ArticleAuthors.Remove(articleAuthorsToRemove);
+                            _userProfileRepository.UpdateArticle(articleEntry, article);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.ApplyAuthorFilter:
                     break;
                 case CreateOrEditNirDataModeEnum.AddingNirSpecial:
                     if(NirSpecialIdAdd!=0)
@@ -125,12 +162,13 @@ namespace KisVuzDotNetCore2.Controllers
                 default:
                     break;
             }
-                        
 
+            ViewBag.AuthorFilter = AuthorFilter;
+            ViewBag.Authors = _selectListRepository.GetSelectListAuthors(AuthorFilter);
             ViewBag.ScienceJournals = _selectListRepository.GetSelectListScienceJournals(article.ScienceJournalId);
             ViewBag.Years = _selectListRepository.GetSelectListYears(article.YearId);
             ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
-            ViewBag.UploadedFile = uploadFile;
+            
             return View(articleEntry);
         }              
 

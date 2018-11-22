@@ -1,0 +1,33 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.ScienceJournalCitationBase
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ScienceJournalCitationBase</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CitationBase)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CitationBase.CitationBaseId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScienceJournal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScienceJournal.ScienceJournalId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ScienceJournalCitationBaseId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

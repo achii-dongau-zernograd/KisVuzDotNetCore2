@@ -47,6 +47,10 @@ namespace KisVuzDotNetCore2.Models.Users
                 .Include(u => u.Author)
                     .ThenInclude(a => a.ArticleAuthors)
                         .ThenInclude(aa => aa.Article)
+                            .ThenInclude(a => a.ArticleAuthors)
+                .Include(u => u.Author)
+                    .ThenInclude(a => a.ArticleAuthors)
+                        .ThenInclude(aa => aa.Article)
                             .ThenInclude(a=>a.FileModel)
                 .Include(u => u.Author)
                     .ThenInclude(a => a.ArticleAuthors)
@@ -162,6 +166,34 @@ namespace KisVuzDotNetCore2.Models.Users
                         articleEntry.ArticleNirSpecials.Add(articleNirSpecial);
                     }
                 }
+            }
+
+            if (article.ArticleAuthors != null && article.ArticleAuthors.Count > 0)
+            {
+                foreach (var articleAuthor in article.ArticleAuthors)
+                {
+                    bool isExists = false;
+                    foreach (var articleAuthorEntry in articleEntry.ArticleAuthors)
+                    {
+                        if (articleAuthorEntry.ArticleAuthorId == articleAuthor.ArticleAuthorId)
+                        {
+                            isExists = true;
+                        }
+                    }
+                    if (!isExists)
+                    {
+                        articleEntry.ArticleAuthors.Add(articleAuthor);
+                    }
+                }
+
+                decimal firstAuthorPart = 1;
+                for(int i=1;i < articleEntry.ArticleAuthors.Count;i++)
+                {
+                    firstAuthorPart -= articleEntry.ArticleAuthors[i].AuthorPart;
+                }
+
+                if (firstAuthorPart < 0) firstAuthorPart = 0;
+                articleEntry.ArticleAuthors[0].AuthorPart = firstAuthorPart;
             }
 
             _context.SaveChanges();

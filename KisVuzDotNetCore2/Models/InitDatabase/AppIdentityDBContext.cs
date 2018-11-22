@@ -748,6 +748,11 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<NirSpecial> NirSpecials { get; set; }
 
+        /// <summary>
+        /// Специальности научных работников, согласно номенклатуре - Профили подготовки
+        /// </summary>
+        public DbSet<NirSpecialEduProfile> NirSpecialEduProfiles { get; set; }
+
         #endregion
 
         #region Студенты

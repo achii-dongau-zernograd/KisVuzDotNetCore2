@@ -79,6 +79,19 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает отфильтрованный список авторов
+        /// </summary>
+        /// <param name="authorFilter"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAuthors(string authorFilter)
+        {
+            return new SelectList(_context.Author
+                .Include(a => a.AppUser)
+                .Where(a => string.IsNullOrWhiteSpace(authorFilter) ? true : a.AuthorName.Contains(authorFilter))
+                .OrderBy(a => a.AuthorName), "AuthorId", "AuthorName");
+        }
+
+        /// <summary>
         /// Возвращает список дисциплин,
         /// содержащих заданную строку
         /// </summary>

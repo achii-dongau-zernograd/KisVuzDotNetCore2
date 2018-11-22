@@ -130,12 +130,18 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListPomesheniya(int selectedId = 0);
 
         /// <summary>
-        /// Возвращает список помещений
+        /// Возвращает список авторов
         /// </summary>
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListAuthors(int selectedId = 0);
-                
+
+        /// <summary>
+        /// Возвращает список авторов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAuthors(string authorFilter);
 
         /// <summary>
         /// Возвращает список пользователей по строке ФИО

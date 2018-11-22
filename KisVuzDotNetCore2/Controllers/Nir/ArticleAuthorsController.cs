@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Nir;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Nir
 {
+    [Authorize(Roles = "Администраторы, НИЧ")]
     public class ArticleAuthorsController : Controller
     {
         private readonly AppIdentityDBContext _context;

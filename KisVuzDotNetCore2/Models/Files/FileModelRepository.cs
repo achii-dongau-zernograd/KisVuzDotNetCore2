@@ -177,13 +177,16 @@ namespace KisVuzDotNetCore2.Models.Files
 
             if (newFileModel != null)
             {
-                // Проверка наличия ранее загруженного файла
-                if(article.FileModelId > 0)
-                {
-                    await RemoveFileAsync(article.FileModelId);
-                }
+                int existingFileModelId = article.FileModelId;
                 article.FileModelId = newFileModel.Id;
+                article.FileModel = newFileModel;
                 await _context.SaveChangesAsync();
+                // Проверка наличия ранее загруженного файла
+                if (existingFileModelId > 0)
+                {
+                    await RemoveFileAsync(existingFileModelId);
+                    await _context.SaveChangesAsync();
+                }                 
             }
             else
             {

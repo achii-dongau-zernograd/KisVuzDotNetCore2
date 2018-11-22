@@ -22,9 +22,13 @@
         /// </summary>
         RemovingAuthor=13,
         /// <summary>
+        /// Установка фильтра фамилий авторов
+        /// </summary>
+        ApplyAuthorFilter=14,
+        /// <summary>
         /// Добавление научной специальности
         /// </summary>
-        AddingNirSpecial=21,
+        AddingNirSpecial =21,
         /// <summary>
         /// Редактирование научной специальности
         /// </summary>

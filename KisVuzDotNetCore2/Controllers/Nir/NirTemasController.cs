@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Nir
 {
-    [Authorize(Roles = "Администраторы")]
+    [Authorize(Roles = "Администраторы, НИЧ")]
     public class NirTemasController : Controller
     {
         private readonly AppIdentityDBContext _context;

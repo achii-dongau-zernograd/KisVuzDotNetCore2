@@ -3,7 +3,7 @@
 <h4>Добавление (редактирование) научной статьи</h4>
 <hr />
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <form asp-action="CreateOrEditArticle" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ArticleId" />
@@ -36,6 +36,70 @@
                 <hr>
             </div>
             <div class="form-group">
+                <label class="control-label">Авторы</label>
+
+                <div class="row">
+                    <div class="col-md-9">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <input name="AuthorFilter" value="@ViewBag.AuthorFilter" class="form-control" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.ApplyAuthorFilter" value="Найти" class="btn btn-primary btn-block form-control" />
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="col-md-6">
+                                <select name="AuthorIdAdd" class="form-control" asp-items="ViewBag.Authors">
+                                    <option value="0">Выберите автора и нажмите кнопку "Добавить"</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <input name="AuthorPart" value="0,5" class="form-control" />
+                            </div>
+                        </div>                        
+                        
+                    </div>
+                    <div class="col-md-3">
+                        <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.AddingAuthor" value="Добавить" class="btn btn-primary btn-block form-control" />
+                    </div>
+                </div>
+
+                <br />
+                <label class="control-label">Добавленные авторы</label>
+                <ul class="list-group">
+                    @if (Model.ArticleAuthors == null || Model.ArticleAuthors.Count == 0)
+                    {
+                        <li class="list-group-item text-danger">
+                            Авторы не добавлены
+                        </li>
+                    }
+                    else
+                    {
+                        foreach (var articleAuthor in Model.ArticleAuthors)
+                        {
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        @articleAuthor.Author.AuthorName
+                                    </div>
+                                    <div class="col-md-2">
+                                        @articleAuthor.AuthorPart.ToString("N")
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.RemovingAuthor" asp-route-AuthorIdRemove="@articleAuthor.AuthorId" value="Удалить" class="btn btn-danger btn-block" />
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+            <hr>
+            <div class="form-group">
                 <label class="control-label">Список научных специальностей</label>
                 <div class="row">
                     <div class="col-md-9">
@@ -44,7 +108,7 @@
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <input type="submit" asp-route-mode="21" value="Добавить" class="btn btn-primary btn-block form-control" />
+                        <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.AddingNirSpecial" value="Добавить" class="btn btn-primary btn-block form-control" />
                     </div>
                 </div>
 
@@ -57,22 +121,25 @@
                             Научные специальности не добавлены
                         </li>
                     }
-                    @foreach (var articleNirSpecial in Model.ArticleNirSpecials)
+                    else
                     {
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-md-9">
-                                    @articleNirSpecial.NirSpecial.NirSpecialName
+                        foreach (var articleNirSpecial in Model.ArticleNirSpecials)
+                        {
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        @articleNirSpecial.NirSpecial.NirSpecialName
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.RemovingNirSpecial" asp-route-NirSpecialIdRemove="@articleNirSpecial.NirSpecialId" value="Удалить" class="btn btn-danger btn-block" />
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="submit" asp-route-mode="23" asp-route-NirSpecialIdRemove="@articleNirSpecial.NirSpecialId" value="Удалить" class="btn btn-danger btn-block" />
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        }
                     }
                 </ul>
-                <hr>
             </div>
+            <hr>
             <div class="form-group">
                 <label asp-for="FileModelId" class="control-label"></label>
                 @if (Model.FileModel != null)
@@ -87,12 +154,12 @@
                     </label>
                 }
 
-                <input type="file" name="uploadFile" value="@ViewBag.UploadedFile" class="form-control" />
+                <input type="file" name="uploadFile" class="form-control" />
                 <span asp-validation-for="FileModelId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="hidden" asp-for="FileModelId" />
-                <input type="submit" asp-route-mode="0" value="Сохранить" class="btn btn-primary" />
+                <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.Saving" value="Сохранить" class="btn btn-primary" />
                 <a asp-action="Articles" class="btn btn-default">Отмена</a>
             </div>
         </form>

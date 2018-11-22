@@ -1,4 +1,5 @@
-﻿using KisVuzDotNetCore2.Models.Struct;
+﻿using KisVuzDotNetCore2.Models.Nir;
+using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Students;
 using System;
 using System.Collections.Generic;
@@ -55,12 +56,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// которому принадлежит данный профиль
         /// </summary>
         public EduNapravl EduNapravl { get; set; }
-
-        /// <summary>
-        /// Темы НИР
-        /// </summary>
-        public List<NirTemaEduProfile> NirTemaEduProfileList { get; set; }
-
+        
         /// <summary>
         /// Студенческие группы, обучающиеся по данному профилю подготовки
         /// </summary>
@@ -75,5 +71,15 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Список привязок "Методкомиссия - Профиль подготовки"
         /// </summary>
         public List<MetodKomissiyaEduProfile> MetodKomissiyaEduProfiles { get; set; }
+
+        /// <summary>
+        /// Список привязок "Методкомиссия - Профиль подготовки"
+        /// </summary>
+        public List<NirSpecialEduProfile> NirSpecialEduProfiles { get; set; }
+
+        /// <summary>
+        /// Темы НИР
+        /// </summary>
+        public List<NirTemaEduProfile> NirTemaEduProfileList { get; set; }
     }
 }
