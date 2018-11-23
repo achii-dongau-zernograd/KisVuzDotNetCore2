@@ -10,9 +10,13 @@
         /// </summary>
         Saving = 0,
         /// <summary>
+        /// Отмена сохранения и удаление временных данных
+        /// </summary>
+        Canceling = 1,
+        /// <summary>
         /// Добавление нового автора
         /// </summary>
-        AddingAuthor=11,
+        AddingAuthor =11,
         /// <summary>
         /// Редактирование автора
         /// </summary>
@@ -28,7 +32,7 @@
         /// <summary>
         /// Добавление научной специальности
         /// </summary>
-        AddingNirSpecial =21,
+        AddingNirSpecial=21,
         /// <summary>
         /// Редактирование научной специальности
         /// </summary>
@@ -36,6 +40,18 @@
         /// <summary>
         /// Удаление научной специальности
         /// </summary>
-        RemovingNirSpecial=23
+        RemovingNirSpecial=23,
+        /// <summary>
+        /// Добавление темы НИР
+        /// </summary>
+        AddingNirTema = 31,
+        /// <summary>
+        /// Редактирование темы НИР
+        /// </summary>
+        EditingNirTema = 32,
+        /// <summary>
+        /// Удаление темы НИР
+        /// </summary>
+        RemovingNirTema = 33
     }
 }

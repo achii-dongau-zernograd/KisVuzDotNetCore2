@@ -177,7 +177,7 @@ namespace KisVuzDotNetCore2.Models.Files
 
             if (newFileModel != null)
             {
-                int existingFileModelId = article.FileModelId;
+                int? existingFileModelId = article.FileModelId;
                 article.FileModelId = newFileModel.Id;
                 article.FileModel = newFileModel;
                 await _context.SaveChangesAsync();

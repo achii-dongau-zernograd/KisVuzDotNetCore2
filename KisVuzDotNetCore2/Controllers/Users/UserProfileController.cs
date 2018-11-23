@@ -61,7 +61,8 @@ namespace KisVuzDotNetCore2.Controllers
             ViewBag.ScienceJournals = _selectListRepository.GetSelectListScienceJournals(article.ScienceJournalId);
             ViewBag.Years = _selectListRepository.GetSelectListYears(article.YearId);
             ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
-            
+            ViewBag.NirTemas = _selectListRepository.GetSelectListNirTemas();
+
             return View(article);
         }
 
@@ -70,13 +71,9 @@ namespace KisVuzDotNetCore2.Controllers
             string AuthorFilter,
             int AuthorIdAdd, int AuthorIdRemove, decimal AuthorPart,
             int NirSpecialIdAdd, int NirSpecialIdRemove,
+            int NirTemaIdAdd, int NirTemaIdRemove,
             CreateOrEditNirDataModeEnum mode, IFormFile uploadFile)
-        {
-            //if(uploadFile!=null && article.ArticleId==0)
-            //{
-            //    FileModel f = await _fileModelRepository.UploadArticleAsync(article, uploadFile);                
-            //}                        
-
+        {            
             Article articleEntry = _userProfileRepository.GetArticle(article.ArticleId, User.Identity.Name);                       
 
             if (articleEntry == null)
@@ -105,8 +102,15 @@ namespace KisVuzDotNetCore2.Controllers
             switch (mode)
             {
                 case CreateOrEditNirDataModeEnum.Saving:
+                    article.RowStatusId = (int)RowStatusEnum.NotConfirmed;
                     _userProfileRepository.UpdateArticle(articleEntry, article);
-                    return RedirectToAction("Articles");                    
+                    return RedirectToAction("Articles");
+                case CreateOrEditNirDataModeEnum.Canceling:
+                    if(article.RowStatusId==null)
+                    {
+                        _userProfileRepository.RemoveArticle(articleEntry.ArticleId, User.Identity.Name);
+                    }                    
+                    return RedirectToAction("Articles");
                 case CreateOrEditNirDataModeEnum.AddingAuthor:
                     if(AuthorIdAdd!=0)
                     {
@@ -159,6 +163,30 @@ namespace KisVuzDotNetCore2.Controllers
                         }                        
                     }
                     break;
+                case CreateOrEditNirDataModeEnum.AddingNirTema:
+                    if (NirTemaIdAdd != 0)
+                    {
+                        var isExists = article.ArticleNirTemas.FirstOrDefault(s => s.NirTemaId == NirTemaIdAdd) != null;
+                        if (!isExists)
+                        {
+                            article.ArticleNirTemas.Add(new ArticleNirTema { NirTemaId = NirTemaIdAdd });
+                            _userProfileRepository.UpdateArticle(articleEntry, article);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.EditingNirTema:
+                    break;
+                case CreateOrEditNirDataModeEnum.RemovingNirTema:
+                    if (NirTemaIdRemove != 0)
+                    {
+                        var articleToRemove = article.ArticleNirTemas.FirstOrDefault(s => s.NirTemaId == NirTemaIdRemove);
+                        if (articleToRemove != null)
+                        {
+                            article.ArticleNirTemas.Remove(articleToRemove);
+                            _userProfileRepository.UpdateArticle(articleEntry, article);
+                        }
+                    }
+                    break;
                 default:
                     break;
             }
@@ -168,9 +196,28 @@ namespace KisVuzDotNetCore2.Controllers
             ViewBag.ScienceJournals = _selectListRepository.GetSelectListScienceJournals(article.ScienceJournalId);
             ViewBag.Years = _selectListRepository.GetSelectListYears(article.YearId);
             ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
-            
+            ViewBag.NirTemas = _selectListRepository.GetSelectListNirTemas();
+
             return View(articleEntry);
-        }              
+        }
+
+        public IActionResult DeleteArticle(int? id)
+        {
+            if (id == null) return NotFound();
+            var articleEntry = _userProfileRepository.GetArticle(id, User.Identity.Name);
+            if (articleEntry == null) return NotFound();
+            return View(articleEntry);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteArticleConfirmed(Article article)
+        {
+            if (article == null) return NotFound();
+            var articleEntry = _userProfileRepository.RemoveArticle(article.ArticleId, User.Identity.Name);
+                        
+            return RedirectToAction("Articles");
+        }
 
         #endregion
 

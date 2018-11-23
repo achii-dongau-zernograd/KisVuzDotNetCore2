@@ -10,6 +10,9 @@
                 @Html.DisplayNameFor(model => model.ArticleName)
             </th>
             <th>
+                Авторы (авт. доля, о.е.)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ScienceJournal)
             </th>
             <th>
@@ -24,7 +27,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.FileModel)
             </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleNirSpecials)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleNirTemas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RowStatus)
+            </th>
             <th>Действия</th>
         </tr>
     </thead>
@@ -33,6 +44,22 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ArticleName)
+            </td>
+            <td>
+                @foreach (var articleAuthor in item.ArticleAuthors)
+                {
+                    if (articleAuthor.Author?.AppUserId != null)
+                    {
+                        <p>
+                            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@articleAuthor.Author.AppUserId">@articleAuthor.Author.AuthorName (@articleAuthor.AuthorPart.ToString("N"))</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p>@articleAuthor.Author?.AuthorName (@articleAuthor.AuthorPart.ToString("N"))</p>
+                    }
+
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ScienceJournal.ScienceJournalName)
@@ -47,9 +74,52 @@
                 @Html.DisplayFor(modelItem => item.Pages)
             </td>
             <td>
-                <a href="/@item.FileModel.Path">Открыть @item.FileModel.Id</a>
-            </td>
+                @if (item.FileModel != null)
+                {
+                    <a href="/@item.FileModel.Path">Открыть @item.FileModel.Id</a>
+                }
+                else
+                {
+                    <p> - </p>
+                }
 
+            </td>
+            <td>
+                @if (item.ArticleNirSpecials != null && item.ArticleNirSpecials.Count > 0)
+                {
+                    foreach (var articleNirSpecial in item.ArticleNirSpecials)
+                    {
+                        <p>@articleNirSpecial.NirSpecial.NirSpecialCode - @articleNirSpecial.NirSpecial.NirSpecialName</p>
+                    }
+                }
+                else
+                {
+                    <p> - </p>
+                }
+            </td>
+            <td>
+                @if (item.ArticleNirTemas != null && item.ArticleNirTemas.Count > 0)
+                {
+                    foreach (var articleNirTema in item.ArticleNirTemas)
+                    {
+                        <p>@articleNirTema.NirTema.NirTemaName</p>
+                    }
+                }
+                else
+                {
+                    <p> - </p>
+                }
+            </td>
+            <td>
+                @if (item.RowStatus != null)
+                {
+                    <p>@item.RowStatus.RowStatusName</p>
+                }
+                else
+                {
+                    <p>Черновик</p>
+                }
+            </td>
             <td>
                 <a asp-action="CreateOrEditArticle" asp-route-id="@item.ArticleId">Редактировать</a> |
                 <a asp-action="DeleteArticle" asp-route-id="@item.ArticleId">Удалить</a>

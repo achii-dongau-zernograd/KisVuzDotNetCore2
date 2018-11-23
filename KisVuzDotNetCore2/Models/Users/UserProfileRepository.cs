@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.UchPosobiya;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,13 @@ namespace KisVuzDotNetCore2.Models.Users
     public class UserProfileRepository : IUserProfileRepository
     {
         AppIdentityDBContext _context;
+        IFileModelRepository _fileModelRepository;
 
-        public UserProfileRepository(AppIdentityDBContext context)
+        public UserProfileRepository(AppIdentityDBContext context,
+            IFileModelRepository fileModelRepository)
         {
             _context = context;
+            _fileModelRepository = fileModelRepository;
         }
         
         public AppUser GetAppUser(string userName)
@@ -48,6 +52,7 @@ namespace KisVuzDotNetCore2.Models.Users
                     .ThenInclude(a => a.ArticleAuthors)
                         .ThenInclude(aa => aa.Article)
                             .ThenInclude(a => a.ArticleAuthors)
+                                .ThenInclude(aa => aa.Author)
                 .Include(u => u.Author)
                     .ThenInclude(a => a.ArticleAuthors)
                         .ThenInclude(aa => aa.Article)
@@ -56,6 +61,10 @@ namespace KisVuzDotNetCore2.Models.Users
                     .ThenInclude(a => a.ArticleAuthors)
                         .ThenInclude(aa => aa.Article)
                             .ThenInclude(a => a.Year)
+                .Include(u => u.Author)
+                    .ThenInclude(a => a.ArticleAuthors)
+                        .ThenInclude(aa => aa.Article)
+                            .ThenInclude(a => a.RowStatus)
                 .SingleOrDefault(u => u.UserName == userName);
 
             return appUser;
@@ -147,9 +156,10 @@ namespace KisVuzDotNetCore2.Models.Users
             articleEntry.ScienceJournalId = article.ScienceJournalId;
             articleEntry.VipuskNumber = article.VipuskNumber;
             articleEntry.YearId = article.YearId;
+            articleEntry.RowStatusId = article.RowStatusId;
             ////////
             /// + списки направлений, авторов и пр.
-            if(article.ArticleNirSpecials!=null && article.ArticleNirSpecials.Count > 0)
+            if (article.ArticleNirSpecials!=null && article.ArticleNirSpecials.Count > 0)
             {
                 foreach (var articleNirSpecial in article.ArticleNirSpecials)
                 {
@@ -197,6 +207,27 @@ namespace KisVuzDotNetCore2.Models.Users
             }
 
             _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Удаляет статью пользователя userName
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public Article RemoveArticle(int articleId, string userName)
+        {
+            var article = GetArticle(articleId, userName);
+            if (article == null) return null;
+
+            _context.Articles.Remove(article);
+            if(article.FileModel!=null)
+            {
+                _fileModelRepository.RemoveFileModelAsync(article.FileModel);
+            }
+            _context.SaveChanges();
+
+            return article;
         }
     }
 }

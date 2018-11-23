@@ -39,5 +39,13 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="articleEntry"></param>
         /// <param name="article"></param>        
         void UpdateArticle(Article articleEntry, Article article);
+
+        /// <summary>
+        /// Удаляет статью пользователя userName
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Article RemoveArticle(int articleId, string userName);
     }
 }

@@ -1,0 +1,32 @@
+﻿@model Article
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление научной статьи</h2>
+
+<h3>Вы действительно хотите удалить научную статью?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ArticleName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ArticleName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScienceJournal.ScienceJournalName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScienceJournal.ScienceJournalName)
+        </dd>        
+    </dl>
+
+    <form asp-action="DeleteArticleConfirmed">
+        <input type="hidden" asp-for="ArticleId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

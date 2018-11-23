@@ -22,6 +22,7 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// <summary>
         /// Авторы - статьи - авторские доли
         /// </summary>
+        [Display(Name = "Авторы")]
         public List<ArticleAuthor> ArticleAuthors { get; set; }
 
         /// <summary>
@@ -61,11 +62,13 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// <summary>
         /// Список тем НИР, которым соответствует статья
         /// </summary>
+        [Display(Name = "Темы НИР")]
         public List<ArticleNirTema> ArticleNirTemas { get; set; }
 
         /// <summary>
         /// Список специальностей научных работников, которым соответствует статья
         /// </summary>
+        [Display(Name = "Научные специальности")]
         public List<ArticleNirSpecial> ArticleNirSpecials { get; set; } = new List<ArticleNirSpecial>();
 
         /// <summary>
@@ -74,6 +77,17 @@ namespace KisVuzDotNetCore2.Models.Nir
         [Display(Name = ".pdf файл статьи")]
         public FileModel FileModel { get; set; }
         [Display(Name = ".pdf файл статьи")]
-        public int FileModelId { get; set; }        
+        public int? FileModelId { get; set; }
+
+        /// <summary>
+        /// Статус записи
+        /// </summary>
+        [Display(Name = "Статус записи")]
+        public RowStatus RowStatus { get; set; }
+        /// <summary>
+        /// Статус записи
+        /// </summary>
+        [Display(Name = "Статус записи")]
+        public int? RowStatusId { get; set; }
     }
 }
