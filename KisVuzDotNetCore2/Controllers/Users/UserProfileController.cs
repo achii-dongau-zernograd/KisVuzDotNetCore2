@@ -267,7 +267,7 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(a => a.UchPosobieAuthors)
                     .ThenInclude(ua => ua.UchPosobie)
                         .ThenInclude(u => u.UchPosobieDisciplineNames)
-                    .ThenInclude(ud => ud.DisciplineName)
+                            .ThenInclude(ud => ud.DisciplineName)
                 .Include(a => a.UchPosobieAuthors)
                     .ThenInclude(ua => ua.UchPosobie)
                         .ThenInclude(u => u.UchPosobieFormaIzdaniya)
@@ -287,6 +287,12 @@ namespace KisVuzDotNetCore2.Controllers
                                 .ThenInclude(u => u.FileModel)
                                     .ThenInclude(fm => fm.FileToFileTypes)
                                         .ThenInclude(ftft => ftft.FileDataType.FileDataTypeGroup)
+                .Include(a=>a.ArticleAuthors)
+                    .ThenInclude(aa=>aa.Article)
+                        .ThenInclude(aaa=>aaa.FileModel)
+                .Include(a => a.ArticleAuthors)
+                    .ThenInclude(aa => aa.Article.ScienceJournal.ScienceJournalCitationBases)
+                        .ThenInclude(cb => cb.CitationBase)
                 .Where(a => a.AppUserId == user.Id)
                 .ToListAsync();
 
