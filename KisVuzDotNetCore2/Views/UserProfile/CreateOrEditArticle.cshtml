@@ -1,6 +1,7 @@
 ﻿@model KisVuzDotNetCore2.Models.Nir.Article
 
 <h4>Добавление (редактирование) научной статьи</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-8">
@@ -197,7 +198,7 @@
                 <span asp-validation-for="FileModelId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="hidden" asp-for="ArticleId" />
+                <input type="hidden" name="ArticleId" value="@Model.ArticleId" />
                 <input type="hidden" asp-for="FileModelId" />
                 <input type="hidden" asp-for="RowStatusId" />
                 <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.Saving" value="Сохранить" class="btn btn-primary" />
