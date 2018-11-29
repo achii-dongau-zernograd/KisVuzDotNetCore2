@@ -39,7 +39,10 @@
             <li class="active"><a href="#common" data-toggle="tab">Общие сведения</a></li>
             <li><a href="#qualification" data-toggle="tab">Образование и квалификация</a></li>
             <li><a href="#uchPosobiya" data-toggle="tab">Учебные пособия</a></li>
-            <li><a href="#education" data-toggle="tab">Образовательная деятельность</a></li>
+            @if (student != null)
+            {
+                <li><a href="#education" data-toggle="tab">Образовательная деятельность</a></li>
+            }
             <li><a href="#science" data-toggle="tab">Научная деятельность</a></li>
             <li><a href="#works" data-toggle="tab">Работы пользователя</a></li>
         </ul>
@@ -163,7 +166,7 @@
                             foreach (var uchPosobieAuthor in author.UchPosobieAuthors.OrderBy(u=>u.UchPosobie.GodIzdaniya))
                             {
                                 <li>
-                                    <a href="/@uchPosobieAuthor.UchPosobie.FileModel.Path">@uchPosobieAuthor.UchPosobie.UchPosobieName, @uchPosobieAuthor.UchPosobie.GodIzdaniya</a>
+                                    <a href="/@uchPosobieAuthor.UchPosobie.FileModel.Path">@uchPosobieAuthor.UchPosobie.BiblOpisanie</a>
                                 </li>
                             }
                         }
@@ -233,7 +236,52 @@
                 }
             </div>
             <div class="tab-pane" id="science">
-                <br />
+                <br />                
+                <h4>Научные статьи</h4>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>№ пп</th>
+                            <th>Год издания</th>
+                            <th>Наименование статьи</th>
+                            <th>Наименование журнала (сборника)</th>
+                            <th>Зарубежный журнал</th>
+                            <th>Системы цитирования</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var author in Model.Author)
+                        {
+                            int cnt = 0;
+                            foreach (var articleAuthor in author.ArticleAuthors.Where(aa=>aa.Article.RowStatusId==(int)RowStatusEnum.Confirmed).OrderBy(a => a.Article.YearId))
+                            {
+                                cnt++;
+                                <tr>
+                                    <td>@cnt</td>
+                                    <td>@articleAuthor.Article.YearId</td>
+                                    <td>@articleAuthor.Article.ArticleName (@articleAuthor.AuthorPart.ToString("N"))</td>
+                                    <td>@articleAuthor.Article.ScienceJournal.ScienceJournalName</td>
+                                    <td>
+                                        @if (articleAuthor.Article.ScienceJournal.IsZarubejn)
+                                        {
+                                            <text>да</text>
+                                        }
+                                        else
+                                        {
+                                            <text>нет</text>
+                                        }
+                                    </td>
+                                    <td>
+                                        @foreach(var sc in articleAuthor.Article.ScienceJournal.ScienceJournalCitationBases)
+                                        {
+                                            <p>@sc.CitationBase.CitationBaseName</p>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>                
             </div>
             <div class="tab-pane" id="works">
                 <br />

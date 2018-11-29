@@ -121,8 +121,13 @@
                 }
             </td>
             <td>
-                <a asp-action="CreateOrEditArticle" asp-route-id="@item.ArticleId">Редактировать</a> |
-                <a asp-action="DeleteArticle" asp-route-id="@item.ArticleId">Удалить</a>
+                @if (item.RowStatusId != (int)RowStatusEnum.Confirmed)
+                {
+                <div>
+                    <a asp-action="CreateOrEditArticle" asp-route-id="@item.ArticleId">Редактировать</a> |
+                    <a asp-action="DeleteArticle" asp-route-id="@item.ArticleId">Удалить</a>
+                </div>                    
+                }                
             </td>
         </tr>
 }

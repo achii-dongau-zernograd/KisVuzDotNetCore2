@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Nir;
 using Microsoft.AspNetCore.Authorization;
+using KisVuzDotNetCore2.Models.Common;
 
 namespace KisVuzDotNetCore2.Controllers.Nir
 {
@@ -24,8 +25,26 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         // GET: Articles
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.Articles.Include(a => a.FileModel).Include(a => a.ScienceJournal);
+            var appIdentityDBContext = _context.Articles
+                .Include(a => a.FileModel)
+                .Include(a => a.ScienceJournal)
+                .Include(a=>a.RowStatus);
             return View(await appIdentityDBContext.ToListAsync());
+        }
+
+        /// <summary>
+        /// Подтверждение статьи
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ConfirmArticle(int articleId)
+        {
+            var article = _context.Articles.SingleOrDefault(a => a.ArticleId == articleId);
+            article.RowStatusId = (int)RowStatusEnum.Confirmed;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         

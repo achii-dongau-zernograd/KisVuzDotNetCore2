@@ -12,20 +12,23 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ArticleName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.VipuskNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Pages)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VipuskNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pages)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.FileModel)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ScienceJournal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RowStatus)
             </th>
             <th></th>
         </tr>
@@ -49,6 +52,19 @@
                 @Html.DisplayFor(modelItem => item.ScienceJournal.ScienceJournalId)
             </td>
             <td>
+                @if (@item.RowStatusId != (int)RowStatusEnum.Confirmed)
+                {
+                    <form asp-action="ConfirmArticle">
+                        <input type="hidden" name="articleId" value="@item.ArticleId" />
+                        <input type="submit" value="Подтвердить" class="btn btn-block btn-primary" />                        
+                    </form>                    
+                }
+                else
+                {
+                    <text>@item.RowStatus.RowStatusName</text>
+                }
+            </td>
+            <td>                
                 <a asp-action="Edit" asp-route-id="@item.ArticleId">Редактировать</a> |
                 <a asp-action="Delete" asp-route-id="@item.ArticleId">Удалить</a>
             </td>
