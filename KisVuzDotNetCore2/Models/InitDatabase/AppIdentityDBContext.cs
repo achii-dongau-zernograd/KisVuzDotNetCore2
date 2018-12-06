@@ -753,6 +753,36 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<NirSpecialEduProfile> NirSpecialEduProfiles { get; set; }
 
+        /// <summary>
+        /// Патенты и свидетельства 
+        /// </summary>
+        public DbSet<Patent> Patents { get; set; }
+
+        /// <summary>
+        /// Патент - автор
+        /// </summary>
+        public DbSet<PatentAuthor> PatentAuthors { get; set; }
+
+        /// <summary>
+        /// Вид патента (свидетельства)
+        /// </summary>
+        public DbSet<PatentVid> PatentVids { get; set; }
+
+        /// <summary>
+        /// Группа вида объекта интеллектуальной собственности
+        /// </summary>
+        public DbSet<PatentVidGroup> PatentVidGroups { get; set; }
+
+        /// <summary>
+        /// Патент - Тема НИР
+        /// </summary>
+        public DbSet<PatentNirTema> PatentNirTemas { get; set; }
+
+        /// <summary>
+        /// Патент - Специальность научных работников, согласно номенклатуре
+        /// </summary>
+        public DbSet<PatentNirSpecial> PatentNirSpecials { get; set; }
+
         #endregion
 
         #region Студенты
@@ -872,6 +902,9 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseVedomostStudentMarkName.CreateVedomostStudentMarkName(serviceProvider, configuration);
             await InitDatabaseUserWorkType.CreateUserWorkType(serviceProvider, configuration);
             await InitDatabaseUserWorkReviewMarks.CreateUserWorkReviewMarks(serviceProvider, configuration);
+
+            await InitDatabasePatents.CreatePatentVidGroups(serviceProvider, configuration);
+            await InitDatabasePatents.CreatePatentVids(serviceProvider, configuration);
         }                
     
     }

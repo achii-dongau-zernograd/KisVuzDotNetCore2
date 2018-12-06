@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20181130113547_Patent")]
+    partial class Patent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1145,8 +1146,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("PatentId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("FileModelId");
-
                     b.Property<bool>("IsACHII");
 
                     b.Property<bool>("IsZarubejn");
@@ -1159,17 +1158,11 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int?>("PatentVidId");
 
-                    b.Property<int?>("RowStatusId");
-
                     b.Property<int?>("YearId");
 
                     b.HasKey("PatentId");
 
-                    b.HasIndex("FileModelId");
-
                     b.HasIndex("PatentVidId");
-
-                    b.HasIndex("RowStatusId");
 
                     b.HasIndex("YearId");
 
@@ -3358,17 +3351,9 @@ namespace KisVuzDotNetCore2.Migrations
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Nir.Patent", b =>
                 {
-                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
-                        .WithMany()
-                        .HasForeignKey("FileModelId");
-
                     b.HasOne("KisVuzDotNetCore2.Models.Nir.PatentVid", "PatentVid")
                         .WithMany("Patents")
                         .HasForeignKey("PatentVidId");
-
-                    b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
-                        .WithMany()
-                        .HasForeignKey("RowStatusId");
 
                     b.HasOne("KisVuzDotNetCore2.Models.Nir.Year", "Year")
                         .WithMany()
