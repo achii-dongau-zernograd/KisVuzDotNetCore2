@@ -1,8 +1,16 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Nir.Article>
 
+@{
+    ViewData["Title"] = "Научные статьи";
+}
+
+<h2>Научные статьи</h2>
+
 <p>
-    <a asp-action="CreateOrEditArticle" class="btn btn-primary">Добавить статью</a>
+    <a asp-action="CreateOrEditArticle" class="btn btn-primary">Добавить</a>
 </p>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -40,96 +48,97 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArticleName)
-            </td>
-            <td>
-                @foreach (var articleAuthor in item.ArticleAuthors)
-                {
-                    if (articleAuthor.Author?.AppUserId != null)
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArticleName)
+                </td>
+                <td>
+                    @foreach (var articleAuthor in item.ArticleAuthors)
                     {
-                        <p>
-                            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@articleAuthor.Author.AppUserId">@articleAuthor.Author.AuthorName (@articleAuthor.AuthorPart.ToString("N"))</a>
-                        </p>
+                        if (articleAuthor.Author?.AppUserId != null)
+                        {
+                            <p>
+                                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@articleAuthor.Author.AppUserId">@articleAuthor.Author.AuthorName (@articleAuthor.AuthorPart.ToString("N"))</a>
+                            </p>
+                        }
+                        else
+                        {
+                            <p>@articleAuthor.Author?.AuthorName (@articleAuthor.AuthorPart.ToString("N"))</p>
+                        }
+
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ScienceJournal.ScienceJournalName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Year.YearName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VipuskNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pages)
+                </td>
+                <td>
+                    @if (item.FileModel != null)
+                    {
+                        <a href="/@item.FileModel.Path">Открыть @item.FileModel.Id</a>
                     }
                     else
                     {
-                        <p>@articleAuthor.Author?.AuthorName (@articleAuthor.AuthorPart.ToString("N"))</p>
+                        <p> - </p>
                     }
 
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ScienceJournal.ScienceJournalName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Year.YearName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VipuskNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pages)
-            </td>
-            <td>
-                @if (item.FileModel != null)
-                {
-                    <a href="/@item.FileModel.Path">Открыть @item.FileModel.Id</a>
-                }
-                else
-                {
-                    <p> - </p>
-                }
-
-            </td>
-            <td>
-                @if (item.ArticleNirSpecials != null && item.ArticleNirSpecials.Count > 0)
-                {
-                    foreach (var articleNirSpecial in item.ArticleNirSpecials)
+                </td>
+                <td>
+                    @if (item.ArticleNirSpecials != null && item.ArticleNirSpecials.Count > 0)
                     {
-                        <p>@articleNirSpecial.NirSpecial.NirSpecialCode - @articleNirSpecial.NirSpecial.NirSpecialName</p>
+                        foreach (var articleNirSpecial in item.ArticleNirSpecials)
+                        {
+                            <p>@articleNirSpecial.NirSpecial.NirSpecialCode - @articleNirSpecial.NirSpecial.NirSpecialName</p>
+                        }
                     }
-                }
-                else
-                {
-                    <p> - </p>
-                }
-            </td>
-            <td>
-                @if (item.ArticleNirTemas != null && item.ArticleNirTemas.Count > 0)
-                {
-                    foreach (var articleNirTema in item.ArticleNirTemas)
+                    else
                     {
-                        <p>@articleNirTema.NirTema.NirTemaName</p>
+                        <p> - </p>
                     }
-                }
-                else
-                {
-                    <p> - </p>
-                }
-            </td>
-            <td>
-                @if (item.RowStatus != null)
-                {
-                    <p>@item.RowStatus.RowStatusName</p>
-                }
-                else
-                {
-                    <p>Черновик</p>
-                }
-            </td>
-            <td>
-                @if (item.RowStatusId != (int)RowStatusEnum.Confirmed)
-                {
-                <div>
-                    <a asp-action="CreateOrEditArticle" asp-route-id="@item.ArticleId">Редактировать</a> |
-                    <a asp-action="DeleteArticle" asp-route-id="@item.ArticleId">Удалить</a>
-                </div>                    
-                }                
-            </td>
-        </tr>
-}
+                </td>
+                <td>
+                    @if (item.ArticleNirTemas != null && item.ArticleNirTemas.Count > 0)
+                    {
+                        foreach (var articleNirTema in item.ArticleNirTemas)
+                        {
+                            <p>@articleNirTema.NirTema.NirTemaName</p>
+                        }
+                    }
+                    else
+                    {
+                        <p> - </p>
+                    }
+                </td>
+                <td>
+                    @if (item.RowStatus != null)
+                    {
+                        <p>@item.RowStatus.RowStatusName</p>
+                    }
+                    else
+                    {
+                        <p>Черновик</p>
+                    }
+                </td>
+                <td>
+                    @if (item.RowStatusId != (int)RowStatusEnum.Confirmed)
+                    {
+                        <div>
+                            <a asp-action="CreateOrEditArticle" asp-route-id="@item.ArticleId">Редактировать</a> |
+                            <a asp-action="DeleteArticle" asp-route-id="@item.ArticleId">Удалить</a>
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

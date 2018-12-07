@@ -37,6 +37,7 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// <summary>
         /// Список сопоставлений "Научный журнал - База цитирования"
         /// </summary>
+        [Display(Name = "Базы цитирования")]
         public List<ScienceJournalCitationBase> ScienceJournalCitationBases { get; set; }
     }
 }

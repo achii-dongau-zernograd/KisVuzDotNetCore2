@@ -31,6 +31,51 @@
                     </label>
                 </div>
             </div>
+
+            @************************/////////////////////////////////////////////////////////////////**************@
+            <div class="form-group">
+                <label class="control-label">Базы цитирования</label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <select name="CitationBaseIdAdd" class="form-control" asp-items="ViewBag.CitationBases">
+                            <option value="0">Выберите базу цитирования и нажмите кнопку "Добавить"</option>
+                        </select>
+                    </div>
+                    @*<div class="col-md-3">
+                        <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.AddingCitationBase" value="Добавить" class="btn btn-primary btn-block form-control" />
+                    </div>*@
+                </div>
+
+                <br />
+                <label class="control-label">Добавленные базы цитирования</label>
+
+                @*<ul class="list-group">
+                @if (Model.CitationBases == null || Model.CitationBases.Count == 0)
+                {
+                    <li class="list-group-item text-danger">
+                        Научные специальности не добавлены
+                    </li>
+                }
+                else
+                {
+                    foreach (var articleNirSpecial in Model.ArticleNirSpecials)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    @articleNirSpecial.NirSpecial.NirSpecialName
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.RemovingNirSpecial" asp-route-NirSpecialIdRemove="@articleNirSpecial.NirSpecialId" value="Удалить" class="btn btn-danger btn-block" />
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>*@
+            </div>
+            @************************/////////////////////////////////////////////////////////////////**************@
+
             <div class="form-group">
                 <label asp-for="ELibraryLink" class="control-label"></label>
                 <input asp-for="ELibraryLink" class="form-control" />

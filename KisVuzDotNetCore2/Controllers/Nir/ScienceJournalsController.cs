@@ -24,7 +24,11 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         // GET: ScienceJournals
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ScienceJournals.ToListAsync());
+            var scienceJournal = _context.ScienceJournals
+                .Include(m => m.ScienceJournalCitationBases)
+                    .ThenInclude(a=>a.CitationBase);
+
+            return View(scienceJournal);
         }
 
         // GET: ScienceJournals/Create

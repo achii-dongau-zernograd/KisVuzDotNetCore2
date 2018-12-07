@@ -28,31 +28,11 @@ namespace KisVuzDotNetCore2.Controllers.Nir
             return View(await appIdentityDBContext.ToListAsync());
         }
 
-        // GET: ScienceJournalCitationBases/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var scienceJournalCitationBase = await _context.ScienceJournalCitationBases
-                .Include(s => s.CitationBase)
-                .Include(s => s.ScienceJournal)
-                .SingleOrDefaultAsync(m => m.ScienceJournalCitationBaseId == id);
-            if (scienceJournalCitationBase == null)
-            {
-                return NotFound();
-            }
-
-            return View(scienceJournalCitationBase);
-        }
-
         // GET: ScienceJournalCitationBases/Create
         public IActionResult Create()
         {
-            ViewData["CitationBaseId"] = new SelectList(_context.CitationBases, "CitationBaseId", "CitationBaseId");
-            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalId");
+            ViewData["CitationBaseId"] = new SelectList(_context.CitationBases, "CitationBaseId", "CitationBaseName");
+            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalName");
             return View();
         }
 
@@ -69,8 +49,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CitationBaseId"] = new SelectList(_context.CitationBases, "CitationBaseId", "CitationBaseId", scienceJournalCitationBase.CitationBaseId);
-            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalId", scienceJournalCitationBase.ScienceJournalId);
+            ViewData["CitationBaseId"] = new SelectList(_context.CitationBases, "CitationBaseId", "CitationBaseName", scienceJournalCitationBase.CitationBaseId);
+            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalName", scienceJournalCitationBase.ScienceJournalId);
             return View(scienceJournalCitationBase);
         }
 
@@ -87,8 +67,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
             {
                 return NotFound();
             }
-            ViewData["CitationBaseId"] = new SelectList(_context.CitationBases, "CitationBaseId", "CitationBaseId", scienceJournalCitationBase.CitationBaseId);
-            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalId", scienceJournalCitationBase.ScienceJournalId);
+            ViewData["CitationBaseId"] = new SelectList(_context.CitationBases, "CitationBaseId", "CitationBaseName", scienceJournalCitationBase.CitationBaseId);
+            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalName", scienceJournalCitationBase.ScienceJournalId);
             return View(scienceJournalCitationBase);
         }
 
@@ -124,8 +104,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CitationBaseId"] = new SelectList(_context.CitationBases, "CitationBaseId", "CitationBaseId", scienceJournalCitationBase.CitationBaseId);
-            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalId", scienceJournalCitationBase.ScienceJournalId);
+            ViewData["CitationBaseId"] = new SelectList(_context.CitationBases, "CitationBaseId", "CitationBaseName", scienceJournalCitationBase.CitationBaseId);
+            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalName", scienceJournalCitationBase.ScienceJournalId);
             return View(scienceJournalCitationBase);
         }
 

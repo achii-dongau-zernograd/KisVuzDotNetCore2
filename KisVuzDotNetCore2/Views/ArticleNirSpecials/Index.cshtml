@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Nir.ArticleNirSpecial>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Научная статья - Научная специальность";
 }
 
-<h2>Index</h2>
+<h2>Научная статья - Научная специальность</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -25,15 +25,14 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Article.ArticleId)
+                @Html.DisplayFor(modelItem => item.Article.ArticleName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NirSpecial.NirSpecialId)
+                @Html.DisplayFor(modelItem => item.NirSpecial.NirSpecialName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ArticleNirSpecialId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ArticleNirSpecialId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ArticleNirSpecialId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ArticleNirSpecialId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.ArticleNirSpecialId">Удалить</a>
             </td>
         </tr>
 }

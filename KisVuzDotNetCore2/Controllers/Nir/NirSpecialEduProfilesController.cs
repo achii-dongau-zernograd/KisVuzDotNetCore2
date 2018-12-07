@@ -28,31 +28,11 @@ namespace KisVuzDotNetCore2.Controllers.Nir
             return View(await appIdentityDBContext.ToListAsync());
         }
 
-        // GET: NirSpecialEduProfiles/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var nirSpecialEduProfile = await _context.NirSpecialEduProfiles
-                .Include(n => n.EduProfile)
-                .Include(n => n.NirSpecial)
-                .SingleOrDefaultAsync(m => m.NirSpecialEduProfileId == id);
-            if (nirSpecialEduProfile == null)
-            {
-                return NotFound();
-            }
-
-            return View(nirSpecialEduProfile);
-        }
-
         // GET: NirSpecialEduProfiles/Create
         public IActionResult Create()
         {
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileId");
-            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialId");
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileName");
+            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialName");
             return View();
         }
 
@@ -69,8 +49,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileId", nirSpecialEduProfile.EduProfileId);
-            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialId", nirSpecialEduProfile.NirSpecialId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileName", nirSpecialEduProfile.EduProfileId);
+            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialName", nirSpecialEduProfile.NirSpecialId);
             return View(nirSpecialEduProfile);
         }
 
@@ -87,8 +67,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
             {
                 return NotFound();
             }
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileId", nirSpecialEduProfile.EduProfileId);
-            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialId", nirSpecialEduProfile.NirSpecialId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileName", nirSpecialEduProfile.EduProfileId);
+            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialName", nirSpecialEduProfile.NirSpecialId);
             return View(nirSpecialEduProfile);
         }
 
@@ -124,8 +104,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileId", nirSpecialEduProfile.EduProfileId);
-            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialId", nirSpecialEduProfile.NirSpecialId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles, "EduProfileId", "EduProfileName", nirSpecialEduProfile.EduProfileId);
+            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialName", nirSpecialEduProfile.NirSpecialId);
             return View(nirSpecialEduProfile);
         }
 

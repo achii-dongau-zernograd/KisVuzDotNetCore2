@@ -1,33 +1,31 @@
 ﻿@model KisVuzDotNetCore2.Models.Nir.ScienceJournalCitationBase
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Удалить соответствие Научный журнал - База Цитирования?";
 }
 
-<h2>Delete</h2>
+<h2>Удалить соответствие Научный журнал - База Цитирования?</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>ScienceJournalCitationBase</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.CitationBase)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.CitationBase.CitationBaseId)
+            @Html.DisplayFor(model => model.CitationBase.CitationBaseName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ScienceJournal)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ScienceJournal.ScienceJournalId)
+            @Html.DisplayFor(model => model.ScienceJournal.ScienceJournalName)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="ScienceJournalCitationBaseId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
     </form>
 </div>

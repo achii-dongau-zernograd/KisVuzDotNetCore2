@@ -51,8 +51,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         // GET: Articles/Create
         public IActionResult Create()
         {
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Id");
-            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalId");
+            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Name");
+            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalName");
             return View();
         }
 
@@ -69,8 +69,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Id", article.FileModelId);
-            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalId", article.ScienceJournalId);
+            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Name", article.FileModelId);
+            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalName", article.ScienceJournalId);
             return View(article);
         }
 
@@ -87,8 +87,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
             {
                 return NotFound();
             }
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Id", article.FileModelId);
-            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalId", article.ScienceJournalId);
+            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Name", article.FileModelId);
+            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalName", article.ScienceJournalId);
             return View(article);
         }
 
@@ -124,8 +124,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Id", article.FileModelId);
-            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalId", article.ScienceJournalId);
+            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Name", article.FileModelId);
+            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalName", article.ScienceJournalId);
             return View(article);
         }
 

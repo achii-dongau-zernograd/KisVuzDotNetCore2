@@ -28,31 +28,11 @@ namespace KisVuzDotNetCore2.Controllers.Nir
             return View(await appIdentityDBContext.ToListAsync());
         }
 
-        // GET: ArticleNirSpecials/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var articleNirSpecial = await _context.ArticleNirSpecials
-                .Include(a => a.Article)
-                .Include(a => a.NirSpecial)
-                .SingleOrDefaultAsync(m => m.ArticleNirSpecialId == id);
-            if (articleNirSpecial == null)
-            {
-                return NotFound();
-            }
-
-            return View(articleNirSpecial);
-        }
-
         // GET: ArticleNirSpecials/Create
         public IActionResult Create()
         {
-            ViewData["ArticleId"] = new SelectList(_context.Articles, "ArticleId", "ArticleId");
-            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialId");
+            ViewData["ArticleId"] = new SelectList(_context.Articles, "ArticleId", "ArticleName");
+            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialName");
             return View();
         }
 
@@ -69,8 +49,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ArticleId"] = new SelectList(_context.Articles, "ArticleId", "ArticleId", articleNirSpecial.ArticleId);
-            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialId", articleNirSpecial.NirSpecialId);
+            ViewData["ArticleId"] = new SelectList(_context.Articles, "ArticleId", "ArticleName", articleNirSpecial.ArticleId);
+            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialName", articleNirSpecial.NirSpecialId);
             return View(articleNirSpecial);
         }
 
@@ -87,8 +67,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
             {
                 return NotFound();
             }
-            ViewData["ArticleId"] = new SelectList(_context.Articles, "ArticleId", "ArticleId", articleNirSpecial.ArticleId);
-            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialId", articleNirSpecial.NirSpecialId);
+            ViewData["ArticleId"] = new SelectList(_context.Articles, "ArticleId", "ArticleName", articleNirSpecial.ArticleId);
+            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialName", articleNirSpecial.NirSpecialId);
             return View(articleNirSpecial);
         }
 
@@ -124,8 +104,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ArticleId"] = new SelectList(_context.Articles, "ArticleId", "ArticleId", articleNirSpecial.ArticleId);
-            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialId", articleNirSpecial.NirSpecialId);
+            ViewData["ArticleId"] = new SelectList(_context.Articles, "ArticleId", "ArticleName", articleNirSpecial.ArticleId);
+            ViewData["NirSpecialId"] = new SelectList(_context.NirSpecials, "NirSpecialId", "NirSpecialName", articleNirSpecial.NirSpecialId);
             return View(articleNirSpecial);
         }
 
