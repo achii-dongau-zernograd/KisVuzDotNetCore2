@@ -905,6 +905,8 @@ namespace KisVuzDotNetCore2.Models
 
             await InitDatabasePatents.CreatePatentVidGroups(serviceProvider, configuration);
             await InitDatabasePatents.CreatePatentVids(serviceProvider, configuration);
+
+            await InitDatabaseYears.CreateYears(serviceProvider, configuration);
         }                
     
     }

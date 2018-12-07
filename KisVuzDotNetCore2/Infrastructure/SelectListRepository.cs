@@ -301,7 +301,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <returns></returns>
         public SelectList GetSelectListYears(int? selectedId = 0)
         {
-            return new SelectList(_context.Years.OrderBy(y => y.YearName),
+            return new SelectList(_context.Years.OrderByDescending(y => y.YearName),
                 "YearId", "YearName", selectedId);
         }
 
