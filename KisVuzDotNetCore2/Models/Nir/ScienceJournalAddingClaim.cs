@@ -10,14 +10,19 @@ namespace KisVuzDotNetCore2.Models.Nir
     /// Заявка на добавление научного журнала
     /// или сборника трудов конференции в справочник
     /// </summary>
-    public class ScienceJournalClaimAdd
+    public class ScienceJournalAddingClaim
     {
-        public int ScienceJournalClaimAddId { get; set; }
+        public int ScienceJournalAddingClaimId { get; set; }
 
         /// <summary>
         /// Пользователь
         /// </summary>
+        [Display(Name = "Пользователь")]
         AppUser AppUser { get; set; }
+        /// <summary>
+        /// Пользователь
+        /// </summary>
+        [Display(Name = "Пользователь")]
         string AppUserId { get; set; }
 
         /// <summary>
@@ -43,5 +48,22 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// </summary>
         [Display(Name = "Ссылка на сведения о журнале в eLibrary")]
         public string ELibraryLink { get; set; }
+
+        /// <summary>
+        /// Базы цитирования
+        /// </summary>
+        [Display(Name = "Базы цитирования")]
+        public string CitationBasesList { get; set; }
+
+        /// <summary>
+        /// Статус заявки
+        /// </summary>
+        [Display(Name = "Статус заявки")]
+        public RowStatus RowStatus { get; set; }
+        /// <summary>
+        /// Статус заявки
+        /// </summary>
+        [Display(Name = "Статус заявки")]
+        public int? RowStatusId { get; set; }
     }
 }

@@ -223,7 +223,7 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public IActionResult CreateClaimAddScienceJournal()
         {
-            ScienceJournalClaimAdd newClaim;
+            ScienceJournalAddingClaim newClaim;
             return View();
         }
 

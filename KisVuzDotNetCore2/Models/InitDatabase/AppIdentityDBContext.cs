@@ -729,6 +729,11 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<ScienceJournal> ScienceJournals { get; set; }
 
         /// <summary>
+        /// Заявки на добавление научных журналов
+        /// </summary>
+        public DbSet<ScienceJournalAddingClaim> ScienceJournalAddingClaims { get; set; }
+
+        /// <summary>
         /// Научные журналы - Базы цитирования
         /// </summary>
         public DbSet<ScienceJournalCitationBase> ScienceJournalCitationBases { get; set; }
