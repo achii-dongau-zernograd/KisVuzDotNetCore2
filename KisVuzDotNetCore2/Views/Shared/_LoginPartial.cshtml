@@ -3,31 +3,49 @@
 
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
+@inject IUserProfileRepository UserProfile
+
+@{
+    int? numUnreadMessages = UserProfile.GetUnreadMessages(User.Identity.Name);
+}
 
 <ul class="nav navbar-nav navbar-right">
     @if (SignInManager.IsSignedIn(User))
-    {       
+    {
         var currentUser = await UserManager.FindByNameAsync(User.Identity.Name);
 
         <!-- Выпадающий список -->
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> @currentUser.GetFullName <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> @currentUser.GetFullName @if (numUnreadMessages>0) { <span class="badge alert-info">@numUnreadMessages</span> } <span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@UserManager.GetUserId(User)" title="Профиль пользователя"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Профиль</a></li>
                 <li><a asp-controller="Qualifications" asp-action="Index" asp-route-id="@UserManager.GetUserId(User)" title="Квалификация пользователя"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Квалификация</a></li>
                 <li><a asp-controller="RefresherCourses" asp-action="Index" asp-route-id="@UserManager.GetUserId(User)" title="Сведения о повышении квалификации пользователя"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Повышение квалификации</a></li>
                 <li><a asp-controller="ProfessionalRetrainings" asp-action="Index" asp-route-id="@UserManager.GetUserId(User)" title="Сведения о профессиональной переподготовке пользователя"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Профессиональная переподготовка</a></li>
                 <li><a asp-controller="UserWorks" asp-action="Index" title="Загрузка работ пользователя (отчеты, курсовые и пр.)"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Работы пользователя</a></li>
-                
+
                 <!-- Выпадающий список -->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span> Научная работа <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a asp-controller="UserProfile" asp-action="Articles">Научные статьи</a></li>                        
+                        <li><a asp-controller="UserProfile" asp-action="Articles">Научные статьи</a></li>
+                        <li><a asp-controller="UserProfile" asp-action="Patents">Патенты и свидетельства</a></li>
                     </ul>
                 </li>
                 <li role="separator" class="divider"></li>
-                <li><a asp-controller="UserMessages" asp-action="Index" title="Сообщения пользователя"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Сообщения</a></li>
+                <li>
+                    <a asp-controller="UserMessages" asp-action="Index" title="Сообщения пользователя">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        @if (numUnreadMessages > 0)
+                        {
+                            <strong>Сообщения</strong> <span class="badge alert-danger">@numUnreadMessages</span>
+                        }
+                        else
+                        {
+                            <text>Сообщения</text>
+                        }
+                    </a>
+                </li>
                 <li role="separator" class="divider"></li>
                 <li><a asp-controller="Account" asp-action="Logout" title="Выйти"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Выйти</a></li>
             </ul>

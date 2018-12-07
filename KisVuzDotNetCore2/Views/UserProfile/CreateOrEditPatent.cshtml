@@ -1,50 +1,47 @@
-﻿@model KisVuzDotNetCore2.Models.Nir.Article
+﻿@model KisVuzDotNetCore2.Models.Nir.Patent
 
 @{
-    ViewData["Title"] = "Добавление (редактирование) научной статьи";
+    ViewData["Title"] = "Добавление (редактирование) патента (свидетельства)";
 }
 
-<h2>Добавление (редактирование) научной статьи</h2>
+<h2>Добавление (редактирование) патента (свидетельства)</h2>
 
 <hr />
 <div class="row">
     <div class="col-md-8">
-        <form asp-action="CreateOrEditArticle" enctype="multipart/form-data">
+        <form asp-action="CreateOrEditPatent" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="PatentVid" class="control-label"></label>
+                <select asp-for="PatentVidId" class="form-control" asp-items="ViewBag.PatentVids"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatentNumber" class="control-label"></label>
+                <input asp-for="PatentNumber" class="form-control" />
+                <span asp-validation-for="PatentNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatentName" class="control-label"></label>
+                <input asp-for="PatentName" class="form-control" />
+                <span asp-validation-for="PatentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Year" class="control-label"></label>
-                <select asp-for="YearId" class="form-control" asp-items="ViewBag.Years"></select>
+                <select asp-for="YearId" class="form-control" asp-items="ViewBag.Years">
+                    <option value="0">Выберите год публикации</option>
+                </select>
                 <span asp-validation-for="YearId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ScienceJournalId" class="control-label"></label>
-                <div class="row">
-                    <div class="col-md-8">
-                        <select asp-for="ScienceJournalId" class="form-control" asp-items="ViewBag.ScienceJournals"></select>
-                        <span asp-validation-for="ScienceJournalId" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <a asp-action="CreateClaimAddScienceJournal" class="form-control btn btn-primary">Заявка на добавление журнала в справочник</a>
-                    </div>                    
-                </div>
-                
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" asp-for="IsACHII"> Принадлежит АЧИИ
+                </label>
             </div>
-            <div class="form-group">
-                <label asp-for="ArticleName" class="control-label"></label>
-                <input asp-for="ArticleName" class="form-control" />
-                <span asp-validation-for="ArticleName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VipuskNumber" class="control-label"></label>
-                <input asp-for="VipuskNumber" class="form-control" />
-                <span asp-validation-for="VipuskNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pages" class="control-label"></label>
-                <input asp-for="Pages" class="form-control" />
-                <span asp-validation-for="Pages" class="text-danger"></span>
-                <hr>
-            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" asp-for="IsZarubejn"> Зарубежный патент
+                </label>
+            </div>            
             <div class="form-group">
                 <label class="control-label">Авторы</label>
 
@@ -81,7 +78,7 @@
                 <br />
                 <label class="control-label">Добавленные авторы</label>
                 <ul class="list-group">
-                    @if (Model.ArticleAuthors == null || Model.ArticleAuthors.Count == 0)
+                    @if (Model.PatentAuthors == null || Model.PatentAuthors.Count == 0)
                     {
                         <li class="list-group-item text-danger">
                             Авторы не добавлены
@@ -89,24 +86,30 @@
                     }
                     else
                     {
-                        foreach (var articleAuthor in Model.ArticleAuthors)
+                        foreach (var patentAuthor in Model.PatentAuthors)
                         {
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        @articleAuthor.Author.AuthorName
+                                        @patentAuthor.Author.AuthorName
                                     </div>
                                     <div class="col-md-2">
-                                        @articleAuthor.AuthorPart.ToString("N")
+                                        @patentAuthor.AuthorPart.ToString("N")
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.RemovingAuthor" asp-route-AuthorIdRemove="@articleAuthor.AuthorId" value="Удалить" class="btn btn-danger btn-block" />
+                                        <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.RemovingAuthor" asp-route-AuthorIdRemove="@patentAuthor.AuthorId" value="Удалить" class="btn btn-danger btn-block" />
                                     </div>
                                 </div>
                             </li>
                         }
                     }
                 </ul>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label asp-for="PatentOwner" class="control-label"></label>
+                <input asp-for="PatentOwner" class="form-control" />
+                <span asp-validation-for="PatentOwner" class="text-danger"></span>
             </div>
             <hr>
             <div class="form-group">
@@ -125,7 +128,7 @@
                 <br />
                 <label class="control-label">Добавленные научные специальности</label>
                 <ul class="list-group">
-                    @if (Model.ArticleNirSpecials == null || Model.ArticleNirSpecials.Count == 0)
+                    @if (Model.PatentNirSpecials == null || Model.PatentNirSpecials.Count == 0)
                     {
                         <li class="list-group-item text-danger">
                             Научные специальности не добавлены
@@ -133,15 +136,15 @@
                     }
                     else
                     {
-                        foreach (var articleNirSpecial in Model.ArticleNirSpecials)
+                        foreach (var patentNirSpecial in Model.PatentNirSpecials)
                         {
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-md-9">
-                                        @articleNirSpecial.NirSpecial.NirSpecialName
+                                        @patentNirSpecial.NirSpecial.NirSpecialName
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.RemovingNirSpecial" asp-route-NirSpecialIdRemove="@articleNirSpecial.NirSpecialId" value="Удалить" class="btn btn-danger btn-block" />
+                                        <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.RemovingNirSpecial" asp-route-NirSpecialIdRemove="@patentNirSpecial.NirSpecialId" value="Удалить" class="btn btn-danger btn-block" />
                                     </div>
                                 </div>
                             </li>
@@ -165,7 +168,7 @@
                 <br />
                 <label class="control-label">Добавленные темы НИР</label>
                 <ul class="list-group">
-                    @if (Model.ArticleNirTemas == null || Model.ArticleNirTemas.Count == 0)
+                    @if (Model.PatentNirTemas == null || Model.PatentNirTemas.Count == 0)
                     {
                         <li class="list-group-item text-danger">
                             Темы НИР не добавлены
@@ -173,15 +176,15 @@
                     }
                     else
                     {
-                        foreach (var articleNirTema in Model.ArticleNirTemas)
+                        foreach (var patentNirTema in Model.PatentNirTemas)
                         {
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-md-9">
-                                        @articleNirTema.NirTema.NirTemaName
+                                        @patentNirTema.NirTema.NirTemaName
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.RemovingNirTema" asp-route-NirTemaIdRemove="@articleNirTema.NirTemaId" value="Удалить" class="btn btn-danger btn-block" />
+                                        <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.RemovingNirTema" asp-route-NirTemaIdRemove="@patentNirTema.NirTemaId" value="Удалить" class="btn btn-danger btn-block" />
                                     </div>
                                 </div>
                             </li>
@@ -208,7 +211,7 @@
                 <span asp-validation-for="FileModelId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="hidden" name="ArticleId" value="@Model.ArticleId" />
+                <input type="hidden" name="PatentId" value="@Model.PatentId" />
                 <input type="hidden" asp-for="FileModelId" />
                 <input type="hidden" asp-for="RowStatusId" />
                 <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.Saving" value="Сохранить" class="btn btn-primary" />

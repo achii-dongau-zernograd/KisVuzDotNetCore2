@@ -498,6 +498,12 @@
     <Compile Remove="Migrations\20181109123732_year.Designer.cs" />
     <Compile Remove="Migrations\20181109124144_year.cs" />
     <Compile Remove="Migrations\20181109124144_year.Designer.cs" />
+    <Compile Remove="Migrations\20181130111859_Patent.cs" />
+    <Compile Remove="Migrations\20181130111859_Patent.Designer.cs" />
+    <Compile Remove="Migrations\20181130112150_Patent.cs" />
+    <Compile Remove="Migrations\20181130112150_Patent.Designer.cs" />
+    <Compile Remove="Migrations\20181207061340_t.cs" />
+    <Compile Remove="Migrations\20181207061340_t.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -507,8 +513,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
@@ -583,6 +591,15 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\StudentsOfKurator\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\UserProfile\CreateOrEditPatent.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\UserProfile\DeletePatent.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\UserProfile\Patents.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\VedomostiOfKurator\Create.cshtml">

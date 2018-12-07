@@ -315,5 +315,17 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(_context.NirTema.OrderBy(n => n.NirTemaName),
                 "NirTemaId", "NirTemaName", selectedId);
         }
+
+        /// <summary>
+        /// Возвращает список видов патентов (свидетельств)
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListPatentVids(int selectedId = 0)
+        {
+            return new SelectList(_context.PatentVids.OrderBy(p => p.PatentVidName),
+                "PatentVidId", "PatentVidName", selectedId);
+        }
+
     }
 }

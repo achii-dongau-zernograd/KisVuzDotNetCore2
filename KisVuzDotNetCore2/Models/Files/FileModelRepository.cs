@@ -195,5 +195,38 @@ namespace KisVuzDotNetCore2.Models.Files
 
             return article.FileModel;
         }
+
+        /// <summary>
+        /// Загружает файл патента (свидетельства) (с заменой ранее загруженного)
+        /// </summary>
+        /// <param name="patent"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadPatentAsync(Patent patent, IFormFile uploadedFile)
+        {
+            if (patent == null || uploadedFile == null) return null;
+
+            FileModel newFileModel = await UploadFileAsync(uploadedFile, "Патент (свидетельство)", (FileDataTypeEnum)patent.PatentVidId);
+
+            if (newFileModel != null)
+            {
+                int? existingFileModelId = patent.FileModelId;
+                patent.FileModelId = newFileModel.Id;
+                patent.FileModel = newFileModel;
+                await _context.SaveChangesAsync();
+                // Проверка наличия ранее загруженного файла
+                if (existingFileModelId > 0)
+                {
+                    await RemoveFileAsync(existingFileModelId);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+            return patent.FileModel;
+        }
     }
 }
