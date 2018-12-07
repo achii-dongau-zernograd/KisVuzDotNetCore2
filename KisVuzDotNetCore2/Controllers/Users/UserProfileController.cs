@@ -219,6 +219,15 @@ namespace KisVuzDotNetCore2.Controllers
             return RedirectToAction("Articles");
         }
 
+        /// <summary>
+        /// Создание заявки на добавление научного журнала в справочник
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult CreateClaimAddScienceJournal()
+        {
+            ScienceJournalClaimAdd newClaim;
+            return View();
+        }
         #endregion
 
         public async Task<IActionResult> Index(string id)

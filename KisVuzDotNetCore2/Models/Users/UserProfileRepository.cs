@@ -229,5 +229,22 @@ namespace KisVuzDotNetCore2.Models.Users
 
             return article;
         }
+
+        /// <summary>
+        /// Возвращает количество непрочтённых сообщений
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public int? GetUnreadMessages(string userName)
+        {
+            if (string.IsNullOrEmpty(userName))
+            {
+                return null;
+            }
+            
+            var appUser = GetAppUser(userName);
+            int numUnreadMessages = _context.UserMessages.Where(um => um.UserReceiverId == appUser.Id && um.IsReadedByReceiver!=true).Count();
+            return numUnreadMessages;
+        }
     }
 }

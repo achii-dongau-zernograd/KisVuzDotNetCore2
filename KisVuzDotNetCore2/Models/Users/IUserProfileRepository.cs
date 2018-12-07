@@ -47,5 +47,12 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="userName"></param>
         /// <returns></returns>
         Article RemoveArticle(int articleId, string userName);
+
+        /// <summary>
+        /// Возвращает количество непрочтённых сообщений
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        int? GetUnreadMessages(string userName);
     }
 }
