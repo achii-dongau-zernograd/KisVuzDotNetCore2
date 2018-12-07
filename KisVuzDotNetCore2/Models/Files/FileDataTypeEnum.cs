@@ -179,6 +179,14 @@
         /// <summary>
         /// Монография
         /// </summary>
-        Monografiya = 52
+        Monografiya = 52,
+        /// <summary>
+        /// Патент на селекционное достижение
+        /// </summary>
+        PatentNaSelekcionnoeDostigenie = 53,
+        /// <summary>
+        /// Патент на промышленный образец
+        /// </summary>
+        PatentNaPromyshlenniyObrazets = 54
     }
 }

@@ -35,5 +35,11 @@ namespace KisVuzDotNetCore2.Models.UchPosobiya
         /// </summary>
         [Display(Name = "Научные статьи")]
         public List<ArticleAuthor> ArticleAuthors { get; set; }
+
+        /// <summary>
+        /// Список патентов (свидетельств), принадлежащих автору
+        /// </summary>
+        [Display(Name = "Патенты (свидетельства)")]
+        public List<PatentAuthor> PatentAuthors { get; set; }
     }
 }

@@ -166,6 +166,12 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <summary>
         /// Возвращает список дисциплин
         /// </summary>
-        SelectList GetSelectListDisciplines(int selectedId = 0);        
+        SelectList GetSelectListDisciplines(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список видов патентов (свидетельств)
+        /// </summary>
+        /// <returns></returns>
+        SelectList GetSelectListPatentVids(int selectedId = 0);
     }
 }

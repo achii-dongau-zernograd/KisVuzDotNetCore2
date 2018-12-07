@@ -51,7 +51,7 @@ namespace KisVuzDotNetCore2.Controllers
             List<Article> userArticles = _userProfileRepository.GetArticles(User.Identity.Name);
             return View(userArticles);
         }
-
+               
         public IActionResult CreateOrEditArticle(int? id)
         {
             Article article = _userProfileRepository.GetArticle(id, User.Identity.Name);
@@ -228,6 +228,181 @@ namespace KisVuzDotNetCore2.Controllers
             ScienceJournalClaimAdd newClaim;
             return View();
         }
+
+        public IActionResult Patents()
+        {
+            List<Patent> userPatents = _userProfileRepository.GetPatents(User.Identity.Name);
+            return View(userPatents);
+        }
+
+        public IActionResult CreateOrEditPatent(int? id)
+        {
+            Patent patent = _userProfileRepository.GetPatent(id, User.Identity.Name);
+            if (patent == null) return NotFound();
+
+            ViewBag.Authors = _selectListRepository.GetSelectListAuthors();
+            ViewBag.Years = _selectListRepository.GetSelectListYears(patent.YearId);
+            ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
+            ViewBag.NirTemas = _selectListRepository.GetSelectListNirTemas();
+            ViewBag.PatentVids = _selectListRepository.GetSelectListPatentVids();
+
+            return View(patent);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateOrEditPatent(Patent patent,
+            string AuthorFilter,
+            int AuthorIdAdd, int AuthorIdRemove, decimal AuthorPart,
+            int NirSpecialIdAdd, int NirSpecialIdRemove,
+            int NirTemaIdAdd, int NirTemaIdRemove,
+            CreateOrEditNirDataModeEnum mode, IFormFile uploadFile)
+        {
+            Patent patentEntry = _userProfileRepository.GetPatent(patent.PatentId, User.Identity.Name);
+
+            if (patentEntry == null)
+            {
+                if (uploadFile != null)
+                {
+                    FileModel f = await _fileModelRepository.UploadPatentAsync(patent, uploadFile);
+                }
+                _userProfileRepository.CreatePatent(patent, User.Identity.Name);
+                patentEntry = patent;
+            }
+            else
+            {
+                if (uploadFile != null)
+                {
+                    FileModel f = await _fileModelRepository.UploadPatentAsync(patentEntry, uploadFile);
+                    patent.FileModelId = patentEntry.FileModelId;
+                }
+                patent.PatentNirSpecials = patentEntry.PatentNirSpecials;
+                patent.PatentAuthors = patentEntry.PatentAuthors;
+                patent.PatentNirTemas = patentEntry.PatentNirTemas;
+                _userProfileRepository.UpdatePatent(patentEntry, patent);
+            }
+
+
+            switch (mode)
+            {
+                case CreateOrEditNirDataModeEnum.Saving:
+                    patent.RowStatusId = (int)RowStatusEnum.NotConfirmed;
+                    _userProfileRepository.UpdatePatent(patentEntry, patent);
+                    return RedirectToAction("Patents");
+                case CreateOrEditNirDataModeEnum.Canceling:
+                    if (patent.RowStatusId == null)
+                    {
+                        _userProfileRepository.RemovePatent(patentEntry.PatentId, User.Identity.Name);
+                    }
+                    return RedirectToAction("Patents");
+                case CreateOrEditNirDataModeEnum.AddingAuthor:
+                    if (AuthorIdAdd != 0)
+                    {
+                        var isExists = patent.PatentAuthors.FirstOrDefault(a => a.AuthorId == AuthorIdAdd) != null;
+                        if (!isExists)
+                        {
+                            patent.PatentAuthors.Add(new PatentAuthor
+                            {
+                                AuthorId = AuthorIdAdd,
+                                AuthorPart = AuthorPart
+                            });
+                            _userProfileRepository.UpdatePatent(patentEntry, patent);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.EditingAuthor:
+                    break;
+                case CreateOrEditNirDataModeEnum.RemovingAuthor:
+                    if (AuthorIdRemove != 0)
+                    {
+                        var patentAuthorsToRemove = patent.PatentAuthors.FirstOrDefault(aa => aa.AuthorId == AuthorIdRemove);
+                        if (patentAuthorsToRemove != null)
+                        {
+                            patent.PatentAuthors.Remove(patentAuthorsToRemove);
+                            _userProfileRepository.UpdatePatent(patentEntry, patent);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.ApplyAuthorFilter:
+                    break;
+                case CreateOrEditNirDataModeEnum.AddingNirSpecial:
+                    if (NirSpecialIdAdd != 0)
+                    {
+                        var isExists = patent.PatentNirSpecials.FirstOrDefault(s => s.NirSpecialId == NirSpecialIdAdd) != null;
+                        if (!isExists)
+                        {
+                            patent.PatentNirSpecials.Add(new PatentNirSpecial { NirSpecialId = NirSpecialIdAdd });
+                            _userProfileRepository.UpdatePatent(patentEntry, patent);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.EditingNirSpecial:
+                    break;
+                case CreateOrEditNirDataModeEnum.RemovingNirSpecial:
+                    if (NirSpecialIdRemove != 0)
+                    {
+                        var patentToRemove = patent.PatentNirSpecials.FirstOrDefault(s => s.NirSpecialId == NirSpecialIdRemove);
+                        if (patentToRemove != null)
+                        {
+                            patent.PatentNirSpecials.Remove(patentToRemove);
+                            _userProfileRepository.UpdatePatent(patentEntry, patent);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.AddingNirTema:
+                    if (NirTemaIdAdd != 0)
+                    {
+                        var isExists = patent.PatentNirTemas.FirstOrDefault(s => s.NirTemaId == NirTemaIdAdd) != null;
+                        if (!isExists)
+                        {
+                            patent.PatentNirTemas.Add(new PatentNirTema { NirTemaId = NirTemaIdAdd });
+                            _userProfileRepository.UpdatePatent(patentEntry, patent);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.EditingNirTema:
+                    break;
+                case CreateOrEditNirDataModeEnum.RemovingNirTema:
+                    if (NirTemaIdRemove != 0)
+                    {
+                        var patentToRemove = patent.PatentNirTemas.FirstOrDefault(s => s.NirTemaId == NirTemaIdRemove);
+                        if (patentToRemove != null)
+                        {
+                            patent.PatentNirTemas.Remove(patentToRemove);
+                            _userProfileRepository.UpdatePatent(patentEntry, patent);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            ViewBag.AuthorFilter = AuthorFilter;
+            ViewBag.Authors = _selectListRepository.GetSelectListAuthors(AuthorFilter);
+            ViewBag.Years = _selectListRepository.GetSelectListYears(patent.YearId);
+            ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
+            ViewBag.NirTemas = _selectListRepository.GetSelectListNirTemas();
+
+            return View(patentEntry);
+        }
+
+        public IActionResult DeletePatent(int? id)
+        {
+            if (id == null) return NotFound();
+            var patentEntry = _userProfileRepository.GetPatent(id, User.Identity.Name);
+            if (patentEntry == null) return NotFound();
+            return View(patentEntry);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePatentConfirmed(Patent patent)
+        {
+            if (patent == null) return NotFound();
+            var patentEntry = _userProfileRepository.RemovePatent(patent.PatentId, User.Identity.Name);
+
+            return RedirectToAction("Patents");
+        }
+
         #endregion
 
         public async Task<IActionResult> Index(string id)
