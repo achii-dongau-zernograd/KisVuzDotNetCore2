@@ -181,7 +181,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                     {
                         FileDataTypeId = (int)FileDataTypeEnum.LocalnieNormativnieActiReglamentiruyushieTekushiyKontrolIPromAttestObuchaushihsya,
                         FileDataTypeName = "Локальные нормативные акты, регламентирующие формы, периодичность и порядок текущего контроля успеваемости и промежуточной аттестации обучающихся",
-                        Itemprop = "tek_KontrolDocLink",
+                        Itemprop = "tekKontrolDocLink",
                         FileDataTypeGroupId = 3
                     };
 
