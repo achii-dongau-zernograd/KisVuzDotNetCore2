@@ -18,12 +18,13 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// Пользователь
         /// </summary>
         [Display(Name = "Пользователь")]
-        AppUser AppUser { get; set; }
+        public AppUser AppUser { get; set; }
+
         /// <summary>
         /// Пользователь
         /// </summary>
         [Display(Name = "Пользователь")]
-        string AppUserId { get; set; }
+        public string AppUserId { get; set; }
 
         /// <summary>
         /// Наименование научного журнала

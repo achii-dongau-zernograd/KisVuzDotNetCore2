@@ -222,9 +222,48 @@ namespace KisVuzDotNetCore2.Controllers
         /// </summary>
         /// <returns></returns>
         public IActionResult CreateClaimAddScienceJournal()
-        {
-            ScienceJournalAddingClaim newClaim;
+        {            
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateClaimAddScienceJournal(ScienceJournalAddingClaim newClaim)
+        {
+            var appUser = _userProfileRepository.GetAppUser(User.Identity.Name);
+            if (appUser == null) return NotFound();
+
+            newClaim.AppUserId = appUser.Id;
+            newClaim.RowStatusId = (int)RowStatusEnum.NotConfirmed;
+            _userProfileRepository.CreateClaimAddScienceJournal(newClaim);
+
+            return RedirectToAction(nameof(ScienceJournalAddingClaims));
+        }
+
+        public IActionResult ScienceJournalAddingClaims()
+        {
+            var myScienceJournalAddingClaims = _userProfileRepository.GetScienceJournalAddingClaims(User.Identity.Name);
+            return View(myScienceJournalAddingClaims);
+        }
+
+        public IActionResult DeleteClaimAddScienceJournal(int id)
+        {
+            var myScienceJournalAddingClaims = _userProfileRepository.GetScienceJournalAddingClaims(User.Identity.Name);
+            var claim = myScienceJournalAddingClaims.FirstOrDefault(c => c.ScienceJournalAddingClaimId == id);
+            if (claim == null) return NotFound();
+
+            return View(claim);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteClaimAddScienceJournal(ScienceJournalAddingClaim claim)
+        {
+            var myScienceJournalAddingClaims = _userProfileRepository.GetScienceJournalAddingClaims(User.Identity.Name);
+            var claimEntry = myScienceJournalAddingClaims.FirstOrDefault(c => c.ScienceJournalAddingClaimId == claim.ScienceJournalAddingClaimId);
+            if (claim == null) return NotFound();
+            _userProfileRepository.RemoveClaimAddScienceJournal(claimEntry);
+
+            return RedirectToAction(nameof(ScienceJournalAddingClaims));
         }
 
         public IActionResult Patents()

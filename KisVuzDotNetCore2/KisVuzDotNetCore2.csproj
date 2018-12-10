@@ -504,6 +504,8 @@
     <Compile Remove="Migrations\20181130112150_Patent.Designer.cs" />
     <Compile Remove="Migrations\20181207061340_t.cs" />
     <Compile Remove="Migrations\20181207061340_t.Designer.cs" />
+    <Compile Remove="Migrations\20181210130843_t.cs" />
+    <Compile Remove="Migrations\20181210130843_t.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

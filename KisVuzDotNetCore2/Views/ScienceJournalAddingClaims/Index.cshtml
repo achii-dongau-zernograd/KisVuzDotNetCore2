@@ -12,21 +12,24 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ScienceJournalName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsVak)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsZarubejn)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ELibraryLink)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CitationBasesList)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScienceJournalName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsVak)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsZarubejn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ELibraryLink)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CitationBasesList)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.RowStatus)
             </th>
@@ -38,6 +41,16 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @if (item.AppUser != null)
+                {
+                    <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
+                }
+                else
+                {
+                    <p>-</p>
+                }
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ScienceJournalName)
             </td>

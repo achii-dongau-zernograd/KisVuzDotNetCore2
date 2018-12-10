@@ -8,22 +8,31 @@ using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Common;
+using KisVuzDotNetCore2.Models.Users;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Nir
 {
+    [Authorize(Roles = "Администраторы, НИЧ")]
     public class ScienceJournalAddingClaimsController : Controller
     {
         private readonly AppIdentityDBContext _context;
 
-        public ScienceJournalAddingClaimsController(AppIdentityDBContext context)
+        private readonly IUserProfileRepository _userProfileRepository;
+
+        public ScienceJournalAddingClaimsController(AppIdentityDBContext context,
+            IUserProfileRepository userProfileRepository)
         {
             _context = context;
+            _userProfileRepository = userProfileRepository;
         }
 
         // GET: ScienceJournalAddingClaims
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.ScienceJournalAddingClaims.Include(s => s.RowStatus);
+            var appIdentityDBContext = _context.ScienceJournalAddingClaims
+                .Include(s => s.RowStatus)
+                .Include(s => s.AppUser);
             return View(await appIdentityDBContext.ToListAsync());
         }        
 
@@ -46,6 +55,12 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 {
                     scienceJournalAddingClaim.RowStatusId = (int?)RowStatusEnum.NotConfirmed;
                 }
+                scienceJournalAddingClaim.AppUserId = _userProfileRepository.GetAppUser(User.Identity.Name).Id;
+                if(scienceJournalAddingClaim.AppUserId==null)
+                {
+                    return NotFound();
+                }
+
                 _context.Add(scienceJournalAddingClaim);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -92,6 +107,7 @@ namespace KisVuzDotNetCore2.Controllers.Nir
 
                 try
                 {
+                    scienceJournalAddingClaim.AppUserId = _userProfileRepository.GetAppUser(User.Identity.Name).Id;
                     _context.Update(scienceJournalAddingClaim);
                     await _context.SaveChangesAsync();
                 }

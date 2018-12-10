@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Education;
+using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Students;
 using KisVuzDotNetCore2.Models.UchPosobiya;
@@ -127,7 +128,12 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Отображение пользователя как автора учебных пособий
         /// </summary>
-        public List<Author> Author { get; set; }        
-                              
+        public List<Author> Author { get; set; }
+
+        /// <summary>
+        /// Заявки пользователя на добавление
+        /// научного журнала (сборника) в справочник
+        /// </summary>
+        public List<ScienceJournalAddingClaim> ScienceJournalAddingClaims { get; set; }                              
     }
 }

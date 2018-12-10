@@ -55,11 +55,19 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <returns></returns>
         int? GetUnreadMessages(string userName);
 
+        /// <summary>
         /// Возвращает патенты (свидетельства) пользователя userName
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
         List<Patent> GetPatents(string userName);
+
+        /// <summary>
+        /// Возвращает объект пользователя по его имени
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        AppUser GetAppUser(string userName);
 
         /// <summary>
         /// Возвращает патент (свидетельство) пользователя userName
@@ -89,5 +97,25 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="patentId"></param>
         /// <param name="userName"></param>
         Patent RemovePatent(int patentId, string userName);
+
+        /// <summary>
+        /// Возвращает заявки пользователя userName
+        /// на добавление научного журнала (сборника) в справочник
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        List<ScienceJournalAddingClaim> GetScienceJournalAddingClaims(string userName);
+
+        /// <summary>
+        /// Добавление заявки на добавление научного журнала в справочник
+        /// </summary>
+        /// <param name="newClaim"></param>
+        void CreateClaimAddScienceJournal(ScienceJournalAddingClaim newClaim);
+
+        /// <summary>
+        /// Удаление заявки на добавление научного журнала в справочник
+        /// </summary>
+        /// <param name="claimEntry"></param>
+        void RemoveClaimAddScienceJournal(ScienceJournalAddingClaim claimEntry);
     }
 }

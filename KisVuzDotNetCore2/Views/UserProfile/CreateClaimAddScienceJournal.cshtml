@@ -1,0 +1,44 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.ScienceJournalAddingClaim
+
+<h4>Создание заявки на добавление научного журнала (сборника) в справочник</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateClaimAddScienceJournal">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+            <div class="form-group">
+                <label asp-for="ScienceJournalName" class="control-label"></label>
+                <input asp-for="ScienceJournalName" class="form-control" />
+                <span asp-validation-for="ScienceJournalName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsVak" /> @Html.DisplayNameFor(model => model.IsVak)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsZarubejn" /> @Html.DisplayNameFor(model => model.IsZarubejn)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ELibraryLink" class="control-label"></label>
+                <input asp-for="ELibraryLink" class="form-control" />
+                <span asp-validation-for="ELibraryLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CitationBasesList" class="control-label"></label>
+                <input asp-for="CitationBasesList" class="form-control" />
+                <span asp-validation-for="CitationBasesList" class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Articles" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.ScienceJournalAddingClaim
+
+<h3>Вы действительно хотите удалить заявку?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ScienceJournalName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScienceJournalName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsVak)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsVak)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsZarubejn)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsZarubejn)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ELibraryLink)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ELibraryLink)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CitationBasesList)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CitationBasesList)
+        </dd>        
+        <dt>
+            @Html.DisplayNameFor(model => model.RowStatus)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RowStatus.RowStatusName)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteClaimAddScienceJournal">
+        <input type="hidden" asp-for="ScienceJournalAddingClaimId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="ScienceJournalAddingClaims" class="btn btn-default">Отмена</a>
+    </form>
+</div>

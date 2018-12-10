@@ -102,6 +102,7 @@ namespace KisVuzDotNetCore2.Models.Users
                         .ThenInclude(pa => pa.Patent)
                             .ThenInclude(p => p.PatentNirTemas)
                                 .ThenInclude(pn => pn.NirTema)
+                .Include(u => u.ScienceJournalAddingClaims)
 
                 .SingleOrDefault(u => u.UserName == userName);
 
@@ -439,6 +440,39 @@ namespace KisVuzDotNetCore2.Models.Users
             _context.SaveChanges();
 
             return patent;
+        }
+
+        /// <summary>
+        /// Возвращает заявки пользователя userName
+        /// на добавление научного журнала (сборника) в справочник
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public List<ScienceJournalAddingClaim> GetScienceJournalAddingClaims(string userName)
+        {
+            var appUser = GetAppUser(userName);
+            var claims = appUser.ScienceJournalAddingClaims;
+            return claims;
+        }
+
+        /// <summary>
+        /// Добавление заявки на добавление научного журнала в справочник
+        /// </summary>
+        /// <param name="newClaim"></param>
+        public void CreateClaimAddScienceJournal(ScienceJournalAddingClaim newClaim)
+        {
+            _context.ScienceJournalAddingClaims.Add(newClaim);
+            _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Удаление заявки на добавление научного журнала в справочник
+        /// </summary>
+        /// <param name="claimEntry"></param>
+        public void RemoveClaimAddScienceJournal(ScienceJournalAddingClaim claimEntry)
+        {
+            _context.ScienceJournalAddingClaims.Remove(claimEntry);
+            _context.SaveChanges();
         }
     }
 }
