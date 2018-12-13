@@ -357,7 +357,12 @@ namespace KisVuzDotNetCore2.Models.Users
             _context.PatentAuthors.Add(patentAuthor);
             _context.SaveChanges();
         }
-
+        
+        /// <summary>
+        /// Обновляет патент (свидетельство) пользователя userName
+        /// </summary>
+        /// <param name="patentEntry"></param>
+        /// <param name="patent"></param>
         public void UpdatePatent(Patent patentEntry, Patent patent)
         {
             patentEntry.PatentNumber = patent.PatentNumber;

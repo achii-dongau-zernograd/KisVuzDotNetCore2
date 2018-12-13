@@ -66,8 +66,8 @@ namespace KisVuzDotNetCore2.Models.Files
         /// Загружает файл патента (свидетельства)
         /// </summary>
         /// <param name="patent">Патент (свидетельство)</param>
-        /// <param name="uploadFile">Загружаемый файл</param>
+        /// <param name="uploadedFile">Загружаемый файл</param>
         /// <returns></returns>
-        Task<FileModel> UploadPatentAsync(Patent patent, IFormFile uploadFile);
+        Task<FileModel> UploadPatentAsync(Patent patent, IFormFile uploadedFile);
     }
 }

@@ -119,9 +119,9 @@
                 <td>
                     @if (item.PatentNirTemas != null && item.PatentNirTemas.Count > 0)
                     {
-                        foreach (var articleNirTema in item.PatentNirTemas)
+                        foreach (var patentNirTema in item.PatentNirTemas)
                         {
-                            <p>@articleNirTema.NirTema.NirTemaName</p>
+                            <p>@patentNirTema.NirTema.NirTemaName</p>
                         }
                     }
                     else

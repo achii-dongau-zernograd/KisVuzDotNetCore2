@@ -292,29 +292,30 @@ namespace KisVuzDotNetCore2.Controllers
             int AuthorIdAdd, int AuthorIdRemove, decimal AuthorPart,
             int NirSpecialIdAdd, int NirSpecialIdRemove,
             int NirTemaIdAdd, int NirTemaIdRemove,
-            CreateOrEditNirDataModeEnum mode, IFormFile uploadFile)
+            CreateOrEditNirDataModeEnum mode, IFormFile uploadedFile)
         {
             Patent patentEntry = _userProfileRepository.GetPatent(patent.PatentId, User.Identity.Name);
 
             if (patentEntry == null)
             {
-                if (uploadFile != null)
+                if (uploadedFile != null)
                 {
-                    FileModel f = await _fileModelRepository.UploadPatentAsync(patent, uploadFile);
+                    FileModel f = await _fileModelRepository.UploadPatentAsync(patent, uploadedFile);
                 }
                 _userProfileRepository.CreatePatent(patent, User.Identity.Name);
                 patentEntry = patent;
             }
             else
             {
-                if (uploadFile != null)
+                if (uploadedFile != null)
                 {
-                    FileModel f = await _fileModelRepository.UploadPatentAsync(patentEntry, uploadFile);
+                    FileModel f = await _fileModelRepository.UploadPatentAsync(patentEntry, uploadedFile);
                     patent.FileModelId = patentEntry.FileModelId;
                 }
                 patent.PatentNirSpecials = patentEntry.PatentNirSpecials;
                 patent.PatentAuthors = patentEntry.PatentAuthors;
                 patent.PatentNirTemas = patentEntry.PatentNirTemas;
+                patent.PatentVid = patentEntry.PatentVid;
                 _userProfileRepository.UpdatePatent(patentEntry, patent);
             }
 
@@ -418,6 +419,7 @@ namespace KisVuzDotNetCore2.Controllers
             ViewBag.Years = _selectListRepository.GetSelectListYears(patent.YearId);
             ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
             ViewBag.NirTemas = _selectListRepository.GetSelectListNirTemas();
+            ViewBag.PatentVids = _selectListRepository.GetSelectListPatentVids();
 
             return View(patentEntry);
         }

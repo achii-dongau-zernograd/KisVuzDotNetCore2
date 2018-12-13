@@ -34,73 +34,13 @@
         <dd>
             @Html.DisplayFor(model => model.Year.YearName)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PatentOwner)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PatentOwner)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsACHII)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsACHII)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsZarubejn)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsZarubejn)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FileModel)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FileModel)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PatentNirSpecials)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PatentNirSpecials)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PatentNirTemas)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PatentNirTemas)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RowStatus)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RowStatus.RowStatusName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PatentAuthors)
-        </dt>
-        <dd>
-            @foreach (var patentAuthor in Model.PatentAuthors)
-            {
-                if (patentAuthor.Author?.AppUserId != null)
-                {
-                    <p>
-                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@patentAuthor.Author.AppUserId">@patentAuthor.Author.AuthorName (@patentAuthor.AuthorPart.ToString("N"))</a>
-                    </p>
-                }
-                else
-                {
-                    <p>@patentAuthor.Author?.AuthorName (@patentAuthor.AuthorPart.ToString("N"))</p>
-                }
-
-            }
-        </dd>
+        
         
     </dl>
 
     <form asp-action="DeletePatentConfirmed">
         <input type="hidden" asp-for="PatentId" />
         <input type="submit" value="Удалить" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-default">Отмена</a>
+        <a asp-action="Patents" class="btn btn-default">Отмена</a>
     </form>
 </div>
