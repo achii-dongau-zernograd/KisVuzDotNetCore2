@@ -1,0 +1,78 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.Patent
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Patent</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PatentId" />
+            <div class="form-group">
+                <label asp-for="PatentName" class="control-label"></label>
+                <input asp-for="PatentName" class="form-control" />
+                <span asp-validation-for="PatentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatentNumber" class="control-label"></label>
+                <input asp-for="PatentNumber" class="form-control" />
+                <span asp-validation-for="PatentNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="YearId" class="control-label"></label>
+                <select asp-for="YearId" class="form-control" asp-items="ViewBag.YearId"></select>
+                <span asp-validation-for="YearId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsZarubejn" /> @Html.DisplayNameFor(model => model.IsZarubejn)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatentOwner" class="control-label"></label>
+                <input asp-for="PatentOwner" class="form-control" />
+                <span asp-validation-for="PatentOwner" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsACHII" /> @Html.DisplayNameFor(model => model.IsACHII)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatentVidId" class="control-label"></label>
+                <select asp-for="PatentVidId" class="form-control" asp-items="ViewBag.PatentVidId"></select>
+                <span asp-validation-for="PatentVidId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                <select asp-for="FileModelId" class="form-control" asp-items="ViewBag.FileModelId"></select>
+                <span asp-validation-for="FileModelId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RowStatusId" class="control-label"></label>
+                <select asp-for="RowStatusId" class="form-control" asp-items="ViewBag.RowStatusId"></select>
+                <span asp-validation-for="RowStatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
