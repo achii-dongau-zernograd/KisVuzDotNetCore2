@@ -529,6 +529,22 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = 11
                     };
 
+                    FileDataType fileDataType53 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.PatentNaSelekcionnoeDostigenie,
+                        FileDataTypeName = "Патент на селекционное достижение",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 11
+                    };
+
+                    FileDataType fileDataType54 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.PatentNaPromyshlenniyObrazets,
+                        FileDataTypeName = "Патент на промышленный образец",
+                        Itemprop = "",
+                        FileDataTypeGroupId = 11
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -581,7 +597,9 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType49,
                         fileDataType50,
                         fileDataType51,
-                        fileDataType52
+                        fileDataType52,
+                        fileDataType53,
+                        fileDataType54
                         );
                     await context.SaveChangesAsync();
                 }
