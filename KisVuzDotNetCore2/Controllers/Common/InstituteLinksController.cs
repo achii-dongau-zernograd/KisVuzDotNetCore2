@@ -51,8 +51,8 @@ namespace KisVuzDotNetCore2.Controllers.Common
         // GET: InstituteLinks/Create
         public IActionResult Create()
         {
-            ViewData["LinkTypeId"] = new SelectList(_context.LinkTypes, "LinkTypeId", "LinkTypeId");
-            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteId");
+            ViewData["LinkTypeId"] = new SelectList(_context.LinkTypes, "LinkTypeId", "LinkTypeName");
+            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteName");
             return View();
         }
 
@@ -69,8 +69,8 @@ namespace KisVuzDotNetCore2.Controllers.Common
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LinkTypeId"] = new SelectList(_context.LinkTypes, "LinkTypeId", "LinkTypeId", instituteLink.LinkTypeId);
-            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteId", instituteLink.StructInstituteId);
+            ViewData["LinkTypeId"] = new SelectList(_context.LinkTypes, "LinkTypeId", "LinkTypeName", instituteLink.LinkTypeId);
+            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteName", instituteLink.StructInstituteId);
             return View(instituteLink);
         }
 
@@ -87,8 +87,8 @@ namespace KisVuzDotNetCore2.Controllers.Common
             {
                 return NotFound();
             }
-            ViewData["LinkTypeId"] = new SelectList(_context.LinkTypes, "LinkTypeId", "LinkTypeId", instituteLink.LinkTypeId);
-            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteId", instituteLink.StructInstituteId);
+            ViewData["LinkTypeId"] = new SelectList(_context.LinkTypes, "LinkTypeId", "LinkTypeName", instituteLink.LinkTypeId);
+            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteName", instituteLink.StructInstituteId);
             return View(instituteLink);
         }
 
@@ -124,8 +124,8 @@ namespace KisVuzDotNetCore2.Controllers.Common
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LinkTypeId"] = new SelectList(_context.LinkTypes, "LinkTypeId", "LinkTypeId", instituteLink.LinkTypeId);
-            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteId", instituteLink.StructInstituteId);
+            ViewData["LinkTypeId"] = new SelectList(_context.LinkTypes, "LinkTypeId", "LinkTypeName", instituteLink.LinkTypeId);
+            ViewData["StructInstituteId"] = new SelectList(_context.StructInstitutes, "StructInstituteId", "StructInstituteName", instituteLink.StructInstituteId);
             return View(instituteLink);
         }
 

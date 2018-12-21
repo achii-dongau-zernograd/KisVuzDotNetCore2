@@ -540,7 +540,15 @@ namespace KisVuzDotNetCore2.Controllers
                     .ThenInclude(tsps=>tsps.StructKaf.StructSubvision)
                 .Include(t => t.TeacherStructKafPostStavka)
                     .ThenInclude(tsps => tsps.Post)
+                .Include(t => t.TeacherStructKafPostStavka)
+                    .ThenInclude(tsps => tsps.EmploymentForm)
                 .Where(t => t.AppUserId == user.Id)
+                .ToListAsync();
+
+            user.AppUserStructSubvisions = await context.AppUserStructSubvisions
+                .Include(a => a.Post)
+                .Include(a => a.EmploymentForm)
+                .Where(a => a.AppUserId == user.Id)
                 .ToListAsync();
 
             ViewBag.CanEdit = canEdit;

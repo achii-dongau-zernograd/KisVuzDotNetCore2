@@ -1,0 +1,26 @@
+﻿@model KisVuzDotNetCore2.Models.Common.EmploymentForm
+
+@{
+    ViewData["Title"] = "Удаление формы занятости";
+}
+
+<h2>Удаление формы занятости</h2>
+
+<h3>Вы действительно хотите удалить форму занятости?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmploymentFormName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmploymentFormName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EmploymentFormId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

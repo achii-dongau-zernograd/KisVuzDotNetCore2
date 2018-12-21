@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20181218044533_AppUserStructSubvisions")]
+    partial class AppUserStructSubvisions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2695,8 +2696,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("TeacherStructKafPostStavkaId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("EmploymentFormId");
-
                     b.Property<int>("PostId");
 
                     b.Property<double>("Stavka");
@@ -2708,8 +2707,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("TeacherId");
 
                     b.HasKey("TeacherStructKafPostStavkaId");
-
-                    b.HasIndex("EmploymentFormId");
 
                     b.HasIndex("PostId");
 
@@ -4001,7 +3998,7 @@ namespace KisVuzDotNetCore2.Migrations
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.AppUserStructSubvision", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
-                        .WithMany("AppUserStructSubvisions")
+                        .WithMany()
                         .HasForeignKey("AppUserId");
 
                     b.HasOne("KisVuzDotNetCore2.Models.Common.EmploymentForm", "EmploymentForm")
@@ -4110,10 +4107,6 @@ namespace KisVuzDotNetCore2.Migrations
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.TeacherStructKafPostStavka", b =>
                 {
-                    b.HasOne("KisVuzDotNetCore2.Models.Common.EmploymentForm", "EmploymentForm")
-                        .WithMany()
-                        .HasForeignKey("EmploymentFormId");
-
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.Post", "Post")
                         .WithMany()
                         .HasForeignKey("PostId")
