@@ -1,141 +1,119 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Nir;
 using Microsoft.AspNetCore.Authorization;
+using KisVuzDotNetCore2.Infrastructure;
 
 namespace KisVuzDotNetCore2.Controllers.Nir
 {
     [Authorize(Roles = "Администраторы, НИЧ")]
     public class ScienceJournalsController : Controller
     {
-        private readonly AppIdentityDBContext _context;
+        private readonly IScienceJournalRepository _scienceJournalRepository;
+        private readonly ISelectListRepository _selectListRepository;
 
-        public ScienceJournalsController(AppIdentityDBContext context)
+        public ScienceJournalsController(IScienceJournalRepository scienceJournalRepository, ISelectListRepository selectListRepository)
         {
-            _context = context;
+            _scienceJournalRepository = scienceJournalRepository;
+            _selectListRepository = selectListRepository;
         }
 
         // GET: ScienceJournals
         public async Task<IActionResult> Index()
         {
-            var scienceJournal = _context.ScienceJournals
-                .Include(m => m.ScienceJournalCitationBases)
-                    .ThenInclude(a=>a.CitationBase);
-
+            var scienceJournal = _scienceJournalRepository.GetScienceJournals();
             return View(scienceJournal);
         }
 
-        // GET: ScienceJournals/Create
-        public IActionResult Create()
+        // GET: ScienceJournals/CreateOrEdit
+        public IActionResult CreateOrEdit(int? id)
         {
-            return View();
+            var scienceJournal = _scienceJournalRepository.GetScienceJournal(id);
+            if (scienceJournal == null) return NotFound();
+            ViewBag.CitationBases = _selectListRepository.GetSelectListCitatonBases();
+            return View(scienceJournal);
         }
 
-        // POST: ScienceJournals/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: ScienceJournals/CreateOrEdit
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ScienceJournalId,ScienceJournalName,IsVak,IsZarubejn,ELibraryLink")] ScienceJournal scienceJournal)
+        public IActionResult CreateOrEdit(ScienceJournal scienceJournal,
+            int CitationBaseIdAdd, int CitationBaseIdRemove,
+            CreateOrEditNirDataModeEnum mode)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(scienceJournal);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(scienceJournal);
-        }
+            ScienceJournal scienceJournalEntry = _scienceJournalRepository.GetScienceJournal(scienceJournal.ScienceJournalId);
 
-        // GET: ScienceJournals/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
+            if (scienceJournalEntry == null) {
+                _scienceJournalRepository.CreateScienceJournal(scienceJournal);
+                scienceJournalEntry = scienceJournal;
             }
 
-            var scienceJournal = await _context.ScienceJournals.SingleOrDefaultAsync(m => m.ScienceJournalId == id);
-            if (scienceJournal == null)
-            {
-                return NotFound();
-            }
-            return View(scienceJournal);
-        }
+            else {
+                scienceJournal.ScienceJournalCitationBases = scienceJournalEntry.ScienceJournalCitationBases;
+                _scienceJournalRepository.UpdateScienceJournal(scienceJournalEntry, scienceJournal);
+            }                     
 
-        // POST: ScienceJournals/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ScienceJournalId,ScienceJournalName,IsVak,IsZarubejn,ELibraryLink")] ScienceJournal scienceJournal)
-        {
-            if (id != scienceJournal.ScienceJournalId)
-            {
-                return NotFound();
-            }
+            switch (mode) {
+                case CreateOrEditNirDataModeEnum.Saving:
+                    _scienceJournalRepository.UpdateScienceJournal(scienceJournalEntry, scienceJournal);
+                    return RedirectToAction("Index");
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(scienceJournal);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ScienceJournalExists(scienceJournal.ScienceJournalId))
-                    {
-                        return NotFound();
+                case CreateOrEditNirDataModeEnum.Canceling:
+                    return RedirectToAction("Index");
+
+                case CreateOrEditNirDataModeEnum.AddingCitationBase:
+                    if (CitationBaseIdAdd != 0) {
+                        var isExists = scienceJournal.ScienceJournalCitationBases.FirstOrDefault(s => s.CitationBaseId == CitationBaseIdAdd) != null;
+                        if (!isExists)
+                        {
+                            scienceJournal.ScienceJournalCitationBases.Add(new ScienceJournalCitationBase {
+                                CitationBaseId = CitationBaseIdAdd });
+                            _scienceJournalRepository.UpdateScienceJournal(scienceJournalEntry, scienceJournal);
+                        }
                     }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(scienceJournal);
-        }
+                    break;
 
+                case CreateOrEditNirDataModeEnum.EditingCitationBase:
+                    break;
+
+                case CreateOrEditNirDataModeEnum.RemovingCitationBase:
+                    if (CitationBaseIdRemove != 0) {
+                        var citationBaseToRemove = scienceJournal.ScienceJournalCitationBases.FirstOrDefault(s => s.CitationBaseId == CitationBaseIdRemove);
+                        if (citationBaseToRemove != null) {
+                            scienceJournal.ScienceJournalCitationBases.Remove(citationBaseToRemove);
+                            _scienceJournalRepository.UpdateScienceJournal(scienceJournalEntry, scienceJournal);
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
+            ViewBag.ScienseJournal = _scienceJournalRepository.GetScienceJournals();
+            ViewBag.CitationBase = _scienceJournalRepository.GetCitationBases();
+
+            return View(scienceJournalEntry);
+        }
+        
         // GET: ScienceJournals/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var scienceJournal = await _context.ScienceJournals
-                .SingleOrDefaultAsync(m => m.ScienceJournalId == id);
-            if (scienceJournal == null)
-            {
-                return NotFound();
-            }
-
-            return View(scienceJournal);
+            if (id == null) return NotFound();
+            var scienceJournalEntry = _scienceJournalRepository.GetScienceJournal(id);
+            if (scienceJournalEntry == null) return NotFound();
+            return View(scienceJournalEntry);
         }
 
         // POST: ScienceJournals/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(ScienceJournal scienceJournal)
         {
-            var scienceJournal = await _context.ScienceJournals.SingleOrDefaultAsync(m => m.ScienceJournalId == id);
-            _context.ScienceJournals.Remove(scienceJournal);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            if (scienceJournal == null) return NotFound();
+            var scienceJournalEntry = _scienceJournalRepository.RemoveScienceJournal(scienceJournal.ScienceJournalId);
 
-        private bool ScienceJournalExists(int id)
-        {
-            return _context.ScienceJournals.Any(e => e.ScienceJournalId == id);
+            return RedirectToAction("Index");
         }
     }
 }

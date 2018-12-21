@@ -1,0 +1,97 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.ScienceJournal
+
+@{
+    ViewData["Title"] = "Добавление сведений о научном журнале";
+}
+
+<h2>Добавление сведений о научном журнале</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateOrEdit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ScienceJournalName" class="control-label"></label>
+                <input asp-for="ScienceJournalName" class="form-control" />
+                <span asp-validation-for="ScienceJournalName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsVak" /> @Html.DisplayNameFor(model => model.IsVak)
+                    </label>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsZarubejn" /> @Html.DisplayNameFor(model => model.IsZarubejn)
+                    </label>
+                </div>
+            </div>
+
+            <hr>
+            <div class="form-group">
+                <label class="control-label">Список баз цитирования</label>
+
+                <div class="row">
+                    <div class="col-md-9">
+
+                        <div class="row">
+                            <div class="col-md-9">
+                                <select name="CitationBaseIdAdd" class="form-control" asp-items="ViewBag.CitationBases">
+                                    <option value="0">Выберите базу цитирования и нажмите кнопку "Добавить"</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.AddingCitationBase" value="Добавить" class="btn btn-primary btn-block form-control" />
+                            </div>
+                        </div>
+
+                        <br />
+                        <label class="control-label">Добавленные базы цитирования</label>
+                        <ul class="list-group">
+                            @if (Model.ScienceJournalCitationBases == null || Model.ScienceJournalCitationBases.Count == 0)
+                            {
+                                <li class="list-group-item text-danger">
+                                    Базы цитирования не добавлены
+                                </li>
+                            }
+                            else
+                            {
+                                foreach (var scienceJournalCitationBase in Model.ScienceJournalCitationBases)
+                                {
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                @scienceJournalCitationBase.CitationBase.CitationBaseName
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.RemovingCitationBase" asp-route-CitationBaseIdRemove="@scienceJournalCitationBase.CitationBaseId" value="Удалить" class="btn btn-danger btn-block" />
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ELibraryLink" class="control-label"></label>
+                <input asp-for="ELibraryLink" class="form-control" />
+                <span asp-validation-for="ELibraryLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="ScienceJournalId" value="@Model.ScienceJournalId" />
+                <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.Saving" value="Сохранить" class="btn btn-primary" />
+                <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.Canceling" value="Отмена" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+  
+</div>
+

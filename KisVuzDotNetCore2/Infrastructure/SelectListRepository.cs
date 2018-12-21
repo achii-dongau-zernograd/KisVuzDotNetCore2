@@ -327,5 +327,15 @@ namespace KisVuzDotNetCore2.Infrastructure
                 "PatentVidId", "PatentVidName", selectedId);
         }
 
+        /// <summary>
+        /// Возвращает список баз цитирования
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListCitatonBases(int selectedId = 0)
+        {
+            return new SelectList(_context.CitationBases.OrderBy(c => c.CitationBaseName),
+                "CitationBaseId", "CitationBaseName", selectedId);
+        }
     }
 }

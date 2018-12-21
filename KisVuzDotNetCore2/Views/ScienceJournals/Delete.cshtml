@@ -28,6 +28,12 @@
             @Html.DisplayFor(model => model.IsZarubejn)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.ScienceJournalCitationBases)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScienceJournalCitationBases)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.ELibraryLink)
         </dt>
         <dd>
@@ -35,7 +41,7 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="DeleteConfirmed">
         <input type="hidden" asp-for="ScienceJournalId" />
         <input type="submit" value="Удалить" class="btn btn-danger" />
         <a asp-action="Index"class="btn btn-primary">Отмена</a>
