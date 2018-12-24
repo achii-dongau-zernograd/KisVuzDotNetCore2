@@ -63,7 +63,7 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// Список тем НИР, которым соответствует статья
         /// </summary>
         [Display(Name = "Темы НИР")]
-        public List<ArticleNirTema> ArticleNirTemas { get; set; }
+        public List<ArticleNirTema> ArticleNirTemas { get; set; } = new List<ArticleNirTema>();
 
         /// <summary>
         /// Список специальностей научных работников, которым соответствует статья

@@ -54,6 +54,7 @@ namespace KisVuzDotNetCore2
             services.AddTransient<ISelectListRepository, SelectListRepository>();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IScienceJournalRepository, ScienceJournalRepository>();
+            services.AddTransient<IArticlesRepository, ArticlesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
