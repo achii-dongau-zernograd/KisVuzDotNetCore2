@@ -9,27 +9,34 @@ using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Nir;
 using Microsoft.AspNetCore.Authorization;
 using KisVuzDotNetCore2.Models.Common;
+using KisVuzDotNetCore2.Infrastructure;
+using Microsoft.AspNetCore.Http;
+using KisVuzDotNetCore2.Models.Files;
 
 namespace KisVuzDotNetCore2.Controllers.Nir
 {
     [Authorize(Roles ="Администраторы, НИЧ")]
     public class ArticlesController : Controller
     {
-        private readonly AppIdentityDBContext _context;
+        private readonly IArticlesRepository _articlesRepository;
+        private readonly ISelectListRepository _selectListRepository;
+        private readonly IFileModelRepository _fileModelRepository;
 
-        public ArticlesController(AppIdentityDBContext context)
+
+        public ArticlesController(IArticlesRepository articlesRepository,
+            ISelectListRepository selectListRepository,
+            IFileModelRepository fileModelRepository)
         {
-            _context = context;
+            _articlesRepository = articlesRepository;
+            _selectListRepository = selectListRepository;
+            _fileModelRepository = fileModelRepository;
         }
 
         // GET: Articles
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var appIdentityDBContext = _context.Articles
-                .Include(a => a.FileModel)
-                .Include(a => a.ScienceJournal)
-                .Include(a=>a.RowStatus);
-            return View(await appIdentityDBContext.ToListAsync());
+            var articles = _articlesRepository.GetArticles();
+            return View(articles);
         }
 
         /// <summary>
@@ -41,106 +48,175 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         [ValidateAntiForgeryToken]
         public IActionResult ConfirmArticle(int articleId)
         {
-            var article = _context.Articles.SingleOrDefault(a => a.ArticleId == articleId);
-            article.RowStatusId = (int)RowStatusEnum.Confirmed;
-            _context.SaveChanges();
+            _articlesRepository.ConfirmArticle(articleId);            
             return RedirectToAction("Index");
         }
-
+               
         
-        // GET: Articles/Create
-        public IActionResult Create()
-        {
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Name");
-            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalName");
-            return View();
-        }
 
-        // POST: Articles/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ArticleId,ArticleName,ScienceJournalId,VipuskNumber,Pages,FileModelId")] Article article)
+        public IActionResult CreateOrEditArticle(int? id)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(article);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Name", article.FileModelId);
-            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalName", article.ScienceJournalId);
-            return View(article);
-        }
-
-        // GET: Articles/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var article = await _context.Articles.SingleOrDefaultAsync(m => m.ArticleId == id);
+            Article article = _articlesRepository.GetArticle(id);
             if (article == null)
             {
-                return NotFound();
+                article = new Article();
             }
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Name", article.FileModelId);
-            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalName", article.ScienceJournalId);
+
+            ViewBag.Authors = _selectListRepository.GetSelectListAuthors();
+            ViewBag.ScienceJournals = _selectListRepository.GetSelectListScienceJournals(article.ScienceJournalId);
+            ViewBag.Years = _selectListRepository.GetSelectListYears(article.YearId);
+            ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
+            ViewBag.NirTemas = _selectListRepository.GetSelectListNirTemas();
+
             return View(article);
         }
 
-        // POST: Articles/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ArticleId,ArticleName,ScienceJournalId,VipuskNumber,Pages,FileModelId")] Article article)
+        public async Task<IActionResult> CreateOrEditArticle(Article article,
+            string AuthorFilter,
+            int AuthorIdAdd, int AuthorIdRemove, decimal AuthorPart,
+            int NirSpecialIdAdd, int NirSpecialIdRemove,
+            int NirTemaIdAdd, int NirTemaIdRemove,
+            CreateOrEditNirDataModeEnum mode, IFormFile uploadFile)
         {
-            if (id != article.ArticleId)
+            Article articleEntry = _articlesRepository.GetArticle(article.ArticleId);
+
+            if (articleEntry == null)
             {
-                return NotFound();
+                if (uploadFile != null)
+                {
+                    FileModel f = await _fileModelRepository.UploadArticleAsync(article, uploadFile);
+                }
+                _articlesRepository.AddArticle(article);
+                articleEntry = article;
+            }
+            else
+            {
+                if (uploadFile != null)
+                {
+                    FileModel f = await _fileModelRepository.UploadArticleAsync(articleEntry, uploadFile);
+                    article.FileModelId = articleEntry.FileModelId;
+                }
+                article.ArticleNirSpecials = articleEntry.ArticleNirSpecials;
+                article.ArticleAuthors = articleEntry.ArticleAuthors;
+                article.ArticleNirTemas = articleEntry.ArticleNirTemas;
+                _articlesRepository.UpdateArticle(articleEntry, article);
             }
 
-            if (ModelState.IsValid)
+
+            switch (mode)
             {
-                try
-                {
-                    _context.Update(article);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ArticleExists(article.ArticleId))
+                case CreateOrEditNirDataModeEnum.Saving:
+                    article.RowStatusId = (int)RowStatusEnum.NotConfirmed;
+                    _articlesRepository.UpdateArticle(articleEntry, article);
+                    return RedirectToAction(nameof(Index));
+                case CreateOrEditNirDataModeEnum.Canceling:
+                    if (article.RowStatusId == null)
                     {
-                        return NotFound();
+                        _articlesRepository.RemoveArticle(articleEntry.ArticleId);
                     }
-                    else
+                    return RedirectToAction(nameof(Index));
+                case CreateOrEditNirDataModeEnum.AddingAuthor:
+                    if (AuthorIdAdd != 0)
                     {
-                        throw;
+                        var isExists = article.ArticleAuthors.FirstOrDefault(a => a.AuthorId == AuthorIdAdd) != null;
+                        if (!isExists)
+                        {
+                            article.ArticleAuthors.Add(new ArticleAuthor
+                            {
+                                AuthorId = AuthorIdAdd,
+                                AuthorPart = AuthorPart
+                            });
+                            _articlesRepository.UpdateArticle(articleEntry, article);
+                        }
                     }
-                }
-                return RedirectToAction(nameof(Index));
+                    break;
+                case CreateOrEditNirDataModeEnum.EditingAuthor:
+                    break;
+                case CreateOrEditNirDataModeEnum.RemovingAuthor:
+                    if (AuthorIdRemove != 0)
+                    {
+                        var articleAuthorsToRemove = article.ArticleAuthors.FirstOrDefault(aa => aa.AuthorId == AuthorIdRemove);
+                        if (articleAuthorsToRemove != null)
+                        {
+                            article.ArticleAuthors.Remove(articleAuthorsToRemove);
+                            _articlesRepository.UpdateArticle(articleEntry, article);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.ApplyAuthorFilter:
+                    break;
+                case CreateOrEditNirDataModeEnum.AddingNirSpecial:
+                    if (NirSpecialIdAdd != 0)
+                    {
+                        var isExists = article.ArticleNirSpecials.FirstOrDefault(s => s.NirSpecialId == NirSpecialIdAdd) != null;
+                        if (!isExists)
+                        {
+                            article.ArticleNirSpecials.Add(new ArticleNirSpecial { NirSpecialId = NirSpecialIdAdd });
+                            _articlesRepository.UpdateArticle(articleEntry, article);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.EditingNirSpecial:
+                    break;
+                case CreateOrEditNirDataModeEnum.RemovingNirSpecial:
+                    if (NirSpecialIdRemove != 0)
+                    {
+                        var articleToRemove = article.ArticleNirSpecials.FirstOrDefault(s => s.NirSpecialId == NirSpecialIdRemove);
+                        if (articleToRemove != null)
+                        {
+                            article.ArticleNirSpecials.Remove(articleToRemove);
+                            _articlesRepository.UpdateArticle(articleEntry, article);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.AddingNirTema:
+                    if (NirTemaIdAdd != 0)
+                    {
+                        var isExists = article.ArticleNirTemas.FirstOrDefault(s => s.NirTemaId == NirTemaIdAdd) != null;
+                        if (!isExists)
+                        {
+                            article.ArticleNirTemas.Add(new ArticleNirTema { NirTemaId = NirTemaIdAdd });
+                            _articlesRepository.UpdateArticle(articleEntry, article);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.EditingNirTema:
+                    break;
+                case CreateOrEditNirDataModeEnum.RemovingNirTema:
+                    if (NirTemaIdRemove != 0)
+                    {
+                        var articleToRemove = article.ArticleNirTemas.FirstOrDefault(s => s.NirTemaId == NirTemaIdRemove);
+                        if (articleToRemove != null)
+                        {
+                            article.ArticleNirTemas.Remove(articleToRemove);
+                            _articlesRepository.UpdateArticle(articleEntry, article);
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Name", article.FileModelId);
-            ViewData["ScienceJournalId"] = new SelectList(_context.ScienceJournals, "ScienceJournalId", "ScienceJournalName", article.ScienceJournalId);
-            return View(article);
+
+            ViewBag.AuthorFilter = AuthorFilter;
+            ViewBag.Authors = _selectListRepository.GetSelectListAuthors(AuthorFilter);
+            ViewBag.ScienceJournals = _selectListRepository.GetSelectListScienceJournals(article.ScienceJournalId);
+            ViewBag.Years = _selectListRepository.GetSelectListYears(article.YearId);
+            ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
+            ViewBag.NirTemas = _selectListRepository.GetSelectListNirTemas();
+
+            return View(articleEntry);
         }
 
         // GET: Articles/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var article = await _context.Articles
-                .Include(a => a.FileModel)
-                .Include(a => a.ScienceJournal)
-                .SingleOrDefaultAsync(m => m.ArticleId == id);
+            var article = _articlesRepository.GetArticle(id);
             if (article == null)
             {
                 return NotFound();
@@ -152,17 +228,11 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         // POST: Articles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var article = await _context.Articles.SingleOrDefaultAsync(m => m.ArticleId == id);
-            _context.Articles.Remove(article);
-            await _context.SaveChangesAsync();
+            _articlesRepository.RemoveArticle(id);
             return RedirectToAction(nameof(Index));
         }
-
-        private bool ArticleExists(int id)
-        {
-            return _context.Articles.Any(e => e.ArticleId == id);
-        }
+        
     }
 }

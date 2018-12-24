@@ -40,7 +40,15 @@
                 @Html.DisplayFor(modelItem => item.EduAccredDateExpiration)
             </td>
             <td>
-                <a href="/@item.EduAccredFile.Path">@item.EduAccredFile.Name</a>
+                @if (item.EduAccredFile != null)
+                {
+                    <a href="/@item.EduAccredFile.Path">@item.EduAccredFile.Name</a>
+                }
+                else
+                {
+                    <text>-</text>
+                }
+
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EduAccredId">Редактировать</a> |

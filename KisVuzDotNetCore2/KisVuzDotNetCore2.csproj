@@ -534,6 +534,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Articles\CreateOrEditArticle.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\MetodKomissiyaMemberArm\FondOcenochnihSredstvCreateOrEdit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
