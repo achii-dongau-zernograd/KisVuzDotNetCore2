@@ -45,7 +45,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// </summary>
         /// <param name="selectedId"></param>
         /// <returns></returns>
-        SelectList GetSelectListCitatonBases(int selectedId = 0);
+        SelectList GetSelectListCitationBases(int selectedId = 0);
 
         /// <summary>
         /// Возвращает список ФИО преподавателей

@@ -55,6 +55,10 @@ namespace KisVuzDotNetCore2.Models.Nir
         public void UpdateScienceJournal(ScienceJournal scienceJournalEntry, ScienceJournal scienceJournal)
         {
             scienceJournalEntry.ScienceJournalName = scienceJournal.ScienceJournalName;
+            scienceJournalEntry.IsVak = scienceJournal.IsVak;
+            scienceJournalEntry.IsZarubejn = scienceJournal.IsZarubejn;
+            scienceJournalEntry.ELibraryLink = scienceJournal.ELibraryLink;
+            scienceJournalEntry.ScienceJournalCitationBases = scienceJournal.ScienceJournalCitationBases;
 
             if (scienceJournal.ScienceJournalCitationBases != null && scienceJournal.ScienceJournalCitationBases.Count > 0)
             {
@@ -84,6 +88,7 @@ namespace KisVuzDotNetCore2.Models.Nir
         public void CreateScienceJournal(ScienceJournal scienceJournal)
         {
             if (scienceJournal.ScienceJournalId != 0) return;
+
 
             _context.ScienceJournals.Add(scienceJournal);
 

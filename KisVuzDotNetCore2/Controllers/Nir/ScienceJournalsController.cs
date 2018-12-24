@@ -31,7 +31,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         {
             var scienceJournal = _scienceJournalRepository.GetScienceJournal(id);
             if (scienceJournal == null) return NotFound();
-            ViewBag.CitationBases = _selectListRepository.GetSelectListCitatonBases();
+            
+            ViewBag.CitationBases = _selectListRepository.GetSelectListCitationBases();
             return View(scienceJournal);
         }
 
@@ -47,7 +48,6 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 _scienceJournalRepository.CreateScienceJournal(scienceJournal);
                 scienceJournalEntry = scienceJournal;
             }
-
             else {
                 scienceJournal.ScienceJournalCitationBases = scienceJournalEntry.ScienceJournalCitationBases;
                 _scienceJournalRepository.UpdateScienceJournal(scienceJournalEntry, scienceJournal);
@@ -57,10 +57,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 case CreateOrEditNirDataModeEnum.Saving:
                     _scienceJournalRepository.UpdateScienceJournal(scienceJournalEntry, scienceJournal);
                     return RedirectToAction("Index");
-
                 case CreateOrEditNirDataModeEnum.Canceling:
                     return RedirectToAction("Index");
-
                 case CreateOrEditNirDataModeEnum.AddingCitationBase:
                     if (CitationBaseIdAdd != 0) {
                         var isExists = scienceJournal.ScienceJournalCitationBases.FirstOrDefault(s => s.CitationBaseId == CitationBaseIdAdd) != null;
@@ -72,10 +70,8 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                         }
                     }
                     break;
-
                 case CreateOrEditNirDataModeEnum.EditingCitationBase:
                     break;
-
                 case CreateOrEditNirDataModeEnum.RemovingCitationBase:
                     if (CitationBaseIdRemove != 0) {
                         var citationBaseToRemove = scienceJournal.ScienceJournalCitationBases.FirstOrDefault(s => s.CitationBaseId == CitationBaseIdRemove);
@@ -85,13 +81,11 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                         }
                     }
                     break;
-
                 default:
                     break;
             }
-
-            ViewBag.ScienseJournal = _scienceJournalRepository.GetScienceJournals();
-            ViewBag.CitationBase = _scienceJournalRepository.GetCitationBases();
+                        
+            ViewBag.CitationBases = _selectListRepository.GetSelectListCitationBases();
 
             return View(scienceJournalEntry);
         }

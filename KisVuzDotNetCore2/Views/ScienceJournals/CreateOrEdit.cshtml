@@ -8,7 +8,7 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form asp-action="CreateOrEdit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -16,14 +16,12 @@
                 <input asp-for="ScienceJournalName" class="form-control" />
                 <span asp-validation-for="ScienceJournalName" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <div class="checkbox">
                     <label>
                         <input asp-for="IsVak" /> @Html.DisplayNameFor(model => model.IsVak)
                     </label>
                 </div>
-
             </div>
             <div class="form-group">
                 <div class="checkbox">
@@ -32,14 +30,11 @@
                     </label>
                 </div>
             </div>
-
             <hr>
             <div class="form-group">
                 <label class="control-label">Список баз цитирования</label>
-
                 <div class="row">
                     <div class="col-md-9">
-
                         <div class="row">
                             <div class="col-md-9">
                                 <select name="CitationBaseIdAdd" class="form-control" asp-items="ViewBag.CitationBases">

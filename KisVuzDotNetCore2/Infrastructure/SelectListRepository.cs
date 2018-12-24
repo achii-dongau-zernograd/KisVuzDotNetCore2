@@ -17,6 +17,10 @@ namespace KisVuzDotNetCore2.Infrastructure
     {
         private readonly AppIdentityDBContext _context;
 
+        /// <summary>
+        /// Внедрение зависимостей
+        /// </summary>
+        /// <param name="context"></param>
         public SelectListRepository(AppIdentityDBContext context)
         {
             _context = context;
@@ -332,7 +336,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// </summary>
         /// <param name="selectedId"></param>
         /// <returns></returns>
-        public SelectList GetSelectListCitatonBases(int selectedId = 0)
+        public SelectList GetSelectListCitationBases(int selectedId = 0)
         {
             return new SelectList(_context.CitationBases.OrderBy(c => c.CitationBaseName),
                 "CitationBaseId", "CitationBaseName", selectedId);

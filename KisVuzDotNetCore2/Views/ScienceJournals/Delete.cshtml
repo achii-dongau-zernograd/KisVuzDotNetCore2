@@ -31,7 +31,10 @@
             @Html.DisplayNameFor(model => model.ScienceJournalCitationBases)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ScienceJournalCitationBases)
+            @foreach (var scienceJournalCitationBase in Model.ScienceJournalCitationBases)
+            {
+                <p>@scienceJournalCitationBase.CitationBase.CitationBaseName</p>
+            }
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ELibraryLink)
