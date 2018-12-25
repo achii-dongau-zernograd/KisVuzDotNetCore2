@@ -7,150 +7,236 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Nir;
+using Microsoft.AspNetCore.Authorization;
+using KisVuzDotNetCore2.Models.Users;
+using KisVuzDotNetCore2.Infrastructure;
+using KisVuzDotNetCore2.Models.Files;
+using Microsoft.AspNetCore.Http;
+using KisVuzDotNetCore2.Models.Common;
 
 namespace KisVuzDotNetCore2.Controllers.Nir
 {
+    [Authorize(Roles = "Администраторы, НИЧ")]
     public class PatentsController : Controller
-    {
-        private readonly AppIdentityDBContext _context;
+    {       
+        private ISelectListRepository _selectListRepository;
+        private IFileModelRepository _fileModelRepository;
+        private IPatentRepository _patentRepository;
 
-        public PatentsController(AppIdentityDBContext context)
+
+        public PatentsController(            
+            ISelectListRepository selectListRepository,
+            IFileModelRepository fileModelRepository,
+            IPatentRepository patentRepository)
+        {            
+            _selectListRepository = selectListRepository;
+            _fileModelRepository = fileModelRepository;
+            _patentRepository = patentRepository;
+        }
+
+        /// <summary>
+        /// Подтверждение патента (свидетельства)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ConfirmPatent(int patentId)
         {
-            _context = context;
+            _patentRepository.ConfirmPatent(patentId);
+            return RedirectToAction("Index");
         }
 
         // GET: Patents
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var appIdentityDBContext = _context.Patents.Include(p => p.FileModel).Include(p => p.PatentVid).Include(p => p.RowStatus).Include(p => p.Year);
-            return View(await appIdentityDBContext.ToListAsync());
-        }
-        
-        // GET: Patents/Create
-        public IActionResult Create()
+            List<Patent> userPatents = _patentRepository.GetPatents();
+            return View(userPatents);
+        }               
+
+        // GET: Patents/CreateOrEditPatent
+        public IActionResult CreateOrEdit(int? id)
         {
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Name");
-            ViewData["PatentVidId"] = new SelectList(_context.PatentVids, "PatentVidId", "PatentVidName");
-            ViewData["RowStatusId"] = new SelectList(_context.RowStatuses, "RowStatusId", "RowStatusName");
-            ViewData["YearId"] = new SelectList(_context.Years, "YearId", "YearName");
-            return View();
+            Patent patent = _patentRepository.GetPatent(id);
+            if (patent == null) return NotFound();
+
+            ViewBag.Authors = _selectListRepository.GetSelectListAuthors();
+            ViewBag.Years = _selectListRepository.GetSelectListYears();
+            ViewBag.PatentVids = _selectListRepository.GetSelectListPatentVids();
+            ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
+            ViewBag.NirTemas = _selectListRepository.GetSelectListNirTemas();
+
+            return View(patent);
         }
 
-        // POST: Patents/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Patents/CreateOrEditPatent        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PatentId,PatentName,PatentNumber,YearId,IsZarubejn,PatentOwner,IsACHII,PatentVidId,FileModelId,RowStatusId")] Patent patent)
+        public async Task<IActionResult> CreateOrEdit(Patent patent,
+            string AuthorFilter,
+            int AuthorIdAdd, int AuthorIdRemove, decimal AuthorPart,
+            int NirSpecialIdAdd, int NirSpecialIdRemove,
+            int NirTemaIdAdd, int NirTemaIdRemove,
+            CreateOrEditNirDataModeEnum mode, IFormFile uploadFile)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(patent);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Id", patent.FileModelId);
-            ViewData["PatentVidId"] = new SelectList(_context.PatentVids, "PatentVidId", "PatentVidName", patent.PatentVidId);
-            ViewData["RowStatusId"] = new SelectList(_context.RowStatuses, "RowStatusId", "RowStatusName", patent.RowStatusId);
-            ViewData["YearId"] = new SelectList(_context.Years, "YearId", "YearId", patent.YearId);
-            return View(patent);
-        }
+            Patent patentEntry = _patentRepository.GetPatent(patent.PatentId);
 
-        // GET: Patents/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
+            if (patentEntry == null)
             {
-                return NotFound();
-            }
-
-            var patent = await _context.Patents.SingleOrDefaultAsync(m => m.PatentId == id);
-            if (patent == null)
-            {
-                return NotFound();
-            }
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Id", patent.FileModelId);
-            ViewData["PatentVidId"] = new SelectList(_context.PatentVids, "PatentVidId", "PatentVidName", patent.PatentVidId);
-            ViewData["RowStatusId"] = new SelectList(_context.RowStatuses, "RowStatusId", "RowStatusName", patent.RowStatusId);
-            ViewData["YearId"] = new SelectList(_context.Years, "YearId", "YearName", patent.YearId);
-            return View(patent);
-        }
-
-        // POST: Patents/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PatentId,PatentName,PatentNumber,YearId,IsZarubejn,PatentOwner,IsACHII,PatentVidId,FileModelId,RowStatusId")] Patent patent)
-        {
-            if (id != patent.PatentId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (uploadFile != null)
                 {
-                    _context.Update(patent);
-                    await _context.SaveChangesAsync();
+                    FileModel f = await _fileModelRepository.UploadPatentAsync(patent, uploadFile);
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PatentExists(patent.PatentId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _patentRepository.AddPatent(patent);
+                patentEntry = patent;
             }
-            ViewData["FileModelId"] = new SelectList(_context.Files, "Id", "Id", patent.FileModelId);
-            ViewData["PatentVidId"] = new SelectList(_context.PatentVids, "PatentVidId", "PatentVidName", patent.PatentVidId);
-            ViewData["RowStatusId"] = new SelectList(_context.RowStatuses, "RowStatusId", "RowStatusName", patent.RowStatusId);
-            ViewData["YearId"] = new SelectList(_context.Years, "YearId", "YearName", patent.YearId);
-            return View(patent);
-        }
+            else
+            {
+                if (uploadFile != null)
+                {
+                    FileModel f = await _fileModelRepository.UploadPatentAsync(patentEntry, uploadFile);
+                    patent.FileModelId = patentEntry.FileModelId;
+                }
+
+                patent.PatentAuthors = patentEntry.PatentAuthors;
+                patent.PatentVid = patentEntry.PatentVid;
+                patent.PatentNirSpecials = patentEntry.PatentNirSpecials;
+                patent.PatentNirTemas = patentEntry.PatentNirTemas;
+                _patentRepository.UpdatePatent(patentEntry, patent);
+            }
+
+            switch (mode)
+            {
+                case CreateOrEditNirDataModeEnum.Saving:
+                    patent.RowStatusId = (int)RowStatusEnum.NotConfirmed;
+                    _patentRepository.UpdatePatent(patentEntry, patent);
+                    return RedirectToAction("Index");
+
+                case CreateOrEditNirDataModeEnum.Canceling:
+                    if (patent.RowStatusId == null)
+                    {
+                        _patentRepository.RemovePatent(patentEntry.PatentId);
+                    }
+                    return RedirectToAction("Index");
+
+                case CreateOrEditNirDataModeEnum.AddingAuthor:
+                    if (AuthorIdAdd != 0)
+                    {
+                        var isExists = patent.PatentAuthors.FirstOrDefault(p => p.AuthorId == AuthorIdAdd) != null;
+                        if (!isExists)
+                        {
+                            patent.PatentAuthors.Add(new PatentAuthor {
+                                AuthorId = AuthorIdAdd,
+                                AuthorPart = AuthorPart});
+                            _patentRepository.UpdatePatent(patentEntry, patent);
+                        }
+                    }
+                    break;
+
+                case CreateOrEditNirDataModeEnum.EditingAuthor:
+                    break;
+
+                case CreateOrEditNirDataModeEnum.RemovingAuthor:
+                    if (AuthorIdRemove!= 0)
+                    {
+                        var patentAuthorsToRemove = patent.PatentAuthors.FirstOrDefault(pp => pp.AuthorId == AuthorIdRemove);
+                        if (patentAuthorsToRemove != null)
+                        {
+                            patent.PatentAuthors.Remove(patentAuthorsToRemove);
+                            _patentRepository.UpdatePatent(patentEntry, patent);
+                        }
+                    }
+                    break;
+
+                case CreateOrEditNirDataModeEnum.ApplyAuthorFilter:
+                    break;
+
+                case CreateOrEditNirDataModeEnum.AddingNirSpecial:
+                    if (NirSpecialIdAdd != 0)
+                    {
+                        var isExists = patent.PatentNirSpecials.FirstOrDefault(s => s.NirSpecialId == NirSpecialIdAdd) != null;
+                        if (!isExists)
+                        {
+                            patent.PatentNirSpecials.Add(new PatentNirSpecial { NirSpecialId = NirSpecialIdAdd});
+                            _patentRepository.UpdatePatent(patentEntry, patent);
+                        }
+                    }
+                    break;
+
+                case CreateOrEditNirDataModeEnum.EditingNirSpecial:
+                    break;
+
+                case CreateOrEditNirDataModeEnum.RemovingNirSpecial:
+                    if (NirSpecialIdRemove != 0)
+                    {
+                        var patentToRemove = patent.PatentNirSpecials.FirstOrDefault(s => s.NirSpecialId == NirSpecialIdRemove);
+                        if (patentToRemove != null)
+                        {
+                            patent.PatentNirSpecials.Remove(patentToRemove);
+                            _patentRepository.UpdatePatent(patentEntry, patent);
+                        }
+                    }
+                    break;
+
+                case CreateOrEditNirDataModeEnum.AddingNirTema:
+                    if(NirTemaIdAdd!=0)
+                    {
+                        var isExists = patent.PatentNirTemas.FirstOrDefault(s => s.NirTemaId == NirTemaIdAdd) != null;
+                        if (!isExists)
+                        {
+                            patent.PatentNirTemas.Add(new PatentNirTema {NirTemaId = NirTemaIdAdd});
+                            _patentRepository.UpdatePatent(patentEntry, patent);
+                        }
+                    }
+                    break;
+
+                case CreateOrEditNirDataModeEnum.EditingNirTema:
+                    break;
+
+                case CreateOrEditNirDataModeEnum.RemovingNirTema:
+                    if(NirTemaIdRemove!=0)
+                    {
+                        var patentToRemove = patent.PatentNirTemas.FirstOrDefault(s => s.NirTemaId == NirTemaIdRemove);
+                        if (patentToRemove != null)
+                        {
+                            patent.PatentNirTemas.Remove(patentToRemove);
+                            _patentRepository.UpdatePatent(patentEntry, patent);
+                        }
+                    }
+                    break;
+                 default:
+                    break;
+            }
+
+            ViewBag.AuthorFilter = AuthorFilter;
+            ViewBag.Authors = _selectListRepository.GetSelectListAuthors(AuthorFilter);
+            ViewBag.Years = _selectListRepository.GetSelectListYears(patent.YearId);
+            ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
+            ViewBag.NirTemas = _selectListRepository.GetSelectListNirTemas();
+
+            return View(patentEntry);
+        }        
 
         // GET: Patents/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var patent = await _context.Patents
-                .Include(p => p.FileModel)
-                .Include(p => p.PatentVid)
-                .Include(p => p.RowStatus)
-                .Include(p => p.Year)
-                .SingleOrDefaultAsync(m => m.PatentId == id);
-            if (patent == null)
-            {
-                return NotFound();
-            }
-
-            return View(patent);
+            if (id == null) return NotFound();
+            var patentEntry = _patentRepository.GetPatent(id);            
+            if (patentEntry == null) return NotFound();    
+            return View(patentEntry);
         }
 
         // POST: Patents/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(Patent patent)
         {
-            var patent = await _context.Patents.SingleOrDefaultAsync(m => m.PatentId == id);
-            _context.Patents.Remove(patent);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (patent == null) return NotFound();
+            var patentEntry = _patentRepository.RemovePatent(patent.PatentId);
+
+            return RedirectToAction("Index");
         }
 
-        private bool PatentExists(int id)
-        {
-            return _context.Patents.Any(e => e.PatentId == id);
-        }
+        
     }
 }
