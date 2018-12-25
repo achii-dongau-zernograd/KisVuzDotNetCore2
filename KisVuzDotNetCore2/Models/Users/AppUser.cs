@@ -140,5 +140,10 @@ namespace KisVuzDotNetCore2.Models
         /// Структурные подразделения, должности и формы занятости пользователя
         /// </summary>
         public List<AppUserStructSubvision> AppUserStructSubvisions { get; set; }
+
+        /// <summary>
+        /// Структурные подразделения, которыми руководит пользователь
+        /// </summary>
+        public List<StructSubvision> StructSubvisions { get; set; }
     }
 }
