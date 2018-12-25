@@ -547,6 +547,7 @@ namespace KisVuzDotNetCore2.Controllers
 
             user.AppUserStructSubvisions = await context.AppUserStructSubvisions
                 .Include(a => a.Post)
+                .Include(a => a.StructSubvision)
                 .Include(a => a.EmploymentForm)
                 .Where(a => a.AppUserId == user.Id)
                 .ToListAsync();

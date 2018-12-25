@@ -33,7 +33,14 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                <a href="@Html.DisplayFor(modelItem => item.ELibraryLink)">@Html.DisplayFor(modelItem => item.ScienceJournalName)</a>
+                @if (item.ELibraryLink != null)
+                {
+                    <a href="@item.ELibraryLink">@item.ScienceJournalName</a>
+                }
+                else
+                {
+                    <p>@item.ScienceJournalName</p>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsVak)
