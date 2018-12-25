@@ -7,7 +7,7 @@
 <h2>Научные журналы</h2>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+    <a asp-action="CreateOrEdit" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -33,7 +33,14 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                <a href="@Html.DisplayFor(modelItem => item.ELibraryLink)">@Html.DisplayFor(modelItem => item.ScienceJournalName)</a>
+                @if (item.ELibraryLink != null)
+                {
+                    <a href="@item.ELibraryLink">@item.ScienceJournalName</a>
+                }
+                else
+                {
+                    <p>@item.ScienceJournalName</p>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsVak)
@@ -50,7 +57,7 @@
                 }
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ScienceJournalId">Редактировать</a> |
+                <a asp-action="CreateOrEdit" asp-route-id="@item.ScienceJournalId">Редактировать</a> |
                 <a asp-action="Delete" asp-route-id="@item.ScienceJournalId">Удалить</a>
             </td>
         </tr>

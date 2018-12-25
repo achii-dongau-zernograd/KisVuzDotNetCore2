@@ -67,41 +67,51 @@
 
                 <p><strong>Email:</strong> @Model.Email</p>
 
-                @if (Model.Teachers != null && Model.Teachers.Count > 0)
+                @if ((Model.AppUserStructSubvisions != null && Model.AppUserStructSubvisions.Count > 0) || (Model.Teachers != null && Model.Teachers.Count > 0))
                 {
-                    <p>                        
-                        @foreach (var teacher in Model.Teachers)
-                        {
-                            if(teacher.TeacherStructKafPostStavka.Count>0)
-                            {
-                                <strong>Должность: </strong>
-                                <ul>
-                                    @foreach (var teacherStructKafPostStavka in teacher.TeacherStructKafPostStavka)
-                                    {
-                                        <li>@teacherStructKafPostStavka.Post.PostName - @teacherStructKafPostStavka.StructKaf.StructSubvision.StructSubvisionName </li>
-                                    }
-                                </ul>
-                            }                            
-                        }
-                    </p>
+                    <strong>Должность: </strong>
+                }
+                <ul>
+                    @if (Model.AppUserStructSubvisions != null && Model.AppUserStructSubvisions.Count > 0)
+                    {
 
-                    <p>
+                        @foreach (var appUserStructSubvision in Model.AppUserStructSubvisions)
+                        {
+                            <li>@appUserStructSubvision.StructSubvision?.StructSubvisionName - @appUserStructSubvision.Post.PostName (@appUserStructSubvision.EmploymentForm?.EmploymentFormName)</li>
+                        }
+                    }
+
+                    @if (Model.Teachers != null && Model.Teachers.Count > 0)
+                    {
                         @foreach (var teacher in Model.Teachers)
                         {
-                            if (teacher.StudentGroupsOfKurator.Count > 0)
+                            if (teacher.TeacherStructKafPostStavka.Count > 0)
                             {
-                                <strong>Куратор: </strong>
-                                <ul>
-                                    @foreach (var studentGroup in teacher.StudentGroupsOfKurator)
-                                    {
-                                        <li>@studentGroup.StudentGroupName </li>
-                                    }
-                                </ul>
+                                @foreach (var teacherStructKafPostStavka in teacher.TeacherStructKafPostStavka)
+                                {
+                                    <li>@teacherStructKafPostStavka.StructKaf.StructSubvision?.StructSubvisionName - @teacherStructKafPostStavka.Post.PostName (@teacherStructKafPostStavka.EmploymentForm?.EmploymentFormName)</li>
+                                }
                             }
                         }
-                    </p>
+                    }
+                </ul>
+                @if (Model.Teachers != null && Model.Teachers.Count > 0)
+                {
+                    @foreach (var teacher in Model.Teachers)
+                    {
+                        if (teacher.StudentGroupsOfKurator.Count > 0)
+                        {
+                            <strong>Куратор: </strong>
+                            <ul>
+                                @foreach (var studentGroup in teacher.StudentGroupsOfKurator)
+                                {
+                                    <li>@studentGroup.StudentGroupName </li>
+                                }
+                            </ul>
+                        }
+                    }
                 }
-            </div>
+                </div>
             <div class="tab-pane" id="qualification">
                 <br />
 

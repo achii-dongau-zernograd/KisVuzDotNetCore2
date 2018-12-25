@@ -52,6 +52,18 @@
         /// <summary>
         /// Удаление темы НИР
         /// </summary>
-        RemovingNirTema = 33
+        RemovingNirTema = 33,
+        /// <summary>
+        /// Добавление базы цитирования
+        /// </summary>
+        AddingCitationBase = 41,
+        /// <summary>
+        /// Редактирование базы цитирования
+        /// </summary>
+        EditingCitationBase = 42,
+        /// <summary>
+        /// Удаление базы цитирования
+        /// </summary>
+        RemovingCitationBase = 43,
     }
 }

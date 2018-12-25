@@ -25,6 +25,9 @@
                 @Html.DisplayNameFor(model => model.StructSubvisionSite)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.StructSubvisionEmail)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.StructSubvisionAdress)
             </th>
             <th>
@@ -38,7 +41,7 @@
         @foreach (var structSubvisionType in structSubvisionTypes)
     {
         <tr>
-            <td colspan="7" class="well text-center"><strong>@structSubvisionType.StructSubvisionTypeName</strong></td>
+            <td colspan="8" class="well text-center"><strong>@structSubvisionType.StructSubvisionTypeName</strong></td>
         </tr>
         @foreach (var item in Model.Where(s=>s.StructSubvisionTypeId== structSubvisionType.StructSubvisionTypeId))
         {
@@ -58,6 +61,9 @@
                 </td>
                 <td>
                     <a href="@Html.DisplayFor(modelItem => item.StructSubvisionSite)">@Html.DisplayFor(modelItem => item.StructSubvisionSite)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StructSubvisionEmail.EmailValue)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.StructSubvisionAdress.GetAddress)

@@ -506,6 +506,10 @@
     <Compile Remove="Migrations\20181207061340_t.Designer.cs" />
     <Compile Remove="Migrations\20181210130843_t.cs" />
     <Compile Remove="Migrations\20181210130843_t.Designer.cs" />
+    <Compile Remove="Migrations\20181218063045_t.cs" />
+    <Compile Remove="Migrations\20181218063045_t.Designer.cs" />
+    <Compile Remove="Migrations\20181225045308_t.cs" />
+    <Compile Remove="Migrations\20181225045308_t.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -532,6 +536,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Articles\CreateOrEditArticle.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\MetodKomissiyaMemberArm\FondOcenochnihSredstvCreateOrEdit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -551,6 +558,9 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\MetodKomissiyaMemberArm\EduPlanPreview.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Components\StructSubvisionChief\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_NichPartial.cshtml">

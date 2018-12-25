@@ -40,6 +40,11 @@ namespace KisVuzDotNetCore2.Models
         /// Справочник годов
         /// </summary>
         public DbSet<Year> Years { get; set; }
+
+        /// <summary>
+        /// Формы занятости (основное, внутреннее совместительство и пр.)
+        /// </summary>
+        public DbSet<EmploymentForm> EmploymentForms { get; set; }
         #endregion
 
         #region Образовательная деятельность (Education)
@@ -840,6 +845,10 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<TeacherMetodKomissiya> TeacherMetodKomissiya { get; set; }
         #endregion
 
+        #region Сотрудники
+        public DbSet<AppUserStructSubvision> AppUserStructSubvisions { get; set; }
+        #endregion
+
         #endregion
         /// <summary>
         /// Инициализация базы данных
@@ -912,6 +921,7 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabasePatents.CreatePatentVids(serviceProvider, configuration);
 
             await InitDatabaseYears.CreateYears(serviceProvider, configuration);
+            await InitDatabaseEmploymentForm.CreateEmploymentForms(serviceProvider, configuration);
         }                
     
     }

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Users
 {
-    [Authorize(Roles = "Администраторы")]
+    [Authorize(Roles = "Администраторы, Отдел кадров")]
     public class TeacherStructKafPostStavkaController : Controller
     {
         private readonly AppIdentityDBContext _context;
@@ -28,6 +28,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 .Include(t => t.Post)
                 .Include(t => t.StructKaf.StructSubvision)
                 .Include(t => t.Teacher)
+                .Include(t => t.EmploymentForm)
                 .OrderBy(t=>t.Teacher.TeacherFio)
                 .ThenBy(t=>t.StructKafId)
                 .ThenBy(t=>t.StavkaDate);
@@ -61,6 +62,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "PostName");
             ViewData["StructKafId"] = new SelectList(_context.StructKafs.Include(sk=>sk.StructSubvision), "StructKafId", "StructSubvision.StructSubvisionName");
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherFio");
+            ViewData["EmploymentForms"] = new SelectList(_context.EmploymentForms, "EmploymentFormId", "EmploymentFormName");
             return View();
         }
 
@@ -69,7 +71,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TeacherStructKafPostStavkaId,TeacherId,StructKafId,PostId,StavkaDate,Stavka")] TeacherStructKafPostStavka teacherStructKafPostStavka)
+        public async Task<IActionResult> Create([Bind("TeacherStructKafPostStavkaId,TeacherId,StructKafId,PostId,StavkaDate,Stavka,EmploymentFormId")] TeacherStructKafPostStavka teacherStructKafPostStavka)
         {
             if (ModelState.IsValid)
             {
@@ -80,6 +82,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "PostName", teacherStructKafPostStavka.PostId);
             ViewData["StructKafId"] = new SelectList(_context.StructKafs.Include(sk => sk.StructSubvision), "StructKafId", "StructSubvision.StructSubvisionName", teacherStructKafPostStavka.StructKafId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherFio", teacherStructKafPostStavka.TeacherId);
+            ViewData["EmploymentForms"] = new SelectList(_context.EmploymentForms, "EmploymentFormId", "EmploymentFormName", teacherStructKafPostStavka.EmploymentFormId);
             return View(teacherStructKafPostStavka);
         }
 
@@ -99,6 +102,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "PostName", teacherStructKafPostStavka.PostId);
             ViewData["StructKafId"] = new SelectList(_context.StructKafs.Include(sk => sk.StructSubvision), "StructKafId", "StructSubvision.StructSubvisionName", teacherStructKafPostStavka.StructKafId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherFio", teacherStructKafPostStavka.TeacherId);
+            ViewData["EmploymentForms"] = new SelectList(_context.EmploymentForms, "EmploymentFormId", "EmploymentFormName", teacherStructKafPostStavka.EmploymentFormId);
             return View(teacherStructKafPostStavka);
         }
 
@@ -107,7 +111,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TeacherStructKafPostStavkaId,TeacherId,StructKafId,PostId,StavkaDate,Stavka")] TeacherStructKafPostStavka teacherStructKafPostStavka)
+        public async Task<IActionResult> Edit(int id, [Bind("TeacherStructKafPostStavkaId,TeacherId,StructKafId,PostId,StavkaDate,Stavka,EmploymentFormId")] TeacherStructKafPostStavka teacherStructKafPostStavka)
         {
             if (id != teacherStructKafPostStavka.TeacherStructKafPostStavkaId)
             {
@@ -137,6 +141,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "PostName", teacherStructKafPostStavka.PostId);
             ViewData["StructKafId"] = new SelectList(_context.StructKafs.Include(sk => sk.StructSubvision), "StructKafId", "StructSubvision.StructSubvisionName", teacherStructKafPostStavka.StructKafId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherFio", teacherStructKafPostStavka.TeacherId);
+            ViewData["EmploymentForms"] = new SelectList(_context.EmploymentForms, "EmploymentFormId", "EmploymentFormName", teacherStructKafPostStavka.EmploymentFormId);
             return View(teacherStructKafPostStavka);
         }
 

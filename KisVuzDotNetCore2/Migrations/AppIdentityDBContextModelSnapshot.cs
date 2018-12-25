@@ -148,6 +148,18 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("AppSettings");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.EmploymentForm", b =>
+                {
+                    b.Property<int>("EmploymentFormId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("EmploymentFormName");
+
+                    b.HasKey("EmploymentFormId");
+
+                    b.ToTable("EmploymentForms");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.BlokDiscipl", b =>
                 {
                     b.Property<int>("BlokDisciplId")
@@ -2494,6 +2506,32 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("UchPosobieVid");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.AppUserStructSubvision", b =>
+                {
+                    b.Property<int>("AppUserStructSubvisionId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<int>("EmploymentFormId");
+
+                    b.Property<int>("PostId");
+
+                    b.Property<int>("StructSubvisionId");
+
+                    b.HasKey("AppUserStructSubvisionId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("EmploymentFormId");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("StructSubvisionId");
+
+                    b.ToTable("AppUserStructSubvisions");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ProfessionalRetraining", b =>
                 {
                     b.Property<int>("ProfessionalRetrainingId")
@@ -2655,6 +2693,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("TeacherStructKafPostStavkaId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("EmploymentFormId");
+
                     b.Property<int>("PostId");
 
                     b.Property<double>("Stavka");
@@ -2666,6 +2706,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("TeacherId");
 
                     b.HasKey("TeacherStructKafPostStavkaId");
+
+                    b.HasIndex("EmploymentFormId");
 
                     b.HasIndex("PostId");
 
@@ -3451,7 +3493,7 @@ namespace KisVuzDotNetCore2.Migrations
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Nir.ScienceJournalAddingClaim", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
-                        .WithMany()
+                        .WithMany("ScienceJournalAddingClaims")
                         .HasForeignKey("AppUserId");
 
                     b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
@@ -3954,6 +3996,28 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.AppUserStructSubvision", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
+                        .WithMany("AppUserStructSubvisions")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Common.EmploymentForm", "EmploymentForm")
+                        .WithMany()
+                        .HasForeignKey("EmploymentFormId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.StructSubvision", "StructSubvision")
+                        .WithMany()
+                        .HasForeignKey("StructSubvisionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ProfessionalRetraining", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
@@ -4044,6 +4108,10 @@ namespace KisVuzDotNetCore2.Migrations
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.TeacherStructKafPostStavka", b =>
                 {
+                    b.HasOne("KisVuzDotNetCore2.Models.Common.EmploymentForm", "EmploymentForm")
+                        .WithMany()
+                        .HasForeignKey("EmploymentFormId");
+
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.Post", "Post")
                         .WithMany()
                         .HasForeignKey("PostId")

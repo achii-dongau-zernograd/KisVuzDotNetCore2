@@ -1,4 +1,5 @@
-﻿using KisVuzDotNetCore2.Models.Struct;
+﻿using KisVuzDotNetCore2.Models.Common;
+using KisVuzDotNetCore2.Models.Struct;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -50,5 +51,16 @@ namespace KisVuzDotNetCore2.Models.Users
         /// </summary>
         [Display(Name = "Количество ставок")]
         public double Stavka { get; set; }
+
+        /// <summary>
+        /// Форма занятости
+        /// </summary>
+        [Display(Name = "Форма занятости")]
+        public EmploymentForm EmploymentForm { get; set; }
+        /// <summary>
+        /// Форма занятости
+        /// </summary>
+        [Display(Name = "Форма занятости")]
+        public int? EmploymentFormId { get; set; }
     }
 }

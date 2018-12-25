@@ -44,6 +44,7 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["StructSubvisionTypes"] = await _context.StructSubvisionTypes.ToListAsync();
             var appIdentityDBContext = _context.StructSubvisions
                 .Include(s => s.StructSubvisionAdress)
+                .Include(s => s.StructSubvisionEmail)
                 .Include(s => s.StructSubvisionPostChief)
                 .Include(s => s.StructSubvisionType)
                 .Include(s => s.StructStandingOrder);
@@ -75,6 +76,7 @@ namespace KisVuzDotNetCore2.Controllers
         public async Task<IActionResult> Create()
         {
             ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress");
+            ViewData["StructSubvisionEmails"] = new SelectList(_context.Emails, "EmailId", "EmailValue");
             ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostName");
             ViewData["StructSubvisionTypes"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeName");            
             ViewData["files"] = new SelectList((await GetFileDataTypePolojenOStructPodrazd()).FileToFileTypes, "FileModelId", "FileModel.Name");
@@ -95,6 +97,7 @@ namespace KisVuzDotNetCore2.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress", structSubvision.StructSubvisionAdressId);
+            ViewData["StructSubvisionEmails"] = new SelectList(_context.Emails, "EmailId", "EmailValue", structSubvision.StructSubvisionEmailId);
             ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostName", structSubvision.StructSubvisionPostChiefId);
             ViewData["StructSubvisionTypes"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeName", structSubvision.StructSubvisionTypeId);
             ViewData["files"] = new SelectList((await GetFileDataTypePolojenOStructPodrazd()).FileToFileTypes, "FileModelId", "FileModel.Name");
@@ -115,6 +118,7 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
             ViewData["StructSubvisionAdressId"] = new SelectList(_context.Addresses, "AddressId", "GetAddress", structSubvision.StructSubvisionAdressId);
+            ViewData["StructSubvisionEmails"] = new SelectList(_context.Emails, "EmailId", "EmailValue", structSubvision.StructSubvisionEmailId);
             ViewData["StructSubvisionPostChiefId"] = new SelectList(_context.Posts, "PostId", "PostName", structSubvision.StructSubvisionPostChiefId);
             ViewData["StructSubvisionTypes"] = new SelectList(_context.StructSubvisionTypes, "StructSubvisionTypeId", "StructSubvisionTypeName", structSubvision.StructSubvisionTypeId);
             ViewData["files"] = new SelectList((await GetFileDataTypePolojenOStructPodrazd()).FileToFileTypes, "FileModelId", "FileModel.Name");

@@ -134,6 +134,16 @@ namespace KisVuzDotNetCore2.Models
         /// Заявки пользователя на добавление
         /// научного журнала (сборника) в справочник
         /// </summary>
-        public List<ScienceJournalAddingClaim> ScienceJournalAddingClaims { get; set; }                              
+        public List<ScienceJournalAddingClaim> ScienceJournalAddingClaims { get; set; }
+
+        /// <summary>
+        /// Структурные подразделения, должности и формы занятости пользователя
+        /// </summary>
+        public List<AppUserStructSubvision> AppUserStructSubvisions { get; set; }
+
+        /// <summary>
+        /// Структурные подразделения, которыми руководит пользователь
+        /// </summary>
+        public List<StructSubvision> StructSubvisions { get; set; }
     }
 }

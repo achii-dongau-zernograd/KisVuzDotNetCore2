@@ -41,6 +41,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListMetodKomissiyaNames(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список баз цитирования
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListCitationBases(int selectedId = 0);
+
+        /// <summary>
         /// Возвращает список ФИО преподавателей
         /// </summary>
         /// <param name="selectedId"></param>
@@ -173,5 +180,6 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// </summary>
         /// <returns></returns>
         SelectList GetSelectListPatentVids(int selectedId = 0);
+
     }
 }

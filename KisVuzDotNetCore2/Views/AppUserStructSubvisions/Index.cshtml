@@ -1,0 +1,52 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Users.AppUserStructSubvision>
+
+@{
+    ViewData["Title"] = "Пользователь - Структурное подразделение - Должность - Форма занятости";
+}
+
+<h2>Пользователь - Структурное подразделение - Должность - Форма занятости</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AppUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmploymentForm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Post)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StructSubvision)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.OrderBy(m=>m.AppUser.GetFullName)) {
+        <tr>
+            <td>
+                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmploymentForm.EmploymentFormName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Post.PostName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StructSubvision.StructSubvisionName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AppUserStructSubvisionId">Редактировать</a> |                
+                <a asp-action="Delete" asp-route-id="@item.AppUserStructSubvisionId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
