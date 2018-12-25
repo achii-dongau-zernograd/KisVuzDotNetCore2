@@ -77,7 +77,7 @@
 
                         @foreach (var appUserStructSubvision in Model.AppUserStructSubvisions)
                         {
-                            <li>@appUserStructSubvision.StructSubvision.StructSubvisionName - @appUserStructSubvision.Post.PostName (@appUserStructSubvision.EmploymentForm?.EmploymentFormName)</li>
+                            <li>@appUserStructSubvision.StructSubvision?.StructSubvisionName - @appUserStructSubvision.Post.PostName (@appUserStructSubvision.EmploymentForm?.EmploymentFormName)</li>
                         }
                     }
 
@@ -89,7 +89,7 @@
                             {
                                 @foreach (var teacherStructKafPostStavka in teacher.TeacherStructKafPostStavka)
                                 {
-                            <li>@teacherStructKafPostStavka.StructKaf.StructSubvision.StructSubvisionName - @teacherStructKafPostStavka.Post.PostName (@teacherStructKafPostStavka.EmploymentForm?.EmploymentFormName)</li>
+                                    <li>@teacherStructKafPostStavka.StructKaf.StructSubvision?.StructSubvisionName - @teacherStructKafPostStavka.Post.PostName (@teacherStructKafPostStavka.EmploymentForm?.EmploymentFormName)</li>
                                 }
                             }
                         }
