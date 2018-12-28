@@ -349,14 +349,23 @@
                                     ctn++;
                                     <tr>
                                         <td>@ctn</td>
-                                        <td>@patentAuthor.Patent.Year</td>
+                                        <td>@patentAuthor.Patent.YearId</td>
                                         <td>@patentAuthor.Patent.PatentName</td>
                                         <td>@patentAuthor.Patent.PatentVid.PatentVidName</td>
                                         <td>@patentAuthor.Patent.PatentNumber</td>
                                         <td>
                                             @foreach (var sc in patentAuthor.Patent.PatentAuthors)
                                             {
-                                                <p>@sc.Author.AuthorName (@sc.AuthorPart)</p>
+                                                if (!string.IsNullOrWhiteSpace(sc.Author?.AppUserId))
+                                                {
+                                                    <p>
+                                                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@sc.Author.AppUserId">@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</a>
+                                                    </p>
+                                                }
+                                                else
+                                                {
+                                                    <p>@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</p>
+                                                }
                                             }
                                         </td>
                                     </tr>

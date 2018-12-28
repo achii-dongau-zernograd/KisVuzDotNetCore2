@@ -521,15 +521,24 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(a => a.ArticleAuthors)
                     .ThenInclude(aa => aa.Article.ScienceJournal.ScienceJournalCitationBases)
                         .ThenInclude(cb => cb.CitationBase)
-
                 .Include(a=>a.ArticleAuthors)
                     .ThenInclude(c=>c.Article.ArticleAuthors)
                         .ThenInclude(a=>a.Author)
 
-
+                .Include(a => a.PatentAuthors)
+                    .ThenInclude(c => c.Patent.PatentAuthors)
+                        .ThenInclude(a => a.Author)
                 .Include(a=>a.PatentAuthors)
                     .ThenInclude(aa=>aa.Patent)
                         .ThenInclude(c=>c.FileModel)
+
+                .Include(a => a.PatentAuthors)
+                    .ThenInclude(aa => aa.Patent)
+                        .ThenInclude(c => c.PatentVid)
+                .Include(a => a.PatentAuthors)
+                    .ThenInclude(aa => aa.Patent)
+                        .ThenInclude(c => c.Year)
+
                 .Where(a => a.AppUserId == user.Id)
                 .ToListAsync();
 
