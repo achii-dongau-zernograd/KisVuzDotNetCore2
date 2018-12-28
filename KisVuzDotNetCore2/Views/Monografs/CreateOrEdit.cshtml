@@ -1,0 +1,61 @@
+﻿@model KisVuzDotNetCore2.Models.Nir.Monograf
+
+@{
+    ViewData["Title"] = "Добавление (редактирование) сведений  о монографии";
+}
+
+<h2>Добавление (редактирование) сведений  о монографии</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MonografId" />
+            <div class="form-group">
+                <label asp-for="MonografName" class="control-label"></label>
+                <input asp-for="MonografName" class="form-control" />
+                <span asp-validation-for="MonografName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="YearId" class="control-label"></label>
+                <select asp-for="YearId" class="form-control" asp-items="ViewBag.Years"></select>
+                <span asp-validation-for="YearId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsACHII" /> @Html.DisplayNameFor(model => model.IsACHII)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                @if (Model.FileModel != null)
+                {
+                    <br />
+                    <label class="control-label">
+                        <a href="/@Model.FileModel.Path">@Model.FileModel.FileName</a>
+                    </label>
+                    <br />
+                    <label class="control-label">
+                        Для замены выберите новый файл
+                    </label>
+                }
+
+                <input type="file" name="uploadFile" class="form-control" />
+                <span asp-validation-for="FileModelId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

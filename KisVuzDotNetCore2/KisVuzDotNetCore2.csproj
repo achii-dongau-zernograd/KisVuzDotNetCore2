@@ -536,6 +536,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Monografs\CreateOrEdit.cshtml" />
+    <None Include="Views\Monografs\Delete.cshtml" />
+    <None Include="Views\Monografs\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="Views\Articles\CreateOrEditArticle.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

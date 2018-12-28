@@ -793,6 +793,25 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<PatentNirSpecial> PatentNirSpecials { get; set; }
 
+        /// <summary>
+        /// Монографии 
+        /// </summary>
+        public DbSet<Monograf> Monografs { get; set; }
+
+        /// <summary>
+        /// Монография - автор
+        /// </summary>
+        public DbSet<MonografAuthor> MonografAuthors { get; set; }
+
+        /// <summary>
+        /// Монография - Тема НИР
+        /// </summary>
+        public DbSet<MonografNirTema> MonografNirTemas { get; set; }
+
+        /// <summary>
+        /// Монография - Специальность научных работников, согласно номенклатуре
+        /// </summary>
+        public DbSet<MonografNirSpecial> MonografNirSpecials { get; set; }
         #endregion
 
         #region Студенты
