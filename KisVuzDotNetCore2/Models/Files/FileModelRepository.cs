@@ -228,5 +228,38 @@ namespace KisVuzDotNetCore2.Models.Files
 
             return patent.FileModel;
         }
+
+        /// <summary>
+        /// Загружает файл монографии (с заменой ранее загруженного)
+        /// </summary>
+        /// <param name="patent"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadMonografAsync(Monograf monograf, IFormFile uploadFile)
+        {
+            if (monograf == null || uploadFile == null) return null;
+
+            FileModel newFileModel = await UploadFileAsync(uploadFile, "Патент (свидетельство)", (FileDataTypeEnum)monograf.MonografId);
+
+            if (newFileModel != null)
+            {
+                int? existingFileModelId = monograf.FileModelId;
+                monograf.FileModelId = newFileModel.Id;
+                monograf.FileModel = newFileModel;
+                await _context.SaveChangesAsync();
+                // Проверка наличия ранее загруженного файла
+                if (existingFileModelId > 0)
+                {
+                    await RemoveFileAsync(existingFileModelId);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+            return monograf.FileModel;
+        }
     }
 }

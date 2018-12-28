@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Common;
+using KisVuzDotNetCore2.Models.Files;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,13 @@ namespace KisVuzDotNetCore2.Models.Nir
     public class ArticlesRepository : IArticlesRepository
     {
         AppIdentityDBContext _context;
+        IFileModelRepository _fileModelRepository;
 
-        public ArticlesRepository(AppIdentityDBContext context)
+        public ArticlesRepository(AppIdentityDBContext context,
+            IFileModelRepository fileModelRepository)
         {
             _context = context;
+            _fileModelRepository = fileModelRepository;
         }
 
         /// <summary>
@@ -80,6 +84,10 @@ namespace KisVuzDotNetCore2.Models.Nir
         {
             var article = GetArticle(articleId);
             _context.Articles.Remove(article);
+            if (article.FileModel != null)
+            {
+                _fileModelRepository.RemoveFileModelAsync(article.FileModel);
+            }
             _context.SaveChanges();
         }
 

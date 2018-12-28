@@ -474,8 +474,12 @@ namespace KisVuzDotNetCore2.Controllers
             user.Qualifications = await context.Qualifications.Where(q => q.AppUserId == user.Id && q.RowStatusId == (int)RowStatusEnum.Confirmed).ToListAsync();
             user.AcademicDegree = await context.AcademicDegrees.Where(d => d.AcademicDegreeId == user.AcademicDegreeId).FirstOrDefaultAsync();
             user.AcademicStat = await context.AcademicStats.Where(s => s.AcademicStatId == user.AcademicStatId).FirstOrDefaultAsync();
-            user.RefresherCourses = await context.RefresherCourses.Where(c=>c.AppUserId == user.Id && c.RowStatusId==(int)RowStatusEnum.Confirmed).ToListAsync();
-            user.ProfessionalRetrainings = await context.ProfessionalRetrainings.Where(c => c.AppUserId == user.Id && c.RowStatusId == (int)RowStatusEnum.Confirmed).ToListAsync();
+            user.RefresherCourses = await context.RefresherCourses
+                .Include(c=>c.RefresherCourseFile)
+                .Where(c=>c.AppUserId == user.Id && c.RowStatusId==(int)RowStatusEnum.Confirmed).ToListAsync();
+            user.ProfessionalRetrainings = await context.ProfessionalRetrainings
+                .Include(c=>c.ProfessionalRetrainingFile)
+                .Where(c => c.AppUserId == user.Id && c.RowStatusId == (int)RowStatusEnum.Confirmed).ToListAsync();
             user.UserWorks = await context.UserWorks
                 .Include(w=>w.FileModel)
                 .Include(w=>w.UserWorkType)

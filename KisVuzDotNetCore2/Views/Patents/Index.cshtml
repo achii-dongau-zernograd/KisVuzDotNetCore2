@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<KisVuzDotNetCore2.Models.Nir.Patent>
 
 @{
-    ViewData["Title"] = "Добавление патента (свидетельства)";
+    ViewData["Title"] = "Патенты (свидетельства)";
 }
 
-<h2>Добавление патента (свидетельства)</h2>
+<h2>Патенты (свидетельства)</h2>
 
 <p>
-    <a asp-action="Create" class=" btn btn-primary">Добавить</a>
+    <a asp-action="CreateOrEdit" class=" btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PatentVid)
+                @Html.DisplayNameFor(model => model.PatentVid.PatentVidName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PatentNumber)
@@ -25,25 +25,29 @@
                 Авторы (авт. доля, о.е.)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Year)
+                @Html.DisplayNameFor(model => model.Year.YearName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PatentOwner)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsZarubejn)
+                @Html.DisplayNameFor(model => model.IsACHII)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsACHII)
+                @Html.DisplayNameFor(model => model.IsZarubejn)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FileModel)
             </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.PatentNirSpecials)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatentNirTemas)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.RowStatus)
             </th>
-
             <th>Действия</th>
         </tr>
     </thead>
@@ -82,21 +86,63 @@
                 @Html.DisplayFor(modelItem => item.PatentOwner)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsZarubejn)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.IsACHII)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FileModel.FileName)
+                @Html.DisplayFor(modelItem => item.IsZarubejn)
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.RowStatus.RowStatusName)
+                @if (item.FileModel != null)
+                {
+                    <a href="/@item.FileModel.Path">Открыть</a>
+                }
+                else
+                {
+                    <p> - </p>
+                }
             </td>
-
             <td>
-                <a asp-action="Edit" asp-route-id="@item.PatentId">Редактировать</a> |
+                @if (item.PatentNirSpecials != null && item.PatentNirSpecials.Count > 0)
+                {
+                    foreach (var articleNirSpecial in item.PatentNirSpecials)
+                    {
+                        <p>@articleNirSpecial.NirSpecial.NirSpecialCode - @articleNirSpecial.NirSpecial.NirSpecialName</p>
+                    }
+                }
+                else
+                {
+                    <p> - </p>
+                }
+            </td>
+            <td>
+                @if (item.PatentNirTemas != null && item.PatentNirTemas.Count > 0)
+                {
+                    foreach (var patentNirTema in item.PatentNirTemas)
+                    {
+                        <p>@patentNirTema.NirTema.NirTemaName</p>
+                    }
+                }
+                else
+                {
+                    <p> - </p>
+                }
+            </td>
+            <td>
+                @if (@item.RowStatusId != (int)RowStatusEnum.Confirmed)
+                {
+                    <form asp-action="ConfirmPatent">
+                        <input type="hidden" name="patentId" value="@item.PatentId" />
+                        <input type="submit" value="Подтвердить" class="btn btn-block btn-primary" />
+                    </form>
+                }
+                else
+                {
+                    <text>@item.RowStatus.RowStatusName</text>
+                }
+            </td>
+            <td>
+                <a asp-action="CreateOrEdit" asp-route-id="@item.PatentId">Редактировать</a> |
                 <a asp-action="Delete" asp-route-id="@item.PatentId">Удалить</a>
             </td>
         </tr>

@@ -117,7 +117,7 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                     }
                     return RedirectToAction(nameof(Index));
                 case CreateOrEditNirDataModeEnum.AddingAuthor:
-                    if (AuthorIdAdd != 0)
+                    if (AuthorIdAdd != 0 && article.ArticleAuthors!=null)
                     {
                         var isExists = article.ArticleAuthors.FirstOrDefault(a => a.AuthorId == AuthorIdAdd) != null;
                         if (!isExists)

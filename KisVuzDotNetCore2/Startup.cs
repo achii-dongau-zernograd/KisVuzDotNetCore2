@@ -1,4 +1,5 @@
-﻿using KisVuzDotNetCore2.Controllers.Students;
+﻿using KisVuzDotNetCore2.Controllers.Nir;
+using KisVuzDotNetCore2.Controllers.Students;
 using KisVuzDotNetCore2.Controllers.UchPosobiya;
 using KisVuzDotNetCore2.Infrastructure;
 using KisVuzDotNetCore2.Models;
@@ -53,8 +54,11 @@ namespace KisVuzDotNetCore2
             services.AddTransient<IUchPosobiyaRepository, UchPosobiyaRepository>();
             services.AddTransient<ISelectListRepository, SelectListRepository>();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<IPatentRepository, PatentRepository>();
             services.AddTransient<IScienceJournalRepository, ScienceJournalRepository>();
             services.AddTransient<IArticlesRepository, ArticlesRepository>();
+            services.AddTransient<IStructSubvisionChiefRepository, StructSubvisionChiefRepository>();
+            services.AddTransient<IMonografRepository, MonografRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
