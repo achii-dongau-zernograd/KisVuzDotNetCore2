@@ -88,7 +88,7 @@ namespace KisVuzDotNetCore2.Models.Users
                 return $"Удостоверение о повышении квалификации {RefresherCourseRegNumber} " +
                     $"от {RefresherCourseDateIssue.ToString("dd.MM.yyyy")} " +
                     $"по программе {RefresherCourseName} ({RefresherCourseHours} ч), " +
-                    $"{RefresherCourseCity}, {RefresherCourseDateIssue.Year} г.";
+                    $"{RefresherCourseInstitition}, {RefresherCourseCity}, {RefresherCourseDateIssue.Year} г.";
             }
         }
 

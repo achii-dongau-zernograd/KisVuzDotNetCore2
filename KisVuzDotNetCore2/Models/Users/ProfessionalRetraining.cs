@@ -94,7 +94,7 @@ namespace KisVuzDotNetCore2.Models.Users
                 return $"Диплом о профессиональной переподготовке {ProfessionalRetrainingDiplomNumber} " +
                     $"от {ProfessionalRetrainingDateIssue.ToString("dd.MM.yyyy")} " +
                     $"по программе {ProfessionalRetrainingProgramName} ({ProfessionalRetrainingHours} ч), " +
-                    $"{ProfessionalRetrainingCity}, {ProfessionalRetrainingDateIssue.Year} г.";
+                    $"{ProfessionalRetrainingInstitition}, {ProfessionalRetrainingCity}, {ProfessionalRetrainingDateIssue.Year} г.";
             }
         }
 

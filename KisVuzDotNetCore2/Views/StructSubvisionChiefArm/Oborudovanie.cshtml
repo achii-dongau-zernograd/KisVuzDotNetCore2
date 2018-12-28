@@ -1,0 +1,47 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.Oborudovanie>
+
+@{
+    ViewData["Title"] = "Oborudovanie";
+}
+
+<h2>Oborudovanie</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OborudovanieName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OborudovanieCount)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pomeshenie)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OborudovanieName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OborudovanieCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pomeshenie.PomeshenieId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.OborudovanieId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.OborudovanieId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.OborudovanieId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
