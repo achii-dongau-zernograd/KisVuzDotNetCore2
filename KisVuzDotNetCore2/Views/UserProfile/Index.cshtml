@@ -246,96 +246,166 @@
                 }
             </div>
             <div class="tab-pane" id="science">
-                <br />                
-                <h4>Научные статьи</h4>
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>№ пп</th>
-                            <th>Год издания</th>
-                            <th>Наименование статьи</th>
-                            <th>Наименование журнала (сборника)</th>
-                            <th>Зарубежный журнал</th>
-                            <th>Системы цитирования</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var author in Model.Author)
-                        {
-                            int cnt = 0;
-                            foreach (var articleAuthor in author.ArticleAuthors.Where(aa=>aa.Article.RowStatusId==(int)RowStatusEnum.Confirmed).OrderBy(a => a.Article.YearId))
-                            {
-                                cnt++;
-                                <tr>
-                                    <td>@cnt</td>
-                                    <td>@articleAuthor.Article.YearId</td>
-                                    <td>@articleAuthor.Article.ArticleName (@articleAuthor.AuthorPart.ToString("N"))</td>
-                                    <td>@articleAuthor.Article.ScienceJournal.ScienceJournalName</td>
-                                    <td>
-                                        @if (articleAuthor.Article.ScienceJournal.IsZarubejn)
-                                        {
-                                            <text>да</text>
-                                        }
-                                        else
-                                        {
-                                            <text>нет</text>
-                                        }
-                                    </td>
-                                    <td>
-                                        @foreach(var sc in articleAuthor.Article.ScienceJournal.ScienceJournalCitationBases)
-                                        {
-                                            <p>@sc.CitationBase.CitationBaseName</p>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>                
-            </div>
-            <div class="tab-pane" id="works">
                 <br />
-                @if (!(Model.UserWorks?.Any() ?? false))
-                {
-                    <h4 class="text-center">Работы пользователя отсутствуют</h4>
-                }
-                else
-                {
-                    <table class="table table-hover">
+                <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Научные статьи</strong></a>
+                <div class="collapse" id="spoiler-1">
+                    <h4>Научные статьи</h4>
+                    <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>Дата размещения</th>
-                                <th>Наименование работы</th>
-                                <th>Описание работы</th>
-                                <th>Файл</th>
-                                <th>Рецензии и оценки</th>
+                                <th>№ пп</th>
+                                <th>Год издания</th>
+                                <th>Наименование статьи</th>
+                                <th>Наименование журнала (сборника)</th>
+                                <th>Зарубежный журнал</th>
+                                <th>Входит в перечень ВАК</th>
+                                <th>Системы цитирования</th>
+                                <th>Авторы (авт.доля, о.е.)</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var itemG in Model.UserWorks.OrderByDescending(w => w.DatePosting).GroupBy(w => w.UserWorkType.UserWorkTypeName))
+                            @foreach (var author in Model.Author)
                             {
-                                <tr>
-                                    <td colspan="5" class="text-center"><strong>@itemG.Key</strong></td>
-                                </tr>
-                                @foreach (var item in itemG)
+                                int cnt = 0;
+                                foreach (var articleAuthor in author.ArticleAuthors.Where(aa => aa.Article.RowStatusId == (int)RowStatusEnum.Confirmed).OrderBy(a => a.Article.YearId))
                                 {
+                                    cnt++;
                                     <tr>
-                                        <td>@item.DatePosting</td>
-                                        <td>@item.UserWorkName</td>
-                                        <td>@item.UserWorkDescription</td>
-                                        <td><a href="/@item.FileModel?.Path">Открыть</a></td>
+                                        <td>@cnt</td>
+                                        <td>@articleAuthor.Article.YearId</td>
+                                        <td>@articleAuthor.Article.ArticleName</td>
+                                        <td>@articleAuthor.Article.ScienceJournal.ScienceJournalName</td>
                                         <td>
-                                            <a asp-controller="UserWorkReviews" asp-action="Index" asp-route-UserWorkId="@item.UserWorkId">
-                                                @item.UserWorkReviews.Count рецензии(ий)
-                                            </a>
+                                            @if (articleAuthor.Article.ScienceJournal.IsZarubejn)
+                                            {
+                                                <text>да</text>
+                                            }
+                                            else
+                                            {
+                                                <text>нет</text>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (articleAuthor.Article.ScienceJournal.IsVak)
+                                            {
+                                                <text>да</text>
+                                            }
+                                            else
+                                            {
+                                                <text>нет</text>
+                                            }
+                                        </td>
+                                        <td>
+                                            @foreach (var sc in articleAuthor.Article.ScienceJournal.ScienceJournalCitationBases)
+                                            {
+                                                <p>@sc.CitationBase.CitationBaseName</p>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            @foreach (var sc in articleAuthor.Article.ArticleAuthors)
+                                            {
+                                                if (!string.IsNullOrWhiteSpace(sc.Author?.AppUserId))
+                                                {
+                                                    <p>
+                                                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@sc.Author.AppUserId">@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</a>
+                                                    </p>
+                                                }
+                                                else
+                                                {
+                                                    <p>@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</p>
+                                                }
+                                            }
                                         </td>
                                     </tr>
                                 }
                             }
                         </tbody>
                     </table>
-                }
+                </div>
+                <a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Патенты свидетельства</strong></a>
+                <div class="collapse" id="spoiler-2">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>№ пп</th>
+                                <th>Год издания</th>
+                                <th>Наименование патента(свидетельства)</th>
+                                <th>Вид патента</th>
+                                <th>Номер патента</th>
+                                <th>Авторы (авт.доля, о.е.)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var author in Model.Author)
+                            {
+                                int ctn = 0;
+                                foreach (var patentAuthor in author.PatentAuthors.Where(aa => aa.Patent.RowStatusId == (int)RowStatusEnum.Confirmed).OrderBy(a => a.Patent.YearId))
+                                {
+                                    ctn++;
+                                    <tr>
+                                        <td>@ctn</td>
+                                        <td>@patentAuthor.Patent.Year</td>
+                                        <td>@patentAuthor.Patent.PatentName</td>
+                                        <td>@patentAuthor.Patent.PatentVid.PatentVidName</td>
+                                        <td>@patentAuthor.Patent.PatentNumber</td>
+                                        <td>
+                                            @foreach (var sc in patentAuthor.Patent.PatentAuthors)
+                                            {
+                                                <p>@sc.Author.AuthorName (@sc.AuthorPart)</p>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            <div class="tab-pane" id="works">
+                    <br />
+                    @if (!(Model.UserWorks?.Any() ?? false))
+                    {
+                        <h4 class="text-center">Работы пользователя отсутствуют</h4>
+                    }
+                    else
+                    {
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Дата размещения</th>
+                                    <th>Наименование работы</th>
+                                    <th>Описание работы</th>
+                                    <th>Файл</th>
+                                    <th>Рецензии и оценки</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var itemG in Model.UserWorks.OrderByDescending(w => w.DatePosting).GroupBy(w => w.UserWorkType.UserWorkTypeName))
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-center"><strong>@itemG.Key</strong></td>
+                                    </tr>
+                                    @foreach (var item in itemG)
+                                    {
+                                        <tr>
+                                            <td>@item.DatePosting</td>
+                                            <td>@item.UserWorkName</td>
+                                            <td>@item.UserWorkDescription</td>
+                                            <td><a href="/@item.FileModel?.Path">Открыть</a></td>
+                                            <td>
+                                                <a asp-controller="UserWorkReviews" asp-action="Index" asp-route-UserWorkId="@item.UserWorkId">
+                                                    @item.UserWorkReviews.Count рецензии(ий)
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+
         </div>
     </div>
 </div>

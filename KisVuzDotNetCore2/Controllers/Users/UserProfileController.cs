@@ -510,12 +510,22 @@ namespace KisVuzDotNetCore2.Controllers
                                 .ThenInclude(u => u.FileModel)
                                     .ThenInclude(fm => fm.FileToFileTypes)
                                         .ThenInclude(ftft => ftft.FileDataType.FileDataTypeGroup)
+
                 .Include(a=>a.ArticleAuthors)
                     .ThenInclude(aa=>aa.Article)
                         .ThenInclude(aaa=>aaa.FileModel)
                 .Include(a => a.ArticleAuthors)
                     .ThenInclude(aa => aa.Article.ScienceJournal.ScienceJournalCitationBases)
                         .ThenInclude(cb => cb.CitationBase)
+
+                .Include(a=>a.ArticleAuthors)
+                    .ThenInclude(c=>c.Article.ArticleAuthors)
+                        .ThenInclude(a=>a.Author)
+
+
+                .Include(a=>a.PatentAuthors)
+                    .ThenInclude(aa=>aa.Patent)
+                        .ThenInclude(c=>c.FileModel)
                 .Where(a => a.AppUserId == user.Id)
                 .ToListAsync();
 
