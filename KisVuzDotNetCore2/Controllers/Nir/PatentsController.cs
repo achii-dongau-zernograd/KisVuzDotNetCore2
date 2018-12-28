@@ -120,7 +120,7 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                     return RedirectToAction("Index");
 
                 case CreateOrEditNirDataModeEnum.AddingAuthor:
-                    if (AuthorIdAdd != 0)
+                    if (AuthorIdAdd != 0 && patent.PatentAuthors!= null)
                     {
                         var isExists = patent.PatentAuthors.FirstOrDefault(p => p.AuthorId == AuthorIdAdd) != null;
                         if (!isExists)
@@ -213,6 +213,7 @@ namespace KisVuzDotNetCore2.Controllers.Nir
             ViewBag.Years = _selectListRepository.GetSelectListYears(patent.YearId);
             ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
             ViewBag.NirTemas = _selectListRepository.GetSelectListNirTemas();
+            ViewBag.PatentVids = _selectListRepository.GetSelectListPatentVids(patent.PatentVidId==null ? 0 : (int)patent.PatentVidId);
 
             return View(patentEntry);
         }        
