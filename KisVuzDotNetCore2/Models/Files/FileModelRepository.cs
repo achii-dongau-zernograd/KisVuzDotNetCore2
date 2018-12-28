@@ -239,7 +239,7 @@ namespace KisVuzDotNetCore2.Models.Files
         {
             if (monograf == null || uploadFile == null) return null;
 
-            FileModel newFileModel = await UploadFileAsync(uploadFile, "Патент (свидетельство)", (FileDataTypeEnum)monograf.MonografId);
+            FileModel newFileModel = await UploadFileAsync(uploadFile, "Монография", FileDataTypeEnum.Monografiya);
 
             if (newFileModel != null)
             {

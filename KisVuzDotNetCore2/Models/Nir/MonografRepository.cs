@@ -90,7 +90,7 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// <param name="monografId"></param>
         public void RemoveMonografAsync(int monografId)
         {
-            var monograf = _context.Monografs.SingleOrDefault(m => m.MonografId == monografId);
+            var monograf = GetMonograf(monografId);
             if (monograf == null) return;
             _context.Monografs.Remove(monograf);
             if (monograf.FileModel != null)
