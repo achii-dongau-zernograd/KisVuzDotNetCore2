@@ -2,6 +2,7 @@
 
 @{
     var student = (Student)ViewData["student"];
+    int spoilerCounter = 0;
 }
 
 <div class="page-header">
@@ -251,9 +252,8 @@
             </div>
             <div class="tab-pane" id="science">
                 <br />
-                <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Научные статьи</strong></a>
-                <div class="collapse" id="spoiler-1">
-                    <h4>Научные статьи</h4>
+                <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Научные статьи</strong></a>
+                <div class="collapse" id="spoiler-@spoilerCounter">                    
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -270,8 +270,9 @@
                         <tbody>
                             @foreach (var author in Model.Author)
                             {
+                                spoilerCounter++;
                                 int cnt = 0;
-                                foreach (var articleAuthor in author.ArticleAuthors.Where(aa => aa.Article.RowStatusId == (int)RowStatusEnum.Confirmed).OrderBy(a => a.Article.YearId))
+                                foreach (var articleAuthor in author.ArticleAuthors.Where(aa => aa.Article.RowStatusId == (int)RowStatusEnum.Confirmed).OrderByDescending(a => a.Article.YearId))
                                 {
                                     cnt++;
                                     <tr>
@@ -307,19 +308,23 @@
                                         </td>
 
                                         <td>
-                                            @foreach (var sc in articleAuthor.Article.ArticleAuthors)
-                                            {
-                                                if (!string.IsNullOrWhiteSpace(sc.Author?.AppUserId))
+                                            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Развернуть</strong></a>
+                                            <div class="collapse" id="spoiler-@spoilerCounter">
+                                                @foreach (var sc in articleAuthor.Article.ArticleAuthors)
                                                 {
-                                                    <p>
-                                                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@sc.Author.AppUserId">@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</a>
-                                                    </p>
+                                                    spoilerCounter++;
+                                                    if (!string.IsNullOrWhiteSpace(sc.Author?.AppUserId))
+                                                    {
+                                                        <p>
+                                                            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@sc.Author.AppUserId">@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</a>
+                                                        </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</p>
+                                                    }
                                                 }
-                                                else
-                                                {
-                                                    <p>@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</p>
-                                                }
-                                            }
+                                            </div>
                                         </td>
                                     </tr>
                                 }
@@ -327,8 +332,8 @@
                         </tbody>
                     </table>
                 </div>
-                <a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Патенты свидетельства</strong></a>
-                <div class="collapse" id="spoiler-2">
+                <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Патенты и свидетельства</strong></a>
+                <div class="collapse" id="spoiler-@spoilerCounter">                    
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -343,8 +348,9 @@
                         <tbody>
                             @foreach (var author in Model.Author)
                             {
+                                spoilerCounter++;
                                 int ctn = 0;
-                                foreach (var patentAuthor in author.PatentAuthors.Where(aa => aa.Patent.RowStatusId == (int)RowStatusEnum.Confirmed).OrderBy(a => a.Patent.YearId))
+                                foreach (var patentAuthor in author.PatentAuthors.Where(aa => aa.Patent.RowStatusId == (int)RowStatusEnum.Confirmed).OrderByDescending(a => a.Patent.YearId))
                                 {
                                     ctn++;
                                     <tr>
@@ -354,19 +360,23 @@
                                         <td>@patentAuthor.Patent.PatentVid.PatentVidName</td>
                                         <td>@patentAuthor.Patent.PatentNumber</td>
                                         <td>
-                                            @foreach (var sc in patentAuthor.Patent.PatentAuthors)
-                                            {
-                                                if (!string.IsNullOrWhiteSpace(sc.Author?.AppUserId))
+                                            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Развернуть</strong></a>
+                                            <div class="collapse" id="spoiler-@spoilerCounter">
+                                                @foreach (var sc in patentAuthor.Patent.PatentAuthors)
                                                 {
-                                                    <p>
-                                                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@sc.Author.AppUserId">@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</a>
-                                                    </p>
+                                                    spoilerCounter++;
+                                                    if (!string.IsNullOrWhiteSpace(sc.Author?.AppUserId))
+                                                    {
+                                                        <p>
+                                                            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@sc.Author.AppUserId">@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</a>
+                                                        </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</p>
+                                                    }
                                                 }
-                                                else
-                                                {
-                                                    <p>@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</p>
-                                                }
-                                            }
+                                            </div>
                                         </td>
                                     </tr>
                                 }
