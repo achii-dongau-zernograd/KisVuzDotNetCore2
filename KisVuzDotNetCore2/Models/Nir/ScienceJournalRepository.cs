@@ -121,7 +121,7 @@ namespace KisVuzDotNetCore2.Models.Nir
             var scienceJournals = _context.ScienceJournals
                 .Include(m => m.ScienceJournalCitationBases)
                     .ThenInclude(a=>a.CitationBase)
-                .ToList();
+                .OrderBy(a=>a.ScienceJournalName).ToList();
 
             return scienceJournals;
         }
