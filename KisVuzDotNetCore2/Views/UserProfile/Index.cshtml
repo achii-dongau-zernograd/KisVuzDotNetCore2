@@ -252,8 +252,7 @@
             <div class="tab-pane" id="science">
                 <br />
                 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Научные статьи</strong></a>
-                <div class="collapse" id="spoiler-1">
-                    <h4>Научные статьи</h4>
+                <div class="collapse" id="spoiler-1">                    
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -271,7 +270,7 @@
                             @foreach (var author in Model.Author)
                             {
                                 int cnt = 0;
-                                foreach (var articleAuthor in author.ArticleAuthors.Where(aa => aa.Article.RowStatusId == (int)RowStatusEnum.Confirmed).OrderBy(a => a.Article.YearId))
+                                foreach (var articleAuthor in author.ArticleAuthors.Where(aa => aa.Article.RowStatusId == (int)RowStatusEnum.Confirmed).OrderByDescending(a => a.Article.YearId))
                                 {
                                     cnt++;
                                     <tr>
@@ -344,7 +343,7 @@
                             @foreach (var author in Model.Author)
                             {
                                 int ctn = 0;
-                                foreach (var patentAuthor in author.PatentAuthors.Where(aa => aa.Patent.RowStatusId == (int)RowStatusEnum.Confirmed).OrderBy(a => a.Patent.YearId))
+                                foreach (var patentAuthor in author.PatentAuthors.Where(aa => aa.Patent.RowStatusId == (int)RowStatusEnum.Confirmed).OrderByDescending(a => a.Patent.YearId))
                                 {
                                     ctn++;
                                     <tr>
