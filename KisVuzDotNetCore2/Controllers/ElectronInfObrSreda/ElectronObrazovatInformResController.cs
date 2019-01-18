@@ -154,6 +154,7 @@ namespace KisVuzDotNetCore2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Preview(bool? IsSobstv)
         {
             var appIdentityDBContext = _context.ElectronObrazovatInformRes.Where(e=>e.IsSobstv==IsSobstv);
