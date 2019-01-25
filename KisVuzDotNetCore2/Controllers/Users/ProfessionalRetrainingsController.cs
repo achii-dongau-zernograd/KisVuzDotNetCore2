@@ -47,7 +47,7 @@ namespace KisVuzDotNetCore2.Controllers
                     .Include(r => r.AppUser)
                     .Include(r => r.ProfessionalRetrainingFile)
                     .Include(r => r.RowStatus)
-                    .OrderBy(r => r.ProfessionalRetrainingDateIssue);
+                    .OrderBy(r => r.AppUser.GetFullName);
                     ViewBag.Id = id;
                     return View(await professionalRetrainings.ToListAsync());
                 }

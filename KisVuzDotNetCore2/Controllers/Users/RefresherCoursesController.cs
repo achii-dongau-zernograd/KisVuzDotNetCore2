@@ -48,7 +48,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
                     .Include(r => r.AppUser)
                     .Include(r => r.RefresherCourseFile)
                     .Include(r => r.RowStatus)
-                    .OrderBy(r => r.RefresherCourseDateIssue);
+                    .OrderBy(r => r.AppUser.GetFullName);
                     ViewBag.Id = id;
                     return View(await userQualifications.ToListAsync());
                 }
