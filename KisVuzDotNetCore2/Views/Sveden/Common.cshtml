@@ -26,14 +26,14 @@
             </tr>
             <tr>
                 <th>Режим, график работы</th>
-                <td>
+                <td itemprop="workTime">
                     <p>@ViewData["WorkingRegime"]</p>
                     <p>@ViewData["WorkingSchedule"]</p>
                 </td>
             </tr>
             <tr>
                 <th>Контактные телефоны</th>
-                <td>
+                <td itemprop="telephone">
                     @foreach (Telephone tel in (List<Telephone>)ViewData["Telephones"])
                     {
                         <p><b>@tel.TelephoneNumber</b> - @tel.TelephoneComment</p>
@@ -42,7 +42,7 @@
             </tr>
             <tr>
                 <th>Факсы</th>
-                <td>
+                <td itemprop="fax">
                     @foreach (Fax fax in (List<Fax>)ViewData["Faxes"])
                     {
                         <p><b>@fax.FaxValue</b></p>
@@ -51,7 +51,7 @@
             </tr>
             <tr>
                 <th>Адреса электронной почты</th>
-                <td>
+                <td itemprop="email">
                     @foreach (Email email in (List<Email>)ViewData["Emailes"])
                     {
                         <p><b>@email.EmailValue</b></p>
