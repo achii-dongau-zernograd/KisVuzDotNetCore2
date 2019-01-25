@@ -12,7 +12,7 @@
     <div class="well">
         @foreach (var ftft in ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug.FileToFileTypes)
         {
-            <p><a itemprop="@ftft.FileDataType.Itemprop" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+            <p itemprop="@ftft.FileDataType.Itemprop"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
         }
     </div>
 </div>
