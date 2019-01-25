@@ -48,7 +48,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
                     .Include(r => r.AppUser)
                     .Include(r => r.RefresherCourseFile)
                     .Include(r => r.RowStatus)
-                    .OrderBy(r => r.AppUser.LastName);
+                    .OrderBy(r => r.RefresherCourseDateIssue);
                     ViewBag.Id = id;
                     return View(await userQualifications.ToListAsync());
                 }
@@ -61,7 +61,8 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 var refresherCourses = _context.RefresherCourses
                 .Include(r => r.AppUser)
                 .Include(r => r.RefresherCourseFile)
-                .Include(r => r.RowStatus);
+                .Include(r => r.RowStatus)
+                .OrderBy(r => r.AppUser.GetFullName);
                 return View(await refresherCourses.ToListAsync());
             }
 
