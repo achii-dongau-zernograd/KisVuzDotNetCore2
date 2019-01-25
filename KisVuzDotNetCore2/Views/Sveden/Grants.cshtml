@@ -22,7 +22,7 @@
             <div class="well">
                 @foreach (var ftft in StipendiiFederalGrant.FileToFileTypes)
                 {
-                    <p><a itemprop="@ftft.FileDataType.Itemprop" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+                    <p itemprop="@ftft.FileDataType.Itemprop"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
                 }
             </div>
         </div>
@@ -32,7 +32,7 @@
             <div class="well">
                 @foreach (var ftft in StipendiiLocalGrant.FileToFileTypes)
                 {
-                    <p><a itemprop="@ftft.FileDataType.Itemprop" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+                    <p itemprop="@ftft.FileDataType.Itemprop"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
                 }
             </div>
         </div>

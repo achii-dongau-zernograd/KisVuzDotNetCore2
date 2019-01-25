@@ -492,8 +492,6 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Vacant()
         {
-
-
             var t23vacant = await _context.Vacants
                 .Include(l => l.EduNapravl.EduUgs.EduLevel)
                 .Include(l => l.EduNapravl)
