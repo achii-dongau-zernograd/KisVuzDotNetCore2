@@ -507,9 +507,7 @@ namespace KisVuzDotNetCore2.Controllers
         /// </summary>
         /// <returns></returns>
         public async Task<IActionResult> PriemExam()
-        {
-          
-               
+        {               
             var t25PriemExam=await _context.PriemExam
                  .Include(l => l.EduNapravl)
              .ToListAsync();
@@ -519,16 +517,13 @@ namespace KisVuzDotNetCore2.Controllers
 
 
         /// <summary>
-        /// Подраздел "Шаблона представления информации по различныфм условиям"
+        /// Подраздел "Шаблона представления информации по различным условиям"
         /// </summary>
         /// <returns></returns>
         public async Task<IActionResult> HostelInfo()
         {
-
-            
             var t20HostelInfo= await _context.HostelInfo.ToListAsync();
-            ViewData["t20HostelInfo"] = t20HostelInfo;
-            
+            ViewData["t20HostelInfo"] = t20HostelInfo;            
        
             return View();
         }
@@ -540,13 +535,10 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> priemKolMest()
         {
-
-
             var t24priemKolMest = await _context.priemKolMest
                 .Include(l => l.EduNapravl)
                 .ToListAsync();
             ViewData["t24priemKolMest"] = t24priemKolMest;
-
 
             return View();
         }

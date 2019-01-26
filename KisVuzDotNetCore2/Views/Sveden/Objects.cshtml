@@ -133,9 +133,8 @@
 <div class="collapse" id="spoiler-3">
     <div class="well">
 
-
-        <div class="sp-body folded">
-            </p>
+        <div itemprop="comNet" class="sp-body folded">
+            
             <table itemprop="purposeEios" class="table table-hover">
                 <tr>
                     <th>Наименование</th>
@@ -167,5 +166,20 @@
                 <tr>
             </table>
         </div>
+
+        <div>
+            <h4>Дополнительные сведения</h4>
+            <ul>
+                <li itemprop="comNetOvz">
+                    Сведения о доступе к информационным системам и информационно-телекоммуникационным сетям, приспособленным для использования инвалидами и лицами с ограниченными возможностями здоровья: специальные средства доступа отсутствуют.
+                </li>
+                <li itemprop="erList">
+                    Перечень электронных образовательных ресурсов:
+                    <a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="true">собственные</a>,
+                    <a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="false">сторонние</a>
+                </li>
+                <li itemprop="erListOvz">Перечень электронных образовательных ресурсов, приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья: электронные образовательные ресурсы, приспособленные для использования инвалидами и лицами с ограниченными возможностями здоровья отсутствуют.</li>
+            </ul>
+         </div>
     </div>
 </div>
