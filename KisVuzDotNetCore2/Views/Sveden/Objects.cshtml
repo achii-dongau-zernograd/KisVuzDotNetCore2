@@ -19,6 +19,12 @@
 <div class="collapse" id="spoiler-1">
     <div class="well">
 
+        <ul>
+            <li itemprop="purposeCab"><span itemprop="purposePrac"><a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/svedeniya-o-nalichii-oborudovannyih-uche">Сведения о наличии оборудованных учебных кабинетов, объектов для проведения практических занятий</a></span></li>
+            <li itemprop="purposeCabOvz"><a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/ovz">Сведения о наличии оборудованных учебных кабинетов, приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья</a></li>
+            <li itemprop="purposePracOvz"><a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/svedeniya-o-nalichii-oborudovannyih-uche">Сведения о наличии объектов для проведения практических занятий, приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья</a></li>
+        </ul>
+
         <table itemprop="purposeCab" class="table table-hover">
             <thead>
                 <tr>
@@ -28,7 +34,7 @@
                     <th>Наименование специальных помещений и помещений для самостоятельной работы</th>
                     <th>Оснащенность специальных помещений и помещений для самостоятельной работы</th>
                     <th>Приспособленность помещений для использования инвалидами и лицами с ограниченными возможностями здоровья</th>
-                </tr>                
+                </tr>
             </thead>
             <tbody>
                 @foreach (var disciplinePomeshenieG in disciplinePomeshenie.GroupBy(dp => dp.EduPlanEduYear.EduPlan.EduProfileId))
@@ -54,18 +60,19 @@
                             <td itemprop="eduName">@discPomeshenie.EduPlanEduYear.EduPlan.EduProfile.EduNapravl.EduNapravlName (@discPomeshenie.EduPlanEduYear.EduPlan.EduProfile.EduProfileName)</td>
                             <td>@discPomeshenie.Discipline.DisciplineName.DisciplineNameName</td>
                             <td>@discPomeshenie.Pomeshenie.PomeshenieFullName</td>
-                            <td itemprop="@purposePrac"><ul>
-                                @foreach (var oborudovanie in discPomeshenie.Pomeshenie.OborudovanieList)
+                            <td itemprop="@purposePrac">
+                                <ul>
+                                    @foreach (var oborudovanie in discPomeshenie.Pomeshenie.OborudovanieList)
                                     {
-                                    <li>@oborudovanie.OborudovanieName (@oborudovanie.OborudovanieCount шт.)</li>
-                                }
+                                        <li>@oborudovanie.OborudovanieName (@oborudovanie.OborudovanieCount шт.)</li>
+                                    }
                                 </ul>
                             </td>
                             <td>@discPomeshenie.Pomeshenie.PomeshenieOvz</td>
                         </tr>
                     }
 
-                 }
+                }
 
             </tbody>
         </table>
@@ -104,7 +111,7 @@
                 </thead>
                 <tbody>
                     @foreach (var item in PurposeLibr)
-                {
+                    {
                         <tr itemprop="@item.itemprop">
                             <td>
                                 @Html.DisplayFor(modelItem => item.VidPom)
@@ -134,7 +141,7 @@
     <div class="well">
 
         <div itemprop="comNet" class="sp-body folded">
-            
+
             <table itemprop="purposeEios" class="table table-hover">
                 <tr>
                     <th>Наименование</th>
@@ -180,6 +187,33 @@
                 </li>
                 <li itemprop="erListOvz">Перечень электронных образовательных ресурсов, приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья: электронные образовательные ресурсы, приспособленные для использования инвалидами и лицами с ограниченными возможностями здоровья отсутствуют.</li>
             </ul>
-         </div>
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии специальных технических средств обучения коллективного и индивидуального пользования для инвалидов и лиц с ограниченными возможностями здоровья</a>
+<div class="collapse" id="spoiler-4">
+    <div class="well">
+        <div itemprop="techOvz">
+            <p>Специальные технические средства обучения коллективного и индивидуального пользования для инвалидов и лиц с ограниченными возможностями здоровья отсутствуют.</p>
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-5" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся</a>
+<div class="collapse" id="spoiler-5">
+    <div class="well">
+        <div itemprop="health">
+            <a href="http://ачгаа.рф/sveden/objects/ohrana-zdorov-obuch">Сведения об охране здоровья обучающихся</a>
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-6" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся с ограниченными возможностями здоровья и инвалидов</a>
+<div class="collapse" id="spoiler-6">
+    <div class="well">
+        <div itemprop="healthOvz">
+            <a href="http://ачгаа.рф/sveden/objects/ohrana-zdorov-obuch">Сведения об охране здоровья обучающихся</a>
+        </div>
     </div>
 </div>
