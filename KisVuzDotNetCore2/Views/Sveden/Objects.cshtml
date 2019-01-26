@@ -11,12 +11,14 @@
     int NumEoisSide = (int)ViewData["NumEoisSide"];
     List<PurposeLibr> PurposeLibr = (List<PurposeLibr>)ViewData["PurposeLibrs"];
     List<DisciplinePomeshenie> disciplinePomeshenie = (List<DisciplinePomeshenie>)ViewData["disciplinePomeshenie"];
+    int spoilerCounter = 1;
 }
 
 <h1>Материально-техническое обеспечение и оснащенность образовательного процесса</h1>
 
-<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии оборудованных учебных кабинетов, объектов для проведения практических занятий</a>
-<div class="collapse" id="spoiler-1">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии оборудованных учебных кабинетов, объектов для проведения практических занятий</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
     <div class="well">
 
         <ul>
@@ -81,8 +83,9 @@
 </div>
 
 
-<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии библиотек, объектов спорта, условиях питания и охраны здоровья обучающихся</a>
-<div class="collapse" id="spoiler-2">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии библиотек, объектов спорта, условиях питания и охраны здоровья обучающихся</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
     <div class="well">
 
 
@@ -136,8 +139,49 @@
     </div>
 </div>
 
-<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о доступе к электронной информационно-образовательной среде, информационным системам и информационно-телекоммуникационным сетям </br> и электронным ресурсам, к которым обеспечивается доступ обучающихся</a>
-<div class="collapse" id="spoiler-3">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии средств обучения и воспитания</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="purposeFacil">
+            Раздел в разработке
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии средств обучения и воспитания, приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="purposeFacilOvz">
+            Раздел в разработке
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об обеспечении доступа в здания образовательной организации инвалидов и лиц с ограниченными возможностями здоровья</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="ovz">
+            <a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/ovz">Сведения об обеспечении доступа в здания образовательной организации инвалидов и лиц с ограниченными возможностями здоровья</a>
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Ссылка на копию документа, содержащего сведения об условиях питания и охраны здоровья обучающихся, в том числе инвалидов и лиц с ограниченными возможностями здоровья</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="mealsDocLink">
+            Раздел в разработке
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о доступе к электронной информационно-образовательной среде, информационным системам и информационно-телекоммуникационным сетям </br> и электронным ресурсам, к которым обеспечивается доступ обучающихся</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
     <div class="well">
 
         <div itemprop="comNet" class="sp-body folded">
@@ -191,8 +235,9 @@
     </div>
 </div>
 
-<a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии специальных технических средств обучения коллективного и индивидуального пользования для инвалидов и лиц с ограниченными возможностями здоровья</a>
-<div class="collapse" id="spoiler-4">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии специальных технических средств обучения коллективного и индивидуального пользования для инвалидов и лиц с ограниченными возможностями здоровья</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
     <div class="well">
         <div itemprop="techOvz">
             <p>Специальные технические средства обучения коллективного и индивидуального пользования для инвалидов и лиц с ограниченными возможностями здоровья отсутствуют.</p>
@@ -200,8 +245,9 @@
     </div>
 </div>
 
-<a href="#spoiler-5" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся</a>
-<div class="collapse" id="spoiler-5">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
     <div class="well">
         <div itemprop="health">
             <a href="http://ачгаа.рф/sveden/objects/ohrana-zdorov-obuch">Сведения об охране здоровья обучающихся</a>
@@ -209,8 +255,9 @@
     </div>
 </div>
 
-<a href="#spoiler-6" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся с ограниченными возможностями здоровья и инвалидов</a>
-<div class="collapse" id="spoiler-6">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся с ограниченными возможностями здоровья и инвалидов</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
     <div class="well">
         <div itemprop="healthOvz">
             <a href="http://ачгаа.рф/sveden/objects/ohrana-zdorov-obuch">Сведения об охране здоровья обучающихся</a>
