@@ -7,7 +7,7 @@
     var t9eduPerevod = (IEnumerable<EduPerevod>)ViewData["t9eduPerevod"];
     var t10eduPrograms = (IEnumerable<EduProgram>)ViewData["t10eduPrograms"];
     var eduShedules = (IEnumerable<EduShedule>)ViewData["eduShedules"];
-    var eduPlans = (IEnumerable<EduPlan>)ViewData["eduPlans"];    
+    var eduPlans = (IEnumerable<EduPlan>)ViewData["eduPlans"];
     var t11eduOPYears = (IEnumerable<EduOPYear>)ViewData["t11eduOPYears"];
     var t12eduPr = (IEnumerable<EduPr>)ViewData["t12eduPr"];
     var t13eduNir = (IEnumerable<EduNir>)ViewData["t13eduNir"];
@@ -238,7 +238,7 @@
                     string educationShedule = "educationShedule";
                     string methodology = "methodology";
                     string eduEl = "eduEl";
-                    
+
                     <tr itemprop="eduOP">
                         <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
                         <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName)</td>
@@ -249,7 +249,7 @@
                                 @eduProgramEduForm.EduForm.EduFormName<br />
                             }
                         </td>
-                        <td itemprop="@opMain">                            
+                        <td itemprop="@opMain">
                             <a href="/@eduProgram.FileModel.Path">Открыть</a>
                         </td>
                         <td itemprop="@educationPlan">
@@ -351,7 +351,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if(t10eduPrograms.Where(op => op.IsAdopt).Count()==0)
+                @if (t10eduPrograms.Where(op => op.IsAdopt).Count() == 0)
                 {
                     <tr itemprop="eduOP">
                         <td colspan="10" class="text-center">
@@ -382,7 +382,7 @@
                     </tr>
                 }
 
-                @foreach (var eduProgram in t10eduPrograms.Where(op=>op.IsAdopt))
+                @foreach (var eduProgram in t10eduPrograms.Where(op => op.IsAdopt))
                 {
                     string opMain = "adOpMain";
                     string educationPlan = "adEducationPlan";
@@ -390,7 +390,7 @@
                     string educationShedule = "adEducationShedule";
                     string methodology = "adMethodology";
                     string eduEl = "adEduEl";
-                    
+
                     <tr itemprop="eduOP">
                         <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
                         <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName)</td>
@@ -401,7 +401,7 @@
                                 @eduProgramEduForm.EduForm.EduFormName<br />
                             }
                         </td>
-                        <td itemprop="@opMain">                            
+                        <td itemprop="@opMain">
                             <a href="/@eduProgram.FileModel.Path">Открыть</a>
                         </td>
                         <td itemprop="@educationPlan">
@@ -552,7 +552,7 @@
                 <tr itemprop="adeduOP">
                     <td itemprop="adeduOP" colspan="8" class="text-center">
                         <strong>Адаптированных образовательных программ не предусмотрено</strong>
-                    </td>                    
+                    </td>
                 </tr>
             }
 
@@ -612,7 +612,7 @@
             </thead>
             @foreach (var item in t12eduPr.Where(pr => !pr.IsOVZ))
             {
-                <tr itemprop="eduOP">
+                <tr itemprop="eduPr">
                     <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
                     <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName</td>
                     <td itemprop="">@item.EduYearBeginningTraining.EduYearBeginningTrainingName</td>
@@ -734,5 +734,13 @@
                 </tr>
             }
         </table>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о научно-исследовательской базе для осуществления научной (научно-исследовательской) деятельности</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
+    <div class="well">
+        <a href="http://xn--80aaak3h.xn--p1ai/wp-content/uploads/2016/10/NapravRezNIR.pdf">Информация о направлениях и результатах научной (научно-исследовательской) деятельности и научно-исследовательской базе для её осуществления</a>
     </div>
 </div>
