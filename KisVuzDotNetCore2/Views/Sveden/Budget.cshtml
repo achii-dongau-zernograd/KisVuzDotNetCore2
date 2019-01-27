@@ -41,7 +41,7 @@
     <div class="well">
         @foreach (var ftft in InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv.FileToFileTypes)
         {
-            <p><a itemprop="@ftft.FileDataType.Itemprop" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+            <p itemprop="@ftft.FileDataType.Itemprop"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
         }
     </div>
 </div>
@@ -51,7 +51,7 @@
     <div class="well">
         @foreach (var ftft in planFinansovoHozyaystvennoyDeyatelnosti.FileToFileTypes)
         {
-            <p><a itemprop="planFinRec" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+            <p itemprop="planFinRec"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
         }
     </div>
 </div>
@@ -59,6 +59,8 @@
 <a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">@busGovRuLink?.InstituteLinkDescription</a>
 <div class="collapse" id="spoiler-4">
     <div class="well">
-        <a itemprop="busgovFinRec" href="@busGovRuLink?.InstituteLinkLink">@busGovRuLink?.InstituteLinkDescription</a>
+        <p itemprop="busgovFinRec">
+            <a href="@busGovRuLink?.InstituteLinkLink">@busGovRuLink?.InstituteLinkDescription</a>
+        </p>
     </div>
 </div>
