@@ -5,6 +5,7 @@
     var GraduateYear = (List<GraduateYear>)ViewData["GraduateYear"];
     var EduGraduate = (List<EduGraduate>)ViewData["EduGraduate"];
     var GraduateTrudoustroustvo = (List<GraduateTrudoustroustvo>)ViewData["GraduateTrudoustroustvo"];
+    int spoilerCounter = 1;
 }
 
 <h1>Стипендии и иные виды материальной поддержки</h1>
@@ -15,12 +16,22 @@
         var t20hostelInfo = (IEnumerable<HostelInfo>)ViewData["t20hostelInfo"];
     }
 
-    <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Информация о наличии и условиях предоставления стипендии</a>
-    <div class="collapse" id="spoiler-1">
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о наличии и условиях предоставления стипендии</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        @{spoilerCounter++;}
         <div class="well">
 
-            <a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Федеральные нормативные акты</a>
-            <div class="collapse" id="spoiler-2">
+            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о видах стипендий</a>
+            <div class="collapse" id="spoiler-@spoilerCounter">
+                @{spoilerCounter++;}
+                <div class="well" itemprop="typeGrant">
+                    Раздел находится в разработке
+                </div>
+            </div>
+
+            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Федеральные нормативные акты</a>
+            <div class="collapse" id="spoiler-@spoilerCounter">
+                @{spoilerCounter++;}
                 <div class="well">
                     @foreach (var ftft in StipendiiFederalGrant.FileToFileTypes)
                     {
@@ -29,8 +40,9 @@
                 </div>
             </div>
 
-            <a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Локальные нормативные акты</a>
-            <div class="collapse" id="spoiler-3">
+            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Локальные нормативные акты</a>
+            <div class="collapse" id="spoiler-@spoilerCounter">
+                @{spoilerCounter++;}
                 <div class="well">
                     @foreach (var ftft in StipendiiLocalGrant.FileToFileTypes)
                     {
@@ -43,8 +55,9 @@
     </div>
 
 
-    <a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Наличие общежития, интерната, количество жилых помещений в общежитии, интернате для иногородних обучающихся</a>
-    <div class="collapse" id="spoiler-4">
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Наличие общежития, интерната, количество жилых помещений в общежитии, интернате для иногородних обучающихся</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        @{spoilerCounter++;}
         <div class="well">
 
             <table itemprop="hostelInfo" class="table table-hover">
@@ -88,9 +101,17 @@
         </div>
     </div>
 
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация об иных видах материальной поддержки обучающихся</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        @{spoilerCounter++;}
+        <div class="well" itemprop="support">
+            Раздел находится в разработке
+        </div>
+    </div>
 
-    <a href="#spoiler-5" data-toggle="collapse" class="btn btn-primary btn-block">Информация о трудоустройстве выпускников</a>
-    <div class="collapse" id="spoiler-5">
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о трудоустройстве выпускников</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        @{spoilerCounter++;}
         <div class="well">
 
             <table itemprop="graduateJob" class="table table-hover">
