@@ -616,7 +616,7 @@
                     <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
                     <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName</td>
                     <td itemprop="">@item.EduYearBeginningTraining.EduYearBeginningTrainingName</td>
-                    <td itemprop="">
+                    <td itemprop="eduOP">
                         @item.EduProfile.EduProfileName
                     </td>
                     <td itemprop="" align=center>@item.EduForm.EduFormName</td>
@@ -740,7 +740,7 @@
 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о научно-исследовательской базе для осуществления научной (научно-исследовательской) деятельности</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++;}
-    <div class="well">
+    <div itemprop="eduNir" class="well">
         <div itemprop="baseNir">
             <a href="http://xn--80aaak3h.xn--p1ai/wp-content/uploads/2016/10/NapravRezNIR.pdf">Информация о направлениях и результатах научной (научно-исследовательской) деятельности и научно-исследовательской базе для её осуществления</a>
         </div>        
