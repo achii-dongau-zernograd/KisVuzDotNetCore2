@@ -38,7 +38,7 @@
 
 <a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Информация о поступлении и расходовании финансовых и материальных средств</a>
 <div class="collapse" id="spoiler-2">
-    <div class="well">
+    <div class="well" itemprop="volume">
         @foreach (var ftft in InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv.FileToFileTypes)
         {
             <p itemprop="@ftft.FileDataType.Itemprop"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
@@ -58,7 +58,7 @@
 
 <a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">@busGovRuLink?.InstituteLinkDescription</a>
 <div class="collapse" id="spoiler-4">
-    <div class="well">
+    <div class="well" itemprop="volume">
         <p itemprop="busgovFinRec">
             <a href="@busGovRuLink?.InstituteLinkLink">@busGovRuLink?.InstituteLinkDescription</a>
         </p>
