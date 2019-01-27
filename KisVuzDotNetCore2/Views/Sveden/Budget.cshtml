@@ -48,7 +48,7 @@
 
 <a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">План финансово-хозяйственной деятельности</a>
 <div class="collapse" id="spoiler-3">
-    <div class="well">
+    <div class="well" itemprop="volume">
         @foreach (var ftft in planFinansovoHozyaystvennoyDeyatelnosti.FileToFileTypes)
         {
             <p itemprop="planFinRec"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
