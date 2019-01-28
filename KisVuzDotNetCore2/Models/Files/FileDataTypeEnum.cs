@@ -187,6 +187,6 @@
         /// <summary>
         /// Патент на промышленный образец
         /// </summary>
-        PatentNaPromyshlenniyObrazets = 54
+        PatentNaPromyshlenniyObrazets = 54        
     }
 }
