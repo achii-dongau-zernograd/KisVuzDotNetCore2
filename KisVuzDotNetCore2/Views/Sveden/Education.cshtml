@@ -277,14 +277,31 @@
                         <td itemprop="@educationPlan">
                             @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
                             {
-                                <a href="/@eduPlan.EduPlanPdf?.Path">Открыть (@eduPlan.EduForm.EduFormName)</a><br />
+                                string eduYearsBegTrainings = "";
+                                if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                {
+                                    foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                    {
+                                        eduYearsBegTrainings += item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                    }
+                                }
+                                <a href="/@eduPlan.EduPlanPdf?.Path">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a><br />
                             }
                         </td>
                         <td itemprop="@educationAnnotation">
 
                             @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
                             {
-                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Открыть</a>
+                                string eduYearsBegTrainings="";
+                                if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                {
+                                    foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                    {
+                                        eduYearsBegTrainings += item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                    }
+                                }
+
+                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a>
                                 <div class="collapse" id="spoiler-@spoilerCounter">
                                     @{spoilerCounter++;}
                                     <div class="well">
@@ -305,6 +322,7 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <br />
                             }
 
 
