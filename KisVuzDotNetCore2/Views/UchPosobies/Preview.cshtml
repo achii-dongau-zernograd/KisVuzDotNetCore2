@@ -39,17 +39,7 @@
                             @{spoilerCounter++;}
 
                             <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UchPosobie.BiblOpisanie)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.UchPosobie)
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
+                                
                                 <tbody>
 
 
@@ -58,11 +48,16 @@
                                 {
                                     <tr>
                                         <td>
-                                            @item.UchPosobie.BiblOpisanie
-                                        </td>
-                                        <td>
-                                            <a href="/@item.UchPosobie.FileModel.Path">Открыть</a>
-                                        </td>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <a href="/@item.UchPosobie.FileModel.Path">@item.UchPosobie.BiblOpisanie</a>
+                                            }
+                                            else
+                                            {
+                                                <text>@item.UchPosobie.BiblOpisanie</text>
+                                            }
+
+                                        </td>                                        
                                     </tr>
                                 }
 
