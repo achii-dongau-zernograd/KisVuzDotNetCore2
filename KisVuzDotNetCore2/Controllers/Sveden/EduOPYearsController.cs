@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Sveden
 {
-    [Authorize(Roles = "Администраторы, Учебная часть")]
+    [Authorize(Roles = "Администраторы, Учебная часть, Деканат инженерно-технологического факультета, Деканат факультета СПО, Деканат факультета ЭиУТ, Деканат энергетического факультета")]
     public class EduOPYearsController : Controller
     {
         private readonly AppIdentityDBContext _context;
