@@ -56,7 +56,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             if (uploadedFile != null)
             {                         
-                string fileName = DateTime.Now.ToString("yyyy-MM-dd-") +
+                string fileName = /*DateTime.Now.ToString("yyyy-MM-dd-") +*/
                     Guid.NewGuid().ToString() +                    
                     Path.GetExtension(uploadedFile.FileName);
                 // путь к папке files
