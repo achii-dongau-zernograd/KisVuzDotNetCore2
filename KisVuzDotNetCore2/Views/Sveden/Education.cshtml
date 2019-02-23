@@ -263,8 +263,14 @@
                             {
                                 if (eduProgramEduYearBeginningTraining.EduYearBeginningTrainingId == eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId)
                                 {
-                                    eduProgramEduPlanList.Add(eduPlan);
-                                    break;
+                                    foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+                                    {
+                                        if(eduProgramEduForm.EduFormId==eduPlan.EduFormId)
+                                        {
+                                            eduProgramEduPlanList.Add(eduPlan);
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -275,9 +281,9 @@
                     {
                         foreach (var item in eduProgram.EduProgramEduYearBeginningTrainings)
                         {
-                            eduYearsBegTrainingsOfCurrentEduProgram += item.EduYearBeginningTraining.EduYearBeginningTrainingName + " ";
+                            eduYearsBegTrainingsOfCurrentEduProgram += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
                         }
-                    }
+                    }                    
 
                     string opMain = "opMain";
                     string educationPlan = "educationPlan";
@@ -307,7 +313,7 @@
                                 {
                                     foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
                                     {
-                                        eduYearsBegTrainings += item.EduYearBeginningTraining.EduYearBeginningTrainingName + " ";
+                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
                                     }
                                 }
                                 <a href="/@eduPlan.EduPlanPdf?.Path">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a><br />
@@ -322,7 +328,7 @@
                                 {
                                     foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
                                     {
-                                        eduYearsBegTrainings += item.EduYearBeginningTraining.EduYearBeginningTrainingName + " ";
+                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
                                     }
                                 }
 
@@ -372,7 +378,7 @@
                                                 {
                                                     foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
                                                     {
-                                                        eduYearsBegTrainings += item.EduYearBeginningTraining.EduYearBeginningTrainingName + " ";
+                                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
                                                     }
                                                 }
                                                 <p><a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a></p>
