@@ -109,7 +109,7 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<EduKurs> EduKurses { get; set; }
 
         /// <summary>
-        /// Таблица EduProgramPodg
+        /// Справочник программ подготовки (академ. бакалавриат и т.д.)
         /// </summary>        
         public DbSet<EduProgramPodg> EduProgramPodg { get; set; }
 
@@ -201,6 +201,12 @@ namespace KisVuzDotNetCore2.Models
         /// Таблица для реализации отношения М:М между таблицами EduPrograms и EduYears
         /// </summary>
         public DbSet<EduProgramEduYear> EduProgramEduYears { get; set; }
+
+        /// <summary>
+        /// Инициализация базы данных
+        /// </summary>        
+        /// <returns></returns>
+        public DbSet<EduProgramEduYearBeginningTraining> EduProgramEduYearBeginningTraining { get; set; }
 
         /// <summary>
         /// Таблица для реализации отношения М:М между таблицами EduPlans и EduYears
@@ -941,7 +947,7 @@ namespace KisVuzDotNetCore2.Models
 
             await InitDatabaseYears.CreateYears(serviceProvider, configuration);
             await InitDatabaseEmploymentForm.CreateEmploymentForms(serviceProvider, configuration);
-        }                
+        }        
     
     }
 }

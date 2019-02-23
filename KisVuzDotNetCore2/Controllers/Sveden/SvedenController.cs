@@ -176,21 +176,26 @@ namespace KisVuzDotNetCore2.Controllers
             #region Таблица 10. Инфоормация по образовательным программам
             var eduPrograms = await _context.EduPrograms
                 .Include(p => p.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(p => p.EduProfile.EduPlans)
                 .Include(p => p.EduProgramEduForms)
+                    .ThenInclude(pf=>pf.EduForm)
+                .Include(p => p.EduProgramEduYearBeginningTrainings)
+                    .ThenInclude(py=>py.EduYearBeginningTraining)
                 .Include(p => p.EduProgramEduYears)
+                    .ThenInclude(py => py.EduYear)
                 .Include(p => p.EduProgramPodg)
                 .Include(p => p.FileModel).ToListAsync();
-            foreach (var eduProgram in eduPrograms)
-            {
-                foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
-                {
-                    eduProgramEduForm.EduForm = await _context.EduForms.SingleOrDefaultAsync(f => f.EduFormId == eduProgramEduForm.EduFormId);
-                }
-                foreach (var eduProgramEduYear in eduProgram.EduProgramEduYears)
-                {
-                    eduProgramEduYear.EduYear = await _context.EduYears.SingleOrDefaultAsync(f => f.EduYearId == eduProgramEduYear.EduYearId);
-                }
-            }
+            //foreach (var eduProgram in eduPrograms)
+            //{
+            //    foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+            //    {
+            //        eduProgramEduForm.EduForm = await _context.EduForms.SingleOrDefaultAsync(f => f.EduFormId == eduProgramEduForm.EduFormId);
+            //    }
+            //    foreach (var eduProgramEduYear in eduProgram.EduProgramEduYears)
+            //    {
+            //        eduProgramEduYear.EduYear = await _context.EduYears.SingleOrDefaultAsync(f => f.EduYearId == eduProgramEduYear.EduYearId);
+            //    }
+            //}
             ViewData["t10eduPrograms"] = eduPrograms;
 
             var eduShedules = await _context.EduShedules
