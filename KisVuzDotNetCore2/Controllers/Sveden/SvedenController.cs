@@ -184,18 +184,7 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(p => p.EduProgramEduYears)
                     .ThenInclude(py => py.EduYear)
                 .Include(p => p.EduProgramPodg)
-                .Include(p => p.FileModel).ToListAsync();
-            //foreach (var eduProgram in eduPrograms)
-            //{
-            //    foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
-            //    {
-            //        eduProgramEduForm.EduForm = await _context.EduForms.SingleOrDefaultAsync(f => f.EduFormId == eduProgramEduForm.EduFormId);
-            //    }
-            //    foreach (var eduProgramEduYear in eduProgram.EduProgramEduYears)
-            //    {
-            //        eduProgramEduYear.EduYear = await _context.EduYears.SingleOrDefaultAsync(f => f.EduYearId == eduProgramEduYear.EduYearId);
-            //    }
-            //}
+                .Include(p => p.FileModel).ToListAsync();            
             ViewData["t10eduPrograms"] = eduPrograms;
 
             var eduShedules = await _context.EduShedules
