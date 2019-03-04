@@ -47,8 +47,9 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <param name="eduProgram"></param>
         /// <param name="uploadedFile"></param>
         /// <param name="eduFormIds"></param>
+        /// <param name="eduYearBeginningTrainingIds"></param>
         /// <param name="eduYearIds"></param>
-        Task UpdateEduProgramByUserNameAsync(string userName, EduProgram eduProgram, IFormFile uploadedFile, int[] eduFormIds, int[] eduYearIds);
+        Task UpdateEduProgramByUserNameAsync(string userName, EduProgram eduProgram, IFormFile uploadedFile, int[] eduFormIds, int[] eduYearBeginningTrainingIds, int[] eduYearIds);
         
         /// <summary>
         /// Возвращает перечисление методкомиссий,

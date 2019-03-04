@@ -526,9 +526,10 @@ namespace KisVuzDotNetCore2.Controllers.Struct
         /// <param name="EduProgramId"></param>
         /// <returns></returns>
         public async Task<IActionResult> EduProgramCreate()
-        {            
-            ViewBag.EduForms = _context.EduForms;
-            ViewBag.EduYears = _context.EduYears;
+        {
+            ViewBag.EduForms = _context.EduForms.OrderBy(f => f.EduFormName);
+            ViewBag.EduYearBeginningTrainings = _context.EduYearBeginningTrainings.OrderBy(y => y.EduYearBeginningTrainingName);
+            ViewBag.EduYears = _context.EduYears.OrderBy(y => y.EduYearName);
             IEnumerable<MetodKomissiya> metodKomissiiOfUser = await _metodKomissiyaRepository.GetMetodKomissiiByUserNameAsync(User.Identity.Name);
             ViewData["EduProfileId"] = _selectListRepository.GetSelectListEduProfileFullNamesOfMethodicalCommission(metodKomissiiOfUser);
             ViewData["EduProgramPodgId"] = _selectListRepository.GetSelectListEduProgramPodg();
@@ -545,6 +546,7 @@ namespace KisVuzDotNetCore2.Controllers.Struct
         {
             var eduProgram = await _metodKomissiyaRepository.GetEduProgramByUserNameAsync(EduProgramId, User.Identity.Name);
             ViewBag.EduForms = _context.EduForms.OrderBy(f => f.EduFormName);
+            ViewBag.EduYearBeginningTrainings = _context.EduYearBeginningTrainings.OrderBy(y => y.EduYearBeginningTrainingName);
             ViewBag.EduYears = _context.EduYears.OrderBy(y => y.EduYearName);
             IEnumerable<MetodKomissiya> metodKomissiiOfUser = await _metodKomissiyaRepository.GetMetodKomissiiByUserNameAsync(User.Identity.Name);
             ViewData["EduProfileId"] = _selectListRepository.GetSelectListEduProfileFullNamesOfMethodicalCommission(metodKomissiiOfUser, eduProgram.EduProfileId);
@@ -561,11 +563,12 @@ namespace KisVuzDotNetCore2.Controllers.Struct
         public async Task<IActionResult> EduProgramEdit([Bind("EduProgramId,EduProfileId,EduProgramPodgId,IsAdopt,UsingElAndDistEduTech,FileModelId,DateUtverjd")] EduProgram eduProgram,
             IFormFile uploadedFile,
             int[] eduFormIds,
+            int[] eduYearBeginningTrainingIds,
             int[] eduYearIds)
         {
             if (ModelState.IsValid)
             {
-                await _metodKomissiyaRepository.UpdateEduProgramByUserNameAsync(User.Identity.Name, eduProgram, uploadedFile, eduFormIds, eduYearIds);                                
+                await _metodKomissiyaRepository.UpdateEduProgramByUserNameAsync(User.Identity.Name, eduProgram, uploadedFile, eduFormIds, eduYearBeginningTrainingIds, eduYearIds);                                
 
                 return RedirectToAction(nameof(EduPrograms));
             }

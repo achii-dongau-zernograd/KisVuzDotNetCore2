@@ -89,6 +89,14 @@ namespace KisVuzDotNetCore2.Models.Struct
                             .ThenInclude(m => m.MetodKomissiyaEduProfiles)
                                 .ThenInclude(mp => mp.EduProfile)
                                     .ThenInclude(p => p.EduPrograms)
+                                        .ThenInclude(ep => ep.EduProgramEduYearBeginningTrainings)
+                                            .ThenInclude(epey => epey.EduYearBeginningTraining)
+                .Include(u => u.Teachers)
+                    .ThenInclude(t => t.TeacherMetodKomissii)
+                        .ThenInclude(tm => tm.MetodKomissiya)
+                            .ThenInclude(m => m.MetodKomissiyaEduProfiles)
+                                .ThenInclude(mp => mp.EduProfile)
+                                    .ThenInclude(p => p.EduPrograms)
                                         .ThenInclude(ep => ep.FileModel)                                            
                 .Include(u => u.Teachers)
                     .ThenInclude(t => t.TeacherMetodKomissii)
@@ -189,7 +197,7 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <param name="uploadedFile"></param>
         /// <param name="eduFormIds"></param>
         /// <param name="eduYearIds"></param>
-        public async Task UpdateEduProgramByUserNameAsync(string userName, EduProgram eduProgram, IFormFile uploadedFile, int[] eduFormIds, int[] eduYearIds)
+        public async Task UpdateEduProgramByUserNameAsync(string userName, EduProgram eduProgram, IFormFile uploadedFile, int[] eduFormIds, int[] eduYearBeginningTrainingIds, int[] eduYearIds)
         {
             ///////
             try
@@ -223,6 +231,25 @@ namespace KisVuzDotNetCore2.Models.Struct
                         eduProgramEduFormList.Add(eduProgramEduForm);
                     }
                     await _context.EduProgramEduForms.AddRangeAsync(eduProgramEduFormList);
+                    await _context.SaveChangesAsync();
+                }
+
+                if (eduYearBeginningTrainingIds != null)
+                {
+                    _context.EduProgramEduYearBeginningTraining.RemoveRange(_context.EduProgramEduYearBeginningTraining.Where(f => f.EduProgramId == eduProgram.EduProgramId));
+                    await _context.SaveChangesAsync();
+
+                    var eduProgramEduYearBeginningTrainingList = new List<EduProgramEduYearBeginningTraining>();
+                    foreach (int eduYearBeginningTrainingId in eduYearBeginningTrainingIds)
+                    {
+                        EduProgramEduYearBeginningTraining eduProgramEduYearBeginningTraining = new EduProgramEduYearBeginningTraining
+                        {
+                            EduProgramId = eduProgram.EduProgramId,
+                            EduYearBeginningTrainingId = eduYearBeginningTrainingId
+                        };
+                        eduProgramEduYearBeginningTrainingList.Add(eduProgramEduYearBeginningTraining);
+                    }
+                    await _context.EduProgramEduYearBeginningTraining.AddRangeAsync(eduProgramEduYearBeginningTrainingList);
                     await _context.SaveChangesAsync();
                 }
 

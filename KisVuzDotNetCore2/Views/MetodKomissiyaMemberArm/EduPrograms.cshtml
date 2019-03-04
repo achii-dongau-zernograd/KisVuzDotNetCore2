@@ -24,6 +24,7 @@
                             <th>Программа подготовки</th>
                             <th>Дата утверждения</th>
                             <th>Формы обучения</th>
+                            <th>Годы начала подготовки</th>
                             <th>Учебные годы</th>
                             <th>Учебные планы</th>
                             <th>Копия ОПОП</th>
@@ -45,6 +46,12 @@
                                     }
                                 </td>
                                 <td>
+                                    @foreach (var eduProgramEduYearBeginningTraining in eduProgram.EduProgramEduYearBeginningTrainings.OrderBy(y=>y.EduYearBeginningTraining.EduYearBeginningTrainingName))
+                                    {
+                                        <p>@eduProgramEduYearBeginningTraining.EduYearBeginningTraining.EduYearBeginningTrainingName</p>
+                                    }
+                                </td>
+                                <td>
                                     @foreach (var eduProgramEduYear in eduProgram.EduProgramEduYears.OrderBy(y=>y.EduYear.EduYearName))
                                     {
                                         <p>@eduProgramEduYear.EduYear.EduYearName</p>
@@ -56,15 +63,45 @@
                                     </p>
                                     @foreach (var eduPlan in eduProgram.EduProfile.EduPlans.Where(p => p.EduProgramPodgId == eduProgram.EduProgramPodgId))
                                     {
-                                        <div class="row">
-                                            <div class="col-md-8">
-                                                <a asp-action="EduPlanPreview" asp-route-id="@eduPlan.EduPlanId">@eduPlan.EduForm.EduFormName @foreach (var year in eduPlan.EduPlanEduYearBeginningTrainings) { <text>@year.EduYearBeginningTraining.EduYearBeginningTrainingName </text> }</a>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <a asp-action="EduPlanCreateOrEdit" asp-route-EduProgramId="@eduProgram.EduProgramId" asp-route-EduPlanId="@eduPlan.EduPlanId"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                                <a asp-action="EduPlanRemove" asp-route-EduPlanId="@eduPlan.EduPlanId"><span class="glyphicon glyphicon-remove-circle text-danger" aria-hidden="true"></span></a>
-                                            </div>
-                                        </div>                                        
+                                        bool isYearBegTr = false;
+                                        foreach (var eduPlanEduYearBeginningTraining in eduPlan.EduPlanEduYearBeginningTrainings)
+                                        {
+                                            foreach (var eduProgramEduYearBeginningTraining in eduProgram.EduProgramEduYearBeginningTrainings)
+                                            {
+                                                if (eduProgramEduYearBeginningTraining.EduYearBeginningTrainingId == eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId)
+                                                {
+                                                    isYearBegTr = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if (isYearBegTr)
+                                        {
+                                            bool isEduForm = false;
+                                            foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+                                            {
+                                                if (eduProgramEduForm.EduFormId == eduPlan.EduFormId)
+                                                {
+                                                    isEduForm = true;
+                                                    break;
+                                                }
+                                            }
+                                            if (isEduForm)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <a asp-action="EduPlanPreview" asp-route-id="@eduPlan.EduPlanId">
+                                                            @eduPlan.EduForm.EduFormName @foreach (var year in eduPlan.EduPlanEduYearBeginningTrainings)
+                                                        {<text>@year.EduYearBeginningTraining.EduYearBeginningTrainingName </text>}
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <a asp-action="EduPlanCreateOrEdit" asp-route-EduProgramId="@eduProgram.EduProgramId" asp-route-EduPlanId="@eduPlan.EduPlanId"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                                        <a asp-action="EduPlanRemove" asp-route-EduPlanId="@eduPlan.EduPlanId"><span class="glyphicon glyphicon-remove-circle text-danger" aria-hidden="true"></span></a>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
                                     }
                                 </td>
                                 <td>

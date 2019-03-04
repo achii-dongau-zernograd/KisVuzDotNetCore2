@@ -61,6 +61,25 @@
                 }
             </div>
             <div class="form-group">
+                <label class="control-label">Годы начала подготовки</label>
+                @foreach (EduYearBeginningTraining eduYearBeginningTraining in ViewBag.EduYearBeginningTrainings)
+                {
+                    string Checked = "";
+                    @if (Model.EduProgramEduYearBeginningTrainings != null)
+                    {
+                        foreach (var eduProgramEduYearBeginningTraining in Model.EduProgramEduYearBeginningTrainings)
+                        {
+                            if (eduProgramEduYearBeginningTraining.EduYearBeginningTrainingId == eduYearBeginningTraining.EduYearBeginningTrainingId)
+                            {
+                                Checked = "checked";
+                                break;
+                            }
+                        }
+                    }
+                    <br /><input type="checkbox" @Checked name="eduYearBeginningTrainingIds" value="@eduYearBeginningTraining.EduYearBeginningTrainingId"> @eduYearBeginningTraining.EduYearBeginningTrainingName
+                }
+            </div>
+            <div class="form-group">
                 <label class="control-label">Учебные годы</label>
                 @foreach (EduYear eduYear in ViewBag.EduYears)
                 {

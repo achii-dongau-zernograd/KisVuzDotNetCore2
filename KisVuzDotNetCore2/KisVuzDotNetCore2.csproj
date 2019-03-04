@@ -510,6 +510,8 @@
     <Compile Remove="Migrations\20181218063045_t.Designer.cs" />
     <Compile Remove="Migrations\20181225045308_t.cs" />
     <Compile Remove="Migrations\20181225045308_t.Designer.cs" />
+    <Compile Remove="Migrations\20190223022448_RenameTable.cs" />
+    <Compile Remove="Migrations\20190223022448_RenameTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

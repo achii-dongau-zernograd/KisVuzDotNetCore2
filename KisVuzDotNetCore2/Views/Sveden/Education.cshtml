@@ -254,6 +254,37 @@
             <tbody>
                 @foreach (var eduProgram in t10eduPrograms.Where(op => !op.IsAdopt))
                 {
+                    var eduProgramEduPlanList = new List<EduPlan>();
+                    foreach (var eduPlan in eduProgram.EduProfile.EduPlans.Where(p => p.EduProgramPodgId == eduProgram.EduProgramPodgId))
+                    {
+                        foreach (var eduPlanEduYearBeginningTraining in eduPlan.EduPlanEduYearBeginningTrainings)
+                        {
+                            foreach (var eduProgramEduYearBeginningTraining in eduProgram.EduProgramEduYearBeginningTrainings)
+                            {
+                                if (eduProgramEduYearBeginningTraining.EduYearBeginningTrainingId == eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId)
+                                {
+                                    foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+                                    {
+                                        if(eduProgramEduForm.EduFormId==eduPlan.EduFormId)
+                                        {
+                                            eduProgramEduPlanList.Add(eduPlan);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    string eduYearsBegTrainingsOfCurrentEduProgram = "";
+                    if (eduProgram.EduProgramEduYearBeginningTrainings != null)
+                    {
+                        foreach (var item in eduProgram.EduProgramEduYearBeginningTrainings)
+                        {
+                            eduYearsBegTrainingsOfCurrentEduProgram += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                        }
+                    }                    
+
                     string opMain = "opMain";
                     string educationPlan = "educationPlan";
                     string educationAnnotation = "educationAnnotation";
@@ -263,8 +294,8 @@
 
                     <tr itemprop="eduOP">
                         <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
-                        <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName)</td>
-                        <td itemprop="eduLevel">@eduProgram.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName<br />(@eduProgram.EduProgramPodg.EduProgramPodgName)</td>
+                        <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName, @eduYearsBegTrainingsOfCurrentEduProgram)</td>
+                        <td itemprop="eduLevel">@eduProgram.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName<br />(@eduProgram.EduProgramPodg.EduProgramPodgName.ToLower())</td>
                         <td itemprop="eduForm">
                             @foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
                             {
@@ -275,14 +306,14 @@
                             <a href="/@eduProgram.FileModel.Path">Открыть</a>
                         </td>
                         <td itemprop="@educationPlan">
-                            @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
+                            @foreach (var eduPlan in eduProgramEduPlanList)
                             {
                                 string eduYearsBegTrainings = "";
                                 if (eduPlan.EduPlanEduYearBeginningTrainings != null)
                                 {
                                     foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
                                     {
-                                        eduYearsBegTrainings += item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
                                     }
                                 }
                                 <a href="/@eduPlan.EduPlanPdf?.Path">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a><br />
@@ -290,14 +321,14 @@
                         </td>
                         <td itemprop="@educationAnnotation">
 
-                            @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
+                            @foreach (var eduPlan in eduProgramEduPlanList)
                             {
-                                string eduYearsBegTrainings="";
+                                string eduYearsBegTrainings = "";
                                 if (eduPlan.EduPlanEduYearBeginningTrainings != null)
                                 {
                                     foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
                                     {
-                                        eduYearsBegTrainings += item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
                                     }
                                 }
 
@@ -340,9 +371,17 @@
                                     <div class="collapse" id="spoiler-@spoilerCounter">
                                         @{spoilerCounter++;}
                                         <div class="well">
-                                            @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
+                                            @foreach (var eduPlan in eduProgramEduPlanList)
                                             {
-                                                <p><a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId">Открыть (@eduPlan.EduForm.EduFormName)</a></p>
+                                                string eduYearsBegTrainings = "";
+                                                if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                                {
+                                                    foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                                    {
+                                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                                    }
+                                                }
+                                                <p><a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a></p>
                                             }
                                         </div>
                                     </div>
