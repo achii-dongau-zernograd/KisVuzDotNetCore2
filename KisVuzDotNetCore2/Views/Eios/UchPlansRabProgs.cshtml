@@ -29,6 +29,10 @@
                                     {
                                         <li>Учебные планы отсутствуют</li>
                                     }
+                                    @if(eduProfile.EduPlans.Count>1)
+                                    {
+                                        eduProfile.EduPlans = eduProfile.EduPlans.Where(p=>p.EduPlanEduYearBeginningTrainings.Count>0).OrderByDescending(p => p.EduPlanEduYearBeginningTrainings[0].EduYearBeginningTraining.EduYearBeginningTrainingName).ToList();
+                                    }
                                     @foreach (var eduPlan in eduProfile.EduPlans)
                                     {
                                         <li>Форма обучения: @eduPlan.EduForm?.EduFormName.
