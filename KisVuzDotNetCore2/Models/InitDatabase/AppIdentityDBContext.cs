@@ -577,6 +577,16 @@ namespace KisVuzDotNetCore2.Models
         /// Таблица для закрепления за преподавателем дисциплин по учебному плану (по учебным годам)
         /// </summary>
         public DbSet<TeacherDiscipline> TeacherDisciplines { get; set; }
+
+        /// <summary>
+        /// Таблица "Типы достижений пользователя"
+        /// </summary>
+        public DbSet<UserAchievmentType> UserAchievmentTypes { get; set; }
+
+        /// <summary>
+        /// Таблица "Достижения пользователя"
+        /// </summary>
+        public DbSet<UserAchievment> UserAchievments { get; set; }
         #endregion
 
         #region Материально-техническое обеспечение

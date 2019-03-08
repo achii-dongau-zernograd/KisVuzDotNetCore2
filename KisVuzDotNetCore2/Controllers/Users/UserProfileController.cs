@@ -488,6 +488,11 @@ namespace KisVuzDotNetCore2.Controllers
                 .Where(w=>w.AppUserId==user.Id)
                 .ToListAsync();
 
+            user.UserAchievments = await context.UserAchievments
+                .Include(a => a.UserAchievmentType)
+                .Where(a => a.AppUserId == user.Id)
+                .ToListAsync();
+
             user.Author = await context.Author
                 .Include(a=>a.UchPosobieAuthors)
                     .ThenInclude(ua=>ua.UchPosobie)

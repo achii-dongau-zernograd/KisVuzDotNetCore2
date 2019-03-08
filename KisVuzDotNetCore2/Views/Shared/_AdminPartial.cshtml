@@ -294,7 +294,7 @@
                     <li><a asp-controller="Articles" asp-action="Index">Научные статьи</a></li>
                     <li><a asp-controller="ArticleNirSpecials" asp-action="Index">Научные статьи - Научные специальности</a></li>
                     <li><a asp-controller="ArticleAuthors" asp-action="Index">Научные статьи - Авторы</a></li>
-                    <li><a asp-controller="Patents" asp-action="Index">Патенты (свидетельства)</a></li>                    
+                    <li><a asp-controller="Patents" asp-action="Index">Патенты (свидетельства)</a></li>
                 </ul>
             </li>
             <li>
@@ -305,6 +305,13 @@
                     <li class="divider"></li>
                     <li><a asp-controller="UserWorkTypes" asp-action="Index">Типы пользовательских работ</a></li>
                     <li><a asp-controller="UserWorkReviewMarks" asp-action="Index">Справочник оценок за пользовательские работы</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Достижения пользователей<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a asp-controller="UserAchievments" asp-action="Index">Достижения пользователей</a></li>                    
+                    <li><a asp-controller="UserAchievmentTypes" asp-action="Index">Типы достижений</a></li>                    
                 </ul>
             </li>
             <li>
