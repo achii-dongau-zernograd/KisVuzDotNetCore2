@@ -66,7 +66,12 @@
                                 <ul>
                                     @foreach (var oborudovanie in discPomeshenie.Pomeshenie.OborudovanieList)
                                     {
-                                        <li>@oborudovanie.OborudovanieName (@oborudovanie.OborudovanieCount шт.)</li>
+                                        <li>@oborudovanie.OborudovanieName
+                                            @if (oborudovanie.OborudovanieCount > 0)
+                                            {
+                                                <text> (@oborudovanie.OborudovanieCount шт.)</text>
+                                            }
+                                        </li>
                                     }
                                 </ul>
                             </td>
