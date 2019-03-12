@@ -359,6 +359,40 @@ namespace KisVuzDotNetCore2.Controllers
 
             ViewData["disciplinePomeshenie"] = disciplinePomeshenie;
 
+            var eduLevelsToPomeshenie = _context.EduLevels
+                .Include(l => l.EduUgses)
+                    .ThenInclude(u => u.EduNapravls)
+                        .ThenInclude(n => n.EduProfiles)
+                            .ThenInclude(p => p.EduPlans)
+                                .ThenInclude(ep => ep.EduPlanEduYears)
+                                    .ThenInclude(epey => epey.DisciplinePomeshenies)
+                                        .ThenInclude(dp => dp.Pomeshenie)
+                                            .ThenInclude(p=>p.OborudovanieList)
+               .Include(l => l.EduUgses)
+                    .ThenInclude(u => u.EduNapravls)
+                        .ThenInclude(n => n.EduProfiles)
+                            .ThenInclude(p => p.EduPlans)
+                                .ThenInclude(ep => ep.EduForm)
+               .Include(l => l.EduUgses)
+                    .ThenInclude(u => u.EduNapravls)
+                        .ThenInclude(n => n.EduProfiles)
+                            .ThenInclude(p => p.EduPlans)
+                                .ThenInclude(ep => ep.EduProgramPodg)
+               .Include(l => l.EduUgses)
+                    .ThenInclude(u => u.EduNapravls)
+                        .ThenInclude(n => n.EduProfiles)
+                            .ThenInclude(p => p.EduPlans)
+                                .ThenInclude(ep => ep.EduPlanEduYearBeginningTrainings)
+                                    .ThenInclude(epey => epey.EduYearBeginningTraining)
+               .Include(l => l.EduUgses)
+                    .ThenInclude(u => u.EduNapravls)
+                        .ThenInclude(n => n.EduProfiles)
+                            .ThenInclude(p => p.EduPlans)
+                                .ThenInclude(ep => ep.EduPlanEduYears)
+                                    .ThenInclude(epey => epey.EduYear)
+               .ToList();
+
+            ViewData["eduLevelsToPomeshenie"] = eduLevelsToPomeshenie;
             #endregion
 
             int NumEbs = _context.ElectronBiblSystem.Count();

@@ -10,7 +10,8 @@
     int NumEoisOwn = (int)ViewData["NumEoisOwn"];
     int NumEoisSide = (int)ViewData["NumEoisSide"];
     List<PurposeLibr> PurposeLibr = (List<PurposeLibr>)ViewData["PurposeLibrs"];
-    List<DisciplinePomeshenie> disciplinePomeshenie = (List<DisciplinePomeshenie>)ViewData["disciplinePomeshenie"];
+    //List<DisciplinePomeshenie> disciplinePomeshenie = (List<DisciplinePomeshenie>)ViewData["disciplinePomeshenie"];
+    List<EduLevel> eduLevels = (List<EduLevel>)ViewData["eduLevelsToPomeshenie"];
     int spoilerCounter = 1;
 }
 
@@ -27,62 +28,122 @@
             <li itemprop="purposePracOvz"><a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/svedeniya-o-nalichii-oborudovannyih-uche">Сведения о наличии объектов для проведения практических занятий, приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья</a></li>
         </ul>
 
-        <table itemprop="purposeCab" class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Код</th>
-                    <th>Наименование специальности, направления подготовки</th>
-                    <th>Наименование дисциплины (модуля), практик в соответствии с учебным планом</th>
-                    <th>Наименование специальных помещений и помещений для самостоятельной работы</th>
-                    <th>Оснащенность специальных помещений и помещений для самостоятельной работы</th>
-                    <th>Приспособленность помещений для использования инвалидами и лицами с ограниченными возможностями здоровья</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var disciplinePomeshenieG in disciplinePomeshenie.GroupBy(dp => dp.EduPlanEduYear.EduPlan.EduProfileId))
-                {
-                    foreach (var discPomeshenie in disciplinePomeshenieG)
+        <hr />
+
+        @foreach (var eduLevel in eduLevels)
+        {
+            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduLevel.EduLevelName</a>
+            <div class="collapse" id="spoiler-@spoilerCounter">
+                @{spoilerCounter++; }
+                <div class="well">
+
+                    @foreach (var eduUgs in eduLevel.EduUgses)
                     {
-                        string purposeCab = "purposeCabOvz";
-                        string purposePrac = "purposePracOvz";
-                        switch (discPomeshenie.Pomeshenie.PomeshenieOvz)
+                        @foreach (var eduNapravl in eduUgs.EduNapravls)
                         {
-                            case null:
-                            case "":
-                            case "нет":
-                            case "не приспособлено":
-                                purposeCab = "purposeCab";
-                                purposePrac = "purposePrac";
-                                break;
+                            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduNapravl.EduNapravlCode - @eduNapravl.EduNapravlName</a>
+                            <div class="collapse" id="spoiler-@spoilerCounter">
+                                @{spoilerCounter++; }
+                                <div class="well">
 
-                        }
-
-                        <tr itemprop="@purposeCab">
-                            <td itemprop="eduCode">@discPomeshenie.EduPlanEduYear.EduPlan.EduProfile.EduNapravl.EduNapravlCode</td>
-                            <td itemprop="eduName">@discPomeshenie.EduPlanEduYear.EduPlan.EduProfile.EduNapravl.EduNapravlName (@discPomeshenie.EduPlanEduYear.EduPlan.EduProfile.EduProfileName)</td>
-                            <td>@discPomeshenie.Discipline.DisciplineName.DisciplineNameName</td>
-                            <td>@discPomeshenie.Pomeshenie.PomeshenieFullName</td>
-                            <td itemprop="@purposePrac">
-                                <ul>
-                                    @foreach (var oborudovanie in discPomeshenie.Pomeshenie.OborudovanieList)
+                                    @foreach (var eduProfile in eduNapravl.EduProfiles)
                                     {
-                                        <li>@oborudovanie.OborudovanieName
-                                            @if (oborudovanie.OborudovanieCount > 0)
-                                            {
-                                                <text> (@oborudovanie.OborudovanieCount шт.)</text>
-                                            }
-                                        </li>
+                                        <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduProfile.EduProfileName</a>
+                                        <div class="collapse" id="spoiler-@spoilerCounter">
+                                            @{spoilerCounter++; }
+                                            <div class="well">
+
+                                                @foreach (var eduPlan in eduProfile.EduPlans)
+                                                {
+                                                    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlan.EduForm.EduFormName - @eduPlan.EduProgramPodg.EduProgramPodgName  @eduPlan.EduYearBeginningTrainingsDescription</a>
+                                                    <div class="collapse" id="spoiler-@spoilerCounter">
+                                                        @{spoilerCounter++; }
+                                                        <div class="well">
+
+                                                            @foreach (var eduPlanEduYear in eduPlan.EduPlanEduYears)
+                                                            {
+                                                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlanEduYear.EduYear.EduYearName</a>
+                                                                <div class="collapse" id="spoiler-@spoilerCounter">
+                                                                    @{spoilerCounter++; }
+                                                                    <div class="well">
+
+                                                                        <table itemprop="purposeCab" class="table table-hover">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Код</th>
+                                                                                    <th>Наименование специальности, направления подготовки</th>
+                                                                                    <th>Наименование дисциплины (модуля), практик в соответствии с учебным планом</th>
+                                                                                    <th>Наименование специальных помещений и помещений для самостоятельной работы</th>
+                                                                                    <th>Оснащенность специальных помещений и помещений для самостоятельной работы</th>
+                                                                                    <th>Приспособленность помещений для использования инвалидами и лицами с ограниченными возможностями здоровья</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+
+                                                                                @foreach (var discPomeshenie in eduPlanEduYear.DisciplinePomeshenies.OrderBy(dp=>dp.Discipline.DisciplineName))
+                                                                                {
+
+                                                                                    string purposeCab = "purposeCabOvz";
+                                                                                    string purposePrac = "purposePracOvz";
+                                                                                    switch (discPomeshenie.Pomeshenie.PomeshenieOvz)
+                                                                                    {
+                                                                                        case null:
+                                                                                        case "":
+                                                                                        case "нет":
+                                                                                        case "не приспособлено":
+                                                                                            purposeCab = "purposeCab";
+                                                                                            purposePrac = "purposePrac";
+                                                                                            break;
+
+                                                                                    }
+
+                                                                                    <tr itemprop="@purposeCab">
+                                                                                        <td itemprop="eduCode">@eduNapravl.EduNapravlCode</td>
+                                                                                        <td itemprop="eduName">@eduNapravl.EduNapravlName (@eduProfile.EduProfileName)</td>
+                                                                                        <td>@discPomeshenie.Discipline.DisciplineName.DisciplineNameName</td>
+                                                                                        <td>@discPomeshenie.Pomeshenie.PomeshenieFullName</td>
+                                                                                        <td itemprop="@purposePrac">
+                                                                                            <ul>
+                                                                                                @foreach (var oborudovanie in discPomeshenie.Pomeshenie.OborudovanieList)
+                                                                                                {
+                                                                                                    <li>
+                                                                                                        @oborudovanie.OborudovanieName
+                                                                                                        @if (oborudovanie.OborudovanieCount > 0)
+                                                                                                        {
+                                                                                                            <text> (@oborudovanie.OborudovanieCount шт.)</text>
+                                                                                                        }
+                                                                                                    </li>
+                                                                                                }
+                                                                                            </ul>
+                                                                                        </td>
+                                                                                        <td>@discPomeshenie.Pomeshenie.PomeshenieOvz</td>
+                                                                                    </tr>
+
+                                                                                }
+
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        </div>
                                     }
-                                </ul>
-                            </td>
-                            <td>@discPomeshenie.Pomeshenie.PomeshenieOvz</td>
-                        </tr>
+
+                                </div>
+                            </div>
+                        }
                     }
 
-                }
-
-            </tbody>
-        </table>
+                </div>
+            </div>
+        }
 
     </div>
 </div>
