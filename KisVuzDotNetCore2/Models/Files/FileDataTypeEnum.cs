@@ -187,6 +187,10 @@
         /// <summary>
         /// Патент на промышленный образец
         /// </summary>
-        PatentNaPromyshlenniyObrazets = 54        
+        PatentNaPromyshlenniyObrazets = 54,
+        /// <summary>
+        /// Положение в соответствии со статьёй 30 ФЗ № 273 от 29.12.12 
+        /// </summary>
+        PolojenSt30Fz273 = 56
     }
 }

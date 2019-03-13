@@ -543,7 +543,14 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeName = "Патент на промышленный образец",
                         Itemprop = "",
                         FileDataTypeGroupId = 11
-                    };                    
+                    };
+
+                    FileDataType fileDataType56 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.PolojenSt30Fz273,
+                        FileDataTypeName = "Положения в соответствии со статьёй 30 ФЗ № 273 от 29.12.12",
+                        FileDataTypeGroupId = 1
+                    };
 
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
