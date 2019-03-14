@@ -107,7 +107,7 @@ namespace KisVuzDotNetCore2.Models.Files
 
             fileModel.Name = name;
 
-            string fileName = DateTime.Now.ToString("yyyy-MM-dd-") +
+            string fileName = /*DateTime.Now.ToString("yyyy-MM-dd-") +*/
                 Guid.NewGuid().ToString() +
                 Path.GetExtension(uploadedFile.FileName);
             // путь к папке files
