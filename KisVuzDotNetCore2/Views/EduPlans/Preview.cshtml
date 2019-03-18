@@ -107,6 +107,20 @@
         <tbody>
             @foreach (var blokDiscipl in Model.BlokDiscipl)
             {
+                bool isDisplay = false;
+
+                @foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
+                {
+                    if (blokDisciplChast.Disciplines.Count > 0)
+                    {
+                        isDisplay = true;
+                        break;
+                    }
+                }
+
+                if(isDisplay)
+                {
+                
                 <tr class="info">
                     <td colspan="7"><strong>@blokDiscipl.BlokDisciplName.BlokDisciplNameName</strong></td>
                 </tr>
@@ -199,6 +213,8 @@
                             </td>
                         </tr>
                     }
+                }
+
                 }
             }
 
