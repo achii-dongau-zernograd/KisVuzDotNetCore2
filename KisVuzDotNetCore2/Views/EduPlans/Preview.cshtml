@@ -193,7 +193,16 @@
                                     <ul>
                                         @foreach (var teacherDiscipline in teacherDisciplineG)
                                         {
-                                        <li><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacherDiscipline.Teacher.AppUserId">@teacherDiscipline.Teacher.TeacherFio</a></li>
+                                        <li>
+                                            @if (!string.IsNullOrEmpty(teacherDiscipline.Teacher.AppUserId))
+                                            {
+                                                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacherDiscipline.Teacher.AppUserId">@teacherDiscipline.Teacher.TeacherFio</a>
+                                            }
+                                            else
+                                            {
+                                                <text>@teacherDiscipline.Teacher.TeacherFio</text>
+                                            }
+                                        </li>
                                         }
                                     </ul>
                                 }
