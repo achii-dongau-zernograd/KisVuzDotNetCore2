@@ -96,12 +96,15 @@
         <thead>
             <tr>
                 <th>Код дисциплины</th>
-                <th>Наименование и содержание дисциплины</th>
+                <th>Наименование дисциплины</th>
                 <th>Аннотация</th>
                 <th>Рабочая программа</th>
                 <th>Фонд оценочных средств</th>
-                <th>Преподаватели</th>
-                <th>Учебные кабинеты</th>
+                @{
+                    //<th>Преподаватели</th>
+                    //<th>Учебные кабинеты</th>
+                }
+
             </tr>
         </thead>
         <tbody>
@@ -185,7 +188,7 @@
                                     <a href="/@fondOcenochnihSredstv.FileModel.Path">Открыть</a>
                                 }
                             </td>
-                            <td>
+                            @*<td>
                                 @foreach (var teacherDisciplineG in discipline.TeacherDisciplines.GroupBy(td=>td.EduPlanEduYear.EduYearId))
                                 {
                                     var eduYearName = teacherDisciplineG.FirstOrDefault().EduPlanEduYear.EduYear.EduYearName;
@@ -219,7 +222,7 @@
                                         }
                                     </ul>
                                 }
-                            </td>
+                            </td>*@
                         </tr>
                     }
                 }

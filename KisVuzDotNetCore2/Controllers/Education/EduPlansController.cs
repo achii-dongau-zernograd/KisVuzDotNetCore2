@@ -419,6 +419,11 @@ namespace KisVuzDotNetCore2.Controllers.Education
         [AllowAnonymous]
         public async Task<IActionResult> Preview(int id)
         {
+            if(!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             var eduPlan = await _context.EduPlans
                 .Include(e => e.EduForm)
                 .Include(e => e.EduPlanPdf)
