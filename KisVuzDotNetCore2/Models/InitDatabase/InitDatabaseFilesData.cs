@@ -95,6 +95,12 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupName = "Научные труды"
                     };
 
+                    FileDataTypeGroup fileDataTypeGroup12 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = 12,
+                        FileDataTypeGroupName = "Результаты освоения образовательной программы"
+                    };
+
                     await context.FileDataTypeGroups.AddRangeAsync(
                         fileDataTypeGroup1,
                         fileDataTypeGroup2,
@@ -106,7 +112,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataTypeGroup8,
                         fileDataTypeGroup9,
                         fileDataTypeGroup10,
-                        fileDataTypeGroup11
+                        fileDataTypeGroup11,
+                        fileDataTypeGroup12
                     );
                     await context.SaveChangesAsync();
                 }
@@ -552,6 +559,13 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = 1
                     };
 
+                    FileDataType fileDataType57 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.RezultOsvoenObrazovatProgr,
+                        FileDataTypeName = "Результаты освоения образовательной программы",
+                        FileDataTypeGroupId = 1
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -606,7 +620,9 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType51,
                         fileDataType52,
                         fileDataType53,
-                        fileDataType54
+                        fileDataType54,                        
+                        fileDataType56,
+                        fileDataType57
                         );
                     await context.SaveChangesAsync();
                 }

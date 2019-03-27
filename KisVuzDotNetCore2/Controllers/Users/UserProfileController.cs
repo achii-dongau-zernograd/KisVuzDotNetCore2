@@ -557,7 +557,8 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(s => s.StudentGroup.EduForm)
                 .Include(s => s.StudentGroup.EduKurs)
                 .Include(s => s.StudentGroup.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Include(s => s.StudentGroup.StructFacultet.StructSubvision)                
+                .Include(s => s.StudentGroup.StructFacultet.StructSubvision)
+                .Include(s => s.RezultOsvoenObrazovatProgr)
                 .SingleOrDefaultAsync(s=>s.AppUserId==user.Id);
             ViewData["student"] = student;
 

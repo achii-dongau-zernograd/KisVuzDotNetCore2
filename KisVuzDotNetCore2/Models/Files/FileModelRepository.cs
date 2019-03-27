@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Nir;
+using KisVuzDotNetCore2.Models.Students;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -260,6 +261,40 @@ namespace KisVuzDotNetCore2.Models.Files
             }
 
             return monograf.FileModel;
+        }
+
+        /// <summary>
+        /// Загружает файл результатов освоения образовательной программы
+        /// </summary>
+        /// <param name="student"></param>
+        /// <param name="uploadFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadRezultOsvoenObrazovatProgrAsync(Student student, IFormFile uploadedFile)
+        {
+            if (student == null || uploadedFile == null) return null;
+
+            FileModel newFileModel = await UploadFileAsync(uploadedFile, "Результаты освоения образовательной программы", FileDataTypeEnum.RezultOsvoenObrazovatProgr);
+            await _context.SaveChangesAsync();
+
+            if (newFileModel != null)
+            {
+                int? existingFileModelId = student.RezultOsvoenObrazovatProgrId;
+                student.RezultOsvoenObrazovatProgrId = newFileModel.Id;
+                student.RezultOsvoenObrazovatProgr = newFileModel;
+                await _context.SaveChangesAsync();
+                // Проверка наличия ранее загруженного файла
+                if (existingFileModelId > 0)
+                {
+                    //await RemoveFileAsync(existingFileModelId);
+                    //await _context.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+            return student.RezultOsvoenObrazovatProgr;
         }
     }
 }

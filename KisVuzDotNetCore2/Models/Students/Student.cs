@@ -55,5 +55,13 @@ namespace KisVuzDotNetCore2.Models.Students
         /// Оценки студента
         /// </summary>
         public List<VedomostStudentMark> VedomostStudentMarks { get; set; }
+
+        /// <summary>
+        /// .pdf файл с результатами освоения образовательной программы
+        /// </summary>
+        [Display(Name = ".pdf файл с результатами освоения образовательной программы")]
+        public FileModel RezultOsvoenObrazovatProgr { get; set; }
+        [Display(Name = ".pdf файл с результатами освоения образовательной программы")]
+        public int? RezultOsvoenObrazovatProgrId { get; set; }
     }
 }
