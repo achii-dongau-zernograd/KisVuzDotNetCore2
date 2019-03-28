@@ -220,7 +220,7 @@
                     <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Результаты промежуточной аттестации</strong></a>
                     <div class="collapse" id="spoiler-@spoilerCounter">
                         @{spoilerCounter++;}
-                        
+
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -249,16 +249,10 @@
                         </table>
                     </div>
 
-                    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Результаты освоения основной профессиональной образовательной программы</strong></a>
-                    <div class="collapse" id="spoiler-@spoilerCounter">
-                        @{spoilerCounter++;}
-
-                        @if (student.RezultOsvoenObrazovatProgr!=null)
-                        {
-                            <a href="/@student.RezultOsvoenObrazovatProgr.Path">Открыть</a>
-                        }
-
-                    </div>
+                    @if (student.RezultOsvoenObrazovatProgr != null)
+                    {
+                        <a href="/@student.RezultOsvoenObrazovatProgr.Path" class="btn btn-primary btn-block"><strong>Результаты освоения основной профессиональной образовательной программы</strong></a>
+                    }                    
                 }
                 else
                 {
