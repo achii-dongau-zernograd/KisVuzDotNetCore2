@@ -366,7 +366,7 @@
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
-                                                                                        @foreach (var teacherDisciplineGroup in eduPlanEduYear.TeacherDisciplines.GroupBy(t =>t.TeacherId))
+                                                                                        @foreach (var teacherDisciplineGroup in eduPlanEduYear.TeacherDisciplines.OrderBy(t=>t.Teacher.TeacherFio).GroupBy(t =>t.TeacherId))
                                                                                         {
                                                                                             var teacher = teacherDisciplineGroup.FirstOrDefault().Teacher;
                                                                                             <tr itemprop="teachingStaff">

@@ -315,6 +315,14 @@ namespace KisVuzDotNetCore2.Controllers
                     .ThenInclude(en => en.EduNapravls)
                         .ThenInclude(p => p.EduProfiles)
                             .ThenInclude(pp => pp.EduPlans)
+                                .ThenInclude(py => py.EduPlanEduYears)
+                                    .ThenInclude(t => t.TeacherDisciplines)
+                                        .ThenInclude(tt => tt.Discipline)
+                                            .ThenInclude(d => d.DisciplineName)
+                 .Include(u => u.EduUgses)
+                    .ThenInclude(en => en.EduNapravls)
+                        .ThenInclude(p => p.EduProfiles)
+                            .ThenInclude(pp => pp.EduPlans)
                                 .ThenInclude(f => f.EduForm)
                 .Include(u => u.EduUgses)
                     .ThenInclude(en => en.EduNapravls)
@@ -345,10 +353,10 @@ namespace KisVuzDotNetCore2.Controllers
 
 
             // Перечень образовательных программ, для которых имеются сведения о распределении дисциплин по преподавателям---
-            var eduProfiles = await _context.EduProfiles
-                .Include(p=>p.EduNapravl.EduUgs.EduLevel)
-                .ToListAsync();//Add filter by teacher-disc data---
-            ViewData["eduProfiles"] = eduProfiles;
+            //var eduProfiles = await _context.EduProfiles
+            //    .Include(p=>p.EduNapravl.EduUgs.EduLevel)
+            //    .ToListAsync();//Add filter by teacher-disc data---
+            //ViewData["eduProfiles"] = eduProfiles;
 
 
             //////////
