@@ -7,9 +7,12 @@
 @{
     var t14rucovodstvo = (IEnumerable<Rucovodstvo>)ViewData["t14rucovodstvo"];
     var t15rucovodstvoFil = (IEnumerable<RucovodstvoFil>)ViewData["t15rucovodstvoFil"];
-    var eduProfiles = (IEnumerable<EduProfile>)ViewData["eduProfiles"];
-    var teacherEduProfileDisciplineNames = (IEnumerable<KisVuzDotNetCore2.Models.Users.TeacherEduProfileDisciplineName>)ViewData["teacherEduProfileDisciplineNames"];
-    var posts = (IEnumerable<Post>)ViewData["posts"];
+    //var eduProfiles = (IEnumerable<EduProfile>)ViewData["eduProfiles"];
+    //var teacherEduProfileDisciplineNames = (IEnumerable<KisVuzDotNetCore2.Models.Users.TeacherEduProfileDisciplineName>)ViewData["teacherEduProfileDisciplineNames"];
+    //var posts = (IEnumerable<Post>)ViewData["posts"];
+    var teacher1 = (IEnumerable<Teacher>)ViewData["teacher1"];
+    int counter = 10;
+    var eduLevels = (IEnumerable<EduLevel>)ViewData["eduLevels"];
 }
 
 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Информация об администрации образовательной организации</a>
@@ -26,19 +29,19 @@
             </thead>
             @foreach (var item in t14rucovodstvo)
             {
-            <tr itemprop="rucovodstvo">
-                @if (item.AppUserId == null)
-                {
-                    <td itemprop="fio">@item.Fio</td>
-                }
-                else
-                {
-                    <td itemprop="fio"><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.Fio</a></td>
-                }
-                <td itemprop="post">@item.Post</td>
-                <td itemprop="telephone">@item.Telephone</td>
-                <td itemprop="email">@item.Email</td>
-            </tr>
+                <tr itemprop="rucovodstvo">
+                    @if (item.AppUserId == null)
+                    {
+                        <td itemprop="fio">@item.Fio</td>
+                    }
+                    else
+                    {
+                        <td itemprop="fio"><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.Fio</a></td>
+                    }
+                    <td itemprop="post">@item.Post</td>
+                    <td itemprop="telephone">@item.Telephone</td>
+                    <td itemprop="email">@item.Email</td>
+                </tr>
             }
         </table>
     </div>
@@ -86,70 +89,91 @@
 <a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Информация о составе педагогических (научно-педагогических) работников образовательной организации</a>
 <div class="collapse" id="spoiler-3">
     <div class="well">
-        @{int counter = 10;}
-        @foreach (var item in eduProfiles)
-        {
-            counter++;
-            <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">@item.GetEduProfileFullName</a>
-            <div class="collapse" id="spoiler-@counter">
-                <div class="well">
+        <a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Пофамильный перечень педагогических (научно-педагогических) работников</a>
+        <div class="collapse" id="spoiler-4">
 
-                    <table itemprop="teachingStaff" class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Ф.И.О. преподавателя, реализующего программу</th>
-                                <th>Должность преподавателя</th>
-                                <th>Перечень преподаваемых дисциплин</th>
-                                <th>Уровень образования</th>
-                                <th>Квалификация</th>
-                                <th>Учёная степень педагогического работника (при наличии)</th>
-                                <th>Учёное звание педагогического работника (при наличии)</th>
-                                <th>Наименование направления подготовки и (или) специальности педагогического работника</th>
-                                <th>Сведения о повышении квалификации и (или) профессиональной переподготовке педагогического работника (при наличии)</th>
-                                <th>Общий стаж работы</th>
-                                <th>Стаж работы педагогического работника по специальности</th>
-                            </tr>
-                            <tr>
-                                <th>1</th>
-                                <th>2</th>
-                                <th>3</th>
-                                <th>4</th>
-                                <th>5</th>
-                                <th>6</th>
-                                <th>7</th>
-                                <th>8</th>
-                                <th>9</th>
-                                <th>10</th>
-                                <th>11</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var teacherKey in @teacherEduProfileDisciplineNames.Where(t => t.EduProfileId == item.EduProfileId).GroupBy(t=>t.TeacherId))
-                            {
-                                var teacher = teacherKey.FirstOrDefault();
+
+            <div class="well">
+
+                <table itemprop="teachingStaff" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Ф.И.О. преподавателя, реализующего программу</th>
+                            <th>Должность преподавателя</th>
+                            <th>Перечень преподаваемых дисциплин</th>
+                            <th>Уровень образования</th>
+                            <th>Квалификация</th>
+                            <th>Учёная степень педагогического работника (при наличии)</th>
+                            <th>Учёное звание педагогического работника (при наличии)</th>
+                            <th>Наименование направления подготовки и (или) специальности педагогического работника</th>
+                            <th>Сведения о повышении квалификации и (или) профессиональной переподготовке педагогического работника (при наличии)</th>
+                            <th>Общий стаж работы</th>
+                            <th>Стаж работы педагогического работника по специальности</th>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th>8</th>
+                            <th>9</th>
+                            <th>10</th>
+                            <th>11</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var teacherKey in teacher1.OrderBy(a => a.TeacherFio).GroupBy(t => t.TeacherId))
+                        {
+                            var teacher = teacherKey.FirstOrDefault();
                             <tr itemprop="teachingStaff">
                                 <td itemprop="fio">
-                                    @if (!string.IsNullOrEmpty(teacher.Teacher.AppUserId))
+                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
                                     {
-                                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacher.Teacher.AppUserId">@teacher.Teacher.TeacherFio</a>
+                                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacher.AppUserId">@teacher.TeacherFio</a>
                                     }
                                     else
                                     {
-                                        <text>@teacher.Teacher.TeacherFio</text>
+                                        <text>@teacher.TeacherFio</text>
                                     }
                                 </td>
-                                <td itemprop="post">@posts.Where(p=>p.PostId == teacher.Teacher?.TeacherStructKafPostStavka?.OrderByDescending(t=>t.StavkaDate).FirstOrDefault()?.PostId).FirstOrDefault()?.PostName</td>
+
+                                <td itemprop="post">
+                                    @foreach (var post in teacher.TeacherStructKafPostStavka)
+                                    {
+                                        <p>@post.Post.PostName</p>
+                                    }
+                                </td>
+
                                 <td itemprop="teachingDiscipline">
-                                    @foreach (var t in teacherKey)
+                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
                                     {
-                                        <p>@t.DisciplineName.DisciplineNameName</p>
+                                        @if (teacher.TeacherEduProfileDisciplineNames.Count > 0)
+                                        {
+                                            counter++;
+                                            <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Открыть</a>
+                                            <div class="collapse" id="spoiler-@counter">
+                                                <div class="well">
+                                                    <ol>
+                                                        @foreach (var discipline in teacher.TeacherEduProfileDisciplineNames)
+                                                        {
+                                                            <li>@discipline.DisciplineName.DisciplineNameName - @discipline.EduProfile.EduNapravl.EduNapravlCode - @discipline.EduProfile.EduNapravl.EduNapravlName - @discipline.EduProfile.EduProfileName</li>
+                                                        }
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        }
                                     }
+
                                 </td>
-                                <td itemprop="teachingLevel">@teacher.Teacher.AppUser?.EduLevelGroup?.EduLevelGroupName</td>
+                                <td itemprop="teachingLevel">@teacher.AppUser?.EduLevelGroup?.EduLevelGroupName</td>
+
                                 <td itemprop="teachingQual">
-                                    @if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId))
+                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
                                     {
-                                        foreach (var qualification in @teacher.Teacher?.AppUser?.Qualifications)
+                                        foreach (var qualification in @teacher.AppUser?.Qualifications)
                                         {
                                             if (qualification.RowStatusId == 2)
                                             {
@@ -159,35 +183,35 @@
                                     }
                                 </td>
                                 <td itemprop="degree">
-                                    @if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId))
+                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
                                     {
-                                        if (string.IsNullOrEmpty(teacher.Teacher.AppUser.AcademicDegree?.AcademicDegreeName))
+                                        if (string.IsNullOrEmpty(teacher.AppUser.AcademicDegree?.AcademicDegreeName))
                                         {
                                             <p>Нет</p>
                                         }
                                         else
                                         {
-                                            @teacher.Teacher.AppUser.AcademicDegree.AcademicDegreeName
+                                            @teacher.AppUser.AcademicDegree.AcademicDegreeName
                                         }
                                     }
                                 </td>
                                 <td itemprop="academStat">
-                                    @if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId))
+                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
                                     {
-                                        if (string.IsNullOrEmpty(teacher.Teacher.AppUser.AcademicStat?.AcademicStatName))
+                                        if (string.IsNullOrEmpty(teacher.AppUser.AcademicStat?.AcademicStatName))
                                         {
                                             <p>Нет</p>
                                         }
                                         else
                                         {
-                                            @teacher.Teacher.AppUser.AcademicStat.AcademicStatName
+                                            @teacher.AppUser.AcademicStat.AcademicStatName
                                         }
                                     }
                                 </td>
                                 <td itemprop="employeeQualification">
-                                    @if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId))
+                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
                                     {
-                                        foreach (var qualification in @teacher.Teacher.AppUser.Qualifications)
+                                        foreach (var qualification in @teacher.AppUser.Qualifications)
                                         {
                                             if (qualification.RowStatusId == 2)
                                             {
@@ -197,16 +221,16 @@
                                     }
                                 </td>
                                 <td itemprop="profDevelopment">
-                                    @if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId))
+                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
                                     {
-                                        @if (teacher.Teacher.AppUser.ProfessionalRetrainings.Count > 0)
+                                        @if (teacher.AppUser.ProfessionalRetrainings.Count > 0)
                                         {
                                             counter++;
                                             <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Профессиональная переподготовка</a>
                                             <div class="collapse" id="spoiler-@counter">
                                                 <div class="well">
                                                     <ol>
-                                                        @foreach (var pp in teacher.Teacher.AppUser.ProfessionalRetrainings)
+                                                        @foreach (var pp in teacher.AppUser.ProfessionalRetrainings)
                                                         {
                                                             <li><a asp-controller="ProfessionalRetrainings" asp-action="Details" asp-route-id="@pp.ProfessionalRetrainingId">@pp.GetProfessionalRetrainingString</a></li>
                                                         }
@@ -215,14 +239,14 @@
                                             </div>
                                         }
 
-                                        @if (teacher.Teacher.AppUser.RefresherCourses.Count > 0)
+                                        @if (teacher.AppUser.RefresherCourses.Count > 0)
                                         {
                                             counter++;
                                             <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Повышение квалификации</a>
                                             <div class="collapse" id="spoiler-@counter">
                                                 <div class="well">
                                                     <ol>
-                                                        @foreach (var pk in teacher.Teacher.AppUser.RefresherCourses)
+                                                        @foreach (var pk in teacher.AppUser.RefresherCourses)
                                                         {
                                                             <li><a asp-controller="RefresherCourses" asp-action="Details" asp-route-id="@pk.RefresherCourseId">@pk.GetRefresherCourseString</a></li>
                                                         }
@@ -234,44 +258,476 @@
                                 </td>
                                 <td itemprop="genExperience">
                                     @{
-                                        if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId) && teacher.Teacher.AppUser.DateStartWorking != null)
+                                        if (!string.IsNullOrEmpty(teacher.AppUserId) && teacher.AppUser.DateStartWorking != null)
                                         {
-                                            var staj = DateTime.Now.Subtract((DateTime)teacher.Teacher.AppUser.DateStartWorking);
+                                            var staj = DateTime.Now.Subtract((DateTime)teacher.AppUser.DateStartWorking);
                                             int years = staj.Days / 365;
                                             int months = (staj.Days - years * 365) / 30;
                                             <p>@years г./лет @months м.</p>
                                         }
                                         @*else
-                                        {
-                                            <p>Нет</p>
-                                        }*@
+                                            {
+                                                <p>Нет</p>
+                                            }*@
                                     }
                                 </td>
                                 <td itemprop="specExperience">
                                     @{
-                                        if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId) && teacher.Teacher.AppUser.DateStartWorkingSpec != null)
+                                        if (!string.IsNullOrEmpty(teacher.AppUserId) && teacher.AppUser.DateStartWorkingSpec != null)
                                         {
-                                            var staj = DateTime.Now.Subtract((DateTime)teacher.Teacher.AppUser.DateStartWorkingSpec);
+                                            var staj = DateTime.Now.Subtract((DateTime)teacher.AppUser.DateStartWorkingSpec);
                                             int years = staj.Days / 365;
                                             int months = (staj.Days - years * 365) / 30;
                                             <p>@years г./лет @months м.</p>
                                         }
                                         @*else
+                                            {
+                                                <p>Нет</p>
+                                            }*@
+                                    }
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+
+                </table>
+
+            </div>
+
+
+        </div>
+
+        @{counter++;}
+        <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Перечень педагогических (научно-педагогических) работников, задействованных в реализации образовательных программ</a>
+        <div class="collapse" id="spoiler-@counter">
+            <div class="well">
+
+                @foreach (var eduLevel in eduLevels)
+                {
+                    counter++;
+                    <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">@eduLevel.EduLevelName</a>
+                    <div class="collapse" id="spoiler-@counter">
+                        <div class="well">
+                            @foreach (var eduUgs in eduLevel.EduUgses)
+                            {
+                                foreach (var eduNapravl in eduUgs.EduNapravls)
+                                {
+                                    counter++;
+                                    <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">@eduNapravl.EduNapravlCode - @eduNapravl.EduNapravlName</a>
+                                    <div class="collapse" id="spoiler-@counter">
+                                        <div class="well">
+                                            @foreach (var eduProfile in eduNapravl.EduProfiles)
+                                            {
+                                                counter++;
+                                                <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">@eduProfile.EduProfileName</a>
+                                                <div class="collapse" id="spoiler-@counter">
+                                                    <div class="well">
+                                                        @foreach (var eduPlan in eduProfile.EduPlans)
+                                                        {
+                                                            counter++;
+                                                            <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlan.EduForm.EduFormName -  @eduPlan.EduProgramPodg.EduProgramPodgName @eduPlan.EduYearBeginningTrainingsDescription</a>
+                                                            <div class="collapse" id="spoiler-@counter">
+                                                                <div class="well">
+                                                                    @foreach (var eduPlanEduYear in eduPlan.EduPlanEduYears)
+                                                                    {
+                                                                        counter++;
+                                                                        <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlanEduYear.EduYear.EduYearName</a>
+                                                                        <div class="collapse" id="spoiler-@counter">
+                                                                            <div class="well">
+                                                                                <table itemprop="teachingStaff" class="table table-hover">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Ф.И.О. преподавателя, реализующего программу</th>
+                                                                                            <th>Должность преподавателя</th>
+                                                                                            <th>Перечень преподаваемых дисциплин</th>
+                                                                                            <th>Уровень образования</th>
+                                                                                            <th>Квалификация</th>
+                                                                                            <th>Учёная степень педагогического работника (при наличии)</th>
+                                                                                            <th>Учёное звание педагогического работника (при наличии)</th>
+                                                                                            <th>Наименование направления подготовки и (или) специальности педагогического работника</th>
+                                                                                            <th>Сведения о повышении квалификации и (или) профессиональной переподготовке педагогического работника (при наличии)</th>
+                                                                                            <th>Общий стаж работы</th>
+                                                                                            <th>Стаж работы педагогического работника по специальности</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <th>1</th>
+                                                                                            <th>2</th>
+                                                                                            <th>3</th>
+                                                                                            <th>4</th>
+                                                                                            <th>5</th>
+                                                                                            <th>6</th>
+                                                                                            <th>7</th>
+                                                                                            <th>8</th>
+                                                                                            <th>9</th>
+                                                                                            <th>10</th>
+                                                                                            <th>11</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        @foreach (var teacherDisciplineGroup in eduPlanEduYear.TeacherDisciplines.GroupBy(t =>t.TeacherId))
+                                                                                        {
+                                                                                            var teacher = teacherDisciplineGroup.FirstOrDefault().Teacher;
+                                                                                            <tr itemprop="teachingStaff">
+                                                                                                <td itemprop="fio">
+                                                                                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
+                                                                                                    {
+                                                                                                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacher.AppUserId">@teacher.TeacherFio</a>
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        <text>@teacher.TeacherFio</text>
+                                                                                                    }
+                                                                                                </td>
+
+                                                                                                <td itemprop="post">
+                                                                                                    @foreach (var post in teacher.TeacherStructKafPostStavka)
+                                                                                                    {
+                                                                                                        <p>@post.Post.PostName</p>
+                                                                                                    }
+                                                                                                </td>
+
+                                                                                                <td itemprop="teachingDiscipline">
+                                                                                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
+                                                                                                    {
+                                                                                                        @if (teacher.TeacherEduProfileDisciplineNames.Count > 0)
+                                                                                                        {
+                                                                                                            counter++;
+                                                                                                            <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Открыть</a>
+                                                                                                            <div class="collapse" id="spoiler-@counter">
+                                                                                                                <div class="well">
+                                                                                                                    <ol>
+                                                                                                                        @foreach (var teacherDiscipline in teacherDisciplineGroup)
+                                                                                                                        {
+                                                                                                                            <li>@teacherDiscipline.Discipline.DisciplineName.DisciplineNameName</li>
+                                                                                                                        }
+                                                                                                                    </ol>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        }
+                                                                                                    }
+
+                                                                                                </td>
+                                                                                                <td itemprop="teachingLevel">@teacher.AppUser?.EduLevelGroup?.EduLevelGroupName</td>
+
+                                                                                                <td itemprop="teachingQual">
+                                                                                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
+                                                                                                    {
+                                                                                                        foreach (var qualification in @teacher.AppUser?.Qualifications)
+                                                                                                        {
+                                                                                                            if (qualification.RowStatusId == 2)
+                                                                                                            {
+                                                                                                                <p>@qualification.QualificationName</p>
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                </td>
+                                                                                                <td itemprop="degree">
+                                                                                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
+                                                                                                    {
+                                                                                                        if (string.IsNullOrEmpty(teacher.AppUser.AcademicDegree?.AcademicDegreeName))
+                                                                                                        {
+                                                                                                            <p>Нет</p>
+                                                                                                        }
+                                                                                                        else
+                                                                                                        {
+                                                                                                            @teacher.AppUser.AcademicDegree.AcademicDegreeName
+                                                                                                        }
+                                                                                                    }
+                                                                                                </td>
+                                                                                                <td itemprop="academStat">
+                                                                                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
+                                                                                                    {
+                                                                                                        if (string.IsNullOrEmpty(teacher.AppUser.AcademicStat?.AcademicStatName))
+                                                                                                        {
+                                                                                                            <p>Нет</p>
+                                                                                                        }
+                                                                                                        else
+                                                                                                        {
+                                                                                                            @teacher.AppUser.AcademicStat.AcademicStatName
+                                                                                                        }
+                                                                                                    }
+                                                                                                </td>
+                                                                                                <td itemprop="employeeQualification">
+                                                                                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
+                                                                                                    {
+                                                                                                        foreach (var qualification in @teacher.AppUser.Qualifications)
+                                                                                                        {
+                                                                                                            if (qualification.RowStatusId == 2)
+                                                                                                            {
+                                                                                                                <p>@qualification.NapravlName</p>
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                </td>
+                                                                                                <td itemprop="profDevelopment">
+                                                                                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
+                                                                                                    {
+                                                                                                        @if (teacher.AppUser.ProfessionalRetrainings.Count > 0)
+                                                                                                        {
+                                                                                                            counter++;
+                                                                                                            <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Профессиональная переподготовка</a>
+                                                                                                            <div class="collapse" id="spoiler-@counter">
+                                                                                                                <div class="well">
+                                                                                                                    <ol>
+                                                                                                                        @foreach (var pp in teacher.AppUser.ProfessionalRetrainings)
+                                                                                                                        {
+                                                                                                                            <li><a asp-controller="ProfessionalRetrainings" asp-action="Details" asp-route-id="@pp.ProfessionalRetrainingId">@pp.GetProfessionalRetrainingString</a></li>
+                                                                                                                        }
+                                                                                                                    </ol>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        }
+
+                                                                                                        @if (teacher.AppUser.RefresherCourses.Count > 0)
+                                                                                                        {
+                                                                                                            counter++;
+                                                                                                            <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Повышение квалификации</a>
+                                                                                                            <div class="collapse" id="spoiler-@counter">
+                                                                                                                <div class="well">
+                                                                                                                    <ol>
+                                                                                                                        @foreach (var pk in teacher.AppUser.RefresherCourses)
+                                                                                                                        {
+                                                                                                                            <li><a asp-controller="RefresherCourses" asp-action="Details" asp-route-id="@pk.RefresherCourseId">@pk.GetRefresherCourseString</a></li>
+                                                                                                                        }
+                                                                                                                    </ol>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        }
+                                                                                                    }
+                                                                                                </td>
+                                                                                                <td itemprop="genExperience">
+                                                                                                    @{
+                                                                                                        if (!string.IsNullOrEmpty(teacher.AppUserId) && teacher.AppUser.DateStartWorking != null)
+                                                                                                        {
+                                                                                                            var staj = DateTime.Now.Subtract((DateTime)teacher.AppUser.DateStartWorking);
+                                                                                                            int years = staj.Days / 365;
+                                                                                                            int months = (staj.Days - years * 365) / 30;
+                                                                                                            <p>@years г./лет @months м.</p>
+                                                                                                        }                                                                                                        
+                                                                                                    }
+                                                                                                </td>
+                                                                                                <td itemprop="specExperience">
+                                                                                                    @{
+                                                                                                        if (!string.IsNullOrEmpty(teacher.AppUserId) && teacher.AppUser.DateStartWorkingSpec != null)
+                                                                                                        {
+                                                                                                            var staj = DateTime.Now.Subtract((DateTime)teacher.AppUser.DateStartWorkingSpec);
+                                                                                                            int years = staj.Days / 365;
+                                                                                                            int months = (staj.Days - years * 365) / 30;
+                                                                                                            <p>@years г./лет @months м.</p>
+                                                                                                        }                                                                                                       
+                                                                                                    }
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        }
+
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*@foreach (var item in eduProfiles)
+{
+    counter++;
+    <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">@item.GetEduProfileFullName</a>
+    <div class="collapse" id="spoiler-@counter">
+        <div class="well">
+
+            <table itemprop="teachingStaff" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Ф.И.О. преподавателя, реализующего программу</th>
+                        <th>Должность преподавателя</th>
+                        <th>Перечень преподаваемых дисциплин</th>
+                        <th>Уровень образования</th>
+                        <th>Квалификация</th>
+                        <th>Учёная степень педагогического работника (при наличии)</th>
+                        <th>Учёное звание педагогического работника (при наличии)</th>
+                        <th>Наименование направления подготовки и (или) специальности педагогического работника</th>
+                        <th>Сведения о повышении квалификации и (или) профессиональной переподготовке педагогического работника (при наличии)</th>
+                        <th>Общий стаж работы</th>
+                        <th>Стаж работы педагогического работника по специальности</th>
+                    </tr>
+                    <tr>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                        <th>8</th>
+                        <th>9</th>
+                        <th>10</th>
+                        <th>11</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var teacherKey in @teacherEduProfileDisciplineNames.Where(t => t.EduProfileId == item.EduProfileId).GroupBy(t => t.TeacherId))
+                    {
+                        var teacher = teacherKey.FirstOrDefault();
+                        <tr itemprop="teachingStaff">
+                            <td itemprop="fio">
+                                @if (!string.IsNullOrEmpty(teacher.Teacher.AppUserId))
+                                {
+                                    <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacher.Teacher.AppUserId">@teacher.Teacher.TeacherFio</a>
+                                }
+                                else
+                                {
+                                    <text>@teacher.Teacher.TeacherFio</text>
+                                }
+                            </td>
+                            <td itemprop="post">@posts.Where(p => p.PostId == teacher.Teacher?.TeacherStructKafPostStavka?.OrderByDescending(t => t.StavkaDate).FirstOrDefault()?.PostId).FirstOrDefault()?.PostName</td>
+                            <td itemprop="teachingDiscipline">
+                                @foreach (var t in teacherKey)
+                                {
+                                    <p>@t.DisciplineName.DisciplineNameName</p>
+                                }
+                            </td>
+                            <td itemprop="teachingLevel">@teacher.Teacher.AppUser?.EduLevelGroup?.EduLevelGroupName</td>
+                            <td itemprop="teachingQual">
+                                @if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId))
+                                {
+                                    foreach (var qualification in @teacher.Teacher?.AppUser?.Qualifications)
+                                    {
+                                        if (qualification.RowStatusId == 2)
+                                        {
+                                            <p>@qualification.QualificationName</p>
+                                        }
+                                    }
+                                }
+                            </td>
+                            <td itemprop="degree">
+                                @if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId))
+                                {
+                                    if (string.IsNullOrEmpty(teacher.Teacher.AppUser.AcademicDegree?.AcademicDegreeName))
+                                    {
+                                        <p>Нет</p>
+                                    }
+                                    else
+                                    {
+                                        @teacher.Teacher.AppUser.AcademicDegree.AcademicDegreeName
+                                    }
+                                }
+                            </td>
+                            <td itemprop="academStat">
+                                @if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId))
+                                {
+                                    if (string.IsNullOrEmpty(teacher.Teacher.AppUser.AcademicStat?.AcademicStatName))
+                                    {
+                                        <p>Нет</p>
+                                    }
+                                    else
+                                    {
+                                        @teacher.Teacher.AppUser.AcademicStat.AcademicStatName
+                                    }
+                                }
+                            </td>
+                            <td itemprop="employeeQualification">
+                                @if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId))
+                                {
+                                    foreach (var qualification in @teacher.Teacher.AppUser.Qualifications)
+                                    {
+                                        if (qualification.RowStatusId == 2)
+                                        {
+                                            <p>@qualification.NapravlName</p>
+                                        }
+                                    }
+                                }
+                            </td>
+                            <td itemprop="profDevelopment">
+                                @if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId))
+                                {
+                                    @if (teacher.Teacher.AppUser.ProfessionalRetrainings.Count > 0)
+                                    {
+                                        counter++;
+                                        <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Профессиональная переподготовка</a>
+                                        <div class="collapse" id="spoiler-@counter">
+                                            <div class="well">
+                                                <ol>
+                                                    @foreach (var pp in teacher.Teacher.AppUser.ProfessionalRetrainings)
+                                                    {
+                                                        <li><a asp-controller="ProfessionalRetrainings" asp-action="Details" asp-route-id="@pp.ProfessionalRetrainingId">@pp.GetProfessionalRetrainingString</a></li>
+                                                    }
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    @if (teacher.Teacher.AppUser.RefresherCourses.Count > 0)
+                                    {
+                                        counter++;
+                                        <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Повышение квалификации</a>
+                                        <div class="collapse" id="spoiler-@counter">
+                                            <div class="well">
+                                                <ol>
+                                                    @foreach (var pk in teacher.Teacher.AppUser.RefresherCourses)
+                                                    {
+                                                        <li><a asp-controller="RefresherCourses" asp-action="Details" asp-route-id="@pk.RefresherCourseId">@pk.GetRefresherCourseString</a></li>
+                                                    }
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </td>
+                            <td itemprop="genExperience">
+                                @{
+                                    if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId) && teacher.Teacher.AppUser.DateStartWorking != null)
+                                    {
+                                        var staj = DateTime.Now.Subtract((DateTime)teacher.Teacher.AppUser.DateStartWorking);
+                                        int years = staj.Days / 365;
+                                        int months = (staj.Days - years * 365) / 30;
+                                        <p>@years г./лет @months м.</p>
+                                    }
+                                    @*else
                                         {
                                             <p>Нет</p>
                                         }*@
+                                @*}*@
+                            @*</td>
+                            <td itemprop="specExperience">
+                                @{
+                                    if (!string.IsNullOrEmpty(teacher.Teacher?.AppUserId) && teacher.Teacher.AppUser.DateStartWorkingSpec != null)
+                                    {
+                                        var staj = DateTime.Now.Subtract((DateTime)teacher.Teacher.AppUser.DateStartWorkingSpec);
+                                        int years = staj.Days / 365;
+                                        int months = (staj.Days - years * 365) / 30;
+                                        <p>@years г./лет @months м.</p>
                                     }
-                                </td>
-                            </tr>    
-                            }
+                                    @*else
+                                        {
+                                            <p>Нет</p>
+                                        }*@
+                                @*}*@
+                            @*</td>
+                        </tr>
+                    }
 
-                        </tbody>
+                </tbody>*@
 
 
-                    </table>
+            @*</table>*@
 
-                </div>
-            </div>
-        }        
-    </div>
-</div>
+        @*</div>*@
+    @*</div>*@

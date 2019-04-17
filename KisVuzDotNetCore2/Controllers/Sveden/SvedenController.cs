@@ -271,7 +271,79 @@ namespace KisVuzDotNetCore2.Controllers
                 .ToListAsync();
             ViewData["t15rucovodstvoFil"] = t15rucovodstvoFil;
 
-            #region Таблица 16. Информация о составе педагогических (научно-педагогических) работников образовательной организации
+            #region Таблица 16-1. Пофамильный перечень педагогических (научно-педагогических) работников
+            var teacher1 = await _context.Teachers
+                .Include(t => t.TeacherStructKafPostStavka)
+                    .ThenInclude(p => p.Post)
+                .Include(a => a.AppUser)
+                    .ThenInclude(e => e.EduLevelGroup)
+                .Include(a => a.AppUser)
+                    .ThenInclude(aa => aa.AcademicDegree)
+                .Include(a => a.AppUser)
+                    .ThenInclude(aa => aa.AcademicStat)
+                .Include(a => a.AppUser)
+                    .ThenInclude(q => q.Qualifications)
+                .Include(a => a.AppUser)
+                    .ThenInclude(pr => pr.ProfessionalRetrainings)
+                .Include(a => a.AppUser)
+                    .ThenInclude(r => r.RefresherCourses)
+                .Include(e => e.TeacherEduProfileDisciplineNames)
+                    .ThenInclude(ed => ed.DisciplineName)
+                .Include(e => e.TeacherEduProfileDisciplineNames)
+                    .ThenInclude(ep => ep.EduProfile)
+                        .ThenInclude(p => p.EduPlans)
+                            .ThenInclude(f => f.EduForm)
+                .Include(e => e.TeacherEduProfileDisciplineNames)
+                    .ThenInclude(ep => ep.EduProfile)
+                        .ThenInclude(p => p.EduNapravl)                            
+                .ToListAsync();
+            ViewData["teacher1"] = teacher1;
+            #endregion
+
+
+            #region Таблица 16. Перечень педагогических (научно-педагогических) работников, задействованных в реализации образовательных программ
+            var eduLevels = await _context.EduLevels
+                .Include(u => u.EduUgses)
+                    .ThenInclude(en => en.EduNapravls)
+                        .ThenInclude(p => p.EduProfiles)
+                            .ThenInclude(pp => pp.EduPlans)
+                                .ThenInclude(py => py.EduPlanEduYears)
+                                    .ThenInclude(t => t.TeacherDisciplines)
+                                        .ThenInclude(tt => tt.Teacher)
+                                            .ThenInclude(a => a.AppUser)
+                 .Include(u => u.EduUgses)
+                    .ThenInclude(en => en.EduNapravls)
+                        .ThenInclude(p => p.EduProfiles)
+                            .ThenInclude(pp => pp.EduPlans)
+                                .ThenInclude(f => f.EduForm)
+                .Include(u => u.EduUgses)
+                    .ThenInclude(en => en.EduNapravls)
+                        .ThenInclude(p => p.EduProfiles)
+                            .ThenInclude(pp => pp.EduPlans)
+                                .ThenInclude(f => f.EduProgramPodg)
+                .Include(u => u.EduUgses)
+                    .ThenInclude(en => en.EduNapravls)
+                        .ThenInclude(p => p.EduProfiles)
+                            .ThenInclude(pp => pp.EduPlans)
+                                .ThenInclude(f => f.EduPlanEduYearBeginningTrainings)
+                                    .ThenInclude(f => f.EduYearBeginningTraining)
+                .Include(u => u.EduUgses)
+                    .ThenInclude(en => en.EduNapravls)
+                        .ThenInclude(p => p.EduProfiles)
+                            .ThenInclude(pp => pp.EduPlans)
+                                .ThenInclude(f => f.EduPlanEduYears)
+                                    .ThenInclude(f => f.EduYear)
+                .ToListAsync();
+            ViewData["eduLevels"] = eduLevels;
+
+
+
+
+
+
+
+
+
             // Перечень образовательных программ, для которых имеются сведения о распределении дисциплин по преподавателям---
             var eduProfiles = await _context.EduProfiles
                 .Include(p=>p.EduNapravl.EduUgs.EduLevel)
@@ -350,14 +422,14 @@ namespace KisVuzDotNetCore2.Controllers
 
             int currentEduYear = (await _context.AppSettings.SingleOrDefaultAsync(s => s.AppSettingId == (int)AppSettingTypesEnum.CurrentEduYear)).AppSettingValue;
 
-            var disciplinePomeshenie = await _context.DisciplinePomeshenies
-                .Include(p => p.Discipline.DisciplineName)
-                .Include(p => p.EduPlanEduYear.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Include(p => p.Pomeshenie.Korpus)
-                .Include(p => p.Pomeshenie.OborudovanieList)
-                .Where(p => p.EduPlanEduYear.EduYearId == currentEduYear).ToListAsync();
+            //var disciplinePomeshenie = await _context.DisciplinePomeshenies
+            //    .Include(p => p.Discipline.DisciplineName)
+            //    .Include(p => p.EduPlanEduYear.EduPlan.EduProfile.EduNapravl.EduUgs.EduLevel)
+            //    .Include(p => p.Pomeshenie.Korpus)
+            //    .Include(p => p.Pomeshenie.OborudovanieList)
+            //    .Where(p => p.EduPlanEduYear.EduYearId == currentEduYear).ToListAsync();
 
-            ViewData["disciplinePomeshenie"] = disciplinePomeshenie;
+            //ViewData["disciplinePomeshenie"] = disciplinePomeshenie;
 
             var eduLevelsToPomeshenie = _context.EduLevels
                 .Include(l => l.EduUgses)
