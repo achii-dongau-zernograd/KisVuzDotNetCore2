@@ -99,7 +99,7 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 monograf.MonografAuthors = monografEntry.MonografAuthors;
                 monograf.MonografNirTemas = monografEntry.MonografNirTemas;
                _monografRepository.UpdateMonograf(monografEntry, monograf);
-                }
+            }
                                  
             switch(mode)
             {

@@ -65,6 +65,7 @@ namespace KisVuzDotNetCore2.Models.Nir
                                 .ThenInclude(en => en.EduNapravl)
                                     .ThenInclude(eu => eu.EduUgs)
                                         .ThenInclude(el => el.EduLevel)
+                                  
                 .Include(p => p.Year)
                 .Include(p => p.FileModel)
                 .Include(p => p.RowStatus)

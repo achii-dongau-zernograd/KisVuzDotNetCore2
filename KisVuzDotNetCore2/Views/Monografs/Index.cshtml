@@ -17,6 +17,10 @@
             </th>
 
             <th>
+                Авторы (авт. доля, о.е.)
+            </th>
+
+            <th>
                 @Html.DisplayNameFor(model => model.Year)
             </th>
 
@@ -26,6 +30,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.FileModel)
             </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.MonografNirSpecials)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonografNirTemas)
+            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.RowStatus)
             </th>
@@ -39,7 +51,24 @@
             <td>
                 @Html.DisplayFor(modelItem => item.MonografName)
             </td>
-            
+
+            <td>
+                @foreach (var monografAuthor in item.MonografAuthors)
+                {
+                    if (monografAuthor.Author?.AppUserId != null)
+                    {
+                        <p>
+                            <a asp-controller="Patents" asp-action="Index" asp-route-id="@monografAuthor.Author.AppUserId">@monografAuthor.Author.AuthorName (@monografAuthor.AuthorPart.ToString("N"))</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p>@monografAuthor.Author?.AuthorName (@monografAuthor.AuthorPart.ToString("N"))</p>
+                    }
+
+                }
+            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Year.YearName)
             </td>
@@ -57,12 +86,50 @@
                     <text>-</text>
                 }
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.RowStatus.RowStatusName)
+                @if (item.MonografNirSpecials != null && item.MonografNirSpecials.Count > 0)
+                {
+                    foreach (var monografNirSpecial in item.MonografNirSpecials)
+                    {
+                        <p>@monografNirSpecial.NirSpecial.NirSpecialCode - @monografNirSpecial.NirSpecial.NirSpecialName</p>
+                    }
+                }
+                else
+                {
+                    <p> - </p>
+                }
             </td>
-            
             <td>
-                <input type="hidden" name="monografId" value="@item.MonografId" />
+                @if (item.MonografNirTemas != null && item.MonografNirTemas.Count > 0)
+                {
+                    foreach (var monografNirTema in item.MonografNirTemas)
+                    {
+                        <p>@monografNirTema.NirTema.NirTemaName</p>
+                    }
+                }
+                else
+                {
+                    <p> - </p>
+                }
+            </td>
+
+            <td>
+                @if (@item.RowStatusId != (int)RowStatusEnum.Confirmed)
+                {
+                    <form asp-action="ConfirmMonograf">
+                        <input type="hidden" name="articleId" value="@item.MonografId" />
+                        <input type="submit" value="Подтвердить" class="btn btn-block btn-primary" />
+                    </form>
+                }
+                else
+                {
+                    <text>@item.RowStatus.RowStatusName</text>
+                }
+            </td>
+
+            <td>
+
                 <a asp-action="CreateOrEdit" asp-route-id="@item.MonografId">Редактировать</a> |
                 <a asp-action="Delete" asp-route-id="@item.MonografId">Удалить</a>
             </td>
