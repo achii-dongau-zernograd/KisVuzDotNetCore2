@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models.Nir;
+using KisVuzDotNetCore2.Models.Students;
 using Microsoft.AspNetCore.Http;
 
 namespace KisVuzDotNetCore2.Models.Files
@@ -77,5 +78,13 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="uploadedFile">Загружаемый файл</param>
         /// <returns></returns>
         Task<FileModel> UploadMonografAsync(Monograf monograf, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Загружает файл результатов освоения образовательной программы
+        /// </summary>
+        /// <param name="student"></param>
+        /// <param name="uploadFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadRezultOsvoenObrazovatProgrAsync(Student student, IFormFile uploadedFile);
     }
 }

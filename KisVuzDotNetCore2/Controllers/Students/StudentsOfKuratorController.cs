@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Students;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using KisVuzDotNetCore2.Models.Files;
 
 namespace KisVuzDotNetCore2.Controllers.Students
 {
@@ -16,15 +18,18 @@ namespace KisVuzDotNetCore2.Controllers.Students
     {
         private readonly AppIdentityDBContext _context;
         private IStudentRepository _studentRepository;
+        private readonly IFileModelRepository _fileModelRepository;
 
         private UserManager<AppUser> userManager;
 
         public StudentsOfKuratorController(AppIdentityDBContext context,
             IStudentRepository studentRepository,
+            IFileModelRepository fileModelRepository,
             UserManager<AppUser> usrMgr)
         {
             _context = context;
             _studentRepository = studentRepository;
+            _fileModelRepository = fileModelRepository;
             userManager = usrMgr;
         }               
 
@@ -125,7 +130,9 @@ namespace KisVuzDotNetCore2.Controllers.Students
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StudentId,StudentFio,ZachetnayaKnijkaNumber,AppUserId,StudentGroupId")] Student student)
+        public async Task<IActionResult> Edit(int id,
+            Student student,
+            IFormFile uploadFile)
         {
             if (id != student.StudentId)
             {
@@ -136,6 +143,11 @@ namespace KisVuzDotNetCore2.Controllers.Students
             {
                 try
                 {
+                    if (uploadFile != null)
+                    {
+                        FileModel f = await _fileModelRepository.UploadRezultOsvoenObrazovatProgrAsync(student, uploadFile);
+                        student.RezultOsvoenObrazovatProgrId = f.Id;
+                    }
                     _context.Update(student);
                     await _context.SaveChangesAsync();
                 }

@@ -28,7 +28,15 @@
                 @Html.DisplayFor(modelItem => item.TeacherFio)
             </td>
             <td>
-                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
+                @if (!string.IsNullOrEmpty(item.AppUserId))
+                {
+                    <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
+                }
+                else
+                {
+                    <text>Незарегистрированный пользователь</text>
+                }
+
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TeacherId">Редактировать</a> |

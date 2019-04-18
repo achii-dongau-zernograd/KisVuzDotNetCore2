@@ -7,7 +7,7 @@
     var t9eduPerevod = (IEnumerable<EduPerevod>)ViewData["t9eduPerevod"];
     var t10eduPrograms = (IEnumerable<EduProgram>)ViewData["t10eduPrograms"];
     var eduShedules = (IEnumerable<EduShedule>)ViewData["eduShedules"];
-    var eduPlans = (IEnumerable<EduPlan>)ViewData["eduPlans"];    
+    var eduPlans = (IEnumerable<EduPlan>)ViewData["eduPlans"];
     var t11eduOPYears = (IEnumerable<EduOPYear>)ViewData["t11eduOPYears"];
     var t12eduPr = (IEnumerable<EduPr>)ViewData["t12eduPr"];
     var t13eduNir = (IEnumerable<EduNir>)ViewData["t13eduNir"];
@@ -50,6 +50,28 @@
                 </tr>
             }
         </table>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о нормативных сроках обучения</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
+    <div class="well">
+        <div itemprop="eduAccred">
+            <ul>
+                <li itemprop="learningTerm">
+                    Среднее профессиональное образование:
+                    2г. 10мес. (очная форма обучения, на базе 9 кл., направления 21.02.05, 38.02.01, 38.02.04),
+                    3г. 10мес. (очная форма обучения, на базе 9 кл., направления 08.02.09, 23.02.03, 35.02.08),
+                    1г. 10мес. (очная форма обучения, на базе 11 кл., направления 38.02.01),
+                    2г. 10мес. (очная форма обучения, на базе 11 кл., направления 23.02.03, 35.02.08)
+                </li>
+                <li itemprop="learningTerm">Высшее образование-бакалавриат: 4 года (очная форма обучения), 5 лет (заочная форма обучения)</li>
+                <li itemprop="learningTerm">Высшее образование-магистратура: 2 года (очная форма обучения), 2 года 6 месяцев (заочная форма обучения)</li>
+                <li itemprop="learningTerm">Высшее образование-специалитет: 5 лет (очная форма обучения), 6 лет (заочная форма обучения)</li>
+                <li itemprop="learningTerm">Высшее образование-подготовка кадров высшей квалификации: 3 года (очная форма обучения), 4 года (очная форма обучения, направление 06.06.01 - Биологические науки), 4 года (заочная форма обучения)</li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -232,37 +254,85 @@
             <tbody>
                 @foreach (var eduProgram in t10eduPrograms.Where(op => !op.IsAdopt))
                 {
+                    var eduProgramEduPlanList = new List<EduPlan>();
+                    foreach (var eduPlan in eduProgram.EduProfile.EduPlans.Where(p => p.EduProgramPodgId == eduProgram.EduProgramPodgId))
+                    {
+                        foreach (var eduPlanEduYearBeginningTraining in eduPlan.EduPlanEduYearBeginningTrainings)
+                        {
+                            foreach (var eduProgramEduYearBeginningTraining in eduProgram.EduProgramEduYearBeginningTrainings)
+                            {
+                                if (eduProgramEduYearBeginningTraining.EduYearBeginningTrainingId == eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId)
+                                {
+                                    foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+                                    {
+                                        if(eduProgramEduForm.EduFormId==eduPlan.EduFormId)
+                                        {
+                                            eduProgramEduPlanList.Add(eduPlan);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    string eduYearsBegTrainingsOfCurrentEduProgram = "";
+                    if (eduProgram.EduProgramEduYearBeginningTrainings != null)
+                    {
+                        foreach (var item in eduProgram.EduProgramEduYearBeginningTrainings)
+                        {
+                            eduYearsBegTrainingsOfCurrentEduProgram += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                        }
+                    }                    
+
                     string opMain = "opMain";
                     string educationPlan = "educationPlan";
                     string educationAnnotation = "educationAnnotation";
                     string educationShedule = "educationShedule";
                     string methodology = "methodology";
                     string eduEl = "eduEl";
-                    
+
                     <tr itemprop="eduOP">
                         <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
-                        <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName)</td>
-                        <td itemprop="eduLevel">@eduProgram.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName<br />(@eduProgram.EduProgramPodg.EduProgramPodgName)</td>
+                        <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName, @eduYearsBegTrainingsOfCurrentEduProgram)</td>
+                        <td itemprop="eduLevel">@eduProgram.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName<br />(@eduProgram.EduProgramPodg.EduProgramPodgName.ToLower())</td>
                         <td itemprop="eduForm">
                             @foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
                             {
                                 @eduProgramEduForm.EduForm.EduFormName<br />
                             }
                         </td>
-                        <td itemprop="@opMain">                            
+                        <td itemprop="@opMain">
                             <a href="/@eduProgram.FileModel.Path">Открыть</a>
                         </td>
                         <td itemprop="@educationPlan">
-                            @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
+                            @foreach (var eduPlan in eduProgramEduPlanList)
                             {
-                                <a href="/@eduPlan.EduPlanPdf?.Path">Открыть (@eduPlan.EduForm.EduFormName)</a><br />
+                                string eduYearsBegTrainings = "";
+                                if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                {
+                                    foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                    {
+                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                    }
+                                }
+                                <a href="/@eduPlan.EduPlanPdf?.Path">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a><br />
                             }
                         </td>
                         <td itemprop="@educationAnnotation">
 
-                            @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
+                            @foreach (var eduPlan in eduProgramEduPlanList)
                             {
-                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Открыть</a>
+                                string eduYearsBegTrainings = "";
+                                if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                {
+                                    foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                    {
+                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                    }
+                                }
+
+                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a>
                                 <div class="collapse" id="spoiler-@spoilerCounter">
                                     @{spoilerCounter++;}
                                     <div class="well">
@@ -283,6 +353,7 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <br />
                             }
 
 
@@ -300,9 +371,17 @@
                                     <div class="collapse" id="spoiler-@spoilerCounter">
                                         @{spoilerCounter++;}
                                         <div class="well">
-                                            @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
+                                            @foreach (var eduPlan in eduProgramEduPlanList)
                                             {
-                                                <p><a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId">Открыть (@eduPlan.EduForm.EduFormName)</a></p>
+                                                string eduYearsBegTrainings = "";
+                                                if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                                {
+                                                    foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                                    {
+                                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                                    }
+                                                }
+                                                <p><a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a></p>
                                             }
                                         </div>
                                     </div>
@@ -351,7 +430,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if(t10eduPrograms.Where(op => op.IsAdopt).Count()==0)
+                @if (t10eduPrograms.Where(op => op.IsAdopt).Count() == 0)
                 {
                     <tr itemprop="eduOP">
                         <td colspan="10" class="text-center">
@@ -382,7 +461,7 @@
                     </tr>
                 }
 
-                @foreach (var eduProgram in t10eduPrograms.Where(op=>op.IsAdopt))
+                @foreach (var eduProgram in t10eduPrograms.Where(op => op.IsAdopt))
                 {
                     string opMain = "adOpMain";
                     string educationPlan = "adEducationPlan";
@@ -390,7 +469,7 @@
                     string educationShedule = "adEducationShedule";
                     string methodology = "adMethodology";
                     string eduEl = "adEduEl";
-                    
+
                     <tr itemprop="eduOP">
                         <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
                         <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName)</td>
@@ -401,7 +480,7 @@
                                 @eduProgramEduForm.EduForm.EduFormName<br />
                             }
                         </td>
-                        <td itemprop="@opMain">                            
+                        <td itemprop="@opMain">
                             <a href="/@eduProgram.FileModel.Path">Открыть</a>
                         </td>
                         <td itemprop="@educationPlan">
@@ -552,7 +631,7 @@
                 <tr itemprop="adeduOP">
                     <td itemprop="adeduOP" colspan="8" class="text-center">
                         <strong>Адаптированных образовательных программ не предусмотрено</strong>
-                    </td>                    
+                    </td>
                 </tr>
             }
 
@@ -581,7 +660,7 @@
 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (наличие практики)</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++;}
-    <div class="well">
+    <div class="well" itemprop="eduOP">
 
         <h3>Информация по неадаптированным образовательным программам</h3>
         <table itemprop="eduPr" class="table table-hover">
@@ -612,11 +691,11 @@
             </thead>
             @foreach (var item in t12eduPr.Where(pr => !pr.IsOVZ))
             {
-                <tr itemprop="eduOP">
+                <tr itemprop="eduPr">
                     <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
                     <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName</td>
                     <td itemprop="">@item.EduYearBeginningTraining.EduYearBeginningTrainingName</td>
-                    <td itemprop="">
+                    <td itemprop="eduOP">
                         @item.EduProfile.EduProfileName
                     </td>
                     <td itemprop="" align=center>@item.EduForm.EduFormName</td>
@@ -734,5 +813,15 @@
                 </tr>
             }
         </table>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о научно-исследовательской базе для осуществления научной (научно-исследовательской) деятельности</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
+    <div itemprop="eduNir" class="well">
+        <div itemprop="baseNir">
+            <a href="http://xn--80aaak3h.xn--p1ai/wp-content/uploads/2016/10/NapravRezNIR.pdf">Информация о направлениях и результатах научной (научно-исследовательской) деятельности и научно-исследовательской базе для её осуществления</a>
+        </div>
     </div>
 </div>

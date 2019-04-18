@@ -60,7 +60,8 @@ namespace KisVuzDotNetCore2.Models.Students
         {
             var student = _context.Students
                 .Include(s => s.AppUser)
-                .Include(s => s.StudentGroup.EduKurs)                
+                .Include(s => s.StudentGroup.EduKurs)
+                .Include(s => s.RezultOsvoenObrazovatProgr)
                 .SingleOrDefaultAsync(m => m.StudentId == studentId);
             return student;
         }

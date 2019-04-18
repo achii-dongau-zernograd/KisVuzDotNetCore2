@@ -4,44 +4,69 @@
     ViewData["Title"] = "Oborudovanie";
 }
 
-<h2>Oborudovanie</h2>
+<h2>Материально-техническое обеспечение</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
+<form>
+    <div class="row">
+        <div class="col-md-4">
+            <a asp-action="Create" class="btn btn-primary">Добавить оборудование</a>
+        </div>
+        <div class="col-md-8">
+            <select id="PomeshenieSelectList" name="" class="form-control" asp-items="ViewBag.PomeshenieSelectList">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.OborudovanieName)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.OborudovanieCount)
                 </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pomeshenie)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OborudovanieName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OborudovanieCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pomeshenie.PomeshenieId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.OborudovanieId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.OborudovanieId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.OborudovanieId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pomeshenie)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OborudovanieName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OborudovanieCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pomeshenie.PomeshenieId)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.OborudovanieId">Редактировать</a> |
+                        <a asp-action="Delete" asp-route-id="@item.OborudovanieId">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+
+
+<script>
+    $(function () {
+
+        $("#PomeshenieSelectList").change(function () {
+
+            $(this).closest("form").submit(); // this will post the form
+        });
+
+    }); 
+</script>

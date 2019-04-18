@@ -20,7 +20,14 @@
             @Html.DisplayNameFor(model => model.AppUser)
         </dt>
         <dd>
-            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.AppUserId">@Model.AppUser.GetFullName</a>
+            @if (!string.IsNullOrEmpty(Model.AppUserId))
+            {
+                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.AppUserId">@Model.AppUser.GetFullName</a>
+            }
+            else
+            {
+                <text>Незарегистрированный пользователь</text>
+            }
         </dd>
     </dl>
 </div>

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KisVuzDotNetCore2.Models.MTO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,16 @@ namespace KisVuzDotNetCore2.Models.Users
         public StructSubvisionChiefRepository(AppIdentityDBContext context)
         {
             _context = context;
+        }
+
+        /// <summary>
+        /// Возвращает модель представления для работы с помещением с указанным УИД
+        /// </summary>
+        /// <param name="pomeshenieId"></param>
+        /// <returns></returns>
+        public PomeshenieViewModel GetPomeshenieViewModel(int? pomeshenieId)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

@@ -82,6 +82,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListNirTemas(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список видов достижений пользователя
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListUserAchievmentTypes(int selectedId = 0);
+
+        /// <summary>
         /// Возвращает список годов
         /// </summary>
         /// <param name="yearId"></param>

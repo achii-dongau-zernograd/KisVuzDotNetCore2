@@ -341,5 +341,16 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(_context.CitationBases.OrderBy(c => c.CitationBaseName),
                 "CitationBaseId", "CitationBaseName", selectedId);
         }
+
+        /// <summary>
+        /// Возвращает список видов достижений пользователя
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListUserAchievmentTypes(int selectedId = 0)
+        {
+            return new SelectList(_context.UserAchievmentTypes.OrderBy(a => a.UserAchievmentTypeName),
+                "UserAchievmentTypeId", "UserAchievmentTypeName", selectedId);
+        }
     }
 }

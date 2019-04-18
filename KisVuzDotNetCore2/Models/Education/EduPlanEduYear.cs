@@ -35,7 +35,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <summary>
         /// Преподаватели-дисциплины по учебному плану в учебном году
         /// </summary>
-        public List<TeacherDiscipline> TeacherDisciplines;
+        public List<TeacherDiscipline> TeacherDisciplines { get; set; }
 
         /// <summary>
         /// Дисциплины-помещения по учебному плану в учебном году

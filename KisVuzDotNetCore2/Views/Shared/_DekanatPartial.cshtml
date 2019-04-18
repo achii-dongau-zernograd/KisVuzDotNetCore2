@@ -36,6 +36,12 @@
         <ul class="dropdown-menu">
             <li><a asp-controller="StudentGroups" asp-action="StudentGroupsOfFacultet" asp-route-StructFacultetId="@structFacultetId">Студенческие группы</a></li>
             <li><a asp-controller="Vedomosti" asp-action="Index">Ведомости</a></li>
+            <li class="divider"></li>
+            <li><a asp-controller="EduShedules" asp-action="Index" asp-route-id="">Календарные учебные графики</a></li>
+            <li class="divider"></li>
+            <li><a asp-controller="EduOPYears" asp-action="Index" asp-route-id="">Образовательная программа (объём программы по годам)</a></li>
+            <li><a asp-controller="EduPrs" asp-action="Index" asp-route-id="">Образовательная программа (наличие практики)</a></li>
+            <li><a asp-controller="EduNir" asp-action="Index" asp-route-id="">Образовательная программа (направления и результаты НИР)</a></li>
         </ul>
     </li>
 </ul>

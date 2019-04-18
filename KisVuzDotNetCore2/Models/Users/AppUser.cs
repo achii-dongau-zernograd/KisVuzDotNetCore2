@@ -114,7 +114,12 @@ namespace KisVuzDotNetCore2.Models
         /// Работы пользователя
         /// </summary>
         public List<UserWork> UserWorks { get; set; }
-        
+
+        /// <summary>
+        /// Достижения пользователя
+        /// </summary>
+        public List<UserAchievment> UserAchievments { get; set; }
+
         /// <summary>
         /// Отображение пользователя как студента образовательной организации
         /// </summary>
@@ -144,6 +149,6 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Структурные подразделения, которыми руководит пользователь
         /// </summary>
-        public List<StructSubvision> StructSubvisions { get; set; }
+        public List<StructSubvision> StructSubvisions { get; set; }        
     }
 }

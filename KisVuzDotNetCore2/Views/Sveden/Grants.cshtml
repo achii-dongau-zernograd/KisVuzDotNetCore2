@@ -5,150 +5,175 @@
     var GraduateYear = (List<GraduateYear>)ViewData["GraduateYear"];
     var EduGraduate = (List<EduGraduate>)ViewData["EduGraduate"];
     var GraduateTrudoustroustvo = (List<GraduateTrudoustroustvo>)ViewData["GraduateTrudoustroustvo"];
+    int spoilerCounter = 1;
 }
 
 <h1>Стипендии и иные виды материальной поддержки</h1>
 
-@{
-    var t20hostelInfo = (IEnumerable<HostelInfo>)ViewData["t20hostelInfo"];
-}
+<div itemprop="grant">
 
-<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Информация о наличии и условиях предоставления стипендии</a>
-<div class="collapse" id="spoiler-1">
-    <div class="well">
+    @{
+        var t20hostelInfo = (IEnumerable<HostelInfo>)ViewData["t20hostelInfo"];
+    }
 
-        <a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Федеральные нормативные акты</a>
-        <div class="collapse" id="spoiler-2">
-            <div class="well">
-                @foreach (var ftft in StipendiiFederalGrant.FileToFileTypes)
-                {
-                    <p><a itemprop="@ftft.FileDataType.Itemprop" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
-                }
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о наличии и условиях предоставления стипендии</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        @{spoilerCounter++;}
+        <div class="well">
+
+            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о видах стипендий</a>
+            <div class="collapse" id="spoiler-@spoilerCounter">
+                @{spoilerCounter++;}
+                <div class="well" itemprop="typeGrant">
+                    Раздел находится в разработке
+                </div>
             </div>
-        </div>
 
-        <a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Локальные нормативные акты</a>
-        <div class="collapse" id="spoiler-3">
-            <div class="well">
-                @foreach (var ftft in StipendiiLocalGrant.FileToFileTypes)
-                {
-                    <p><a itemprop="@ftft.FileDataType.Itemprop" href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
-                }
+            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Федеральные нормативные акты</a>
+            <div class="collapse" id="spoiler-@spoilerCounter">
+                @{spoilerCounter++;}
+                <div class="well">
+                    @foreach (var ftft in StipendiiFederalGrant.FileToFileTypes)
+                    {
+                        <p itemprop="@ftft.FileDataType.Itemprop"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+                    }
+                </div>
             </div>
+
+            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Локальные нормативные акты</a>
+            <div class="collapse" id="spoiler-@spoilerCounter">
+                @{spoilerCounter++;}
+                <div class="well">
+                    @foreach (var ftft in StipendiiLocalGrant.FileToFileTypes)
+                    {
+                        <p itemprop="@ftft.FileDataType.Itemprop"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+                    }
+                </div>
+            </div>
+
         </div>
-
     </div>
-</div>
 
 
-<a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Наличие общежития, интерната, количество жилых помещений в общежитии, интернате для иногородних обучающихся</a>
-<div class="collapse" id="spoiler-4">
-    <div class="well">
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Наличие общежития, интерната, количество жилых помещений в общежитии, интернате для иногородних обучающихся</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        @{spoilerCounter++;}
+        <div class="well">
 
-        <table itemprop="hostelInfo" class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Наименование показателя</th>
-                    <th>Значение</th>
-                </tr>
-            </thead>
-            @foreach (var item in t20hostelInfo)
-            {
-                <tr itemprop="hostelInfo">
-                    <td>@item.NameIndicator</td>
-                    @if (item.Link != String.Empty)
-                    {
-
-                        @if (item.Itemprop != String.Empty)
-                        {
-                            <td itemprop="@item.Itemprop"><a href="@item.Link">@item.Value</a></td>
-                        }
-                        else
-                        {
-                            <td><a href="@item.Link">@item.Value</a></td>
-                        }
-                    }
-                    else
-                    {
-                        @if (item.Itemprop != String.Empty)
-                        {
-                            <td itemprop="@item.Itemprop">@item.Value</td>
-                        }
-                        else
-                        {
-                            <td>@item.Value</td>
-                        }
-                        <td>@item.Link</td>
-                    }
-                </tr>
-            }
-        </table>
-    </div>
-</div>
-
-
-<a href="#spoiler-5" data-toggle="collapse" class="btn btn-primary btn-block">Информация о трудоустройстве выпускников</a>
-<div class="collapse" id="spoiler-5">
-    <div class="well">
-
-        <table itemprop="graduateJob" class="table table-hover">
-            <thead>
-                <tr>
-                    <th rowspan="2">Код</th>
-                    <th rowspan="2">Наименование профессии, специальности, направления подготовки</th>
-                    <th colspan="2">@GraduateYear[GraduateYear.Count - 1].GraduateYearName</th>
-                    <th colspan="2">@GraduateYear[GraduateYear.Count - 2].GraduateYearName</th>
-                    <th colspan="2">@GraduateYear[GraduateYear.Count - 3].GraduateYearName</th>
-                </tr>
-                <tr>
-                    <th>Кол-во выпускников</th>
-                    <th>Кол-во трудоустроенных выпускников</th>
-                    <th>Кол-во выпускников</th>
-                    <th>Кол-во трудоустроенных выпускников</th>
-                    <th>Кол-во выпускников</th>
-                    <th>Кол-во трудоустроенных выпускников</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var graduateG in EduGraduate.OrderBy(g => g.EduProfileId).GroupBy(g => g.EduProfileId))
+            <table itemprop="hostelInfo" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Наименование показателя</th>
+                        <th>Значение</th>
+                    </tr>
+                </thead>
+                @foreach (var item in t20hostelInfo)
                 {
-                <tr itemprop="graduateJob">
-                    <td itemprop="eduCode">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlCode</td>
-                    <td itemprop="eduName">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlName (@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduProfileName)</td>
-                    @foreach (var graduateYear in GraduateYear.TakeLast(3).OrderByDescending(y => y.GraduateYearId))
-                    {
-                        bool IsFounded = false;
-                        foreach (var graduate in graduateG.Where(g => g.GraduateYearId == graduateYear.GraduateYearId))
+                    <tr itemprop="hostelInfo">
+                        <td>@item.NameIndicator</td>
+                        @if (item.Link != String.Empty)
                         {
-                            IsFounded = true;
-                            <td>@graduate.GraduateNumber</td>
 
-                            int? trud = GraduateTrudoustroustvo.Where(t => t.EduProfileId == graduateG.Key && t.GraduateYearId == graduateYear.GraduateYearId).FirstOrDefault()?.GraduateTrudoustroustvoNumber;
-                            if(trud>0)
+                            @if (item.Itemprop != String.Empty)
                             {
-                            <td itemprop="graduateJob">@trud</td>
+                                <td itemprop="@item.Itemprop"><a href="@item.Link">@item.Value</a></td>
                             }
                             else
                             {
-                            <td>-</td>    
+                                <td><a href="@item.Link">@item.Value</a></td>
+                            }
+                        }
+                        else
+                        {
+                            @if (item.Itemprop != String.Empty)
+                            {
+                                <td itemprop="@item.Itemprop">@item.Value</td>
+                            }
+                            else
+                            {
+                                <td>@item.Value</td>
+                            }
+                            <td>@item.Link</td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация об иных видах материальной поддержки обучающихся</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        @{spoilerCounter++;}
+        <div class="well" itemprop="support">
+            Раздел находится в разработке
+        </div>
+    </div>
+
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о трудоустройстве выпускников</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        @{spoilerCounter++;}
+        <div class="well">
+
+            <table itemprop="graduateJob" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Код</th>
+                        <th rowspan="2">Наименование профессии, специальности, направления подготовки</th>
+                        <th colspan="2">@GraduateYear[GraduateYear.Count - 1].GraduateYearName</th>
+                        <th colspan="2">@GraduateYear[GraduateYear.Count - 2].GraduateYearName</th>
+                        <th colspan="2">@GraduateYear[GraduateYear.Count - 3].GraduateYearName</th>
+                    </tr>
+                    <tr>
+                        <th>Кол-во выпускников</th>
+                        <th>Кол-во трудоустроенных выпускников</th>
+                        <th>Кол-во выпускников</th>
+                        <th>Кол-во трудоустроенных выпускников</th>
+                        <th>Кол-во выпускников</th>
+                        <th>Кол-во трудоустроенных выпускников</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var graduateG in EduGraduate.OrderBy(g => g.EduProfileId).GroupBy(g => g.EduProfileId))
+                    {
+                        <tr itemprop="graduateJob">
+                            <td itemprop="eduCode">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlCode</td>
+                            <td itemprop="eduName">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlName (@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduProfileName)</td>
+                            @foreach (var graduateYear in GraduateYear.TakeLast(3).OrderByDescending(y => y.GraduateYearId))
+                            {
+                                bool IsFounded = false;
+                                foreach (var graduate in graduateG.Where(g => g.GraduateYearId == graduateYear.GraduateYearId))
+                                {
+                                    IsFounded = true;
+                                    <td>@graduate.GraduateNumber</td>
+
+                                    int? trud = GraduateTrudoustroustvo.Where(t => t.EduProfileId == graduateG.Key && t.GraduateYearId == graduateYear.GraduateYearId).FirstOrDefault()?.GraduateTrudoustroustvoNumber;
+                                    if (trud > 0)
+                                    {
+                                        <td itemprop="graduateJob">@trud</td>
+                                    }
+                                    else
+                                    {
+                                        <td>-</td>
+                                    }
+
+                                    break;
+                                }
+
+                                if (!IsFounded)
+                                {
+                                    <td>-</td>
+                                    <td>-</td>
+                                }
                             }
 
-                            break;
-                        }
 
-                        if (!IsFounded)
-                        {
-                            <td>-</td>
-                            <td>-</td>
-                        }
+                        </tr>
                     }
 
+                </tbody>
+            </table>
 
-                </tr>
-                }
-
-            </tbody>
-        </table>
-
+        </div>
     </div>
+
 </div>

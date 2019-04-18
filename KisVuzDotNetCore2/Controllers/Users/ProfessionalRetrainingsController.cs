@@ -60,7 +60,8 @@ namespace KisVuzDotNetCore2.Controllers
                 var professionalRetrainings = _context.ProfessionalRetrainings
                 .Include(r => r.AppUser)
                 .Include(r => r.ProfessionalRetrainingFile)
-                .Include(r => r.RowStatus);
+                .Include(r => r.RowStatus)
+                .OrderBy(r => r.AppUser.GetFullName);
                 return View(await professionalRetrainings.ToListAsync());
             }
 

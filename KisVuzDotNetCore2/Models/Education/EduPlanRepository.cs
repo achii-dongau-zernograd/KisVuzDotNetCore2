@@ -137,6 +137,8 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <returns></returns>
         public async Task CreateEduPlanStructureAsync(EduPlan eduPlan)
         {
+            int eduLevelId = eduPlan.EduProfile.EduNapravl.EduUgs.EduLevelId;
+            
             // Создаём список, содержащий блоки дисциплин
             if (eduPlan.BlokDiscipl == null)
             {
@@ -151,7 +153,26 @@ namespace KisVuzDotNetCore2.Models.Education
                 {
                     BlokDiscipl blokDiscipl = new BlokDiscipl();
                     blokDiscipl.BlokDisciplNameId = blokDisciplName.BlokDisciplNameId;
-                    eduPlan.BlokDiscipl.Add(blokDiscipl);
+
+                    bool isAddBlockDisc = false;
+                    if (blokDiscipl.BlokDisciplNameId == 1) isAddBlockDisc = true;
+                    if (blokDiscipl.BlokDisciplNameId == 2) isAddBlockDisc = true;
+                    if (eduLevelId == 3 || eduLevelId == 4 || eduLevelId == 5)
+                    {
+                        if (blokDiscipl.BlokDisciplNameId == 3) isAddBlockDisc = true;
+                        if (blokDiscipl.BlokDisciplNameId == 4) isAddBlockDisc = true;
+                    }
+                    else if(eduLevelId == 6)
+                    {
+                        if (blokDiscipl.BlokDisciplNameId == 9) isAddBlockDisc = true;
+                        if (blokDiscipl.BlokDisciplNameId == 10) isAddBlockDisc = true;
+                        if (blokDiscipl.BlokDisciplNameId == 11) isAddBlockDisc = true;
+                    }
+
+                    if (isAddBlockDisc)
+                    {
+                        eduPlan.BlokDiscipl.Add(blokDiscipl);
+                    }
                 }
 
                 await _context.SaveChangesAsync();

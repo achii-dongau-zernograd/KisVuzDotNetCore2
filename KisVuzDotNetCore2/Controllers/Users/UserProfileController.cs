@@ -488,6 +488,11 @@ namespace KisVuzDotNetCore2.Controllers
                 .Where(w=>w.AppUserId==user.Id)
                 .ToListAsync();
 
+            user.UserAchievments = await context.UserAchievments
+                .Include(a => a.UserAchievmentType)
+                .Where(a => a.AppUserId == user.Id)
+                .ToListAsync();
+
             user.Author = await context.Author
                 .Include(a=>a.UchPosobieAuthors)
                     .ThenInclude(ua=>ua.UchPosobie)
@@ -552,7 +557,8 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(s => s.StudentGroup.EduForm)
                 .Include(s => s.StudentGroup.EduKurs)
                 .Include(s => s.StudentGroup.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Include(s => s.StudentGroup.StructFacultet.StructSubvision)                
+                .Include(s => s.StudentGroup.StructFacultet.StructSubvision)
+                .Include(s => s.RezultOsvoenObrazovatProgr)
                 .SingleOrDefaultAsync(s=>s.AppUserId==user.Id);
             ViewData["student"] = student;
 

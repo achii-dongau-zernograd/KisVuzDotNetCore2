@@ -96,17 +96,34 @@
         <thead>
             <tr>
                 <th>Код дисциплины</th>
-                <th>Наименование и содержание дисциплины</th>
+                <th>Наименование дисциплины</th>
                 <th>Аннотация</th>
                 <th>Рабочая программа</th>
                 <th>Фонд оценочных средств</th>
-                <th>Преподаватели</th>
-                <th>Учебные кабинеты</th>
+                @{
+                    //<th>Преподаватели</th>
+                    //<th>Учебные кабинеты</th>
+                }
+
             </tr>
         </thead>
         <tbody>
             @foreach (var blokDiscipl in Model.BlokDiscipl)
             {
+                bool isDisplay = false;
+
+                @foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
+                {
+                    if (blokDisciplChast.Disciplines.Count > 0)
+                    {
+                        isDisplay = true;
+                        break;
+                    }
+                }
+
+                if(isDisplay)
+                {
+                
                 <tr class="info">
                     <td colspan="7"><strong>@blokDiscipl.BlokDisciplName.BlokDisciplNameName</strong></td>
                 </tr>
@@ -116,7 +133,7 @@
                         <td colspan="7">@blokDisciplChast.BlokDisciplChastName.BlokDisciplChastNameName часть</td>
                     </tr>
 
-                    @foreach (var discipline in blokDisciplChast.Disciplines)
+                    @foreach (var discipline in blokDisciplChast.Disciplines.OrderBy(d => d.DisciplineCode))
                     {
                         <tr>
                             <td>@discipline.DisciplineCode</td>
@@ -171,7 +188,7 @@
                                     <a href="/@fondOcenochnihSredstv.FileModel.Path">Открыть</a>
                                 }
                             </td>
-                            <td>
+                            @*<td>
                                 @foreach (var teacherDisciplineG in discipline.TeacherDisciplines.GroupBy(td=>td.EduPlanEduYear.EduYearId))
                                 {
                                     var eduYearName = teacherDisciplineG.FirstOrDefault().EduPlanEduYear.EduYear.EduYearName;
@@ -179,7 +196,16 @@
                                     <ul>
                                         @foreach (var teacherDiscipline in teacherDisciplineG)
                                         {
-                                        <li><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacherDiscipline.Teacher.AppUserId">@teacherDiscipline.Teacher.TeacherFio</a></li>
+                                        <li>
+                                            @if (!string.IsNullOrEmpty(teacherDiscipline.Teacher.AppUserId))
+                                            {
+                                                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacherDiscipline.Teacher.AppUserId">@teacherDiscipline.Teacher.TeacherFio</a>
+                                            }
+                                            else
+                                            {
+                                                <text>@teacherDiscipline.Teacher.TeacherFio</text>
+                                            }
+                                        </li>
                                         }
                                     </ul>
                                 }
@@ -196,9 +222,11 @@
                                         }
                                     </ul>
                                 }
-                            </td>
+                            </td>*@
                         </tr>
                     }
+                }
+
                 }
             }
 

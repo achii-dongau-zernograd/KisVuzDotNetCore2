@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace KisVuzDotNetCore2.Migrations
@@ -600,6 +602,24 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("EduYearId");
 
                     b.ToTable("EduProgramEduYears");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProgramEduYearBeginningTraining", b =>
+                {
+                    b.Property<int>("EduProgramEduYearBeginningTrainingId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EduProgramId");
+
+                    b.Property<int>("EduYearBeginningTrainingId");
+
+                    b.HasKey("EduProgramEduYearBeginningTrainingId");
+
+                    b.HasIndex("EduProgramId");
+
+                    b.HasIndex("EduYearBeginningTrainingId");
+
+                    b.ToTable("EduProgramEduYearBeginningTraining");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProgramPodg", b =>
@@ -1985,6 +2005,8 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<string>("AppUserId");
 
+                    b.Property<int?>("RezultOsvoenObrazovatProgrId");
+
                     b.Property<string>("StudentFio");
 
                     b.Property<int>("StudentGroupId");
@@ -1994,6 +2016,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("StudentId");
 
                     b.HasIndex("AppUserId");
+
+                    b.HasIndex("RezultOsvoenObrazovatProgrId");
 
                     b.HasIndex("StudentGroupId");
 
@@ -2800,6 +2824,40 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("TeacherStructKafPostStavka");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserAchievment", b =>
+                {
+                    b.Property<int>("UserAchievmentId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("UserAchievmentTypeId");
+
+                    b.HasKey("UserAchievmentId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("UserAchievmentTypeId");
+
+                    b.ToTable("UserAchievments");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserAchievmentType", b =>
+                {
+                    b.Property<int>("UserAchievmentTypeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("UserAchievmentTypeName");
+
+                    b.HasKey("UserAchievmentTypeId");
+
+                    b.ToTable("UserAchievmentTypes");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserMessage", b =>
                 {
                     b.Property<int>("UserMessageId")
@@ -3271,6 +3329,19 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Education.EduYear", "EduYear")
                         .WithMany()
                         .HasForeignKey("EduYearId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduProgramEduYearBeginningTraining", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProgram", "EduProgram")
+                        .WithMany("EduProgramEduYearBeginningTrainings")
+                        .HasForeignKey("EduProgramId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduYearBeginningTraining", "EduYearBeginningTraining")
+                        .WithMany()
+                        .HasForeignKey("EduYearBeginningTrainingId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -3879,6 +3950,10 @@ namespace KisVuzDotNetCore2.Migrations
                         .WithMany("Students")
                         .HasForeignKey("AppUserId");
 
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "RezultOsvoenObrazovatProgr")
+                        .WithMany()
+                        .HasForeignKey("RezultOsvoenObrazovatProgrId");
+
                     b.HasOne("KisVuzDotNetCore2.Models.Students.StudentGroup", "StudentGroup")
                         .WithMany("Students")
                         .HasForeignKey("StudentGroupId")
@@ -4261,6 +4336,18 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.Users.Teacher", "Teacher")
                         .WithMany("TeacherStructKafPostStavka")
                         .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserAchievment", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
+                        .WithMany("UserAchievments")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Users.UserAchievmentType", "UserAchievmentType")
+                        .WithMany("UserAchievments")
+                        .HasForeignKey("UserAchievmentTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

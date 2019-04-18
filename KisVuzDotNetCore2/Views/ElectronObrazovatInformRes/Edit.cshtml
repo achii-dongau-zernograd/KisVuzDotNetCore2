@@ -24,7 +24,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="ResId" class="control-label"></label>
-                <select asp-for="ResId" class="form-control" asp-items="ViewBag.ResId"></select>
+                <select asp-for="ResId" class="form-control" asp-items="ViewBag.ResId">
+                    <option value="">Не выбрано</option>
+                </select>
                 <span asp-validation-for="ResId" class="text-danger"></span>
             </div>
             <div class="form-group">

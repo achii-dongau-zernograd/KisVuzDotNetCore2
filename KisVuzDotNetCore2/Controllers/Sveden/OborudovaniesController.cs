@@ -42,6 +42,7 @@ namespace KisVuzDotNetCore2.Controllers
         /// </summary>
         /// <param name="id">УИД помещения</param>
         /// <returns></returns>
+        [AllowAnonymous]
         public async Task<IActionResult> Preview(int? id)
         {
             if(id==null)

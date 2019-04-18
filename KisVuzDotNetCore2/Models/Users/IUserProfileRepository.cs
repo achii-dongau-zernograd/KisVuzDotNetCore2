@@ -12,6 +12,21 @@ namespace KisVuzDotNetCore2.Models.Users
     public interface IUserProfileRepository
     {
         /// <summary>
+        /// Возвращает список достижений пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        List<UserAchievment> GetAchievments(string userName);
+
+        /// <summary>
+        /// Возвращает достижение пользователя
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        UserAchievment GetAchievment(int? id, string userName);
+
+        /// <summary>
         /// Возвращает список статей пользователя userName
         /// </summary>
         /// <param name="userName"></param>
@@ -24,7 +39,7 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="id"></param>
         /// <param name="userName"></param>
         /// <returns></returns>
-        Article GetArticle(int? id, string userName);
+        Article GetArticle(int? id, string userName);        
 
         /// <summary>
         /// Добавляет статью пользователя userName
@@ -68,6 +83,7 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="userName"></param>
         /// <returns></returns>
         AppUser GetAppUser(string userName);
+               
 
         /// <summary>
         /// Возвращает патент (свидетельство) пользователя userName

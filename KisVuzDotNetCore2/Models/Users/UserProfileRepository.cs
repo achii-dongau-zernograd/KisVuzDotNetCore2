@@ -103,7 +103,8 @@ namespace KisVuzDotNetCore2.Models.Users
                             .ThenInclude(p => p.PatentNirTemas)
                                 .ThenInclude(pn => pn.NirTema)
                 .Include(u => u.ScienceJournalAddingClaims)
-
+                .Include(u => u.UserAchievments)
+                    .ThenInclude(ua => ua.UserAchievmentType)
                 .SingleOrDefault(u => u.UserName == userName);
 
             return appUser;
@@ -478,6 +479,42 @@ namespace KisVuzDotNetCore2.Models.Users
         {
             _context.ScienceJournalAddingClaims.Remove(claimEntry);
             _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Возвращает список достижений пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public List<UserAchievment> GetAchievments(string userName)
+        {
+            var appUser = GetAppUser(userName);
+            return appUser.UserAchievments.OrderByDescending(a=>a.Date).ToList();
+        }
+
+        /// <summary>
+        /// Возвращает достижение пользователя
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public UserAchievment GetAchievment(int? id, string userName)
+        {
+            var appUser = GetAppUser(userName);
+            if (appUser == null)
+            {
+                return null;
+            }
+
+            if( id == null )
+            {
+                return new UserAchievment { AppUserId = appUser.Id };
+            }
+            else
+            {
+                var userAchievment = appUser.UserAchievments.FirstOrDefault(a => a.UserAchievmentId == id);
+                return userAchievment;
+            }            
         }
     }
 }
