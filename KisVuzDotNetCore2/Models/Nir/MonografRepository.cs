@@ -121,7 +121,7 @@ namespace KisVuzDotNetCore2.Models.Nir
             /// + списки направлений, авторов и пр.
             if (monograf.MonografNirSpecials != null && monograf.MonografNirSpecials.Count > 0)
             {
-                foreach (var monografNirSpecial in monograf.MonografNirSpecials)
+                foreach (var monografNirSpecial in monografEntry.MonografNirSpecials)
                 {
                     bool isExists = false;
                     foreach (var monografNirSpecialEntry in monografEntry.MonografNirSpecials)

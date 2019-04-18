@@ -11,7 +11,7 @@
     <div class="col-md-8">
         <form asp-action="CreateOrEdit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MonografId" />
+            <input type="hidden" name="MonografId" value="@Model.MonografId" />
             <div class="form-group">
                 <label asp-for="MonografName" class="control-label"></label>
                 <input asp-for="MonografName" class="form-control" />
@@ -195,9 +195,11 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Сохранить" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-default">Отмена</a>
-
+                <input type="hidden" name="PatentId" value="@Model.MonografId" />
+                <input type="hidden" asp-for="FileModelId" />
+                <input type="hidden" asp-for="RowStatusId" />
+                <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.Saving" value="Сохранить" class="btn btn-primary" />
+                <input type="submit" asp-route-mode="@CreateOrEditNirDataModeEnum.Canceling" value="Отмена" class="btn btn-default" />
             </div>
         </form>
     </div>

@@ -106,17 +106,18 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 case CreateOrEditNirDataModeEnum.Saving:
                     monograf.RowStatusId = (int)RowStatusEnum.NotConfirmed;
                     _monografRepository.UpdateMonograf(monografEntry, monograf);
-                    return RedirectToAction("Index");
+                    return RedirectToAction(nameof(Index));
+
                 case CreateOrEditNirDataModeEnum.Canceling:
                     if(monograf.RowStatusId==null)
                     {
                         _monografRepository.RemoveMonografAsync(monografEntry.MonografId);
                     }
-                    return RedirectToAction("Index");
+                    return RedirectToAction(nameof(Index));
                 case CreateOrEditNirDataModeEnum.AddingAuthor:
-                    if(AuthorIdAdd!=0)
+                    if(AuthorIdAdd != 0 && monograf.MonografAuthors != null)
                     {
-                        var isExist = monograf.MonografAuthors.FirstOrDefault(a => a.AuthorId == AuthorIdAdd) != null;
+                        var isExist = monografEntry.MonografAuthors.FirstOrDefault(a => a.AuthorId == AuthorIdAdd) != null;
                         if (!isExist)
                         {
                             monograf.MonografAuthors.Add(new MonografAuthor
