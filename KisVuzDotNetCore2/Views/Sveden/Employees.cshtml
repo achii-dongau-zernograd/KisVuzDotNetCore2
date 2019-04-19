@@ -89,7 +89,7 @@
 <a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Информация о составе педагогических (научно-педагогических) работников образовательной организации</a>
 <div class="collapse" id="spoiler-3">
     <div class="well">
-        <a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Пофамильный перечень педагогических (научно-педагогических) работников</a>
+        <a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Перечень педагогических (научно-педагогических) работников</a>
         <div class="collapse" id="spoiler-4">
 
 
@@ -327,15 +327,16 @@
                                                         @foreach (var eduPlan in eduProfile.EduPlans)
                                                         {
                                                             counter++;
-                                                            <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlan.EduForm.EduFormName -  @eduPlan.EduProgramPodg.EduProgramPodgName @eduPlan.EduYearBeginningTrainingsDescription</a>
-                                                            <div class="collapse" id="spoiler-@counter">
+                                                            @*<a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlan.EduForm.EduFormName -  @eduPlan.EduProgramPodg.EduProgramPodgName @eduPlan.EduYearBeginningTrainingsDescription</a>
+                                                            <div class="collapse" id="spoiler-@counter">*@
                                                                 <div class="well">
                                                                     @foreach (var eduPlanEduYear in eduPlan.EduPlanEduYears)
                                                                     {
-                                                                        counter++;
+                                                                        if (eduPlanEduYear.TeacherDisciplines.Count == 0) { continue; }
+                                                                        @*counter++;
                                                                         <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlanEduYear.EduYear.EduYearName</a>
                                                                         <div class="collapse" id="spoiler-@counter">
-                                                                            <div class="well">
+                                                                            <div class="well">*@
                                                                                 <table itemprop="teachingStaff" class="table table-hover">
                                                                                     <thead>
                                                                                         <tr>
@@ -366,7 +367,7 @@
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody>
-                                                                                        @foreach (var teacherDisciplineGroup in eduPlanEduYear.TeacherDisciplines.GroupBy(t =>t.TeacherId))
+                                                                                        @foreach (var teacherDisciplineGroup in eduPlanEduYear.TeacherDisciplines.OrderBy(t=>t.Teacher.TeacherFio).GroupBy(t =>t.TeacherId))
                                                                                         {
                                                                                             var teacher = teacherDisciplineGroup.FirstOrDefault().Teacher;
                                                                                             <tr itemprop="teachingStaff">
@@ -400,7 +401,7 @@
                                                                                                                     <ol>
                                                                                                                         @foreach (var teacherDiscipline in teacherDisciplineGroup)
                                                                                                                         {
-                                                                                                                            <li>@teacherDiscipline.Discipline.DisciplineName.DisciplineNameName</li>
+                                                                                                                            <li>@teacherDiscipline.Discipline?.DisciplineName?.DisciplineNameName</li>
                                                                                                                         }
                                                                                                                     </ol>
                                                                                                                 </div>
@@ -524,11 +525,11 @@
 
                                                                                     </tbody>
                                                                                 </table>
-                                                                            </div>
-                                                                        </div>
+                                                                            @*</div>
+                                                                        </div>*@
                                                                     }
                                                                 </div>
-                                                            </div>
+                                                            @*</div>*@
                                                         }
                                                     </div>
                                                 </div>

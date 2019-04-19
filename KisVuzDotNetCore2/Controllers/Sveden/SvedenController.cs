@@ -315,6 +315,14 @@ namespace KisVuzDotNetCore2.Controllers
                     .ThenInclude(en => en.EduNapravls)
                         .ThenInclude(p => p.EduProfiles)
                             .ThenInclude(pp => pp.EduPlans)
+                                .ThenInclude(py => py.EduPlanEduYears)
+                                    .ThenInclude(t => t.TeacherDisciplines)
+                                        .ThenInclude(tt => tt.Discipline)
+                                            .ThenInclude(d => d.DisciplineName)
+                 .Include(u => u.EduUgses)
+                    .ThenInclude(en => en.EduNapravls)
+                        .ThenInclude(p => p.EduProfiles)
+                            .ThenInclude(pp => pp.EduPlans)
                                 .ThenInclude(f => f.EduForm)
                 .Include(u => u.EduUgses)
                     .ThenInclude(en => en.EduNapravls)
@@ -345,67 +353,67 @@ namespace KisVuzDotNetCore2.Controllers
 
 
             // Перечень образовательных программ, для которых имеются сведения о распределении дисциплин по преподавателям---
-            var eduProfiles = await _context.EduProfiles
-                .Include(p=>p.EduNapravl.EduUgs.EduLevel)
-                .ToListAsync();//Add filter by teacher-disc data---
-            ViewData["eduProfiles"] = eduProfiles;
+            //var eduProfiles = await _context.EduProfiles
+            //    .Include(p=>p.EduNapravl.EduUgs.EduLevel)
+            //    .ToListAsync();//Add filter by teacher-disc data---
+            //ViewData["eduProfiles"] = eduProfiles;
 
 
             //////////
             // Очищаем таблицу TeacherEduProfileDisciplineNames
-            _context.TeacherEduProfileDisciplineNames.RemoveRange(_context.TeacherEduProfileDisciplineNames);
-            await _context.SaveChangesAsync();
+            //_context.TeacherEduProfileDisciplineNames.RemoveRange(_context.TeacherEduProfileDisciplineNames);
+            //await _context.SaveChangesAsync();
 
-            int currentEduYearId = (await _context.AppSettings.SingleOrDefaultAsync(s=>s.AppSettingId==(int)AppSettingTypesEnum.CurrentEduYear)).AppSettingValue;
-            // Группируем TeacherDisciplines по коду профиля EduProfileId
-            var teacherDisciplinesGroupedByEduProfileId = await _context.TeacherDisciplines
-                .Include(td => td.Discipline.DisciplineName)
-                .Include(td => td.EduPlanEduYear.EduPlan)
-                .Where(td=>td.EduPlanEduYear.EduYearId== currentEduYearId)//Фильтр по учебному году 2 - 2018-2019
-                .GroupBy(td=>td.EduPlanEduYear.EduPlan.EduProfileId)
-                .ToListAsync();
+            //int currentEduYearId = (await _context.AppSettings.SingleOrDefaultAsync(s=>s.AppSettingId==(int)AppSettingTypesEnum.CurrentEduYear)).AppSettingValue;
+            //// Группируем TeacherDisciplines по коду профиля EduProfileId
+            //var teacherDisciplinesGroupedByEduProfileId = await _context.TeacherDisciplines
+            //    .Include(td => td.Discipline.DisciplineName)
+            //    .Include(td => td.EduPlanEduYear.EduPlan)
+            //    .Where(td=>td.EduPlanEduYear.EduYearId== currentEduYearId)//Фильтр по учебному году 2 - 2018-2019
+            //    .GroupBy(td=>td.EduPlanEduYear.EduPlan.EduProfileId)
+            //    .ToListAsync();
             
-            foreach (var teacherDisciplinesGroupedByEduProfileIdItem in teacherDisciplinesGroupedByEduProfileId)
-            {
-                // Группируем по коду преподавателя
-                foreach(var teacherIdG in teacherDisciplinesGroupedByEduProfileIdItem.GroupBy(g=>g.TeacherId))
-                {
-                    foreach (var teacherDiscipline in teacherIdG)
-                    {                        
-                        var teacherEduProfileDisciplineName = new TeacherEduProfileDisciplineName();
-                        teacherEduProfileDisciplineName.EduProfileId = teacherDisciplinesGroupedByEduProfileIdItem.Key;
-                        teacherEduProfileDisciplineName.TeacherId = teacherIdG.Key;
-                        teacherEduProfileDisciplineName.DisciplineNameId = teacherDiscipline.Discipline.DisciplineNameId;
+            //foreach (var teacherDisciplinesGroupedByEduProfileIdItem in teacherDisciplinesGroupedByEduProfileId)
+            //{
+            //    // Группируем по коду преподавателя
+            //    foreach(var teacherIdG in teacherDisciplinesGroupedByEduProfileIdItem.GroupBy(g=>g.TeacherId))
+            //    {
+            //        foreach (var teacherDiscipline in teacherIdG)
+            //        {                        
+            //            var teacherEduProfileDisciplineName = new TeacherEduProfileDisciplineName();
+            //            teacherEduProfileDisciplineName.EduProfileId = teacherDisciplinesGroupedByEduProfileIdItem.Key;
+            //            teacherEduProfileDisciplineName.TeacherId = teacherIdG.Key;
+            //            teacherEduProfileDisciplineName.DisciplineNameId = teacherDiscipline.Discipline.DisciplineNameId;
 
-                        var findedItem = await _context.TeacherEduProfileDisciplineNames.SingleOrDefaultAsync(tepd => 
-                        tepd.EduProfileId == teacherEduProfileDisciplineName.EduProfileId && 
-                        tepd.TeacherId == teacherEduProfileDisciplineName.TeacherId &&
-                        tepd.DisciplineNameId == teacherEduProfileDisciplineName.DisciplineNameId);
-                        if (findedItem==null)
-                        {
-                            await _context.TeacherEduProfileDisciplineNames.AddAsync(teacherEduProfileDisciplineName);
-                            await _context.SaveChangesAsync();
-                        }
-                    }                    
-                }                
-            }
+            //            var findedItem = await _context.TeacherEduProfileDisciplineNames.SingleOrDefaultAsync(tepd => 
+            //            tepd.EduProfileId == teacherEduProfileDisciplineName.EduProfileId && 
+            //            tepd.TeacherId == teacherEduProfileDisciplineName.TeacherId &&
+            //            tepd.DisciplineNameId == teacherEduProfileDisciplineName.DisciplineNameId);
+            //            if (findedItem==null)
+            //            {
+            //                await _context.TeacherEduProfileDisciplineNames.AddAsync(teacherEduProfileDisciplineName);
+            //                await _context.SaveChangesAsync();
+            //            }
+            //        }                    
+            //    }                
+            //}
             
-            //////////
+            ////////////
 
-            var teacherEduProfileDisciplineNames = await _context.TeacherEduProfileDisciplineNames
-                .Include(tpd => tpd.Teacher.AppUser.EduLevelGroup)
-                .Include(tpd => tpd.Teacher.AppUser.Qualifications)
-                .Include(tpd => tpd.Teacher.AppUser.AcademicDegree)
-                .Include(tpd => tpd.Teacher.AppUser.AcademicStat)
-                .Include(tpd => tpd.Teacher.AppUser.ProfessionalRetrainings)
-                .Include(tpd => tpd.Teacher.AppUser.RefresherCourses)
-                .Include(tdp => tdp.Teacher.TeacherStructKafPostStavka)
-                .Include(tpd => tpd.DisciplineName)
-                .ToListAsync();
-            ViewData["teacherEduProfileDisciplineNames"] = teacherEduProfileDisciplineNames;
+            //var teacherEduProfileDisciplineNames = await _context.TeacherEduProfileDisciplineNames
+            //    .Include(tpd => tpd.Teacher.AppUser.EduLevelGroup)
+            //    .Include(tpd => tpd.Teacher.AppUser.Qualifications)
+            //    .Include(tpd => tpd.Teacher.AppUser.AcademicDegree)
+            //    .Include(tpd => tpd.Teacher.AppUser.AcademicStat)
+            //    .Include(tpd => tpd.Teacher.AppUser.ProfessionalRetrainings)
+            //    .Include(tpd => tpd.Teacher.AppUser.RefresherCourses)
+            //    .Include(tdp => tdp.Teacher.TeacherStructKafPostStavka)
+            //    .Include(tpd => tpd.DisciplineName)
+            //    .ToListAsync();
+            //ViewData["teacherEduProfileDisciplineNames"] = teacherEduProfileDisciplineNames;
             
-            var posts = await _context.Posts.ToListAsync();
-            ViewData["posts"] = posts;            
+            //var posts = await _context.Posts.ToListAsync();
+            //ViewData["posts"] = posts;            
             #endregion
 
             return View();
