@@ -393,6 +393,55 @@
                         </tbody>
                     </table>
                 </div>
+
+                <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Монографии</strong></a>
+                <div class="collapse" id="spoiler-@spoilerCounter">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>№ пп</th>
+                                <th>Год издания</th>
+                                <th>Наименование монографии</th>
+                                <th>Авторы (авт.доля, о.е.)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var author in Model.Author)
+                            {
+                                spoilerCounter++;
+                                int ctn = 0;
+                                foreach (var monografAuthor in author.MonografAuthors.Where(aa => aa.Monograf.RowStatusId == (int)RowStatusEnum.Confirmed).OrderByDescending(a => a.Monograf.YearId))
+                                {
+                                    ctn++;
+                                    <tr>
+                                        <td>@ctn</td>
+                                        <td>@monografAuthor.Monograf.YearId</td>
+                                        <td>@monografAuthor.Monograf.MonografName</td>
+                                        <td>
+                                            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Развернуть</strong></a>
+                                            <div class="collapse" id="spoiler-@spoilerCounter">
+                                                @foreach (var sc in monografAuthor.Monograf.MonografAuthors)
+                                                {
+                                                    spoilerCounter++;
+                                                    if (!string.IsNullOrWhiteSpace(sc.Author?.AppUserId))
+                                                    {
+                                                        <p>
+                                                            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@sc.Author.AppUserId">@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</a>
+                                                        </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>@sc.Author.AuthorName (@sc.AuthorPart.ToString("N"))</p>
+                                                    }
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="tab-pane" id="works">
                 <br />

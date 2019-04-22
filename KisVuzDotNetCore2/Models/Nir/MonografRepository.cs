@@ -1,4 +1,5 @@
-﻿using KisVuzDotNetCore2.Models.Files;
+﻿using KisVuzDotNetCore2.Models.Common;
+using KisVuzDotNetCore2.Models.Files;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -166,6 +167,18 @@ namespace KisVuzDotNetCore2.Models.Nir
                 monografEntry.MonografAuthors[0].AuthorPart = firstAuthorPart;
             }
 
+            _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Подтверждение монографии
+        /// </summary>
+        /// <param name="monografId"></param>
+        /// <returns></returns>
+        public void ConfirmMonograf(int monografId)
+        {
+            var monograf = _context.Monografs.SingleOrDefault(p => p.MonografId == monografId);
+            monograf.RowStatusId = (int)RowStatusEnum.Confirmed;
             _context.SaveChanges();
         }
     }

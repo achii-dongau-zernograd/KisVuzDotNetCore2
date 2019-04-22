@@ -33,6 +33,7 @@ namespace KisVuzDotNetCore2.Models.Users
                             .ThenInclude(a => a.ScienceJournal)
                                 .ThenInclude(s => s.ScienceJournalCitationBases)
                                     .ThenInclude(c => c.CitationBase)
+                ////////////////// Статьи //////////////////
                 .Include(u => u.Author)
                     .ThenInclude(a => a.ArticleAuthors)
                         .ThenInclude(aa => aa.Article)
@@ -65,7 +66,7 @@ namespace KisVuzDotNetCore2.Models.Users
                     .ThenInclude(a => a.ArticleAuthors)
                         .ThenInclude(aa => aa.Article)
                             .ThenInclude(a => a.RowStatus)
-
+                ////////////////// Патенты //////////////////
                 .Include(u => u.Author)
                     .ThenInclude(a => a.PatentAuthors)
                         .ThenInclude(pa => pa.Patent)
@@ -102,6 +103,35 @@ namespace KisVuzDotNetCore2.Models.Users
                         .ThenInclude(pa => pa.Patent)
                             .ThenInclude(p => p.PatentNirTemas)
                                 .ThenInclude(pn => pn.NirTema)
+                ////////////////// Монографии //////////////////
+                .Include(u => u.Author)
+                    .ThenInclude(ma => ma.MonografAuthors)
+                        .ThenInclude(m => m.Monograf)
+                            .ThenInclude(p => p.RowStatus)
+                .Include(u => u.Author)
+                    .ThenInclude(a => a.MonografAuthors)
+                        .ThenInclude(pa => pa.Monograf)
+                            .ThenInclude(p => p.FileModel)
+                .Include(u => u.Author)
+                    .ThenInclude(a => a.MonografAuthors)
+                        .ThenInclude(pa => pa.Monograf)
+                            .ThenInclude(p => p.Year)
+                .Include(u => u.Author)
+                    .ThenInclude(a => a.MonografAuthors)
+                        .ThenInclude(pa => pa.Monograf)
+                            .ThenInclude(p => p.MonografNirSpecials)
+                                .ThenInclude(pn => pn.NirSpecial)
+                 .Include(u => u.Author)
+                    .ThenInclude(a => a.MonografAuthors)
+                        .ThenInclude(pa => pa.Monograf)
+                            .ThenInclude(p => p.MonografNirTemas)
+                                .ThenInclude(pn => pn.NirTema)
+                 .Include(u => u.Author)
+                    .ThenInclude(a => a.MonografAuthors)
+                        .ThenInclude(pa => pa.Monograf)
+                            .ThenInclude(p => p.MonografAuthors)
+                                .ThenInclude(ma => ma.Author)
+
                 .Include(u => u.ScienceJournalAddingClaims)
                 .Include(u => u.UserAchievments)
                     .ThenInclude(ua => ua.UserAchievmentType)
@@ -515,6 +545,166 @@ namespace KisVuzDotNetCore2.Models.Users
                 var userAchievment = appUser.UserAchievments.FirstOrDefault(a => a.UserAchievmentId == id);
                 return userAchievment;
             }            
+        }       
+
+        /// <summary>
+        /// Возвращает список монографий пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public List<Monograf> GetMonografs(string userName)
+        {
+            List<Monograf> monografs = new List<Monograf>();
+            AppUser appUser = GetAppUser(userName);
+            appUser.Author
+                .ForEach(a =>
+                    a.MonografAuthors
+                        .ForEach(aa =>
+                            monografs.Add(aa.Monograf)));
+
+            return monografs;
         }
+
+        
+        /// <summary>
+        /// Возвращает монографию пользователя userName
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public Monograf GetMonograf(int? id, string userName)
+        {
+            Monograf monograf = new Monograf();
+
+            if (id == null)
+            {
+                return monograf;
+            }
+
+            List<Monograf> userMonografs = GetMonografs(userName);
+            monograf = userMonografs.SingleOrDefault(a => a.MonografId == id);
+            return monograf; 
+        }
+        
+        /// <summary>
+        /// Добавляет статью пользователя userName
+        /// </summary>
+        /// <param name="monograf"></param>
+        /// <param name="userName"></param>
+        public void CreateMonograf(Monograf monograf, string userName)
+        {
+            if (monograf.MonografId != 0) return;
+
+            AppUser appUser = GetAppUser(userName);
+            Author author = appUser.Author.FirstOrDefault();
+            if (author == null)
+            {
+                author = new Author
+                {
+                    AppUserId = appUser.Id,
+                    AuthorName = appUser.GetFullName
+                };
+                _context.Author.Add(author);
+                //_context.SaveChanges();
+            }
+            if (author.AuthorId == 0) return;
+
+            _context.Monografs.Add(monograf);
+
+            MonografAuthor monografAuthor = new MonografAuthor
+            {
+                MonografId = monograf.MonografId,
+                AuthorId = author.AuthorId,
+                AuthorPart = 1
+            };
+            _context.MonografAuthors.Add(monografAuthor);
+            _context.SaveChanges();
+        }
+
+        
+        /// <summary>
+        /// Обновляет монографию пользователя userName
+        /// </summary>
+        /// <param name="monografEntry"></param>
+        /// <param name="monograf"></param>   
+        public void UpdateMonograf(Monograf monografEntry, Monograf monograf)
+        {
+            monografEntry.MonografName = monograf.MonografName;
+            monografEntry.FileModelId = monograf.FileModelId;
+            monografEntry.YearId = monograf.YearId;
+            monografEntry.RowStatusId = monograf.RowStatusId;
+            ////////
+            /// + списки направлений, авторов и пр.
+            if (monograf.MonografNirSpecials != null && monograf.MonografNirSpecials.Count > 0)
+            {
+                foreach (var monografNirSpecial in monograf.MonografNirSpecials)
+                {
+                    bool isExists = false;
+                    foreach (var monografNirSpecialEntry in monografEntry.MonografNirSpecials)
+                    {
+                        if (monografNirSpecialEntry.NirSpecialId == monografNirSpecial.NirSpecialId)
+                        {
+                            isExists = true;
+                        }
+                    }
+                    if (!isExists)
+                    {
+                        monografEntry.MonografNirSpecials.Add(monografNirSpecial);
+                    }
+                }
+            }
+
+            if (monograf.MonografAuthors != null && monograf.MonografAuthors.Count > 0)
+            {
+                foreach (var monografAuthor in monograf.MonografAuthors)
+                {
+                    bool isExists = false;
+                    foreach (var monografAuthorEntry in monografEntry.MonografAuthors)
+                    {
+                        if (monografAuthorEntry.MonografAuthorId == monografAuthor.MonografAuthorId)
+                        {
+                            isExists = true;
+                        }
+                    }
+                    if (!isExists)
+                    {
+                        monografEntry.MonografAuthors.Add(monografAuthor);
+                    }
+                }
+
+                decimal firstAuthorPart = 1;
+                for (int i = 1; i < monografEntry.MonografAuthors.Count; i++)
+                {
+                    firstAuthorPart -= monografEntry.MonografAuthors[i].AuthorPart;
+                }
+
+                if (firstAuthorPart < 0) firstAuthorPart = 0;
+                monografEntry.MonografAuthors[0].AuthorPart = firstAuthorPart;
+            }
+
+            _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Удаляет монографию пользователя userName
+        /// </summary>
+        /// <param name="monografId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public Monograf RemoveMonograf(int monografId, string userName)
+        {
+            var monograf = GetMonograf(monografId, userName);
+            if (monograf == null) return null;
+
+            _context.Monografs.Remove(monograf);
+            if (monograf.FileModel != null)
+            {
+                _fileModelRepository.RemoveFileModelAsync(monograf.FileModel);
+            }
+            _context.SaveChanges();
+
+            return monograf;
+        }
+              
     }
 }

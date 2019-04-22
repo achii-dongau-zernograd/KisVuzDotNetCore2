@@ -44,6 +44,10 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         #region Научная работа
+        /// <summary>
+        /// Научные статьи
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Articles()
         {
             List<Article> userArticles = _userProfileRepository.GetArticles(User.Identity.Name);
@@ -266,6 +270,10 @@ namespace KisVuzDotNetCore2.Controllers
             return RedirectToAction(nameof(ScienceJournalAddingClaims));
         }
 
+        /// <summary>
+        /// Патенты и свидетельства
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Patents()
         {
             List<Patent> userPatents = _userProfileRepository.GetPatents(User.Identity.Name);
@@ -442,6 +450,185 @@ namespace KisVuzDotNetCore2.Controllers
             return RedirectToAction("Patents");
         }
 
+        /// <summary>
+        /// Монографии
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Monografs()
+        {
+            List<Monograf> userMonografs = _userProfileRepository.GetMonografs(User.Identity.Name);
+            return View(userMonografs);
+        }
+
+        public IActionResult CreateOrEditMonograf(int? id)
+        {
+            Monograf monograf = _userProfileRepository.GetMonograf(id, User.Identity.Name);
+            if (monograf == null) return NotFound();
+
+            ViewBag.Authors = _selectListRepository.GetSelectListAuthors();
+            ViewBag.Years = _selectListRepository.GetSelectListYears(monograf.YearId);
+            ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
+            ViewBag.NirTemas = _selectListRepository.GetSelectListNirTemas();
+            return View(monograf);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateOrEditMonograf(Monograf monograf,
+            string AuthorFilter,
+            int AuthorIdAdd, int AuthorIdRemove, decimal AuthorPart,
+            int NirSpecialIdAdd, int NirSpecialIdRemove,
+            int NirTemaIdAdd, int NirTemaIdRemove,
+            CreateOrEditNirDataModeEnum mode, IFormFile uploadedFile)
+        {
+            Monograf monografEntry = _userProfileRepository.GetMonograf(monograf.MonografId, User.Identity.Name);
+
+            if (monografEntry == null)
+            {
+                if (uploadedFile != null)
+                {
+                    FileModel f = await _fileModelRepository.UploadMonografAsync(monograf, uploadedFile);
+                }
+                _userProfileRepository.CreateMonograf(monograf, User.Identity.Name);
+                monografEntry = monograf;
+            }
+            else
+            {
+                if (uploadedFile != null)
+                {
+                    FileModel f = await _fileModelRepository.UploadMonografAsync(monografEntry, uploadedFile);
+                    monograf.FileModelId = monografEntry.FileModelId;
+                }
+                monograf.MonografNirSpecials = monografEntry.MonografNirSpecials;
+                monograf.MonografAuthors = monografEntry.MonografAuthors;
+                monograf.MonografNirTemas = monografEntry.MonografNirTemas;
+                _userProfileRepository.UpdateMonograf(monografEntry, monograf);
+            }
+            
+            switch (mode)
+            {
+                case CreateOrEditNirDataModeEnum.Saving:
+                    monograf.RowStatusId = (int)RowStatusEnum.NotConfirmed;
+                    _userProfileRepository.UpdateMonograf(monografEntry, monograf);
+                    return RedirectToAction("Monografs");
+                case CreateOrEditNirDataModeEnum.Canceling:
+                    if (monograf.RowStatusId == null)
+                    {
+                        _userProfileRepository.RemoveMonograf(monografEntry.MonografId, User.Identity.Name);
+                    }
+                    return RedirectToAction("Monografs");
+                case CreateOrEditNirDataModeEnum.AddingAuthor:
+                    if (AuthorIdAdd != 0)
+                    {
+                        var isExists = monograf.MonografAuthors.FirstOrDefault(a => a.AuthorId == AuthorIdAdd) != null;
+                        if (!isExists)
+                        {
+                            monograf.MonografAuthors.Add(new MonografAuthor
+                            {
+                                AuthorId = AuthorIdAdd,
+                                AuthorPart = AuthorPart
+                            });
+                            _userProfileRepository.UpdateMonograf(monografEntry, monograf);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.EditingAuthor:
+                    break;
+                case CreateOrEditNirDataModeEnum.RemovingAuthor:
+                    if (AuthorIdRemove != 0)
+                    {
+                        var monografAuthorsToRemove = monograf.MonografAuthors.FirstOrDefault(aa => aa.AuthorId == AuthorIdRemove);
+                        if (monografAuthorsToRemove != null)
+                        {
+                            monograf.MonografAuthors.Remove(monografAuthorsToRemove);
+                            _userProfileRepository.UpdateMonograf(monografEntry, monograf);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.ApplyAuthorFilter:
+                    break;
+                case CreateOrEditNirDataModeEnum.AddingNirSpecial:
+                    if (NirSpecialIdAdd != 0)
+                    {
+                        var isExists = monograf.MonografNirSpecials.FirstOrDefault(s => s.NirSpecialId == NirSpecialIdAdd) != null;
+                        if (!isExists)
+                        {
+                            monograf.MonografNirSpecials.Add(new MonografNirSpecial { NirSpecialId = NirSpecialIdAdd });
+                            _userProfileRepository.UpdateMonograf(monografEntry, monograf);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.EditingNirSpecial:
+                    break;
+                case CreateOrEditNirDataModeEnum.RemovingNirSpecial:
+                    if (NirSpecialIdRemove != 0)
+                    {
+                        var monografToRemove = monograf.MonografNirSpecials.FirstOrDefault(s => s.NirSpecialId == NirSpecialIdRemove);
+                        if (monografToRemove != null)
+                        {
+                            monograf.MonografNirSpecials.Remove(monografToRemove);
+                            _userProfileRepository.UpdateMonograf(monografEntry, monograf);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.AddingNirTema:
+                    if (NirTemaIdAdd != 0)
+                    {
+                        var isExists = monograf.MonografNirTemas.FirstOrDefault(s => s.NirTemaId == NirTemaIdAdd) != null;
+                        if (!isExists)
+                        {
+                            monograf.MonografNirTemas.Add(new MonografNirTema { NirTemaId = NirTemaIdAdd });
+                            _userProfileRepository.UpdateMonograf(monografEntry, monograf);
+                        }
+                    }
+                    break;
+                case CreateOrEditNirDataModeEnum.EditingNirTema:
+                    break;
+                case CreateOrEditNirDataModeEnum.RemovingNirTema:
+                    if (NirTemaIdRemove != 0)
+                    {
+                        var monografToRemove = monograf.MonografNirTemas.FirstOrDefault(s => s.NirTemaId == NirTemaIdRemove);
+                        if (monografToRemove != null)
+                        {
+                            monograf.MonografNirTemas.Remove(monografToRemove);
+                            _userProfileRepository.UpdateMonograf(monografEntry, monograf);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            ViewBag.AuthorFilter = AuthorFilter;
+            ViewBag.Authors = _selectListRepository.GetSelectListAuthors(AuthorFilter);
+            ViewBag.Years = _selectListRepository.GetSelectListYears(monograf.YearId);
+            ViewBag.NirSpecials = _selectListRepository.GetSelectListNirSpecials();
+            ViewBag.NirTemas = _selectListRepository.GetSelectListNirTemas();
+
+            return View(monografEntry);
+        }
+
+        public IActionResult DeleteMonograf(int? id)
+        {
+            if (id == null) return NotFound();
+            var monografEntry = _userProfileRepository.GetMonograf(id, User.Identity.Name);
+            if (monografEntry == null) return NotFound();
+            return View(monografEntry);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteMonografConfirmed(Monograf monograf)
+        {
+            if (monograf == null) return NotFound();
+            var monografEntry = _userProfileRepository.RemoveMonograf(monograf.MonografId, User.Identity.Name);
+
+            return RedirectToAction("Monografs");
+        }
+
+        
+
+
+
         #endregion
 
         public async Task<IActionResult> Index(string id)
@@ -542,6 +729,17 @@ namespace KisVuzDotNetCore2.Controllers
                         .ThenInclude(c => c.PatentVid)
                 .Include(a => a.PatentAuthors)
                     .ThenInclude(aa => aa.Patent)
+                        .ThenInclude(c => c.Year)
+
+
+                .Include(a => a.MonografAuthors)
+                    .ThenInclude(c => c.Monograf.MonografAuthors)
+                        .ThenInclude(a => a.Author)
+                .Include(a => a.MonografAuthors)
+                    .ThenInclude(aa => aa.Monograf)
+                        .ThenInclude(c => c.FileModel)
+                .Include(a => a.MonografAuthors)
+                    .ThenInclude(aa => aa.Monograf)
                         .ThenInclude(c => c.Year)
 
                 .Where(a => a.AppUserId == user.Id)

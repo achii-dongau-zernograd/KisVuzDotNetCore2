@@ -352,5 +352,10 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(_context.UserAchievmentTypes.OrderBy(a => a.UserAchievmentTypeName),
                 "UserAchievmentTypeId", "UserAchievmentTypeName", selectedId);
         }
+
+        public dynamic GetSelectListScienceJournals(object scienceJournalId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

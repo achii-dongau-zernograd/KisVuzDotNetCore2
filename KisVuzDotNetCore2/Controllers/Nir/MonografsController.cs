@@ -37,6 +37,19 @@ namespace KisVuzDotNetCore2.Controllers.Nir
             _monografRepository = monografRepository;                      
         }
 
+        /// <summary>
+        /// Подтверждение монографии
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ConfirmMonograf(int monografId)
+        {
+            _monografRepository.ConfirmMonograf(monografId);
+            return RedirectToAction("Index");
+        }
+
         // GET: Monografs
         public IActionResult Index()
         {

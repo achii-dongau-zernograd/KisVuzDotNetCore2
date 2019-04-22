@@ -1,0 +1,31 @@
+﻿@model Monograf
+
+@{
+    ViewData["Title"] = "Удалить монографию?";
+}
+
+<h2>Удалить монографию?</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MonografName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MonografName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Year.YearName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Year.YearName)
+        </dd>
+    </dl>
+
+    <form asp-action="DeleteMonografConfirmed">
+        <input type="hidden" asp-for="MonografId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Monografs" class="btn btn-default">Отмена</a>
+    </form>
+</div>

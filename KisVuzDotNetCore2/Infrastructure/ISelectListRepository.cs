@@ -187,6 +187,6 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// </summary>
         /// <returns></returns>
         SelectList GetSelectListPatentVids(int selectedId = 0);
-
+        dynamic GetSelectListScienceJournals(object scienceJournalId);
     }
 }

@@ -133,5 +133,44 @@ namespace KisVuzDotNetCore2.Models.Users
         /// </summary>
         /// <param name="claimEntry"></param>
         void RemoveClaimAddScienceJournal(ScienceJournalAddingClaim claimEntry);
+
+        /// <summary>
+        /// Возвращает список монографий пользователя userName
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        List<Monograf> GetMonografs(string userName);
+        
+        /// <summary>
+        /// Возвращает монографию пользователя userName
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Monograf GetMonograf(int? id, string userName);
+
+        /// <summary>
+        /// Добавляет монографию пользователя userName
+        /// </summary>
+        /// <param name="monograf"></param>
+        /// <param name="userName"></param>
+        void CreateMonograf(Monograf monograf, string userName);
+
+        /// <summary>
+        /// Обновляет монографию пользователя userName
+        /// </summary>
+        /// <param name="monografEntry"></param>
+        /// <param name="monograf"></param>        
+        void UpdateMonograf(Monograf monografEntry, Monograf monograf);
+
+        /// <summary>
+        /// Удаляет монографию пользователя userName
+        /// </summary>
+        /// <param name="monografId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>       
+        Monograf RemoveMonograf(int monografId, string userName);
+
+
     }
 }
