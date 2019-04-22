@@ -17,6 +17,26 @@
 
 <h1>Материально-техническое обеспечение и оснащенность образовательного процесса</h1>
 
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="health">
+            <p>Сведения об охране здоровья обучающихся: <a href="http://ачгаа.рф/sveden/objects/ohrana-zdorov-obuch">открыть</a></p>
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся с ограниченными возможностями здоровья и инвалидов</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="healthOvz">
+            <p>Сведения об условиях охраны здоровья обучающихся с ограниченными возможностями здоровья и инвалидов: <a href="http://ачгаа.рф/sveden/objects/ohrana-zdorov-obuch">открыть</a></p>
+        </div>
+    </div>
+</div>
+
 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии оборудованных учебных кабинетов, объектов для проведения практических занятий</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++; }
@@ -55,81 +75,82 @@
 
                                                 @foreach (var eduPlan in eduProfile.EduPlans)
                                                 {
-                                                    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlan.EduForm.EduFormName - @eduPlan.EduProgramPodg.EduProgramPodgName  @eduPlan.EduYearBeginningTrainingsDescription</a>
-                                                    <div class="collapse" id="spoiler-@spoilerCounter">
-                                                        @{spoilerCounter++; }
-                                                        <div class="well">
+                                                    @*<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlan.EduForm.EduFormName - @eduPlan.EduProgramPodg.EduProgramPodgName  @eduPlan.EduYearBeginningTrainingsDescription</a>
+                                                        <div class="collapse" id="spoiler-@spoilerCounter">
+                                                            @{spoilerCounter++; }
+                                                            <div class="well">*@
 
-                                                            @foreach (var eduPlanEduYear in eduPlan.EduPlanEduYears)
-                                                            {
-                                                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlanEduYear.EduYear.EduYearName</a>
-                                                                <div class="collapse" id="spoiler-@spoilerCounter">
-                                                                    @{spoilerCounter++; }
-                                                                    <div class="well">
+                                                    @foreach (var eduPlanEduYear in eduPlan.EduPlanEduYears)
+                                                    {
+                                                        if (eduPlanEduYear.DisciplinePomeshenies.Count == 0) { continue; }
+                                                        @*<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlanEduYear.EduYear.EduYearName</a>
+                                                            <div class="collapse" id="spoiler-@spoilerCounter">
+                                                                @{spoilerCounter++; }
+                                                                <div class="well">*@
 
-                                                                        <table itemprop="purposeCab" class="table table-hover">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Код</th>
-                                                                                    <th>Наименование специальности, направления подготовки</th>
-                                                                                    <th>Наименование дисциплины (модуля), практик в соответствии с учебным планом</th>
-                                                                                    <th>Наименование специальных помещений и помещений для самостоятельной работы</th>
-                                                                                    <th>Оснащенность специальных помещений и помещений для самостоятельной работы</th>
-                                                                                    <th>Приспособленность помещений для использования инвалидами и лицами с ограниченными возможностями здоровья</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
+                                                        <table itemprop="purposeCab" class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Код</th>
+                                                                    <th>Наименование специальности, направления подготовки</th>
+                                                                    <th>Наименование дисциплины (модуля), практик в соответствии с учебным планом</th>
+                                                                    <th>Наименование специальных помещений и помещений для самостоятельной работы</th>
+                                                                    <th>Оснащенность специальных помещений и помещений для самостоятельной работы</th>
+                                                                    <th>Приспособленность помещений для использования инвалидами и лицами с ограниченными возможностями здоровья</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
 
-                                                                                @foreach (var discPomeshenie in eduPlanEduYear.DisciplinePomeshenies.OrderBy(dp=>dp.Discipline.DisciplineName.DisciplineNameName))
+                                                                @foreach (var discPomeshenie in eduPlanEduYear.DisciplinePomeshenies.OrderBy(dp => dp.Discipline.DisciplineName.DisciplineNameName))
+                                                                {
+
+                                                                    string purposeCab = "purposeCabOvz";
+                                                                    string purposePrac = "purposePracOvz";
+                                                                    switch (discPomeshenie.Pomeshenie.PomeshenieOvz)
+                                                                    {
+                                                                        case null:
+                                                                        case "":
+                                                                        case "нет":
+                                                                        case "не приспособлено":
+                                                                            purposeCab = "purposeCab";
+                                                                            purposePrac = "purposePrac";
+                                                                            break;
+
+                                                                    }
+
+                                                                    <tr itemprop="@purposeCab">
+                                                                        <td itemprop="eduCode">@eduNapravl.EduNapravlCode</td>
+                                                                        <td itemprop="eduName">@eduNapravl.EduNapravlName (@eduProfile.EduProfileName)</td>
+                                                                        <td>@discPomeshenie.Discipline.DisciplineName.DisciplineNameName</td>
+                                                                        <td>@discPomeshenie.Pomeshenie.PomeshenieFullName</td>
+                                                                        <td itemprop="@purposePrac">
+                                                                            <ul>
+                                                                                @foreach (var oborudovanie in discPomeshenie.Pomeshenie.OborudovanieList)
                                                                                 {
-
-                                                                                    string purposeCab = "purposeCabOvz";
-                                                                                    string purposePrac = "purposePracOvz";
-                                                                                    switch (discPomeshenie.Pomeshenie.PomeshenieOvz)
-                                                                                    {
-                                                                                        case null:
-                                                                                        case "":
-                                                                                        case "нет":
-                                                                                        case "не приспособлено":
-                                                                                            purposeCab = "purposeCab";
-                                                                                            purposePrac = "purposePrac";
-                                                                                            break;
-
-                                                                                    }
-
-                                                                                    <tr itemprop="@purposeCab">
-                                                                                        <td itemprop="eduCode">@eduNapravl.EduNapravlCode</td>
-                                                                                        <td itemprop="eduName">@eduNapravl.EduNapravlName (@eduProfile.EduProfileName)</td>
-                                                                                        <td>@discPomeshenie.Discipline.DisciplineName.DisciplineNameName</td>
-                                                                                        <td>@discPomeshenie.Pomeshenie.PomeshenieFullName</td>
-                                                                                        <td itemprop="@purposePrac">
-                                                                                            <ul>
-                                                                                                @foreach (var oborudovanie in discPomeshenie.Pomeshenie.OborudovanieList)
-                                                                                                {
-                                                                                                    <li>
-                                                                                                        @oborudovanie.OborudovanieName
-                                                                                                        @if (oborudovanie.OborudovanieCount > 0)
-                                                                                                        {
-                                                                                                            <text> (@oborudovanie.OborudovanieCount шт.)</text>
-                                                                                                        }
-                                                                                                    </li>
-                                                                                                }
-                                                                                            </ul>
-                                                                                        </td>
-                                                                                        <td>@discPomeshenie.Pomeshenie.PomeshenieOvz</td>
-                                                                                    </tr>
-
+                                                                                    <li>
+                                                                                        @oborudovanie.OborudovanieName
+                                                                                        @if (oborudovanie.OborudovanieCount > 0)
+                                                                                        {
+                                                                                            <text> (@oborudovanie.OborudovanieCount шт.)</text>
+                                                                                        }
+                                                                                    </li>
                                                                                 }
+                                                                            </ul>
+                                                                        </td>
+                                                                        <td>@discPomeshenie.Pomeshenie.PomeshenieOvz</td>
+                                                                    </tr>
 
-                                                                            </tbody>
-                                                                        </table>
+                                                                }
 
-                                                                    </div>
-                                                                </div>
-                                                            }
+                                                            </tbody>
+                                                        </table>
 
-                                                        </div>
-                                                    </div>
+                                                        @*</div>
+                                                            </div>*@
+                                                    }
+
+                                                    @*</div>
+                                                        </div>*@
                                                 }
 
                                             </div>
@@ -147,7 +168,6 @@
 
     </div>
 </div>
-
 
 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии библиотек, объектов спорта, условиях питания и охраны здоровья обучающихся</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
@@ -220,7 +240,7 @@
     @{spoilerCounter++; }
     <div class="well">
         <div itemprop="purposeFacilOvz">
-            Раздел в разработке
+            <a href="http://ачгаа.рф/wp-content/uploads/2019/04/SoglOSotrUFU.pdf">При необходимости предоставляются РУМЦ ЮФУ в соответствии с соглашением о сотрудничестве</a>
         </div>
     </div>
 </div>
@@ -240,7 +260,7 @@
     @{spoilerCounter++; }
     <div class="well">
         <div itemprop="mealsDocLink">
-            Раздел в разработке
+            <a href="http://ачгаа.рф/sveden/objects/meals">Открыть</a>
         </div>
     </div>
 </div>
@@ -306,27 +326,7 @@
     @{spoilerCounter++; }
     <div class="well">
         <div itemprop="techOvz">
-            <p>Специальные технические средства обучения коллективного и индивидуального пользования для инвалидов и лиц с ограниченными возможностями здоровья отсутствуют.</p>
-        </div>
-    </div>
-</div>
-
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся</a>
-<div class="collapse" id="spoiler-@spoilerCounter">
-    @{spoilerCounter++; }
-    <div class="well">
-        <div itemprop="health">
-            <a href="http://ачгаа.рф/sveden/objects/ohrana-zdorov-obuch">Сведения об охране здоровья обучающихся</a>
-        </div>
-    </div>
-</div>
-
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся с ограниченными возможностями здоровья и инвалидов</a>
-<div class="collapse" id="spoiler-@spoilerCounter">
-    @{spoilerCounter++; }
-    <div class="well">
-        <div itemprop="healthOvz">
-            <a href="http://ачгаа.рф/sveden/objects/ohrana-zdorov-obuch">Сведения об охране здоровья обучающихся</a>
+            <a href="http://ачгаа.рф/wp-content/uploads/2019/04/SoglOSotrUFU.pdf">При необходимости предоставляются РУМЦ ЮФУ в соответствии с соглашением о сотрудничестве</a>
         </div>
     </div>
 </div>
