@@ -3,6 +3,7 @@
 }
 
 @{
+    int currentEduYear = (int)ViewData["currentEduYear"];
     int NumEbs = (int)ViewData["NumEbs"];
     int NumEbsSobstv = (int)ViewData["NumEbsSobstv"];
     int NumEbsDogovor = (int)ViewData["NumEbsDogovor"];
@@ -41,15 +42,7 @@
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++; }
     <div class="well">
-
-        <ul>
-            <li itemprop="purposeCab"><span itemprop="purposePrac"><a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/svedeniya-o-nalichii-oborudovannyih-uche">Сведения о наличии оборудованных учебных кабинетов, объектов для проведения практических занятий</a></span></li>
-            <li itemprop="purposeCabOvz"><a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/ovz">Сведения о наличии оборудованных учебных кабинетов, приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья</a></li>
-            <li itemprop="purposePracOvz"><a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/svedeniya-o-nalichii-oborudovannyih-uche">Сведения о наличии объектов для проведения практических занятий, приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья</a></li>
-        </ul>
-
-        <hr />
-
+        
         @foreach (var eduLevel in eduLevels)
         {
             <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduLevel.EduLevelName</a>
@@ -83,6 +76,7 @@
                                                     @foreach (var eduPlanEduYear in eduPlan.EduPlanEduYears)
                                                     {
                                                         if (eduPlanEduYear.DisciplinePomeshenies.Count == 0) { continue; }
+                                                        if (eduPlanEduYear.EduYearId != currentEduYear) { continue; }
                                                         @*<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlanEduYear.EduYear.EduYearName</a>
                                                             <div class="collapse" id="spoiler-@spoilerCounter">
                                                                 @{spoilerCounter++; }

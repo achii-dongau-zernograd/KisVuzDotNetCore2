@@ -429,6 +429,7 @@ namespace KisVuzDotNetCore2.Controllers
             #region Таблица 17. Сведения о наличии оборудованных учебных кабинетов
 
             int currentEduYear = (await _context.AppSettings.SingleOrDefaultAsync(s => s.AppSettingId == (int)AppSettingTypesEnum.CurrentEduYear)).AppSettingValue;
+            ViewData["currentEduYear"] = currentEduYear;
 
             //var disciplinePomeshenie = await _context.DisciplinePomeshenies
             //    .Include(p => p.Discipline.DisciplineName)
