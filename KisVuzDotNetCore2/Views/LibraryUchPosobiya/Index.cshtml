@@ -170,7 +170,7 @@
                 }
             </td>
             <td>
-                <a asp-action="UchPosobieCreateOrEdit" asp-route-id="@item.UchPosobieId" class="btn btn-primary btn-block">Редактировать</a>
+                <a asp-action="UchPosobieCreateOrEdit" asp-route-id="@item.UchPosobieId" asp-route-filter="@Model.UchPosobieFilterModel.GodIzdaniya" class="btn btn-primary btn-block">Редактировать</a>
                 <a asp-action="UchPosobieDelete" asp-route-id="@item.UchPosobieId" class="btn btn-danger btn-block">Удалить</a>
             </td>
         </tr>

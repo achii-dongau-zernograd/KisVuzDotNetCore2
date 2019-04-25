@@ -45,8 +45,10 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
         /// </summary>
         /// <param name="uchPosobieEditViewModel"></param>
         /// <returns></returns>
-        public async Task<IActionResult> UchPosobieCreateOrEdit(int id)
+        public async Task<IActionResult> UchPosobieCreateOrEdit(int id, string filter)
         {
+            ViewBag.filter = filter;
+
             UchPosobie uchPosobie = await _uchPosobiyaRepository.GetUchPosobieByIdAsync(id);
             ViewBag.UchPosobieVidList = _selectListRepository.GetSelectListUchPosobieVid();
             ViewBag.UchPosobieFormaIzdaniyaList = _selectListRepository.GetSelectListUchPosobieFormaIzdaniya();
@@ -55,14 +57,14 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UchPosobieCreateOrEdit(UchPosobieEditViewModel uchPosobieEditViewModel)
+        public async Task<IActionResult> UchPosobieCreateOrEdit(UchPosobieEditViewModel uchPosobieEditViewModel, UchPosobieFilterModel uchPosobieFilterModel)
         {
             if(uchPosobieEditViewModel != null)
             {
                 await _uchPosobiyaRepository.UpdateUchPosobie(uchPosobieEditViewModel);
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), uchPosobieFilterModel);
         }
 
         /// <summary>

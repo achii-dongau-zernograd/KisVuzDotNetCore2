@@ -7,6 +7,7 @@
         <form asp-action="UchPosobieCreateOrEdit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UchPosobie.UchPosobieId" />
+            <input type="hidden" name="uchPosobieFilterModel.GodIzdaniya" value="@ViewBag.filter" />
             <div class="form-group">
                 <label asp-for="UchPosobie.UchPosobieVidId" class="control-label"></label>
                 <select asp-for="UchPosobie.UchPosobieVidId" class="form-control" asp-items="ViewBag.UchPosobieVidList"></select>
