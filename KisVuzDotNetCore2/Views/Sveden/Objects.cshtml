@@ -68,10 +68,10 @@
 
                                                 @foreach (var eduPlan in eduProfile.EduPlans)
                                                 {
-                                                    @*<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlan.EduForm.EduFormName - @eduPlan.EduProgramPodg.EduProgramPodgName  @eduPlan.EduYearBeginningTrainingsDescription</a>
+                                                    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlan.EduForm.EduFormName - @eduPlan.EduProgramPodg.EduProgramPodgName  @eduPlan.EduYearBeginningTrainingsDescription</a>
                                                         <div class="collapse" id="spoiler-@spoilerCounter">
                                                             @{spoilerCounter++; }
-                                                            <div class="well">*@
+                                                            <div class="well">
 
                                                     @foreach (var eduPlanEduYear in eduPlan.EduPlanEduYears)
                                                     {
@@ -143,8 +143,8 @@
                                                             </div>*@
                                                     }
 
-                                                    @*</div>
-                                                        </div>*@
+                                                    </div>
+                                                        </div>
                                                 }
 
                                             </div>
