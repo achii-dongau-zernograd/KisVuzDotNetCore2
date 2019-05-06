@@ -454,7 +454,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Дата размещения</th>
+                                @*<th>Дата размещения</th>*@
                                 <th>Наименование работы</th>
                                 <th>Описание работы</th>
                                 <th>Файл</th>
@@ -470,7 +470,7 @@
                                 @foreach (var item in itemG)
                                 {
                                     <tr>
-                                        <td>@item.DatePosting</td>
+                                        @*<td>@item.DatePosting</td>*@
                                         <td>@item.UserWorkName</td>
                                         <td>@item.UserWorkDescription</td>
                                         <td><a href="/@item.FileModel?.Path">Открыть</a></td>
