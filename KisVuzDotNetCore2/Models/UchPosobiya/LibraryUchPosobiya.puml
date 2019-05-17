@@ -1,0 +1,24 @@
+﻿@startuml
+
+interface IFileModelRepository
+interface IUchPosobiyaRepository
+interface ISelectListRepository
+
+together {
+  class UchPosobiyaRepository
+  class SelectListRepository  
+}
+
+LibraryUchPosobiyaController *-- IUchPosobiyaRepository
+IUchPosobiyaRepository <|-- UchPosobiyaRepository
+UchPosobiyaRepository *-- AppIdentityDBContext
+UchPosobiyaRepository *-- IFileModelRepository
+IFileModelRepository <|-- FileModelRepository
+FileModelRepository *-- AppIdentityDBContext
+FileModelRepository *-- IHostingEnvironment
+
+LibraryUchPosobiyaController *-- ISelectListRepository
+ISelectListRepository <|-- SelectListRepository
+SelectListRepository *-- AppIdentityDBContext
+
+@enduml
