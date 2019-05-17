@@ -1,0 +1,25 @@
+﻿@startuml
+
+together {	
+	interface ISelectListRepository
+	interface IPatentRepository
+	interface IFileModelRepository
+}
+
+interface IHostingEnvironment
+
+PatentsController *-- IPatentRepository
+IPatentRepository <|-- PatentRepository
+PatentRepository *-- AppIdentityDBContext
+PatentRepository *-- IFileModelRepository
+
+PatentsController *-- ISelectListRepository
+ISelectListRepository <|-- SelectListRepository
+SelectListRepository *-- AppIdentityDBContext
+
+PatentsController *-- IFileModelRepository
+IFileModelRepository <|-- FileModelRepository
+FileModelRepository *-- AppIdentityDBContext
+FileModelRepository *-- IHostingEnvironment
+
+@enduml

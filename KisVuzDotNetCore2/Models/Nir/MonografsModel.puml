@@ -1,0 +1,31 @@
+﻿@startuml
+
+together {
+	interface IUserProfileRepository
+	interface ISelectListRepository
+	interface IMonografRepository
+	interface IFileModelRepository
+}
+
+interface IHostingEnvironment
+
+MonografsController *-- IUserProfileRepository
+IUserProfileRepository <|-- UserProfileRepository
+UserProfileRepository *-- AppIdentityDBContext
+UserProfileRepository *-- IFileModelRepository
+
+MonografsController *-- ISelectListRepository
+ISelectListRepository <|-- SelectListRepository
+SelectListRepository *-- AppIdentityDBContext
+
+MonografsController *-- IMonografRepository
+IMonografRepository <|-- MonografRepository
+MonografRepository *-- AppIdentityDBContext
+MonografRepository *-- IFileModelRepository
+
+MonografsController *-- IFileModelRepository
+IFileModelRepository <|-- FileModelRepository
+FileModelRepository *-- AppIdentityDBContext
+FileModelRepository *-- IHostingEnvironment
+
+@enduml

@@ -1,0 +1,25 @@
+﻿@startuml
+
+together {
+	interface IArticlesRepository
+	interface IFileModelRepository
+	interface ISelectListRepository  
+}
+
+interface IHostingEnvironment
+
+ArticlesController *-- IArticlesRepository
+IArticlesRepository <|-- ArticlesRepository
+ArticlesRepository *-- AppIdentityDBContext
+ArticlesRepository *-- IFileModelRepository
+
+ArticlesController *-- ISelectListRepository
+ISelectListRepository <|-- SelectListRepository
+SelectListRepository *-- AppIdentityDBContext
+
+ArticlesController *-- IFileModelRepository
+IFileModelRepository <|-- FileModelRepository
+FileModelRepository *-- AppIdentityDBContext
+FileModelRepository *-- IHostingEnvironment
+
+@enduml
