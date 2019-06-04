@@ -10,6 +10,7 @@ using KisVuzDotNetCore2.Models.Students;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Query;
 using KisVuzDotNetCore2.Models.Struct;
+using KisVuzDotNetCore2.Models.Users;
 
 namespace KisVuzDotNetCore2.Controllers.Students
 {
@@ -336,6 +337,47 @@ namespace KisVuzDotNetCore2.Controllers.Students
                 return RedirectToAction(nameof(Index));
             }            
         }
+
+        public IActionResult SendMessagesToStudents(int id, int? StructFacultetId)
+        {
+            ViewBag.id = id;
+            ViewBag.StructFacultetId = StructFacultetId;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SendMessagesToStudents(int id, int? StructFacultetId, string message)
+        {
+            var userSenderId = _context.Users.FirstOrDefault(u=>u.UserName == User.Identity.Name).Id;
+
+            var students = _context.Students.Where(s => s.StudentGroupId == id).ToList();
+
+            var messages = new List<UserMessage>();
+            foreach (var student in students)
+            {
+                var userMessage = new UserMessage { UserSenderId = userSenderId,
+                    UserReceiverId = student.AppUserId,
+                    UserMessageText = message,
+                    UserMessageDate = DateTime.Now
+                };
+
+                messages.Add(userMessage);
+            }
+
+            _context.UserMessages.AddRange(messages);
+            _context.SaveChanges();
+
+            if (StructFacultetId != null)
+            {
+                return RedirectToAction(nameof(StudentGroupsOfFacultet), new { StructFacultetId });
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
 
         private bool StudentGroupExists(int id)
         {
