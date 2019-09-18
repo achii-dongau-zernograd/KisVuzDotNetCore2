@@ -324,7 +324,22 @@ namespace KisVuzDotNetCore2.Controllers.Students
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id, int? StructFacultetId)
         {
-            var studentGroup = await _context.StudentGroups.SingleOrDefaultAsync(m => m.StudentGroupId == id);
+            var studentGroup = await _context.StudentGroups
+                .Include(sg=>sg.Vedomosti)
+                    .ThenInclude(v=>v.VedomostStudentMarks)
+                .Include(sg=>sg.Students)
+                    .ThenInclude(s=>s.AppUser)
+                        .ThenInclude(au=>au.AppUserStructSubvisions)
+                .Include(sg => sg.Students)
+                    .ThenInclude(s => s.AppUser)
+                        .ThenInclude(au => au.Teachers)
+                .Include(sg => sg.Students)
+                    .ThenInclude(s => s.AppUser)
+                        .ThenInclude(au => au.Students)                
+                .SingleOrDefaultAsync(sg => sg.StudentGroupId == id);
+
+            //var appUserIds = studentGroup.Students.Select(s => s.AppUserId);
+
             _context.StudentGroups.Remove(studentGroup);
             await _context.SaveChangesAsync();
 
