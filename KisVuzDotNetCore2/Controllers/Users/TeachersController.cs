@@ -12,7 +12,7 @@ using KisVuzDotNetCore2.Infrastructure;
 
 namespace KisVuzDotNetCore2.Controllers.Users
 {
-    [Authorize(Roles = "Администраторы")]
+    [Authorize(Roles = "Администраторы, Отдел кадров")]
     public class TeachersController : Controller
     {
         private readonly AppIdentityDBContext _context;
@@ -65,7 +65,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TeacherId,TeacherFio,AppUserId")] Teacher teacher)
+        public async Task<IActionResult> Create(Teacher teacher)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TeacherId,TeacherFio,AppUserId")] Teacher teacher)
+        public async Task<IActionResult> Edit(int id, Teacher teacher)
         {
             if (id != teacher.TeacherId)
             {

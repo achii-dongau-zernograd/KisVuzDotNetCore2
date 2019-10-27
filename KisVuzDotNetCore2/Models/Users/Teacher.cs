@@ -23,6 +23,18 @@ namespace KisVuzDotNetCore2.Models.Users
         public string AppUserId { get; set; }
 
         /// <summary>
+        /// Общий стаж работы
+        /// </summary>
+        [Display(Name = "Общий стаж работы")]
+        public string WorkExperienceGeneral { get; set; }
+
+        /// <summary>
+        /// Стаж работы педагогического работника по специальности
+        /// </summary>
+        [Display(Name = "Стаж работы педагогического работника по специальности")]
+        public string WorkExperienceSpecialty { get; set; }
+
+        /// <summary>
         /// Профили подготовки и дисциплины преподавателя
         /// </summary>
         public List<TeacherEduProfileDisciplineName> TeacherEduProfileDisciplineNames { get; set; }

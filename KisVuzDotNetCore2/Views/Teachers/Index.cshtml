@@ -18,6 +18,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.AppUser)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkExperienceGeneral)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkExperienceSpecialty)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -36,7 +42,12 @@
                 {
                     <text>Незарегистрированный пользователь</text>
                 }
-
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkExperienceGeneral)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkExperienceSpecialty)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TeacherId">Редактировать</a> |

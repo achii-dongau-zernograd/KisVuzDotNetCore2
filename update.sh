@@ -13,6 +13,6 @@ echo "Published"
 #dotnet ef database update --project KisVuzDotNetCore2
 #echo "Updated"
 
-echo "Starting kestrel-csmpmweb.service..."
+echo "Starting kestrel-kisvuz.service..."
 systemctl start kestrel-kisvuz.service
 echo "STARTED"
