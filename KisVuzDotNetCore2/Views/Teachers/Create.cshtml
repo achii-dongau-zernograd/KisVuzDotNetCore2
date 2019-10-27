@@ -19,9 +19,19 @@
             </div>
             <div class="form-group">
                 <label asp-for="AppUserId" class="control-label"></label>
-                <select asp-for="AppUserId" class ="form-control" asp-items="ViewBag.AppUserId">
+                <select asp-for="AppUserId" class="form-control" asp-items="ViewBag.AppUserId">
                     <option value="">Незарегистрированный пользователь</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkExperienceGeneral" class="control-label"></label>
+                <input asp-for="WorkExperienceGeneral" class="form-control" />
+                <span asp-validation-for="WorkExperienceGeneral" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkExperienceSpecialty" class="control-label"></label>
+                <input asp-for="WorkExperienceSpecialty" class="form-control" />
+                <span asp-validation-for="WorkExperienceSpecialty" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Добавить" class="btn btn-primary" />

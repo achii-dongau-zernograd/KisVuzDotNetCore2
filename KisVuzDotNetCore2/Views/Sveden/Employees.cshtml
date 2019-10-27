@@ -276,34 +276,10 @@
                                     }
                                 </td>
                                 <td itemprop="genExperience">
-                                    @{
-                                        if (!string.IsNullOrEmpty(teacher.AppUserId) && teacher.AppUser.DateStartWorking != null)
-                                        {
-                                            var staj = DateTime.Now.Subtract((DateTime)teacher.AppUser.DateStartWorking);
-                                            int years = staj.Days / 365;
-                                            int months = (staj.Days - years * 365) / 30;
-                                            <p>@years г./лет @months м.</p>
-                                        }
-                                        @*else
-                                        {
-                                            <p>Нет</p>
-                                        }*@
-                                    }
+                                    <p>@teacher.WorkExperienceGeneral</p>
                                 </td>
                                 <td itemprop="specExperience">
-                                    @{
-                                        if (!string.IsNullOrEmpty(teacher.AppUserId) && teacher.AppUser.DateStartWorkingSpec != null)
-                                        {
-                                            var staj = DateTime.Now.Subtract((DateTime)teacher.AppUser.DateStartWorkingSpec);
-                                            int years = staj.Days / 365;
-                                            int months = (staj.Days - years * 365) / 30;
-                                            <p>@years г./лет @months м.</p>
-                                        }
-                                        @*else
-                                        {
-                                            <p>Нет</p>
-                                        }*@
-                                    }
+                                    <p>@teacher.WorkExperienceSpecialty</p>
                                 </td>
                             </tr>
                         }
@@ -518,26 +494,10 @@
                                                                                         }
                                                                                     </td>
                                                                                     <td itemprop="genExperience">
-                                                                                        @{
-                                                                                            if (!string.IsNullOrEmpty(teacher.AppUserId) && teacher.AppUser.DateStartWorking != null)
-                                                                                            {
-                                                                                                var staj = DateTime.Now.Subtract((DateTime)teacher.AppUser.DateStartWorking);
-                                                                                                int years = staj.Days / 365;
-                                                                                                int months = (staj.Days - years * 365) / 30;
-                                                                                                <p>@years г./лет @months м.</p>
-                                                                                            }
-                                                                                        }
+                                                                                        <p>@teacher.WorkExperienceGeneral</p>
                                                                                     </td>
                                                                                     <td itemprop="specExperience">
-                                                                                        @{
-                                                                                            if (!string.IsNullOrEmpty(teacher.AppUserId) && teacher.AppUser.DateStartWorkingSpec != null)
-                                                                                            {
-                                                                                                var staj = DateTime.Now.Subtract((DateTime)teacher.AppUser.DateStartWorkingSpec);
-                                                                                                int years = staj.Days / 365;
-                                                                                                int months = (staj.Days - years * 365) / 30;
-                                                                                                <p>@years г./лет @months м.</p>
-                                                                                            }
-                                                                                        }
+                                                                                        <p>@teacher.WorkExperienceSpecialty</p>
                                                                                     </td>
                                                                                 </tr>
                                                                             }
