@@ -18,7 +18,7 @@ namespace KisVuzDotNetCore2.Models.Users
         [Display(Name ="Профиль подготовки")]
         public EduProfile EduProfile { get; set; }
         [Display(Name = "Профиль подготовки")]
-        public int EduProfileId { get; set; }
+        public int? EduProfileId { get; set; }
 
         [Display(Name = "Дисциплина")]
         public DisciplineName DisciplineName { get; set; }

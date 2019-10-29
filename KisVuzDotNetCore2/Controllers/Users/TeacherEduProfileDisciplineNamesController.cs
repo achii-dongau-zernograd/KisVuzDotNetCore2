@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Users
 {
-    [Authorize(Roles = "Администраторы")]
+    [Authorize(Roles = "Администраторы, Отдел кадров")]
     public class TeacherEduProfileDisciplineNamesController : Controller
     {
         private readonly AppIdentityDBContext _context;
@@ -27,7 +27,8 @@ namespace KisVuzDotNetCore2.Controllers.Users
             var appIdentityDBContext = _context.TeacherEduProfileDisciplineNames
                 .Include(t => t.DisciplineName)
                 .Include(t => t.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Include(t => t.Teacher);
+                .Include(t => t.Teacher)
+                .OrderBy(t => t.Teacher.TeacherFio);
             return View(await appIdentityDBContext.ToListAsync());
         }
 
@@ -55,9 +56,9 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // GET: TeacherEduProfileDisciplineNames/Create
         public IActionResult Create()
         {
-            ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames, "DisciplineNameId", "DisciplineNameName");
-            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p=>p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherFio");
+            ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames.OrderBy(d => d.DisciplineNameName), "DisciplineNameId", "DisciplineNameName");
+            ViewData["EduProfileId"]     = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
+            ViewData["TeacherId"]        = new SelectList(_context.Teachers.OrderBy(t => t.TeacherFio), "TeacherId", "TeacherFio");
             return View();
         }
 
@@ -74,9 +75,9 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames, "DisciplineNameId", "DisciplineNameName", teacherEduProfileDisciplineName.DisciplineNameId);
+            ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames.OrderBy(d => d.DisciplineNameName), "DisciplineNameId", "DisciplineNameName", teacherEduProfileDisciplineName.DisciplineNameId);
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", teacherEduProfileDisciplineName.EduProfileId);
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherFio", teacherEduProfileDisciplineName.TeacherId);
+            ViewData["TeacherId"] = new SelectList(_context.Teachers.OrderBy(t => t.TeacherFio), "TeacherId", "TeacherFio", teacherEduProfileDisciplineName.TeacherId);
             return View(teacherEduProfileDisciplineName);
         }
 
@@ -93,9 +94,9 @@ namespace KisVuzDotNetCore2.Controllers.Users
             {
                 return NotFound();
             }
-            ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames, "DisciplineNameId", "DisciplineNameName", teacherEduProfileDisciplineName.DisciplineNameId);
+            ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames.OrderBy(d => d.DisciplineNameName), "DisciplineNameId", "DisciplineNameName", teacherEduProfileDisciplineName.DisciplineNameId);
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", teacherEduProfileDisciplineName.EduProfileId);
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherFio", teacherEduProfileDisciplineName.TeacherId);
+            ViewData["TeacherId"] = new SelectList(_context.Teachers.OrderBy(t => t.TeacherFio), "TeacherId", "TeacherFio", teacherEduProfileDisciplineName.TeacherId);
             return View(teacherEduProfileDisciplineName);
         }
 
@@ -131,9 +132,9 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames, "DisciplineNameId", "DisciplineNameName", teacherEduProfileDisciplineName.DisciplineNameId);
+            ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames.OrderBy(d => d.DisciplineNameName), "DisciplineNameId", "DisciplineNameName", teacherEduProfileDisciplineName.DisciplineNameId);
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", teacherEduProfileDisciplineName.EduProfileId);
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "TeacherId", "TeacherFio", teacherEduProfileDisciplineName.TeacherId);
+            ViewData["TeacherId"] = new SelectList(_context.Teachers.OrderBy(t => t.TeacherFio), "TeacherId", "TeacherFio", teacherEduProfileDisciplineName.TeacherId);
             return View(teacherEduProfileDisciplineName);
         }
 
@@ -167,7 +168,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             _context.TeacherEduProfileDisciplineNames.Remove(teacherEduProfileDisciplineName);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
+        }        
 
         private bool TeacherEduProfileDisciplineNameExists(int id)
         {
