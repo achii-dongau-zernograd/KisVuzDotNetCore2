@@ -108,6 +108,8 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(v => v.StudentGroup.Students)
                 .Include(v => v.VedomostStudentMarks)
                     .ThenInclude(m=>m.VedomostStudentMarkName)
+                .Include(v => v.VedomostStudentMarks)
+                    .ThenInclude(m => m.Student)
                 .SingleOrDefaultAsync(v => v.VedomostId == id);
 
             if (vedomost != null)

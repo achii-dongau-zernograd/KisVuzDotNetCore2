@@ -36,7 +36,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.VedomostStudentMarks.OrderBy(m=>m.Student.StudentFio))
+            @foreach (var item in Model.VedomostStudentMarks?.OrderBy(m=>m.Student.StudentFio))
             {
                 <tr>
                     <td>
