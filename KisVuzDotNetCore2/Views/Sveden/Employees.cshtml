@@ -162,7 +162,7 @@
                                 <td itemprop="post">
                                     @foreach (var post in teacher.TeacherStructKafPostStavka)
                                     {
-                                        <p>@post.Post.PostName</p>
+                                        <p>@post.Post.PostName (@post.StructKaf.StructSubvision.StructSubvisionName - @post.EmploymentForm.EmploymentFormName)</p>
                                     }
                                 </td>
 

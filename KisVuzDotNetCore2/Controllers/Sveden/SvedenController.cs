@@ -275,6 +275,10 @@ namespace KisVuzDotNetCore2.Controllers
             var teacher1 = await _context.Teachers
                 .Include(t => t.TeacherStructKafPostStavka)
                     .ThenInclude(p => p.Post)
+                .Include(t => t.TeacherStructKafPostStavka)
+                    .ThenInclude(p => p.StructKaf.StructSubvision)
+                .Include(t => t.TeacherStructKafPostStavka)
+                    .ThenInclude(p => p.EmploymentForm)
                 .Include(a => a.AppUser)
                     .ThenInclude(e => e.EduLevelGroup)
                 .Include(a => a.AppUser)
