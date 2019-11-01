@@ -176,7 +176,7 @@
                                             <div class="collapse" id="spoiler-@counter">
                                                 <div class="well">
                                                     <ol>
-                                                        @foreach (var discipline in teacher.TeacherEduProfileDisciplineNames)
+                                                        @foreach (var discipline in teacher.TeacherEduProfileDisciplineNames.OrderBy(td=>td.DisciplineName.DisciplineNameName))
                                                         {
                                                             <li>@discipline.DisciplineName.DisciplineNameName</li>
                                                         }
