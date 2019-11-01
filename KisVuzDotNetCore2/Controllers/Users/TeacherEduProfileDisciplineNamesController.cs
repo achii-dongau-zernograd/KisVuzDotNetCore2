@@ -22,18 +22,26 @@ namespace KisVuzDotNetCore2.Controllers.Users
         }
 
         // GET: TeacherEduProfileDisciplineNames
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string fioSearch)
         {
             var appIdentityDBContext = _context.TeacherEduProfileDisciplineNames
                 .Include(t => t.DisciplineName)
                 .Include(t => t.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Include(t => t.Teacher)
+                .Include(t => t.Teacher)                
                 .OrderBy(t => t.Teacher.TeacherFio);
+
+            if (!string.IsNullOrWhiteSpace(fioSearch))
+            {
+                ViewBag.fioSearch = fioSearch;
+                return View(await appIdentityDBContext.Where(t => t.Teacher.TeacherFio.Contains(fioSearch)).ToListAsync());
+            }
+
             return View(await appIdentityDBContext.ToListAsync());
         }
 
         // GET: TeacherEduProfileDisciplineNames/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id,
+            string fioSearch)
         {
             if (id == null)
             {
@@ -50,15 +58,21 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 return NotFound();
             }
 
+            ViewBag.fioSearch = fioSearch;
             return View(teacherEduProfileDisciplineName);
         }
 
         // GET: TeacherEduProfileDisciplineNames/Create
-        public IActionResult Create()
+        public IActionResult Create(string fioSearch)
         {
+            ViewBag.fioSearch = fioSearch;
+
             ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames.OrderBy(d => d.DisciplineNameName), "DisciplineNameId", "DisciplineNameName");
             ViewData["EduProfileId"]     = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
-            ViewData["TeacherId"]        = new SelectList(_context.Teachers.OrderBy(t => t.TeacherFio), "TeacherId", "TeacherFio");
+            ViewData["TeacherId"]        = new SelectList(_context
+                .Teachers
+                .Where(t => string.IsNullOrWhiteSpace(fioSearch) ? true : t.TeacherFio.Contains(fioSearch))
+                .OrderBy(t => t.TeacherFio), "TeacherId", "TeacherFio");
             return View();
         }
 
@@ -67,22 +81,27 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TeacherEduProfileDisciplineNameId,TeacherId,EduProfileId,DisciplineNameId")] TeacherEduProfileDisciplineName teacherEduProfileDisciplineName)
+        public async Task<IActionResult> Create(TeacherEduProfileDisciplineName teacherEduProfileDisciplineName,
+            string fioSearch)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(teacherEduProfileDisciplineName);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { fioSearch });
             }
+
+            ViewBag.fioSearch = fioSearch;
             ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames.OrderBy(d => d.DisciplineNameName), "DisciplineNameId", "DisciplineNameName", teacherEduProfileDisciplineName.DisciplineNameId);
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", teacherEduProfileDisciplineName.EduProfileId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers.OrderBy(t => t.TeacherFio), "TeacherId", "TeacherFio", teacherEduProfileDisciplineName.TeacherId);
+
             return View(teacherEduProfileDisciplineName);
         }
 
         // GET: TeacherEduProfileDisciplineNames/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id,
+            string fioSearch)
         {
             if (id == null)
             {
@@ -94,9 +113,12 @@ namespace KisVuzDotNetCore2.Controllers.Users
             {
                 return NotFound();
             }
+            ViewBag.fioSearch = fioSearch;
+
             ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames.OrderBy(d => d.DisciplineNameName), "DisciplineNameId", "DisciplineNameName", teacherEduProfileDisciplineName.DisciplineNameId);
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", teacherEduProfileDisciplineName.EduProfileId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers.OrderBy(t => t.TeacherFio), "TeacherId", "TeacherFio", teacherEduProfileDisciplineName.TeacherId);
+
             return View(teacherEduProfileDisciplineName);
         }
 
@@ -105,7 +127,8 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TeacherEduProfileDisciplineNameId,TeacherId,EduProfileId,DisciplineNameId")] TeacherEduProfileDisciplineName teacherEduProfileDisciplineName)
+        public async Task<IActionResult> Edit(int id, [Bind("TeacherEduProfileDisciplineNameId,TeacherId,EduProfileId,DisciplineNameId")] TeacherEduProfileDisciplineName teacherEduProfileDisciplineName,
+            string fioSearch)
         {
             if (id != teacherEduProfileDisciplineName.TeacherEduProfileDisciplineNameId)
             {
@@ -130,16 +153,20 @@ namespace KisVuzDotNetCore2.Controllers.Users
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { fioSearch });
             }
+
+            ViewBag.fioSearch = fioSearch;
             ViewData["DisciplineNameId"] = new SelectList(_context.DisciplineNames.OrderBy(d => d.DisciplineNameName), "DisciplineNameId", "DisciplineNameName", teacherEduProfileDisciplineName.DisciplineNameId);
             ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(p => p.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", teacherEduProfileDisciplineName.EduProfileId);
             ViewData["TeacherId"] = new SelectList(_context.Teachers.OrderBy(t => t.TeacherFio), "TeacherId", "TeacherFio", teacherEduProfileDisciplineName.TeacherId);
+
             return View(teacherEduProfileDisciplineName);
         }
 
         // GET: TeacherEduProfileDisciplineNames/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id,
+            string fioSearch)
         {
             if (id == null)
             {
@@ -156,18 +183,20 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 return NotFound();
             }
 
+            ViewBag.fioSearch = fioSearch;
             return View(teacherEduProfileDisciplineName);
         }
 
         // POST: TeacherEduProfileDisciplineNames/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id,
+            string fioSearch)
         {
             var teacherEduProfileDisciplineName = await _context.TeacherEduProfileDisciplineNames.SingleOrDefaultAsync(m => m.TeacherEduProfileDisciplineNameId == id);
             _context.TeacherEduProfileDisciplineNames.Remove(teacherEduProfileDisciplineName);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { fioSearch });
         }        
 
         private bool TeacherEduProfileDisciplineNameExists(int id)

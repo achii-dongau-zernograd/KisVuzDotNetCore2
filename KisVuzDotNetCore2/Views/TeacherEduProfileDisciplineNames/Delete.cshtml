@@ -17,12 +17,12 @@
         <dd>
             <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.Teacher.AppUserId">@Model.Teacher.TeacherFio</a>
         </dd>
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.EduProfile)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
-        </dd>
+        </dd>*@
         <dt>
             @Html.DisplayNameFor(model => model.DisciplineName)
         </dt>
@@ -32,8 +32,9 @@
     </dl>
     
     <form asp-action="Delete">
+        <input type="hidden" name="fioSearch" value="@ViewBag.fioSearch" />
         <input type="hidden" asp-for="TeacherEduProfileDisciplineNameId" />
         <input type="submit" value="Удалить" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-default">Отмена</a>
+        <a asp-action="Index" asp-route-fioSearch="@ViewBag.fioSearch" class="btn btn-default">Отмена</a>
     </form>
 </div>

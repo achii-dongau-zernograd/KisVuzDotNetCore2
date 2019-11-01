@@ -16,12 +16,12 @@
         <dd>
             <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.Teacher.AppUserId">@Model.Teacher.TeacherFio</a>
         </dd>
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.EduProfile)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
-        </dd>
+        </dd>*@
         <dt>
             @Html.DisplayNameFor(model => model.DisciplineName)
         </dt>
@@ -31,6 +31,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.TeacherEduProfileDisciplineNameId" class="btn btn-default">Редактировать</a>
-    <a asp-action="Index" class="btn btn-primary">Назад</a>
+    <a asp-action="Edit" asp-route-id="@Model.TeacherEduProfileDisciplineNameId" asp-route-fioSearch="@ViewBag.fioSearch" class="btn btn-default">Редактировать</a>
+    <a asp-action="Index" asp-route-fioSearch="@ViewBag.fioSearch" class="btn btn-primary">Назад</a>
 </div>
