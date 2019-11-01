@@ -28,7 +28,8 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 .Include(t => t.DisciplineName)
                 .Include(t => t.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(t => t.Teacher)                
-                .OrderBy(t => t.Teacher.TeacherFio);
+                .OrderBy(t => t.Teacher.TeacherFio)
+                .ThenBy(t => t.DisciplineName.DisciplineNameName);
 
             if (!string.IsNullOrWhiteSpace(fioSearch))
             {
