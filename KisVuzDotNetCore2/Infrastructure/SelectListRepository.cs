@@ -353,9 +353,32 @@ namespace KisVuzDotNetCore2.Infrastructure
                 "UserAchievmentTypeId", "UserAchievmentTypeName", selectedId);
         }
 
+        /// <summary>
+        /// Возвращает список учебных годов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEduYears(int selectedId = 0)
+        {
+            return new SelectList(_context.EduYears.OrderBy(ey => ey.EduYearName),
+                 "EduYearId", "EduYearName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список годов начала подготовки
+        /// </summary>        
+        public SelectList GetSelectListEduYearBeginningTrainings(int selectedId = 0)
+        {
+            return new SelectList(_context.EduYearBeginningTrainings.OrderBy(ey => ey.EduYearBeginningTrainingName),
+                 "EduYearBeginningTrainingId", "EduYearBeginningTrainingName", selectedId);
+        }
+
+
+
         public dynamic GetSelectListScienceJournals(object scienceJournalId)
         {
             throw new NotImplementedException();
         }
+
     }
 }

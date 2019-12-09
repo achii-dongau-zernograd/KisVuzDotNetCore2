@@ -184,9 +184,21 @@ namespace KisVuzDotNetCore2.Infrastructure
 
         /// <summary>
         /// Возвращает список видов патентов (свидетельств)
-        /// </summary>
-        /// <returns></returns>
+        /// </summary>        
         SelectList GetSelectListPatentVids(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список учебных годов
+        /// </summary>        
+        SelectList GetSelectListEduYears(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список годов начала подготовки
+        /// </summary>        
+        SelectList GetSelectListEduYearBeginningTrainings(int selectedId = 0);
+
+
         dynamic GetSelectListScienceJournals(object scienceJournalId);
+        
     }
 }

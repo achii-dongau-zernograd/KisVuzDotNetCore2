@@ -317,8 +317,41 @@ namespace KisVuzDotNetCore2.Controllers
         /// </summary>
         /// <param name="EduProfileId"></param>
         /// <returns></returns>
-        public async Task<IActionResult> EmployeesOfEduProfile(int EduProfileId)
+        public async Task<IActionResult> EmployeesOfEduProfile(int EduProfileId,
+            int EduYearBeginningTrainingId,
+            int EduYearId)
         {
+            var eduPlansOfSelectedEduProfile = await _context.EduPlans
+                .Include(p => p.EduPlanEduYearBeginningTrainings)
+                .Include(p => p.EduPlanEduYears)
+                .Where(p => p.EduProfileId == EduProfileId)
+                .ToListAsync();
+
+            var eduPlansOfSelectedEduProfileAndYearBeginningTraining = new List<EduPlan>();
+            foreach (var plan in eduPlansOfSelectedEduProfile)
+            {
+                foreach (var eduPlanEduYearBeginningTraining in plan.EduPlanEduYearBeginningTrainings)
+                {
+                    if(eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId == EduYearBeginningTrainingId)
+                    {
+                        eduPlansOfSelectedEduProfileAndYearBeginningTraining.Add(plan);
+                    }
+                }
+            }
+
+            var eduPlansFiltered = new List<EduPlan>();
+            foreach (var plan in eduPlansOfSelectedEduProfileAndYearBeginningTraining)
+            {
+                foreach (var eduPlanEduYears in plan.EduPlanEduYears)
+                {
+                    if (eduPlanEduYears.EduYearId == EduYearId)
+                    {
+                        eduPlansFiltered.Add(plan);
+                    }
+                }
+            }
+
+
             #region Перечень педагогических (научно-педагогических) работников
             var teacher1 = await _context.Teachers
                 .Include(t => t.TeacherStructKafPostStavka)
@@ -352,9 +385,7 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["teacher1"] = teacher1;
             #endregion
 
-            #region Таблица 16. Перечень педагогических (научно-педагогических) работников, задействованных в реализации образовательных программ
-
-            ViewBag.EduProfiles = _selectListRepository.GetSelectListEduProfileFullNames();
+            #region Таблица 16. Перечень педагогических (научно-педагогических) работников, задействованных в реализации образовательных программ                       
 
             var eduLevels = await _context.EduLevels
                 .Include(u => u.EduUgses)
@@ -406,8 +437,12 @@ namespace KisVuzDotNetCore2.Controllers
                                     .ThenInclude(f => f.EduYear)
                 .ToListAsync();
 
-            ViewData["eduLevels"] = eduLevels;            
+            ViewData["eduLevels"] = eduLevels;
             #endregion
+
+            ViewBag.EduProfiles = _selectListRepository.GetSelectListEduProfileFullNames();
+            ViewBag.EduYearBeginningTrainings = _selectListRepository.GetSelectListEduYearBeginningTrainings();
+            ViewBag.EduYears = _selectListRepository.GetSelectListEduYears();
 
             return View();
         }

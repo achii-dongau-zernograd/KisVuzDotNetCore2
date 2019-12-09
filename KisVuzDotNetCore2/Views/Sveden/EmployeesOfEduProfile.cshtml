@@ -9,12 +9,21 @@
 
 <form asp-action="EmployeesOfEduProfile">
     <div class="form-group">
-        <label name="EduProfileId" class="control-label"></label>
+        <label name="EduProfileId" class="control-label">Профиль / направленность подготовки</label>
         <select name="EduProfileId" class="form-control" asp-items="@ViewBag.EduProfiles">
             <option value="">Не выбрано</option>
         </select>
-        <input type="submit" value="Просмотр" />
     </div>
+    <div class="form-group">
+        <label name="EduProfileId" class="control-label">Год начала подготовки</label>
+        <select name="EduYearBeginningTrainingId" class="form-control" asp-items="@ViewBag.EduYearBeginningTrainings"></select>
+    </div>
+    <div class="form-group">
+        <label name="EduProfileId" class="control-label">Учебный год</label>
+        <select name="EduYearId" class="form-control" asp-items="@ViewBag.EduYears"></select>
+    </div>
+
+    <input type="submit" value="Просмотр" />
 </form>
 
 
