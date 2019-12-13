@@ -27,7 +27,7 @@
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++;}
     <div class="well">
-        @*<div itemprop="eduAccred">
+        <div itemprop="eduAccred">
                 <ul>
                     <li itemprop="learningTerm">
                         Среднее профессиональное образование:
@@ -41,7 +41,7 @@
                     <li itemprop="learningTerm">Высшее образование-специалитет: 5 лет (очная форма обучения), 6 лет (заочная форма обучения)</li>
                     <li itemprop="learningTerm">Высшее образование-подготовка кадров высшей квалификации: 3 года (очная форма обучения), 4 года (очная форма обучения, направление 06.06.01 - Биологические науки), 4 года (заочная форма обучения)</li>
                 </ul>
-            </div>*@
+            </div>
 
         @{spoilerCounter++;}
         <div class="well">
@@ -405,7 +405,29 @@
             {
                 <tr itemprop="adeduPr">
                     <td itemprop="adeduOP" colspan="10" class="text-center">
-                        <strong>Адаптированных образовательных программ не предусмотрено</strong>
+                        <span itemprop="eduCode">
+                            <span itemprop="eduName">
+                                <span itemprop="eduLevel">
+                                    <span itemprop="eduForm">
+                                        <span itemprop="adOpMain">
+                                            <span itemprop="adEducationPlan">
+                                                <span itemprop="adEducationAnnotation">
+                                                    <span itemprop="adEducationShedule">
+                                                        <span itemprop="adMethodology">
+                                                            <span itemprop="adEduPr">
+                                                                <span itemprop="adEduEl">
+                                                                    <strong>Адаптированных образовательных программ не предусмотрено</strong>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
                     </td>
                 </tr>
             }

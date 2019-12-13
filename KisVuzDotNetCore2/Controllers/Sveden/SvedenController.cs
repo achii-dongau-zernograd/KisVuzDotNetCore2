@@ -238,7 +238,8 @@ namespace KisVuzDotNetCore2.Controllers
                     var t11eduObrProg = await _context.EduPr
                 .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduYearBeginningTraining.EduPlanEduYearBeginningTrainings)   
-                    .ThenInclude(e=>e.EduPlan)
+                    .ThenInclude(e=>e.EduPlan.EduPlanEduYears)
+                        .ThenInclude(e=>e.EduYear)
                 .ToListAsync();
             ViewData["t11eduObrProg"] = t11eduObrProg;
             #endregion
