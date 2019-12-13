@@ -91,7 +91,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: EduNapravls/Create
         public IActionResult Create(int? id)
         {
-            ViewData["EduUgsId"] = new SelectList(_context.EduUgses.Include(u => u.EduLevel), "EduUgsId", "EduUgsName", id);
+            ViewData["EduUgsId"] = new SelectList(_context.EduUgses.Include(u => u.EduLevel), "EduUgsId", "EduUgsFullName", id);
             ViewData["EduQualifications"] = new SelectList(_context.EduQualification, "EduQualificationId", "EduQualificationName", id);
             return View();
         }
@@ -109,7 +109,7 @@ namespace KisVuzDotNetCore2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsName", eduNapravl.EduUgsId);
+            ViewData["EduUgsId"] = new SelectList(_context.EduUgses.Include(u => u.EduLevel), "EduUgsId", "EduUgsFullName", eduNapravl.EduUgsId);
             ViewData["EduQualifications"] = new SelectList(_context.EduQualification, "EduQualificationId", "EduQualificationName");
             return View(eduNapravl);
         }
@@ -127,7 +127,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 return NotFound();
             }
-            ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsName", eduNapravl.EduUgsId);
+            ViewData["EduUgsId"] = new SelectList(_context.EduUgses.Include(u => u.EduLevel), "EduUgsId", "EduUgsFullName", eduNapravl.EduUgsId);
             ViewData["EduQualifications"] = new SelectList(_context.EduQualification, "EduQualificationId", "EduQualificationName");
             return View(eduNapravl);
         }
@@ -164,7 +164,7 @@ namespace KisVuzDotNetCore2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EduUgsId"] = new SelectList(_context.EduUgses, "EduUgsId", "EduUgsName", eduNapravl.EduUgsId);
+            ViewData["EduUgsId"] = new SelectList(_context.EduUgses.Include(u => u.EduLevel), "EduUgsId", "EduUgsFullName", eduNapravl.EduUgsId);
             ViewData["EduQualifications"] = new SelectList(_context.EduQualification, "EduQualificationId", "EduQualificationName", eduNapravl.EduQualificationId);
             return View(eduNapravl);
         }

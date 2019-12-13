@@ -2,34 +2,74 @@
 
 <h1>Образовательные стандарты</h1>
 
-@foreach (var level in Model)
-{
-    <a href="#spoiler-@level.EduLevelId" data-toggle="collapse" class="btn btn-primary btn-block">@level.EduLevelName</a>
-    <div class="collapse" id="spoiler-@level.EduLevelId">
-        <div class="well">
-            <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Код направления подготовки</th>
-                            <th>Наименование направления подготовки</th>
-                            <th>Образовательный стандарт</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            @foreach (var ugs in level.EduUgses)
-            {                
-                    @foreach (var napravl in ugs.EduNapravls)
-                    {
-                        <tr itemprop="eduStandartDoc">
-                            <td>@napravl.EduNapravlCode</td>
-                            <td>@napravl.EduNapravlName</td>
-                            <td itemprop="eduStandartDoc"><a href="@napravl.EduNapravlStandartDocLink">Открыть</a></td>
-                        </tr>
-                    }                    
-            }
-                    </tbody>
-              </table>
-        </div>
+<a href="#spoiler-eduFedDoc" data-toggle="collapse" class="btn btn-primary btn-block">
+    Информация о федеральных государственных образовательных стандартах<br />
+    с размещением их копий и (или) гиперссылки на соответствующие документы
+</a>
+<div class="collapse" id="spoiler-eduFedDoc">
+    <div class="well">
+        @foreach (var level in Model)
+        {
+            <a href="#spoiler-@level.EduLevelId" data-toggle="collapse" class="btn btn-primary btn-block">@level.EduLevelName</a>
+            <div class="collapse" id="spoiler-@level.EduLevelId">
+                <div class="well">
+                    <table class="table" itemprop="eduDoc">
+                        <thead>
+                            <tr>
+                                <th>Код направления подготовки</th>
+                                <th>Наименование направления подготовки</th>
+                                <th>Образовательный стандарт (ФГОС 3+)</th>
+                                <th>Образовательный стандарт  (ФГОС 3++)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ugs in level.EduUgses)
+                            {
+                                @foreach (var napravl in ugs.EduNapravls)
+                                {
+                                    <tr itemprop="eduDoc">
+                                        <td>@napravl.EduNapravlCode</td>
+                                        <td>@napravl.EduNapravlName</td>
+                                        <td itemprop="eduFedDoc">
+                                            @if (!string.IsNullOrWhiteSpace(napravl.EduNapravlStandartDocLink))
+                                            {
+                                                <a href="@napravl.EduNapravlStandartDocLink">Открыть</a>
+                                            }
+                                            else
+                                            {
+                                                <p>-</p>
+                                            }
+                                        </td>
+                                        <td itemprop="eduFedDoc">
+                                            @if (!string.IsNullOrWhiteSpace(napravl.EduNapravlStandartDocLinkFgos3pp))
+                                            {
+                                                <a href="@napravl.EduNapravlStandartDocLinkFgos3pp">Открыть</a>
+                                            }
+                                            else
+                                            {
+                                                <p>-</p>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
     </div>
+</div>
 
-}
+
+<a href="#spoiler-eduStandartDoc" data-toggle="collapse" class="btn btn-primary btn-block">
+    Информация об образовательных стандартах с размещением их копий<br />
+    и (или) гиперссылки на соответствующие документы
+</a>
+<div class="collapse" id="spoiler-eduStandartDoc">
+    <div class="well" itemprop="eduDoc">
+        <h4 itemprop="eduStandartDoc">Образовательная организация для реализации лицензированных образовательных программ использует федеральные государственные образовательные стандарты (ФГОС)</h4>
+    </div>
+</div>
+
+

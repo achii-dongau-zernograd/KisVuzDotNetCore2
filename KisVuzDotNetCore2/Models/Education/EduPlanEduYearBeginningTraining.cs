@@ -33,6 +33,6 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Год начала подготовки 
         /// </summary>
         [Display(Name = "Год начала подготовки")]
-        public int EduYearBeginningTrainingId { get; set; }
+        public int EduYearBeginningTrainingId { get; set; }        
     }
 }

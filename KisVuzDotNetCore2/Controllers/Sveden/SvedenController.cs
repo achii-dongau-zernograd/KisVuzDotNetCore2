@@ -138,16 +138,19 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Education()
         {
-            #region Таблица 6. Инфоормация о сроке действия государственной аккредитации            
-            var t6eduAccred = await _context.EduNapravls                
+            #region Таблица 9. Информация о реализуемых уровнях образования, о формах обучения, нормативных сроках обучения, сроке действия государственной аккредитации образовательной программы (при наличии государственной аккредитации), о языках, на которых осуществляется образование(обучение)
+            var t9eduAccred = await _context.EduNapravls                
                 .Include(l => l.EduUgs.EduAccred.EduAccredFile)
-                .Include(l => l.EduUgs)
-                    .ThenInclude(ugs => ugs.EduLevel)                
+                .Include(l => l.EduUgs.EduLevel)
+                .Include(n => n.EduNapravlEduFormEduSroks)
+                    .ThenInclude(n=>n.EduForm)
+                .Include(n => n.EduNapravlEduFormEduSroks)
+                    .ThenInclude(n => n.EduSrok)
                 .ToListAsync();
-            ViewData["t6eduAccred"] = t6eduAccred;
+            ViewData["t9eduAccred"] = t9eduAccred;
             #endregion
 
-            #region Таблица 7. Инфоормация о численности обучающихся            
+            #region Таблица 7. Информация о численности обучающихся            
             var t7eduChislen = await _context.EduChislens
                 .Include(c => c.EduProfile)
                     .ThenInclude(n => n.EduNapravl)
@@ -158,7 +161,7 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["t7eduChislen"] = t7eduChislen;
             #endregion
 
-            #region Таблица 8. Инфоормация о результатах приема            
+            #region Таблица 8. Информация о результатах приема            
             var t8eduPriem = await _context.EduPriem
                 .Include(e => e.EduNapravl)
                     .ThenInclude(n => n.EduUgs)
@@ -168,7 +171,7 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["t8eduPriem"] = t8eduPriem;
             #endregion
 
-            #region Таблица 9. Инфоормация о результатах перевода, восстановления и отчисления            
+            #region Таблица 9. Информация о результатах перевода, восстановления и отчисления            
             var t9eduPerevod = await _context.eduPerevod
                 .Include(c => c.EduNapravl)                    
                     .ThenInclude(u => u.EduUgs)
@@ -178,7 +181,7 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["t9eduPerevod"] = t9eduPerevod;
             #endregion
 
-            #region Таблица 10. Инфоормация по образовательным программам
+            #region Таблица 10. Информация по образовательным программам
             var eduPrograms = await _context.EduPrograms
                 .Include(p => p.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(p => p.EduProfile.EduPlans)
@@ -231,12 +234,13 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["t11eduOPYears"] = t11eduOPYears;
             #endregion
 
-            #region Таблица 12. Образовательная программа (наличие практики)
-            var t12eduPr = await _context.EduPr
+            #region Таблица 11. Информация о реализуемых образовательных программах, в том числе о реализуемых адаптированных образовательных программах, а также об использовании при реализации указанных образовательных программ электронного обучения и дистанционных образовательных технологиий
+                    var t11eduObrProg = await _context.EduPr
                 .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Include(e => e.EduYearBeginningTraining)                
+                .Include(e => e.EduYearBeginningTraining.EduPlanEduYearBeginningTrainings)   
+                    .ThenInclude(e=>e.EduPlan)
                 .ToListAsync();
-            ViewData["t12eduPr"] = t12eduPr;
+            ViewData["t11eduObrProg"] = t11eduObrProg;
             #endregion
 
             #region Таблица 13. Образовательная программа (направления и результаты научной (научно-исследовательской) деятельности

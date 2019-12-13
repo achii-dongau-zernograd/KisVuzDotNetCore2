@@ -69,6 +69,11 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<EduNapravl> EduNapravls { get; set; }
 
         /// <summary>
+        /// Таблица, связывающая направление подготовки, форму обучения и нормативный срок обучения
+        /// </summary>
+        public DbSet<EduNapravlEduFormEduSrok> EduNapravlEduFormEduSroks { get; set; }
+
+        /// <summary>
         /// Профили подготовки (направленности, специализации)
         /// </summary>
         public DbSet<EduProfile> EduProfiles { get; set; }

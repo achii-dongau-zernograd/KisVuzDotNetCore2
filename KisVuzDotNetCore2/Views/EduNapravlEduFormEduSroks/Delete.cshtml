@@ -1,0 +1,37 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduNapravlEduFormEduSrok
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Удалить запись</h2>
+
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.GetEduNapravlFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduSrok)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduSrok.EduSrokName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduNapravlEduFormEduSrokId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

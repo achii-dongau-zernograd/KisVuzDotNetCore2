@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Образование";
 
-    var t6eduAccred = (IEnumerable<EduNapravl>)ViewData["t6eduAccred"];
+    var t9eduAccred = (IEnumerable<EduNapravl>)ViewData["t9eduAccred"];
     var t7eduChislen = (IEnumerable<EduChislen>)ViewData["t7eduChislen"];
     var t8eduPriem = (IEnumerable<EduPriem>)ViewData["t8eduPriem"];
     var t9eduPerevod = (IEnumerable<EduPerevod>)ViewData["t9eduPerevod"];
@@ -9,7 +9,7 @@
     var eduShedules = (IEnumerable<EduShedule>)ViewData["eduShedules"];
     var eduPlans = (IEnumerable<EduPlan>)ViewData["eduPlans"];
     var t11eduOPYears = (IEnumerable<EduOPYear>)ViewData["t11eduOPYears"];
-    var t12eduPr = (IEnumerable<EduPr>)ViewData["t12eduPr"];
+    var t11eduObrProg = (IEnumerable<EduPr>)ViewData["t11eduObrProg"];
     var t13eduNir = (IEnumerable<EduNir>)ViewData["t13eduNir"];
 
     int spoilerCounter = 1;
@@ -17,61 +17,430 @@
 
 <h1>Образование</h1>
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о сроке действия государственной аккредитации образовательной программы, о языках, на которых осуществляется образование (обучение)</a>
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Информация о реализуемых уровнях образования,
+    о формах обучения, нормативных сроках обучения,<br />
+    сроке действия государственной аккредитации образовательной программы
+    (при наличии государственной аккредитации),<br />
+    о языках, на которых осуществляется образование (обучение)
+</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++;}
     <div class="well">
+        @*<div itemprop="eduAccred">
+                <ul>
+                    <li itemprop="learningTerm">
+                        Среднее профессиональное образование:
+                        2г. 10мес. (очная форма обучения, на базе 9 кл., направления 21.02.05, 38.02.01, 38.02.04),
+                        3г. 10мес. (очная форма обучения, на базе 9 кл., направления 08.02.09, 23.02.03, 35.02.08),
+                        1г. 10мес. (очная форма обучения, на базе 11 кл., направления 38.02.01),
+                        2г. 10мес. (очная форма обучения, на базе 11 кл., направления 23.02.03, 35.02.08)
+                    </li>
+                    <li itemprop="learningTerm">Высшее образование-бакалавриат: 4 года (очная форма обучения), 5 лет (заочная форма обучения)</li>
+                    <li itemprop="learningTerm">Высшее образование-магистратура: 2 года (очная форма обучения), 2 года 6 месяцев (заочная форма обучения)</li>
+                    <li itemprop="learningTerm">Высшее образование-специалитет: 5 лет (очная форма обучения), 6 лет (заочная форма обучения)</li>
+                    <li itemprop="learningTerm">Высшее образование-подготовка кадров высшей квалификации: 3 года (очная форма обучения), 4 года (очная форма обучения, направление 06.06.01 - Биологические науки), 4 года (заочная форма обучения)</li>
+                </ul>
+            </div>*@
 
-        <table itemprop="eduAccred" class="table table-hover">
+        @{spoilerCounter++;}
+        <div class="well">
+
+            <table itemprop="eduAccred" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Код</th>
+                        <th>Наименование профессии, специальности, направления подготовки</th>
+                        <th>Уровень образования</th>
+                        <th>Срок действия государственной аккредитации<br /> (дата окончания действия свидетельства о государственной аккредитации)</th>
+                        <th>Языки, на которых осуществляется образование (обучение)</th>
+                        <th>Формы обучения</th>
+                        <th>Нормативный срок обучения</th>
+                    </tr>
+                    <tr>
+                        <th align=center>1</th>
+                        <th align=center>2</th>
+                        <th align=center>3</th>
+                        <th align=center>4</th>
+                        <th align=center>5</th>
+                        <th align=center>6</th>
+                        <th align=center>7</th>
+                    </tr>
+                </thead>
+                @foreach (var item in t9eduAccred)
+                {
+                    <tr itemprop="eduAccred">
+                        <td itemprop="eduCode">@item.EduNapravlCode</td>
+                        <td itemprop="eduName">@item.EduNapravlName</td>
+                        <td itemprop="eduLevel">@item.EduUgs.EduLevel.EduLevelName</td>
+                        <td itemprop="dateEnd">@item.EduUgs.EduAccred?.EduAccredDateExpiration.ToString("dd.MM.yyyy")</td>
+                        <td itemprop="language">Русский</td>
+                        <td itemprop="">
+                            @foreach (var eduNapravlEduFormEduSrok in item.EduNapravlEduFormEduSroks)
+                            {
+                                <p>@eduNapravlEduFormEduSrok.EduForm.EduFormName</p>
+                            }
+                        </td>
+                        <td itemprop="">
+                            @foreach (var eduNapravlEduFormEduSrok in item.EduNapravlEduFormEduSroks)
+                            {
+                                <p>@eduNapravlEduFormEduSrok.EduSrok.EduSrokName</p>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация об описании образовательной программы</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
+    <div class="well">
+        <h3>Информация по неадаптированным образовательным программам</h3>
+        <table itemprop="eduOP" class="table table-hover">
             <thead>
                 <tr>
                     <th>Код</th>
                     <th>Наименование специальности, направления подготовки</th>
                     <th>Уровень образования</th>
-                    <th>Срок действия государственной аккредитации (дата окончания действия свидетельства о государственной аккредитации)</th>
-                    <th>Языки, на которых осуществляется образование (обучение)</th>
+                    <th>Реализуемые формы обучения</th>
+                    <th>Ссылка на копии разработанных и утверждённых образовательной организацией образовательных программ</th>
+                    <th>Ссылка на учебный план с приложением его копии</th>
+                    <th>Ссылка на аннотации к рабочим программам дисциплин (по каждой дисциплине в составе образовательной программы, в том числе практик) с приложением копий рабочих программ</th>
+                    <th>Ссылка на календарный учебный график с приложением его копии</th>
+                    <th>Ссылка на методические и иные документы, разработанные образовательной организацией для обеспечения образовательного процесса</th>
                 </tr>
                 <tr>
-                    <th align=center>1</th>
-                    <th align=center>2</th>
-                    <th align=center>3</th>
-                    <th align=center>4</th>
-                    <th align=center>5</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                    <th>8</th>
+                    <th>9</th>
                 </tr>
             </thead>
-            @foreach (var item in t6eduAccred)
-            {
-                <tr itemprop="eduAccred">
-                    <td itemprop="eduCode">@item.EduNapravlCode</td>
-                    <td itemprop="eduName">@item.EduNapravlName</td>
-                    <td itemprop="eduLevel">@item.EduUgs.EduLevel.EduLevelName</td>
-                    <td itemprop="dateEnd">@item.EduUgs.EduAccred?.EduAccredDateExpiration.ToString("dd.MM.yyyy")</td>
-                    <td itemprop="language">Русский</td>
-                </tr>
-            }
+            <tbody>
+                @foreach (var eduProgram in t10eduPrograms.Where(op => !op.IsAdopt))
+                {
+                    var eduProgramEduPlanList = new List<EduPlan>();
+                    foreach (var eduPlan in eduProgram.EduProfile.EduPlans.Where(p => p.EduProgramPodgId == eduProgram.EduProgramPodgId))
+                    {
+                        foreach (var eduPlanEduYearBeginningTraining in eduPlan.EduPlanEduYearBeginningTrainings)
+                        {
+                            foreach (var eduProgramEduYearBeginningTraining in eduProgram.EduProgramEduYearBeginningTrainings)
+                            {
+                                if (eduProgramEduYearBeginningTraining.EduYearBeginningTrainingId == eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId)
+                                {
+                                    foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+                                    {
+                                        if (eduProgramEduForm.EduFormId == eduPlan.EduFormId)
+                                        {
+                                            eduProgramEduPlanList.Add(eduPlan);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    string eduYearsBegTrainingsOfCurrentEduProgram = "";
+                    if (eduProgram.EduProgramEduYearBeginningTrainings != null)
+                    {
+                        foreach (var item in eduProgram.EduProgramEduYearBeginningTrainings)
+                        {
+                            eduYearsBegTrainingsOfCurrentEduProgram += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                        }
+                    }
+
+                    string opMain = "opMain";
+                    string educationPlan = "educationPlan";
+                    string educationAnnotation = "educationAnnotation";
+                    string educationShedule = "educationShedule";
+                    string methodology = "methodology";
+                    string eduEl = "eduEl";
+
+                    <tr itemprop="eduOP">
+                        <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
+                        <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName, @eduYearsBegTrainingsOfCurrentEduProgram)</td>
+                        <td itemprop="eduLevel">@eduProgram.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName<br />(@eduProgram.EduProgramPodg.EduProgramPodgName.ToLower())</td>
+                        <td itemprop="eduForm">
+                            @foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
+                            {
+                                @eduProgramEduForm.EduForm.EduFormName<br />
+                            }
+                        </td>
+                        <td itemprop="@opMain">
+                            <a href="/@eduProgram.FileModel.Path">Открыть</a>
+                        </td>
+                        <td itemprop="@educationPlan">
+                            @foreach (var eduPlan in eduProgramEduPlanList)
+                            {
+                                string eduYearsBegTrainings = "";
+                                if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                {
+                                    foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                    {
+                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                    }
+                                }
+                                <a href="/@eduPlan.EduPlanPdf?.Path">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a><br />
+                            }
+                        </td>
+                        <td itemprop="@educationAnnotation">
+
+                            @foreach (var eduPlan in eduProgramEduPlanList)
+                            {
+                                string eduYearsBegTrainings = "";
+                                if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                {
+                                    foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                    {
+                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                    }
+                                }
+
+                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a>
+                                <div class="collapse" id="spoiler-@spoilerCounter">
+                                    @{spoilerCounter++;}
+                                    <div class="well">
+
+                                        <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Аннотации</a>
+                                        <div class="collapse" id="spoiler-@spoilerCounter">
+                                            @{spoilerCounter++;}
+                                            <div class="well">
+                                                <ul>
+                                                    @foreach (var blokDiscipl in eduPlan.BlokDiscipl)
+                                                    {
+                                                        foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
+                                                        {
+                                                            foreach (var discipline in blokDisciplChast.Disciplines)
+                                                            {
+                                                                foreach (var eduAnnotation in discipline.EduAnnotations)
+                                                                {
+                                                                    <li><a href="/@eduAnnotation.FileModel.Path">@discipline.DisciplineCode @discipline.DisciplineName.DisciplineNameName</a></li>
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <p><a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId">Рабочие программы</a></p>
+                                    </div>
+                                </div>
+                                <br />
+
+                            }
+
+
+                        </td>
+                        <td itemprop="@educationShedule">
+                            @foreach (var eduShedule in eduShedules.Where(s => s.EduProfileId == eduProgram.EduProfileId))
+                            {
+                                <a href="/@eduShedule.FileModel?.Path">@eduShedule.EduForm?.EduFormName (@eduShedule.EduYear?.EduYearName уч.год.)</a>
+                            }
+                        </td>
+                        <td itemprop="@methodology">
+                            <ul>
+                                <li>
+                                    <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Фонды оценочных средств</a>
+                                    <div class="collapse" id="spoiler-@spoilerCounter">
+                                        @{spoilerCounter++;}
+                                        <div class="well">
+                                            @foreach (var eduPlan in eduProgramEduPlanList)
+                                            {
+                                                string eduYearsBegTrainings = "";
+                                                if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                                {
+                                                    foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                                    {
+                                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                                    }
+                                                }
+                                                <p><a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a></p>
+                                            }
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a asp-controller="UchPosobies" asp-action="Preview" asp-route-id="@eduProgram.EduProfile.EduNapravlId">Учебные пособия</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
 </div>
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о нормативных сроках обучения</a>
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Информация о реализуемых образовательных программах,<br />
+    в том числе о реализуемых адаптированных образовательных программах,<br />
+    а также об использовании при реализации указанных образовательных программ электронного обучения<br />
+    и дистанционных образовательных технологиий
+</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++;}
     <div class="well">
-        <div itemprop="eduAccred">
-            <ul>
-                <li itemprop="learningTerm">
-                    Среднее профессиональное образование:
-                    2г. 10мес. (очная форма обучения, на базе 9 кл., направления 21.02.05, 38.02.01, 38.02.04),
-                    3г. 10мес. (очная форма обучения, на базе 9 кл., направления 08.02.09, 23.02.03, 35.02.08),
-                    1г. 10мес. (очная форма обучения, на базе 11 кл., направления 38.02.01),
-                    2г. 10мес. (очная форма обучения, на базе 11 кл., направления 23.02.03, 35.02.08)
-                </li>
-                <li itemprop="learningTerm">Высшее образование-бакалавриат: 4 года (очная форма обучения), 5 лет (заочная форма обучения)</li>
-                <li itemprop="learningTerm">Высшее образование-магистратура: 2 года (очная форма обучения), 2 года 6 месяцев (заочная форма обучения)</li>
-                <li itemprop="learningTerm">Высшее образование-специалитет: 5 лет (очная форма обучения), 6 лет (заочная форма обучения)</li>
-                <li itemprop="learningTerm">Высшее образование-подготовка кадров высшей квалификации: 3 года (очная форма обучения), 4 года (очная форма обучения, направление 06.06.01 - Биологические науки), 4 года (заочная форма обучения)</li>
-            </ul>
-        </div>
+
+        <h3>Информация о реализуемых образовательных программах</h3>
+        <table itemprop="eduObrProg" class="table table-hover">
+            <thead>
+                <tr>
+                    <th rowspan="2">Код</th>
+                    <th rowspan="2">Наименование специальности, направления подготовки</th>
+                    <th rowspan="2">Год начала подготовки</th>
+                    <th rowspan="2">Направленность (профиль) программы</th>
+                    <th rowspan="2">Реализуемы формы обучения</th>
+                    <th rowspan="2">Учебные предметы, курсы, дисциплины (модули)</th>
+                    <th rowspan="2">
+                        Использование при реализации<br />
+                        образовательных программ<br />
+                        электронного обучения<br />
+                        и дистанционных образовательных<br />
+                        технологий
+                    </th>
+                    <th colspan="3">Наличие практики (з.е.)</th>
+                </tr>
+                <tr>
+                    <th>учебная</th>
+                    <th>производственная</th>
+                    <th>преддипломная практика для выполнения<br /> выпускной квалификационной работы</th>
+                </tr>
+                <tr>
+                    <td align=center><strong>1</strong></td>
+                    <td align=center><strong>2</strong></td>
+                    <td align=center><strong>3</strong></td>
+                    <td align=center><strong>4</strong></td>
+                    <td align=center><strong>5</strong></td>
+                    <td align=center><strong>6</strong></td>
+                    <td align=center><strong>7</strong></td>
+                    <td align=center><strong>8</strong></td>
+                    <td align=center><strong>9</strong></td>
+                    <td align=center><strong>10</strong></td>
+                </tr>
+            </thead>
+            @foreach (var item in t11eduObrProg.Where(pr => !pr.IsOVZ))
+            {
+                <tr itemprop="eduPr">
+                    <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
+                    <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName</td>
+                    <td itemprop="">@item.EduYearBeginningTraining.EduYearBeginningTrainingName</td>
+                    <td itemprop="eduOP">
+                        @item.EduProfile.EduProfileName
+                    </td>
+                    <td itemprop="" align=center>@item.EduForm.EduFormName</td>
+                    <td itemprop="eduSubject">
+                        @foreach (var eduPlanEduYearBeginningTraining in item.EduYearBeginningTraining.EduPlanEduYearBeginningTrainings.Where(e => e.EduPlan.EduProfileId == item.EduProfileId && e.EduPlan.EduFormId == item.EduFormId))
+                        {
+                            string eduYearsOfCurrentRow = "(";
+
+                            var stringList = eduPlanEduYearBeginningTraining.EduPlan.EduPlanEduYears.Select(el => el.EduYear.EduYearName).ToList();
+                            eduYearsOfCurrentRow += string.Join(", ", stringList);
+                            eduYearsOfCurrentRow += ")";
+
+                            <p>
+                                <a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlanEduYearBeginningTraining.EduPlanId">Открыть @eduYearsOfCurrentRow</a>
+                            </p>
+                        }
+                    </td>
+                    <td>Нет</td>
+                    <td itemprop="eduPr" align=center>@item.EduPrUchebn</td>
+                    <td itemprop="eduPr" align=center>@item.EduPrProizv</td>
+                    <td itemprop="eduPr" align=center>@item.EduPrPreddiplomn</td>
+                </tr>
+            }
+        </table>
+
+        <br />
+        <hr />
+        <br />
+
+        <h3>Информация по адаптированным образовательным программам</h3>
+        <table itemprop="eduObrProg" class="table table-hover">
+            <thead>
+                <tr>
+                    <th rowspan="2">Код</th>
+                    <th rowspan="2">Наименование специальности, направления подготовки</th>
+                    <th rowspan="2">Год начала подготовки</th>
+                    <th rowspan="2">Направленность (профиль) программы</th>
+                    <th rowspan="2">Реализуемы формы обучения</th>
+                    <th rowspan="2">Учебные предметы, курсы, дисциплины (модули)</th>
+                    <th rowspan="2">
+                        Использование при реализации<br />
+                        образовательных программ<br />
+                        электронного обучения<br />
+                        и дистанционных образовательных<br />
+                        технологий
+                    </th>
+                    <th colspan="3">Наличие практики (з.е.)</th>
+                </tr>
+                <tr>
+                    <th>учебная</th>
+                    <th>производственная</th>
+                    <th>преддипломная практика для выполнения<br /> выпускной квалификационной работы</th>
+                </tr>
+                <tr>
+                    <td align=center><strong>1</strong></td>
+                    <td align=center><strong>2</strong></td>
+                    <td align=center><strong>3</strong></td>
+                    <td align=center><strong>4</strong></td>
+                    <td align=center><strong>5</strong></td>
+                    <td align=center><strong>6</strong></td>
+                    <td align=center><strong>7</strong></td>
+                    <td align=center><strong>8</strong></td>
+                    <td align=center><strong>9</strong></td>
+                    <td align=center><strong>10</strong></td>
+                </tr>
+            </thead>
+            @if (t11eduObrProg.Where(pr => pr.IsOVZ).Count() == 0)
+            {
+                <tr itemprop="adeduPr">
+                    <td itemprop="adeduOP" colspan="10" class="text-center">
+                        <strong>Адаптированных образовательных программ не предусмотрено</strong>
+                    </td>
+                </tr>
+            }
+            @foreach (var item in t11eduObrProg.Where(pr => pr.IsOVZ))
+            {
+                <tr itemprop="eduPr">
+                    <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
+                    <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName</td>
+                    <td itemprop="">@item.EduYearBeginningTraining.EduYearBeginningTrainingName</td>
+                    <td itemprop="eduOP">
+                        @item.EduProfile.EduProfileName
+                    </td>
+                    <td itemprop="" align=center>@item.EduForm.EduFormName</td>
+                    <td itemprop="eduSubject">
+                        @foreach (var eduPlanEduYearBeginningTraining in item.EduYearBeginningTraining.EduPlanEduYearBeginningTrainings.Where(e => e.EduPlan.EduProfileId == item.EduProfileId && e.EduPlan.EduFormId == item.EduFormId))
+                        {
+                            string eduYearsOfCurrentRow = "(";
+
+                            var stringList = eduPlanEduYearBeginningTraining.EduPlan.EduPlanEduYears.Select(el => el.EduYear.EduYearName).ToList();
+                            eduYearsOfCurrentRow += string.Join(", ", stringList);
+                            eduYearsOfCurrentRow += ")";
+
+                            <p>
+                                <a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlanEduYearBeginningTraining.EduPlanId">Открыть @eduYearsOfCurrentRow</a>
+                            </p>
+                        }
+                    </td>
+                    <td>Нет</td>
+                    <td itemprop="eduPr" align=center>@item.EduPrUchebn</td>
+                    <td itemprop="eduPr" align=center>@item.EduPrProizv</td>
+                    <td itemprop="eduPr" align=center>@item.EduPrPreddiplomn</td>
+                </tr>
+            }
+        </table>
+
     </div>
 </div>
 
@@ -120,6 +489,77 @@
                 </tr>
             }
         </table>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о направлениях и результатах научной (научно-исследовательской) деятельности и научно-исследовательской базе для её осуществления</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
+    <div itemprop="eduNir" class="well">
+
+        <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (направления и результаты научной (научно-исследовательской) деятельности)</a>
+        <div class="collapse" id="spoiler-@spoilerCounter">
+            @{spoilerCounter++;}
+            <div class="well">
+                <table itemprop="eduProf" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Код</th>
+                            <th>Наименование специальности, направления подготовки</th>
+                            <th>Уровень образования</th>
+                            <th>Перечень научных направлений, в рамках которых ведётся научная (научно-исследовательская) деятельность</th>
+                            <th>Количество НПР, принимающих участие в научной (научно-исследовательской) деятельности</th>
+                            <th>Количество студентов, принимающих участие в научной (научно-исследовательской) деятельности</th>
+                            <th>Количество изданных монографий научно-педагогических работников образовательной организации по всем научным направлениям за последний год</th>
+                            <th>Количество изданных и принятых к публикации статей в изданиях, рекомендованных ВАК / зарубежных для публикации научных работ за последний год</th>
+                            <th>Количество патентов, полученных на разработки за последний год: российских / зарубежных</th>
+                            <th>Количество свидетельств о регистрации объекта интеллектуальной собственности, выданных на разработки за последний год: российских / зарубежных</th>
+                            <th>Среднегодовой объём финансирования научных исследований на одного научно-педагогического работника организации (в приведённых к целочисленным значениям ставок)</th>
+                        </tr>
+                        <tr>
+                            <td align=center><strong>1</strong></td>
+                            <td align=center><strong>2</strong></td>
+                            <td align=center><strong>3</strong></td>
+                            <td align=center><strong>4</strong></td>
+                            <td align=center><strong>5</strong></td>
+                            <td align=center><strong>6</strong></td>
+                            <td align=center><strong>7</strong></td>
+                            <td align=center><strong>8</strong></td>
+                            <td align=center><strong>9</strong></td>
+                            <td align=center><strong>10</strong></td>
+                            <td align=center><strong>11</strong></td>
+                        </tr>
+                    </thead>
+                    @foreach (var item in t13eduNir)
+                    {
+                        <tr itemprop="eduProf">
+                            <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
+                            <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
+                            <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel</td>
+                            <td itemprop="perechenNir">@item.NirNapravls</td>
+                            <td itemprop="nprNir">@item.NumNpr</td>
+                            <td itemprop="studNir" align=center>@item.NumStud</td>
+                            <td itemprop="monografNir" align=center>@item.NumMonograf</td>
+                            <td itemprop="articleNir" align=center>@item.NumArticles / @item.NumArticlesZ</td>
+                            <td align=center><span itemprop="patentRNir">@item.NumPatents</span> / <span itemprop="patentZNir">@item.NumPatentsZ</span></td>
+                            <td align=center><span itemprop="svidRNir">@item.NumSvidetelstv</span> / <span itemprop="svidZNir">@item.NumSvidetelstvZ</span></td>
+                            <td itemprop="financeNir" align=center>@item.NumFinance</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+        <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о научно-исследовательской базе для осуществления научной (научно-исследовательской) деятельности</a>
+        <div class="collapse" id="spoiler-@spoilerCounter">
+            @{spoilerCounter++;}
+            <div itemprop="eduNir" class="well">
+                <div itemprop="baseNir">
+                    <a href="http://xn--80aaak3h.xn--p1ai/wp-content/uploads/2016/10/NapravRezNIR.pdf">Информация о направлениях и результатах научной (научно-исследовательской) деятельности и научно-исследовательской базе для её осуществления</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -219,337 +659,6 @@
     </div>
 </div>
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация по образовательным программам, в том числе адаптированным</a>
-<div class="collapse" id="spoiler-@spoilerCounter">
-    @{spoilerCounter++;}
-    <div class="well">
-        <h3>Информация по неадаптированным образовательным программам</h3>
-        <table itemprop="eduOP" class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Код</th>
-                    <th>Наименование специальности, направления подготовки</th>
-                    <th>Уровень образования</th>
-                    <th>Реализуемые формы обучения</th>
-                    <th>Ссылка на описание образовательной программы с приложением её копии</th>
-                    <th>Ссылка на учебный план с приложением его копии</th>
-                    <th>Ссылка на аннотации к рабочим программам дисциплин (по каждой дисциплине в составе образовательной программы) с приложением их копий</th>
-                    <th>Ссылка на календарный учебный график с приложением его копии</th>
-                    <th>Ссылка на методические и иные документы, разработанные образовательной организацией для обеспечения образовательного процесса</th>
-                    <th>Использование при реализации образовательных программ электронного обучения и дистанционных образовательных технологий</th>
-                </tr>
-                <tr>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
-                    <th>5</th>
-                    <th>6</th>
-                    <th>7</th>
-                    <th>8</th>
-                    <th>9</th>
-                    <th>10</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var eduProgram in t10eduPrograms.Where(op => !op.IsAdopt))
-                {
-                    var eduProgramEduPlanList = new List<EduPlan>();
-                    foreach (var eduPlan in eduProgram.EduProfile.EduPlans.Where(p => p.EduProgramPodgId == eduProgram.EduProgramPodgId))
-                    {
-                        foreach (var eduPlanEduYearBeginningTraining in eduPlan.EduPlanEduYearBeginningTrainings)
-                        {
-                            foreach (var eduProgramEduYearBeginningTraining in eduProgram.EduProgramEduYearBeginningTrainings)
-                            {
-                                if (eduProgramEduYearBeginningTraining.EduYearBeginningTrainingId == eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId)
-                                {
-                                    foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
-                                    {
-                                        if(eduProgramEduForm.EduFormId==eduPlan.EduFormId)
-                                        {
-                                            eduProgramEduPlanList.Add(eduPlan);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    string eduYearsBegTrainingsOfCurrentEduProgram = "";
-                    if (eduProgram.EduProgramEduYearBeginningTrainings != null)
-                    {
-                        foreach (var item in eduProgram.EduProgramEduYearBeginningTrainings)
-                        {
-                            eduYearsBegTrainingsOfCurrentEduProgram += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
-                        }
-                    }                    
-
-                    string opMain = "opMain";
-                    string educationPlan = "educationPlan";
-                    string educationAnnotation = "educationAnnotation";
-                    string educationShedule = "educationShedule";
-                    string methodology = "methodology";
-                    string eduEl = "eduEl";
-
-                    <tr itemprop="eduOP">
-                        <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
-                        <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName, @eduYearsBegTrainingsOfCurrentEduProgram)</td>
-                        <td itemprop="eduLevel">@eduProgram.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName<br />(@eduProgram.EduProgramPodg.EduProgramPodgName.ToLower())</td>
-                        <td itemprop="eduForm">
-                            @foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
-                            {
-                                @eduProgramEduForm.EduForm.EduFormName<br />
-                            }
-                        </td>
-                        <td itemprop="@opMain">
-                            <a href="/@eduProgram.FileModel.Path">Открыть</a>
-                        </td>
-                        <td itemprop="@educationPlan">
-                            @foreach (var eduPlan in eduProgramEduPlanList)
-                            {
-                                string eduYearsBegTrainings = "";
-                                if (eduPlan.EduPlanEduYearBeginningTrainings != null)
-                                {
-                                    foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
-                                    {
-                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
-                                    }
-                                }
-                                <a href="/@eduPlan.EduPlanPdf?.Path">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a><br />
-                            }
-                        </td>
-                        <td itemprop="@educationAnnotation">
-
-                            @foreach (var eduPlan in eduProgramEduPlanList)
-                            {
-                                string eduYearsBegTrainings = "";
-                                if (eduPlan.EduPlanEduYearBeginningTrainings != null)
-                                {
-                                    foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
-                                    {
-                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
-                                    }
-                                }
-
-                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a>
-                                <div class="collapse" id="spoiler-@spoilerCounter">
-                                    @{spoilerCounter++;}
-                                    <div class="well">
-                                        <ul>
-                                            @foreach (var blokDiscipl in eduPlan.BlokDiscipl)
-                                            {
-                                                foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
-                                                {
-                                                    foreach (var discipline in blokDisciplChast.Disciplines)
-                                                    {
-                                                        foreach (var eduAnnotation in discipline.EduAnnotations)
-                                                        {
-                                                            <li><a href="/@eduAnnotation.FileModel.Path">@discipline.DisciplineCode @discipline.DisciplineName.DisciplineNameName</a></li>
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        </ul>
-                                    </div>
-                                </div>
-                                <br />
-                            }
-
-
-                        </td>
-                        <td itemprop="@educationShedule">
-                            @foreach (var eduShedule in eduShedules.Where(s => s.EduProfileId == eduProgram.EduProfileId))
-                            {
-                                <a href="/@eduShedule.FileModel?.Path">@eduShedule.EduForm?.EduFormName (@eduShedule.EduYear?.EduYearName уч.год.)</a>
-                            }
-                        </td>
-                        <td itemprop="@methodology">
-                            <ul>
-                                <li>
-                                    <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Рабочие программы и фонды оценочных средств</a>
-                                    <div class="collapse" id="spoiler-@spoilerCounter">
-                                        @{spoilerCounter++;}
-                                        <div class="well">
-                                            @foreach (var eduPlan in eduProgramEduPlanList)
-                                            {
-                                                string eduYearsBegTrainings = "";
-                                                if (eduPlan.EduPlanEduYearBeginningTrainings != null)
-                                                {
-                                                    foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
-                                                    {
-                                                        eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
-                                                    }
-                                                }
-                                                <p><a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a></p>
-                                            }
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a asp-controller="UchPosobies" asp-action="Preview" asp-route-id="@eduProgram.EduProfile.EduNapravlId">Учебные пособия</a>
-                                </li>
-                            </ul>
-                        </td>
-                        <td itemprop="@eduEl">@eduProgram.UsingElAndDistEduTech</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        <br />
-        <hr />
-        <br />
-
-        <h3>Информация по адаптированным образовательным программам</h3>
-        <table itemprop="adeduOP" class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Код</th>
-                    <th>Наименование специальности, направления подготовки</th>
-                    <th>Уровень образования</th>
-                    <th>Реализуемые формы обучения</th>
-                    <th>Ссылка на описание образовательной программы с приложением её копии</th>
-                    <th>Ссылка на учебный план с приложением его копии</th>
-                    <th>Ссылка на аннотации к рабочим программам дисциплин (по каждой дисциплине в составе образовательной программы) с приложением их копий</th>
-                    <th>Ссылка на календарный учебный график с приложением его копии</th>
-                    <th>Ссылка на методические и иные документы, разработанные образовательной организацией для обеспечения образовательного процесса</th>
-                    <th>Использование при реализации образовательных программ электронного обучения и дистанционных образовательных технологий</th>
-                </tr>
-                <tr>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
-                    <th>5</th>
-                    <th>6</th>
-                    <th>7</th>
-                    <th>8</th>
-                    <th>9</th>
-                    <th>10</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (t10eduPrograms.Where(op => op.IsAdopt).Count() == 0)
-                {
-                    <tr itemprop="eduOP">
-                        <td colspan="10" class="text-center">
-                            <span itemprop="eduCode">
-                                <span itemprop="eduName">
-                                    <span itemprop="eduLevel">
-                                        <span itemprop="eduForm">
-                                            <span itemprop="adOpMain">
-                                                <span itemprop="adEducationPlan">
-                                                    <span itemprop="adEducationAnnotation">
-                                                        <span itemprop="adEducationShedule">
-                                                            <span itemprop="adMethodology">
-                                                                <span itemprop="adEduPr">
-                                                                    <span itemprop="adEduEl">
-                                                                        <strong>Адаптированных образовательных программ не предусмотрено</strong>
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                            </span>
-                        </td>
-                    </tr>
-                }
-
-                @foreach (var eduProgram in t10eduPrograms.Where(op => op.IsAdopt))
-                {
-                    string opMain = "adOpMain";
-                    string educationPlan = "adEducationPlan";
-                    string educationAnnotation = "adEducationAnnotation";
-                    string educationShedule = "adEducationShedule";
-                    string methodology = "adMethodology";
-                    string eduEl = "adEduEl";
-
-                    <tr itemprop="eduOP">
-                        <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
-                        <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName)</td>
-                        <td itemprop="eduLevel">@eduProgram.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName<br />(@eduProgram.EduProgramPodg.EduProgramPodgName)</td>
-                        <td itemprop="eduForm">
-                            @foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
-                            {
-                                @eduProgramEduForm.EduForm.EduFormName<br />
-                            }
-                        </td>
-                        <td itemprop="@opMain">
-                            <a href="/@eduProgram.FileModel.Path">Открыть</a>
-                        </td>
-                        <td itemprop="@educationPlan">
-                            @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
-                            {
-                                <a href="/@eduPlan.EduPlanPdf?.Path">Открыть (@eduPlan.EduForm.EduFormName)</a><br />
-                            }
-                        </td>
-                        <td itemprop="@educationAnnotation">
-
-                            @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
-                            {
-                                <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Открыть</a>
-                                <div class="collapse" id="spoiler-@spoilerCounter">
-                                    @{spoilerCounter++;}
-                                    <div class="well">
-                                        <ul>
-                                            @foreach (var blokDiscipl in eduPlan.BlokDiscipl)
-                                            {
-                                                foreach (var blokDisciplChast in blokDiscipl.BlokDisciplChast)
-                                                {
-                                                    foreach (var discipline in blokDisciplChast.Disciplines)
-                                                    {
-                                                        foreach (var eduAnnotation in discipline.EduAnnotations)
-                                                        {
-                                                            <li><a href="/@eduAnnotation.FileModel.Path">@discipline.DisciplineCode @discipline.DisciplineName.DisciplineNameName</a></li>
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        </ul>
-                                    </div>
-                                </div>
-                            }
-
-
-                        </td>
-                        <td itemprop="@educationShedule">
-                            @foreach (var eduShedule in eduShedules.Where(s => s.EduProfileId == eduProgram.EduProfileId))
-                            {
-                                <a href="/@eduShedule.FileModel?.Path">@eduShedule.EduForm?.EduFormName (@eduShedule.EduYear?.EduYearName уч.год.)</a>
-                            }
-                        </td>
-                        <td itemprop="@methodology">
-                            <ul>
-                                <li>
-                                    <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Рабочие программы и фонды оценочных средств</a>
-                                    <div class="collapse" id="spoiler-@spoilerCounter">
-                                        @{spoilerCounter++;}
-                                        <div class="well">
-                                            @foreach (var eduPlan in eduPlans.Where(p => p.EduProfileId == eduProgram.EduProfileId))
-                                            {
-                                                <p><a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId">Открыть (@eduPlan.EduForm.EduFormName)</a></p>
-                                            }
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a asp-controller="UchPosobies" asp-action="Preview" asp-route-id="@eduProgram.EduProfile.EduNapravlId">Учебные пособия</a>
-                                </li>
-                            </ul>
-                        </td>
-                        <td itemprop="@eduEl">@eduProgram.UsingElAndDistEduTech</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
 
 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (объём программы по годам)</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
@@ -654,174 +763,5 @@
             }
         </table>
 
-    </div>
-</div>
-
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (наличие практики)</a>
-<div class="collapse" id="spoiler-@spoilerCounter">
-    @{spoilerCounter++;}
-    <div class="well" itemprop="eduOP">
-
-        <h3>Информация по неадаптированным образовательным программам</h3>
-        <table itemprop="eduPr" class="table table-hover">
-            <thead>
-                <tr>
-                    <th rowspan="2">Код</th>
-                    <th rowspan="2">Наименование специальности, направления подготовки</th>
-                    <th rowspan="2">Год начала подготовки</th>
-                    <th rowspan="2">Профиль программы</th>
-                    <th rowspan="2">Реализуемы формы обучения</th>
-                    <th colspan="3">Наличие практики (з.е.)</th>
-                </tr>
-                <tr>
-                    <th>учебная</th>
-                    <th>производственная</th>
-                    <th>преддипломная практика для выполнения выпускной квалификационной работы</th>
-                </tr>
-                <tr>
-                    <td align=center><strong>1</strong></td>
-                    <td align=center><strong>2</strong></td>
-                    <td align=center><strong>3</strong></td>
-                    <td align=center><strong>4</strong></td>
-                    <td align=center><strong>5</strong></td>
-                    <td align=center><strong>6</strong></td>
-                    <td align=center><strong>7</strong></td>
-                    <td align=center><strong>8</strong></td>
-                </tr>
-            </thead>
-            @foreach (var item in t12eduPr.Where(pr => !pr.IsOVZ))
-            {
-                <tr itemprop="eduPr">
-                    <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
-                    <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName</td>
-                    <td itemprop="">@item.EduYearBeginningTraining.EduYearBeginningTrainingName</td>
-                    <td itemprop="eduOP">
-                        @item.EduProfile.EduProfileName
-                    </td>
-                    <td itemprop="" align=center>@item.EduForm.EduFormName</td>
-                    <td itemprop="" align=center>@item.EduPrUchebn</td>
-                    <td itemprop="" align=center>@item.EduPrProizv</td>
-                    <td itemprop="" align=center>@item.EduPrPreddiplomn</td>
-                </tr>
-            }
-        </table>
-
-        <br />
-        <hr />
-        <br />
-
-        <h3>Информация по адаптированным образовательным программам</h3>
-        <table itemprop="eduPr" class="table table-hover">
-            <thead>
-                <tr>
-                    <th rowspan="2">Код</th>
-                    <th rowspan="2">Наименование специальности, направления подготовки</th>
-                    <th rowspan="2">Год начала подготовки</th>
-                    <th rowspan="2">Профиль программы</th>
-                    <th rowspan="2">Реализуемы формы обучения</th>
-                    <th colspan="3">Наличие практики (з.е.)</th>
-                </tr>
-                <tr>
-                    <th>учебная</th>
-                    <th>производственная</th>
-                    <th>преддипломная практика для выполнения выпускной квалификационной работы</th>
-                </tr>
-                <tr>
-                    <td align=center><strong>1</strong></td>
-                    <td align=center><strong>2</strong></td>
-                    <td align=center><strong>3</strong></td>
-                    <td align=center><strong>4</strong></td>
-                    <td align=center><strong>5</strong></td>
-                    <td align=center><strong>6</strong></td>
-                    <td align=center><strong>7</strong></td>
-                    <td align=center><strong>8</strong></td>
-                </tr>
-            </thead>
-            @if (t12eduPr.Where(pr => pr.IsOVZ).Count() == 0)
-            {
-                <tr itemprop="adeduPr">
-                    <td itemprop="adeduOP" colspan="8" class="text-center">
-                        <strong>Адаптированных образовательных программ не предусмотрено</strong>
-                    </td>
-                </tr>
-            }
-            @foreach (var item in t12eduPr.Where(pr => pr.IsOVZ))
-            {
-                <tr itemprop="adeduPr">
-                    <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
-                    <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName</td>
-                    <td itemprop="">@item.EduYearBeginningTraining.EduYearBeginningTrainingName</td>
-                    <td itemprop="">
-                        @item.EduProfile.EduProfileName
-                        <br />
-                        <i>(Адаптированная ОП)</i>
-                    </td>
-                    <td itemprop="" align=center>@item.EduForm.EduFormName</td>
-                    <td itemprop="" align=center>@item.EduPrUchebn</td>
-                    <td itemprop="" align=center>@item.EduPrProizv</td>
-                    <td itemprop="" align=center>@item.EduPrPreddiplomn</td>
-                </tr>
-            }
-        </table>
-    </div>
-</div>
-
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (направления и результаты научной (научно-исследовательской) деятельности)</a>
-<div class="collapse" id="spoiler-@spoilerCounter">
-    @{spoilerCounter++;}
-    <div class="well">
-        <table itemprop="eduNir" class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Код</th>
-                    <th>Наименование специальности, направления подготовки</th>
-                    <th>Перечень научных направлений, в рамках которых ведётся научная (научно-исследовательская) деятельность</th>
-                    <th>Количество НПР, принимающих участие в научной (научно-исследовательской) деятельности</th>
-                    <th>Количество студентов, принимающих участие в научной (научно-исследовательской) деятельности</th>
-                    <th>Количество изданных монографий научно-педагогических работников образовательной организации по всем научным направлениям за последний год</th>
-                    <th>Количество изданных и принятых к публикации статей в изданиях, рекомендованных ВАК / зарубежных для публикации научных работ за последний год</th>
-                    <th>Количество патентов, полученных на разработки за последний год: российских / зарубежных</th>
-                    <th>Количество свидетельств о регистрации объекта интеллектуальной собственности, выданных на разработки за последний год: российских / зарубежных</th>
-                    <th>Среднегодовой объём финансирования научных исследований на одного научно-педагогического работника организации (в приведённых к целочисленным значениям ставок)</th>
-                </tr>
-                <tr>
-                    <td align=center><strong>1</strong></td>
-                    <td align=center><strong>2</strong></td>
-                    <td align=center><strong>3</strong></td>
-                    <td align=center><strong>4</strong></td>
-                    <td align=center><strong>5</strong></td>
-                    <td align=center><strong>6</strong></td>
-                    <td align=center><strong>7</strong></td>
-                    <td align=center><strong>8</strong></td>
-                    <td align=center><strong>9</strong></td>
-                    <td align=center><strong>10</strong></td>
-                </tr>
-            </thead>
-            @foreach (var item in t13eduNir)
-            {
-                <tr itemprop="eduNir">
-                    <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
-                    <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
-                    <td itemprop="perechenNir">@item.NirNapravls</td>
-                    <td itemprop="nprNir">@item.NumNpr</td>
-                    <td itemprop="studNir" align=center>@item.NumStud</td>
-                    <td itemprop="monografNir" align=center>@item.NumMonograf</td>
-                    <td itemprop="articleNir" align=center>@item.NumArticles / @item.NumArticlesZ</td>
-                    <td align=center><span itemprop="patentRNir">@item.NumPatents</span> / <span itemprop="patentZNir">@item.NumPatentsZ</span></td>
-                    <td align=center><span itemprop="svidRNir">@item.NumSvidetelstv</span> / <span itemprop="svidZNir">@item.NumSvidetelstvZ</span></td>
-                    <td itemprop="financeNir" align=center>@item.NumFinance</td>
-                </tr>
-            }
-        </table>
-    </div>
-</div>
-
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о научно-исследовательской базе для осуществления научной (научно-исследовательской) деятельности</a>
-<div class="collapse" id="spoiler-@spoilerCounter">
-    @{spoilerCounter++;}
-    <div itemprop="eduNir" class="well">
-        <div itemprop="baseNir">
-            <a href="http://xn--80aaak3h.xn--p1ai/wp-content/uploads/2016/10/NapravRezNIR.pdf">Информация о направлениях и результатах научной (научно-исследовательской) деятельности и научно-исследовательской базе для её осуществления</a>
-        </div>
     </div>
 </div>

@@ -29,11 +29,16 @@ namespace KisVuzDotNetCore2.Models.Education
         public string EduNapravlName { get; set; }
 
         /// <summary>
-        /// Ссылка на файл образовательного стандарта
+        /// Ссылка на файл образовательного стандарта ФГОС 3+
         /// </summary>
-        [Display(Name = "Образовательный стандарт")]
+        [Display(Name = "Образовательный стандарт ФГОС 3+")]
         public string EduNapravlStandartDocLink { get; set; }
 
+        /// <summary>
+        /// Ссылка на файл образовательного стандарта ФГОС 3++
+        /// </summary>
+        [Display(Name = "Образовательный стандарт ФГОС 3++")]
+        public string EduNapravlStandartDocLinkFgos3pp { get; set; }
 
         ////////// Навигационные свойства и поля ////////////
 
@@ -72,5 +77,10 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         [Display(Name = "Квалификация")]
         public EduQualification EduQualification { get; set; }
+
+        /// <summary>
+        /// Набор записей, свзывающих направление подготовки, форму обучения и нормативный срок обучения
+        /// </summary>
+        public List<EduNapravlEduFormEduSrok> EduNapravlEduFormEduSroks { get; set; }
     }
 }

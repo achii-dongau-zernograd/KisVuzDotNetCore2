@@ -28,6 +28,9 @@
                     @Html.DisplayNameFor(model => model.EduNapravlStandartDocLink)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.EduNapravlStandartDocLinkFgos3pp)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.EduQualification)
                 </th>
                 <th>
@@ -39,7 +42,7 @@
             @foreach (var eduUgs in ((IEnumerable<KisVuzDotNetCore2.Models.Education.EduUgs>)ViewData["EduUgses"]).Where(l=>l.EduLevelId==eduLevel.EduLevelId))
             {
                 <tr>
-                    <td colspan="5" class="well text-center text-info">@eduUgs.EduUgsCode - @eduUgs.EduUgsName</td>
+                    <td colspan="6" class="well text-center text-info">@eduUgs.EduUgsCode - @eduUgs.EduUgsName</td>
                 </tr>
                 @foreach (var item in Model.Where(n=>n.EduUgsId==eduUgs.EduUgsId))
                 {
@@ -54,6 +57,20 @@
                             @if (!String.IsNullOrWhiteSpace(item.EduNapravlStandartDocLink))
                             {
                                 <a href="@item.EduNapravlStandartDocLink" target="_blank">Открыть</a>
+                            }
+                            else
+                            {
+                                <p>-</p>
+                            }
+                        </td>
+                        <td>
+                            @if (!String.IsNullOrWhiteSpace(item.EduNapravlStandartDocLinkFgos3pp))
+                            {
+                                <a href="@item.EduNapravlStandartDocLinkFgos3pp" target="_blank">Открыть</a>
+                            }
+                            else
+                            {
+                                <p>-</p>
                             }
                         </td>
                         <td>

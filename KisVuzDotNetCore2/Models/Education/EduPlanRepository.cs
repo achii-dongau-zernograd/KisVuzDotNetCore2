@@ -107,19 +107,40 @@ namespace KisVuzDotNetCore2.Models.Education
 
                 if (eduPlanEduYearIds != null)
                 {
-                    _context.EduPlanEduYears.RemoveRange(_context.EduPlanEduYears.Where(y => y.EduPlanId == eduPlan.EduPlanId));
-                    await _context.SaveChangesAsync();
-
-                    var eduPlanEduYears = new List<EduPlanEduYear>();
-                    foreach (var EduPlanEduYearId in eduPlanEduYearIds)
+                    foreach (var eduYearIdByUser in eduPlanEduYearIds)
                     {
-                        EduPlanEduYear eduPlanEduYear = new EduPlanEduYear();
-                        eduPlanEduYear.EduPlanId = eduPlan.EduPlanId;
-                        eduPlanEduYear.EduYearId = EduPlanEduYearId;
-                        eduPlanEduYears.Add(eduPlanEduYear);
+                        bool isNeedAdd = true;
+                        foreach (var item in eduPlan.EduPlanEduYears)
+                        {
+                            if (item.EduYearId == eduYearIdByUser) isNeedAdd = false;
+                        }
+
+                        if(isNeedAdd)
+                        {
+                            eduPlan.EduPlanEduYears.Add(new EduPlanEduYear { EduYearId = eduYearIdByUser, EduPlanId = eduPlan.EduPlanId });
+                            await _context.SaveChangesAsync();
+                        }
                     }
-                    await _context.EduPlanEduYears.AddRangeAsync(eduPlanEduYears);
-                    await _context.SaveChangesAsync();
+
+                    var eduPlanEduYearEntriesToRemove = new List<EduPlanEduYear>();
+                    foreach (var eduPlanEduYearEntry in eduPlan.EduPlanEduYears)
+                    {
+                        bool isNeedRemove = true;
+                        foreach (var eduYearIdByUser in eduPlanEduYearIds)
+                        {
+                            if (eduYearIdByUser == eduPlanEduYearEntry.EduYearId) isNeedRemove = false;
+                        }
+
+                        if(isNeedRemove)
+                        {
+                            eduPlanEduYearEntriesToRemove.Add(eduPlanEduYearEntry);
+                        }
+                    }
+                    foreach (var removingItem in eduPlanEduYearEntriesToRemove)
+                    {
+                        eduPlan.EduPlanEduYears.Remove(removingItem);
+                    }
+                    await _context.SaveChangesAsync();                    
                 }
             }
             catch (DbUpdateConcurrencyException)

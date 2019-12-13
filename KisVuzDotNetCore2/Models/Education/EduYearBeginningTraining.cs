@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models.Education
 {
@@ -17,5 +18,10 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         [Display(Name = "Наименование года начала подготовки")]
         public string EduYearBeginningTrainingName { get; set; }
+
+        /// <summary>
+        /// Набор привязок годов начала подготовки к учебным планам
+        /// </summary>
+        public List<EduPlanEduYearBeginningTraining> EduPlanEduYearBeginningTrainings { get; set; }
     }
 }

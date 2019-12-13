@@ -9,30 +9,24 @@
 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Основные сведения</a>
 <div class="collapse" id="spoiler-1">
     <div class="well">
-        <table class="table">
+        <table class="table" itemprop="osnovSveden">
             <tr>
                 <th>Дата создания образовательной организации</th>
                 <td itemprop="regDate">@ViewData["DateOfCreation"]</td>
             </tr>
             <tr>
                 <th>Адрес местонахождения образовательной организации</th>
-                <td  itemprop="address">@ViewData["Address"]</td>
+                <td itemprop="address">@ViewData["Address"]</td>
             </tr>
             <tr>
-                <th>Филиалы образовательной организации</th>
-                <td>
-                    @((bool)ViewData["ExistenceOfFilials"] ? "Есть" : "Нет")
-                </td>
-            </tr>
-            <tr>
-                <th>Режим, график работы</th>
+                <th>Режим, график работы ОО и её филиалов</th>
                 <td itemprop="workTime">
                     <p>@ViewData["WorkingRegime"]</p>
                     <p>@ViewData["WorkingSchedule"]</p>
                 </td>
             </tr>
             <tr>
-                <th>Контактные телефоны</th>
+                <th>Контактные телефоны ОО и её филиалов</th>
                 <td itemprop="telephone">
                     @foreach (Telephone tel in (List<Telephone>)ViewData["Telephones"])
                     {
@@ -40,17 +34,17 @@
                     }
                 </td>
             </tr>
+            @*<tr>
+            <th>Факсы</th>
+            <td itemprop="fax">
+                @foreach (Fax fax in (List<Fax>)ViewData["Faxes"])
+                {
+                    <p><b>@fax.FaxValue</b></p>
+                }
+            </td>
+        </tr>*@
             <tr>
-                <th>Факсы</th>
-                <td itemprop="fax">
-                    @foreach (Fax fax in (List<Fax>)ViewData["Faxes"])
-                    {
-                        <p><b>@fax.FaxValue</b></p>
-                    }
-                </td>
-            </tr>
-            <tr>
-                <th>Адреса электронной почты</th>
+                <th>Адреса электронной почты ОО и её филиалов</th>
                 <td itemprop="email">
                     @foreach (Email email in (List<Email>)ViewData["Emailes"])
                     {
@@ -58,6 +52,45 @@
                     }
                 </td>
             </tr>
+            <tr>
+                <th>Филиалы образовательной организации</th>
+                <td>
+                    @((bool)ViewData["ExistenceOfFilials"] ? "Есть" : "Нет")
+                </td>
+            </tr>
+            @if (t4filInfo.Count() > 0)
+            {
+                foreach (var item in t4filInfo)
+                {                    
+                    <tr itemprop="filInfo">
+                        <th>Наименование филиала</th>
+                        <td itemprop="nameFil">@item.NameFil</td>
+                    </tr>
+                    <tr itemprop="filInfo">
+                        <th>Адрес местонахождения филиала образовательной организации</th>
+                        <td itemprop="addressFil">@item.AddressFil</td>
+                    </tr>
+                    <tr itemprop="filInfo">
+                        <th>Адрес официального сайта в сети "Интернет"</th>
+                        <td itemprop="websiteFil">@item.WebsiteFil</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr itemprop="filInfo">
+                    <th>Наименование филиала</th>
+                    <td itemprop="nameFil">Филиалов нет</td>
+                </tr>
+                <tr itemprop="filInfo">
+                    <th>Адрес местонахождения филиала образовательной организации</th>
+                    <td itemprop="addressFil">Филиалов нет</td>
+                </tr>
+                <tr itemprop="filInfo">
+                    <th>Адрес официального сайта в сети "Интернет"</th>
+                    <td itemprop="websiteFil">Филиалов нет</td>
+                </tr>
+            }
         </table>
     </div>
 </div>
@@ -93,7 +126,7 @@
 </div>
 
 
-<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о филиалах</a>
+@*<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о филиалах</a>
 <div class="collapse" id="spoiler-3">
     <div class="well">
         <table itemprop="filInfo" class="table table-bordered table-hover table-striped">
@@ -125,4 +158,4 @@
             </tbody>
         </table>
     </div>
-</div>
+</div>*@

@@ -242,8 +242,8 @@
                                 }                                
                             </td>
                             <td>
-                                @foreach (var eduPlanEduYears in Model.EduPlanEduYears)
-                                {                                    
+                                @foreach (var eduPlanEduYears in Model.EduPlanEduYears.OrderBy(e => e.EduYear.EduYearName))
+                                {
                                     <p><strong>@eduPlanEduYears.EduYear.EduYearName уч.год</strong></p>
                                     <p>
                                         <a asp-action="TeacherDisciplinesCreateOrEdit" asp-route-EduPlanId="@Model.EduPlanId" asp-route-DisciplineId="@discipline.DisciplineId" asp-route-EduYearId="@eduPlanEduYears.EduYearId" class="btn btn-primary btn-block"> Добавить преподавателя</a>
@@ -268,7 +268,7 @@
                                 }
                             </td>
                             <td>
-                                @foreach (var eduPlanEduYears in Model.EduPlanEduYears)
+                                @foreach (var eduPlanEduYears in Model.EduPlanEduYears.OrderBy(e => e.EduYear.EduYearName))
                                 {                                    
                                     <p><strong>@eduPlanEduYears.EduYear.EduYearName уч.год</strong></p>
                                     <p>
