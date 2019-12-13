@@ -34,15 +34,15 @@
                     }
                 </td>
             </tr>
-            @*<tr>
-            <th>Факсы</th>
-            <td itemprop="fax">
-                @foreach (Fax fax in (List<Fax>)ViewData["Faxes"])
-                {
-                    <p><b>@fax.FaxValue</b></p>
-                }
-            </td>
-        </tr>*@
+            <tr>
+                <th>Факсы</th>
+                <td itemprop="fax">
+                    @foreach (Fax fax in (List<Fax>)ViewData["Faxes"])
+                    {
+                        <p><b>@fax.FaxValue</b></p>
+                    }
+                </td>
+            </tr>
             <tr>
                 <th>Адреса электронной почты ОО и её филиалов</th>
                 <td itemprop="email">
