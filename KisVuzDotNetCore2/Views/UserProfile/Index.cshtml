@@ -287,7 +287,16 @@
                                     <tr>
                                         <td>@cnt</td>
                                         <td>@articleAuthor.Article.YearId</td>
-                                        <td>@articleAuthor.Article.ArticleName</td>
+                                        <td>
+                                            @if (articleAuthor.Article.FileModel != null)
+                                            {
+                                                <a href="/@articleAuthor.Article.FileModel.Path">@articleAuthor.Article.ArticleName</a>
+                                            }
+                                            else
+                                            {
+                                                <p>@articleAuthor.Article.ArticleName</p>
+                                            }
+                                        </td>
                                         <td>@articleAuthor.Article.ScienceJournal.ScienceJournalName</td>
                                         <td>
                                             @if (articleAuthor.Article.ScienceJournal.IsZarubejn)
@@ -365,7 +374,16 @@
                                     <tr>
                                         <td>@ctn</td>
                                         <td>@patentAuthor.Patent.YearId</td>
-                                        <td>@patentAuthor.Patent.PatentName</td>
+                                        <td>                                            
+                                            @if (patentAuthor.Patent.FileModel != null)
+                                            {
+                                                <a href="/@patentAuthor.Patent.FileModel.Path">@patentAuthor.Patent.PatentName</a>
+                                            }
+                                            else
+                                            {
+                                                <p>@patentAuthor.Patent.PatentName</p>
+                                            }
+                                        </td>
                                         <td>@patentAuthor.Patent.PatentVid.PatentVidName</td>
                                         <td>@patentAuthor.Patent.PatentNumber</td>
                                         <td>
@@ -416,7 +434,17 @@
                                     <tr>
                                         <td>@ctn</td>
                                         <td>@monografAuthor.Monograf.YearId</td>
-                                        <td>@monografAuthor.Monograf.MonografName</td>
+                                        <td>
+                                            
+                                            @if (monografAuthor.Monograf.FileModel != null)
+                                            {
+                                                <a href="/@monografAuthor.Monograf.FileModel.Path">@monografAuthor.Monograf.MonografName</a>
+                                            }
+                                            else
+                                            {
+                                                <p>@monografAuthor.Monograf.MonografName</p>
+                                            }
+                                        </td>
                                         <td>
                                             <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Развернуть</strong></a>
                                             <div class="collapse" id="spoiler-@spoilerCounter">

@@ -107,6 +107,9 @@ namespace KisVuzDotNetCore2.Models.Education
 
                 if (eduPlanEduYearIds != null)
                 {
+                    if (eduPlan.EduPlanEduYears == null)
+                        eduPlan.EduPlanEduYears = new List<EduPlanEduYear>();
+
                     foreach (var eduYearIdByUser in eduPlanEduYearIds)
                     {
                         bool isNeedAdd = true;
@@ -178,6 +181,10 @@ namespace KisVuzDotNetCore2.Models.Education
                     bool isAddBlockDisc = false;
                     if (blokDiscipl.BlokDisciplNameId == 1) isAddBlockDisc = true;
                     if (blokDiscipl.BlokDisciplNameId == 2) isAddBlockDisc = true;
+                    if (eduLevelId == 2)
+                    {
+                        if (blokDiscipl.BlokDisciplNameId == 3) isAddBlockDisc = true;                        
+                    }
                     if (eduLevelId == 3 || eduLevelId == 4 || eduLevelId == 5)
                     {
                         if (blokDiscipl.BlokDisciplNameId == 3) isAddBlockDisc = true;
