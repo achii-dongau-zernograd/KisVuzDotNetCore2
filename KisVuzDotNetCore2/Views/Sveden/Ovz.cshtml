@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewData["Title"] = "Доступная среда";
+    int spoilerCounter = 1;
+}
+
+<h2>Доступная среда</h2>
+
+<span itemprop="mtoOvz">
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о специально оборудованных учебных кабинетах </a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="purposeCabOvz">
+
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о приспособленных объектах для проведения практических занятий</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="purposePracOvz">
+
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения о наличии приспособленных библиотек, специальных объектов спорта,<br />
+    условиях питания и охраны здоровья обучающихся
+</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div>
+            <a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/ohrana-zdorov-obuch">Сведения об охране здоровья обучающихся с ограниченными возможностями здоровья и инвалидов</a>
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения о средствах обучения и воспитания,<br />
+    приспособленных  для использования инвалидами<br />
+    и лицами с ограниченными возможностями здоровья
+</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="purposeFacilOvz">
+            <a href="http://xn--80aaak3h.xn--p1ai/wp-content/uploads/2019/04/SoglOSotrUFU.pdf">Сведения о наличии средств обучения и воспитания, приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья</a>            
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения об обеспечении беспрепятственного доступа в здания образовательной организации<br />
+    инвалидов и лиц с ограниченными возможностями здоровья
+</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="ovz">
+            <a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/ovz">Сведения об обеспечении доступа в здания образовательной организации инвалидов и лиц с ограниченными возможностями здоровья</a>
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения о доступе к информационным системам и информационно-телекоммуникационным сетям,<br />
+    приспособленным для использования инвалидами и лицами с ограниченными возможностями здоровья
+</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="comNetOvz">
+
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения об электронных образовательных ресурсах,<br />
+    приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья
+</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="erListOvz">
+
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения о наличии специальных технических средств обучения<br />
+    коллективного и индивидуального пользования<br />
+    для инвалидов и лиц с ограниченными возможностями здоровья
+</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="techOvz">
+
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения о наличии условий для беспрепятственного доступа в общежитии, интернате
+</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="hostelInfoOvz">
+
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения о количестве жилых помещений в общежитии, интернате,<br />
+    приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья
+</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <div itemprop="hostelNumOvz">
+
+        </div>
+    </div>
+</div>
+
+</span>

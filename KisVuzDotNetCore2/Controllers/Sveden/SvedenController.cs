@@ -653,6 +653,30 @@ namespace KisVuzDotNetCore2.Controllers
             return View();
         }
 
+
+        /// <summary>
+        /// Подраздел "Доступная среда"
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Ovz()
+        {
+            
+            return View();
+        }
+
+
+        /// <summary>
+        /// Подраздел "Международное сотрудничество"
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Inter()
+        {
+
+            return View();
+        }
+
+
+
         /// <summary>
         /// Подраздел "Шаблон представления информации по различным условиям поступления"
         /// </summary>
