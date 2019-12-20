@@ -1,0 +1,52 @@
+﻿@model List<Teacher>
+
+@{
+    ViewData["Title"] = "TeacherDisciplineNames";
+}
+
+<h2>@ViewBag.Kafedra.StructSubvision.StructSubvisionName</h2>
+<h3>Преподаватели. Перечень преподаваемых дисциплин</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ФИО сотрудника</th>            
+            <th>Должность</th>
+            <th>Перечень преподаваемых дисциплин</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var teacher in Model.OrderBy(t=>t.TeacherFio))
+        {
+            <tr>
+                <td>
+                    @if (string.IsNullOrWhiteSpace(teacher.AppUserId))
+                    {
+                        @teacher.TeacherFio
+                    }
+                    else
+                    {
+                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacher.AppUserId">@teacher.TeacherFio</a>
+                    }
+                </td>
+                <td>
+                    @foreach(var teacherStructKafPostStavka in teacher.TeacherStructKafPostStavka)
+                    {
+                        <p>@teacherStructKafPostStavka.Post.PostName</p>
+                    }
+                </td>
+                <td>
+                    @foreach (var teacherEduProfileDisciplineName in teacher.TeacherEduProfileDisciplineNames.OrderBy(d=>d.DisciplineName.DisciplineNameName))
+                    {
+                        <p>@teacherEduProfileDisciplineName.DisciplineName.DisciplineNameName</p>
+                    }
+                </td>
+                <td>
+                        <a asp-action="TeacherDisciplineNamesEdit" asp-route-teacherId="@teacher.TeacherId" class="btn btn-primary btn-block">Редактировать</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

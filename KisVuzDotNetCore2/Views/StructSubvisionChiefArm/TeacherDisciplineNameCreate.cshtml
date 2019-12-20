@@ -1,0 +1,28 @@
+﻿@model TeacherEduProfileDisciplineName
+
+@{
+    ViewData["Title"] = "TeacherDisciplineNameEdit";
+}
+
+<h2>@ViewBag.Teacher.TeacherFio</h2>
+
+<h4>Добавление преподаваемой дисциплины</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="TeacherDisciplineNameCreate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TeacherEduProfileDisciplineNameId" />
+            <input type="hidden" asp-for="TeacherId" />
+            <div class="form-group">
+                <label asp-for="DisciplineNameId" class="control-label"></label>
+                <select asp-for="DisciplineNameId" class="form-control" asp-items="ViewBag.DisciplineNames"></select>
+                <span asp-validation-for="DisciplineNameId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="TeacherDisciplineNamesEdit" asp-route-teacherId="@ViewBag.Teacher.TeacherId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
