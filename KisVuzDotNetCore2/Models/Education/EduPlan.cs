@@ -69,9 +69,9 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <summary>
         /// Программа подготовки
         /// </summary>
-        [Display(Name = "Программа подготовки")]
+        [Display(Name = "Программа подготовки / Квалификация")]
         public EduProgramPodg EduProgramPodg { get; set; }
-        [Display(Name = "Программа подготовки")]
+        [Display(Name = "Программа подготовки / Квалификация")]
         public int EduProgramPodgId { get; set; }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <summary>
         /// Виды деятельности 
         /// </summary>
-        [Display(Name = "Виды деятельности по учебному плану")]
+        [Display(Name = "Виды деятельности / Типы задач профессиональной деятельности")]
         public List<EduPlanEduVidDeyat> EduVidDeyatList { get; set; }
 
        
