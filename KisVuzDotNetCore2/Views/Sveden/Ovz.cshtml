@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Доступная среда";
     int spoilerCounter = 1;
+    List<PurposeLibr> PurposeLibr = (List<PurposeLibr>)ViewData["PurposeLibrs"];
 }
 
 <h2>Доступная среда</h2>
@@ -37,6 +38,60 @@
     <div class="well">
         <div>
             <a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/ohrana-zdorov-obuch">Сведения об охране здоровья обучающихся с ограниченными возможностями здоровья и инвалидов</a>
+
+            <hr />
+
+            <div class="well">
+
+
+                <div class="sp-body folded">
+
+                    <table class="table" itemprop="purposeLibr">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Вид помещения
+                                </th>
+                                <th>
+                                    Адрес места нахождения
+                                </th>
+                                <th>
+                                    Площадь, м.кв.
+                                </th>
+                                <th>
+                                    Количество мест
+                                </th>
+                                <th>
+                                    Приспособленность для использования инвалидами и лицами с ограниченными возможностями здоровья
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in PurposeLibr)
+                            {
+                                <tr itemprop="@item.itemprop">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.VidPom)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Adress)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Square)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NumberPlaces)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PrisposoblOvz)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -63,7 +118,9 @@
     @{spoilerCounter++; }
     <div class="well">
         <div itemprop="ovz">
-            <a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/ovz">Сведения об обеспечении доступа в здания образовательной организации инвалидов и лиц с ограниченными возможностями здоровья</a>
+            <div itemprop="dopSsylka1">
+                <a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/ovz">Сведения об обеспечении доступа в здания образовательной организации инвалидов и лиц с ограниченными возможностями здоровья</a>
+            </div>            
         </div>
     </div>
 </div>
@@ -115,7 +172,8 @@
     @{spoilerCounter++; }
     <div class="well">
         <div itemprop="hostelInfoOvz">
-
+            <p>В общежитии № 1 студенческого городка Азово-Черноморского инженерного института ФГБОУ ВО Донской ГАУ расположенного по адресу: 347740 Ростовская область г. Зерноград ул. Советская 19 предусмотрен беспрепятственный доступ для инвалидов и лиц с ограниченными возможностями здоровья.</p>
+            <p>Для инвалидов и лиц с ОВЗ в общежитии оборудован вход и установлена кнопка вызова.</p>
         </div>
     </div>
 </div>
@@ -128,7 +186,8 @@
     @{spoilerCounter++; }
     <div class="well">
         <div itemprop="hostelNumOvz">
-
+            <p>В общежитии № 1 студенческого городка Азово-Черноморского инженерного института ФГБОУ ВО Донской ГАУ расположенного по адресу: 347740 Ростовская область г. Зерноград ул. Советская 19 предусмотрено одно жилое помещение для использования инвалидами и лицами с ограниченными возможностями здоровья.</p>
+            <p>Для инвалидов и лиц с ОВЗ в общежитии на первом этаже оборудована жилая комната, гладильная комната и санитарный узел, который включает в себя: умывальник, туалет и душевую. Санитарный узел оснащен тревожной кнопкой вызова.</p>
         </div>
     </div>
 </div>
