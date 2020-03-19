@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.UchPosobiya
 {
-    [Authorize(Roles = "Администраторы")]
+    [Authorize(Roles = "Администраторы, Библиотека, НИЧ")]    
     public class AuthorsController : Controller
     {
         private readonly AppIdentityDBContext _context;
@@ -24,7 +24,9 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
         // GET: Authors
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.Author.Include(a => a.AppUser);
+            var appIdentityDBContext = _context.Author
+                .Include(a => a.AppUser)
+                .OrderBy(a => a.AuthorName);
             return View(await appIdentityDBContext.ToListAsync());
         }
 

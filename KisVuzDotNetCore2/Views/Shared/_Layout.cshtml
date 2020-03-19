@@ -40,6 +40,12 @@
                             <li><a asp-controller="ElectronBiblSystems" asp-action="Preview">Электронные библиотечные системы</a></li>
                             <li><a asp-controller="ElectronCatalogs" asp-action="Preview">Базы данных электронного каталога</a></li>
                             <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Учебные пособия<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Eios" asp-action="UchPosobiesSobstv">Учебные пособия (собственные)</a></li>                                    
+                                </ul>
+                            </li>
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Электронные образовательные и информационные ресурсы<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-issobstv="true">Электронные образовательные и информационные ресурсы (собственные)</a></li>
@@ -135,7 +141,7 @@
             @RenderBody()
             <hr />
             <footer>
-                <p class="text-center">&copy; 2019 <a href="http://www.ачгаа.рф/">Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ</a>. Все права защищены.</p>
+                <p class="text-center">&copy; 2020 <a href="http://www.ачгаа.рф/">Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ</a>. Все права защищены.</p>
                 <p class="text-center">Разработка сайта - Кафедра "Математика и биоинформатика".</p>
             </footer>
         </div>

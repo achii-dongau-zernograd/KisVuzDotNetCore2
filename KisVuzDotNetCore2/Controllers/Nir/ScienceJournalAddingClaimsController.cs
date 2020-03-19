@@ -28,11 +28,15 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         }
 
         // GET: ScienceJournalAddingClaims
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string rowStatus = "NotConfirmed")
         {
             var appIdentityDBContext = _context.ScienceJournalAddingClaims
                 .Include(s => s.RowStatus)
                 .Include(s => s.AppUser);
+
+            if (rowStatus == "NotConfirmed")
+                return View(await appIdentityDBContext.Where(c => c.RowStatus.RowStatusId == (int)RowStatusEnum.NotConfirmed).ToListAsync());
+
             return View(await appIdentityDBContext.ToListAsync());
         }        
 
@@ -170,6 +174,30 @@ namespace KisVuzDotNetCore2.Controllers.Nir
             var claim = await _context.ScienceJournalAddingClaims.FirstOrDefaultAsync(c => c.ScienceJournalAddingClaimId == id);
             if(claim!=null)
             {
+                var scienceJournal = new ScienceJournal
+                {
+                    ScienceJournalName = claim.ScienceJournalName,
+                    IsVak = claim.IsVak,
+                    IsZarubejn = claim.IsZarubejn,
+                    ELibraryLink = claim.ELibraryLink
+                };
+
+                // Системы цитирования
+                var citationBases = await _context.CitationBases.ToListAsync();
+                foreach (var citationBase in citationBases)
+                {
+                    if(claim.CitationBasesList.ToLower().Contains(citationBase.CitationBaseName.ToLower()))
+                    {
+                        scienceJournal.ScienceJournalCitationBases.Add(
+                            new ScienceJournalCitationBase
+                            {
+                                CitationBaseId = citationBase.CitationBaseId
+                            });
+                    }
+                }
+
+                await _context.ScienceJournals.AddAsync(scienceJournal);
+
                 claim.RowStatusId = (int)RowStatusEnum.Confirmed;
                 await _context.SaveChangesAsync();
             }

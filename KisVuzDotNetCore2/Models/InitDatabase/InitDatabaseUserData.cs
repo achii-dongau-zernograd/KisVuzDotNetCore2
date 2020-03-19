@@ -47,7 +47,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                     if (result.Succeeded)
                     {
                         await userManager.AddToRoleAsync(user, role);
-                    }
+                        await userManager.AddToRoleAsync(user, "НИЧ");
+                    }                    
                 }
             }
         }

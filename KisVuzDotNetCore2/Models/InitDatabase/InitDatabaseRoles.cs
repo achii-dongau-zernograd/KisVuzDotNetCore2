@@ -38,7 +38,14 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                     "Деканат инженерно-технологического факультета",
                     "Деканат факультета ЭиУТ",
                     "Деканат факультета СПО",
-                    "Приёмная комиссия"
+                    "Приёмная комиссия",
+                    "Библиотека",
+                    "ЗамДиректораПоВоспРаботе",
+                    "ЗамДиректораПоСоцРаботе",
+                    "Канцелярия",
+                    "НИЧ",
+                    "ЦПОРМ",
+                    "Юротдел"
                 };
 
                 foreach(string role in Roles)
@@ -47,9 +54,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                     {
                         await roleManager.CreateAsync(new IdentityRole(role));
                     }
-                }
-
-                
+                }                
             }
         }
     }

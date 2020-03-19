@@ -12,9 +12,9 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.AuthorName)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuthorName)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.AppUserId)
             </th>
@@ -27,8 +27,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.AuthorName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AppUser.Id)
+            <td>                
+                @if (item.AppUser!=null)
+                {
+                    <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.AuthorId">Редактировать</a> |

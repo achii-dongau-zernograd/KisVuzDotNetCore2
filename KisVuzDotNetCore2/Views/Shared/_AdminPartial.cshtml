@@ -41,6 +41,7 @@
                     <li><a asp-controller="LinkTypes" asp-action="Index">Типы веб-ресурсов</a></li>
                     <li><a asp-controller="InstituteLinks" asp-action="Index">Веб-ресурсы институтов</a></li>
                     <li><a asp-controller="Years" asp-action="Index">Годы</a></li>
+                    <li><a asp-controller="Authors" asp-action="Index" asp-route-id="">Справочник авторов</a></li>
                 </ul>
             </li>
 
@@ -269,9 +270,8 @@
 
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Учебные пособия <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li><a asp-controller="Authors" asp-action="Index" asp-route-id="">Справочник авторов учебных пособий</a></li>
-                    <li><a asp-controller="UchPosobies" asp-action="Index" asp-route-id="">Учебное пособие</a></li>
+                <ul class="dropdown-menu">                    
+                    <li><a asp-controller="UchPosobies" asp-action="Index" asp-route-id="">Учебные пособия (собственные)</a></li>
                     <li><a asp-controller="UchPosobieAuthors" asp-action="Index" asp-route-id="">Связь между Uchposobie (учебное пособие) и Author (автор)</a></li>
                     <li><a asp-controller="UchPosobieDisciplineNames" asp-action="Index" asp-route-id="">Связь между UchPosobie (учебное пособие) и  DisciplineName (наименование дисциплины)</a></li>
                     <li><a asp-controller="UchPosobieEduForms" asp-action="Index" asp-route-id="">Связь между UchPosobie (учебное пособие) и  EduForm (форма обучения)</a></li>

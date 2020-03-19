@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "Учебные пособия";
+    int Number = 0;
+}
+
+@model IEnumerable<UchPosobie>
+
+<h2>Учебные пособия, изданные в образовательной организации</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>№ п.п.</th>
+            <th>
+                @Html.DisplayNameFor(model => model.UchPosobieName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BiblOpisanie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GodIzdaniya)
+            </th>            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderBy(m=>m.UchPosobieName))
+        {
+            Number++;
+            <tr>
+                <td>
+                    @Number
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UchPosobieName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BiblOpisanie)
+                </td>
+                <td>
+                    <a href="/@item.FileModel.Path">Открыть</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GodIzdaniya)
+                </td>                           
+            </tr>
+        }
+    </tbody>
+</table>

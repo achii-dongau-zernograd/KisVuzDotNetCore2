@@ -133,6 +133,7 @@ namespace KisVuzDotNetCore2.Models.Users
                                 .ThenInclude(ma => ma.Author)
 
                 .Include(u => u.ScienceJournalAddingClaims)
+                    .ThenInclude(u => u.RowStatus)
                 .Include(u => u.UserAchievments)
                     .ThenInclude(ua => ua.UserAchievmentType)
                 .SingleOrDefault(u => u.UserName == userName);

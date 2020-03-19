@@ -514,6 +514,10 @@
     <Compile Remove="Migrations\20190223022448_RenameTable.Designer.cs" />
     <Compile Remove="Migrations\20190308040835_UserAchievments.cs" />
     <Compile Remove="Migrations\20190308040835_UserAchievments.Designer.cs" />
+    <Compile Remove="Migrations\20200319102845_test.cs" />
+    <Compile Remove="Migrations\20200319102845_test.Designer.cs" />
+    <Compile Remove="Migrations\20200319152545_test.cs" />
+    <Compile Remove="Migrations\20200319152545_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.UchPosobiya;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,10 +15,13 @@ namespace KisVuzDotNetCore2.Controllers.Eios
     public class EiosController : Controller
     {
         private readonly AppIdentityDBContext _context;
+        private readonly IUchPosobiyaRepository _uchPosobiyaRepository;
 
-        public EiosController(AppIdentityDBContext context)
+        public EiosController(AppIdentityDBContext context,
+            IUchPosobiyaRepository uchPosobiyaRepository)
         {
             _context = context;
+            _uchPosobiyaRepository = uchPosobiyaRepository;
         }
 
         public async Task<IActionResult> UchPlansRabProgs()
@@ -95,6 +99,16 @@ namespace KisVuzDotNetCore2.Controllers.Eios
             .ToListAsync();
 
             return View(structFacultets);
+        }
+
+        /// <summary>
+        /// Каталог учебных пособий, изданных сотрудниками вуза
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> UchPosobiesSobstv()
+        {            
+            var uchPos = await _uchPosobiyaRepository.GetUchPosobiyaAsync(null);
+            return View(uchPos);
         }
     }
 }

@@ -962,6 +962,9 @@ namespace KisVuzDotNetCore2.Models
 
             await InitDatabaseYears.CreateYears(serviceProvider, configuration);
             await InitDatabaseEmploymentForm.CreateEmploymentForms(serviceProvider, configuration);
+
+            await InitDatabaseCitationBases.CreateCitationBases(serviceProvider, configuration);
+            await InitDatabaseNirSpecials.CreateNirSpecials(serviceProvider, configuration);
         }        
     
     }
