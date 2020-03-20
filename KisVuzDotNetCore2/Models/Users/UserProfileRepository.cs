@@ -33,7 +33,7 @@ namespace KisVuzDotNetCore2.Models.Users
             return appUser;
         }
 
-        private IEnumerable<AppUser> GetUsers()
+        private IQueryable<AppUser> GetUsers()
         {
             return _context.Users
                 .Include(u => u.Author)
