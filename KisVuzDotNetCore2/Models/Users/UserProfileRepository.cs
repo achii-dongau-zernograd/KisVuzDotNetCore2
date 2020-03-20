@@ -6,6 +6,7 @@ using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.UchPosobiya;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace KisVuzDotNetCore2.Models.Users
 {
@@ -26,119 +27,124 @@ namespace KisVuzDotNetCore2.Models.Users
         
         public AppUser GetAppUser(string userName)
         {
-            var appUser = _context.Users
+            var appUser = GetUsers()
+                .SingleOrDefault(u => u.UserName == userName);
+
+            return appUser;
+        }
+
+        private IEnumerable<AppUser> GetUsers()
+        {
+            return _context.Users
                 .Include(u => u.Author)
                     .ThenInclude(a => a.ArticleAuthors)
                         .ThenInclude(aa => aa.Article)
                             .ThenInclude(a => a.ScienceJournal)
                                 .ThenInclude(s => s.ScienceJournalCitationBases)
                                     .ThenInclude(c => c.CitationBase)
-                ////////////////// Статьи //////////////////
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.ArticleAuthors)
-                        .ThenInclude(aa => aa.Article)
-                            .ThenInclude(a => a.ArticleNirTemas)
-                                .ThenInclude(t => t.NirTema)
-                                    .ThenInclude(n => n.NirTemaEduProfileList)
-                                        .ThenInclude(np => np.EduProfile)
-                                            .ThenInclude(p => p.EduNapravl)
-                                                .ThenInclude(n => n.EduUgs)
-                                                    .ThenInclude(u => u.EduLevel)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.ArticleAuthors)
-                        .ThenInclude(aa => aa.Article)
-                            .ThenInclude(aas => aas.ArticleNirSpecials)
-                                .ThenInclude(ns => ns.NirSpecial)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.ArticleAuthors)
-                        .ThenInclude(aa => aa.Article)
-                            .ThenInclude(a => a.ArticleAuthors)
-                                .ThenInclude(aa => aa.Author)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.ArticleAuthors)
-                        .ThenInclude(aa => aa.Article)
-                            .ThenInclude(a=>a.FileModel)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.ArticleAuthors)
-                        .ThenInclude(aa => aa.Article)
-                            .ThenInclude(a => a.Year)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.ArticleAuthors)
-                        .ThenInclude(aa => aa.Article)
-                            .ThenInclude(a => a.RowStatus)
-                ////////////////// Патенты //////////////////
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.PatentAuthors)
-                        .ThenInclude(pa => pa.Patent)
-                            .ThenInclude(p => p.RowStatus)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.PatentAuthors)
-                        .ThenInclude(pa => pa.Patent)
-                            .ThenInclude(p => p.FileModel)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.PatentAuthors)
-                        .ThenInclude(pa => pa.Patent)
-                            .ThenInclude(p => p.Year)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.PatentAuthors)
-                        .ThenInclude(pa => pa.Patent)
-                            .ThenInclude(p => p.PatentAuthors)
-                                .ThenInclude(pa => pa.Author)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.PatentAuthors)
-                        .ThenInclude(pa => pa.Patent)
-                            .ThenInclude(p => p.Year)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.PatentAuthors)
-                        .ThenInclude(pa => pa.Patent)
-                            .ThenInclude(p => p.PatentNirSpecials)
-                                .ThenInclude(pn => pn.NirSpecial)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.PatentAuthors)
-                        .ThenInclude(pa => pa.Patent)
-                            .ThenInclude(p => p.PatentVid)
-                                .ThenInclude(pv => pv.PatentVidGroup)
-                 .Include(u => u.Author)
-                    .ThenInclude(a => a.PatentAuthors)
-                        .ThenInclude(pa => pa.Patent)
-                            .ThenInclude(p => p.PatentNirTemas)
-                                .ThenInclude(pn => pn.NirTema)
-                ////////////////// Монографии //////////////////
-                .Include(u => u.Author)
-                    .ThenInclude(ma => ma.MonografAuthors)
-                        .ThenInclude(m => m.Monograf)
-                            .ThenInclude(p => p.RowStatus)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.MonografAuthors)
-                        .ThenInclude(pa => pa.Monograf)
-                            .ThenInclude(p => p.FileModel)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.MonografAuthors)
-                        .ThenInclude(pa => pa.Monograf)
-                            .ThenInclude(p => p.Year)
-                .Include(u => u.Author)
-                    .ThenInclude(a => a.MonografAuthors)
-                        .ThenInclude(pa => pa.Monograf)
-                            .ThenInclude(p => p.MonografNirSpecials)
-                                .ThenInclude(pn => pn.NirSpecial)
-                 .Include(u => u.Author)
-                    .ThenInclude(a => a.MonografAuthors)
-                        .ThenInclude(pa => pa.Monograf)
-                            .ThenInclude(p => p.MonografNirTemas)
-                                .ThenInclude(pn => pn.NirTema)
-                 .Include(u => u.Author)
-                    .ThenInclude(a => a.MonografAuthors)
-                        .ThenInclude(pa => pa.Monograf)
-                            .ThenInclude(p => p.MonografAuthors)
-                                .ThenInclude(ma => ma.Author)
+                            ////////////////// Статьи //////////////////
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.ArticleAuthors)
+                                    .ThenInclude(aa => aa.Article)
+                                        .ThenInclude(a => a.ArticleNirTemas)
+                                            .ThenInclude(t => t.NirTema)
+                                                .ThenInclude(n => n.NirTemaEduProfileList)
+                                                    .ThenInclude(np => np.EduProfile)
+                                                        .ThenInclude(p => p.EduNapravl)
+                                                            .ThenInclude(n => n.EduUgs)
+                                                                .ThenInclude(u => u.EduLevel)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.ArticleAuthors)
+                                    .ThenInclude(aa => aa.Article)
+                                        .ThenInclude(aas => aas.ArticleNirSpecials)
+                                            .ThenInclude(ns => ns.NirSpecial)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.ArticleAuthors)
+                                    .ThenInclude(aa => aa.Article)
+                                        .ThenInclude(a => a.ArticleAuthors)
+                                            .ThenInclude(aa => aa.Author)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.ArticleAuthors)
+                                    .ThenInclude(aa => aa.Article)
+                                        .ThenInclude(a => a.FileModel)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.ArticleAuthors)
+                                    .ThenInclude(aa => aa.Article)
+                                        .ThenInclude(a => a.Year)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.ArticleAuthors)
+                                    .ThenInclude(aa => aa.Article)
+                                        .ThenInclude(a => a.RowStatus)
+                            ////////////////// Патенты //////////////////
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.PatentAuthors)
+                                    .ThenInclude(pa => pa.Patent)
+                                        .ThenInclude(p => p.RowStatus)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.PatentAuthors)
+                                    .ThenInclude(pa => pa.Patent)
+                                        .ThenInclude(p => p.FileModel)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.PatentAuthors)
+                                    .ThenInclude(pa => pa.Patent)
+                                        .ThenInclude(p => p.Year)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.PatentAuthors)
+                                    .ThenInclude(pa => pa.Patent)
+                                        .ThenInclude(p => p.PatentAuthors)
+                                            .ThenInclude(pa => pa.Author)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.PatentAuthors)
+                                    .ThenInclude(pa => pa.Patent)
+                                        .ThenInclude(p => p.Year)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.PatentAuthors)
+                                    .ThenInclude(pa => pa.Patent)
+                                        .ThenInclude(p => p.PatentNirSpecials)
+                                            .ThenInclude(pn => pn.NirSpecial)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.PatentAuthors)
+                                    .ThenInclude(pa => pa.Patent)
+                                        .ThenInclude(p => p.PatentVid)
+                                            .ThenInclude(pv => pv.PatentVidGroup)
+                             .Include(u => u.Author)
+                                .ThenInclude(a => a.PatentAuthors)
+                                    .ThenInclude(pa => pa.Patent)
+                                        .ThenInclude(p => p.PatentNirTemas)
+                                            .ThenInclude(pn => pn.NirTema)
+                            ////////////////// Монографии //////////////////
+                            .Include(u => u.Author)
+                                .ThenInclude(ma => ma.MonografAuthors)
+                                    .ThenInclude(m => m.Monograf)
+                                        .ThenInclude(p => p.RowStatus)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.MonografAuthors)
+                                    .ThenInclude(pa => pa.Monograf)
+                                        .ThenInclude(p => p.FileModel)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.MonografAuthors)
+                                    .ThenInclude(pa => pa.Monograf)
+                                        .ThenInclude(p => p.Year)
+                            .Include(u => u.Author)
+                                .ThenInclude(a => a.MonografAuthors)
+                                    .ThenInclude(pa => pa.Monograf)
+                                        .ThenInclude(p => p.MonografNirSpecials)
+                                            .ThenInclude(pn => pn.NirSpecial)
+                             .Include(u => u.Author)
+                                .ThenInclude(a => a.MonografAuthors)
+                                    .ThenInclude(pa => pa.Monograf)
+                                        .ThenInclude(p => p.MonografNirTemas)
+                                            .ThenInclude(pn => pn.NirTema)
+                             .Include(u => u.Author)
+                                .ThenInclude(a => a.MonografAuthors)
+                                    .ThenInclude(pa => pa.Monograf)
+                                        .ThenInclude(p => p.MonografAuthors)
+                                            .ThenInclude(ma => ma.Author)
 
-                .Include(u => u.ScienceJournalAddingClaims)
-                    .ThenInclude(u => u.RowStatus)
-                .Include(u => u.UserAchievments)
-                    .ThenInclude(ua => ua.UserAchievmentType)
-                .SingleOrDefault(u => u.UserName == userName);
-
-            return appUser;
+                            .Include(u => u.ScienceJournalAddingClaims)
+                                .ThenInclude(u => u.RowStatus)
+                            .Include(u => u.UserAchievments)
+                                .ThenInclude(ua => ua.UserAchievmentType);
         }
 
         /// <summary>
@@ -706,6 +712,20 @@ namespace KisVuzDotNetCore2.Models.Users
 
             return monograf;
         }
-              
+
+        /// <summary>
+        /// Поиск пользователей по заданным параметрам
+        /// </summary>
+        /// <param name="appUserSearchModel"></param>
+        /// <returns></returns>
+        public IEnumerable<AppUser> FindAppUsers(AppUserSearchModel appUserSearchModel)
+        {
+            var users = _context.Users
+                .Where(u => u.LastName.ToLower().Contains(appUserSearchModel.LastNameSearchFragment))
+                .Include(u => u.Students)
+                .Include(u => u.Teachers);
+
+            return users;
+        }
     }
 }

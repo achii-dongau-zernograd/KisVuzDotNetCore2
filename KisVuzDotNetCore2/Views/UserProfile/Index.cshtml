@@ -39,11 +39,14 @@
         <ul class="nav nav-tabs" id="myTab">
             <li class="active"><a href="#common" data-toggle="tab">Общие сведения</a></li>
             <li><a href="#qualification" data-toggle="tab">Образование и квалификация</a></li>
-            <li><a href="#uchPosobiya" data-toggle="tab">Учебные пособия</a></li>
-            @if (student != null)
+            @if (student != null || (Model.Teachers != null && Model.Teachers.Count > 0))
             {
                 <li><a href="#education" data-toggle="tab">Образовательная деятельность</a></li>
             }
+            @if (Model.Author != null)
+            {
+                <li><a href="#uchPosobiya" data-toggle="tab">Учебные пособия</a></li>
+            }            
             <li><a href="#science" data-toggle="tab">Научная деятельность</a></li>
             <li><a href="#works" data-toggle="tab">Работы пользователя</a></li>
             <li><a href="#achievments" data-toggle="tab">Иные достижения</a></li>
@@ -76,7 +79,6 @@
                 <ul>
                     @if (Model.AppUserStructSubvisions != null && Model.AppUserStructSubvisions.Count > 0)
                     {
-
                         @foreach (var appUserStructSubvision in Model.AppUserStructSubvisions)
                         {
                             <li>@appUserStructSubvision.StructSubvision?.StructSubvisionName - @appUserStructSubvision.Post.PostName (@appUserStructSubvision.EmploymentForm?.EmploymentFormName)</li>
@@ -97,6 +99,16 @@
                         }
                     }
                 </ul>
+
+                @if (Model.Teachers != null && Model.Teachers.Count > 0)
+                {                                        
+                    @foreach (var teacher in Model.Teachers)
+                    {
+                        <p><strong>Общий стаж работы: </strong> @teacher.WorkExperienceGeneral</p>
+                        <p><strong>Стаж работы педагогического работника по специальности: </strong> @teacher.WorkExperienceSpecialty</p>
+                    }
+                }
+
                 @if (Model.Teachers != null && Model.Teachers.Count > 0)
                 {
                     @foreach (var teacher in Model.Teachers)
@@ -168,6 +180,7 @@
                 }
 
             </div>
+
             <div class="tab-pane" id="uchPosobiya">
                 <br />
                 @if (Model.Author == null)
@@ -189,6 +202,7 @@
                     </ol>
                 }
             </div>
+            
             <div class="tab-pane" id="education">
                 <br />
                 @if (student != null)
@@ -254,11 +268,25 @@
                         <a href="/@student.RezultOsvoenObrazovatProgr.Path" class="btn btn-primary btn-block"><strong>Результаты освоения основной профессиональной образовательной программы</strong></a>
                     }                    
                 }
-                else
+                
+                @if (Model.Teachers != null && Model.Teachers.Count() > 0)
                 {
-                    <h4>Пользователь не является студентом образовательной организации</h4>
+                    <p><strong>Преподаваемые дисциплины:</strong></p>
+                    foreach (var teacher in Model.Teachers)
+                    {
+                        <ul>
+                            @if(teacher.TeacherEduProfileDisciplineNames != null)
+                            {
+                                foreach (var teacherEduProfileDisciplineName in teacher.TeacherEduProfileDisciplineNames)
+                                {
+                                    <li>@teacherEduProfileDisciplineName.DisciplineName.DisciplineNameName</li>
+                                }
+                            }
+                        </ul>
+                    }
                 }
             </div>
+
             <div class="tab-pane" id="science">
                 <br />
                 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Научные статьи</strong></a>
@@ -350,6 +378,8 @@
                         </tbody>
                     </table>
                 </div>
+
+                @{spoilerCounter++;}
                 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Патенты и свидетельства</strong></a>
                 <div class="collapse" id="spoiler-@spoilerCounter">
                     <table class="table table-bordered table-hover">
@@ -374,7 +404,7 @@
                                     <tr>
                                         <td>@ctn</td>
                                         <td>@patentAuthor.Patent.YearId</td>
-                                        <td>                                            
+                                        <td>
                                             @if (patentAuthor.Patent.FileModel != null)
                                             {
                                                 <a href="/@patentAuthor.Patent.FileModel.Path">@patentAuthor.Patent.PatentName</a>
@@ -412,6 +442,7 @@
                     </table>
                 </div>
 
+                @{spoilerCounter++;}
                 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block"><strong>Монографии</strong></a>
                 <div class="collapse" id="spoiler-@spoilerCounter">
                     <table class="table table-bordered table-hover">
@@ -435,7 +466,7 @@
                                         <td>@ctn</td>
                                         <td>@monografAuthor.Monograf.YearId</td>
                                         <td>
-                                            
+
                                             @if (monografAuthor.Monograf.FileModel != null)
                                             {
                                                 <a href="/@monografAuthor.Monograf.FileModel.Path">@monografAuthor.Monograf.MonografName</a>
@@ -471,6 +502,7 @@
                     </table>
                 </div>
             </div>
+
             <div class="tab-pane" id="works">
                 <br />
                 @if (!(Model.UserWorks?.Any() ?? false))
@@ -514,6 +546,7 @@
                     </table>
                 }
             </div>
+
             <div class="tab-pane" id="achievments">
                 <br />
                 @if (!(Model.UserAchievments?.Any() ?? false))

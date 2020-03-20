@@ -769,6 +769,8 @@ namespace KisVuzDotNetCore2.Controllers
                     .ThenInclude(tsps => tsps.Post)
                 .Include(t => t.TeacherStructKafPostStavka)
                     .ThenInclude(tsps => tsps.EmploymentForm)
+                .Include(t => t.TeacherEduProfileDisciplineNames)
+                    .ThenInclude(tepdn => tepdn.DisciplineName)
                 .Where(t => t.AppUserId == user.Id)
                 .ToListAsync();
 

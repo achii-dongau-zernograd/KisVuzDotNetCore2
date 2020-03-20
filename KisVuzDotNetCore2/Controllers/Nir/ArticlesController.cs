@@ -40,6 +40,16 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         }
 
         /// <summary>
+        /// Статьи, ожидающие подтверждения
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult ArticlesNotConfirmed()
+        {
+            var articlesNotConfirmed = _articlesRepository.GetArticlesNotConfirmed();
+            return View(articlesNotConfirmed);
+        }
+
+        /// <summary>
         /// Подтверждение статьи
         /// </summary>
         /// <param name="id"></param>
@@ -49,7 +59,7 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         public IActionResult ConfirmArticle(int articleId)
         {
             _articlesRepository.ConfirmArticle(articleId);            
-            return RedirectToAction("Index");
+            return RedirectToAction("ArticlesNotConfirmed");
         }
                
         

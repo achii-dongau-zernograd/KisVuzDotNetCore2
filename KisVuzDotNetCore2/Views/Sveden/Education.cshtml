@@ -67,7 +67,7 @@
                         <th align=center>7</th>
                     </tr>
                 </thead>
-                @foreach (var item in t9eduAccred)
+                @foreach (var item in t9eduAccred.OrderBy(item => item.EduNapravlCode))
                 {
                     <tr itemprop="eduAccred">
                         <td itemprop="eduCode">@item.EduNapravlCode</td>
@@ -125,7 +125,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var eduProgram in t10eduPrograms.Where(op => !op.IsAdopt))
+                @foreach (var eduProgram in t10eduPrograms.OrderBy(item => item.EduProfile.EduNapravl.EduNapravlCode).Where(op => !op.IsAdopt))
                 {
                     var eduProgramEduPlanList = new List<EduPlan>();
                     foreach (var eduPlan in eduProgram.EduProfile.EduPlans.Where(p => p.EduProgramPodgId == eduProgram.EduProgramPodgId))
@@ -328,7 +328,10 @@
                     <td align=center><strong>10</strong></td>
                 </tr>
             </thead>
-            @foreach (var item in t11eduObrProg.Where(pr => !pr.IsOVZ))
+            @foreach (var item in t11eduObrProg
+                .OrderBy(pr => pr.EduProfile.EduNapravl.EduNapravlCode)
+                .ThenBy(pr => pr.EduYearBeginningTraining.EduYearBeginningTrainingName)
+                .Where(pr => !pr.IsOVZ))
             {
                 <tr itemprop="eduPr">
                     <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
@@ -497,7 +500,7 @@
                     <td align=center><strong>8</strong></td>
                 </tr>
             </thead>
-            @foreach (var item in t7eduChislen)
+            @foreach (var item in t7eduChislen.OrderBy(ch=>ch.EduProfile.EduNapravl.EduNapravlCode))
             {
                 <tr itemprop="eduChislen">
                     <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
@@ -552,7 +555,7 @@
                             <td align=center><strong>11</strong></td>
                         </tr>
                     </thead>
-                    @foreach (var item in t13eduNir)
+                    @foreach (var item in t13eduNir.OrderBy(item=>item.EduNapravl.EduNapravlCode))
                     {
                         <tr itemprop="eduProf">
                             <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
@@ -618,7 +621,7 @@
                     <th align=center>9</th>
                 </tr>
             </thead>
-            @foreach (var item in t8eduPriem)
+            @foreach (var item in t8eduPriem.OrderBy(item => item.EduNapravl.EduNapravlCode))
             {
                 <tr itemprop="eduPriem">
                     <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
@@ -664,7 +667,7 @@
                     <td align=center><strong>8</strong></td>
                 </tr>
             </thead>
-            @foreach (var item in t9eduPerevod)
+            @foreach (var item in t9eduPerevod.OrderBy(item => item.EduNapravl.EduNapravlCode))
             {
                 <tr itemprop="eduPerevod">
                     <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
@@ -711,7 +714,7 @@
                     <td align=center><strong>8</strong></td>
                 </tr>
             </thead>
-            @foreach (var item in t11eduOPYears.Where(op => !op.IsOVZ))
+            @foreach (var item in t11eduOPYears.OrderBy(item => item.EduProfile.EduNapravl.EduNapravlCode).Where(op => !op.IsOVZ))
             {
                 <tr itemprop="eduOP">
                     <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>

@@ -47,5 +47,10 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// </summary>
         /// <param name="articleId"></param>
         void RemoveArticle(int articleId);
+
+        /// <summary>
+        /// Статьи, ожидающие подтверждения
+        /// </summary>
+        IEnumerable<Article> GetArticlesNotConfirmed();
     }
 }

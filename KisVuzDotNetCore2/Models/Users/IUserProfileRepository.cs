@@ -62,6 +62,13 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="userName"></param>
         /// <returns></returns>
         Article RemoveArticle(int articleId, string userName);
+        
+        /// <summary>
+        /// Поиск пользователей по заданным параметрам
+        /// </summary>
+        /// <param name="appUserSearchModel"></param>
+        /// <returns></returns>
+        IEnumerable<AppUser> FindAppUsers(AppUserSearchModel appUserSearchModel);
 
         /// <summary>
         /// Возвращает количество непрочтённых сообщений

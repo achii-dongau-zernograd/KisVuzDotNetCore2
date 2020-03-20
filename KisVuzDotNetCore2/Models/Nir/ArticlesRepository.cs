@@ -62,18 +62,27 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// <returns></returns>
         public List<Article> GetArticles()
         {
-            var articles = _context.Articles
+            List<Article> articles = GetArticlesAll()
+                .OrderByDescending(a => a.Year.YearName)
+                .ToList();
+            return articles;
+        }
+
+        /// <summary>
+        /// Все статьи
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerable<Article> GetArticlesAll()
+        {
+            return _context.Articles
                 .Include(a => a.FileModel)
                 .Include(a => a.ScienceJournal)
                 .Include(a => a.RowStatus)
                 .Include(a => a.Year)
                 .Include(a => a.ArticleAuthors)
-                    .ThenInclude(aa => aa.Author)
-                .Include(a=>a.ArticleNirSpecials)
-                .Include(a => a.ArticleNirTemas)
-                .OrderByDescending(a => a.Year.YearName)
-                .ToList();
-            return articles;
+                      .ThenInclude(aa => aa.Author)
+                .Include(a => a.ArticleNirSpecials)
+            .Include(a => a.ArticleNirTemas);
         }
 
         /// <summary>
@@ -150,6 +159,14 @@ namespace KisVuzDotNetCore2.Models.Nir
             }
 
             _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Статьи, ожидающие подтверждения
+        /// </summary>
+        public IEnumerable<Article> GetArticlesNotConfirmed()
+        {
+            return GetArticlesAll().Where(a => a.RowStatusId == (int?)RowStatusEnum.NotConfirmed);
         }
     }
 }

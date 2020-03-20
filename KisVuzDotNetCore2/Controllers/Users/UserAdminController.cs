@@ -1,8 +1,10 @@
 ﻿using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Controllers
@@ -19,6 +21,7 @@ namespace KisVuzDotNetCore2.Controllers
         private IPasswordValidator<AppUser> passwordValidator;
         private IPasswordHasher<AppUser> passwordHasher;
         private AppIdentityDBContext context;
+        private IUserProfileRepository userProfileRepository;
         #endregion
 
         #region Конструктор
@@ -26,23 +29,45 @@ namespace KisVuzDotNetCore2.Controllers
             IUserValidator<AppUser> userValid,
             IPasswordValidator<AppUser> passValid,
             IPasswordHasher<AppUser> passwordHash,
-            AppIdentityDBContext ctx)
+            AppIdentityDBContext ctx,
+            IUserProfileRepository userProfileRepo
+            )
         {
             userManager = usrMgr;
             userValidator = userValid;
             passwordValidator = passValid;
             passwordHasher = passwordHash;
             context = ctx;
+            userProfileRepository = userProfileRepo;
         }
         #endregion
 
-        #region Index
+        #region Index, Search
         public ViewResult Index()
         {
             var users = context.Users
                 .Include(u=>u.Students)
                 .Include(u=>u.Teachers);
             return View(users);
+        }
+
+        public ViewResult Search()
+        {            
+            
+            return View();
+        }
+
+        [HttpPost]        
+        public IActionResult Search([FromForm]AppUserSearchModel appUserSearchModel, [FromForm]string LastNameSearchFragment)
+        {
+            if (LastNameSearchFragment == null)
+                return RedirectToAction(nameof(Search));
+
+            appUserSearchModel.LastNameSearchFragment = this.ControllerContext.HttpContext.Request.Form["LastNameSearchFragment"];
+                                            
+            ViewBag.FindedAppUsers = userProfileRepository.FindAppUsers(appUserSearchModel);
+
+            return View(appUserSearchModel);
         }
         #endregion
 
