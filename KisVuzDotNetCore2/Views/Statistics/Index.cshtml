@@ -1,9 +1,8 @@
-﻿
+﻿@model KisVuzDotNetCore2.Infrastructure.NumRowsInDataTables
+
 @{
     ViewData["Title"] = "Статистика";
 }
-
-@model KisVuzDotNetCore2.Infrastructure.NumRowsInDataTables
 
 <h2>Статистика</h2>
 
@@ -11,5 +10,69 @@
     <tr>
         <td>Количество зарегистрированных пользователей</td>
         <td>@Model.AppUsersNum</td>
+    </tr>
+    <tr>
+        <td>Количество наименований учебных дисциплин</td>
+        <td>@Model.DisciplinesNamesNum</td>
+    </tr>
+    <tr>
+        <td>Количество преподавателей</td>
+        <td>@Model.TeachersNum</td>
+    </tr>
+    <tr>
+        <td>Количество студентов</td>
+        <td>@Model.StudentsNum</td>
+    </tr>
+    <tr>
+        <td>Количество студенческих групп</td>
+        <td>@Model.StudentGroupsNum</td>
+    </tr>
+    <tr>
+        <td>Количество пользовательских сообщений</td>
+        <td>@Model.UserMessagesNum</td>
+    </tr>
+    <tr>
+        <td>Количество сообщений для учебных групп</td>
+        <td>@Model.MessagesFromAppUsersToStudentGroupsNum</td>
+    </tr>
+    <tr>
+        <td>Количество учебных пособий, изданных вузом</td>
+        <td>@Model.UchPosobiesNum</td>
+    </tr>
+    <tr>
+        <td>Количество научных статей</td>
+        <td>@Model.ArticlesNum</td>
+    </tr>
+    <tr>
+        <td>Количество неподтверждённых научных статей</td>
+        <td>@Model.ArticlesNotConfirmedNum</td>
+    </tr>
+    <tr>
+        <td>Количество патентов и свидетельств</td>
+        <td>@Model.PatentsNum</td>
+    </tr>
+    <tr>
+        <td>Количество неподтверждённых патентов и свидетельств</td>
+        <td>@Model.PatentsNotConfirmedNum</td>
+    </tr>
+    <tr>
+        <td>Количество монографий</td>
+        <td>@Model.MonografsNum</td>
+    </tr>
+    <tr>
+        <td>Количество неподтверждённых монографий</td>
+        <td>@Model.MonografsNotConfirmedNum</td>
+    </tr>
+    <tr>
+        <td>Количество научных журналов</td>
+        <td>@Model.ScienceJournalsNum</td>
+    </tr>
+    <tr>
+        <td>Количество заявок на добавление научных журналов</td>
+        <td>@Model.ScienceJournalAddingClaimsNum</td>
+    </tr>
+    <tr>
+        <td>Количество неподтверждённых заявок на добавление научных журналов</td>
+        <td>@Model.ScienceJournalAddingClaimsNotConfirmedNum</td>
     </tr>
 </table>

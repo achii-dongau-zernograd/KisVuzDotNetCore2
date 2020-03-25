@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace KisVuzDotNetCore2.Models.Nir
 {
@@ -11,7 +12,13 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// Возвращает все патенты (свидетельства)
         /// </summary>        
         /// <returns></returns>
-        List<Patent> GetPatents();
+        IQueryable<Patent> GetPatents();
+
+        /// <summary>
+        /// Патенты и свидетельства, ожидающие подтверждения
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<Patent> GetPatentsNotConfirmed();
 
         /// <summary>
         /// Возвращает патент (свидетельство) по УИД
@@ -43,6 +50,6 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// Подтверждение патента (свидетельства)
         /// </summary>
         /// <param name="patentId"></param>
-        void ConfirmPatent(int patentId);
+        void ConfirmPatent(int patentId);        
     }
 }

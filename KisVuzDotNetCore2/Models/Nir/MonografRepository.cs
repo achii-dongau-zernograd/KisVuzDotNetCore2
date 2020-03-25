@@ -36,9 +36,8 @@ namespace KisVuzDotNetCore2.Models.Nir
             {
                 return monograf;
             }
-
-            List<Monograf> monografs = GetMonografs();
-            monograf = monografs.SingleOrDefault(m => m.MonografId == id);
+                        
+            monograf = GetMonografs().SingleOrDefault(m => m.MonografId == id);
             return monograf;
         }
 
@@ -47,9 +46,9 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// </summary>        
         /// <returns></returns>
 
-        public List<Monograf> GetMonografs()
+        public IQueryable<Monograf> GetMonografs()
         {
-            List<Monograf> monografs = _context.Monografs
+            IQueryable<Monograf> monografs = _context.Monografs
                 .Include(m => m.MonografNirSpecials)
                    .ThenInclude(ns => ns.NirSpecial)
                         .ThenInclude(np => np.NirSpecialEduProfiles)
@@ -70,10 +69,18 @@ namespace KisVuzDotNetCore2.Models.Nir
                 .Include(p => p.Year)
                 .Include(p => p.FileModel)
                 .Include(p => p.RowStatus)
-                .OrderByDescending(m=>m.Year.YearName)
-                .ToList();
+                .OrderByDescending(m=>m.Year.YearName);
 
             return monografs;
+        }
+
+        /// <summary>
+        /// Монографии, ожидающие подтверждения
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<Monograf> GetMonografsNotConfirmed()
+        {
+            return GetMonografs().Where(a => a.RowStatusId == (int?)RowStatusEnum.NotConfirmed);
         }
 
         /// <summary>

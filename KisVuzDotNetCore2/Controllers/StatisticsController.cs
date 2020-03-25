@@ -20,7 +20,7 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         public IActionResult Index()
-        {
+        {            
             NumRowsInDataTables statistics = _statisticsRepository.GetNumRowsInDataTables();
 
             return View(statistics);

@@ -47,14 +47,24 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         public IActionResult ConfirmMonograf(int monografId)
         {
             _monografRepository.ConfirmMonograf(monografId);
-            return RedirectToAction("Index");
+            return RedirectToAction("MonografsNotConfirmed");
         }
 
         // GET: Monografs
         public IActionResult Index()
         {
-            List<Monograf> monografs = _monografRepository.GetMonografs();
+            List<Monograf> monografs = _monografRepository.GetMonografs().ToList();
             return View(monografs);
+        }
+
+        /// <summary>
+        /// Патенты, ожидающие подтверждения
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult MonografsNotConfirmed()
+        {
+            var monografsNotConfirmed = _monografRepository.GetMonografsNotConfirmed();
+            return View(monografsNotConfirmed);
         }
 
 

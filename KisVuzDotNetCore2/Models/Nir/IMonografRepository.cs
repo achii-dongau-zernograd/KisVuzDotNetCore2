@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace KisVuzDotNetCore2.Models.Nir
 {
@@ -8,7 +9,13 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// Возвращает все монографии
         /// </summary>        
         /// <returns></returns>
-        List<Monograf> GetMonografs();
+        IQueryable<Monograf> GetMonografs();
+
+        /// <summary>
+        /// Возвращает монографии, ожидающие подтверждения
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<Monograf> GetMonografsNotConfirmed();
 
         /// <summary>
         /// Возвращает монографию по УИД

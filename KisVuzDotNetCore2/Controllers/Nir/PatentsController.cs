@@ -44,15 +44,25 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         public IActionResult ConfirmPatent(int patentId)
         {
             _patentRepository.ConfirmPatent(patentId);
-            return RedirectToAction("Index");
+            return RedirectToAction("PatentsNotConfirmed");
         }
 
         // GET: Patents
         public IActionResult Index()
         {
-            List<Patent> userPatents = _patentRepository.GetPatents();
+            List<Patent> userPatents = _patentRepository.GetPatents().ToList();
             return View(userPatents);
-        }               
+        }
+
+        /// <summary>
+        /// Патенты, ожидающие подтверждения
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult PatentsNotConfirmed()
+        {
+            var patentsNotConfirmed = _patentRepository.GetPatentsNotConfirmed();
+            return View(patentsNotConfirmed);
+        }
 
         // GET: Patents/CreateOrEditPatent
         public IActionResult CreateOrEdit(int? id)

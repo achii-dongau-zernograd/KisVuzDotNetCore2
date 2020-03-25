@@ -7,18 +7,24 @@
         <ul class="dropdown-menu">
             <li><a asp-controller="Authors" asp-action="Index" asp-route-id="">Справочник авторов</a></li>
             <li><a asp-controller="CitationBases" asp-action="Index">Базы цитирования</a></li>
+            <li class="divider"></li>
             <li><a asp-controller="NirSpecials" asp-action="Index">Научные специальности</a></li>
             <li><a asp-controller="NirSpecialEduProfiles" asp-action="Index">Научные специальности - Профили подготовки</a></li>
+            <li class="divider"></li>
             <li><a asp-controller="NirTemas" asp-action="Index">Темы НИР</a></li>
             <li><a asp-controller="NirTemaEduProfiles" asp-action="Index">Тема НИР - Профиль подготовки</a></li>
+            <li class="divider"></li>
             <li><a asp-controller="ScienceJournals" asp-action="Index">Научные журналы</a></li>
             <li><a asp-controller="ScienceJournalAddingClaims" asp-action="Index">Заявки на добавление научных журналов</a></li>
             <li class="divider"></li>
             <li><a asp-controller="Articles" asp-action="Index">Научные статьи</a></li>
             <li><a asp-controller="Articles" asp-action="ArticlesNotConfirmed">Научные статьи (неподтверждённые)</a></li>
             <li class="divider"></li>
-            <li><a asp-controller="Patents" asp-action="Index">Патенты (свидетельства)</a></li>
+            <li><a asp-controller="Patents" asp-action="Index">Патенты и свидетельства</a></li>
+            <li><a asp-controller="Patents" asp-action="PatentsNotConfirmed">Патенты и свидетельства (неподтверждённые)</a></li>
+            <li class="divider"></li>
             <li><a asp-controller="Monografs" asp-action="Index">Монографии</a></li>
+            <li><a asp-controller="Monografs" asp-action="MonografsNotConfirmed">Монографии (неподтверждённые)</a></li>
         </ul>
     </li>
     }    

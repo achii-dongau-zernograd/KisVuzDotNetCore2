@@ -1,0 +1,138 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Nir.Monograf>
+
+@{
+    ViewData["Title"] = "Монографии";
+}
+
+<h2>Монографии, ожидающие подтверждения</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MonografName)
+            </th>
+
+            <th>
+                Авторы (авт. доля, о.е.)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Year.YearName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.IsACHII)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileModel)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.MonografNirSpecials)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonografNirTemas)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.RowStatus)
+            </th>
+
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MonografName)
+            </td>
+
+            <td>
+                @foreach (var monografAuthor in item.MonografAuthors)
+                {
+                    if (monografAuthor.Author?.AppUserId != null)
+                    {
+                        <p>
+                            <a asp-controller="Monografs" asp-action="Index" asp-route-id="@monografAuthor.Author.AppUserId">@monografAuthor.Author.AuthorName (@monografAuthor.AuthorPart.ToString("N"))</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p>@monografAuthor.Author?.AuthorName (@monografAuthor.AuthorPart.ToString("N"))</p>
+                    }
+
+                }
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Year.YearName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.IsACHII)
+            </td>
+            <td>
+                @if (item.FileModel != null)
+                {
+                    <a href="/@item.FileModel.Path">Открыть</a>
+                }
+                else
+                {
+                    <text>-</text>
+                }
+            </td>
+
+            <td>
+                @if (item.MonografNirSpecials != null && item.MonografNirSpecials.Count > 0)
+                {
+                    foreach (var monografNirSpecial in item.MonografNirSpecials)
+                    {
+                        <p>@monografNirSpecial.NirSpecial.NirSpecialCode - @monografNirSpecial.NirSpecial.NirSpecialName</p>
+                    }
+                }
+                else
+                {
+                    <p> - </p>
+                }
+            </td>
+            <td>
+                @if (item.MonografNirTemas != null && item.MonografNirTemas.Count > 0)
+                {
+                    foreach (var monografNirTema in item.MonografNirTemas)
+                    {
+                        <p>@monografNirTema.NirTema.NirTemaName</p>
+                    }
+                }
+                else
+                {
+                    <p> - </p>
+                }
+            </td>
+
+            <td>
+                @if (@item.RowStatusId != (int)RowStatusEnum.Confirmed)
+                {
+                    <form asp-action="ConfirmMonograf">
+                        <input type="hidden" name="monografId" value="@item.MonografId" />
+                        <input type="submit" value="Подтвердить" class="btn btn-block btn-primary" />
+                    </form>
+                }
+                else
+                {
+                    <text>@item.RowStatus.RowStatusName</text>
+                }
+            </td>
+
+            <td>
+
+                <a asp-action="CreateOrEdit" asp-route-id="@item.MonografId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.MonografId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

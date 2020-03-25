@@ -36,7 +36,7 @@ namespace KisVuzDotNetCore2.Models.Nir
                 return patent;
             }
 
-            List<Patent> userPatents = GetPatents();
+            List<Patent> userPatents = GetPatents().ToList();
             patent = userPatents.SingleOrDefault(p => p.PatentId == id);
             return patent;
         }
@@ -45,9 +45,9 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// Возвращает список всех патентов (свидетельств)
         /// </summary>        
         /// <returns></returns>
-        public List<Patent> GetPatents()
+        public IQueryable<Patent> GetPatents()
         {
-            List<Patent> patents = _context.Patents
+            IQueryable<Patent> patents = _context.Patents
                 .Include(p => p.PatentNirSpecials)
                     .ThenInclude(ns => ns.NirSpecial)
                         .ThenInclude(np => np.NirSpecialEduProfiles)
@@ -69,10 +69,18 @@ namespace KisVuzDotNetCore2.Models.Nir
                 .Include(p => p.Year)
                 .Include(p => p.FileModel)
                 .Include(p => p.RowStatus)
-                .OrderByDescending(p=>p.Year.YearName)
-                .ToList();
+                .OrderByDescending(p=>p.Year.YearName);
 
             return patents;
+        }
+
+        /// <summary>
+        /// Патенты и свидетельства, ожидающие подтверждения
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<Patent> GetPatentsNotConfirmed()
+        {
+            return GetPatents().Where(a => a.RowStatusId == (int?)RowStatusEnum.NotConfirmed);
         }
 
         /// <summary>
@@ -184,7 +192,6 @@ namespace KisVuzDotNetCore2.Models.Nir
             }
 
             _context.SaveChanges();
-        }
-
+        }        
     }
 }
