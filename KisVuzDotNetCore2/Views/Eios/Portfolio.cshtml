@@ -3,6 +3,7 @@
     ViewData["Title"] = "Портфолио";
     var eduLevels = (IEnumerable<EduLevel>)ViewData["eduLevels"];
     int spoilerCounter = 0;
+    bool isTeacher = (bool)ViewBag.IsTeacher;
 }
 
 <h2>Электронное портфолио обучающихся</h2>
@@ -34,10 +35,13 @@
                                             <div class="collapse" id="spoiler-@spoilerCounter">
                                                 <div class="well">
                                                     <p>Куратор: <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@studentGroup.Kurator.AppUserId">@studentGroup.Kurator.TeacherFio</a></p>
+                                                    <p>
+                                                        <a asp-controller="MessagesFromAppUserToStudentGroups" asp-action="Create" asp-route-studentGroupId="@studentGroup.StudentGroupId" class="btn btn-primary" target="_blank">Отправить собщение группе</a>
+                                                    </p>
                                                     <ol>
-                                                        @foreach (var student in studentGroup.Students.OrderBy(s=>s.StudentFio))
+                                                        @foreach (var student in studentGroup.Students.OrderBy(s => s.StudentFio))
                                                         {
-                                                        <li><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@student.AppUserId">@student.StudentFio</a></li>
+                                                            <li><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@student.AppUserId">@student.StudentFio</a></li>
                                                         }
                                                     </ol>
                                                 </div>

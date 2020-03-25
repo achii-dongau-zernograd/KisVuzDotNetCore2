@@ -97,6 +97,13 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="userName"></param>
         /// <returns></returns>
         string GetAppUserId(string userName);
+        
+        /// <summary>
+        /// Определяет, является ли пользователь преподавателем
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<bool> IsTeacherAsync(string userName);
 
         /// <summary>
         /// Возвращает патент (свидетельство) пользователя userName

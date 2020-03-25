@@ -59,17 +59,26 @@ namespace KisVuzDotNetCore2.Controllers.Students
                
 
         // GET: MessagesFromAppUsersToStudentGroups/Create
-        public IActionResult Create()
+        public IActionResult Create(int? studentGroupId)
         {
             var newMessage = new MessageFromAppUserToStudentGroup
             {
                 AppUserId = _userProfileRepository.GetAppUserId(User.Identity.Name),
-                DateTime = DateTime.Now
+                DateTime = DateTime.Now,                 
             };
 
-            ViewData["DisciplineNameId"]  = _selectListRepository.GetSelectListDisciplineNames();
-            ViewData["StudentGroupId"]    = _selectListRepository.GetSelectListStudentGroups();
+            if (studentGroupId != null)
+            {
+                newMessage.StudentGroupId = (int)studentGroupId;
+            }
+            else
+            {
+                ViewData["StudentGroupId"] = _selectListRepository.GetSelectListStudentGroups();
+            }
+
+            ViewData["DisciplineNameId"]  = _selectListRepository.GetSelectListDisciplineNames();            
             ViewData["UserMessageTypeId"] = _selectListRepository.GetSelectListUserMessageTypes();
+
             return View(newMessage);
         }
 

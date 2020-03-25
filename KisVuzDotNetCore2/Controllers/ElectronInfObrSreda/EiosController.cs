@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.UchPosobiya;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,12 +17,15 @@ namespace KisVuzDotNetCore2.Controllers.Eios
     {
         private readonly AppIdentityDBContext _context;
         private readonly IUchPosobiyaRepository _uchPosobiyaRepository;
+        private readonly IUserProfileRepository _userProfileRepository;
 
         public EiosController(AppIdentityDBContext context,
-            IUchPosobiyaRepository uchPosobiyaRepository)
+            IUchPosobiyaRepository uchPosobiyaRepository,
+            IUserProfileRepository userProfileRepository)
         {
             _context = context;
             _uchPosobiyaRepository = uchPosobiyaRepository;
+            _userProfileRepository = userProfileRepository;
         }
 
         public async Task<IActionResult> UchPlansRabProgs()
@@ -76,6 +80,9 @@ namespace KisVuzDotNetCore2.Controllers.Eios
             .ToListAsync();
 
             ViewData["eduLevels"] = eduLevels;
+
+            bool isTeacher = await _userProfileRepository.IsTeacherAsync(User.Identity.Name);
+            ViewBag.IsTeacher = isTeacher;
 
             return View();
         }

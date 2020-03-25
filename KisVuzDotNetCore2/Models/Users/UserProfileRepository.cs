@@ -742,6 +742,23 @@ namespace KisVuzDotNetCore2.Models.Users
                 .Include(u => u.Teachers);
 
             return users;
-        }        
+        }
+
+        /// <summary>
+        /// Определяет, является ли пользователь преподавателем
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<bool> IsTeacherAsync(string userName)
+        {
+            var appUser = await _context.Users
+                .Include(u => u.Teachers)
+                .SingleOrDefaultAsync(u => u.UserName == userName);
+
+            if (appUser.Teachers.Count > 0)
+                return true;
+            else
+                return false;
+        }
     }
 }
