@@ -52,7 +52,7 @@ namespace KisVuzDotNetCore2.Controllers.Students
                 receivedGroupMessages.AddRange(items);
             }
 
-            var modelTuple = new Tuple<List<MessageFromAppUserToStudentGroup>, List<MessageFromAppUserToStudentGroup>> (sendedMessagesByUser, receivedGroupMessages);
+            var modelTuple = new Tuple<List<MessageFromAppUserToStudentGroup>, List<MessageFromAppUserToStudentGroup>, AppUser> (sendedMessagesByUser, receivedGroupMessages, appUser);
 
             return View(modelTuple);
         }

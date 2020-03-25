@@ -170,7 +170,7 @@ namespace KisVuzDotNetCore2.Controllers
                     IdentityResult result = await userManager.UpdateAsync(user);
                     if(result.Succeeded)
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {

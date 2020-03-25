@@ -1,124 +1,131 @@
-﻿@model Tuple<List<MessageFromAppUserToStudentGroup>, List<MessageFromAppUserToStudentGroup>>
+﻿@model Tuple<List<MessageFromAppUserToStudentGroup>, List<MessageFromAppUserToStudentGroup>, AppUser>
 
 @{
     ViewData["Title"] = "Index";
+    var appUser = Model.Item3;
 }
 
-<h2>Отправленные сообщения учебным группам</h2>
+@if (appUser.Teachers != null && appUser.Teachers.Count > 0)
+{
+    <h2>Сообщения, отправленные учебным группам</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Добавить</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Дата и время отправки сообщения
-            </th>
-            <th>
-                Текст сообщения
-            </th>
-            <th>
-                Наименование дисциплины
-            </th>
-            <th>
-                Группа
-            </th>
-            <th>
-                Тип сообщения
-            </th>
-            <th>
-                Действия
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Item1)
-        {
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Добавить</a>
+    </p>
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateTime)
-                </td>
-                <td>
-                    @if (string.IsNullOrWhiteSpace(item.Link))
-                    {
-                        @Html.DisplayFor(modelItem => item.MessageText)
-                    }
-                    else
-                    {
-                        <a href="@item.Link" target="_blank">@item.MessageText</a>
-                    }
-
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DisciplineName.DisciplineNameName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentGroup.StudentGroupName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserMessageType.UserMessageTypeName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
-                </td>
+                <th>
+                    Дата и время отправки сообщения
+                </th>
+                <th>
+                    Текст сообщения
+                </th>
+                <th>
+                    Наименование дисциплины
+                </th>
+                <th>
+                    Группа
+                </th>
+                <th>
+                    Тип сообщения
+                </th>
+                <th>
+                    Действия
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Item1)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTime)
+                    </td>
+                    <td>
+                        @if (string.IsNullOrWhiteSpace(item.Link))
+                        {
+                            @Html.DisplayFor(modelItem => item.MessageText)
+                        }
+                        else
+                        {
+                            <a href="@item.Link" target="_blank">@item.MessageText</a>
+                        }
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DisciplineName.DisciplineNameName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentGroup.StudentGroupName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserMessageType.UserMessageTypeName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 
-<h2>Сообщения группе</h2>
+@if (Model.Item2.Count > 0)
+{
+    <h2>Сообщения группе</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Дата и время отправки сообщения
-            </th>
-            <th>
-                Текст сообщения
-            </th>
-            <th>
-                Наименование дисциплины
-            </th>
-            <th>
-                Группа
-            </th>
-            <th>
-                Тип сообщения
-            </th>            
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Item2)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateTime)
-                </td>
-                <td>
-                    @if (string.IsNullOrWhiteSpace(item.Link))
-                    {
-                        @Html.DisplayFor(modelItem => item.MessageText)
-                    }
-                    else
-                    {
-                        <a href="@item.Link" target="_blank">@item.MessageText</a>
-                    }
-
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DisciplineName.DisciplineNameName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentGroup.StudentGroupName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserMessageType.UserMessageTypeName)
-                </td>                
+                <th>
+                    Дата и время отправки сообщения
+                </th>
+                <th>
+                    Текст сообщения
+                </th>
+                <th>
+                    Наименование дисциплины
+                </th>
+                <th>
+                    Группа
+                </th>
+                <th>
+                    Тип сообщения
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Item2)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTime)
+                    </td>
+                    <td>
+                        @if (string.IsNullOrWhiteSpace(item.Link))
+                        {
+                            @Html.DisplayFor(modelItem => item.MessageText)
+                        }
+                        else
+                        {
+                            <a href="@item.Link" target="_blank">@item.MessageText</a>
+                        }
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DisciplineName.DisciplineNameName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StudentGroup.StudentGroupName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserMessageType.UserMessageTypeName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
