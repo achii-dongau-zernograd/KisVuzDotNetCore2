@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "Статистика";
+}
+
+@model KisVuzDotNetCore2.Infrastructure.NumRowsInDataTables
+
+<h2>Статистика</h2>
+
+<table class="table">
+    <tr>
+        <td>Количество зарегистрированных пользователей</td>
+        <td>@Model.AppUsersNum</td>
+    </tr>
+</table>

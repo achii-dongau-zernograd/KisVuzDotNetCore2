@@ -39,6 +39,12 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListMetodKomissiyaNames(int selectedId = 0);
+                       
+        /// <summary>
+        /// Возвращает список учебных групп
+        /// </summary>
+        /// <returns></returns>
+        SelectList GetSelectListStudentGroups(int selectedId = 0);
 
         /// <summary>
         /// Возвращает список баз цитирования
@@ -53,6 +59,12 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListTeacherFio(int selectedId = 0);
+        
+        /// <summary>
+        /// Возвращает список типов пользовательских сообщений
+        /// </summary>
+        /// <returns></returns>
+        SelectList GetSelectListUserMessageTypes(int selectedId = 0);
 
         /// <summary>
         /// Возвращает список форм издания
@@ -134,6 +146,12 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// </summary>
         /// <returns></returns>
         SelectList GetSelectListStructKaf(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает полный список дисциплин
+        /// </summary>
+        /// <returns></returns>
+        SelectList GetSelectListDisciplineNames(int? selectedId = 0);
 
         /// <summary>
         /// Возвращает список дисциплин,

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Students;
 using Microsoft.AspNetCore.Authorization;
+using KisVuzDotNetCore2.Infrastructure;
 
 namespace KisVuzDotNetCore2.Controllers.Students
 {
@@ -16,15 +17,18 @@ namespace KisVuzDotNetCore2.Controllers.Students
     {
         private readonly AppIdentityDBContext _context;
         private IStudentRepository _studentRepository;
+        private ISelectListRepository _selectListRepository;
 
         private UserManager<AppUser> userManager;
 
         public StudentsController(AppIdentityDBContext context,
             IStudentRepository studentRepository,
+            ISelectListRepository selectListRepository,
             UserManager<AppUser> usrMgr)
         {
             _context = context;
             _studentRepository = studentRepository;
+            _selectListRepository = selectListRepository;
             userManager = usrMgr;
         }
 
@@ -68,8 +72,8 @@ namespace KisVuzDotNetCore2.Controllers.Students
         // GET: Students/Create
         public IActionResult Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName");
-            ViewData["StudentGroupId"] = new SelectList(_context.StudentGroups.Include(g=>g.EduKurs), "StudentGroupId", "StudentGroupName");
+            ViewData["AppUserId"] = _selectListRepository.GetSelectListAppUsers();
+            ViewData["StudentGroupId"] = new SelectList(_context.StudentGroups.Include(g=>g.EduKurs).OrderBy(g=>g.StudentGroupName), "StudentGroupId", "StudentGroupName");
             return View();
         }
 
@@ -87,7 +91,7 @@ namespace KisVuzDotNetCore2.Controllers.Students
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", student.AppUserId);
-            ViewData["StudentGroupId"] = new SelectList(_context.StudentGroups, "StudentGroupId", "StudentGroupId", student.StudentGroupId);
+            ViewData["StudentGroupId"] = new SelectList(_context.StudentGroups.Include(g => g.EduKurs).OrderBy(g => g.StudentGroupName), "StudentGroupId", "StudentGroupId", student.StudentGroupId);
             return View(student);
         }
 
@@ -171,7 +175,7 @@ namespace KisVuzDotNetCore2.Controllers.Students
             ViewBag.StudentGroupId = StudentGroupId;
             ViewBag.StructFacultetId = StructFacultetId;
             ViewData["AppUserIds"] = new SelectList(_context.Users, "Id", "GetFullName", student.AppUserId);
-            ViewData["StudentGroupIds"] = new SelectList(_context.StudentGroups.Include(g=>g.EduKurs), "StudentGroupId", "StudentGroupName", student.StudentGroupId);
+            ViewData["StudentGroupIds"] = new SelectList(_context.StudentGroups.Include(g => g.EduKurs).OrderBy(g => g.StudentGroupName), "StudentGroupId", "StudentGroupName", student.StudentGroupId);
             return View(student);
         }
 
@@ -212,7 +216,7 @@ namespace KisVuzDotNetCore2.Controllers.Students
             ViewBag.StudentGroupId = StudentGroupId;
             ViewBag.StructFacultetId = StructFacultetId;
             ViewData["AppUserIds"] = new SelectList(_context.Users, "Id", "GetFullName", student.AppUserId);
-            ViewData["StudentGroupIds"] = new SelectList(_context.StudentGroups.Include(g => g.EduKurs), "StudentGroupId", "StudentGroupName", student.StudentGroupId);
+            ViewData["StudentGroupIds"] = new SelectList(_context.StudentGroups.Include(g => g.EduKurs).OrderBy(g => g.StudentGroupName), "StudentGroupId", "StudentGroupName", student.StudentGroupId);
             return View(student);
         }
 

@@ -149,6 +149,11 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Структурные подразделения, которыми руководит пользователь
         /// </summary>
-        public List<StructSubvision> StructSubvisions { get; set; }        
+        public List<StructSubvision> StructSubvisions { get; set; }
+
+        /// <summary>
+        /// Сообщения от пользователя для студенческих групп
+        /// </summary>
+        public List<MessageFromAppUserToStudentGroup> MessagesFromAppUserToStudentGroups { get; set; }
     }
 }

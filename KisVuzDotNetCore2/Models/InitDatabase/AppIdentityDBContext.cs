@@ -45,6 +45,11 @@ namespace KisVuzDotNetCore2.Models
         /// Формы занятости (основное, внутреннее совместительство и пр.)
         /// </summary>
         public DbSet<EmploymentForm> EmploymentForms { get; set; }
+
+        /// <summary>
+        /// Типы пользовательских сообщений
+        /// </summary>
+        public DbSet<UserMessageType> UserMessageTypes { get; set; }
         #endregion
 
         #region Образовательная деятельность (Education)
@@ -866,6 +871,11 @@ namespace KisVuzDotNetCore2.Models
         /// Сообщения пользователей друг другу
         /// </summary>
         public DbSet<UserMessage> UserMessages { get; set; }
+
+        /// <summary>
+        /// Сообщения от пользователей для учебных групп
+        /// </summary>
+        public DbSet<MessageFromAppUserToStudentGroup> MessagesFromAppUsersToStudentGroups { get; set; }
         #endregion
 
         #region Методкомиссии
@@ -965,6 +975,8 @@ namespace KisVuzDotNetCore2.Models
 
             await InitDatabaseCitationBases.CreateCitationBases(serviceProvider, configuration);
             await InitDatabaseNirSpecials.CreateNirSpecials(serviceProvider, configuration);
+
+            await InitDatabaseUserMessageTypes.CreateUserMessageTypes(serviceProvider, configuration);
         }        
     
     }

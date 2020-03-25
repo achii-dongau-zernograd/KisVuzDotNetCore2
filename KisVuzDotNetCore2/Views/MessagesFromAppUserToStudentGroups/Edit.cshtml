@@ -1,0 +1,51 @@
+﻿@model MessageFromAppUserToStudentGroup
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<h2>Редактирование сообщения студенческой группе</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="DateTime" class="form-control" />
+            <input type="hidden" asp-for="AppUserId" class="form-control" />
+
+            <div class="form-group">
+                <label asp-for="StudentGroup" class="control-label"></label>
+                <select asp-for="StudentGroupId" class="form-control" asp-items="ViewBag.StudentGroupId"></select>
+                <span asp-validation-for="StudentGroupId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserMessageType" class="control-label"></label>
+                <select asp-for="UserMessageTypeId" class="form-control" asp-items="ViewBag.UserMessageTypeId"></select>
+                <span asp-validation-for="UserMessageTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DisciplineName" class="control-label"></label>
+                <select asp-for="DisciplineNameId" class="form-control" asp-items="ViewBag.DisciplineNameId">
+                    <option value="">Нет</option>
+                </select>
+                <span asp-validation-for="DisciplineNameId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageText" class="control-label"></label>
+                <input asp-for="MessageText" class="form-control" />
+                <span asp-validation-for="MessageText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Link" class="control-label"></label>
+                <input asp-for="Link" class="form-control" />
+                <span asp-validation-for="Link" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

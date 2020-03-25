@@ -60,6 +60,8 @@ namespace KisVuzDotNetCore2
             services.AddTransient<IStructSubvisionChiefRepository, StructSubvisionChiefRepository>();
             services.AddTransient<IMonografRepository, MonografRepository>();
             services.AddTransient<IEduNapravlRepository, EduNapravlRepository>();
+            services.AddTransient<IStatisticsRepository, StatisticsRepository>();
+            services.AddTransient<IMessagesFromAppUserToStudentGroupsRepository, MessagesFromAppUserToStudentGroupsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

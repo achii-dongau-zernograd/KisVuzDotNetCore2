@@ -1,0 +1,54 @@
+﻿@model KisVuzDotNetCore2.Models.Students.MessageFromAppUserToStudentGroup
+
+@{
+    ViewData["Title"] = "Новое сообщение";
+}
+
+<h2>Новое сообщение студенческой группе</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @*<label asp-for="DateTime" class="control-label"></label>
+                <p>@Model.DateTime</p>*@
+                <input type="hidden" asp-for="DateTime" />
+            </div>
+            <div class="form-group">
+                @*<label asp-for="AppUserId" class="control-label"></label>
+                <p>@Model.AppUserId</p>*@
+                <input type="hidden" asp-for="AppUserId" />
+            </div>
+            <div class="form-group">
+                <label asp-for="StudentGroup" class="control-label"></label>
+                <select asp-for="StudentGroupId" class="form-control" asp-items="ViewBag.StudentGroupId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserMessageType" class="control-label"></label>
+                <select asp-for="UserMessageTypeId" class="form-control" asp-items="ViewBag.UserMessageTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DisciplineName" class="control-label"></label>
+                <select asp-for="DisciplineNameId" class="form-control" asp-items="ViewBag.DisciplineNameId">
+                    <option value="">Нет</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageText" class="control-label"></label>
+                <input asp-for="MessageText" class="form-control" />
+                <span asp-validation-for="MessageText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Link" class="control-label"></label>
+                <input asp-for="Link" class="form-control" />
+                <span asp-validation-for="Link" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Отправить сообщение" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

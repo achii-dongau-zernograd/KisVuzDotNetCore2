@@ -6,51 +6,66 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
-using KisVuzDotNetCore2.Models.Nir;
-using Microsoft.AspNetCore.Authorization;
+using KisVuzDotNetCore2.Models.Common;
 
-namespace KisVuzDotNetCore2.Controllers.Nir
+namespace KisVuzDotNetCore2.Controllers.Common
 {
-    [Authorize(Roles = "Администраторы, НИЧ")]
-    public class NirSpecialsController : Controller
+    public class UserMessageTypesController : Controller
     {
         private readonly AppIdentityDBContext _context;
 
-        public NirSpecialsController(AppIdentityDBContext context)
+        public UserMessageTypesController(AppIdentityDBContext context)
         {
             _context = context;
         }
 
-        // GET: NirSpecials
+        // GET: UserMessageTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.NirSpecials.OrderBy(ns => ns.NirSpecialCode).ToListAsync());
+            return View(await _context.UserMessageTypes.ToListAsync());
         }
 
-        
-        // GET: NirSpecials/Create
+        // GET: UserMessageTypes/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var userMessageType = await _context.UserMessageTypes
+                .SingleOrDefaultAsync(m => m.UserMessageTypeId == id);
+            if (userMessageType == null)
+            {
+                return NotFound();
+            }
+
+            return View(userMessageType);
+        }
+
+        // GET: UserMessageTypes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: NirSpecials/Create
+        // POST: UserMessageTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NirSpecialId,NirSpecialCode,NirSpecialName")] NirSpecial nirSpecial)
+        public async Task<IActionResult> Create([Bind("UserMessageTypeId,UserMessageTypeName")] UserMessageType userMessageType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(nirSpecial);
+                _context.Add(userMessageType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(nirSpecial);
+            return View(userMessageType);
         }
 
-        // GET: NirSpecials/Edit/5
+        // GET: UserMessageTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -58,22 +73,22 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 return NotFound();
             }
 
-            var nirSpecial = await _context.NirSpecials.SingleOrDefaultAsync(m => m.NirSpecialId == id);
-            if (nirSpecial == null)
+            var userMessageType = await _context.UserMessageTypes.SingleOrDefaultAsync(m => m.UserMessageTypeId == id);
+            if (userMessageType == null)
             {
                 return NotFound();
             }
-            return View(nirSpecial);
+            return View(userMessageType);
         }
 
-        // POST: NirSpecials/Edit/5
+        // POST: UserMessageTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("NirSpecialId,NirSpecialCode,NirSpecialName")] NirSpecial nirSpecial)
+        public async Task<IActionResult> Edit(int id, [Bind("UserMessageTypeId,UserMessageTypeName")] UserMessageType userMessageType)
         {
-            if (id != nirSpecial.NirSpecialId)
+            if (id != userMessageType.UserMessageTypeId)
             {
                 return NotFound();
             }
@@ -82,12 +97,12 @@ namespace KisVuzDotNetCore2.Controllers.Nir
             {
                 try
                 {
-                    _context.Update(nirSpecial);
+                    _context.Update(userMessageType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NirSpecialExists(nirSpecial.NirSpecialId))
+                    if (!UserMessageTypeExists(userMessageType.UserMessageTypeId))
                     {
                         return NotFound();
                     }
@@ -98,10 +113,10 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(nirSpecial);
+            return View(userMessageType);
         }
 
-        // GET: NirSpecials/Delete/5
+        // GET: UserMessageTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -109,30 +124,30 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 return NotFound();
             }
 
-            var nirSpecial = await _context.NirSpecials
-                .SingleOrDefaultAsync(m => m.NirSpecialId == id);
-            if (nirSpecial == null)
+            var userMessageType = await _context.UserMessageTypes
+                .SingleOrDefaultAsync(m => m.UserMessageTypeId == id);
+            if (userMessageType == null)
             {
                 return NotFound();
             }
 
-            return View(nirSpecial);
+            return View(userMessageType);
         }
 
-        // POST: NirSpecials/Delete/5
+        // POST: UserMessageTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var nirSpecial = await _context.NirSpecials.SingleOrDefaultAsync(m => m.NirSpecialId == id);
-            _context.NirSpecials.Remove(nirSpecial);
+            var userMessageType = await _context.UserMessageTypes.SingleOrDefaultAsync(m => m.UserMessageTypeId == id);
+            _context.UserMessageTypes.Remove(userMessageType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool NirSpecialExists(int id)
+        private bool UserMessageTypeExists(int id)
         {
-            return _context.NirSpecials.Any(e => e.NirSpecialId == id);
+            return _context.UserMessageTypes.Any(e => e.UserMessageTypeId == id);
         }
     }
 }

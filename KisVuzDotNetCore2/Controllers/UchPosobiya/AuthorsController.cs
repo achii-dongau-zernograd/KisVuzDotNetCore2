@@ -33,7 +33,7 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
         // GET: Authors/Create
         public IActionResult Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName");
+            ViewData["AppUserId"] = new SelectList(_context.Users.OrderBy(u => u.GetFullName), "Id", "GetFullName");
             return View();
         }
 
@@ -46,11 +46,16 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
         {
             if (ModelState.IsValid)
             {
+                // Проверяем, имеется ли уже зарегистрированный автор с указанными данными (ФИО)
+                bool isRegistered = _context.Author.Any(a => a.AuthorName == author.AuthorName);
+                if (isRegistered)
+                    return View("AuthorIsAlreadyRegistered");
+
                 _context.Add(author);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", author.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users.OrderBy(u => u.GetFullName), "Id", "GetFullName", author.AppUserId);
             return View(author);
         }
 
@@ -67,7 +72,7 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", author.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users.OrderBy(u => u.GetFullName), "Id", "GetFullName", author.AppUserId);
             return View(author);
         }
 
@@ -103,7 +108,7 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", author.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users.OrderBy(u => u.GetFullName), "Id", "Id", author.AppUserId);
             return View(author);
         }
 

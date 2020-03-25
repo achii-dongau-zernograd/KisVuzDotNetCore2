@@ -35,7 +35,7 @@
 
                 <li><a asp-controller="UserWorks" asp-action="Index" title="Загрузка работ пользователя (отчеты, курсовые и пр.)"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Работы пользователя</a></li>
                 <li><a asp-controller="UserAchievments" asp-action="Index" title="Иные достижения пользователя (выступления, участие в мероприятиях и пр.)"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Иные достижения</a></li>
-                
+
                 <li role="separator" class="divider"></li>
                 <li>
                     <a asp-controller="UserMessages" asp-action="Index" title="Сообщения пользователя">
@@ -48,6 +48,12 @@
                         {
                             <text>Сообщения</text>
                         }
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="MessagesFromAppUserToStudentGroups" asp-action="Index" title="Сообщения для учебных групп">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        Сообщения группе                       
                     </a>
                 </li>
 

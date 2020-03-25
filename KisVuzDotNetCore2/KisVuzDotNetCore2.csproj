@@ -518,6 +518,16 @@
     <Compile Remove="Migrations\20200319102845_test.Designer.cs" />
     <Compile Remove="Migrations\20200319152545_test.cs" />
     <Compile Remove="Migrations\20200319152545_test.Designer.cs" />
+    <Compile Remove="Migrations\20200323143543_MessagesFromAppUserToStudentGroups.cs" />
+    <Compile Remove="Migrations\20200323143543_MessagesFromAppUserToStudentGroups.Designer.cs" />
+    <Compile Remove="Migrations\20200323143900_MessagesFromAppUserToStudentGroups.cs" />
+    <Compile Remove="Migrations\20200323143900_MessagesFromAppUserToStudentGroups.Designer.cs" />
+    <Compile Remove="Migrations\20200323144019_MessagesFromAppUserToStudentGroups.cs" />
+    <Compile Remove="Migrations\20200323144019_MessagesFromAppUserToStudentGroups.Designer.cs" />
+    <Compile Remove="Migrations\20200324050609_MessageFromAppUserToStudentGroup.cs" />
+    <Compile Remove="Migrations\20200324050609_MessageFromAppUserToStudentGroup.Designer.cs" />
+    <Compile Remove="Migrations\20200324051047_MessageFromAppUserToStudentGroup.cs" />
+    <Compile Remove="Migrations\20200324051047_MessageFromAppUserToStudentGroup.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

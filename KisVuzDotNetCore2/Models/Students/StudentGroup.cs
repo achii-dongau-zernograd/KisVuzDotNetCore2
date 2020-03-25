@@ -129,5 +129,10 @@ namespace KisVuzDotNetCore2.Models.Students
         /// Ведомости данной группы
         /// </summary>
         public List<Vedomost> Vedomosti { get; set; }
+
+        /// <summary>
+        /// Сообщения от пользователя всей студенческой группы
+        /// </summary>
+        public List<MessageFromAppUserToStudentGroup> MessagesFromAppUserToStudentGroup { get; set; }
     }
 }

@@ -96,6 +96,20 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает список наименований учебных дисциплоин
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListDisciplineNames(int? selectedId = 0)
+        {
+            return new SelectList(_context.DisciplineNames
+                .OrderBy(dn => dn.DisciplineNameName),
+                "DisciplineNameId",
+                "DisciplineNameName",
+                selectedId);
+        }
+
+        /// <summary>
         /// Возвращает список дисциплин,
         /// содержащих заданную строку
         /// </summary>
@@ -373,12 +387,35 @@ namespace KisVuzDotNetCore2.Infrastructure
                  "EduYearBeginningTrainingId", "EduYearBeginningTrainingName", selectedId);
         }
 
+        /// <summary>
+        /// Возвращает список учебных групп
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListStudentGroups(int selectedId = 0)
+        {
+            return new SelectList(_context.StudentGroups
+                .Include(sg => sg.EduKurs)
+                .OrderBy(sg => sg.StudentGroupName),
+                 "StudentGroupId", "StudentGroupName", selectedId);
+        }
 
+        /// <summary>
+        /// Возвращает список типов пользовательских сообщений
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListUserMessageTypes(int selectedId = 0)
+        {
+            return new SelectList(_context.UserMessageTypes,
+                 "UserMessageTypeId", "UserMessageTypeName", selectedId);
+        }
 
         public dynamic GetSelectListScienceJournals(object scienceJournalId)
         {
             throw new NotImplementedException();
         }
 
+        
     }
 }

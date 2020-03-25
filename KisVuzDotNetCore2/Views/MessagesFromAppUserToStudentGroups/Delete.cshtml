@@ -1,0 +1,56 @@
+﻿@model KisVuzDotNetCore2.Models.Students.MessageFromAppUserToStudentGroup
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление сообщения учебной группе</h2>
+
+<h3>Вы действительно хотите удалить сообщение учебной группе?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentGroup)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StudentGroup.StudentGroupName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserMessageType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserMessageType.UserMessageTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DisciplineName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DisciplineName.DisciplineNameName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MessageText)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MessageText)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Link)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Link)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

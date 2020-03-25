@@ -54,7 +54,7 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="articleEntry"></param>
         /// <param name="article"></param>        
         void UpdateArticle(Article articleEntry, Article article);
-
+        
         /// <summary>
         /// Удаляет статью пользователя userName
         /// </summary>
@@ -90,7 +90,13 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="userName"></param>
         /// <returns></returns>
         AppUser GetAppUser(string userName);
-               
+
+        /// <summary>
+        /// Возвращает Id пользователя по его имени
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        string GetAppUserId(string userName);
 
         /// <summary>
         /// Возвращает патент (свидетельство) пользователя userName
