@@ -1,3 +1,41 @@
-﻿
+﻿@{ 
+    var roles = (List<IdentityRole>)ViewBag.Roles;
+    var userRoles = (IList<string>)ViewBag.UserRoles;
+}
 
 <h1>Редактирование ролей пользователя</h1>
+
+<form asp-action="ChangeUserRoles" method="post">
+
+    <table class="table">
+        @foreach (var role in roles.OrderBy(r => r.Name))
+        {
+            string isChecked = "";
+            foreach (var userRole in userRoles)
+            {
+                if(role.Name == userRole)
+                {
+                    isChecked = "checked";
+                    break;
+                }
+            }
+
+            <tr>
+                <td>
+                    @role.Name
+                </td>
+                <td>
+                    <input type="checkbox" name="selectedRoles" value="@role.Name" @isChecked />
+                </td>
+            </tr>
+
+        }
+    </table>
+
+    <div>
+        <input type="hidden" name="id" value="@ViewBag.Id" />
+        <input type="submit" value="Сохранить" class="btn btn-primary" />
+        <a asp-action="Search" class="btn btn-default">Отмена</a>
+    </div>
+
+</form>

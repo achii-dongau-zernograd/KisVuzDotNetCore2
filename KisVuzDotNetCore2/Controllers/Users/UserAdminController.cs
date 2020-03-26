@@ -15,7 +15,7 @@ namespace KisVuzDotNetCore2.Controllers
     [Authorize(Roles = "Администраторы")]
     public class UserAdminController : Controller
     {
-        #region Закрытые поля
+        #region Закрытые поля        
         private UserManager<AppUser> userManager;
         private IUserValidator<AppUser> userValidator;
         private IPasswordValidator<AppUser> passwordValidator;
@@ -32,7 +32,7 @@ namespace KisVuzDotNetCore2.Controllers
             AppIdentityDBContext ctx,
             IUserProfileRepository userProfileRepo
             )
-        {
+        {            
             userManager = usrMgr;
             userValidator = userValid;
             passwordValidator = passValid;
@@ -196,9 +196,38 @@ namespace KisVuzDotNetCore2.Controllers
         public async Task<IActionResult> EditUserRoles(string id)
         {
             var appUser = await userManager.FindByIdAsync(id);
-            var roles = context.Roles;
+            var roles = context.Roles.ToList();
             var userRoles = await userManager.GetRolesAsync(appUser);
+
+            ViewBag.Id = id;
+            ViewBag.Roles = roles;
+            ViewBag.UserRoles = userRoles;
+
             return View();
+        }
+
+        public async Task<IActionResult> ChangeUserRoles(string id, string[] selectedRoles)
+        {
+            var appUser = await userManager.FindByIdAsync(id);
+            var roles = context.Roles.ToList();
+            var userRoles = await userManager.GetRolesAsync(appUser);
+
+            foreach (var role in roles)
+            {
+                if (userRoles.Contains(role.Name) && !selectedRoles.Contains(role.Name))
+                {
+                    await userManager.RemoveFromRoleAsync(appUser, role.Name);
+                    continue;
+                }
+
+                if (!userRoles.Contains(role.Name) && selectedRoles.Contains(role.Name))
+                {
+                    await userManager.AddToRoleAsync(appUser, role.Name);                    
+                }
+            }
+
+            return RedirectToAction(nameof(Search), new { LastNameSearchFragment = appUser.LastName });
+            //return RedirectToAction(nameof(Search));
         }
         #endregion
 

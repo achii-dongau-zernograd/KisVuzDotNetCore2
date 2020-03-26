@@ -192,7 +192,7 @@
                     <ol>
                         @foreach (var author in Model.Author)
                         {
-                            foreach (var uchPosobieAuthor in author.UchPosobieAuthors.OrderBy(u => u.UchPosobie.GodIzdaniya))
+                            foreach (var uchPosobieAuthor in author.UchPosobieAuthors.OrderByDescending(u => u.UchPosobie.GodIzdaniya))
                             {
                                 <li>
                                     <a href="/@uchPosobieAuthor.UchPosobie.FileModel.Path">@uchPosobieAuthor.UchPosobie.BiblOpisanie</a>
