@@ -20,6 +20,39 @@ namespace KisVuzDotNetCore2.Models
         public string Password { get; set; }
     }
 
+    /// <summary>
+    /// Модель представления для регистрации нового абитуриента
+    /// </summary>
+    public class AppUserCreateModelAbitur
+    {
+        [Required]
+        [Display(Name = "Имя")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Фамилия")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Отчество")]
+        public string Patronymic { get; set; }
+
+        [DataType(DataType.Date)]
+        [Display(Name = "Дата рождения")]
+        public DateTime? Birthdate { get; set; }
+
+        [Required]
+        [Display(Name = "Телефон")]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Адрес электронной почты (Email)")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Пароль (не менее 6 символов)")]
+        public string Password { get; set; }
+    }
+
     public class LoginModel
     {
         [Required]

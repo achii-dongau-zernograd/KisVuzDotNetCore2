@@ -17,6 +17,12 @@ namespace KisVuzDotNetCore2.Models
     public class AppUser : IdentityUser
     {
         /// <summary>
+        /// Дата и время регистрации пользователя в системе
+        /// </summary>
+        [Display(Name = "Дата и время регистрации пользователя в системе")]
+        public DateTime? RegisterDateTime { get; set; }
+
+        /// <summary>
         /// Имя
         /// </summary>
         [Display(Name = "Имя")]
@@ -94,6 +100,13 @@ namespace KisVuzDotNetCore2.Models
         [DataType(DataType.Date)]
         [Display(Name = "Дата начала трудовой деятельности по специальности")]
         public DateTime? DateStartWorkingSpec { get; set; }
+
+        /// <summary>
+        /// Статус пользователя
+        /// </summary>
+        [Display(Name = "Статус пользователя")]
+        public AppUserStatus AppUserStatus { get; set; }
+        public int? AppUserStatusId { get; set; }
 
         /// <summary>
         /// Квалификации

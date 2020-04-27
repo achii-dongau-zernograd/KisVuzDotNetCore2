@@ -5,6 +5,8 @@
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Приёмная комиссия <span class="caret"></span></a>
         <ul class="dropdown-menu">
+            <li><a asp-controller="Abitur" asp-action="RegisteredAbiturs">Абитуриенты</a></li>
+            <li class="divider"></li>
             <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="LocalnieNormativnieActiReglamentiruyushiePravilaPriemaObuchaushihsya">Локальные нормативные акты, регламентирующие правила приема обучающихся</a></li>
             <li><a asp-controller="Documents" asp-action="Index" asp-route-id="" asp-route-doctype="ObrazecDogovoraObOkazaniiPlatnihObrazovatelnihUslug">Образец договора об оказании платных образовательных услуг</a></li>
             <li><a asp-controller="EduPriems" asp-action="Index">Результаты приема по каждой профессии, специальности СПО (табл. 8)</a></li>

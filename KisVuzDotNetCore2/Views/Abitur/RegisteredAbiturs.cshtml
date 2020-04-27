@@ -1,0 +1,38 @@
+﻿@model List<AppUser>
+
+@{
+    ViewData["Title"] = "Абитуриенты";
+}
+
+<h2>Абитуриенты</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Дата/время регистриции</th>
+            <th>ФИО</th>
+            <th>Статус</th>
+        </tr>        
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.RegisterDateTime</td>
+                    <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.Id">@item.GetFullName</a></td>
+                    <td>@item.AppUserStatus?.AppUserStatusName</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2" class="text-center">Абитуриенты не зарегистрированы</td>                
+            </tr>
+        }
+
+    </tbody>
+</table>
+

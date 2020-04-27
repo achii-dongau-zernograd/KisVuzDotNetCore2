@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewData["Title"] = "GenerateApplicationForAdmission";
+}
+
+<h2>Заявление о приёме</h2>
+
+<br>
+<hr />
+
+<canvas id="myCanvas" width="700" height="1000"
+        style="background-color:#fff; border:1px solid #ccc;">
+    Ваш браузер не поддерживает Canvas
+</canvas>
+
+
+<script>
+    var canvas = document.getElementById("myCanvas"),
+        context = canvas.getContext("2d");
+
+    context.beginPath();
+    context.moveTo(10, 10);
+    context.lineTo(70, 70);
+    context.moveTo(150, 50);
+    context.lineTo(150, 150);
+    context.stroke();
+
+    @*context.beginPath();
+    context.fillStyle = 'black';
+    context.moveTo(@x1 + @radius, @y0);
+    context.arc(@x1, @y0, @radius, 0, 2 * Math.PI, true);
+    context.moveTo(@x2 + @radius, @y0);
+    context.arc(@x2, @y0, @radius, 0, 2 * Math.PI, true);
+    context.moveTo(@x3 + @radius, @y0);
+    context.arc(@x3, @y0, @radius, 0, 2 * Math.PI, true);
+    context.moveTo(@x4 + @radius, @y0);
+    context.arc(@x4, @y0, @radius, 0, 2 * Math.PI, true);
+    context.moveTo(@x5 + @radius, @y0);
+    context.arc(@x5, @y0, @radius, 0, 2 * Math.PI, true);
+    context.moveTo(@x6 + @radius, @y0);
+    context.arc(@x6, @y0, @radius, 0, 2 * Math.PI, true);
+    context.fill();
+
+    context.beginPath();
+    context.moveTo(@x9, @y0);
+    context.arc(@x8, @y0, @radiusTP, 0, 2 * Math.PI, true);
+    context.moveTo(@x10, @y0);
+    context.arc(@x9, @y0, @radiusTP, 0, 2 * Math.PI, true);
+    context.stroke();
+
+    context.beginPath();
+    context.moveTo(@x10, @y0);
+    context.lineTo(@x12, @y0);
+    context.stroke();
+
+    context.beginPath();
+    context.arc(@x11, @y0, @radius, 0, 2 * Math.PI, true);
+    context.arc(@x12, @y0, @radius, 0, 2 * Math.PI, true);
+    context.fill();*@
+
+    context.beginPath();
+    context.fillStyle = 'black';
+    context.font = "14px Times";
+    context.fillText("Прошу допустить меня к участию в конкурсе по следующему направлению подготовки (специальности)", 10, 100);
+        context.fillText("1", 70, 50);
+        context.fillText("2", 90, 50);
+        context.fillText("3", 110, 50);
+        context.fillText("4", 130, 50);
+        context.fillText("5", 150, 50);
+        context.fillText("6", 170, 50);
+        context.fillText("T6", 190, 50);
+        context.fillText("а", 210, 50);
+        context.fillText("б", 230, 50);
+</script>
+

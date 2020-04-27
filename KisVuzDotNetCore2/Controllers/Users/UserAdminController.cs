@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -100,7 +101,7 @@ namespace KisVuzDotNetCore2.Controllers
                 }
             }
             return View(model);
-        }
+        }        
         #endregion
 
         #region Delete

@@ -304,6 +304,11 @@ namespace KisVuzDotNetCore2.Models
 
         #region Общие справочники (должности, адреса, телефоны, факсы и пр.)
         /// <summary>
+        /// Справочник статусов пользователей
+        /// </summary>
+        public DbSet<AppUserStatus> AppUserStatuses { get; set; }
+        
+        /// <summary>
         /// Справочник статусов записей
         /// </summary>
         public DbSet<RowStatus> RowStatuses { get; set; }
@@ -977,6 +982,8 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseNirSpecials.CreateNirSpecials(serviceProvider, configuration);
 
             await InitDatabaseUserMessageTypes.CreateUserMessageTypes(serviceProvider, configuration);
+
+            await InitDatabaseAppUserStatuses.CreateAppUserStatuses(serviceProvider, configuration);
         }        
     
     }
