@@ -28,7 +28,7 @@ namespace KisVuzDotNetCore2.Models
         #region Конструктор
         public AppIdentityDBContext(DbContextOptions<AppIdentityDBContext> options) : base(options)
         {
-
+            
         }
         #endregion
         #region Таблицы
