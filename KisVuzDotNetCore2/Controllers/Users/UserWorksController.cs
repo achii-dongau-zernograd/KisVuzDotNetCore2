@@ -110,7 +110,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             {
                 if(uploadedFile!=null)
                 {
-                    var loadedFile = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Работа пользователя", FileDataTypeEnum.UserWork);
+                    var loadedFile = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Работа пользователя", FileDataTypeEnum.UserWork);
                     if(loadedFile!=null)
                     {
                         userWork.FileModelId = loadedFile.Id;
@@ -174,12 +174,12 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 {
                     if (uploadedFile != null)
                     {
-                        var loadedFile = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Работа пользователя", FileDataTypeEnum.UserWork);
+                        var loadedFile = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Работа пользователя", FileDataTypeEnum.UserWork);
                         await _context.SaveChangesAsync();
                         var fileToRemoveId = userWork.FileModelId;
                         userWork.FileModelId = loadedFile.Id;
                         await _context.SaveChangesAsync();
-                        Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+                        KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
                     }
 
                     _context.Update(userWork);
@@ -228,7 +228,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         {
             var userWork = await _context.UserWorks.SingleOrDefaultAsync(m => m.UserWorkId == id);
             _context.UserWorks.Remove(userWork);
-            Files.RemoveFile(_context,_appEnvironment, userWork.FileModelId);
+            KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context,_appEnvironment, userWork.FileModelId);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

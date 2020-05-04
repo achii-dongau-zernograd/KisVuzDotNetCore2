@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Education;
+using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Students;
@@ -168,5 +169,10 @@ namespace KisVuzDotNetCore2.Models
         /// Сообщения от пользователя для студенческих групп
         /// </summary>
         public List<MessageFromAppUserToStudentGroup> MessagesFromAppUserToStudentGroups { get; set; }
+
+        /// <summary>
+        /// Документы пользователя
+        /// </summary>
+        public List<UserDocument> UserDocuments { get; set; }
     }
 }

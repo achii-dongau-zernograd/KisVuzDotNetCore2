@@ -113,7 +113,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             {
                 if(uploadedFile!=null)
                 {
-                    var loadedFile = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Рецензия на работу пользователя", FileDataTypeEnum.UserWorkRecenziya);
+                    var loadedFile = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Рецензия на работу пользователя", FileDataTypeEnum.UserWorkRecenziya);
                     userWorkReview.FileModelId = loadedFile.Id;
                 }
                 _context.Add(userWorkReview);
@@ -172,10 +172,10 @@ namespace KisVuzDotNetCore2.Controllers.Users
                         {
                             userWorkReview.FileModelId = null;
                             _context.Update(userWorkReview);
-                            Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+                            KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
                             await _context.SaveChangesAsync();
                         }
-                        var loadedFile = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Рецензия на работу пользователя", FileDataTypeEnum.UserWorkRecenziya);
+                        var loadedFile = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Рецензия на работу пользователя", FileDataTypeEnum.UserWorkRecenziya);
                         userWorkReview.FileModelId = loadedFile.Id;
                     }
                     _context.Update(userWorkReview);
@@ -233,7 +233,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             if(userWorkReview.FileModelId!=null)
             {
                 await _context.SaveChangesAsync();
-                Files.RemoveFile(_context,_appEnvironment, userWorkReview.FileModelId);
+                KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context,_appEnvironment, userWorkReview.FileModelId);
             }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index),new { userWorkReview.UserWorkId });

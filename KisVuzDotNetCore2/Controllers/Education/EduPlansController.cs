@@ -137,7 +137,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
         {
             if (ModelState.IsValid && uploadedFile != null)
             {
-                FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Учебный план", FileDataTypeEnum.UchebniyPlan);
+                FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Учебный план", FileDataTypeEnum.UchebniyPlan);
 
                 eduPlan.EduPlanPdfId = fileModel.Id;
                 _context.EduPlans.Add(eduPlan);
@@ -264,12 +264,12 @@ namespace KisVuzDotNetCore2.Controllers.Education
             {
                 if (uploadedFile != null)
                 {
-                    FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Учебный план", FileDataTypeEnum.UchebniyPlan);
+                    FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Учебный план", FileDataTypeEnum.UchebniyPlan);
                     await _context.SaveChangesAsync();
                     int? fileToRemoveId = eduPlan.EduPlanPdfId;
                     eduPlan.EduPlanPdfId = fileModel.Id;
                     await _context.SaveChangesAsync();
-                    Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+                    KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
                 }
 
                 try
@@ -403,7 +403,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
             var eduPlan = await _context.EduPlans.SingleOrDefaultAsync(m => m.EduPlanId == id);
             _context.EduPlans.Remove(eduPlan);
 
-            Files.RemoveFile(_context, _appEnvironment, eduPlan?.EduPlanPdfId);
+            KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, eduPlan?.EduPlanPdfId);
 
             await _context.SaveChangesAsync();
 

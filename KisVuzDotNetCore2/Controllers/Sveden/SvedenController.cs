@@ -309,7 +309,8 @@ namespace KisVuzDotNetCore2.Controllers
                 //            .ThenInclude(f => f.EduForm)
                 .Include(e => e.TeacherEduProfileDisciplineNames)
                     .ThenInclude(ep => ep.EduProfile)
-                        .ThenInclude(p => p.EduNapravl)                            
+                        .ThenInclude(p => p.EduNapravl)
+                .Where(t => t.IsIdle != true)
                 .ToListAsync();
             ViewData["teacher1"] = teacher1;
             #endregion
@@ -673,7 +674,7 @@ namespace KisVuzDotNetCore2.Controllers
         /// Подраздел "Международное сотрудничество"
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Inter()
+        public IActionResult Inter()
         {
 
             return View();

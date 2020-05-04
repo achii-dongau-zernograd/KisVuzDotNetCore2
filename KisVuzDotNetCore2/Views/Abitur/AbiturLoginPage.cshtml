@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "Абитуриента";
+}
+
+<h2>Кабинет абитуриента</h2>
+<hr />
+
+<p>
+    Для входа в систему нажмите на кнопку "Войти".
+</p>
+<div class="panel">
+    <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Abitur/Start" class="btn btn-primary">Войти</a>
+</div>
+
+<hr />
+
+<p>
+    Если вы ещё не зарегистрированы, нажмите на кнопку "Регистрация абитуриента"
+</p>
+<div>    
+    <a asp-controller="Abitur" asp-action="Register" class="btn btn-success">Регистрация абитуриента</a>
+</div>

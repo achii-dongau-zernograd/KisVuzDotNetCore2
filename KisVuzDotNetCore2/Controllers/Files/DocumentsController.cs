@@ -58,7 +58,7 @@ namespace KisVuzDotNetCore2.Controllers
             if (uploadedFile == null || doctype == null)
                 return NotFound();
 
-            FileModel fileModelUploaded = await Files.LoadFile(_context, _appEnvironment, uploadedFile, fileName, (FileDataTypeEnum)doctype);
+            FileModel fileModelUploaded = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, fileName, (FileDataTypeEnum)doctype);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index), new { doctype });
@@ -89,9 +89,9 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 if (uploadedFile != null)
                 {
-                    FileModel fileModelUploaded = await Files.LoadFile(_context, _appEnvironment, uploadedFile, fileModel.Name, (FileDataTypeEnum)doctype);
-                    await _context.SaveChangesAsync();                    
-                    Files.RemoveFile(_context, _appEnvironment, fileModel.Id);
+                    FileModel fileModelUploaded = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, fileModel.Name, (FileDataTypeEnum)doctype);
+                    await _context.SaveChangesAsync();
+                    KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, fileModel.Id);
                     await _context.SaveChangesAsync();
                 }
                 else
@@ -114,7 +114,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             if(id!=null)
             {
-                Files.RemoveFile(_context, _appEnvironment, id);
+                KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, id);
                 await _context.SaveChangesAsync();
             }
 

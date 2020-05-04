@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.WorkExperienceSpecialty)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsIdle)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -48,6 +51,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.WorkExperienceSpecialty)
+            </td>
+            <td>
+                @if(item.IsIdle == true)
+                {
+                    <p class="text-danger">Не работает в н.в.</p>
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TeacherId">Редактировать</a> |

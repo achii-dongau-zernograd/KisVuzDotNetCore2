@@ -20,7 +20,7 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         }
 
         // GET: ScienceJournals
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var scienceJournal = _scienceJournalRepository.GetScienceJournals();
             return View(scienceJournal);

@@ -106,7 +106,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             if (ModelState.IsValid && uploadedFile!=null)
             {
-                FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Образовательная программа", FileDataTypeEnum.OPOP);
+                FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Образовательная программа", FileDataTypeEnum.OPOP);
                 eduProgram.FileModelId = fileModel.Id;
                 _context.Add(eduProgram);
                 await _context.SaveChangesAsync();
@@ -197,12 +197,12 @@ namespace KisVuzDotNetCore2.Controllers
                 {
                     if (uploadedFile != null)
                     {
-                        FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Образовательная программа", FileDataTypeEnum.OPOP);
+                        FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Образовательная программа", FileDataTypeEnum.OPOP);
                         await _context.SaveChangesAsync();
                         int? fileToRemoveId = eduProgram.FileModelId;
                         eduProgram.FileModelId = fileModel.Id;
                         await _context.SaveChangesAsync();
-                        Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+                        KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
                     }
 
                     _context.Update(eduProgram);
@@ -305,7 +305,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             var eduProgram = await _context.EduPrograms.SingleOrDefaultAsync(m => m.EduProgramId == id);
             _context.EduPrograms.Remove(eduProgram);
-            Files.RemoveFile(_context, _appEnvironment, eduProgram?.FileModelId);
+            KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, eduProgram?.FileModelId);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

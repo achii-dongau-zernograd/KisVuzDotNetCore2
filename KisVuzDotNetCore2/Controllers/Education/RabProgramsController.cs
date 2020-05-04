@@ -107,7 +107,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
         {
             if (ModelState.IsValid && uploadedFile != null)
             {
-                FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Рабочая программа", FileDataTypeEnum.RabProgrammaDisciplini);
+                FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Рабочая программа", FileDataTypeEnum.RabProgrammaDisciplini);
                 rabProgram.FileModelId = fileModel.Id;
                 _context.Add(rabProgram);
                 await _context.SaveChangesAsync();
@@ -205,12 +205,12 @@ namespace KisVuzDotNetCore2.Controllers.Education
             {
                 if (uploadedFile != null)
                 {
-                    FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Рабочая программа", FileDataTypeEnum.RabProgrammaDisciplini);
+                    FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Рабочая программа", FileDataTypeEnum.RabProgrammaDisciplini);
                     await _context.SaveChangesAsync();
                     int? fileToRemoveId = rabProgram.FileModelId;
                     rabProgram.FileModelId = fileModel.Id;
                     await _context.SaveChangesAsync();
-                    Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+                    KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
                 }
 
                 try

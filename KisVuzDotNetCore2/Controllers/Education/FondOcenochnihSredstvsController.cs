@@ -107,7 +107,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             if (ModelState.IsValid && uploadedFile != null)
             {
-                FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Фонд оценочных средств", FileDataTypeEnum.FondOcenochnihSredstv);
+                FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Фонд оценочных средств", FileDataTypeEnum.FondOcenochnihSredstv);
                 fondOcenochnihSredstv.FileModelId = fileModel.Id;
                 _context.Add(fondOcenochnihSredstv);
                 await _context.SaveChangesAsync();
@@ -204,12 +204,12 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 if (uploadedFile != null)
                 {
-                    FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Фонд оценочных средств", FileDataTypeEnum.FondOcenochnihSredstv);
+                    FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Фонд оценочных средств", FileDataTypeEnum.FondOcenochnihSredstv);
                     await _context.SaveChangesAsync();
                     int? fileToRemoveId = fondOcenochnihSredstv.FileModelId;
                     fondOcenochnihSredstv.FileModelId = fileModel.Id;
                     await _context.SaveChangesAsync();
-                    Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+                    KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
                 }
 
                 try

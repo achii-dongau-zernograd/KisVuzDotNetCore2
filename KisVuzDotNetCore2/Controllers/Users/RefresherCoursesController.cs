@@ -127,7 +127,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         {
             if (ModelState.IsValid && uploadedFile != null)
             {
-                FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Удостоверение о повышении квалификации", FileDataTypeEnum.UdostoverenieOPovisheniiKvalifikacii);
+                FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Удостоверение о повышении квалификации", FileDataTypeEnum.UdostoverenieOPovisheniiKvalifikacii);
                 refresherCourse.RefresherCourseFileId = fileModel.Id;
                 refresherCourse.RowStatusId = (int)RowStatusEnum.NotConfirmed;
                 _context.Add(refresherCourse);
@@ -192,12 +192,12 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 {
                     if (uploadedFile != null)
                     {
-                        FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Удостоверение о повышении квалификации", FileDataTypeEnum.UdostoverenieOPovisheniiKvalifikacii);
+                        FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Удостоверение о повышении квалификации", FileDataTypeEnum.UdostoverenieOPovisheniiKvalifikacii);
                         await _context.SaveChangesAsync();
                         int? fileToRemoveId = refresherCourse.RefresherCourseFileId;
                         refresherCourse.RefresherCourseFileId = fileModel.Id;                        
                         await _context.SaveChangesAsync();
-                        Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+                        KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
                     }
                     refresherCourse.RowStatusId = (int)RowStatusEnum.NotConfirmed;
                     _context.Update(refresherCourse);
@@ -247,7 +247,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         {
             var refresherCourse = await _context.RefresherCourses.SingleOrDefaultAsync(m => m.RefresherCourseId == id);
             _context.RefresherCourses.Remove(refresherCourse);
-            Files.RemoveFile(_context, _appEnvironment, refresherCourse.RefresherCourseFileId);
+            KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, refresherCourse.RefresherCourseFileId);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index), new { id = refresherCourse.AppUserId });
         }

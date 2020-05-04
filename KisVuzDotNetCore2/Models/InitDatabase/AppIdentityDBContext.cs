@@ -17,6 +17,7 @@ using KisVuzDotNetCore2.Models.UchPosobiya;
 using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Students;
 using KisVuzDotNetCore2.Models.Nir;
+using KisVuzDotNetCore2.Models.Files;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -526,6 +527,11 @@ namespace KisVuzDotNetCore2.Models
         /// Группы типов содержимого файлов
         /// </summary>
         public DbSet<FileDataTypeGroup> FileDataTypeGroups { get; set; }
+
+        /// <summary>
+        /// Документы пользователя
+        /// </summary>
+        public DbSet<UserDocument> UserDocuments { get; set; }
         #endregion
 
         #region Прием

@@ -528,6 +528,8 @@
     <Compile Remove="Infrastructure\Migrations\20200324050609_MessageFromAppUserToStudentGroup.Designer.cs" />
     <Compile Remove="Infrastructure\Migrations\20200324051047_MessageFromAppUserToStudentGroup.cs" />
     <Compile Remove="Infrastructure\Migrations\20200324051047_MessageFromAppUserToStudentGroup.Designer.cs" />
+    <Compile Remove="Migrations\20200504121245_IsIdle.cs" />
+    <Compile Remove="Migrations\20200504121245_IsIdle.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

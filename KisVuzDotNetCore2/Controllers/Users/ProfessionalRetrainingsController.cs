@@ -126,7 +126,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             if (ModelState.IsValid && uploadedFile != null)
             {
-                FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Диплом о профессиональной переподготовке", FileDataTypeEnum.DiplomOProfessionalnoyPerepodgotovke);
+                FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Диплом о профессиональной переподготовке", FileDataTypeEnum.DiplomOProfessionalnoyPerepodgotovke);
                 professionalRetraining.ProfessionalRetrainingFileId = fileModel.Id;
                 professionalRetraining.RowStatusId = (int)RowStatusEnum.NotConfirmed;
                 _context.Add(professionalRetraining);
@@ -190,12 +190,12 @@ namespace KisVuzDotNetCore2.Controllers
                 {
                     if (uploadedFile != null)
                     {
-                        FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Диплом о профессиональной переподготовке", FileDataTypeEnum.DiplomOProfessionalnoyPerepodgotovke);
+                        FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Диплом о профессиональной переподготовке", FileDataTypeEnum.DiplomOProfessionalnoyPerepodgotovke);
                         await _context.SaveChangesAsync();
                         int? fileToRemoveId = professionalRetraining.ProfessionalRetrainingFileId;
                         professionalRetraining.ProfessionalRetrainingFileId = fileModel.Id;
                         await _context.SaveChangesAsync();
-                        Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+                        KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
                     }
                     professionalRetraining.RowStatusId = (int)RowStatusEnum.NotConfirmed;
                     _context.Update(professionalRetraining);
@@ -245,7 +245,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             var professionalRetraining = await _context.ProfessionalRetrainings.SingleOrDefaultAsync(m => m.ProfessionalRetrainingId == id);
             _context.ProfessionalRetrainings.Remove(professionalRetraining);
-            Files.RemoveFile(_context,_appEnvironment, professionalRetraining.ProfessionalRetrainingFileId);
+            KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context,_appEnvironment, professionalRetraining.ProfessionalRetrainingFileId);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index), new { id = professionalRetraining.AppUserId });
         }

@@ -79,7 +79,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             if (ModelState.IsValid && uploadedFile!=null)
             {
-                FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Календарный учебный график", FileDataTypeEnum.KalendarniyUchebniyGraphik);
+                FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Календарный учебный график", FileDataTypeEnum.KalendarniyUchebniyGraphik);
                 eduShedule.FileModelId = fileModel.Id;
                 _context.Add(eduShedule);
                 await _context.SaveChangesAsync();
@@ -130,12 +130,12 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 if (uploadedFile != null)
                 {
-                    FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, "Календарный учебный график", FileDataTypeEnum.KalendarniyUchebniyGraphik);
+                    FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, "Календарный учебный график", FileDataTypeEnum.KalendarniyUchebniyGraphik);
                     await _context.SaveChangesAsync();
                     int? fileToRemoveId = eduShedule.FileModelId;
                     eduShedule.FileModelId = fileModel.Id;
                     await _context.SaveChangesAsync();
-                    Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+                    KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
                 }
 
                 try
@@ -193,7 +193,7 @@ namespace KisVuzDotNetCore2.Controllers
             var eduShedule = await _context.EduShedules.SingleOrDefaultAsync(m => m.EduSheduleId == id);
             _context.EduShedules.Remove(eduShedule);
 
-            Files.RemoveFile(_context, _appEnvironment, eduShedule?.FileModelId);
+            KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, eduShedule?.FileModelId);
                         
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

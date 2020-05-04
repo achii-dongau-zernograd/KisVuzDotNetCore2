@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Students;
 using Microsoft.AspNetCore.Http;
@@ -80,11 +81,25 @@ namespace KisVuzDotNetCore2.Models.Files
         Task<FileModel> UploadMonografAsync(Monograf monograf, IFormFile uploadedFile);
 
         /// <summary>
+        /// Загружает файл согласия на обработку персональных данных
+        /// </summary>
+        /// <param name="uploadedFile">Загружаемый файл</param>
+        /// <returns></returns>
+        Task<FileModel> UploadApplicationForProcessingPersonalDataAsync(IFormFile uploadedFile);
+
+        /// <summary>
         /// Загружает файл результатов освоения образовательной программы
         /// </summary>
         /// <param name="student"></param>
         /// <param name="uploadFile"></param>
         /// <returns></returns>
         Task<FileModel> UploadRezultOsvoenObrazovatProgrAsync(Student student, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Возвращает типы файлов указанной группы
+        /// </summary>
+        /// <param name="fileDataTypeGroup"></param>
+        /// <returns></returns>
+        IQueryable<FileDataType> GetFileDataTypes(FileDataTypeGroupEnum fileDataTypeGroup);
     }
 }

@@ -195,6 +195,10 @@
         /// <summary>
         /// Результаты освоения образовательной программы
         /// </summary>
-        RezultOsvoenObrazovatProgr = 57
+        RezultOsvoenObrazovatProgr = 57,
+        /// <summary>
+        /// Согласие на обработку персональных данных
+        /// </summary>
+        SoglasieNaObrabotkuPersonalnihDannih = 58
     }
 }

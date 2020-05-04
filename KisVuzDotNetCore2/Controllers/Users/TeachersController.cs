@@ -65,10 +65,11 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Teacher teacher)
+        public async Task<IActionResult> Create(Teacher teacher, string IsIdleSelect)
         {
             if (ModelState.IsValid)
             {
+                teacher.IsIdle = IsIdleSelect == "on" ? true : false;
                 _context.Add(teacher);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -91,6 +92,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 return NotFound();
             }
             ViewData["AppUserId"] = _selectListRepository.GetSelectListAppUsers(teacher.AppUserId);
+            ViewData["IsIdle"] = teacher.IsIdle == true ? true : false;
             return View(teacher);
         }
 
@@ -99,7 +101,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Teacher teacher)
+        public async Task<IActionResult> Edit(int id, Teacher teacher, string IsIdleSelect)
         {
             if (id != teacher.TeacherId)
             {
@@ -110,6 +112,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             {
                 try
                 {
+                    teacher.IsIdle = IsIdleSelect=="on" ? true : false;
                     _context.Update(teacher);
                     await _context.SaveChangesAsync();
                 }

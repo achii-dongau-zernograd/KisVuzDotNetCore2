@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200428085618_UserDocuments")]
+    partial class UserDocuments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2830,8 +2831,6 @@ namespace KisVuzDotNetCore2.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("AppUserId");
-
-                    b.Property<bool?>("IsIdle");
 
                     b.Property<string>("TeacherFio");
 

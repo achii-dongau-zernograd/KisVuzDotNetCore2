@@ -126,7 +126,7 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
                     fileDataTypeEnum = (FileDataTypeEnum)fileDataType.FileDataTypeId;
                 }
                 
-                FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, uchPosobie.UchPosobieName, fileDataTypeEnum);
+                FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, uchPosobie.UchPosobieName, fileDataTypeEnum);
                 uchPosobie.FileModelId = fileModel.Id;
                 _context.Add(uchPosobie);
                 await _context.SaveChangesAsync();
@@ -184,12 +184,12 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
 
                 if (uploadedFile != null)
                 {
-                    FileModel fileModel = await Files.LoadFile(_context, _appEnvironment, uploadedFile, uchPosobie.UchPosobieName, fileDataTypeEnum);
+                    FileModel fileModel = await KisVuzDotNetCore2.Models.Files.Files.LoadFile(_context, _appEnvironment, uploadedFile, uchPosobie.UchPosobieName, fileDataTypeEnum);
                     await _context.SaveChangesAsync();                    
                     int? fileToRemoveId = uchPosobie.FileModelId;
                     uchPosobie.FileModelId = fileModel.Id;
                     await _context.SaveChangesAsync();
-                    Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+                    KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
                 }
                 
                 try
@@ -245,7 +245,7 @@ namespace KisVuzDotNetCore2.Controllers.UchPosobiya
             var uchPosobie = await _context.UchPosobie.SingleOrDefaultAsync(m => m.UchPosobieId == id);
             _context.UchPosobie.Remove(uchPosobie);
 
-            Files.RemoveFile(_context, _appEnvironment, uchPosobie?.FileModelId);
+            KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, uchPosobie?.FileModelId);
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

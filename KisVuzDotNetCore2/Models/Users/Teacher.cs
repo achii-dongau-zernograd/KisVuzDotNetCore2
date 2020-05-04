@@ -35,6 +35,15 @@ namespace KisVuzDotNetCore2.Models.Users
         public string WorkExperienceSpecialty { get; set; }
 
         /// <summary>
+        /// Флаг для определения неработающих в настоящее время сотрудников
+        /// (null, false - штатный, работает в настоящее время,
+        /// true - неработающий, уволенный и пр. )
+        /// </summary>
+        [Display(Name = "Не работает в н.в.")]
+        public bool? IsIdle { get; set; }
+       
+
+        /// <summary>
         /// Профили подготовки и дисциплины преподавателя
         /// </summary>
         public List<TeacherEduProfileDisciplineName> TeacherEduProfileDisciplineNames { get; set; }

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.Common;
+using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Priem;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +21,7 @@ using Spire.Pdf;
 using Spire.Pdf.Graphics;
 
 namespace KisVuzDotNetCore2.Controllers
-{    
+{
     public class AbiturController : Controller
     {
         string searchTemplate = "";
@@ -29,22 +32,102 @@ namespace KisVuzDotNetCore2.Controllers
         List<BlankNum> blankNum = new List<BlankNum>();
 
         private readonly AppIdentityDBContext _context;
-        private UserManager<AppUser> _userManager;
-        private SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly IAbiturRepository _abiturRepository;
+        private readonly IFileModelRepository _fileModelRepository;
+        private readonly IUserDocumentRepository _userDocumentRepository;
 
         public AbiturController(AppIdentityDBContext context,
             UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager)
+            SignInManager<AppUser> signInManager,
+            IAbiturRepository abiturRepository,
+            IFileModelRepository fileModelRepository,
+            IUserDocumentRepository userDocumentRepository)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _abiturRepository = abiturRepository;
+            _fileModelRepository = fileModelRepository;
+            _userDocumentRepository = userDocumentRepository;
         }
 
         public IActionResult Index()
         {
             return View();
         }
+
+        #region Стартовая страница абитуриента
+        public IActionResult Start()
+        {
+            // Если пользователь не вошёл в систему,
+            // отображаем форму, позволяющую либо зарегистрироваться,
+            // либо войти в систему
+            if (!User.Identity.IsAuthenticated)
+                return View("AbiturLoginPage");
+
+            // Если пользователь не является абитуриентом - выводим соответствующее сообщение
+            if (!_abiturRepository.IsAbitur(User.Identity.Name))
+                return View("NotAbiturMessageForm");
+
+            // Проверяем наличие у абитуриента загруженного заявления
+            // на обработку персональных данных
+            if (!_abiturRepository.IsLoadedFileApplicationForProcessingPersonalData(User.Identity.Name))
+                return View("LoadFileApplicationForProcessingPersonalData");
+
+            // Проверяем наличие у абитуриента загруженного документа об образовании
+            if (!_abiturRepository.IsLoadedFileEducationDocuments(User.Identity.Name))
+                return RedirectToAction(nameof(LoadFileEducationDocument));
+
+            return View();
+        }
+
+        /// <summary>
+        /// Загрузка заявления
+        /// на обработку персональных данных
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> LoadFileApplicationForProcessingPersonalData(IFormFile uploadedFile)
+        {
+            if (uploadedFile == null)
+                RedirectToAction(nameof(Start));
+
+            UserDocument newUserDocument = await _userDocumentRepository
+                .CreateApplicationForProcessingPersonalDataAsync(User.Identity.Name, uploadedFile);
+
+            return RedirectToAction(nameof(Start));
+        }
+
+        /// <summary>
+        /// Загрузка документа об образовании
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult LoadFileEducationDocument()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Загрузка документа об образовании
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> LoadFileEducationDocument(IFormFile uploadedFile)
+        {
+            if (uploadedFile == null)
+                RedirectToAction(nameof(Start));
+
+            UserDocument newUserDocument = await _userDocumentRepository
+                .CreateApplicationForProcessingPersonalDataAsync(User.Identity.Name, uploadedFile);
+
+            return RedirectToAction(nameof(Start));
+        }
+        #endregion
+
 
         #region Регистрация абитуриентов и прием документов
         public IActionResult Register()
@@ -118,6 +201,8 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public IActionResult GenerateApplicationForAdmission()
         {
+            var systemFontCollection = SystemFonts.Collection;
+
             #region SixLabors.ImageSharp
             using (Image img = new Image<Rgba32>(1500, 500))
             {
@@ -132,7 +217,8 @@ namespace KisVuzDotNetCore2.Controllers
                 // singleton and manually install the ttf fonts yourself as using SystemFonts
                 // can be expensive and you risk font existing or not existing on a deployment
                 // by deployment basis.
-                var font = SystemFonts.CreateFont("Arial", 14, FontStyle.Regular);
+                var font = SystemFonts.CreateFont(
+                    "Arial", 14, FontStyle.Regular);
 
                 string text = "Тестовая строка";
                 var textGraphicsOptions = new TextGraphicsOptions(true) // draw the text along the path wrapping at the end of the line

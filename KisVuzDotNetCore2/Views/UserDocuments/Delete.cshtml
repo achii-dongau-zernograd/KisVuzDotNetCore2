@@ -1,0 +1,39 @@
+﻿@model KisVuzDotNetCore2.Models.Files.UserDocument
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>UserDocument</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileDataType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileDataType.FileDataTypeId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileModel.Id)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="UserDocumentId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

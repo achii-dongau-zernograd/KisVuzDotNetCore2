@@ -113,6 +113,11 @@ namespace KisVuzDotNetCore2.Models.Files
                 Path.GetExtension(uploadedFile.FileName);
             // путь к папке files
             string[] paths = { _appEnvironment.WebRootPath, "files", fileName };
+
+            string pathToDirectory = Path.Combine(paths[0],paths[1]);
+            if (!Directory.Exists(pathToDirectory))
+                Directory.CreateDirectory(pathToDirectory);
+
             string path = Path.Combine(paths);
             // сохраняем файл в папку files в каталоге wwwroot
             using (var fileStream = new FileStream(path, FileMode.Create))
@@ -295,6 +300,31 @@ namespace KisVuzDotNetCore2.Models.Files
             }
 
             return student.RezultOsvoenObrazovatProgr;
+        }
+
+        /// <summary>
+        /// Загружает файл согласия на обработку персональных данных
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadApplicationForProcessingPersonalDataAsync(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                "Согласие на обработку персональных данных",
+                FileDataTypeEnum.SoglasieNaObrabotkuPersonalnihDannih);
+            return fileModel;
+        }
+
+        /// <summary>
+        /// Возвращает типы файлов для заданной группы
+        /// </summary>
+        /// <param name="fileDataTypeGroup"></param>
+        /// <returns></returns>
+        public IQueryable<FileDataType> GetFileDataTypes(FileDataTypeGroupEnum fileDataTypeGroup)
+        {
+            var fileDataTypes = _context.FileDataTypes.Where(f => f.FileDataTypeGroupId == (int)fileDataTypeGroup);
+
+            return fileDataTypes;
         }
     }
 }
