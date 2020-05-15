@@ -1,0 +1,240 @@
+﻿
+@{
+    ViewData["Title"] = "Кабинет абитуриента";
+    var abiturient = (Abiturient)ViewBag.Abiturient;
+    var passport = abiturient.AppUser.PassportData;
+    var selectedTab = (string)ViewBag.SelectedTab;
+    if(string.IsNullOrWhiteSpace(selectedTab))
+    {
+        selectedTab = "passportData";
+    }
+
+    string passportDataClass = "";
+    string userDocumentsClass = "";
+    string abiturientAchievmentsClass = "";
+    string applicationForAdmissionsClass = "";
+
+    switch (selectedTab)
+    {
+        case "passportData":
+            passportDataClass = "active";
+            break;
+        case "userDocuments":
+            userDocumentsClass = "active";
+            break;
+        case "abiturientAchievments":
+            abiturientAchievmentsClass = "active";
+            break;
+        case "applicationForAdmissions":
+            applicationForAdmissionsClass = "active";
+            break;
+    }
+
+}
+
+<h2>Личный кабинет абитуриента</h2>
+
+@*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*@
+
+<ul class="nav nav-tabs" id="myTab">
+    <li class="@passportDataClass"><a href="#passportData" data-toggle="tab">Паспортные данные</a></li>
+    <li class="@userDocumentsClass"><a href="#userDocuments" data-toggle="tab">Загруженные документы</a></li>    
+    <li class="@abiturientAchievmentsClass"><a href="#abiturientAchievments" data-toggle="tab">Индивидуальные достижения</a></li>
+    <li class="@applicationForAdmissionsClass"><a href="#applicationForAdmissions" data-toggle="tab">Заявления о приёме</a></li>    
+</ul>
+
+<div class="tab-content">
+    @*//////////////////////////////////////////////////////////// Паспортные данные /////////////////////////////////////////////////////*@
+    <div class="tab-pane @passportDataClass" id="passportData">
+        <br />
+        <p>Паспорт выдан @passport.KemVidan @passport.DataVidachi.ToString("d"), код подразделения: @passport.KodPodrazdeleniya.</p>
+        <p>Привязанный документ: <a href="/@passport.UserDocument?.FileModel?.Path">Просмотр</a></p>
+    </div>
+
+    @*////////////////////////////////////////////////////////// Загруженные документы ///////////////////////////////////////////////////*@
+    <div class="tab-pane @userDocumentsClass" id="userDocuments">
+        <br />
+        <table class="table table-hover">
+            @foreach (var userDocumentGroup in abiturient.AppUser.UserDocuments.GroupBy(ud => ud.FileDataType.FileDataTypeName).OrderBy(g => g.Key))
+            {
+                <tr>
+                    <td>@userDocumentGroup.Key</td>
+                    <td>
+                        @foreach (var userDocument in userDocumentGroup)
+                        {
+                            var userDocumentRowStatus = userDocument.GetRowStatusEnum;
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <a href="/@userDocument.FileModel.Path">Открыть</a>
+                                </div>
+                                <div class="col-md-2">
+
+                                    @if (userDocumentRowStatus == RowStatusEnum.Confirmed)
+                                    {
+                                        <p class="text-primary">Подтверждено</p>
+                                    }
+                                    else if (userDocumentRowStatus == RowStatusEnum.ReturnedForCorrection)
+                                    {
+                                        <p class="text-danger">Возвращено на доработку</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-warning">На проверке</p>
+                                    }
+                                </div>
+                                <div class="col-md-3">
+                                    <p>@userDocument.Remark</p>
+                                </div>
+
+                                @if (userDocumentRowStatus != RowStatusEnum.Confirmed)
+                                {
+                                    <div class="col-md-2">
+                                        <a class="btn btn-primary btn-block" asp-action="ReloadUserDocument" asp-route-userDocumentId="@userDocument.UserDocumentId">Заменить</a>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a class="btn btn-danger  btn-block" asp-action="RemoveUserDocument" asp-route-userDocumentId="@userDocument.UserDocumentId">Удалить</a>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    @*//////////////////////////////////////////////////////// Индивидуальные достижения /////////////////////////////////////////////////*@
+    <div class="tab-pane @abiturientAchievmentsClass" id="abiturientAchievments">
+        <br />
+        <a asp-action="CreateAbiturientIndividualAchievment" class="btn btn-primary">Добавить достижение</a>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Наименование достижения</th>
+                    <th>Скан-копия подтверждающего документа</th>
+                    <th>Статус</th>
+                    <th>Замечания</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            @if (abiturient.AbiturientIndividualAchievments == null || abiturient.AbiturientIndividualAchievments.Count() == 0)
+            {
+                <tr>
+                    <td colspan="6" class="text-center">
+                        Индивидуальные достижения абитуриента отсутствуют
+                    </td>
+                </tr>
+            }
+            else
+            {
+                foreach (var abiturientIndividualAchievment in abiturient.AbiturientIndividualAchievments.OrderBy(a => a.AbiturientIndividualAchievmentType.Point))
+                {
+                    var rowStatus = abiturientIndividualAchievment.RowStatus;
+                    <tr>
+                        <td>@abiturientIndividualAchievment.AbiturientIndividualAchievmentType.AbiturientIndividualAchievmentTypeName</td>
+                        <td>
+                            @if (abiturientIndividualAchievment.FileModel != null)
+                            {
+                                <a href="/@abiturientIndividualAchievment.FileModel.Path">Открыть</a>
+                            }
+                            else
+                            {
+                                <a asp-action="LoadAbiturientIndividualAchievmentFile"
+                                   asp-route-abiturientIndividualAchievmentId="@abiturientIndividualAchievment.AbiturientIndividualAchievmentId">Загрузить</a>
+                            }
+                        </td>
+                        <td>
+                            @if (rowStatus.RowStatusId == (int)RowStatusEnum.Confirmed)
+                            {
+                                <p class="text-primary">Подтверждено</p>
+                            }
+                            else if (rowStatus.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                            {
+                                <p class="text-danger">Возвращено на доработку</p>
+                            }
+                            else
+                            {
+                                <p class="text-warning">На проверке</p>
+                            }
+                        </td>
+                        <td>@abiturientIndividualAchievment.Remark</td>
+                        <td>
+                            @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
+                            {
+                                <a class="btn btn-primary btn-block" asp-action="AbiturientIndividualAchievmentEdit" asp-route-applicationForAdmissionId="@abiturientIndividualAchievment.AbiturientIndividualAchievmentId">Изменить</a>
+                                <a class="btn btn-danger  btn-block" asp-action="AbiturientIndividualAchievmentRemove" asp-route-applicationForAdmissionId="@abiturientIndividualAchievment.AbiturientIndividualAchievmentId">Удалить</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+
+    </div>
+
+    @*//////////////////////////////////////////////////////// Заявления о приёме /////////////////////////////////////////////////////////*@
+    <div class="tab-pane @applicationForAdmissionsClass" id="applicationForAdmissions">
+        <br />
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Уровень образования</th>
+                    <th>Направление подготовки</th>
+                    <th>Направленность</th>
+                    <th>Форма обучения</th>
+                    <th>Тип квоты</th>
+                    <th>Приоритет</th>
+                    <th>Скан-копия заявления</th>
+                    <th>Статус</th>
+                    <th>Замечания</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            @foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions.OrderBy(a => a.PriorityId))
+            {
+                var rowStatus = applicationForAdmission.RowStatus;
+                <tr>
+                    <td>@applicationForAdmission.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                    <td>@applicationForAdmission.EduProfile.EduNapravl.GetEduNapravlName</td>
+                    <td>@applicationForAdmission.EduProfile.EduProfileName</td>
+                    <td>@applicationForAdmission.EduForm.EduFormName</td>
+                    <td>@applicationForAdmission.QuotaType.QuotaTypeName</td>
+                    <td>@applicationForAdmission.PriorityId</td>
+                    <td>
+                        @if (applicationForAdmission.FileModel != null)
+                        {
+                            <a href="/@applicationForAdmission.FileModel.Path">Открыть</a>
+                        }
+                        else
+                        {
+                            <a asp-action="ApplicationForAdmissionFileLoad" asp-route-id="@applicationForAdmission.ApplicationForAdmissionId">Загрузить</a>
+                        }
+                    </td>
+                    <td>
+                        @if (rowStatus.RowStatusId == (int)RowStatusEnum.Confirmed)
+                        {
+                            <p class="text-primary">Подтверждено</p>
+                        }
+                        else if (rowStatus.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                        {
+                            <p class="text-danger">Возвращено на доработку</p>
+                        }
+                        else
+                        {
+                            <p class="text-warning">На проверке</p>
+                        }
+                    </td>
+                    <td>@applicationForAdmission.Remark</td>
+                    <td>
+                        @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
+                        {
+                            <a class="btn btn-primary btn-block" asp-action="ApplicationForAdmissionEdit" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Заменить</a>
+                            <a class="btn btn-danger  btn-block" asp-action="ApplicationForAdmissionRemove" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Удалить</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

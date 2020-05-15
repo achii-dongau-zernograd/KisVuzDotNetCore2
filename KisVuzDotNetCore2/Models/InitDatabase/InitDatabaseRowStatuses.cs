@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KisVuzDotNetCore2.Models.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -30,19 +31,26 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                 {
                     RowStatus RowStatus1 = new RowStatus
                     {
-                        RowStatusId=1,
+                        RowStatusId= (int)RowStatusEnum.NotConfirmed,
                         RowStatusName="Ожидает подтверждения"
                     };
 
                     RowStatus RowStatus2 = new RowStatus
                     {
-                        RowStatusId = 2,
+                        RowStatusId = (int)RowStatusEnum.Confirmed,
                         RowStatusName = "Подтверждено"
                     };
-                    
+
+                    RowStatus RowStatus3 = new RowStatus
+                    {
+                        RowStatusId = (int)RowStatusEnum.ReturnedForCorrection,
+                        RowStatusName = "Возвращено для исправления"
+                    };
+
                     await context.RowStatuses.AddRangeAsync(
                         RowStatus1,
-                        RowStatus2
+                        RowStatus2,
+                        RowStatus3
                     );
                     await context.SaveChangesAsync();
                 }

@@ -1,0 +1,71 @@
+﻿@model KisVuzDotNetCore2.Models.Users.UserEducation
+
+@{
+    ViewData["Title"] = "Добавление";
+}
+
+<h2>Добавление сведений об образовании</h2>
+
+<h4>ФИО абитуриента: @Model.AppUser.GetFullName</h4>
+<h4>Документ об образовании: <a href="/@Model.UserDocument.FileModel.Path">@Model.FileDataType.FileDataTypeName</a> </h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateUserEducation">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EducationalInstitutionId" class="control-label"></label>
+                <select asp-for="EducationalInstitutionId" class="form-control" asp-items="ViewBag.EducationalInstitutions">
+                    <option value="null">Выберите учебное заведение</option>
+                </select>
+            </div>
+            @if (Model.FileDataTypeId != (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii)
+            {
+                <div class="form-group">
+                    <label asp-for="QualificationId" class="control-label"></label>
+                    <select asp-for="QualificationId" class="form-control" asp-items="ViewBag.UserQualifications">
+                        <option value="null">Квалификация не присвоена</option>
+                    </select>
+                </div>
+            }
+
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label">В случае отсутствия в списках учебного заведения и(или) квалификации (при наличии), впишите их в данное текстовое поле</label>
+                <input asp-for="Remark" class="form-control" />
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>
+            <hr />
+            @*<div class="form-group">
+                <label asp-for="FileDataTypeId" class="control-label"></label>
+                <select asp-for="FileDataTypeId" class="form-control" asp-items="ViewBag.FileDataTypes"></select>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="EducationDocumentDate" class="control-label"></label>
+                <input asp-for="EducationDocumentDate" class="form-control" />
+                <span asp-validation-for="EducationDocumentDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EducationDocumentSeries" class="control-label"></label>
+                <input asp-for="EducationDocumentSeries" class="form-control" />
+                <span asp-validation-for="EducationDocumentSeries" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EducationDocumentNumber" class="control-label"></label>
+                <input asp-for="EducationDocumentNumber" class="form-control" />
+                <span asp-validation-for="EducationDocumentNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EducationDocumentNumberReg" class="control-label"></label>
+                <input asp-for="EducationDocumentNumberReg" class="form-control" />
+                <span asp-validation-for="EducationDocumentNumberReg" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" asp-for="AppUserId" />
+                <input type="hidden" asp-for="UserDocumentId" />
+                <input type="hidden" asp-for="FileDataTypeId" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

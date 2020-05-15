@@ -1,0 +1,61 @@
+﻿@model KisVuzDotNetCore2.Models.Files.UserDocument
+
+@{
+    ViewData["Title"] = "Замена";
+}
+
+<h2>Замена документа</h2>
+
+<div>
+    <hr />
+    <h4>Сведения о заменяемом документе</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FileDataTypeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileDataType.FileDataTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUserId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.GetFullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModelId)
+        </dt>
+        <dd>
+            <a href="/@Model.FileModel.Path">Просмотр</a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RowStatusId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RowStatus.RowStatusName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+    </dl>
+</div>
+
+<hr />
+<h4>Загружаемый документ</h4>
+<div>
+    <form asp-action="ReloadUserDocumentConfirmed" enctype="multipart/form-data">        
+        <div class="form-group">
+            <label class="control-label">Выберите файл: </label>
+            <input type="file" name="uploadedFile" class="form-control" />
+        </div>
+        <div class="form-group">
+            <input type="hidden" asp-for="UserDocumentId" />
+            <input type="submit" value="Загрузить" class="btn btn-primary" />
+            <a asp-action="Start" class="btn btn-default">Отмена</a>
+        </div>
+    </form>
+</div>

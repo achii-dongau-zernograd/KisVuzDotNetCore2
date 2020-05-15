@@ -12,6 +12,10 @@
         /// <summary>
         /// Документы пользователей
         /// </summary>
-        UserDocuments = 13        
+        UserDocuments = 13,
+        /// <summary>
+        /// Файлы абитуриентов
+        /// </summary>
+        AbiturientFiles = 14
     }
 }

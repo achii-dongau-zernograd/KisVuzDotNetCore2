@@ -94,6 +94,14 @@
         /// </summary>
         DiplomOProfessionalnoyPerepodgotovke = 24,
         /// <summary>
+        /// Диплом о среднем профессиональном образовании
+        /// </summary>
+        DiplomSPO = 25,
+        /// <summary>
+        /// Диплом о высшем образовании
+        /// </summary>
+        DiplomVO = 26,
+        /// <summary>
         /// Учебный план
         /// </summary>
         UchebniyPlan = 31,
@@ -199,6 +207,18 @@
         /// <summary>
         /// Согласие на обработку персональных данных
         /// </summary>
-        SoglasieNaObrabotkuPersonalnihDannih = 58
+        SoglasieNaObrabotkuPersonalnihDannih = 58,
+        /// <summary>
+        /// Аттестат о среднем общем образовании
+        /// </summary>
+        AttestatOSrednemObshemObrazovanii = 59,
+        /// <summary>
+        /// Паспорт
+        /// </summary>
+        Passport = 60,
+        /// <summary>
+        /// Файл, подтверждающий индивидуальное достижение абитуриента
+        /// </summary>
+        IndividualnoeDostijenieAbiturienta = 61
     }
 }

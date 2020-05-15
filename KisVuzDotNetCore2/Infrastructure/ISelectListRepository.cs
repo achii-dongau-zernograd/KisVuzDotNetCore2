@@ -1,4 +1,5 @@
-﻿using KisVuzDotNetCore2.Models.Struct;
+﻿using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.Struct;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
@@ -14,7 +15,17 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// реализуемых направлений подготовки
         /// </summary>
         /// <returns></returns>
-        SelectList GetSelectListEduNapravlFullNames(int selectedId=0);
+        SelectList GetSelectListEduNapravlFullNames(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список полных наименований
+        /// реализуемых направлений подготовки
+        /// указанного уровня образования
+        /// </summary>
+        /// <param name="eduLevelId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListEduNapravlFullNamesOfEduLevel(int? eduLevelId, int selectedId = 0);
 
         /// <summary>
         /// Возвращает список полных наименований
@@ -23,6 +34,16 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListEduProfileFullNames(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список наименований
+        /// реализуемых профилей подготовки
+        /// для указанного направления
+        /// </summary>
+        /// <param name="eduNapravlId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListEduProfilesOfEduNapravl(int? eduNapravlId, int selectedId = 0);
 
         /// <summary>
         /// Возвращает список полных наименований
@@ -45,6 +66,19 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// </summary>
         /// <returns></returns>
         SelectList GetSelectListStudentGroups(int selectedId = 0);
+        
+        /// <summary>
+        /// Возвращает список статусов пользователей
+        /// </summary>
+        /// <returns></returns>
+        SelectList GetSelectListAppUserStatuses(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список статусов абитуриентов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAbiturientStatuses(int selectedId = 0);
 
         /// <summary>
         /// Возвращает список баз цитирования
@@ -80,6 +114,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListNirSpecials(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список статусов записей
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListRowStatuses(int selectedId = 0);
+
+        /// <summary>
         /// Возвращает список научных журналов
         /// </summary>
         /// <param name="selectedId"></param>
@@ -101,6 +142,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListUserAchievmentTypes(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список индивидуальных достижений абитуриента
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAbiturientIndividualAchievmentTypes(int selectedId = 0);
+
+        /// <summary>
         /// Возвращает список годов
         /// </summary>
         /// <param name="yearId"></param>
@@ -108,11 +156,51 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListYears(int? selectedId = 0);
 
         /// <summary>
+        /// Возвращает список документов об образовании для абитуриентов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListEducationDocumentsForAbiturients(int selectedId = (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii);
+        
+        /// <summary>
+        /// Возвращает список населённых пунктов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListPopulatedLocalities(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список уровней образования
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListEduLevels(int selectedId = 0);
+        
+        /// <summary>
         /// Возвращает список видов учебных пособий
         /// </summary>
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListUchPosobieVid(int selectedId = 0);
+        
+        /// <summary>
+        /// Возвращает список учебных заведений
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListEducationalInstitutions(int selectedId = 0);
+        
+        /// <summary>
+        /// Возвращает список типов квот набора
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListQuotaTypes(int selectedId = 0);
+        
+        /// <summary>
+        /// Возвращает список квалификаций пользователя
+        /// </summary>        
+        SelectList GetSelectListUserQualifications(string userName, int selectedId = 0);
 
         /// <summary>
         /// Возвращает список форм обучения
@@ -120,6 +208,14 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListEduForms(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список форм обучения, доступных абитуриенту
+        /// при подаче заявления о приёме
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListEduFormsForAbiturient(int selectedId = 0);
 
         /// <summary>
         /// Возвращает список программ подготовки

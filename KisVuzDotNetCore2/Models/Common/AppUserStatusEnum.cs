@@ -6,12 +6,16 @@
     public enum AppUserStatusEnum
     {
         /// <summary>
-        /// Новый пользователь - абитуриент
+        /// Новый пользователь
         /// </summary>
-        NewAbitur = 1,
+        NewUser = 1,
         /// <summary>
         /// Подтверждённый пользователь - абитуриент
         /// </summary>
-        ConfirmedAbitur = 2
+        ConfirmedUser = 2,
+        /// <summary>
+        /// Аккаунт пользователя, помеченный к удалению
+        /// </summary>
+        ToDelete = 3
     }
 }

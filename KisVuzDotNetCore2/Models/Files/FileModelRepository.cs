@@ -51,7 +51,15 @@ namespace KisVuzDotNetCore2.Models.Files
         {
             if (fileModel == null) return;
             _context.Files.Remove(fileModel);
+            RemoveFileFromDisk(fileModel);
+        }
 
+        /// <summary>
+        /// Удаляет файл с диска для указанной файловой модели
+        /// </summary>
+        /// <param name="fileModel"></param>
+        private void RemoveFileFromDisk(FileModel fileModel)
+        {
             if (!string.IsNullOrEmpty(fileModel.Path))
             {
                 string PathToFile = Path.Combine(_appEnvironment.WebRootPath, fileModel.Path);
@@ -107,23 +115,7 @@ namespace KisVuzDotNetCore2.Models.Files
             fileModel.ContentType = uploadedFile.ContentType;
 
             fileModel.Name = name;
-
-            string fileName = /*DateTime.Now.ToString("yyyy-MM-dd-") +*/
-                Guid.NewGuid().ToString() +
-                Path.GetExtension(uploadedFile.FileName);
-            // путь к папке files
-            string[] paths = { _appEnvironment.WebRootPath, "files", fileName };
-
-            string pathToDirectory = Path.Combine(paths[0],paths[1]);
-            if (!Directory.Exists(pathToDirectory))
-                Directory.CreateDirectory(pathToDirectory);
-
-            string path = Path.Combine(paths);
-            // сохраняем файл в папку files в каталоге wwwroot
-            using (var fileStream = new FileStream(path, FileMode.Create))
-            {
-                await uploadedFile.CopyToAsync(fileStream);
-            }
+            string fileName = await UploadFileToDisk(uploadedFile);
 
             fileModel.FileName = Path.GetFileName(uploadedFile.FileName);
             fileModel.Path = Path.Combine("files", fileName); ;
@@ -146,6 +138,28 @@ namespace KisVuzDotNetCore2.Models.Files
             await _context.SaveChangesAsync();
 
             return fileModel;
+        }
+
+        private async Task<string> UploadFileToDisk(IFormFile uploadedFile)
+        {
+            string fileName = /*DateTime.Now.ToString("yyyy-MM-dd-") +*/
+                            Guid.NewGuid().ToString() +
+                            Path.GetExtension(uploadedFile.FileName);
+            // путь к папке files
+            string[] paths = { _appEnvironment.WebRootPath, "files", fileName };
+
+            string pathToDirectory = Path.Combine(paths[0], paths[1]);
+            if (!Directory.Exists(pathToDirectory))
+                Directory.CreateDirectory(pathToDirectory);
+
+            string path = Path.Combine(paths);
+            // сохраняем файл в папку files в каталоге wwwroot
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await uploadedFile.CopyToAsync(fileStream);
+            }
+
+            return fileName;
         }
 
         /// <summary>
@@ -316,6 +330,61 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает файл паспорта
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadPassportAsync(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                "Паспорт",
+                FileDataTypeEnum.Passport);
+            return fileModel;
+        }
+
+
+
+        /// <summary>
+        /// Загружайт скан-копию файла, подтверждающего индивидуальное достижение абитуриента
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadIndividualAchievmentFile(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                "Файл, подтверждающий индивидуальное достижение абитуриента",
+                FileDataTypeEnum.IndividualnoeDostijenieAbiturienta);
+            return fileModel;
+        }
+
+        /// <summary>
+        /// Загружает файл документа об образовании
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <param name="typeOfEducationDocument"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadEducationDocumentAsync(IFormFile uploadedFile, FileDataTypeEnum typeOfEducationDocument)
+        {
+            FileDataType eduDocType = GetFileDataType(typeOfEducationDocument);
+            var fileModel = await UploadFileAsync(uploadedFile,
+                eduDocType.FileDataTypeName,
+                typeOfEducationDocument);
+            return fileModel;
+        }
+
+        /// <summary>
+        /// Возвращает тип файлов
+        /// </summary>
+        /// <param name="fileDataType"></param>
+        /// <returns></returns>
+        private FileDataType GetFileDataType(FileDataTypeEnum fileDataType)
+        {
+            var fileDataTypeEntry = _context.FileDataTypes.FirstOrDefault(f => f.FileDataTypeId == (int)fileDataType);
+
+            return fileDataTypeEntry;
+        }
+
+        /// <summary>
         /// Возвращает типы файлов для заданной группы
         /// </summary>
         /// <param name="fileDataTypeGroup"></param>
@@ -326,5 +395,53 @@ namespace KisVuzDotNetCore2.Models.Files
 
             return fileDataTypes;
         }
+
+        /// <summary>
+        /// Удаляет документ пользователя
+        /// </summary>
+        /// <param name="userDocument"></param>
+        /// <returns></returns>
+        public async Task RemoveUserDocumentAsync(UserDocument userDocument)
+        {
+            _context.UserDocuments.Remove(userDocument);
+            await RemoveFileModelAsync(userDocument.FileModel);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет набор документов пользователя
+        /// </summary>
+        /// <param name="userDocuments"></param>
+        /// <returns></returns>
+        public async Task RemoveUserDocumentsAsync(List<UserDocument> userDocuments)
+        {
+            userDocuments.ForEach(async ud => await RemoveFileModelAsync(ud.FileModel));
+            _context.UserDocuments.RemoveRange(userDocuments);
+
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Заменяет файл на диске
+        /// </summary>
+        /// <param name="fileModel"></param>
+        /// <param name="uploadedFile"></param>
+        public async Task ReloadFileAsync(FileModel fileModel, IFormFile uploadedFile)
+        {
+            RemoveFileFromDisk(fileModel);
+
+            string fileName = await UploadFileToDisk(uploadedFile);
+
+            fileModel.FileName = Path.GetFileName(uploadedFile.FileName);
+            fileModel.Path = Path.Combine("files", fileName); ;
+
+            if (Path.GetExtension(uploadedFile.FileName) == ".pdf")
+            {
+                fileModel.ContentType = "application/pdf";
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

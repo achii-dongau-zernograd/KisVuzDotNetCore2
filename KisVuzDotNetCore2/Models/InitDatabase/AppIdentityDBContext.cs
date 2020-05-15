@@ -18,6 +18,7 @@ using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Students;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.Abitur;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -51,6 +52,11 @@ namespace KisVuzDotNetCore2.Models
         /// Типы пользовательских сообщений
         /// </summary>
         public DbSet<UserMessageType> UserMessageTypes { get; set; }
+
+        /// <summary>
+        /// Паспортные данные
+        /// </summary>
+        public DbSet<PassportData> PassportDataSet { get; set; }
         #endregion
 
         #region Образовательная деятельность (Education)
@@ -348,6 +354,51 @@ namespace KisVuzDotNetCore2.Models
         /// Справочник типов веб-ресурсов
         /// </summary>
         public DbSet<LinkType> LinkTypes { get; set; }
+
+        /// <summary>
+        /// Учебные заведения
+        /// </summary>
+        public DbSet<EducationalInstitution> EducationalInstitutions { get; set; }
+
+        /// <summary>
+        /// Типы учебных заведений
+        /// </summary>
+        public DbSet<EducationalInstitutionType> EducationalInstitutionTypes { get; set; }
+
+        /// <summary>
+        /// Расположения учебных заведений, адреса абитуриентов и прочее
+        /// </summary>
+        public DbSet<Location> Locations { get; set; }
+
+        /// <summary>
+        /// GPS-координаты
+        /// </summary>
+        public DbSet<GpsCoordinate> GpsCoordinates { get; set; }
+        
+        /// <summary>
+        /// Страны
+        /// </summary>
+        public DbSet<Country> Countries { get; set; }
+
+        /// <summary>
+        /// Регионы (области, края и пр.)
+        /// </summary>
+        public DbSet<Region> Regions { get; set; }
+
+        /// <summary>
+        /// Районы (в составе региона)
+        /// </summary>
+        public DbSet<District> Districts { get; set; }
+
+        /// <summary>
+        /// Населённые пункты
+        /// </summary>
+        public DbSet<PopulatedLocality> PopulatedLocalities { get; set; }
+
+        /// <summary>
+        /// Типы населённых пунктов
+        /// </summary>
+        public DbSet<PopulatedLocalityType> PopulatedLocalityTypes { get; set; }
         #endregion
 
         #region Сведения об образовательной организации
@@ -443,6 +494,39 @@ namespace KisVuzDotNetCore2.Models
         #endregion
 
         #region Абитуриенту
+        /// <summary>
+        /// Абитуриенты
+        /// </summary>
+        public DbSet<Abiturient> Abiturients { get; set; }
+
+        /// <summary>
+        /// Статусы абитуриентов
+        /// </summary>
+        public DbSet<AbiturientStatus> AbiturientStatuses { get; set; }
+
+        /// <summary>
+        /// Типы квот на выделение мест для обучения
+        /// (в пределах квоты приема лиц, имеющих особое право,
+        /// в пределах квоты целевого приема, основные в рамках контрольных цифр,
+        /// по договорам об оказании платных образовательных услуг)
+        /// </summary>
+        public DbSet<QuotaType> QuotaTypes { get; set; }
+
+        /// <summary>
+        /// Заявления о приёме
+        /// </summary>
+        public DbSet<ApplicationForAdmission> ApplicationForAdmissions { get; set; }
+
+        /// <summary>
+        /// Индивидуальные достижения абитуриентов
+        /// </summary>
+        public DbSet<AbiturientIndividualAchievment> AbiturientIndividualAchievments { get; set; }
+
+        /// <summary>
+        /// Типы индивидуальных достижений абитуриентов
+        /// </summary>
+        public DbSet<AbiturientIndividualAchievmentType> AbiturientIndividualAchievmentTypes { get; set; }
+
         /// <summary>
         /// Таблица 24. Информация о количестве мест для приёма на обучение
         /// по различным условиям поступления (до 1 октября)
@@ -608,6 +692,21 @@ namespace KisVuzDotNetCore2.Models
         /// Таблица "Достижения пользователя"
         /// </summary>
         public DbSet<UserAchievment> UserAchievments { get; set; }
+
+        /// <summary>
+        /// Таблица "Образование пользователя"
+        /// </summary>
+        public DbSet<UserEducation> UserEducations { get; set; }
+
+        /// <summary>
+        /// Иностранные языки
+        /// </summary>
+        public DbSet<ForeignLanguage> ForeignLanguages { get; set; }
+
+        /// <summary>
+        /// Пользователи - Иностранные языки
+        /// </summary>
+        public DbSet<AppUserForeignLanguage> AppUserForeignLanguages { get; set; }
         #endregion
 
         #region Материально-техническое обеспечение
@@ -990,6 +1089,22 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseUserMessageTypes.CreateUserMessageTypes(serviceProvider, configuration);
 
             await InitDatabaseAppUserStatuses.CreateAppUserStatuses(serviceProvider, configuration);
+
+            await InitDatabaseEducationalInstitutionTypes.CreateEducationalInstitutionTypes(serviceProvider, configuration);
+
+            await InitDatabasePopulatedLocalities.CreateCountries(serviceProvider, configuration);
+            await InitDatabasePopulatedLocalities.CreateRegions(serviceProvider, configuration);
+            await InitDatabasePopulatedLocalities.CreateDistricts(serviceProvider, configuration);
+            await InitDatabasePopulatedLocalities.CreatePopulatedLocalityTypes(serviceProvider, configuration);
+            await InitDatabasePopulatedLocalities.CreatePopulatedLocalities(serviceProvider, configuration);
+
+            await InitDatabaseEducationalInstitutions.CreateEducationalInstitutions(serviceProvider, configuration);
+
+            await InitDatabaseAbiturientStatuses.CreateAbiturientStatuses(serviceProvider, configuration);
+            await InitDatabaseQuotaTypes.CreateQuotaTypes(serviceProvider, configuration);
+            await InitDatabaseAbiturientIndividualAchievmentTypes.CreateAbiturientIndividualAchievmentTypes(serviceProvider, configuration);
+
+            await InitDatabaseForeignLanguages.CreateForeignLanguages(serviceProvider, configuration);
         }        
     
     }

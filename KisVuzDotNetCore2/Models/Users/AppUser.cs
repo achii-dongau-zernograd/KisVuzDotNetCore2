@@ -1,4 +1,5 @@
-﻿using KisVuzDotNetCore2.Models.Education;
+﻿using KisVuzDotNetCore2.Models.Abitur;
+using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Struct;
@@ -17,6 +18,12 @@ namespace KisVuzDotNetCore2.Models
     /// </summary>
     public class AppUser : IdentityUser
     {
+        /// <summary>
+        /// Пароль (только для абитуриентов и студентов)
+        /// </summary>
+        [Display(Name = "Пароль (только для абитуриентов и студентов)")]
+        public string Password { get; set; }
+
         /// <summary>
         /// Дата и время регистрации пользователя в системе
         /// </summary>
@@ -174,5 +181,26 @@ namespace KisVuzDotNetCore2.Models
         /// Документы пользователя
         /// </summary>
         public List<UserDocument> UserDocuments { get; set; }
+
+        /// <summary>
+        /// Паспортные данные пользователя
+        /// </summary>
+        public PassportData PassportData { get; set; }
+
+        /// <summary>
+        /// Личное дело абитуриента
+        /// </summary>
+        public Abiturient Abiturient { get; set; }
+
+        /// <summary>
+        /// Адрес текущего проживания
+        /// </summary>
+        public int? AddressCurrentId { get; set; }
+        public Address AddressCurrent { get; set; }
+
+        /// <summary>
+        /// Иностранные языки, которыми владеет пользователь
+        /// </summary>
+        public List<AppUserForeignLanguage> AppUserForeignLanguages { get; set; }
     }
 }

@@ -1,0 +1,15 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.Abiturient
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление аккаунта абитуриента</h2>
+<h3>Вы действительно хотите удалить аккаунт абитуриента и все связанные данные?</h3>
+<hr />
+<h4>@Model.AppUser.GetFullName</h4>
+
+<form asp-action="DeleteConfirmed">    
+    <input type="hidden" name="userName" value="@Model.AppUser.UserName" />
+    <input type="submit" value="Удалить" class="btn btn-danger" />
+    <a asp-action="Index" class="btn btn-default">Отмена </a>
+</form>

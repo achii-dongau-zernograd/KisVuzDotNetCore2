@@ -21,6 +21,25 @@ namespace KisVuzDotNetCore2.Models.Files
         Task<UserDocument> CreateApplicationForProcessingPersonalDataAsync(string userName, IFormFile uploadedFile);
 
         /// <summary>
+        /// Загружает на сервер документ об образовании и
+        /// создаёт соответствующую запись в таблице UserDocuments
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="uploadedFile"></param>
+        /// <param name="typeOfEducationDocument">Тип документа об образовании</param>
+        /// <returns></returns>
+        Task<UserDocument> CreateEducationDocumentAsync(string userName, IFormFile uploadedFile, FileDataTypeEnum typeOfEducationDocument);
+
+        /// <summary>
+        /// Загружает на сервер паспорт и
+        /// создаёт соответствующую запись в таблице UserDocuments
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<UserDocument> CreatePassport(string userName, IFormFile uploadedFile);
+
+        /// <summary>
         /// Удаляет документ пользователя
         /// </summary>
         /// <param name="userDocumentId">УИД документа пользователя</param>
@@ -42,5 +61,50 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="fileDataTypeGroup"></param>
         /// <returns></returns>
         bool IsLoadedUserDocument(string userName, FileDataTypeGroupEnum fileDataTypeGroup);
+
+        /// <summary>
+        /// Устанавливает замечание к документу
+        /// </summary>
+        /// <param name="userDocument"></param>
+        /// <param name="remark"></param>
+        /// <returns></returns>
+        Task SetUserDocumentRemarkAsync(UserDocument userDocument, string remark);
+        
+        /// <summary>
+        /// Возвращает документ пользователя
+        /// </summary>
+        /// <param name="userDocumentId"></param>
+        /// <returns></returns>
+        Task<UserDocument> GetUserDocumentAsync(int userDocumentId);
+
+        /// <summary>
+        /// Проверяет наличие у пользователя сведений об образовании
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<bool> IsUserEducationDataExistsAsync(string userName);
+
+        /// <summary>
+        /// Возвращает запрос на выборку документов об образовании пользователя, не имеющих заполненных сведений
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        IQueryable<UserDocument> GetUserEducationDocumentsWithoutUserEducationDataAsync(string userName);
+                
+        /// <summary>
+        /// Возвращает первый объект документа пользователя,
+        /// который является паспортом и не связан с объектом паспортных данных
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<UserDocument> GetUserDocumentPassportWithoutPassportDataAsync(string userName);
+
+        /// <summary>
+        /// Заменяет пользовательский документ
+        /// </summary>
+        /// <param name="userDocumentId"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task ReloadUserDocumentAsync(int userDocumentId, IFormFile uploadedFile);
     }
 }

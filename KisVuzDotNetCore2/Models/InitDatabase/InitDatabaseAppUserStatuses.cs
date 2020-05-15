@@ -31,19 +31,26 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                 {
                     var AppUserStatus1 = new AppUserStatus
                     {
-                        AppUserStatusId = (int)AppUserStatusEnum.NewAbitur,
-                        AppUserStatusName = "Новый пользователь - абитуриент"
+                        AppUserStatusId = (int)AppUserStatusEnum.NewUser,
+                        AppUserStatusName = "Новый пользователь"
                     };
 
                     var AppUserStatus2 = new AppUserStatus
                     {
-                        AppUserStatusId = (int)AppUserStatusEnum.ConfirmedAbitur,
-                        AppUserStatusName = "Подтверждённый пользователь - абитуриент"
+                        AppUserStatusId = (int)AppUserStatusEnum.ConfirmedUser,
+                        AppUserStatusName = "Подтверждённый пользователь"
                     };
-                    
+
+                    var AppUserStatus3 = new AppUserStatus
+                    {
+                        AppUserStatusId = (int)AppUserStatusEnum.ToDelete,
+                        AppUserStatusName = "Пользователь, помеченный к удалению"
+                    };
+
                     await context.AppUserStatuses.AddRangeAsync(
                         AppUserStatus1,
-                        AppUserStatus2
+                        AppUserStatus2,
+                        AppUserStatus3
                     );
                     await context.SaveChangesAsync();
                 }

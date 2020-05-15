@@ -1,0 +1,81 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.Abiturient
+
+@{
+    ViewData["Title"] = "Абитуриент";
+    string mode = (string)ViewBag.Mode;
+}
+
+<h2>Абитуриент</h2>
+<hr />
+<h3>@Model.AppUser.GetFullName</h3>
+<hr />
+<div class="row">
+    <div class="col-md-2">Дата/время регистрации: </div>
+    <div class="col-md-2">@Model.AppUser.RegisterDateTime</div>
+</div>
+<div class="row">
+    <div class="col-md-2">Статус абитуриента: </div>
+    @if (mode == "ChangeAbiturStatus")
+    {
+        <form>
+            <div class="col-md-2">
+                <select name="AbiturientStatusId" class="form-control" asp-items="ViewBag.AbiturientStatuses">
+                </select>
+            </div>
+            <div class="col-md-2">            
+                <input type="hidden" name="userName" value="@Model.AppUser.UserName" />
+                <input type="hidden" name="mode" value="ChangeAbiturStatusSave" />
+                <input type="submit" class="btn btn-primary" value="Сохранить" />
+                <a asp-route-userName="@Model.AppUser.UserName">Отмена</a>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="col-md-2">@Model.AbiturientStatus.AbiturientStatusName</div>
+        <div class="col-md-1">
+            <a asp-route-userName="@Model.AppUser.UserName" asp-route-mode="ChangeAbiturStatus">Изменить</a>
+        </div>
+    }
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-2">Дата рождения: </div>
+    @if (!string.IsNullOrWhiteSpace(Model.AppUser.Birthdate.ToString()))
+    {
+        <div class="col-md-2">@(((DateTime)Model.AppUser.Birthdate).ToString("d"))</div>
+    }
+    else
+    {
+        <div class="col-md-2 text-danger">Не указано</div>
+    }    
+</div>
+<div class="row">
+    <div class="col-md-2">Телефон: </div>
+    @if (!string.IsNullOrWhiteSpace(Model.AppUser.PhoneNumber))
+    {
+        <div class="col-md-2">@Model.AppUser.PhoneNumber</div>
+    }
+    else
+    {
+        <div class="col-md-2 text-danger">Не указано</div>
+    }
+</div>
+<div class="row">
+    <div class="col-md-2">Адрес электронной почты (Email): </div>
+    <div class="col-md-2">@Model.AppUser.Email</div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">Пароль: </div>
+    <div class="col-md-2">@Model.AppUser.Password</div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <a asp-action="UserDocuments" asp-route-userName="@Model.AppUser.UserName" class="btn btn-primary btn-block">Копии документов, загруженные пользователем</a>
+    </div>    
+</div>
+

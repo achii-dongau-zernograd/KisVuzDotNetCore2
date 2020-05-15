@@ -50,7 +50,7 @@ namespace KisVuzDotNetCore2.Models
 
         [Required]
         [Display(Name = "Пароль (не менее 6 символов)")]
-        public string Password { get; set; }
+        public string Password { get; set; }        
     }
 
     public class LoginModel

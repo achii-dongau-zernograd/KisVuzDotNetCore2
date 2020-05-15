@@ -1,0 +1,96 @@
+﻿@model KisVuzDotNetCore2.Models.Users.PassportData
+
+@{
+    ViewData["Title"] = "CreatePassportData";
+}
+
+<h2>Добавление паспортных данных</h2>
+
+<h4>@Model.AppUser?.GetFullName</h4>
+<h4><a href="/@Model.UserDocument?.FileModel?.Path">Скан-копия паспорта</a></h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreatePassportData">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <h4>Общие сведения</h4>
+
+            <div class="form-group">
+                <label asp-for="KemVidan" class="control-label"></label>
+                <input asp-for="KemVidan" class="form-control" />
+                <span asp-validation-for="KemVidan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataVidachi" class="control-label"></label>
+                <input asp-for="DataVidachi" class="form-control" />
+                <span asp-validation-for="DataVidachi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KodPodrazdeleniya" class="control-label"></label>
+                <input asp-for="KodPodrazdeleniya" class="form-control" />
+                <span asp-validation-for="KodPodrazdeleniya" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MestoRojdeniya" class="control-label"></label>
+                <input asp-for="MestoRojdeniya" class="form-control" />
+                <span asp-validation-for="MestoRojdeniya" class="text-danger"></span>
+            </div>
+
+            <hr />
+            <h4>Адрес по прописке</h4>
+
+            <div class="form-group">
+                <label asp-for="Address.Country" class="control-label"></label>
+                <input asp-for="Address.Country" class="form-control" />
+                <span asp-validation-for="Address.Country" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address.PostCode" class="control-label"></label>
+                <input asp-for="Address.PostCode" class="form-control" />
+                <span asp-validation-for="Address.PostCode" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address.Region" class="control-label"></label>
+                <input asp-for="Address.Region" class="form-control" />
+                <span asp-validation-for="Address.Region" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address.Settlement" class="control-label"></label>
+                <input asp-for="Address.Settlement" class="form-control" />
+                <span asp-validation-for="Address.Settlement" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address.PopulatedLocalityId" class="control-label"></label>
+                <select asp-for="Address.PopulatedLocalityId" class="form-control" asp-items="ViewBag.PopulatedLocalities">
+                    <option value="null">Выберите населённый пункт из списка (при наличии)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address.Street" class="control-label"></label>
+                <input asp-for="Address.Street" class="form-control" />
+                <span asp-validation-for="Address.Street" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address.HouseNumber" class="control-label"></label>
+                <input asp-for="Address.HouseNumber" class="form-control" />
+                <span asp-validation-for="Address.HouseNumber" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="hidden" asp-for="AppUserId" />
+                <input type="hidden" asp-for="UserDocumentId" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

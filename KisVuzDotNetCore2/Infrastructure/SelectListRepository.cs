@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Education;
+using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Struct;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,14 +19,23 @@ namespace KisVuzDotNetCore2.Infrastructure
     public class SelectListRepository : ISelectListRepository
     {
         private readonly AppIdentityDBContext _context;
+        private readonly IUserProfileRepository _userProfileRepository;
+        private readonly IEducationalInstitutionRepository _educationalInstitutionRepository;
+        private readonly IPopulatedLocalityRepository _populatedLocalityRepository;
 
         /// <summary>
         /// Внедрение зависимостей
         /// </summary>
         /// <param name="context"></param>
-        public SelectListRepository(AppIdentityDBContext context)
+        public SelectListRepository(AppIdentityDBContext context,
+            IUserProfileRepository userProfileRepository,
+            IEducationalInstitutionRepository educationalInstitutionRepository,
+            IPopulatedLocalityRepository populatedLocalityRepository)
         {
             _context = context;
+            _userProfileRepository = userProfileRepository;
+            _educationalInstitutionRepository = educationalInstitutionRepository;
+            _populatedLocalityRepository = populatedLocalityRepository;
         }
 
         /// <summary>
@@ -144,6 +156,18 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает список форм обучения, доступных абитуриенту
+        /// при подаче заявления о приёме
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEduFormsForAbiturient(int selectedId = 0)
+        {
+            var data = _context.EduForms.Where(f => f.EduFormId == 1 || f.EduFormId == 3);
+            return new SelectList(data, "EduFormId", "EduFormName", selectedId);
+        }
+
+        /// <summary>
         /// Возвращает список полных наименований
         /// реализуемых направлений подготовки
         /// </summary>
@@ -155,6 +179,23 @@ namespace KisVuzDotNetCore2.Infrastructure
 
         /// <summary>
         /// Возвращает список полных наименований
+        /// реализуемых направлений подготовки
+        /// указанного уровня образования
+        /// </summary>
+        /// <param name="eduLevelId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEduNapravlFullNamesOfEduLevel(int? eduLevelId, int selectedId = 0)
+        {
+            var data = _context.EduNapravls
+                .Include(n => n.EduUgs.EduLevel)
+                .Where(n => n.EduUgs.EduLevelId == eduLevelId);
+
+            return new SelectList(data, "EduNapravlId", "GetEduNapravlName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список полных наименований
         /// реализуемых профилей подготовки
         /// </summary>
         /// <param name="selectedId"></param>
@@ -162,6 +203,22 @@ namespace KisVuzDotNetCore2.Infrastructure
         public SelectList GetSelectListEduProfileFullNames(int selectedId = 0)
         {
             return new SelectList(_context.EduProfiles.Include(n => n.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список наименований
+        /// реализуемых профилей подготовки
+        /// для указанного направления
+        /// </summary>
+        /// <param name="eduNapravlId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEduProfilesOfEduNapravl(int? eduNapravlId, int selectedId = 0)
+        {
+            var data = _context.EduProfiles
+                .Include(p => p.EduNapravl.EduUgs.EduLevel)
+                .Where(p => p.EduNapravlId == eduNapravlId);
+            return new SelectList(data, "EduProfileId", "EduProfileName", selectedId);
         }
 
         /// <summary>
@@ -416,6 +473,133 @@ namespace KisVuzDotNetCore2.Infrastructure
             throw new NotImplementedException();
         }
 
-        
+        /// <summary>
+        /// Возвращает список статусов пользователей
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAppUserStatuses(int selectedId = 0)
+        {
+            return new SelectList(_context.AppUserStatuses,
+                 "AppUserStatusId", "AppUserStatusName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список статусов абитуриентов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAbiturientStatuses(int selectedId = 0)
+        {
+            return new SelectList(_context.AbiturientStatuses,
+                 "AbiturientStatusId", "AbiturientStatusName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список статусов записей
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListRowStatuses(int selectedId = 0)
+        {
+            return new SelectList(_context.RowStatuses,
+                 "RowStatusId", "RowStatusName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список документов об образовании для абитуриентов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEducationDocumentsForAbiturients(int selectedId = (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii)
+        {
+            var dataTypes = _context.FileDataTypes.Where(fdt=>fdt.FileDataTypeGroupId == (int)FileDataTypeGroupEnum.EducationDocuments);
+            var dataTypesForAbiturients = dataTypes
+                .Where(fdt => fdt.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
+                              fdt.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO ||
+                              fdt.FileDataTypeId == (int)FileDataTypeEnum.DiplomVO)
+                .OrderBy(fdt => fdt.FileDataTypeName);
+
+            return new SelectList(dataTypesForAbiturients,
+                 "FileDataTypeId", "FileDataTypeName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список квалификаций пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListUserQualifications(string userName, int selectedId = 0)
+        {
+            var userQualifications = _userProfileRepository.GetQualifications(userName).ToList();
+            return new SelectList(userQualifications,
+                 "QualificationId", "QualificationFullName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список учебных заведений
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEducationalInstitutions(int selectedId = 0)
+        {
+            var educationalInstitutions = _educationalInstitutionRepository.GetEducationalInstitutions().ToList();
+            return new SelectList(educationalInstitutions,
+                 "EducationalInstitutionId", "GetEducationalInstitutionNameAndSettlement", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список населённых пунктов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListPopulatedLocalities(int selectedId = 0)
+        {
+            var populatedLocalities = _populatedLocalityRepository.GetPopulatedLocalities()
+                .OrderBy(pl => pl.District.Region.Country.CountryName)
+                .ThenBy(pl => pl.District.Region.RegionName)
+                .ThenBy(pl => pl.District.DistrictName)
+                .ThenBy(pl => pl.PopulatedLocalityName)
+                .ToList();
+            return new SelectList(populatedLocalities,
+                 "PopulatedLocalityId", "GetPopulatedLocalityFullName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список типов квот набора
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListQuotaTypes(int selectedId = 0)
+        {
+            var data = _context.QuotaTypes.OrderBy(q => q.QuotaTypeName);
+            return new SelectList(data,
+                 "QuotaTypeId", "QuotaTypeName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список уровней образования
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEduLevels(int selectedId = 0)
+        {
+            var data = _context.EduLevels.OrderBy(l => l.EduLevelId);
+            return new SelectList(data,
+                 "EduLevelId", "EduLevelName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список индивидуальных достижений абитуриента
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAbiturientIndividualAchievmentTypes(int selectedId = 0)
+        {
+            var data = _context.AbiturientIndividualAchievmentTypes.OrderBy(t => t.AbiturientIndividualAchievmentTypeName);
+            return new SelectList(data,
+                 "AbiturientIndividualAchievmentTypeId", "AbiturientIndividualAchievmentTypeName", selectedId);
+        }
     }
 }

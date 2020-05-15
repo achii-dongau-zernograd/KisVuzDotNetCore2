@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Выбор направления подготовки";
+}
+
+<h2>Выбор уровня образования и направления подготовки</h2>
+<hr />
+
+@if (ViewBag.EduLevels != null)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="ChooseEduNapravl">
+
+                <div class="form-group">
+                    <label for="eduLevelId" class="control-label">Выберите уровень образования</label>
+                    <select name="eduLevelId" class="form-control" asp-items="ViewBag.EduLevels"></select>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Выбрать" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+@if (ViewBag.EduNapravls != null)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="ChooseEduNapravl">
+
+                <div class="form-group">
+                    <label for="eduNapravlId" class="control-label">Выберите направление подготовки</label>
+                    <select name="eduNapravlId" class="form-control" asp-items="ViewBag.EduNapravls"></select>
+                </div>
+
+                <div class="form-group">
+                    <input type="hidden" name="eduLevelId" value="@ViewBag.EduLevelId" />
+                    <input type="submit" value="Выбрать" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+}

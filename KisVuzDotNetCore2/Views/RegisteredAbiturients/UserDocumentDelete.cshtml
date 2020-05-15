@@ -1,0 +1,51 @@
+﻿@model KisVuzDotNetCore2.Models.Files.UserDocument
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление документа пользователя</h2>
+
+<h3>Вы действительно хотите удалить документ?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Пользователь
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.GetFullName)
+        </dd>
+        <dt>
+            Тип документа
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileDataType.FileDataTypeName)
+        </dd>
+        <dt>
+            Файл документа
+        </dt>
+        <dd>
+            <a href="/@Model.FileModel.Path">Открыть</a>
+        </dd>
+        <dt>
+            Статус документа
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RowStatus.RowStatusName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+    </dl>
+    
+    <form asp-action="UserDocumentDeleteConfirmed">
+        <input type="hidden" asp-for="UserDocumentId" />
+        <input type="hidden" name="userName" value="@Model.AppUser.UserName" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="UserDocuments" asp-route-userName="@Model.AppUser.UserName" class="btn btn-default">Отмена </a>
+    </form>
+</div>

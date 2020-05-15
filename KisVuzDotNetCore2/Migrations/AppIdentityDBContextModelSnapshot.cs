@@ -20,6 +20,135 @@ namespace KisVuzDotNetCore2.Migrations
                 .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 .HasAnnotation("ProductVersion", "2.0.3-rtm-10026");
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.Abiturient", b =>
+                {
+                    b.Property<int>("AbiturientId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AbiturientStatusId");
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<bool>("IsHostelRequired");
+
+                    b.HasKey("AbiturientId");
+
+                    b.HasIndex("AbiturientStatusId");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
+
+                    b.ToTable("Abiturients");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.AbiturientIndividualAchievment", b =>
+                {
+                    b.Property<int>("AbiturientIndividualAchievmentId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AbiturientId");
+
+                    b.Property<int>("AbiturientIndividualAchievmentTypeId");
+
+                    b.Property<int?>("FileModelId");
+
+                    b.Property<string>("Remark");
+
+                    b.Property<int>("RowStatusId");
+
+                    b.HasKey("AbiturientIndividualAchievmentId");
+
+                    b.HasIndex("AbiturientId");
+
+                    b.HasIndex("AbiturientIndividualAchievmentTypeId");
+
+                    b.HasIndex("FileModelId");
+
+                    b.HasIndex("RowStatusId");
+
+                    b.ToTable("AbiturientIndividualAchievments");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.AbiturientIndividualAchievmentType", b =>
+                {
+                    b.Property<int>("AbiturientIndividualAchievmentTypeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AbiturientIndividualAchievmentTypeName");
+
+                    b.Property<int>("Point");
+
+                    b.HasKey("AbiturientIndividualAchievmentTypeId");
+
+                    b.ToTable("AbiturientIndividualAchievmentTypes");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.AbiturientStatus", b =>
+                {
+                    b.Property<int>("AbiturientStatusId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AbiturientStatusName");
+
+                    b.HasKey("AbiturientStatusId");
+
+                    b.ToTable("AbiturientStatuses");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.ApplicationForAdmission", b =>
+                {
+                    b.Property<int>("ApplicationForAdmissionId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AbiturientId");
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<int>("EduFormId");
+
+                    b.Property<int>("EduProfileId");
+
+                    b.Property<int?>("FileModelId");
+
+                    b.Property<int>("PriorityId");
+
+                    b.Property<int>("QuotaTypeId");
+
+                    b.Property<string>("RegNumber");
+
+                    b.Property<string>("Remark");
+
+                    b.Property<int>("RowStatusId");
+
+                    b.HasKey("ApplicationForAdmissionId");
+
+                    b.HasIndex("AbiturientId");
+
+                    b.HasIndex("EduFormId");
+
+                    b.HasIndex("EduProfileId");
+
+                    b.HasIndex("FileModelId");
+
+                    b.HasIndex("QuotaTypeId");
+
+                    b.HasIndex("RowStatusId");
+
+                    b.ToTable("ApplicationForAdmissions");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.QuotaType", b =>
+                {
+                    b.Property<int>("QuotaTypeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("QuotaTypeName");
+
+                    b.HasKey("QuotaTypeId");
+
+                    b.ToTable("QuotaTypes");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.AcademicDegree", b =>
                 {
                     b.Property<int>("AcademicDegreeId")
@@ -71,6 +200,8 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<int?>("AddressCurrentId");
+
                     b.Property<byte[]>("AppUserPhoto");
 
                     b.Property<int?>("AppUserStatusId");
@@ -105,6 +236,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
 
+                    b.Property<string>("Password");
+
                     b.Property<string>("PasswordHash");
 
                     b.Property<string>("Patronymic");
@@ -127,6 +260,9 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("AcademicDegreeId");
 
                     b.HasIndex("AcademicStatId");
+
+                    b.HasIndex("AddressCurrentId")
+                        .IsUnique();
 
                     b.HasIndex("AppUserStatusId");
 
@@ -168,6 +304,70 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("AppSettings");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.Country", b =>
+                {
+                    b.Property<int>("CountryId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CountryName");
+
+                    b.HasKey("CountryId");
+
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.District", b =>
+                {
+                    b.Property<int>("DistrictId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DistrictName");
+
+                    b.Property<int?>("GpsGeometryCenterId");
+
+                    b.Property<int>("RegionId");
+
+                    b.HasKey("DistrictId");
+
+                    b.HasIndex("GpsGeometryCenterId");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("Districts");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.EducationalInstitution", b =>
+                {
+                    b.Property<int>("EducationalInstitutionId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("EducationalInstitutionName");
+
+                    b.Property<int>("EducationalInstitutionTypeId");
+
+                    b.Property<int?>("LocationId");
+
+                    b.HasKey("EducationalInstitutionId");
+
+                    b.HasIndex("EducationalInstitutionTypeId");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("EducationalInstitutions");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.EducationalInstitutionType", b =>
+                {
+                    b.Property<int>("EducationalInstitutionTypeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("EducationalInstitutionTypeName");
+
+                    b.HasKey("EducationalInstitutionTypeId");
+
+                    b.ToTable("EducationalInstitutionTypes");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.EmploymentForm", b =>
                 {
                     b.Property<int>("EmploymentFormId")
@@ -178,6 +378,88 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("EmploymentFormId");
 
                     b.ToTable("EmploymentForms");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.GpsCoordinate", b =>
+                {
+                    b.Property<int>("GpsCoordinateId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<decimal>("Latitude");
+
+                    b.Property<decimal>("Longitude");
+
+                    b.HasKey("GpsCoordinateId");
+
+                    b.ToTable("GpsCoordinates");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.Location", b =>
+                {
+                    b.Property<int>("LocationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AddressId");
+
+                    b.Property<int?>("GpsCoordinateId");
+
+                    b.HasKey("LocationId");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("GpsCoordinateId");
+
+                    b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.PopulatedLocality", b =>
+                {
+                    b.Property<int>("PopulatedLocalityId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DistrictId");
+
+                    b.Property<string>("PopulatedLocalityName");
+
+                    b.Property<int>("PopulatedLocalityTypeId");
+
+                    b.HasKey("PopulatedLocalityId");
+
+                    b.HasIndex("DistrictId");
+
+                    b.HasIndex("PopulatedLocalityTypeId");
+
+                    b.ToTable("PopulatedLocalities");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.PopulatedLocalityType", b =>
+                {
+                    b.Property<int>("PopulatedLocalityTypeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("PopulatedLocalityTypeName");
+
+                    b.Property<string>("PopulatedLocalityTypeNameShort");
+
+                    b.HasKey("PopulatedLocalityTypeId");
+
+                    b.ToTable("PopulatedLocalityTypes");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.Region", b =>
+                {
+                    b.Property<int>("RegionId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CountryId");
+
+                    b.Property<string>("RegionName");
+
+                    b.HasKey("RegionId");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Regions");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.UserMessageType", b =>
@@ -1053,6 +1335,10 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("FileModelId");
 
+                    b.Property<string>("Remark");
+
+                    b.Property<int?>("RowStatusId");
+
                     b.HasKey("UserDocumentId");
 
                     b.HasIndex("AppUserId");
@@ -1060,6 +1346,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("FileDataTypeId");
 
                     b.HasIndex("FileModelId");
+
+                    b.HasIndex("RowStatusId");
 
                     b.ToTable("UserDocuments");
                 });
@@ -1775,19 +2063,29 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("AddressId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Country");
+                    b.Property<string>("Country")
+                        .IsRequired();
 
-                    b.Property<string>("HouseNumber");
+                    b.Property<string>("HouseNumber")
+                        .IsRequired();
 
-                    b.Property<string>("PostCode");
+                    b.Property<int?>("PopulatedLocalityId");
 
-                    b.Property<string>("Region");
+                    b.Property<string>("PostCode")
+                        .IsRequired();
 
-                    b.Property<string>("Settlement");
+                    b.Property<string>("Region")
+                        .IsRequired();
 
-                    b.Property<string>("Street");
+                    b.Property<string>("Settlement")
+                        .IsRequired();
+
+                    b.Property<string>("Street")
+                        .IsRequired();
 
                     b.HasKey("AddressId");
+
+                    b.HasIndex("PopulatedLocalityId");
 
                     b.ToTable("Addresses");
                 });
@@ -2720,6 +3018,24 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("UchPosobieVid");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.AppUserForeignLanguage", b =>
+                {
+                    b.Property<int>("AppUserForeignLanguageId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<int>("ForeignLanguageId");
+
+                    b.HasKey("AppUserForeignLanguageId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("ForeignLanguageId");
+
+                    b.ToTable("AppUserForeignLanguages");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.AppUserStructSubvision", b =>
                 {
                     b.Property<int>("AppUserStructSubvisionId")
@@ -2744,6 +3060,58 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("StructSubvisionId");
 
                     b.ToTable("AppUserStructSubvisions");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ForeignLanguage", b =>
+                {
+                    b.Property<int>("ForeignLanguageId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ForeignLanguageName");
+
+                    b.HasKey("ForeignLanguageId");
+
+                    b.ToTable("ForeignLanguages");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.PassportData", b =>
+                {
+                    b.Property<int>("PassportDataId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AddressId");
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<DateTime>("DataVidachi");
+
+                    b.Property<string>("KemVidan")
+                        .IsRequired();
+
+                    b.Property<string>("KodPodrazdeleniya")
+                        .IsRequired();
+
+                    b.Property<string>("MestoRojdeniya")
+                        .IsRequired();
+
+                    b.Property<int?>("RowStatusId");
+
+                    b.Property<int?>("UserDocumentId");
+
+                    b.HasKey("PassportDataId");
+
+                    b.HasIndex("AddressId")
+                        .IsUnique();
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
+
+                    b.HasIndex("RowStatusId");
+
+                    b.HasIndex("UserDocumentId")
+                        .IsUnique();
+
+                    b.ToTable("PassportDataSet");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ProfessionalRetraining", b =>
@@ -2972,6 +3340,50 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("UserAchievmentTypes");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserEducation", b =>
+                {
+                    b.Property<int>("UserEducationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<DateTime>("EducationDocumentDate");
+
+                    b.Property<string>("EducationDocumentNumber");
+
+                    b.Property<string>("EducationDocumentNumberReg");
+
+                    b.Property<string>("EducationDocumentSeries");
+
+                    b.Property<int?>("EducationalInstitutionId");
+
+                    b.Property<int>("FileDataTypeId");
+
+                    b.Property<int?>("QualificationId");
+
+                    b.Property<string>("Remark");
+
+                    b.Property<int?>("RowStatusId");
+
+                    b.Property<int?>("UserDocumentId");
+
+                    b.HasKey("UserEducationId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("EducationalInstitutionId");
+
+                    b.HasIndex("FileDataTypeId");
+
+                    b.HasIndex("QualificationId");
+
+                    b.HasIndex("RowStatusId");
+
+                    b.HasIndex("UserDocumentId");
+
+                    b.ToTable("UserEducations");
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserMessage", b =>
                 {
                     b.Property<int>("UserMessageId")
@@ -3184,6 +3596,72 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.Abiturient", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Abitur.AbiturientStatus", "AbiturientStatus")
+                        .WithMany()
+                        .HasForeignKey("AbiturientStatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
+                        .WithOne("Abiturient")
+                        .HasForeignKey("KisVuzDotNetCore2.Models.Abitur.Abiturient", "AppUserId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.AbiturientIndividualAchievment", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Abitur.Abiturient", "Abiturient")
+                        .WithMany("AbiturientIndividualAchievments")
+                        .HasForeignKey("AbiturientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Abitur.AbiturientIndividualAchievmentType", "AbiturientIndividualAchievmentType")
+                        .WithMany("AbiturientIndividualAchievments")
+                        .HasForeignKey("AbiturientIndividualAchievmentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
+                        .WithMany()
+                        .HasForeignKey("FileModelId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
+                        .WithMany()
+                        .HasForeignKey("RowStatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.ApplicationForAdmission", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Abitur.Abiturient", "Abiturient")
+                        .WithMany("ApplicationForAdmissions")
+                        .HasForeignKey("AbiturientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
+                        .WithMany()
+                        .HasForeignKey("EduFormId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduProfile", "EduProfile")
+                        .WithMany()
+                        .HasForeignKey("EduProfileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
+                        .WithMany()
+                        .HasForeignKey("FileModelId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Abitur.QuotaType", "QuotaType")
+                        .WithMany()
+                        .HasForeignKey("QuotaTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
+                        .WithMany()
+                        .HasForeignKey("RowStatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.AcademicDegree", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.AcademicDegreeGroup", "AcademicDegreeGroup")
@@ -3202,6 +3680,10 @@ namespace KisVuzDotNetCore2.Migrations
                         .WithMany()
                         .HasForeignKey("AcademicStatId");
 
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.Address", "AddressCurrent")
+                        .WithOne("AppUser")
+                        .HasForeignKey("KisVuzDotNetCore2.Models.AppUser", "AddressCurrentId");
+
                     b.HasOne("KisVuzDotNetCore2.Models.AppUserStatus", "AppUserStatus")
                         .WithMany()
                         .HasForeignKey("AppUserStatusId");
@@ -3209,6 +3691,62 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.EduLevelGroup", "EduLevelGroup")
                         .WithMany()
                         .HasForeignKey("EduLevelGroupId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.District", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Common.GpsCoordinate", "GpsGeometryCenter")
+                        .WithMany()
+                        .HasForeignKey("GpsGeometryCenterId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Common.Region", "Region")
+                        .WithMany("Districts")
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.EducationalInstitution", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Common.EducationalInstitutionType", "EducationalInstitutionType")
+                        .WithMany("EducationalInstitutions")
+                        .HasForeignKey("EducationalInstitutionTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Common.Location", "Location")
+                        .WithMany("EducationalInstitutions")
+                        .HasForeignKey("LocationId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.Location", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Common.GpsCoordinate", "GpsCoordinate")
+                        .WithMany("Locations")
+                        .HasForeignKey("GpsCoordinateId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.PopulatedLocality", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Common.District", "District")
+                        .WithMany("PopulatedLocalities")
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Common.PopulatedLocalityType", "PopulatedLocalityType")
+                        .WithMany("PopulatedLocalities")
+                        .HasForeignKey("PopulatedLocalityTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.Region", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Common.Country", "Country")
+                        .WithMany("Regions")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.BlokDiscipl", b =>
@@ -3630,6 +4168,10 @@ namespace KisVuzDotNetCore2.Migrations
                         .WithMany()
                         .HasForeignKey("FileModelId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
+                        .WithMany()
+                        .HasForeignKey("RowStatusId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.FileToFileType", b =>
@@ -3959,6 +4501,13 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
                         .WithMany()
                         .HasForeignKey("RowStatusId");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Address", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Common.PopulatedLocality", "PopulatedLocality")
+                        .WithMany("Addresses")
+                        .HasForeignKey("PopulatedLocalityId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Struct.Email", b =>
@@ -4381,6 +4930,18 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.AppUserForeignLanguage", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
+                        .WithMany("AppUserForeignLanguages")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Users.ForeignLanguage", "ForeignLanguage")
+                        .WithMany()
+                        .HasForeignKey("ForeignLanguageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.AppUserStructSubvision", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
@@ -4401,6 +4962,26 @@ namespace KisVuzDotNetCore2.Migrations
                         .WithMany()
                         .HasForeignKey("StructSubvisionId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.PassportData", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Struct.Address", "Address")
+                        .WithOne("PassportData")
+                        .HasForeignKey("KisVuzDotNetCore2.Models.Users.PassportData", "AddressId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
+                        .WithOne("PassportData")
+                        .HasForeignKey("KisVuzDotNetCore2.Models.Users.PassportData", "AppUserId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
+                        .WithMany()
+                        .HasForeignKey("RowStatusId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Files.UserDocument", "UserDocument")
+                        .WithOne("PassportData")
+                        .HasForeignKey("KisVuzDotNetCore2.Models.Users.PassportData", "UserDocumentId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ProfessionalRetraining", b =>
@@ -4522,6 +5103,34 @@ namespace KisVuzDotNetCore2.Migrations
                         .WithMany("UserAchievments")
                         .HasForeignKey("UserAchievmentTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserEducation", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Common.EducationalInstitution", "EducationalInstitution")
+                        .WithMany()
+                        .HasForeignKey("EducationalInstitutionId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.FileDataType", "FileDataType")
+                        .WithMany()
+                        .HasForeignKey("FileDataTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Qualification", "Qualification")
+                        .WithMany("UserEducations")
+                        .HasForeignKey("QualificationId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
+                        .WithMany()
+                        .HasForeignKey("RowStatusId");
+
+                    b.HasOne("KisVuzDotNetCore2.Models.Files.UserDocument", "UserDocument")
+                        .WithMany("UserEducations")
+                        .HasForeignKey("UserDocumentId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserMessage", b =>

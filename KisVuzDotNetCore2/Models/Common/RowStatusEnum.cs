@@ -17,6 +17,10 @@ namespace KisVuzDotNetCore2.Models.Common
         /// <summary>
         /// Подтверждено
         /// </summary>
-        Confirmed = 2
+        Confirmed = 2,
+        /// <summary>
+        /// Возвращено для исправления
+        /// </summary>
+        ReturnedForCorrection = 3
     }
 }

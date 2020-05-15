@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Students;
@@ -65,6 +66,13 @@ namespace KisVuzDotNetCore2.Models.Files
         Task<FileModel> UploadArticleAsync(Article article, IFormFile uploadedFile);
 
         /// <summary>
+        /// Загружайт скан-копию файла, подтверждающего индивидуальное достижение абитуриента
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadIndividualAchievmentFile(IFormFile uploadedFile);
+
+        /// <summary>
         /// Загружает файл патента (свидетельства)
         /// </summary>
         /// <param name="patent">Патент (свидетельство)</param>
@@ -81,6 +89,14 @@ namespace KisVuzDotNetCore2.Models.Files
         Task<FileModel> UploadMonografAsync(Monograf monograf, IFormFile uploadedFile);
 
         /// <summary>
+        /// Загружает файл документа об образовании
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <param name="typeOfEducationDocument"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadEducationDocumentAsync(IFormFile uploadedFile, FileDataTypeEnum typeOfEducationDocument);
+
+        /// <summary>
         /// Загружает файл согласия на обработку персональных данных
         /// </summary>
         /// <param name="uploadedFile">Загружаемый файл</param>
@@ -94,6 +110,13 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="uploadFile"></param>
         /// <returns></returns>
         Task<FileModel> UploadRezultOsvoenObrazovatProgrAsync(Student student, IFormFile uploadedFile);
+        
+        /// <summary>
+        /// Загружает файл паспорта
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadPassportAsync(IFormFile uploadedFile);
 
         /// <summary>
         /// Возвращает типы файлов указанной группы
@@ -101,5 +124,26 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="fileDataTypeGroup"></param>
         /// <returns></returns>
         IQueryable<FileDataType> GetFileDataTypes(FileDataTypeGroupEnum fileDataTypeGroup);
+        
+        /// <summary>
+        /// Удаляет документ пользователя
+        /// </summary>
+        /// <param name="userDocument"></param>
+        /// <returns></returns>
+        Task RemoveUserDocumentAsync(UserDocument userDocument);
+
+        /// <summary>
+        /// Удаляет набор документов пользователя
+        /// </summary>
+        /// <param name="userDocuments"></param>
+        /// <returns></returns>
+        Task RemoveUserDocumentsAsync(List<UserDocument> userDocuments);
+
+        /// <summary>
+        /// Заменяет файл на диске
+        /// </summary>
+        /// <param name="fileModel"></param>
+        /// <param name="uploadedFile"></param>
+        Task ReloadFileAsync(FileModel fileModel, IFormFile uploadedFile);
     }
 }

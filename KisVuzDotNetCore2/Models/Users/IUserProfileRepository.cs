@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KisVuzDotNetCore2.Models.Common;
+using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Nir;
 
 namespace KisVuzDotNetCore2.Models.Users
@@ -39,7 +41,14 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="id"></param>
         /// <param name="userName"></param>
         /// <returns></returns>
-        Article GetArticle(int? id, string userName);        
+        Article GetArticle(int? id, string userName);
+
+        /// <summary>
+        /// Добавляет паспортные данные
+        /// </summary>
+        /// <param name="passportData"></param>
+        /// <returns></returns>
+        Task AddPassportDataAsync(PassportData passportData);
 
         /// <summary>
         /// Добавляет статью пользователя userName
@@ -54,7 +63,14 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="articleEntry"></param>
         /// <param name="article"></param>        
         void UpdateArticle(Article articleEntry, Article article);
-        
+
+        /// <summary>
+        /// Возвращает запрос на выборку квалификаций пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        IQueryable<Qualification> GetQualifications(string userName);
+
         /// <summary>
         /// Удаляет статью пользователя userName
         /// </summary>
@@ -92,6 +108,20 @@ namespace KisVuzDotNetCore2.Models.Users
         AppUser GetAppUser(string userName);
 
         /// <summary>
+        /// Возвращает паспортные данные указанного пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<PassportData> GetPassportDataAsync(string userName);
+
+        /// <summary>
+        /// Проверяет наличие наспортных данных указанного пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<bool> IsPassportDataExistsAsync(string userName);
+
+        /// <summary>
         /// Возвращает Id пользователя по его имени
         /// </summary>
         /// <param name="userName"></param>
@@ -114,11 +144,34 @@ namespace KisVuzDotNetCore2.Models.Users
         Patent GetPatent(int? id, string userName);
 
         /// <summary>
+        /// Устанавливает статус пользователя
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <param name="appUserStatusEnum"></param>
+        /// <returns></returns>
+        Task SetAppUserStatusAsync(AppUser appUser, AppUserStatusEnum appUserStatusEnum);
+
+        /// <summary>
         /// Добавляет патент (свидетельство) пользователя userName
         /// </summary>
         /// <param name="article"></param>
         /// <param name="userName"></param>
         void CreatePatent(Patent patent, string userName);
+
+        /// <summary>
+        /// Удаляет аккаунт пользователя и все связанные данные
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task RemoveAppUserAsync(string userName);
+
+        /// <summary>
+        /// Устанавливает статус документа
+        /// </summary>
+        /// <param name="userDocument"></param>
+        /// <param name="rowStatusEnum"></param>
+        /// <returns></returns>
+        Task SetUserDocumentStatusAsync(UserDocument userDocument, RowStatusEnum rowStatusEnum);
 
         /// <summary>
         /// Обновляет патент (свидетельство) пользователя userName

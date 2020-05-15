@@ -49,7 +49,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataTypeGroup fileDataTypeGroup4 = new FileDataTypeGroup
                     {
-                        FileDataTypeGroupId = 4,
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.EducationDocuments,
                         FileDataTypeGroupName = "Документы об образовании"
                     };
 
@@ -580,6 +580,28 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = (int)FileDataTypeGroupEnum.UserDocuments
                     };
 
+                    FileDataType fileDataType59 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii,
+                        FileDataTypeName = "Аттестат о среднем общем образовании",
+                        Itemprop = "",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.EducationDocuments
+                    };
+
+                    FileDataType fileDataType60 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.Passport,
+                        FileDataTypeName = "Паспорт",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.UserDocuments
+                    };
+
+                    FileDataType fileDataType61 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.IndividualnoeDostijenieAbiturienta,
+                        FileDataTypeName = "Файл, подтверждающий индивидуальное достижение абитуриента",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.AbiturientFiles
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -637,7 +659,10 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType54,                        
                         fileDataType56,
                         fileDataType57,
-                        fileDataType58
+                        fileDataType58,
+                        fileDataType59,
+                        fileDataType60,
+                        fileDataType61
                         );
                     await context.SaveChangesAsync();
                 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.UchPosobiya;
@@ -16,13 +17,13 @@ namespace KisVuzDotNetCore2.Models.Users
     public class UserProfileRepository : IUserProfileRepository
     {
         AppIdentityDBContext _context;
-        IFileModelRepository _fileModelRepository;
+        IFileModelRepository _fileModelRepository;        
 
         public UserProfileRepository(AppIdentityDBContext context,
             IFileModelRepository fileModelRepository)
         {
             _context = context;
-            _fileModelRepository = fileModelRepository;
+            _fileModelRepository = fileModelRepository;            
         }
 
         /// <summary>
@@ -46,6 +47,15 @@ namespace KisVuzDotNetCore2.Models.Users
         private IQueryable<AppUser> GetUsers()
         {
             return _context.Users
+                //////////// Фактический адрес ////////////
+                .Include(u => u.AddressCurrent.PopulatedLocality.District.GpsGeometryCenter)
+                .Include(u => u.AddressCurrent.PopulatedLocality.District.Region.Country)
+                //////////// Иностранные языки ////////////
+                .Include(u => u.AppUserForeignLanguages)
+                    .ThenInclude(aufl=> aufl.ForeignLanguage)
+                /////////////// Абитуриенты ///////////////
+                .Include(u => u.Abiturient.ApplicationForAdmissions)
+                ////////////////// Авторы /////////////////
                 .Include(u => u.Author)
                     .ThenInclude(a => a.ArticleAuthors)
                         .ThenInclude(aa => aa.Article)
@@ -117,7 +127,7 @@ namespace KisVuzDotNetCore2.Models.Users
                         .ThenInclude(pa => pa.Patent)
                             .ThenInclude(p => p.PatentVid)
                                 .ThenInclude(pv => pv.PatentVidGroup)
-                    .Include(u => u.Author)
+                .Include(u => u.Author)
                     .ThenInclude(a => a.PatentAuthors)
                         .ThenInclude(pa => pa.Patent)
                             .ThenInclude(p => p.PatentNirTemas)
@@ -140,12 +150,12 @@ namespace KisVuzDotNetCore2.Models.Users
                         .ThenInclude(pa => pa.Monograf)
                             .ThenInclude(p => p.MonografNirSpecials)
                                 .ThenInclude(pn => pn.NirSpecial)
-                    .Include(u => u.Author)
+                .Include(u => u.Author)
                     .ThenInclude(a => a.MonografAuthors)
                         .ThenInclude(pa => pa.Monograf)
                             .ThenInclude(p => p.MonografNirTemas)
                                 .ThenInclude(pn => pn.NirTema)
-                    .Include(u => u.Author)
+                .Include(u => u.Author)
                     .ThenInclude(a => a.MonografAuthors)
                         .ThenInclude(pa => pa.Monograf)
                             .ThenInclude(p => p.MonografAuthors)
@@ -157,10 +167,27 @@ namespace KisVuzDotNetCore2.Models.Users
                     .ThenInclude(ua => ua.UserAchievmentType)
                 ///////////////// Преподаватели ////////////////////
                 .Include(u => u.Teachers)
-                ///////////////// Студенты ////////////////////
+                /////////////////// Студенты ///////////////////////
                 .Include(u => u.Students)
                     .ThenInclude(s => s.StudentGroup)
-                        .ThenInclude(sg => sg.EduKurs);
+                        .ThenInclude(sg => sg.EduKurs)
+                ///////////////// Документы пользователя ///////////
+                .Include(u => u.UserDocuments)
+                    .ThenInclude(ud => ud.RowStatus)
+                .Include(u => u.UserDocuments)
+                    .ThenInclude(ud => ud.FileModel)
+                .Include(u => u.UserDocuments)
+                    .ThenInclude(ud => ud.FileDataType)
+                ///////////// Работы пользователя //////////////////
+                .Include(u => u.UserWorks)
+                .Include(u => u.UserAchievments)
+                .Include(u => u.StructSubvisions)
+                .Include(u => u.AppUserStructSubvisions)
+                .Include(u => u.MessagesFromAppUserToStudentGroups)
+                .Include(u => u.ProfessionalRetrainings)
+                .Include(u => u.Qualifications)
+                .Include(u => u.RefresherCourses)
+                .Include(u => u.ScienceJournalAddingClaims);
         }
 
         /// <summary>
@@ -356,6 +383,7 @@ namespace KisVuzDotNetCore2.Models.Users
 
             return patents;
         }
+                
 
         /// <summary>
         /// Возвращает патент (свидетельство) пользователя userName
@@ -760,5 +788,127 @@ namespace KisVuzDotNetCore2.Models.Users
             else
                 return false;
         }
+
+        /// <summary>
+        /// Устанавливает статус пользователя
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <param name="appUserStatusEnum"></param>
+        /// <returns></returns>
+        public async Task SetAppUserStatusAsync(AppUser appUser, AppUserStatusEnum appUserStatusEnum)
+        {
+            appUser.AppUserStatusId = (int)appUserStatusEnum;
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Устанавливает статус документа
+        /// </summary>
+        /// <param name="userDocument"></param>
+        /// <param name="rowStatusEnum"></param>
+        /// <returns></returns>
+        public async Task SetUserDocumentStatusAsync(UserDocument userDocument, RowStatusEnum rowStatusEnum)
+        {
+            userDocument.RowStatusId = (int)rowStatusEnum;
+            await _context.SaveChangesAsync();
+        }
+
+
+        /// <summary>
+        /// Возвращает запрос на выборку квалификаций пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public IQueryable<Qualification> GetQualifications(string userName)
+        {
+            var query = _context.Qualifications.Where(q => q.AppUserId == GetAppUser(userName).Id);
+            return query;
+        }
+
+
+
+        /// <summary>
+        /// Удаляет аккаунт пользователя и все связанные данные
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveAppUserAsync(string userName)
+        {
+            var appUser = GetAppUser(userName);
+
+            if (appUser == null)
+                throw new Exception($"Пользователь {userName} не найден!");
+
+            // Удаляем все пользовательские сообщения
+            var userMessages = await _context.UserMessages
+                .Where(um => um.UserSenderId == appUser.Id || um.UserReceiverId == appUser.Id)
+                .ToListAsync();
+            _context.UserMessages.RemoveRange(userMessages); 
+            await _context.SaveChangesAsync();
+
+            //// Удаляем все групповые сообщения // Удаляется автоматически
+            //if (appUser.MessagesFromAppUserToStudentGroups != null && appUser.MessagesFromAppUserToStudentGroups.Count > 0)
+            //{
+                
+            //}
+            if(appUser.UserDocuments != null && appUser.UserDocuments.Count > 0)
+            {
+                await _fileModelRepository.RemoveUserDocumentsAsync(appUser.UserDocuments);                
+            }
+
+            _context.Users.Remove(appUser);
+            await _context.SaveChangesAsync();
+        }
+
+
+        #region Паспортные данные
+        /// <summary>
+        /// Добавляет паспортные данные
+        /// </summary>
+        /// <param name="passportData"></param>
+        /// <returns></returns>
+        public async Task AddPassportDataAsync(PassportData passportData)
+        {
+            _context.PassportDataSet.Add(passportData);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Возвращает паспортные данные пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<PassportData> GetPassportDataAsync(string userName)
+        {
+            var appUser = await _context.Users
+                .Include(u => u.PassportData.Address.PopulatedLocality.PopulatedLocalityType)
+                .Include(u => u.PassportData.Address.PopulatedLocality.District.GpsGeometryCenter)
+                .Include(u => u.PassportData.Address.PopulatedLocality.District.Region.Country)
+                .Include(u => u.PassportData.RowStatus)
+                .Include(u => u.PassportData.UserDocument.FileDataType)
+                .Include(u => u.PassportData.UserDocument.FileModel)
+                .FirstOrDefaultAsync(u => u.UserName == userName);
+
+            if (appUser == null) return null;
+            if (appUser.PassportData == null) return null;
+
+            return appUser.PassportData;
+        }
+
+        /// <summary>
+        /// Проверяет наличие наспортных данных
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<bool> IsPassportDataExistsAsync(string userName)
+        {
+            var passportData = await GetPassportDataAsync(userName);
+
+            if (passportData == null) return false;
+
+            return true;
+        }
+
+        #endregion
     }
 }

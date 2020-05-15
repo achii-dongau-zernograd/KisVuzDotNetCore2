@@ -58,13 +58,20 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         public List<EduProfile> EduProfiles { get; set; }
 
+        public string GetEduNapravlName
+        {
+            get
+            {
+                return EduNapravlCode + " - " + EduNapravlName;
+            }
+        }
+
         public string GetEduNapravlFullName
         {
             get
             {
                 return EduUgs?.EduLevel?.EduLevelName + " - " + EduNapravlCode + " - " + EduNapravlName;
             }
-
         }
 
         /// <summary>

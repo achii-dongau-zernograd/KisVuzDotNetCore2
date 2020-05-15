@@ -1,0 +1,43 @@
+﻿@model List<KisVuzDotNetCore2.Models.Abitur.Abiturient>
+
+@{
+    ViewData["Title"] = "Абитуриенты";
+}
+
+<h2>Абитуриенты</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Дата/время регистрации</th>
+            <th>ФИО</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>        
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.AppUser.RegisterDateTime</td>
+                    <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUser.Id">@item.AppUser.GetFullName</a></td>
+                    <td>@item.AbiturientStatus?.AbiturientStatusName</td>
+                    <td>
+                        <a asp-action="Details" asp-route-userName="@item.AppUser.UserName" class="btn btn-primary">Сведения</a>
+                        <a asp-action="Delete" asp-route-userName="@item.AppUser.UserName" class="btn btn-danger">Удалить</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2" class="text-center">Абитуриенты не зарегистрированы</td>                
+            </tr>
+        }
+
+    </tbody>
+</table>
+

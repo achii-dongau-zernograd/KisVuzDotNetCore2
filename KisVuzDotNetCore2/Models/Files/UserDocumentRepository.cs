@@ -65,6 +65,63 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает на сервер документ об образовании и
+        /// создаёт соответствующую запись в таблице UserDocuments
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="uploadedFile"></param>
+        /// <param name="typeOfEducationDocument">Тип документа об образовании</param>
+        /// <returns></returns>
+        public async Task<UserDocument> CreateEducationDocumentAsync(string userName,
+            IFormFile uploadedFile,
+            FileDataTypeEnum typeOfEducationDocument)
+        {
+            var userId = _userProfileRepository.GetAppUserId(userName);
+            var fileModel = await _fileModelRepository.UploadEducationDocumentAsync(uploadedFile, typeOfEducationDocument);
+            if (fileModel == null)
+                return null;
+
+            var userDocument = new UserDocument
+            {
+                AppUserId = userId,
+                FileModelId = fileModel.Id,
+                FileDataTypeId = (int)typeOfEducationDocument
+            };
+
+            await _context.AddAsync(userDocument);
+            await _context.SaveChangesAsync();
+
+            return userDocument;
+        }
+
+        /// <summary>
+        /// Загружает на сервер паспорт и
+        /// создаёт соответствующую запись в таблице UserDocuments
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<UserDocument> CreatePassport(string userName, IFormFile uploadedFile)
+        {
+            var userId = _userProfileRepository.GetAppUserId(userName);
+            var fileModel = await _fileModelRepository.UploadPassportAsync(uploadedFile);
+            if (fileModel == null)
+                return null;
+
+            var userDocument = new UserDocument
+            {
+                AppUserId = userId,
+                FileModelId = fileModel.Id,
+                FileDataTypeId = (int)FileDataTypeEnum.Passport                
+            };
+
+            await _context.AddAsync(userDocument);
+            await _context.SaveChangesAsync();
+
+            return userDocument;
+        }
+
+        /// <summary>
         /// Проверяет наличие у пользователя наличия документов указанного типа
         /// </summary>
         /// <param name="userName"></param>
@@ -115,15 +172,153 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="userDocumentId"></param>
         /// <returns></returns>
         public async Task RemoveUserDocumentAsync(int userDocumentId)
+        {            
+            var userDocument = await GetUserDocumentAsync(userDocumentId);
+            await _fileModelRepository.RemoveUserDocumentAsync(userDocument);
+        }
+
+        /// <summary>
+        /// Устанавливает замечание к документу
+        /// </summary>
+        /// <param name="userDocument"></param>
+        /// <param name="remark"></param>
+        /// <returns></returns>
+        public async Task SetUserDocumentRemarkAsync(UserDocument userDocument, string remark)
         {
-            var userDocument = await _context.UserDocuments
-                .Include(ud => ud.FileModel)
-                .SingleOrDefaultAsync(m => m.UserDocumentId == userDocumentId);
-            _context.UserDocuments.Remove(userDocument);
-
-            await _fileModelRepository.RemoveFileModelAsync(userDocument.FileModel);
-
+            userDocument.Remark = remark;
             await _context.SaveChangesAsync();
-        }        
+        }
+
+        /// <summary>
+        /// Возвращает запрос на выборку всех пользовательских документов со связями
+        /// </summary>
+        IQueryable<UserDocument> UserDocuments => _context.UserDocuments
+            .Include(ud => ud.AppUser)
+            .Include(ud => ud.FileModel.FileToFileTypes)
+            .Include(ud => ud.FileDataType)
+            .Include(ud => ud.RowStatus)
+            .Include(ud => ud.UserEducations)
+            .Include(ud => ud.PassportData);
+
+        /// <summary>
+        /// Возвращает документ пользователя
+        /// </summary>
+        /// <param name="userDocumentId"></param>
+        /// <returns></returns>
+        public async Task<UserDocument> GetUserDocumentAsync(int userDocumentId)
+        {
+            var userDocument = await UserDocuments.FirstOrDefaultAsync(ud => ud.UserDocumentId == userDocumentId);
+
+            return userDocument;
+        }
+
+        /// <summary>
+        /// Проверяет наличие у пользователя сведений об образовании
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<bool> IsUserEducationDataExistsAsync(string userName)
+        {
+            var userEducationDocuments = await GetUserEducationDocuments(userName).ToListAsync();
+
+            foreach (var userEducationDocument in userEducationDocuments)
+            {
+                if (userEducationDocument.UserEducations == null || userEducationDocument.UserEducations.Count == 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        
+
+        
+
+        /// <summary>
+        /// Возвращает документы об образовании пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        private IQueryable<UserDocument> GetUserEducationDocuments(string userName)
+        {
+            return GetUserDocuments(FileDataTypeGroupEnum.EducationDocuments)
+                .Where(ud => ud.AppUser.UserName == userName);            
+        }
+
+        /// <summary>
+        /// Возвращает паспорта пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        private IQueryable<UserDocument> GetUserPassports(string userName)
+        {
+            return GetUserDocuments(FileDataTypeEnum.Passport)
+                .Where(ud => ud.AppUser.UserName == userName);
+        }
+
+        /// <summary>
+        /// Возвращает документы пользователя указанного типа
+        /// </summary>
+        /// <param name="educationDocuments"></param>
+        /// <returns></returns>
+        private IQueryable<UserDocument> GetUserDocuments(FileDataTypeGroupEnum fileDataTypeGroup)
+        {
+            var userDocuments = UserDocuments.Where(ud => ud.FileDataType.FileDataTypeGroupId == (int)fileDataTypeGroup);
+            return userDocuments;
+        }
+
+        /// <summary>
+        /// Возвращает документы пользователя указанного типа
+        /// </summary>
+        /// <param name="educationDocuments"></param>
+        /// <returns></returns>
+        private IQueryable<UserDocument> GetUserDocuments(FileDataTypeEnum fileDataType)
+        {
+            var userDocuments = UserDocuments.Where(ud => ud.FileDataTypeId == (int)fileDataType);
+            return userDocuments;
+        }
+
+        /// <summary>
+        /// Возвращает запрос на выборку документов об образовании пользователя, не имеющих заполненных сведений
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public IQueryable<UserDocument> GetUserEducationDocumentsWithoutUserEducationDataAsync(string userName)
+        {
+            var query = GetUserEducationDocuments(userName).Where(ud => ud.UserEducations == null || ud.UserEducations.Count == 0);
+            return query;
+        }
+
+        /// <summary>
+        /// Возвращает первый объект документа пользователя,
+        /// который является паспортом и не связан с объектом паспортных данных
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<UserDocument> GetUserDocumentPassportWithoutPassportDataAsync(string userName)
+        {
+            var userDocumentPassport = await GetUserPassports(userName)
+                .Where(ud => ud.PassportData == null)
+                .FirstOrDefaultAsync();
+
+            return userDocumentPassport;
+        }
+
+        /// <summary>
+        /// Заменяет пользовательский документ
+        /// </summary>
+        /// <param name="userDocumentId"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task ReloadUserDocumentAsync(int userDocumentId, IFormFile uploadedFile)
+        {
+            var userDocument = await GetUserDocumentAsync(userDocumentId);
+            if (userDocument == null)
+                throw new Exception("Пользовательский документ не найден!");
+
+            await _fileModelRepository.ReloadFileAsync(userDocument.FileModel, uploadedFile);          
+        }
     }
 }

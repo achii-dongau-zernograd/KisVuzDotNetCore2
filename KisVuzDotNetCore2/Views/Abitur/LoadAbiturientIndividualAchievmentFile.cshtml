@@ -1,0 +1,55 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.AbiturientIndividualAchievment
+
+@{
+    ViewData["Title"] = "Загрузка документа";
+}
+
+<h2>Загрузка скан-копии документа, подтверждающего наличие индивидуального достижения</h2>
+
+<div>
+    <hr />
+    <h4>Индивидуальное достижение абитуриента</h4>
+    <dl class="">
+        <dt>
+            @Html.DisplayNameFor(model => model.AbiturientId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Abiturient.AppUser.GetFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AbiturientIndividualAchievmentTypeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AbiturientIndividualAchievmentType.AbiturientIndividualAchievmentTypeName)
+        </dd>
+        @*<dt>
+                @Html.DisplayNameFor(model => model.FileModel)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FileModel.Id)
+            </dd>*@
+        <dt>
+            @Html.DisplayNameFor(model => model.RowStatusId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RowStatus.RowStatusName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+    </dl>
+        
+
+    <form asp-action="LoadAbiturientIndividualAchievmentFile" enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="control-label">Выберите файл, содержащий скан-копии всех страниц подтверждающего документа: </label>
+            <input type="file" name="uploadedFile" class="form-control" />
+        </div>
+        <input type="hidden" asp-for="AbiturientIndividualAchievmentId" />
+        <input type="submit" value="Загрузить" class="btn btn-primary" />
+        <a asp-action="Start" class="btn btn-default">Отмена</a>
+    </form>
+</div>

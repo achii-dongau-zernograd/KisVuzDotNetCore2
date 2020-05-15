@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Паспорт";
+}
+
+<h2>Паспорт</h2>
+
+<p>Отсканируйте развороты страниц паспорта, содержащие фотографию и прописку, сохраните в формате pdf и загрузите в систему.</p>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="LoadFilePassport" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Выберите файл: </label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Загрузить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

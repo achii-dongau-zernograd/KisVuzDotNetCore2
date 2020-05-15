@@ -1,0 +1,39 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.ApplicationForAdmission
+
+@{
+    ViewData["Title"] = "Заявление оприёме";
+    var eduNapravl = (EduNapravl)ViewBag.EduNapravl;
+}
+
+<h2>Создание заявления о оприёме</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateApplicationForAdmission">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">@eduNapravl?.EduUgs?.EduLevel?.EduLevelName</label>
+                <label class="control-label">@eduNapravl?.EduNapravlName</label>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduProfileId" class="control-label"></label>
+                <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfiles"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduFormId" class="control-label"></label>
+                <select asp-for="EduFormId" class="form-control" asp-items="ViewBag.EduForms"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuotaTypeId" class="control-label"></label>
+                <select asp-for="QuotaTypeId" class="form-control" asp-items="ViewBag.QuotaTypes"></select>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="CreationDate" value="@DateTime.Now" />
+                <input type="hidden" asp-for="AbiturientId" value="@Model.AbiturientId" />
+                <input type="hidden" asp-for="PriorityId" value="@Model.PriorityId" />
+                <input type="submit" value="Создать" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
