@@ -1,0 +1,53 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.AbiturientIndividualAchievment
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление индивидуального достижения абитуриента</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AbiturientId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Abiturient.AppUser.GetFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AbiturientIndividualAchievmentTypeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AbiturientIndividualAchievmentType.AbiturientIndividualAchievmentTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModelId)
+        </dt>
+        <dd>
+            @if(Model.FileModel != null)
+            {
+                <a href="/@Model.FileModel.Path" target="_blank">Открыть</a>
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RowStatusId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RowStatus.RowStatusName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+    </dl>
+    
+    <form asp-action="AbiturientIndividualAchievmentRemove">
+        <input type="hidden" asp-for="AbiturientIndividualAchievmentId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Start" asp-route-selectedTab="abiturientAchievments" class="btn btn-default">Отмена</a>
+    </form>
+</div>

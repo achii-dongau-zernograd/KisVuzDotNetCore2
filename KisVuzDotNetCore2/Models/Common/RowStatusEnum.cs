@@ -21,6 +21,10 @@ namespace KisVuzDotNetCore2.Models.Common
         /// <summary>
         /// Возвращено для исправления
         /// </summary>
-        ReturnedForCorrection = 3
+        ReturnedForCorrection = 3,
+        /// <summary>
+        /// Изменено пользователем
+        /// </summary>
+        ChangedByUser = 4
     }
 }

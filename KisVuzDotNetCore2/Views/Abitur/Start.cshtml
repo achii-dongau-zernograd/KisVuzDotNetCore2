@@ -162,8 +162,8 @@
                         <td>
                             @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
                             {
-                                <a class="btn btn-primary btn-block" asp-action="AbiturientIndividualAchievmentEdit" asp-route-applicationForAdmissionId="@abiturientIndividualAchievment.AbiturientIndividualAchievmentId">Изменить</a>
-                                <a class="btn btn-danger  btn-block" asp-action="AbiturientIndividualAchievmentRemove" asp-route-applicationForAdmissionId="@abiturientIndividualAchievment.AbiturientIndividualAchievmentId">Удалить</a>
+                                <a class="btn btn-primary btn-block" asp-action="AbiturientIndividualAchievmentEdit" asp-route-abiturientIndividualAchievmentId="@abiturientIndividualAchievment.AbiturientIndividualAchievmentId">Изменить</a>
+                                <a class="btn btn-danger  btn-block" asp-action="AbiturientIndividualAchievmentRemove" asp-route-abiturientIndividualAchievmentId="@abiturientIndividualAchievment.AbiturientIndividualAchievmentId">Удалить</a>
                             }
                         </td>
                     </tr>
@@ -176,6 +176,9 @@
     @*//////////////////////////////////////////////////////// Заявления о приёме /////////////////////////////////////////////////////////*@
     <div class="tab-pane @applicationForAdmissionsClass" id="applicationForAdmissions">
         <br />
+
+        <a asp-action="CreateApplicationForAdmission" class="btn btn-primary">Добавить заявление о приёме</a>
+
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -229,7 +232,7 @@
                     <td>
                         @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
                         {
-                            <a class="btn btn-primary btn-block" asp-action="ApplicationForAdmissionEdit" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Заменить</a>
+                            <a class="btn btn-primary btn-block" asp-action="ApplicationForAdmissionEdit" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Редактировать</a>
                             <a class="btn btn-danger  btn-block" asp-action="ApplicationForAdmissionRemove" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Удалить</a>
                         }
                     </td>

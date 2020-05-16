@@ -47,10 +47,17 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         RowStatusName = "Возвращено для исправления"
                     };
 
+                    RowStatus RowStatus4 = new RowStatus
+                    {
+                        RowStatusId = (int)RowStatusEnum.ChangedByUser,
+                        RowStatusName = "Изменено пользователем"
+                    };
+
                     await context.RowStatuses.AddRangeAsync(
                         RowStatus1,
                         RowStatus2,
-                        RowStatus3
+                        RowStatus3,
+                        RowStatus4
                     );
                     await context.SaveChangesAsync();
                 }

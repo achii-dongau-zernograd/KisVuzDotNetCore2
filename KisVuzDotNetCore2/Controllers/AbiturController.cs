@@ -136,8 +136,13 @@ namespace KisVuzDotNetCore2.Controllers
             IFormFile uploadedFile)
         {
             await _abiturRepository.AddAbiturientIndividualAchievment(abiturientIndividualAchievment);
+            if(uploadedFile != null)
+            {
+                await _abiturRepository.UpdateAbiturientIndividualAchievmentFileAsync(abiturientIndividualAchievment.AbiturientIndividualAchievmentId,
+                uploadedFile);
+            }            
 
-            return RedirectToAction(nameof(Start));
+            return RedirectToAction(nameof(Start), new { selectedTab = "abiturientAchievments" });
         }
 
         /// <summary>
@@ -160,6 +165,51 @@ namespace KisVuzDotNetCore2.Controllers
             await _abiturRepository.UpdateAbiturientIndividualAchievmentFileAsync(abiturientIndividualAchievmentId, uploadedFile);
 
             return RedirectToAction(nameof(Start));
+        }
+
+        /// <summary>
+        /// Редактирование записи об индиальном достижении абитуриента
+        /// </summary>
+        /// <param name="abiturientIndividualAchievmentId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> AbiturientIndividualAchievmentEdit(int abiturientIndividualAchievmentId)
+        {
+            var abiturientIndividualAchievment = await _abiturRepository.GetAbiturientIndividualAchievmentAsync(abiturientIndividualAchievmentId);
+            ViewBag.AbiturientIndividualAchievmentTypes = _selectListRepository.GetSelectListAbiturientIndividualAchievmentTypes(abiturientIndividualAchievment.AbiturientIndividualAchievmentTypeId);
+            return View(abiturientIndividualAchievment);
+        }
+
+        /// <summary>
+        /// Редактирование записи об индиальном достижении абитуриента (HttpPost)
+        /// </summary>
+        /// <param name="abiturientIndividualAchievment"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AbiturientIndividualAchievmentEdit(AbiturientIndividualAchievment abiturientIndividualAchievment,
+            IFormFile uploadedFile)
+        {
+            await _abiturRepository.UpdateAbiturientIndividualAchievment(abiturientIndividualAchievment, uploadedFile);            
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "abiturientAchievments" });
+        }
+
+        
+        public async Task<IActionResult> AbiturientIndividualAchievmentRemove(int abiturientIndividualAchievmentId)
+        {
+            var abiturientIndividualAchievment = await _abiturRepository.GetAbiturientIndividualAchievmentAsync(abiturientIndividualAchievmentId);
+
+            return View(abiturientIndividualAchievment);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AbiturientIndividualAchievmentRemove(AbiturientIndividualAchievment abiturientIndividualAchievment)
+        {
+            await _abiturRepository.RemoveAbiturientIndividualAchievmentAsync(abiturientIndividualAchievment.AbiturientIndividualAchievmentId);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "abiturientAchievments" });
         }
         #endregion
 
@@ -184,6 +234,10 @@ namespace KisVuzDotNetCore2.Controllers
 
         public async Task<IActionResult> CreateApplicationForAdmission(int? eduNapravlId)
         {
+            int numApplicationForAdmissions = _abiturRepository.GetNumberOfApplicationForAdmissions(User.Identity.Name);
+            if (numApplicationForAdmissions >= 6)
+                return View("MaxNumberOfApplicationForAdmissions");
+
             if (eduNapravlId == null)
                 return RedirectToAction(nameof(ChooseEduNapravl));
 
@@ -220,7 +274,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             await _abiturRepository.AddApplicationForAdmission(applicationForAdmission);
 
-            return RedirectToAction(nameof(Start));
+            return RedirectToAction(nameof(Start), new { selectedTab = "applicationForAdmissions" } );
         }
         #endregion
 
@@ -304,6 +358,7 @@ namespace KisVuzDotNetCore2.Controllers
         }
         #endregion
 
+        #region Загрузка заявления на обработку персональных данных
         /// <summary>
         /// Загрузка заявления
         /// на обработку персональных данных
@@ -321,6 +376,7 @@ namespace KisVuzDotNetCore2.Controllers
 
             return RedirectToAction(nameof(Start));
         }
+        #endregion
 
         #region Загрузка документа об образовании
         /// <summary>
@@ -586,7 +642,7 @@ namespace KisVuzDotNetCore2.Controllers
         #endregion
 
         /////////////////////////////////////////////////////////////////////////////////////////
-
+        #region Рздел "Сведения об образовательной организации"
 
         /// <summary>
         /// Подраздел для представления информации по СПО
@@ -708,5 +764,6 @@ namespace KisVuzDotNetCore2.Controllers
 
             return View();
         }
+        #endregion
     }
 }

@@ -443,5 +443,23 @@ namespace KisVuzDotNetCore2.Models.Files
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Возвращает объект файловой модели
+        /// </summary>
+        /// <param name="fileModelId"></param>
+        /// <returns></returns>
+        public async Task<FileModel> GetFileModelAsync(int? fileModelId)
+        {
+            if (fileModelId == null || fileModelId == 0)
+                return null;
+
+            var fileModel = await _context.Files
+                .Include(f => f.FileToFileTypes)
+                    .ThenInclude(ftft => ftft.FileDataType)
+                        .ThenInclude(fdt => fdt.FileDataTypeGroup)
+                .FirstOrDefaultAsync(f => f.Id == fileModelId);
+
+            return fileModel;
+        }
     }
 }

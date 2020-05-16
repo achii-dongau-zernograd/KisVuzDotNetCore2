@@ -36,6 +36,7 @@
             <th>ФИО</th>
             <th>Логин</th>
             <th>Email</th>
+            <th>Пароль</th>
             <th>Студент</th>
             <th>Преподаватель</th>
             <th>Действия</th>
@@ -55,6 +56,7 @@
                     <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@user.Id">@user.GetFullName</a></td>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
+                    <td>@(user.Password??"Неизвестно")</td>
                     <td>
                         @if (user.Students.Count > 0)
                         {

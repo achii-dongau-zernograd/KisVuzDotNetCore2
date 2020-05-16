@@ -209,5 +209,26 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="applicationForAdmission"></param>
         /// <returns></returns>
         Task AddApplicationForAdmission(ApplicationForAdmission applicationForAdmission);
+
+        /// <summary>
+        /// Обновляет запись об индивидуальном достижении абитуриента
+        /// </summary>
+        /// <param name="abiturientIndividualAchievment"></param>
+        /// <returns></returns>
+        Task UpdateAbiturientIndividualAchievment(AbiturientIndividualAchievment abiturientIndividualAchievment, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Удаляет индивидуальное достижение абитуриента
+        /// </summary>
+        /// <param name="abiturientIndividualAchievmentId"></param>
+        /// <returns></returns>
+        Task RemoveAbiturientIndividualAchievmentAsync(int abiturientIndividualAchievmentId);
+        
+        /// <summary>
+        /// Возвращает количество заявлений о приёме, созданных указанным пользователем
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        int GetNumberOfApplicationForAdmissions(string userName);
     }
 }

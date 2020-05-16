@@ -426,5 +426,63 @@ namespace KisVuzDotNetCore2.Models.Abitur
         {
             await _userProfileRepository.SetUserDocumentStatusAsync(userDocument, rowStatusId);
         }
+
+        /// <summary>
+        /// Обновляет запись об индивидуальном достижении абитуриента
+        /// </summary>
+        /// <param name="abiturientIndividualAchievment"></param>
+        /// <returns></returns>
+        public async Task UpdateAbiturientIndividualAchievment(AbiturientIndividualAchievment abiturientIndividualAchievment, IFormFile uploadedFile)
+        {            
+            if(uploadedFile != null)
+            {
+                if(abiturientIndividualAchievment.FileModelId != null)
+                {
+                    if(abiturientIndividualAchievment.FileModel == null)
+                    {
+                        var entryFileModel = await _fileModelRepository.GetFileModelAsync(abiturientIndividualAchievment.FileModelId);
+                        abiturientIndividualAchievment.FileModel = entryFileModel;
+                    }
+
+                    await _fileModelRepository.ReloadFileAsync(abiturientIndividualAchievment.FileModel, uploadedFile);
+                }
+                else
+                {
+                    var loadedFileModel = await _fileModelRepository.UploadIndividualAchievmentFile(uploadedFile);
+                    abiturientIndividualAchievment.FileModel = loadedFileModel;
+                    abiturientIndividualAchievment.FileModelId = loadedFileModel.Id;
+                }
+            }
+            
+            _context.AbiturientIndividualAchievments.Update(abiturientIndividualAchievment);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет индивидуальное достижение абитуриента
+        /// </summary>
+        /// <param name="abiturientIndividualAchievmentId"></param>
+        /// <returns></returns>
+        public async Task RemoveAbiturientIndividualAchievmentAsync(int abiturientIndividualAchievmentId)
+        {
+            var entry = await GetAbiturientIndividualAchievmentAsync(abiturientIndividualAchievmentId);
+
+            if(entry.FileModel != null)
+                await _fileModelRepository.RemoveFileModelAsync(entry.FileModel);
+
+            _context.AbiturientIndividualAchievments.Remove(entry);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Возвращает количество заявлений о приёме, созданных указанным пользователем
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public int GetNumberOfApplicationForAdmissions(string userName)
+        {
+            int result = _applicationForAdmissionRepository.GetNumberOfApplicationForAdmissions(userName);
+            return result;
+        }
     }
 }

@@ -59,5 +59,16 @@ namespace KisVuzDotNetCore2.Models.Abitur
 
             return query;
         }
+
+        /// <summary>
+        /// Возвращает количество заявлений о приёме, созданных указанным пользователем
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public int GetNumberOfApplicationForAdmissions(string userName)
+        {
+            int result = GetApplicationForAdmissions(userName).Count();
+            return result;
+        }
     }
 }

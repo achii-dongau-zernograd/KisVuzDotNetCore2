@@ -28,5 +28,12 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// </summary>
         /// <returns></returns>
         IQueryable<ApplicationForAdmission> GetApplicationForAdmissions(string userName);
+
+        /// <summary>
+        /// Возвращает количество заявлений о приёме, созданных указанным пользователем
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        int GetNumberOfApplicationForAdmissions(string userName);
     }
 }

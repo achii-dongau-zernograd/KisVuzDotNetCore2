@@ -52,10 +52,13 @@ namespace KisVuzDotNetCore2.Controllers
             return View(users);
         }
 
-        public ViewResult Search()
-        {            
-            
-            return View();
+        public ViewResult Search(string LastNameSearchFragment)
+        {
+            var model = new AppUserSearchModel
+            {
+                LastNameSearchFragment = LastNameSearchFragment
+            };
+            return View(model);
         }
 
         [HttpPost]        
@@ -114,7 +117,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 IdentityResult result = await userManager.DeleteAsync(user);
                 if (result.Succeeded)
-                    return RedirectToAction("Index");
+                    return RedirectToAction(nameof(Search));
                 else
                     AddErrorsFromResult(result);
             }
@@ -123,7 +126,7 @@ namespace KisVuzDotNetCore2.Controllers
                 ModelState.AddModelError("", "Пользователь не найден");
             }
 
-            return View("Index", userManager.Users);
+            return View(nameof(Search));
         }
         #endregion
 
@@ -158,6 +161,7 @@ namespace KisVuzDotNetCore2.Controllers
                     validPass = await passwordValidator.ValidateAsync(userManager, user, password);
                     if(validPass.Succeeded)
                     {
+                        user.Password = password;
                         user.PasswordHash = passwordHasher.HashPassword(user, password);
                     }
                     else
@@ -171,7 +175,7 @@ namespace KisVuzDotNetCore2.Controllers
                     IdentityResult result = await userManager.UpdateAsync(user);
                     if(result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction(nameof(Search), new { LastNameSearchFragment = user.LastName });
                     }
                     else
                     {
