@@ -572,6 +572,20 @@
     <Compile Remove="Migrations\20200514050532_AbiturientIndividualAchievments.Designer.cs" />
     <Compile Remove="Migrations\20200514050803_AbiturientIndividualAchievments.cs" />
     <Compile Remove="Migrations\20200514050803_AbiturientIndividualAchievments.Designer.cs" />
+    <Compile Remove="Migrations\20200518022725_LmsTask.cs" />
+    <Compile Remove="Migrations\20200518022725_LmsTask.Designer.cs" />
+    <Compile Remove="Migrations\20200518031239_LmsTaskSet.cs" />
+    <Compile Remove="Migrations\20200518031239_LmsTaskSet.Designer.cs" />
+    <Compile Remove="Migrations\20200518032210_LmsTaskSetLmsTasks.cs" />
+    <Compile Remove="Migrations\20200518032210_LmsTaskSetLmsTasks.Designer.cs" />
+    <Compile Remove="Migrations\20200518162059_AppUserDetails.cs" />
+    <Compile Remove="Migrations\20200518162059_AppUserDetails.Designer.cs" />
+    <Compile Remove="Migrations\20200518163401_AppUserDetails.cs" />
+    <Compile Remove="Migrations\20200518163401_AppUserDetails.Designer.cs" />
+    <Compile Remove="Migrations\20200519021808_t.cs" />
+    <Compile Remove="Migrations\20200519021808_t.Designer.cs" />
+    <Compile Remove="Migrations\20200519094910_PassportNumber.cs" />
+    <Compile Remove="Migrations\20200519094910_PassportNumber.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

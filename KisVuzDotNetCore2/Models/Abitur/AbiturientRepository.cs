@@ -163,7 +163,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public IQueryable<Abiturient> GetAbiturients()
         {
             var abiturs = _context.Abiturients
-                .Include(a => a.AbiturientStatus)
+                .Include(a => a.AbiturientStatus)                
                 // Индивидуальные достижения
                 .Include(a => a.AbiturientIndividualAchievments)
                     .ThenInclude(aia => aia.AbiturientIndividualAchievmentType)
@@ -174,7 +174,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
                         .ThenInclude(fm=>fm.FileToFileTypes)
                             .ThenInclude(ftf => ftf.FileDataType)
                 // Паспортные данные пользователя
-                .Include(a => a.AppUser.PassportData)
+                .Include(a => a.AppUser.PassportData.Address)
+                // Личные данные пользователя
+                .Include(a => a.AppUser.Gender)
+                .Include(a => a.AppUser.MilitaryServiceStatus)
+                .Include(a => a.AppUser.FamilyMemberContacts)
+                    .ThenInclude(fmc => fmc.FamilyMemberType)
+                .Include(a => a.AppUser.AppUserForeignLanguages)
+                    .ThenInclude(aufl => aufl.ForeignLanguage)
                 // Документы пользователя
                 .Include(a => a.AppUser.UserDocuments)
                     .ThenInclude(ud => ud.RowStatus)
@@ -182,6 +189,15 @@ namespace KisVuzDotNetCore2.Models.Abitur
                     .ThenInclude(ud => ud.FileModel)
                 .Include(a => a.AppUser.UserDocuments)
                     .ThenInclude(ud => ud.FileDataType)
+                // Образование пользователя
+                .Include(a => a.AppUser.UserEducations)
+                    .ThenInclude(ue => ue.RowStatus)
+                .Include(a => a.AppUser.UserEducations)
+                    .ThenInclude(ue => ue.Qualification.RowStatus)
+                .Include(a => a.AppUser.UserEducations)
+                    .ThenInclude(ue => ue.UserDocument.RowStatus)
+                .Include(a => a.AppUser.UserEducations)
+                    .ThenInclude(ue => ue.UserDocument.FileModel)
                 // Заявления о приёме
                 .Include(a => a.ApplicationForAdmissions)
                     .ThenInclude(afa => afa.EduForm)
@@ -264,6 +280,22 @@ namespace KisVuzDotNetCore2.Models.Abitur
         }
 
         /// <summary>
+        /// Проверяет наличие заявлений о приёме
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        public bool IsApplicationForAdmissionExists(Abiturient abiturient)
+        {
+            if (abiturient.ApplicationForAdmissions == null)
+                return false;
+
+            if (abiturient.ApplicationForAdmissions.Count == 0)
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
         /// Проверяет наличие у абитуриента загруженного заявления
         /// на обработку персональных данных
         /// </summary>
@@ -276,7 +308,20 @@ namespace KisVuzDotNetCore2.Models.Abitur
             return isLoadedFile;
         }
 
-        
+        /// <summary>
+        /// Проверяем наличие у абитуриента загруженного заявления
+        /// на обработку персональных данных
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        public bool IsLoadedFileApplicationForProcessingPersonalData(Abiturient abiturient)
+        {
+            bool isLoadedFile = _userDocumentRepository.IsLoadedUserDocument(abiturient.AppUser, FileDataTypeEnum.SoglasieNaObrabotkuPersonalnihDannih);
+
+            return isLoadedFile;
+        }
+
+
 
         /// <summary>
         /// Проверяет наличие у абитуриента загруженных
@@ -287,6 +332,19 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public bool IsLoadedFileEducationDocuments(string userName)
         {
             bool isLoadedFile = _userDocumentRepository.IsLoadedUserDocument(userName, FileDataTypeGroupEnum.EducationDocuments);
+
+            return isLoadedFile;
+        }
+
+        /// <summary>
+        /// Проверяет наличие у абитуриента загруженных
+        /// документов об образовании
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        public bool IsLoadedFileEducationDocuments(Abiturient abiturient)
+        {
+            bool isLoadedFile = _userDocumentRepository.IsLoadedUserDocument(abiturient.AppUser, FileDataTypeGroupEnum.EducationDocuments);
 
             return isLoadedFile;
         }
@@ -304,6 +362,18 @@ namespace KisVuzDotNetCore2.Models.Abitur
         }
 
         /// <summary>
+        /// Проверяем наличие у абитуриента загруженной скан-копии паспорта
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        public bool IsLoadedFilePassport(Abiturient abiturient)
+        {
+            bool isLoadedFile = _userDocumentRepository.IsLoadedUserDocument(abiturient.AppUser, FileDataTypeEnum.Passport);
+
+            return isLoadedFile;
+        }
+
+        /// <summary>
         /// Проверяет наличие наспортных данных
         /// </summary>
         /// <param name="userName"></param>
@@ -315,6 +385,17 @@ namespace KisVuzDotNetCore2.Models.Abitur
         }
 
         /// <summary>
+        /// Проверяет наличие паспортных данных
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        public bool IsPassportDataExists(Abiturient abiturient)
+        {
+            bool isEntered =_userProfileRepository.IsPassportDataExists(abiturient.AppUser);
+            return isEntered;
+        }
+
+        /// <summary>
         /// Проверяет наличие у абитуриента сведений об образовании
         /// </summary>
         /// <param name="userName"></param>
@@ -322,6 +403,17 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public async Task<bool> IsUserEducationDataExists(string userName)
         {
             bool isEntered = await _userDocumentRepository.IsUserEducationDataExistsAsync(userName);
+            return isEntered;
+        }
+
+        /// <summary>
+        /// Проверяет наличие у абитуриента сведений об образовании
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        public async Task<bool> IsUserEducationDataExists(Abiturient abiturient)
+        {
+            bool isEntered = await _userDocumentRepository.IsUserEducationDataExistsAsync(abiturient.AppUser);
             return isEntered;
         }
 
@@ -367,13 +459,40 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public async Task RemoveAbiturientAsync(string userName)
+        public async Task RemoveAbiturientAsync(string userName, bool markAppUserAccountToDelete = false)
         {
             var abiturient = await GetAbiturientAsync(userName);
-            await _userProfileRepository.SetAppUserStatusAsync(abiturient.AppUser, AppUserStatusEnum.ToDelete);
+            if(markAppUserAccountToDelete)
+            {
+                await _userProfileRepository.SetAppUserStatusAsync(abiturient.AppUser, AppUserStatusEnum.ToDelete);
+            }
+            
+            if(abiturient.AbiturientIndividualAchievments != null && abiturient.AbiturientIndividualAchievments.Count() > 0)
+            {
+                await RemoveAbiturientIndividualAchievmentsAsync(abiturient.AbiturientIndividualAchievments);
+            }
+
+            await _applicationForAdmissionRepository.RemoveApplicationForAdmissionsAsync(abiturient.ApplicationForAdmissions);
+
             _context.Abiturients.Remove(abiturient);
 
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет индивидуальные достижения абитуриента
+        /// </summary>
+        /// <param name="abiturientIndividualAchievments"></param>
+        /// <returns></returns>
+        private async Task RemoveAbiturientIndividualAchievmentsAsync(List<AbiturientIndividualAchievment> abiturientIndividualAchievments)
+        {
+            var list = new List<int>();
+            abiturientIndividualAchievments.ForEach(a => list.Add(a.AbiturientIndividualAchievmentId));
+
+            foreach(var item in list)
+            {
+                await RemoveAbiturientIndividualAchievmentAsync(item);
+            }
         }
 
         /// <summary>
@@ -483,6 +602,113 @@ namespace KisVuzDotNetCore2.Models.Abitur
         {
             int result = _applicationForAdmissionRepository.GetNumberOfApplicationForAdmissions(userName);
             return result;
+        }
+
+        /// <summary>
+        /// Возвращает заявление о зачислении абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="applicationForAdmissionId"></param>
+        /// <returns></returns>
+        public async Task<ApplicationForAdmission> GetApplicationForAdmissionAsync(string userName,
+            int applicationForAdmissionId)
+        {
+            ApplicationForAdmission applicationForAdmission = await _applicationForAdmissionRepository
+                .GetApplicationForAdmissionAsync(applicationForAdmissionId);
+            if (applicationForAdmission == null ||
+                applicationForAdmission.Abiturient == null ||
+                applicationForAdmission.Abiturient.AppUser == null ||
+                applicationForAdmission.Abiturient.AppUser.UserName != userName)
+                return null;
+
+            return applicationForAdmission;
+        }
+
+        /// <summary>
+        /// Обновляет заявление о зачислении
+        /// </summary>
+        /// <param name="applicationForAdmission"></param>
+        /// <returns></returns>
+        public async Task UpdateApplicationForAdmissionAsync(ApplicationForAdmission applicationForAdmission)
+        {
+            await _applicationForAdmissionRepository.UpdateApplicationForAdmissionAsync(applicationForAdmission);
+        }
+
+        /// <summary>
+        /// Обновляет заявление о приёме
+        /// </summary>
+        /// <param name="applicationForAdmission"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task UpdateApplicationForAdmissionAsync(ApplicationForAdmission applicationForAdmission, IFormFile uploadedFile)
+        {
+            await _applicationForAdmissionRepository.UpdateApplicationForAdmissionAsync(applicationForAdmission, uploadedFile);
+        }
+
+        /// <summary>
+        /// Удаляет заявление о приёме
+        /// </summary>
+        /// <param name="applicationForAdmission"></param>
+        /// <returns></returns>
+        public async Task RemoveApplicationForAdmissionAsync(string userName, int applicationForAdmissionId)
+        {
+            var entry = await GetApplicationForAdmissionAsync(userName, applicationForAdmissionId);
+
+            if (entry == null) return;
+
+            await _applicationForAdmissionRepository.RemoveApplicationForAdmissionAsync(entry);
+        }
+
+
+        /// <summary>
+        /// Загрузка скан-копии заявления о приёме
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="applicationForAdmissionId"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task ApplicationForAdmissionFileLoadAsync(string userName, int applicationForAdmissionId, IFormFile uploadedFile)
+        {
+            await _applicationForAdmissionRepository.ApplicationForAdmissionFileLoadAsync(userName, applicationForAdmissionId, uploadedFile);
+        }
+
+        /// <summary>
+        /// Обновляет данные абитуриента
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        public async Task UpdateAbiturientAsync(Abiturient abiturient)
+        {
+            _context.Abiturients.Update(abiturient);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Добавляет иностранный язык
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="foreignLanguageId"></param>
+        /// <returns></returns>
+        public async Task AddAbiturientForeignLanguage(string userName, int foreignLanguageId)
+        {
+            var abiturient = await GetAbiturientAsync(userName);
+            if (abiturient == null) return;
+            if (abiturient.AppUser.UserName != userName) return;
+
+            await _userProfileRepository.AddAppUserForeignLanguage(abiturient.AppUser, foreignLanguageId);
+        }
+
+        /// <summary>
+        /// Добавляет контакт ближайшего родственника
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="familyMemberContact"></param>
+        /// <returns></returns>
+        public async Task AddFamilyMemberContactAsync(string userName, FamilyMemberContact familyMemberContact)
+        {
+            var abiturient = await GetAbiturientAsync(userName);
+            familyMemberContact.AppUserId = abiturient.AppUserId;
+            await _userProfileRepository.AddFamilyMemberContact(familyMemberContact);
         }
     }
 }

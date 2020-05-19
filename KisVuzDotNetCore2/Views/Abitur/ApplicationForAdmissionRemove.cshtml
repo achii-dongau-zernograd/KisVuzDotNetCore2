@@ -1,0 +1,69 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.ApplicationForAdmission
+
+@{
+    ViewData["Title"] = "ApplicationForAdmissionRemove";
+}
+
+<h2>Удаление заявления о приёме</h2>
+
+<h3>Вы действительно хотите удалить заявление о приёме?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AbiturientId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Abiturient.AppUser.GetFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduForm.EduFormName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduForm.EduFormName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfileId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.EduProfileName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModelId)
+        </dt>
+        <dd>
+            @if (Model.FileModel == null)
+            {
+                <p>-</p>
+            }
+            else
+            {
+                <a href="/@Model.FileModel.Path">@Model.FileModel.FileName</a>
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.QuotaTypeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.QuotaType.QuotaTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RowStatusId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RowStatus.RowStatusName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+    </dl>
+    
+    <form asp-action="ApplicationForAdmissionRemove">
+        <input type="hidden" asp-for="ApplicationForAdmissionId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Start" asp-route-selectedTab="applicationForAdmissions"  class="btn btn-default">Отмена</a>
+    </form>
+</div>

@@ -134,6 +134,18 @@ namespace KisVuzDotNetCore2.Models.Files
             if (appUser == null)
                 throw new Exception($"Пользователь {userName} не найден!");
 
+            bool isLoadedFile = IsLoadedUserDocument(appUser, fileDataType);
+            return isLoadedFile;
+        }
+
+        /// <summary>
+        /// Проверяет наличие у пользователя документов указанного типа
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <param name="fileDataType"></param>
+        /// <returns></returns>
+        public bool IsLoadedUserDocument(AppUser appUser, FileDataTypeEnum fileDataType)
+        {
             bool isLoadedFile = appUser.UserDocuments.Any(u =>
                 u.FileDataTypeId == (int)fileDataType);
             return isLoadedFile;
@@ -152,6 +164,18 @@ namespace KisVuzDotNetCore2.Models.Files
             if (appUser == null)
                 throw new Exception($"Пользователь {userName} не найден!");
 
+            bool isLoadedUserDocuments = IsLoadedUserDocument(appUser, fileDataTypeGroup);
+            return isLoadedUserDocuments;
+        }
+
+        /// <summary>
+        /// Проверяет наличие у пользователя документов указанной группы типов
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <param name="fileDataTypeGroup"></param>
+        /// <returns></returns>
+        public bool IsLoadedUserDocument(AppUser appUser, FileDataTypeGroupEnum fileDataTypeGroup)
+        {
             var fileDataTypes = _fileModelRepository.GetFileDataTypes(fileDataTypeGroup);
 
             foreach (var fileDataType in fileDataTypes)
@@ -162,7 +186,7 @@ namespace KisVuzDotNetCore2.Models.Files
                 if (isLoadedFile)
                     return true;
             }
-                        
+
             return false;
         }
 
@@ -232,9 +256,28 @@ namespace KisVuzDotNetCore2.Models.Files
             return true;
         }
 
-        
+        /// <summary>
+        /// Проверяет наличие у пользователя сведений об образовании
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <returns></returns>
+        public async Task<bool> IsUserEducationDataExistsAsync(AppUser appUser)
+        {
+            if(appUser.UserEducations != null)
+            {
+                if (appUser.UserEducations.Count > 0)
+                    return true; 
+                else
+                    return false;
+            }
+            else
+            {
+                var isExists = await IsUserEducationDataExistsAsync(appUser.UserName);
+                return isExists;
+            }            
+        }
 
-        
+
 
         /// <summary>
         /// Возвращает документы об образовании пользователя
@@ -320,5 +363,24 @@ namespace KisVuzDotNetCore2.Models.Files
 
             await _fileModelRepository.ReloadFileAsync(userDocument.FileModel, uploadedFile);          
         }
+
+        /// <summary>
+        /// Удаляет все документы пользователя
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <returns></returns>
+        public async Task RemoveUserDocumentsAsync(AppUser appUser)
+        {
+            if (appUser == null)
+                return;
+
+            if (appUser.UserDocuments == null)
+            {
+                
+            }
+            throw new NotImplementedException();
+        }
+
+        
     }
 }

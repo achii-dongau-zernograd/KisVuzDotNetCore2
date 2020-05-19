@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200517102736_LmsEventTypes")]
+    partial class LmsEventTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,8 +90,6 @@ namespace KisVuzDotNetCore2.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AbiturientId");
-
-                    b.Property<bool>("IsAccepted");
 
                     b.Property<int>("LmsEventId");
 
@@ -228,8 +227,6 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<DateTime?>("Birthdate");
 
-                    b.Property<string>("Citizenship");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -246,17 +243,11 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<string>("FirstName");
 
-                    b.Property<int?>("GenderId");
-
                     b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<int?>("MilitaryServiceStatusId");
-
-                    b.Property<string>("Nationality");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -295,10 +286,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("AppUserStatusId");
 
                     b.HasIndex("EduLevelGroupId");
-
-                    b.HasIndex("GenderId");
-
-                    b.HasIndex("MilitaryServiceStatusId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -1452,24 +1439,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("LmsEvents");
                 });
 
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsEventLmsTaskSet", b =>
-                {
-                    b.Property<int>("LmsEventLmsTaskSetId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("LmsEventId");
-
-                    b.Property<int>("LmsTaskSetId");
-
-                    b.HasKey("LmsEventLmsTaskSetId");
-
-                    b.HasIndex("LmsEventId");
-
-                    b.HasIndex("LmsTaskSetId");
-
-                    b.ToTable("LmsEventLmsTaskSets");
-                });
-
             modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsEventType", b =>
                 {
                     b.Property<int>("LmsEventTypeId")
@@ -1496,92 +1465,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("LmsEventTypeGroupId");
 
                     b.ToTable("LmsEventTypeGroups");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsTask", b =>
-                {
-                    b.Property<int>("LmsTaskId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AppUserId");
-
-                    b.Property<DateTime>("DateTimeOfCreation");
-
-                    b.Property<int?>("LmsTaskJpgId");
-
-                    b.Property<string>("LmsTaskText");
-
-                    b.Property<int>("LmsTaskTypeId");
-
-                    b.HasKey("LmsTaskId");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("LmsTaskJpgId");
-
-                    b.HasIndex("LmsTaskTypeId");
-
-                    b.ToTable("LmsTasks");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsTaskDisciplineName", b =>
-                {
-                    b.Property<int>("LmsTaskDisciplineNameId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("DisciplineNameId");
-
-                    b.Property<int>("LmsTaskId");
-
-                    b.HasKey("LmsTaskDisciplineNameId");
-
-                    b.HasIndex("DisciplineNameId");
-
-                    b.HasIndex("LmsTaskId");
-
-                    b.ToTable("LmsTaskDisciplineNames");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsTaskSet", b =>
-                {
-                    b.Property<int>("LmsTaskSetId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("LmsTaskSetDescription");
-
-                    b.HasKey("LmsTaskSetId");
-
-                    b.ToTable("LmsTaskSets");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsTaskSetLmsTask", b =>
-                {
-                    b.Property<int>("LmsTaskSetLmsTaskId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("LmsTaskId");
-
-                    b.Property<int>("LmsTaskSetId");
-
-                    b.HasKey("LmsTaskSetLmsTaskId");
-
-                    b.HasIndex("LmsTaskId");
-
-                    b.HasIndex("LmsTaskSetId");
-
-                    b.ToTable("LmsTaskSetLmsTasks");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsTaskType", b =>
-                {
-                    b.Property<int>("LmsTaskTypeId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("LmsTaskTypeName");
-
-                    b.HasKey("LmsTaskTypeId");
-
-                    b.ToTable("LmsTaskTypes");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Nir.Article", b =>
@@ -3244,46 +3127,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.ToTable("AppUserStructSubvisions");
                 });
 
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.FamilyMemberContact", b =>
-                {
-                    b.Property<int>("FamilyMemberContactId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AppUserId");
-
-                    b.Property<int>("FamilyMemberTypeId");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<string>("Patronymic");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<string>("WorkPlace");
-
-                    b.HasKey("FamilyMemberContactId");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("FamilyMemberTypeId");
-
-                    b.ToTable("FamilyMemberContacts");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.FamilyMemberType", b =>
-                {
-                    b.Property<int>("FamilyMemberTypeId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("FamilyMemberTypeName");
-
-                    b.HasKey("FamilyMemberTypeId");
-
-                    b.ToTable("FamilyMemberTypes");
-                });
-
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.ForeignLanguage", b =>
                 {
                     b.Property<int>("ForeignLanguageId")
@@ -3294,30 +3137,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("ForeignLanguageId");
 
                     b.ToTable("ForeignLanguages");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.Gender", b =>
-                {
-                    b.Property<int>("GenderId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("GenderName");
-
-                    b.HasKey("GenderId");
-
-                    b.ToTable("Genders");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.MilitaryServiceStatus", b =>
-                {
-                    b.Property<int>("MilitaryServiceStatusId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("MilitaryServiceStatusName");
-
-                    b.HasKey("MilitaryServiceStatusId");
-
-                    b.ToTable("MilitaryServiceStatuses");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.PassportData", b =>
@@ -3339,10 +3158,6 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<string>("MestoRojdeniya")
                         .IsRequired();
-
-                    b.Property<string>("PassportNumber");
-
-                    b.Property<string>("PassportSeriya");
 
                     b.Property<int?>("RowStatusId");
 
@@ -3954,14 +3769,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.EduLevelGroup", "EduLevelGroup")
                         .WithMany()
                         .HasForeignKey("EduLevelGroupId");
-
-                    b.HasOne("KisVuzDotNetCore2.Models.Users.Gender", "Gender")
-                        .WithMany()
-                        .HasForeignKey("GenderId");
-
-                    b.HasOne("KisVuzDotNetCore2.Models.Users.MilitaryServiceStatus", "MilitaryServiceStatus")
-                        .WithMany()
-                        .HasForeignKey("MilitaryServiceStatusId");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.District", b =>
@@ -4479,66 +4286,11 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsEventLmsTaskSet", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.LMS.LmsEvent", "LmsEvent")
-                        .WithMany()
-                        .HasForeignKey("LmsEventId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("KisVuzDotNetCore2.Models.LMS.LmsTaskSet", "LmsTaskSet")
-                        .WithMany("LmsEventLmsTaskSets")
-                        .HasForeignKey("LmsTaskSetId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsEventType", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.LMS.LmsEventTypeGroup", "LmsEventTypeGroup")
                         .WithMany("LmsEventTypes")
                         .HasForeignKey("LmsEventTypeGroupId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsTask", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId");
-
-                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "LmsTaskJpg")
-                        .WithMany()
-                        .HasForeignKey("LmsTaskJpgId");
-
-                    b.HasOne("KisVuzDotNetCore2.Models.LMS.LmsTaskType", "LmsTaskType")
-                        .WithMany("LmsTasks")
-                        .HasForeignKey("LmsTaskTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsTaskDisciplineName", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.DisciplineName", "DisciplineName")
-                        .WithMany()
-                        .HasForeignKey("DisciplineNameId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("KisVuzDotNetCore2.Models.LMS.LmsTask", "LmsTask")
-                        .WithMany("LmsTaskDisciplineNames")
-                        .HasForeignKey("LmsTaskId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsTaskSetLmsTask", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.LMS.LmsTask", "LmsTask")
-                        .WithMany()
-                        .HasForeignKey("LmsTaskId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("KisVuzDotNetCore2.Models.LMS.LmsTaskSet", "LmsTaskSet")
-                        .WithMany("lmsTaskSetLmsTasks")
-                        .HasForeignKey("LmsTaskSetId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -5306,18 +5058,6 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.FamilyMemberContact", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
-                        .WithMany("FamilyMemberContacts")
-                        .HasForeignKey("AppUserId");
-
-                    b.HasOne("KisVuzDotNetCore2.Models.Users.FamilyMemberType", "FamilyMemberType")
-                        .WithMany()
-                        .HasForeignKey("FamilyMemberTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.PassportData", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Struct.Address", "Address")
@@ -5462,7 +5202,7 @@ namespace KisVuzDotNetCore2.Migrations
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Users.UserEducation", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
-                        .WithMany("UserEducations")
+                        .WithMany()
                         .HasForeignKey("AppUserId");
 
                     b.HasOne("KisVuzDotNetCore2.Models.Common.EducationalInstitution", "EducationalInstitution")

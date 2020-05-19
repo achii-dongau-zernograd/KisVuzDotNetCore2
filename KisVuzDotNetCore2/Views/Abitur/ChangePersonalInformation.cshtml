@@ -1,0 +1,108 @@
+﻿@model Abiturient
+
+@{
+    ViewData["Title"] = "Изменение личных данных абитуриента";
+}
+
+<h2>Изменение личных данных абитуриента</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ChangePersonalInformation">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AbiturientId" />
+            <div class="form-group">
+                <label asp-for="AppUser.GenderId" class="control-label"></label>
+                <select asp-for="AppUser.GenderId" class="form-control" asp-items="ViewBag.Genders"></select>
+                <span asp-validation-for="AppUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppUser.Citizenship" class="control-label"></label>
+                <input asp-for="AppUser.Citizenship" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="AppUser.Nationality" class="control-label"></label>
+                <input asp-for="AppUser.Nationality" class="form-control" />
+            </div>
+            @*<div class="form-group">
+                <label asp-for="AppUser.AppUserForeignLanguages" class="control-label"></label>
+
+                @if (Model.AppUser.AppUserForeignLanguages == null)
+                {
+                    <a asp-action="AddAppUserForeignLanguage" class="text-danger">Добавить</a>
+                }
+                else
+                {
+                    @foreach (var item in Model.AppUser.AppUserForeignLanguages)
+                    {
+                        <p> @item.ForeignLanguage.ForeignLanguageName </p>
+                    }
+                }
+            </div>*@
+            <div class="form-group">
+                <label asp-for="AppUser.MilitaryServiceStatusId" class="control-label"></label>
+                <select asp-for="AppUser.MilitaryServiceStatusId" class="form-control" asp-items="ViewBag.MilitaryServiceStatuses"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsHostelRequired" class="control-label"></label>
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsHostelRequired" /> Мне необходимо общежитие
+                    </label>
+                </div>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="AppUser.FamilyMemberContacts" class="control-label"></label>
+                @if (Model.AppUser.FamilyMemberContacts == null || Model.AppUser.FamilyMemberContacts.Count == 0)
+                {
+                    <a asp-action="AddFamilyMemberContact" class="text-danger">Не указано</a>
+                }
+                else
+                {
+                    @foreach (var familyMemberContact in Model.AppUser.FamilyMemberContacts)
+                    {
+                        <p>
+                            @familyMemberContact.GetFamilyMemberContactString
+                        </p>
+                    }
+                }
+            </div>*@
+
+            @*<hr />
+            <input type="hidden" asp-for="AppUser.AddressCurrentId" class="form-control" />
+            <div class="form-group">
+                <label asp-for="AppUser.AddressCurrentId" class="control-label"></label>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppUser.AddressCurrent.PostCode" class="control-label"></label>
+                <input asp-for="AppUser.AddressCurrent.PostCode" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="AppUser.AddressCurrent.Country" class="control-label"></label>
+                <input asp-for="AppUser.AddressCurrent.Country" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="AppUser.AddressCurrent.Region" class="control-label"></label>
+                <input asp-for="AppUser.AddressCurrent.Region" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="AppUser.AddressCurrent.Settlement" class="control-label"></label>
+                <input asp-for="AppUser.AddressCurrent.Settlement" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="AppUser.AddressCurrent.Street" class="control-label"></label>
+                <input asp-for="AppUser.AddressCurrent.Street" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="AppUser.AddressCurrent.HouseNumber" class="control-label"></label>
+                <input asp-for="AppUser.AddressCurrent.HouseNumber" class="form-control" />
+            </div>*@
+
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Start" asp-route-selectedTab="personalInformation" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -133,6 +133,20 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListNirTemas(int selectedId = 0);
+        
+        /// <summary>
+        /// Возвращает список полов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListGenders(int selectedId = 0);
+        
+        /// <summary>
+        /// Возвращает список типов отношений к военной службе
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListMilitaryServiceStatuses(int selectedId = 0);
 
         /// <summary>
         /// Возвращает список видов достижений пользователя
@@ -175,14 +189,28 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListEduLevels(int selectedId = 0);
-        
+
+        /// <summary>
+        /// Возвращает список иностранных языков
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListForeignLanguages(int selectedId = 0);
+
         /// <summary>
         /// Возвращает список видов учебных пособий
         /// </summary>
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListUchPosobieVid(int selectedId = 0);
-        
+
+        /// <summary>
+        /// Возвращает список типов родственных связей
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListFamilyMemberTypes(int selectedId = 0);
+
         /// <summary>
         /// Возвращает список учебных заведений
         /// </summary>

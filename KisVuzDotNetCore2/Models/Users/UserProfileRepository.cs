@@ -909,6 +909,54 @@ namespace KisVuzDotNetCore2.Models.Users
             return true;
         }
 
+        /// <summary>
+        /// Проверяет наличие паспортных данных
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <returns></returns>
+        public bool IsPassportDataExists(AppUser appUser)
+        {
+            if(appUser.PassportData == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Добавляет иностранный язык
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <param name="foreignLanguageId"></param>
+        /// <returns></returns>
+        public async Task AddAppUserForeignLanguage(AppUser appUser, int foreignLanguageId)
+        {
+            if (appUser == null) return;
+            if (appUser.AppUserForeignLanguages == null)
+            {
+                appUser.AppUserForeignLanguages = new List<AppUserForeignLanguage>();
+            }
+            var appUserForeignLanguage = new AppUserForeignLanguage
+            {
+                ForeignLanguageId = foreignLanguageId
+            };
+            appUser.AppUserForeignLanguages.Add(appUserForeignLanguage);
+
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Добавляет контакт ближайшего родственника
+        /// </summary>
+        /// <param name="familyMemberContact"></param>
+        /// <returns></returns>
+        public async Task AddFamilyMemberContact(FamilyMemberContact familyMemberContact)
+        {
+            _context.FamilyMemberContacts.Add(familyMemberContact);
+            await _context.SaveChangesAsync();
+        }
+
         #endregion
     }
 }

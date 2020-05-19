@@ -56,9 +56,13 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string userName)
-        {
-            await _abiturRepository.RemoveAbiturientAsync(userName);
+        public async Task<IActionResult> DeleteConfirmed(string userName, string markAppUserAccountToDelete)
+        {            
+            bool boolMarkAppUserAccountToDelete = false;
+            if(markAppUserAccountToDelete =="on")
+                boolMarkAppUserAccountToDelete = true;
+
+            await _abiturRepository.RemoveAbiturientAsync(userName, boolMarkAppUserAccountToDelete);
             return RedirectToAction(nameof(Index));
         }
 

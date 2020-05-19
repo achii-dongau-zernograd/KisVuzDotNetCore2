@@ -19,6 +19,7 @@ using KisVuzDotNetCore2.Models.Students;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Abitur;
+using KisVuzDotNetCore2.Models.LMS;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -57,6 +58,53 @@ namespace KisVuzDotNetCore2.Models
         /// Паспортные данные
         /// </summary>
         public DbSet<PassportData> PassportDataSet { get; set; }
+        #endregion
+
+        #region Система дистанционного образования (СДО, LMS)
+        /// <summary>
+        /// Группы типов событий СДО
+        /// </summary>
+        public DbSet<LmsEventTypeGroup> LmsEventTypeGroups { get; set; }
+
+        /// <summary>
+        /// Типы событий СДО
+        /// </summary>
+        public DbSet<LmsEventType> LmsEventTypes { get; set; }
+
+        /// <summary>
+        /// События СДО (экзамены, вебинары и пр.)
+        /// </summary>
+        public DbSet<LmsEvent> LmsEvents { get; set; }
+
+        /// <summary>
+        /// Задания СДО
+        /// </summary>
+        public DbSet<LmsTask> LmsTasks { get; set; }
+
+        /// <summary>
+        /// Типы заданий СДО
+        /// </summary>
+        public DbSet<LmsTaskType> LmsTaskTypes { get; set; }
+
+        /// <summary>
+        /// Сопоставления заданий СДО с наименованиями дисциплин
+        /// </summary>
+        public DbSet<LmsTaskDisciplineName> LmsTaskDisciplineNames { get; set; }
+
+        /// <summary>
+        /// Наборы заданий СДО
+        /// </summary>
+        public DbSet<LmsTaskSet> LmsTaskSets { get; set; }
+
+        /// <summary>
+        /// Сопоставления наборов заданий СДО с заданиями СДО
+        /// </summary>
+        public DbSet<LmsTaskSetLmsTask> LmsTaskSetLmsTasks { get; set; }
+
+        /// <summary>
+        /// Сопоставления наборов заданий СДО с событиями СДО
+        /// </summary>
+        public DbSet<LmsEventLmsTaskSet> LmsEventLmsTaskSets { get; set; }
         #endregion
 
         #region Образовательная деятельность (Education)
@@ -528,6 +576,11 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<AbiturientIndividualAchievmentType> AbiturientIndividualAchievmentTypes { get; set; }
 
         /// <summary>
+        /// Назначения абитуриентам мероприятий системы дистанционного образования
+        /// </summary>
+        public DbSet<AbiturientLmsEvent> AbiturientLmsEvents { get; set; }
+
+        /// <summary>
         /// Таблица 24. Информация о количестве мест для приёма на обучение
         /// по различным условиям поступления (до 1 октября)
         /// </summary>
@@ -707,6 +760,26 @@ namespace KisVuzDotNetCore2.Models
         /// Пользователи - Иностранные языки
         /// </summary>
         public DbSet<AppUserForeignLanguage> AppUserForeignLanguages { get; set; }
+
+        /// <summary>
+        /// Типы отношений пользователя к военной службе
+        /// </summary>
+        public DbSet<MilitaryServiceStatus> MilitaryServiceStatuses { get; set; }
+
+        /// <summary>
+        /// Справочник полов
+        /// </summary>
+        public DbSet<Gender> Genders { get; set; }
+
+        /// <summary>
+        /// Контакты членов семьи / ближайших родственников
+        /// </summary>
+        public DbSet<FamilyMemberContact> FamilyMemberContacts { get; set; }
+
+        /// <summary>
+        /// Наименования типов родственных связей (отец, мать и пр.)
+        /// </summary>
+        public DbSet<FamilyMemberType> FamilyMemberTypes { get; set; }
         #endregion
 
         #region Материально-техническое обеспечение
@@ -1105,6 +1178,13 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseAbiturientIndividualAchievmentTypes.CreateAbiturientIndividualAchievmentTypes(serviceProvider, configuration);
 
             await InitDatabaseForeignLanguages.CreateForeignLanguages(serviceProvider, configuration);
+
+            await InitDatabaseLmsEventTypes.CreateLmsEventTypeGroups(serviceProvider, configuration);
+            await InitDatabaseLmsEventTypes.CreateLmsEventTypes(serviceProvider, configuration);
+
+            await InitDatabaseGenders.CreateGenders(serviceProvider, configuration);
+            await InitDatabaseFamilyMemberTypes.CreateFamilyMemberTypes(serviceProvider, configuration);
+            await InitDatabaseMilitaryServiceStatuses.CreateMilitaryServiceStatuses(serviceProvider, configuration);
         }        
     
     }

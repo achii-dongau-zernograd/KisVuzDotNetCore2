@@ -74,46 +74,128 @@ namespace KisVuzDotNetCore2.Controllers
             if (!User.Identity.IsAuthenticated)
                 return View("AbiturLoginPage");
 
+            var abiturient = await _abiturRepository.GetAbiturientAsync(User.Identity.Name);
+
             // Если пользователь не является абитуриентом - выводим соответствующее сообщение
-            // и предлагаем стать абитуриентом
-            if (!_abiturRepository.IsAbitur(User.Identity.Name))
+            // и предлагаем стать абитуриентом            
+            if (abiturient == null)
                 return View("NotAbiturMessageForm");
 
             // Проверяем наличие у абитуриента загруженного заявления
             // на обработку персональных данных
-            if (!_abiturRepository.IsLoadedFileApplicationForProcessingPersonalData(User.Identity.Name))
+            if (!_abiturRepository.IsLoadedFileApplicationForProcessingPersonalData(abiturient))
                 return View("LoadFileApplicationForProcessingPersonalData");                        
 
             // Проверяем наличие у абитуриента загруженного документа об образовании
-            if (!_abiturRepository.IsLoadedFileEducationDocuments(User.Identity.Name))
+            if (!_abiturRepository.IsLoadedFileEducationDocuments(abiturient))
                 return RedirectToAction(nameof(LoadFileEducationDocument));
-
-            //// Для все загруженных абитуриентом документов об образовании
-            //// проверяем заполнение сведений
-            //if (!_abiturRepository.IsEducationDocumentsDataEntered(User.Identity.Name))
-            //    return RedirectToAction(nameof(EducationDocumentsDataEntering));
-
+            
             // Проверяем наличие сведений об образовании
-            if (! await _abiturRepository.IsUserEducationDataExists(User.Identity.Name))
+            if (! await _abiturRepository.IsUserEducationDataExists(abiturient))
                 return RedirectToAction(nameof(CreateUserEducation));
 
             // Проверяем наличие у абитуриента загруженной скан-копии паспорта
-            if (!_abiturRepository.IsLoadedFilePassport(User.Identity.Name))
+            if (!_abiturRepository.IsLoadedFilePassport(abiturient))
                 return RedirectToAction(nameof(LoadFilePassport));
 
             // Проверяем наличие паспортных данных
-            if (!await _abiturRepository.IsPassportDataExistsAsync(User.Identity.Name))
+            if (!_abiturRepository.IsPassportDataExists(abiturient))
                 return RedirectToAction(nameof(CreatePassportData));
 
             // Проверяем наличие заявлений о приёме
-            if (!_abiturRepository.IsApplicationForAdmissionExists(User.Identity.Name))
+            if (!_abiturRepository.IsApplicationForAdmissionExists(abiturient))
                 return RedirectToAction(nameof(CreateApplicationForAdmission));
-
-            ViewBag.Abiturient = await _abiturRepository.GetAbiturientAsync(User.Identity.Name);            
+            
+            ViewBag.Abiturient = abiturient;
             ViewBag.SelectedTab = selectedTab;
             return View();
         }
         #endregion
+
+        #region Личные данные абитуриентов
+        public async Task<IActionResult> ChangePersonalInformation()
+        {
+            var abiturient = await _abiturRepository.GetAbiturientAsync(User.Identity.Name);
+            if(abiturient.AppUser.Citizenship == null) abiturient.AppUser.Citizenship = "Россия";
+            if (abiturient.AppUser.Nationality == null) abiturient.AppUser.Nationality = "Русский";            
+
+            ViewBag.Genders = _selectListRepository.GetSelectListGenders(abiturient.AppUser.GenderId ?? 0);
+            ViewBag.MilitaryServiceStatuses = _selectListRepository.GetSelectListMilitaryServiceStatuses(abiturient.AppUser.MilitaryServiceStatusId ?? 0);
+
+
+            return View(abiturient);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePersonalInformation(Abiturient abiturientUpdateData)
+        {
+            var entryAbitur = await _abiturRepository.GetAbiturientAsync(User.Identity.Name);
+            if (entryAbitur == null)
+                return NotFound();
+            if (entryAbitur.AbiturientId != abiturientUpdateData.AbiturientId)
+                return NotFound();
+
+            entryAbitur.AppUser.GenderId = abiturientUpdateData.AppUser.GenderId;
+            entryAbitur.AppUser.Citizenship = abiturientUpdateData.AppUser.Citizenship;
+            entryAbitur.AppUser.Nationality = abiturientUpdateData.AppUser.Nationality;
+
+            entryAbitur.AppUser.MilitaryServiceStatusId = abiturientUpdateData.AppUser.MilitaryServiceStatusId;
+            entryAbitur.IsHostelRequired = abiturientUpdateData.IsHostelRequired;
+
+            await _abiturRepository.UpdateAbiturientAsync(entryAbitur);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "personalInformation" });
+        }
+
+        /// <summary>
+        /// Добавление иностранного языка, которым владеет абитуриент
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult AddAppUserForeignLanguage()
+        {
+            ViewBag.ForeignLanguages = _selectListRepository.GetSelectListForeignLanguages();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddAppUserForeignLanguage(AppUserForeignLanguage appUserForeignLanguage)
+        { 
+            await _abiturRepository.AddAbiturientForeignLanguage(User.Identity.Name, appUserForeignLanguage.ForeignLanguageId);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "personalInformation" });
+        }
+
+        /// <summary>
+        /// Добавление контакта ближайшего родственника
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult AddFamilyMemberContact()
+        {
+            ViewBag.FamilyMemberTypes = _selectListRepository.GetSelectListFamilyMemberTypes();
+            return View();
+        }
+
+        /// <summary>
+        /// Добавление контакта ближайшего родственника
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddFamilyMemberContact(FamilyMemberContact familyMemberContact)
+        {
+            if(ModelState.IsValid)
+            {
+                await _abiturRepository.AddFamilyMemberContactAsync(User.Identity.Name, familyMemberContact);
+                return RedirectToAction(nameof(Start), new { selectedTab = "personalInformation" });
+            }
+
+            ViewBag.FamilyMemberTypes = _selectListRepository.GetSelectListFamilyMemberTypes();
+            return View(familyMemberContact);            
+        }
+        #endregion
+
 
         #region Индивидуальные достижения абитуриента
         public async Task<IActionResult> CreateAbiturientIndividualAchievment()
@@ -164,7 +246,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             await _abiturRepository.UpdateAbiturientIndividualAchievmentFileAsync(abiturientIndividualAchievmentId, uploadedFile);
 
-            return RedirectToAction(nameof(Start));
+            return RedirectToAction(nameof(Start), new { selectedTab = "abiturientAchievments" });
         }
 
         /// <summary>
@@ -236,7 +318,8 @@ namespace KisVuzDotNetCore2.Controllers
         {
             int numApplicationForAdmissions = _abiturRepository.GetNumberOfApplicationForAdmissions(User.Identity.Name);
             if (numApplicationForAdmissions >= 6)
-                return View("MaxNumberOfApplicationForAdmissions");
+                return View("Max" +
+                    "NumberOfApplicationForAdmissions");
 
             if (eduNapravlId == null)
                 return RedirectToAction(nameof(ChooseEduNapravl));
@@ -275,6 +358,69 @@ namespace KisVuzDotNetCore2.Controllers
             await _abiturRepository.AddApplicationForAdmission(applicationForAdmission);
 
             return RedirectToAction(nameof(Start), new { selectedTab = "applicationForAdmissions" } );
+        }
+
+        public async Task<IActionResult> ApplicationForAdmissionEdit(int applicationForAdmissionId)
+        {
+            var applicationForAdmission = await _abiturRepository.GetApplicationForAdmissionAsync(User.Identity.Name, applicationForAdmissionId);
+            if (applicationForAdmission == null)
+                return NotFound();
+
+            ViewBag.EduProfiles = _selectListRepository.GetSelectListEduProfileFullNames(applicationForAdmission.EduProfileId);
+            ViewBag.EduForms = _selectListRepository.GetSelectListEduFormsForAbiturient(applicationForAdmission.EduFormId);
+            ViewBag.QuotaTypes = _selectListRepository.GetSelectListQuotaTypes(applicationForAdmission.QuotaTypeId);
+
+            return View(applicationForAdmission);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApplicationForAdmissionEdit(ApplicationForAdmission applicationForAdmission,
+            IFormFile uploadedFile)
+        {
+            applicationForAdmission.RowStatusId = (int)RowStatusEnum.ChangedByUser;
+            await _abiturRepository.UpdateApplicationForAdmissionAsync(applicationForAdmission, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "applicationForAdmissions" });
+        }
+
+        public async Task<IActionResult> ApplicationForAdmissionRemove(int applicationForAdmissionId)
+        {
+            var applicationForAdmission = await _abiturRepository.GetApplicationForAdmissionAsync(User.Identity.Name, applicationForAdmissionId);
+            if (applicationForAdmission == null)
+                return NotFound();                       
+
+            return View(applicationForAdmission);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApplicationForAdmissionRemove(ApplicationForAdmission applicationForAdmission)
+        {            
+            await _abiturRepository.RemoveApplicationForAdmissionAsync(User.Identity.Name, applicationForAdmission.ApplicationForAdmissionId);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "applicationForAdmissions" });
+        }
+
+        /// <summary>
+        /// Загрузка скан-копии заявления о приёме
+        /// </summary>
+        /// <param name="applicationForAdmissionId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> ApplicationForAdmissionFileLoad(int applicationForAdmissionId)
+        {
+            var applicationForAdmission = await _abiturRepository.GetApplicationForAdmissionAsync(User.Identity.Name, applicationForAdmissionId);
+
+            return View(applicationForAdmission);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApplicationForAdmissionFileLoad(int applicationForAdmissionId, IFormFile uploadedFile)
+        {
+            await _abiturRepository.ApplicationForAdmissionFileLoadAsync(User.Identity.Name, applicationForAdmissionId, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "applicationForAdmissions" });
         }
         #endregion
 

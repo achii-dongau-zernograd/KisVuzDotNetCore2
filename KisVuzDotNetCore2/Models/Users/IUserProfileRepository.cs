@@ -122,6 +122,13 @@ namespace KisVuzDotNetCore2.Models.Users
         Task<bool> IsPassportDataExistsAsync(string userName);
 
         /// <summary>
+        /// Проверяет наличие паспортных данных
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <returns></returns>
+        bool IsPassportDataExists(AppUser appUser);
+
+        /// <summary>
         /// Возвращает Id пользователя по его имени
         /// </summary>
         /// <param name="userName"></param>
@@ -244,6 +251,19 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <returns></returns>       
         Monograf RemoveMonograf(int monografId, string userName);
 
+        /// <summary>
+        /// Добавляет иностранный язык
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="foreignLanguageId"></param>
+        /// <returns></returns>
+        Task AddAppUserForeignLanguage(AppUser appUser, int foreignLanguageId);
 
+        /// <summary>
+        /// Добавляет контакт ближайшего родственника
+        /// </summary>
+        /// <param name="familyMemberContact"></param>
+        /// <returns></returns>
+        Task AddFamilyMemberContact(FamilyMemberContact familyMemberContact);
     }
 }

@@ -601,5 +601,53 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(data,
                  "AbiturientIndividualAchievmentTypeId", "AbiturientIndividualAchievmentTypeName", selectedId);
         }
+
+        /// <summary>
+        /// Возвращает список полов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListGenders(int selectedId = 0)
+        {
+            var data = _context.Genders;
+            return new SelectList(data,
+                 "GenderId", "GenderName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список типов отношений к военной службе
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListMilitaryServiceStatuses(int selectedId = 0)
+        {
+            var data = _context.MilitaryServiceStatuses.OrderByDescending(m=>m.MilitaryServiceStatusName);
+            return new SelectList(data,
+                 "MilitaryServiceStatusId", "MilitaryServiceStatusName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список иностранных языков
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListForeignLanguages(int selectedId = 0)
+        {
+            var data = _context.ForeignLanguages.OrderBy(m => m.ForeignLanguageName);
+            return new SelectList(data,
+                 "ForeignLanguageId", "ForeignLanguageName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список типов родственных связей
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListFamilyMemberTypes(int selectedId = 0)
+        {
+            var data = _context.FamilyMemberTypes;
+            return new SelectList(data,
+                 "FamilyMemberTypeId", "FamilyMemberTypeName", selectedId);
+        }
     }
 }

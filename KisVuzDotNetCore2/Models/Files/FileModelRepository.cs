@@ -330,6 +330,19 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загрузка скан-копии заявления о приёме
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadApplicationForAdmissionFileAsync(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                 "Заявление о приёме",
+                 FileDataTypeEnum.ApplicationForAdmission);
+            return fileModel;
+        }
+
+        /// <summary>
         /// Загружает файл паспорта
         /// </summary>
         /// <param name="uploadedFile"></param>
@@ -461,5 +474,7 @@ namespace KisVuzDotNetCore2.Models.Files
 
             return fileModel;
         }
+
+        
     }
 }

@@ -22,7 +22,7 @@
             <div class="form-group">
                 <input type="hidden" asp-for="AbiturientId" />
                 <input type="submit" value="Добавить" class="btn btn-primary" />
-                <a asp-action="Start" class="btn btn-default">Отмена</a>
+                <a asp-action="Start" asp-route-selectedTab = "abiturientAchievments" class="btn btn-default">Отмена</a>
             </div>
         </form>
     </div>

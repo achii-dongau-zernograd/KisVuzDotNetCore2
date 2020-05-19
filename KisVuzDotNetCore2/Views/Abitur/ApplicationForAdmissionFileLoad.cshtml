@@ -1,0 +1,45 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.ApplicationForAdmission
+
+@{
+    ViewData["Title"] = "Загрузка файла";
+}
+
+<h2>Загрузка скан-копии заявления о приёме</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="ApplicationForAdmissionFileLoad" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ApplicationForAdmissionId" />            
+            <div class="form-group">
+                <label asp-for="AbiturientId" class="control-label"></label>
+                <label asp-for="AbiturientId" class="form-control">@Model.Abiturient.AppUser.GetFullName</label>
+                <span asp-validation-for="AbiturientId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduFormId" class="control-label"></label>
+                <label asp-for="EduFormId" class="form-control">@Model.EduForm.EduFormName</label>
+                <span asp-validation-for="EduFormId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EduProfileId" class="control-label"></label>
+                <label asp-for="EduProfileId" class="form-control">@Model.EduProfile.GetEduProfileFullName</label>
+                <span asp-validation-for="EduProfileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuotaTypeId" class="control-label"></label>
+                <label asp-for="QuotaTypeId" class="form-control">@Model.QuotaType.QuotaTypeName</label>
+                <span asp-validation-for="QuotaTypeId" class="text-danger"></span>
+            </div>            
+            <div class="form-group">                
+                <label class="control-label">Выберите файл, содержащий скан-копию заявления о приёме: </label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Start" asp-route-selectedTab="applicationForAdmissions" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

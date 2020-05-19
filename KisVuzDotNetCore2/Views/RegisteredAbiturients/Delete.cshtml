@@ -3,12 +3,15 @@
     ViewData["Title"] = "Удаление";
 }
 
-<h2>Удаление аккаунта абитуриента</h2>
-<h3>Вы действительно хотите удалить аккаунт абитуриента и все связанные данные?</h3>
+<h2>Удаление абитуриента</h2>
+<h3>Вы действительно хотите удалить все сведения из личного кабинета абитуриента и пометить аккаунт пользователя к удалению?</h3>
 <hr />
 <h4>@Model.AppUser.GetFullName</h4>
 
-<form asp-action="DeleteConfirmed">    
+<form asp-action="DeleteConfirmed">
+    <label class="label-danger">Пометить акаунт к удалению?</label>
+    <input type="checkbox" name="markAppUserAccountToDelete" class="checkbox-inline" />
+    <br />
     <input type="hidden" name="userName" value="@Model.AppUser.UserName" />
     <input type="submit" value="Удалить" class="btn btn-danger" />
     <a asp-action="Index" class="btn btn-default">Отмена </a>

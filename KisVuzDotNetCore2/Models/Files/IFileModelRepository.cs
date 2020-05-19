@@ -124,7 +124,14 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="fileDataTypeGroup"></param>
         /// <returns></returns>
         IQueryable<FileDataType> GetFileDataTypes(FileDataTypeGroupEnum fileDataTypeGroup);
-        
+
+        /// <summary>
+        /// Загрузка скан-копии заявления о приёме
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadApplicationForAdmissionFileAsync(IFormFile uploadedFile);
+
         /// <summary>
         /// Удаляет документ пользователя
         /// </summary>

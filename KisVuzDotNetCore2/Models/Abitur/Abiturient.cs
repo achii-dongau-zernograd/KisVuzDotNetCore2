@@ -39,5 +39,11 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// Индивидуальные достижения абитуриента
         /// </summary>
         public List<AbiturientIndividualAchievment> AbiturientIndividualAchievments { get; set; }
+
+        /// <summary>
+        /// Список назначенных мероприятий СДО абитуриента
+        /// (в т.ч. вступительных испытаний)
+        /// </summary>
+        public List<AbiturientLmsEvent> AbiturientLmsEvents { get; set; }
     }
 }

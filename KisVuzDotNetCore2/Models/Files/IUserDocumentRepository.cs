@@ -47,7 +47,7 @@ namespace KisVuzDotNetCore2.Models.Files
         Task RemoveUserDocumentAsync(int userDocumentId);
 
         /// <summary>
-        /// Проверяет наличие у пользователя наличия документов указанного типа
+        /// Проверяет наличие у пользователя документов указанного типа
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="fileDataType"></param>
@@ -55,12 +55,30 @@ namespace KisVuzDotNetCore2.Models.Files
         bool IsLoadedUserDocument(string userName, FileDataTypeEnum fileDataType);
 
         /// <summary>
-        /// Проверяет наличие у пользователя наличия документов указанной группы типов
+        /// Проверяет наличие у пользователя документов указанного типа
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <param name="fileDataType"></param>
+        /// <returns></returns>
+        bool IsLoadedUserDocument(AppUser appUser, FileDataTypeEnum fileDataType);
+
+        /// <summary>
+        /// Проверяет наличие у пользователя документов указанной группы типов
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="fileDataTypeGroup"></param>
         /// <returns></returns>
         bool IsLoadedUserDocument(string userName, FileDataTypeGroupEnum fileDataTypeGroup);
+
+        /// <summary>
+        /// Проверяет наличие у пользователя документов указанной группы типов
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <param name="fileDataTypeGroup"></param>
+        /// <returns></returns>
+        bool IsLoadedUserDocument(AppUser appUser, FileDataTypeGroupEnum fileDataTypeGroup);
+
+        
 
         /// <summary>
         /// Устанавливает замечание к документу
@@ -85,6 +103,13 @@ namespace KisVuzDotNetCore2.Models.Files
         Task<bool> IsUserEducationDataExistsAsync(string userName);
 
         /// <summary>
+        /// Проверяет наличие у пользователя сведений об образовании
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <returns></returns>
+        Task<bool> IsUserEducationDataExistsAsync(AppUser appUser);
+
+        /// <summary>
         /// Возвращает запрос на выборку документов об образовании пользователя, не имеющих заполненных сведений
         /// </summary>
         /// <param name="userName"></param>
@@ -106,5 +131,14 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task ReloadUserDocumentAsync(int userDocumentId, IFormFile uploadedFile);
+        
+        /// <summary>
+        /// Удаляет все документы пользователя
+        /// </summary>
+        /// <param name="appUser"></param>
+        /// <returns></returns>
+        Task RemoveUserDocumentsAsync(AppUser appUser);
+
+        
     }
 }

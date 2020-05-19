@@ -19,6 +19,18 @@ namespace KisVuzDotNetCore2.Models.Users
         public AppUser AppUser { get; set; }
 
         /// <summary>
+        /// Серия паспорта
+        /// </summary>        
+        [Display(Name = "Серия паспорта")]
+        public string PassportSeriya { get; set; }
+
+        /// <summary>
+        /// Номер паспорта
+        /// </summary>        
+        [Display(Name = "Номер паспорта")]
+        public string PassportNumber { get; set; }
+
+        /// <summary>
         /// Кем выдан
         /// </summary>
         [Required]

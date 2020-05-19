@@ -195,12 +195,51 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Адрес текущего проживания
         /// </summary>
+        [Display(Name = "Адрес текущего проживания")]
         public int? AddressCurrentId { get; set; }
         public Address AddressCurrent { get; set; }
 
         /// <summary>
+        /// Отношение к военной службе
+        /// </summary>
+        [Display(Name = "Отношение к военной службе")]
+        public int? MilitaryServiceStatusId { get; set; }
+        public MilitaryServiceStatus MilitaryServiceStatus { get; set; }
+
+        /// <summary>
+        /// Гражданство
+        /// </summary>
+        [Display(Name = "Гражданство")]
+        public string Citizenship { get; set; }
+
+        /// <summary>
+        /// Национальность
+        /// </summary>
+        [Display(Name = "Национальность")]
+        public string Nationality { get; set; }
+
+        /// <summary>
+        /// Пол
+        /// </summary>
+        [Display(Name = "Пол")]
+        public int? GenderId { get; set; }
+        public Gender Gender { get; set; }
+
+        /// <summary>
+        /// Контактные данные членов семьи
+        /// </summary>
+        [Display(Name = "Контактные данные членов семьи")]
+        public List<FamilyMemberContact> FamilyMemberContacts { get; set; }
+
+        /// <summary>
         /// Иностранные языки, которыми владеет пользователь
         /// </summary>
+        [Display(Name = "Иностранные языки")]
         public List<AppUserForeignLanguage> AppUserForeignLanguages { get; set; }
+
+        /// <summary>
+        /// Сведения об образовании пользователя
+        /// </summary>
+        public List<UserEducation> UserEducations { get; set; }
     }
 }

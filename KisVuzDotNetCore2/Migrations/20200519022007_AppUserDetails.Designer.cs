@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200519022007_AppUserDetails")]
+    partial class AppUserDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3339,10 +3340,6 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<string>("MestoRojdeniya")
                         .IsRequired();
-
-                    b.Property<string>("PassportNumber");
-
-                    b.Property<string>("PassportSeriya");
 
                     b.Property<int?>("RowStatusId");
 

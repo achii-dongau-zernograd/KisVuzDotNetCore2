@@ -26,7 +26,15 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="userName"></param>
         /// <returns></returns>
         bool IsLoadedFileApplicationForProcessingPersonalData(string userName);
-        
+
+        /// <summary>
+        /// Проверяем наличие у абитуриента загруженного заявления
+        /// на обработку персональных данных
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        bool IsLoadedFileApplicationForProcessingPersonalData(Abiturient abiturient);
+
         /// <summary>
         /// Возвращает запрос на извлечение абитуриентов
         /// </summary>
@@ -48,14 +56,22 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="userName"></param>
         /// <returns></returns>
         bool IsLoadedFileEducationDocuments(string userName);
-                
-        
+
         /// <summary>
-        /// Удаляет аккаунт абитуриента и все связанные данные
+        /// Проверяет наличие у абитуриента загруженных
+        /// документов об образовании
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        bool IsLoadedFileEducationDocuments(Abiturient abiturient);
+
+        /// <summary>
+        /// Удаляет личный кабинет абитуриента и все связанные данные
+        /// с возможностью пометки аккаунта к удалению
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        Task RemoveAbiturientAsync(string userName);
+        Task RemoveAbiturientAsync(string userName, bool MarkAppUserAccountToDelete = false);
 
         /// <summary>
         /// Устанавливает статус документа
@@ -88,6 +104,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="abiturientStatusId"></param>
         /// <returns></returns>
         Task SetAbiturientStatusAsync(Abiturient abiturient, AbiturientStatusEnum abiturientStatusId);
+                
 
         /// <summary>
         /// Удаляет документ пользователя
@@ -96,13 +113,20 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="userDocumentId"></param>
         /// <returns></returns>
         Task RemoveUserDocumentAsync(string userName, int userDocumentId);
-
+                
         /// <summary>
         /// Проверяет наличие сведений об образовании
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
         Task<bool> IsUserEducationDataExists(string userName);
+        
+        /// <summary>
+        /// Проверяет наличие сведений об образовании
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        Task<bool> IsUserEducationDataExists(Abiturient abiturient);
 
         /// <summary>
         /// Возвращает запрос на выборку документов об образовании пользователя, не имеющих сведений 
@@ -126,6 +150,13 @@ namespace KisVuzDotNetCore2.Models.Abitur
         Task<bool> IsPassportDataExistsAsync(string userName);
 
         /// <summary>
+        /// Проверяет наличие паспортных данных
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        bool IsPassportDataExists(Abiturient abiturient);
+
+        /// <summary>
         /// Проверяет наличие у абитуриента загруженной скан-копии паспорта
         /// </summary>
         /// <param name="userName"></param>
@@ -133,11 +164,32 @@ namespace KisVuzDotNetCore2.Models.Abitur
         bool IsLoadedFilePassport(string userName);
 
         /// <summary>
-        /// Проверяем наличие заявлений о приёме
+        /// Проверяем наличие у абитуриента загруженной скан-копии паспорта
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        bool IsLoadedFilePassport(Abiturient abiturient);
+
+        /// <summary>
+        /// Обновляет данные абитуриента
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        Task UpdateAbiturientAsync(Abiturient abiturient);
+
+        /// <summary>
+        /// Проверяет наличие заявлений о приёме
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
         bool IsApplicationForAdmissionExists(string userName);
+
+        /// <summary>
+        /// Проверяет наличие заявлений о приёме
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        bool IsApplicationForAdmissionExists(Abiturient abiturient);
 
         /// <summary>
         /// Возвращает паспортные данные указанного пользователя
@@ -145,6 +197,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="userName"></param>
         /// <returns></returns>
         Task<PassportData> GetPassportDataAsync(string userName);
+
+        /// <summary>
+        /// Добавляет иностранный язык
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="foreignLanguageId"></param>
+        /// <returns></returns>
+        Task AddAbiturientForeignLanguage(string userName, int foreignLanguageId);
 
         /// <summary>
         /// Добавляет сведения об образовании абитуриента
@@ -158,6 +218,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// </summary>
         /// <param name="passportData"></param>
         Task AddPassportDataAsync(PassportData passportData);
+
+        /// <summary>
+        /// Добавляет контакт ближайшего родственника
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="familyMemberContact"></param>
+        /// <returns></returns>
+        Task AddFamilyMemberContactAsync(string userName, FamilyMemberContact familyMemberContact);
 
         /// <summary>
         /// Добавляет индивидуальное достижение пользователя
@@ -230,5 +298,47 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="userName"></param>
         /// <returns></returns>
         int GetNumberOfApplicationForAdmissions(string userName);
+
+        /// <summary>
+        /// Возвращает заявление о приёме пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="applicationForAdmissionId"></param>
+        /// <returns></returns>
+        Task<ApplicationForAdmission> GetApplicationForAdmissionAsync(string userName, int applicationForAdmissionId);
+
+        /// <summary>
+        /// Обновляет заявление о приёме
+        /// </summary>
+        /// <param name="applicationForAdmission"></param>
+        /// <returns></returns>
+        Task UpdateApplicationForAdmissionAsync(ApplicationForAdmission applicationForAdmission);
+
+        /// <summary>
+        /// Обновляет заявление о приёме
+        /// </summary>
+        /// <param name="applicationForAdmission"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task UpdateApplicationForAdmissionAsync(ApplicationForAdmission applicationForAdmission, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Удаляет заявление о приёме
+        /// </summary>
+        /// <param name="applicationForAdmission"></param>
+        /// <returns></returns>
+        Task RemoveApplicationForAdmissionAsync(string userName, int applicationForAdmissionId);
+
+        /// <summary>
+        /// Загрузка скан-копии заявления о приёме
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="applicationForAdmissionId"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task ApplicationForAdmissionFileLoadAsync(string userName, int applicationForAdmissionId, IFormFile uploadedFile);
+        
+
+        
     }
 }

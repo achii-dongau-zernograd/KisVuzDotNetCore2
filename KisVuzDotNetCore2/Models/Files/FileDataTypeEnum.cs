@@ -219,6 +219,10 @@
         /// <summary>
         /// Файл, подтверждающий индивидуальное достижение абитуриента
         /// </summary>
-        IndividualnoeDostijenieAbiturienta = 61
+        IndividualnoeDostijenieAbiturienta = 61,
+        /// <summary>
+        /// Заявление о приёме
+        /// </summary>
+        ApplicationForAdmission = 62
     }
 }
