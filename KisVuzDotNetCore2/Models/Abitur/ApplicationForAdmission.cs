@@ -80,5 +80,11 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// </summary>
         [Display(Name = "Замечание / комментарий")]
         public string Remark { get; set; }
+
+        /// <summary>
+        /// Льготы
+        /// </summary>
+        [Display(Name = "Льготы")]
+        public List<AdmissionPrivilege> AdmissionPrivileges { get; set; }
     }
 }

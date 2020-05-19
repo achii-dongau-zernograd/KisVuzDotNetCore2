@@ -250,7 +250,7 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         /// <summary>
-        /// Редактирование записи об индиальном достижении абитуриента
+        /// Редактирование записи об индивидуальном достижении абитуриента
         /// </summary>
         /// <param name="abiturientIndividualAchievmentId"></param>
         /// <returns></returns>

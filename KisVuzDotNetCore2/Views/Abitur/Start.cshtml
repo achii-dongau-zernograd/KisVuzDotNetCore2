@@ -12,6 +12,7 @@
     string passportDataClass = "";
     string userDocumentsClass = "";
     string abiturientAchievmentsClass = "";
+    string abiturientAdmissionPrivilegesClass = "";
     string applicationForAdmissionsClass = "";
     string entranceTestsClass = "";
     string personalInformationClass = "";
@@ -29,6 +30,9 @@
             break;
         case "abiturientAchievments":
             abiturientAchievmentsClass = "active";
+            break;
+        case "abiturientAdmissionPrivileges":
+            abiturientAdmissionPrivilegesClass = "active";
             break;
         case "applicationForAdmissions":
             applicationForAdmissionsClass = "active";
@@ -48,8 +52,9 @@
     <li class="@passportDataClass"><a href="#passportData" data-toggle="tab">Паспортные данные</a></li>
     <li class="@personalInformationClass"><a href="#personalInformation" data-toggle="tab">Личные сведения</a></li>
     <li class="@userDocumentsClass"><a href="#userDocuments" data-toggle="tab">Загруженные документы</a></li>
-    <li class="@abiturientAchievmentsClass"><a href="#abiturientAchievments" data-toggle="tab">Индивидуальные достижения</a></li>
     <li class="@applicationForAdmissionsClass"><a href="#applicationForAdmissions" data-toggle="tab">Заявления о приёме</a></li>
+    <li class="@abiturientAchievmentsClass"><a href="#abiturientAchievments" data-toggle="tab">Индивидуальные достижения</a></li>
+    <li class="@abiturientAdmissionPrivilegesClass"><a href="#abiturientAdmissionPrivileges" data-toggle="tab">Льготы</a></li>
     <li class="@entranceTestsClass"><a href="#entranceTests" data-toggle="tab">Вступительные испытания</a></li>
 </ul>
 
@@ -137,9 +142,9 @@
                     <td>@passport.Address?.HouseNumber</td>
                 </tr>
                 @*<tr>
-                    <th>Скан-копия паспорта</th>
-                    <td><a href="/@passport.UserDocument?.FileModel?.Path" target="_blank">Просмотр</a></td>
-                </tr>*@
+                        <th>Скан-копия паспорта</th>
+                        <td><a href="/@passport.UserDocument?.FileModel?.Path" target="_blank">Просмотр</a></td>
+                    </tr>*@
             </tbody>
         </table>
     </div>
@@ -308,6 +313,75 @@
         </table>
     </div>
 
+
+    @*/////////////////////////////////////////////////////////// Заявления о приёме ////////////////////////////////////////////////////*@
+    <div class="tab-pane @applicationForAdmissionsClass" id="applicationForAdmissions">
+        <br />
+
+        <a asp-action="CreateApplicationForAdmission" class="btn btn-primary">Добавить заявление о приёме</a>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Уровень образования</th>
+                    <th>Направление подготовки</th>
+                    <th>Направленность</th>
+                    <th>Форма обучения</th>
+                    <th>Тип квоты</th>
+                    <th>Приоритет</th>
+                    <th>Скан-копия заявления</th>
+                    <th>Статус</th>
+                    <th>Замечания</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            @foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions.OrderBy(a => a.PriorityId))
+            {
+                var rowStatus = applicationForAdmission.RowStatus;
+                <tr>
+                    <td>@applicationForAdmission.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                    <td>@applicationForAdmission.EduProfile.EduNapravl.GetEduNapravlName</td>
+                    <td>@applicationForAdmission.EduProfile.EduProfileName</td>
+                    <td>@applicationForAdmission.EduForm.EduFormName</td>
+                    <td>@applicationForAdmission.QuotaType.QuotaTypeName</td>
+                    <td>@applicationForAdmission.PriorityId</td>
+                    <td>
+                        @if (applicationForAdmission.FileModel != null)
+                        {
+                            <a href="/@applicationForAdmission.FileModel.Path">Открыть</a>
+                        }
+                        else
+                        {
+                            <a asp-action="ApplicationForAdmissionFileLoad" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Загрузить</a>
+                        }
+                    </td>
+                    <td>
+                        @if (rowStatus.RowStatusId == (int)RowStatusEnum.Confirmed)
+                        {
+                            <p class="text-primary">Подтверждено</p>
+                        }
+                        else if (rowStatus.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                        {
+                            <p class="text-danger">Возвращено на доработку</p>
+                        }
+                        else
+                        {
+                            <p class="text-warning">На проверке</p>
+                        }
+                    </td>
+                    <td>@applicationForAdmission.Remark</td>
+                    <td>
+                        @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
+                        {
+                            <a class="btn btn-primary btn-block" asp-action="ApplicationForAdmissionEdit" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Редактировать</a>
+                            <a class="btn btn-danger  btn-block" asp-action="ApplicationForAdmissionRemove" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Удалить</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
     @*//////////////////////////////////////////////////////// Индивидуальные достижения /////////////////////////////////////////////////*@
     <div class="tab-pane @abiturientAchievmentsClass" id="abiturientAchievments">
         <br />
@@ -378,72 +452,97 @@
 
     </div>
 
-    @*//////////////////////////////////////////////////////// Заявления о приёме /////////////////////////////////////////////////////////*@
-    <div class="tab-pane @applicationForAdmissionsClass" id="applicationForAdmissions">
+    @*///////////////////////////////////////////////////////////////// Льготы ///////////////////////////////////////////////////////////*@
+    <div class="tab-pane @abiturientAdmissionPrivilegesClass" id="abiturientAdmissionPrivileges">
         <br />
-
-        <a asp-action="CreateApplicationForAdmission" class="btn btn-primary">Добавить заявление о приёме</a>
+        <a asp-action="CreateAbiturientAdmissionPrivilege" class="btn btn-primary">Добавить льготу</a>
 
         <table class="table table-hover">
             <thead>
-                <tr>
-                    <th>Уровень образования</th>
-                    <th>Направление подготовки</th>
-                    <th>Направленность</th>
-                    <th>Форма обучения</th>
-                    <th>Тип квоты</th>
-                    <th>Приоритет</th>
-                    <th>Скан-копия заявления</th>
+                <tr>                    
+                    <th>Вид льготы</th>
+                    <th>Скан-копия подтверждающего документа</th>
                     <th>Статус</th>
                     <th>Замечания</th>
                     <th>Действия</th>
                 </tr>
             </thead>
-            @foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions.OrderBy(a => a.PriorityId))
-            {
-                var rowStatus = applicationForAdmission.RowStatus;
-                <tr>
-                    <td>@applicationForAdmission.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
-                    <td>@applicationForAdmission.EduProfile.EduNapravl.GetEduNapravlName</td>
-                    <td>@applicationForAdmission.EduProfile.EduProfileName</td>
-                    <td>@applicationForAdmission.EduForm.EduFormName</td>
-                    <td>@applicationForAdmission.QuotaType.QuotaTypeName</td>
-                    <td>@applicationForAdmission.PriorityId</td>
-                    <td>
-                        @if (applicationForAdmission.FileModel != null)
-                        {
-                            <a href="/@applicationForAdmission.FileModel.Path">Открыть</a>
+            <tbody>
+                @if (abiturient.ApplicationForAdmissions == null ||
+                abiturient.ApplicationForAdmissions.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            Заявления на поступление не оформлены
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    
+                    foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions)
+                    {
+                        <tr>
+                            <td colspan="5" class="">
+                                Заявление о приёме: @applicationForAdmission.EduProfile.GetEduProfileFullName
+                            </td>
+                        </tr>
+
+                        <tr>
+                                @if (applicationForAdmission.AdmissionPrivileges == null || applicationForAdmission.AdmissionPrivileges.Count == 0)
+                                {
+                                    <td colspan="5" class="text-center">
+                                        Льготы для поступления отсутствуют
+                                    </td>
+                                }
+                                else
+                                {
+                                    foreach (var admissionPrivilege in applicationForAdmission.AdmissionPrivileges)
+                                    {
+                                        var rowStatus = admissionPrivilege.RowStatus;
+                                        <td>@admissionPrivilege.AdmissionPrivilegeType?.AdmissionPrivilegeTypeName</td>
+                                        <td>
+                                            @if (admissionPrivilege.FileModel != null)
+                                            {
+                                                <a href="/@admissionPrivilege.FileModel.Path" target="_blank">Открыть</a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-action="LoadAbiturientAdmissionPrivilegeFile"
+                                                   asp-route-abiturientAdmissionPrivilegeId="@admissionPrivilege.AdmissionPrivilegeId">Загрузить</a>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (rowStatus.RowStatusId == (int)RowStatusEnum.Confirmed)
+                                            {
+                                                <p class="text-primary">Подтверждено</p>
+                                            }
+                                            else if (rowStatus.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                                            {
+                                                <p class="text-danger">Возвращено на доработку</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-warning">На проверке</p>
+                                            }
+                                        </td>
+                                        <td>@admissionPrivilege.Remark</td>
+                                        <td>
+                                            @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
+                                            {
+                                                <a class="btn btn-primary btn-block" asp-action="AbiturientAdmissionPrivilegeEdit"   asp-route-abiturientAdmissionPrivilegeId="@admissionPrivilege.AdmissionPrivilegeId">Изменить</a>
+                                                <a class="btn btn-danger  btn-block" asp-action="AbiturientAdmissionPrivilegeRemove" asp-route-abiturientAdmissionPrivilegeId="@admissionPrivilege.AdmissionPrivilegeId">Удалить</a>
+                                            }
+                                        </td>
+                                }
+                            }
+                                
+                            </tr>
                         }
-                        else
-                        {
-                            <a asp-action="ApplicationForAdmissionFileLoad" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Загрузить</a>
-                        }
-                    </td>
-                    <td>
-                        @if (rowStatus.RowStatusId == (int)RowStatusEnum.Confirmed)
-                        {
-                            <p class="text-primary">Подтверждено</p>
-                        }
-                        else if (rowStatus.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
-                        {
-                            <p class="text-danger">Возвращено на доработку</p>
-                        }
-                        else
-                        {
-                            <p class="text-warning">На проверке</p>
-                        }
-                    </td>
-                    <td>@applicationForAdmission.Remark</td>
-                    <td>
-                        @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
-                        {
-                            <a class="btn btn-primary btn-block" asp-action="ApplicationForAdmissionEdit" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Редактировать</a>
-                            <a class="btn btn-danger  btn-block" asp-action="ApplicationForAdmissionRemove" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Удалить</a>
-                        }
-                    </td>
-                </tr>
-            }
+                    }
+            </tbody>
         </table>
+
     </div>
 
     @*///////////////////////////////////////////////////// Вступительные испытания /////////////////////////////////////////////////////*@

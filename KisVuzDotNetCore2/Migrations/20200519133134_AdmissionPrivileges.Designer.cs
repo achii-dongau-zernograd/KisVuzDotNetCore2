@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200519133134_AdmissionPrivileges")]
+    partial class AdmissionPrivileges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,10 +127,6 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int?>("FileModelId");
 
-                    b.Property<string>("Remark");
-
-                    b.Property<int>("RowStatusId");
-
                     b.HasKey("AdmissionPrivilegeId");
 
                     b.HasIndex("AdmissionPrivilegeTypeId");
@@ -137,8 +134,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("ApplicationForAdmissionId");
 
                     b.HasIndex("FileModelId");
-
-                    b.HasIndex("RowStatusId");
 
                     b.ToTable("AdmissionPrivileges");
                 });
@@ -3948,11 +3943,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
                         .WithMany()
                         .HasForeignKey("FileModelId");
-
-                    b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
-                        .WithMany()
-                        .HasForeignKey("RowStatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.ApplicationForAdmission", b =>

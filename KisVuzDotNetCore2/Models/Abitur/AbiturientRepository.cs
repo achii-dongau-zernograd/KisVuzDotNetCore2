@@ -163,7 +163,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public IQueryable<Abiturient> GetAbiturients()
         {
             var abiturs = _context.Abiturients
-                .Include(a => a.AbiturientStatus)                
+                .Include(a => a.AbiturientStatus)
                 // Индивидуальные достижения
                 .Include(a => a.AbiturientIndividualAchievments)
                     .ThenInclude(aia => aia.AbiturientIndividualAchievmentType)
@@ -171,7 +171,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
                     .ThenInclude(aia => aia.RowStatus)
                 .Include(a => a.AbiturientIndividualAchievments)
                     .ThenInclude(aia => aia.FileModel)
-                        .ThenInclude(fm=>fm.FileToFileTypes)
+                        .ThenInclude(fm => fm.FileToFileTypes)
                             .ThenInclude(ftf => ftf.FileDataType)
                 // Паспортные данные пользователя
                 .Include(a => a.AppUser.PassportData.Address)
@@ -210,7 +210,19 @@ namespace KisVuzDotNetCore2.Models.Abitur
                 .Include(a => a.ApplicationForAdmissions)
                     .ThenInclude(afa => afa.FileModel)
                         .ThenInclude(fm => fm.FileToFileTypes)
-                            .ThenInclude(ftft => ftft.FileDataType);
+                            .ThenInclude(ftft => ftft.FileDataType)
+                // Льготы
+                .Include(a => a.ApplicationForAdmissions)
+                    .ThenInclude(afa => afa.AdmissionPrivileges)
+                        .ThenInclude(ap => ap.RowStatus)
+                .Include(a => a.ApplicationForAdmissions)
+                    .ThenInclude(afa => afa.AdmissionPrivileges)
+                        .ThenInclude(ap => ap.AdmissionPrivilegeType)
+                .Include(a => a.ApplicationForAdmissions)
+                    .ThenInclude(afa => afa.AdmissionPrivileges)
+                        .ThenInclude(ap => ap.FileModel)
+                            .ThenInclude(fm => fm.FileToFileTypes)
+                                .ThenInclude(ftft => ftft.FileDataType);
             return abiturs;
         }
 

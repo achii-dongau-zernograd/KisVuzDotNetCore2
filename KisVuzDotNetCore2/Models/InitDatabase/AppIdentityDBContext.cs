@@ -571,6 +571,17 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<AbiturientIndividualAchievment> AbiturientIndividualAchievments { get; set; }
 
         /// <summary>
+        /// Типы льгот при приёме
+        /// </summary>
+        public DbSet<AdmissionPrivilegeType> AdmissionPrivilegeTypes { get; set; }
+
+        /// <summary>
+        /// Льготы при приёме
+        /// </summary>
+        public DbSet<AdmissionPrivilege> AdmissionPrivileges { get; set; }
+
+
+        /// <summary>
         /// Типы индивидуальных достижений абитуриентов
         /// </summary>
         public DbSet<AbiturientIndividualAchievmentType> AbiturientIndividualAchievmentTypes { get; set; }
@@ -1185,6 +1196,8 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseGenders.CreateGenders(serviceProvider, configuration);
             await InitDatabaseFamilyMemberTypes.CreateFamilyMemberTypes(serviceProvider, configuration);
             await InitDatabaseMilitaryServiceStatuses.CreateMilitaryServiceStatuses(serviceProvider, configuration);
+
+            await InitDatabaseAdmissionPrivilegeTypes.CreateAdmissionPrivilegeTypes(serviceProvider, configuration);
         }        
     
     }

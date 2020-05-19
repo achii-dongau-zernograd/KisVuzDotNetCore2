@@ -586,6 +586,8 @@
     <Compile Remove="Migrations\20200519021808_t.Designer.cs" />
     <Compile Remove="Migrations\20200519094910_PassportNumber.cs" />
     <Compile Remove="Migrations\20200519094910_PassportNumber.Designer.cs" />
+    <Compile Remove="Migrations\20200519132957_AdmissionPrivileges.cs" />
+    <Compile Remove="Migrations\20200519132957_AdmissionPrivileges.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
