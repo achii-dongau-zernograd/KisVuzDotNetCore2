@@ -1,0 +1,33 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.AdmissionPrivilege
+
+@{
+    ViewData["Title"] = "Добавление льготы";
+}
+
+<h2>Добавление льготы при поступлении</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateAbiturientAdmissionPrivilege" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ApplicationForAdmissionId" class="control-label"></label>
+                <select asp-for="ApplicationForAdmissionId" class ="form-control" asp-items="ViewBag.ApplicationForAdmissions"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdmissionPrivilegeTypeId" class="control-label"></label>
+                <select asp-for="AdmissionPrivilegeTypeId" class ="form-control" asp-items="ViewBag.AdmissionPrivilegeTypes"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>            
+            <div class="form-group">
+                <input type="hidden" asp-route="RowStatusId" value="@RowStatusEnum.NotConfirmed" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Start" asp-route-selectedTab="admissionPrivileges" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -20,6 +20,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         private readonly IUserProfileRepository _userProfileRepository;
         private readonly IUserEducationRepository _userEducationRepository;
         private readonly IApplicationForAdmissionRepository _applicationForAdmissionRepository;
+        private readonly IAdmissionPrivilegeRepository _admissionPrivilegeRepository;
         private readonly IFileModelRepository _fileModelRepository;
 
         public AbiturientRepository(AppIdentityDBContext context,
@@ -27,6 +28,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
             IUserProfileRepository userProfileRepository,
             IUserEducationRepository userEducationRepository,
             IApplicationForAdmissionRepository applicationForAdmissionRepository,
+            IAdmissionPrivilegeRepository admissionPrivilegeRepository,
             IFileModelRepository fileModelRepository
             )
         {
@@ -35,6 +37,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
             _userProfileRepository = userProfileRepository;
             _userEducationRepository = userEducationRepository;
             _applicationForAdmissionRepository = applicationForAdmissionRepository;
+            _admissionPrivilegeRepository = admissionPrivilegeRepository;
             _fileModelRepository = fileModelRepository;
         }
 
@@ -721,6 +724,101 @@ namespace KisVuzDotNetCore2.Models.Abitur
             var abiturient = await GetAbiturientAsync(userName);
             familyMemberContact.AppUserId = abiturient.AppUserId;
             await _userProfileRepository.AddFamilyMemberContact(familyMemberContact);
+        }
+
+        /// <summary>
+        /// Создание льготы абитуриента при приёме
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="admissionPrivilege"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task CreateAdmissionPrivilegeAsync(string userName, AdmissionPrivilege admissionPrivilege, IFormFile uploadedFile)
+        {
+            var applicationForAdmission = await GetApplicationForAdmissionAsync(userName, admissionPrivilege.ApplicationForAdmissionId);
+            if (applicationForAdmission == null) return;
+
+            await _admissionPrivilegeRepository.CreateAdmissionPrivilegeAsync(admissionPrivilege, uploadedFile);
+        }
+
+        /// <summary>
+        /// Возвращает объект льготы абитуриента при поступлении
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="abiturientAdmissionPrivilegeId"></param>
+        /// <returns></returns>
+        public async Task<AdmissionPrivilege> GetAdmissionPrivilegeAsync(string userName, int abiturientAdmissionPrivilegeId)
+        {
+            var admissionPrivilege = await _admissionPrivilegeRepository.GetAdmissionPrivilegeAsync(abiturientAdmissionPrivilegeId);
+            if (admissionPrivilege == null)
+                return null;
+
+            if (admissionPrivilege.ApplicationForAdmission.Abiturient.AppUser.UserName != userName)
+                return null;
+
+            return admissionPrivilege;
+        }
+
+        /// <summary>
+        /// Удаляет льготу абитуриента при поступлении
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="admissionPrivilegeId"></param>
+        /// <returns></returns>
+        public async Task RemoveAdmissionPrivilegeAsync(string userName, int admissionPrivilegeId)
+        {
+            var admissionPrivilege = await GetAdmissionPrivilegeAsync(userName, admissionPrivilegeId);
+            if (admissionPrivilege == null) return;
+
+            await _admissionPrivilegeRepository.RemoveAdmissionPrivilegeAsync(admissionPrivilege);
+        }
+
+        /// <summary>
+        /// Обновляет льготу абитуриента при поступлении
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="admissionPrivilege"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task UpdateAdmissionPrivilegeAsync(string userName, AdmissionPrivilege admissionPrivilege, IFormFile uploadedFile)
+        {
+            if (admissionPrivilege == null) return;
+            var entry = await GetAdmissionPrivilegeAsync(userName, admissionPrivilege.AdmissionPrivilegeId);
+            if (entry == null) return;
+                        
+            entry.ApplicationForAdmissionId = admissionPrivilege.ApplicationForAdmissionId;
+            entry.AdmissionPrivilegeTypeId = admissionPrivilege.AdmissionPrivilegeTypeId;
+            entry.RowStatusId = (int)RowStatusEnum.ChangedByUser;
+            
+            await _admissionPrivilegeRepository.UpdateAdmissionPrivilegeAsync(entry, uploadedFile);
+        }
+
+        /// <summary>
+        /// Изменение паспортных данных
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="passportData"></param>
+        /// <returns></returns>
+        public async Task ChangePassportData(string userName, PassportData passportData)
+        {
+            var entryPassportData = await GetPassportDataAsync(userName);
+            if (entryPassportData == null) return;
+
+            entryPassportData.PassportSeriya = passportData.PassportSeriya;
+            entryPassportData.PassportNumber = passportData.PassportNumber;
+            entryPassportData.MestoRojdeniya = passportData.MestoRojdeniya;
+            entryPassportData.KemVidan = passportData.KemVidan;
+            entryPassportData.DataVidachi = passportData.DataVidachi;
+            entryPassportData.KodPodrazdeleniya = passportData.KodPodrazdeleniya;
+            entryPassportData.Address.PostCode = passportData.Address.PostCode;
+            entryPassportData.Address.Country = passportData.Address.Country;
+            entryPassportData.Address.Region = passportData.Address.Region;
+            entryPassportData.Address.Settlement = passportData.Address.Settlement;
+            entryPassportData.Address.Street = passportData.Address.Street;
+            entryPassportData.Address.HouseNumber = passportData.Address.HouseNumber;
+            entryPassportData.Address.PopulatedLocalityId = passportData.Address.PopulatedLocalityId;
+
+            await _userProfileRepository.UpdatePassportDataAsync(entryPassportData);
         }
     }
 }

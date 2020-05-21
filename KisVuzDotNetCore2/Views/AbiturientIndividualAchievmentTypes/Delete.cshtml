@@ -1,0 +1,32 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.AbiturientIndividualAchievmentType
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AbiturientIndividualAchievmentTypeName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AbiturientIndividualAchievmentTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Point)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Point)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="AbiturientIndividualAchievmentTypeId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

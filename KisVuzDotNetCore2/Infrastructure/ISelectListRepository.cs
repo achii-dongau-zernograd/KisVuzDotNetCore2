@@ -224,7 +224,15 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListQuotaTypes(int selectedId = 0);
-        
+
+        /// <summary>
+        /// Возвращает список типов квот набора для указанного направления подготовки
+        /// </summary>
+        /// <param name="eduNapravlId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListQuotaTypes(int eduNapravlId, int selectedId = 0);
+
         /// <summary>
         /// Возвращает список квалификаций пользователя
         /// </summary>        
@@ -244,6 +252,15 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListEduFormsForAbiturient(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список форм обучения, доступных абитуриенту
+        /// при подаче заявления о приёме на указанное направление
+        /// </summary>
+        /// <param name="EduNapravlId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListEduFormsForAbiturient(int EduNapravlId, int selectedId = 0);
 
         /// <summary>
         /// Возвращает список программ подготовки
@@ -284,7 +301,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="disciplineNameSearchString"></param>
         /// <returns></returns>
         SelectList GetSelectListDisciplineNames(string disciplineNameSearchString);
-
+        
         /// <summary>
         /// Возвращает список помещений
         /// </summary>
@@ -298,7 +315,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListAuthors(int selectedId = 0);
-
+        
         /// <summary>
         /// Возвращает список авторов
         /// </summary>
@@ -342,5 +359,18 @@ namespace KisVuzDotNetCore2.Infrastructure
 
         dynamic GetSelectListScienceJournals(object scienceJournalId);
         
+        /// <summary>
+        /// Возвращает список типов привилегий абитуриента при приёме
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAdmissionPrivilegeTypes(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список заявлений о приёме абитуриента
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListApplicationForAdmissions(int abiturientId, int selectedId = 0);
     }
 }

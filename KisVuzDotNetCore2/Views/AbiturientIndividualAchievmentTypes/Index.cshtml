@@ -1,0 +1,40 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Abitur.AbiturientIndividualAchievmentType>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Типы индивидуальных достижений абитуриентов</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AbiturientIndividualAchievmentTypeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Point)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AbiturientIndividualAchievmentTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Point)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AbiturientIndividualAchievmentTypeId" class="btn btn-primary">Редактировать</a> 
+                <a asp-action="Delete" asp-route-id="@item.AbiturientIndividualAchievmentTypeId" class="btn btn-danger">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

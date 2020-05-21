@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200521154135_EduNapravlQuotaTypes")]
+    partial class EduNapravlQuotaTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,24 +196,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("RowStatusId");
 
                     b.ToTable("ApplicationForAdmissions");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.EduNapravlEduForm", b =>
-                {
-                    b.Property<int>("EduNapravlEduFormId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("EduFormId");
-
-                    b.Property<int>("EduNapravlId");
-
-                    b.HasKey("EduNapravlEduFormId");
-
-                    b.HasIndex("EduFormId");
-
-                    b.HasIndex("EduNapravlId");
-
-                    b.ToTable("EduNapravlEduForms");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.EduNapravlQuotaType", b =>
@@ -4020,19 +4003,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
                         .WithMany()
                         .HasForeignKey("RowStatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.EduNapravlEduForm", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduForm", "EduForm")
-                        .WithMany()
-                        .HasForeignKey("EduFormId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("KisVuzDotNetCore2.Models.Education.EduNapravl", "EduNapravl")
-                        .WithMany()
-                        .HasForeignKey("EduNapravlId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

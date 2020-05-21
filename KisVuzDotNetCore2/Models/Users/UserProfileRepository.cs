@@ -957,6 +957,17 @@ namespace KisVuzDotNetCore2.Models.Users
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Обновляет паспортные данные
+        /// </summary>
+        /// <param name="passportData"></param>
+        /// <returns></returns>
+        public async Task UpdatePassportDataAsync(PassportData passportData)
+        {
+            _context.PassportDataSet.Update(passportData);
+            await _context.SaveChangesAsync();
+        }
+
         #endregion
     }
 }

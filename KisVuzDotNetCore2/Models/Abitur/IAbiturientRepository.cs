@@ -338,7 +338,46 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <returns></returns>
         Task ApplicationForAdmissionFileLoadAsync(string userName, int applicationForAdmissionId, IFormFile uploadedFile);
         
+        /// <summary>
+        /// Создание льготы абитуриента при приёме
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="admissionPrivilege"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task CreateAdmissionPrivilegeAsync(string userName, AdmissionPrivilege admissionPrivilege, IFormFile uploadedFile);
 
-        
+        /// <summary>
+        /// Возвращает объект льготы абитуриента при поступлении
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="abiturientAdmissionPrivilegeId"></param>
+        /// <returns></returns>
+        Task<AdmissionPrivilege> GetAdmissionPrivilegeAsync(string userName, int abiturientAdmissionPrivilegeId);
+
+        /// <summary>
+        /// Удаляет льготу абитуриента при поступлении
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="admissionPrivilegeId"></param>
+        /// <returns></returns>
+        Task RemoveAdmissionPrivilegeAsync(string userName, int admissionPrivilegeId);
+
+        /// <summary>
+        /// Обновляет льготу абитуриента при поступлении
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="admissionPrivilege"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task UpdateAdmissionPrivilegeAsync(string userName, AdmissionPrivilege admissionPrivilege, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Изменение паспортных данных
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="passportData"></param>
+        /// <returns></returns>
+        Task ChangePassportData(string userName, PassportData passportData);
     }
 }

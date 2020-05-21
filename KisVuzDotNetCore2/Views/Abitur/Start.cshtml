@@ -6,13 +6,13 @@
     var selectedTab = (string)ViewBag.SelectedTab;
     if(string.IsNullOrWhiteSpace(selectedTab))
     {
-        selectedTab = "passportData";
+        selectedTab = "userDocuments";
     }
 
     string passportDataClass = "";
     string userDocumentsClass = "";
     string abiturientAchievmentsClass = "";
-    string abiturientAdmissionPrivilegesClass = "";
+    string admissionPrivilegesClass = "";
     string applicationForAdmissionsClass = "";
     string entranceTestsClass = "";
     string personalInformationClass = "";
@@ -31,8 +31,8 @@
         case "abiturientAchievments":
             abiturientAchievmentsClass = "active";
             break;
-        case "abiturientAdmissionPrivileges":
-            abiturientAdmissionPrivilegesClass = "active";
+        case "admissionPrivileges":
+            admissionPrivilegesClass = "active";
             break;
         case "applicationForAdmissions":
             applicationForAdmissionsClass = "active";
@@ -49,12 +49,12 @@
 @*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*@
 
 <ul class="nav nav-tabs" id="myTab">
+    <li class="@userDocumentsClass"><a href="#userDocuments" data-toggle="tab">Основные документы</a></li>
     <li class="@passportDataClass"><a href="#passportData" data-toggle="tab">Паспортные данные</a></li>
     <li class="@personalInformationClass"><a href="#personalInformation" data-toggle="tab">Личные сведения</a></li>
-    <li class="@userDocumentsClass"><a href="#userDocuments" data-toggle="tab">Загруженные документы</a></li>
     <li class="@applicationForAdmissionsClass"><a href="#applicationForAdmissions" data-toggle="tab">Заявления о приёме</a></li>
     <li class="@abiturientAchievmentsClass"><a href="#abiturientAchievments" data-toggle="tab">Индивидуальные достижения</a></li>
-    <li class="@abiturientAdmissionPrivilegesClass"><a href="#abiturientAdmissionPrivileges" data-toggle="tab">Льготы</a></li>
+    <li class="@admissionPrivilegesClass"><a href="#abiturientAdmissionPrivileges" data-toggle="tab">Льготы</a></li>
     <li class="@entranceTestsClass"><a href="#entranceTests" data-toggle="tab">Вступительные испытания</a></li>
 </ul>
 
@@ -64,8 +64,7 @@
         <br />
         @if (passport.RowStatusId != (int)RowStatusEnum.Confirmed)
         {
-            <a asp-action="ChangePassportData" class="btn btn-primary">Изменить основные сведения</a>
-            <a asp-action="ChangePassportDataAddress" class="btn btn-primary">Изменить адрес</a>
+            <a asp-action="ChangePassportData" class="btn btn-primary">Изменить паспортные данные</a>            
         }
 
         <table class="table table-hover">
@@ -453,7 +452,7 @@
     </div>
 
     @*///////////////////////////////////////////////////////////////// Льготы ///////////////////////////////////////////////////////////*@
-    <div class="tab-pane @abiturientAdmissionPrivilegesClass" id="abiturientAdmissionPrivileges">
+    <div class="tab-pane @admissionPrivilegesClass" id="abiturientAdmissionPrivileges">
         <br />
         <a asp-action="CreateAbiturientAdmissionPrivilege" class="btn btn-primary">Добавить льготу</a>
 

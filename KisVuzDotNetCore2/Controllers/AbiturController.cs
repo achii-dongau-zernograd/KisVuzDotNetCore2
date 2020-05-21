@@ -196,105 +196,7 @@ namespace KisVuzDotNetCore2.Controllers
         }
         #endregion
 
-
-        #region Индивидуальные достижения абитуриента
-        public async Task<IActionResult> CreateAbiturientIndividualAchievment()
-        {
-            var abiturient = await _abiturRepository.GetAbiturientAsync(User.Identity.Name);
-
-            var abiturientIndividualAchievment = new AbiturientIndividualAchievment
-            {
-                AbiturientId = abiturient.AbiturientId,
-                Abiturient = abiturient
-            };
-
-            ViewBag.AbiturientIndividualAchievmentTypes = _selectListRepository.GetSelectListAbiturientIndividualAchievmentTypes();
-            return View(abiturientIndividualAchievment);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAbiturientIndividualAchievment(AbiturientIndividualAchievment abiturientIndividualAchievment,
-            IFormFile uploadedFile)
-        {
-            await _abiturRepository.AddAbiturientIndividualAchievment(abiturientIndividualAchievment);
-            if(uploadedFile != null)
-            {
-                await _abiturRepository.UpdateAbiturientIndividualAchievmentFileAsync(abiturientIndividualAchievment.AbiturientIndividualAchievmentId,
-                uploadedFile);
-            }            
-
-            return RedirectToAction(nameof(Start), new { selectedTab = "abiturientAchievments" });
-        }
-
-        /// <summary>
-        /// Представление загрузки скан-копии подтверждающего документа
-        /// индивидуального достижения абитуриента
-        /// </summary>
-        /// <returns></returns>
-        public async Task<IActionResult> LoadAbiturientIndividualAchievmentFile(int abiturientIndividualAchievmentId)
-        {
-            var abiturAchievment = await _abiturRepository.GetAbiturientIndividualAchievmentAsync(abiturientIndividualAchievmentId);
-
-            return View(abiturAchievment);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoadAbiturientIndividualAchievmentFile(int abiturientIndividualAchievmentId,
-            IFormFile uploadedFile)
-        {
-            await _abiturRepository.UpdateAbiturientIndividualAchievmentFileAsync(abiturientIndividualAchievmentId, uploadedFile);
-
-            return RedirectToAction(nameof(Start), new { selectedTab = "abiturientAchievments" });
-        }
-
-        /// <summary>
-        /// Редактирование записи об индивидуальном достижении абитуриента
-        /// </summary>
-        /// <param name="abiturientIndividualAchievmentId"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> AbiturientIndividualAchievmentEdit(int abiturientIndividualAchievmentId)
-        {
-            var abiturientIndividualAchievment = await _abiturRepository.GetAbiturientIndividualAchievmentAsync(abiturientIndividualAchievmentId);
-            ViewBag.AbiturientIndividualAchievmentTypes = _selectListRepository.GetSelectListAbiturientIndividualAchievmentTypes(abiturientIndividualAchievment.AbiturientIndividualAchievmentTypeId);
-            return View(abiturientIndividualAchievment);
-        }
-
-        /// <summary>
-        /// Редактирование записи об индиальном достижении абитуриента (HttpPost)
-        /// </summary>
-        /// <param name="abiturientIndividualAchievment"></param>
-        /// <param name="uploadedFile"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AbiturientIndividualAchievmentEdit(AbiturientIndividualAchievment abiturientIndividualAchievment,
-            IFormFile uploadedFile)
-        {
-            await _abiturRepository.UpdateAbiturientIndividualAchievment(abiturientIndividualAchievment, uploadedFile);            
-
-            return RedirectToAction(nameof(Start), new { selectedTab = "abiturientAchievments" });
-        }
-
-        
-        public async Task<IActionResult> AbiturientIndividualAchievmentRemove(int abiturientIndividualAchievmentId)
-        {
-            var abiturientIndividualAchievment = await _abiturRepository.GetAbiturientIndividualAchievmentAsync(abiturientIndividualAchievmentId);
-
-            return View(abiturientIndividualAchievment);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AbiturientIndividualAchievmentRemove(AbiturientIndividualAchievment abiturientIndividualAchievment)
-        {
-            await _abiturRepository.RemoveAbiturientIndividualAchievmentAsync(abiturientIndividualAchievment.AbiturientIndividualAchievmentId);
-
-            return RedirectToAction(nameof(Start), new { selectedTab = "abiturientAchievments" });
-        }
-        #endregion
-
+                
         #region Заявления о приёме
         public IActionResult ChooseEduNapravl(int? eduLevelId, int? eduNapravlId)
         {
@@ -345,8 +247,10 @@ namespace KisVuzDotNetCore2.Controllers
                 .FirstOrDefaultAsync(n=>n.EduNapravlId == eduNapravlId);
 
             ViewBag.EduProfiles = _selectListRepository.GetSelectListEduProfilesOfEduNapravl(eduNapravlId);
-            ViewBag.EduForms = _selectListRepository.GetSelectListEduFormsForAbiturient();
-            ViewBag.QuotaTypes = _selectListRepository.GetSelectListQuotaTypes(applicationForAdmission.QuotaTypeId);
+            //ViewBag.EduForms = _selectListRepository.GetSelectListEduFormsForAbiturient();
+            ViewBag.EduForms = _selectListRepository.GetSelectListEduFormsForAbiturient(eduNapravlId ?? 0, 0);
+            //ViewBag.QuotaTypes = _selectListRepository.GetSelectListQuotaTypes(applicationForAdmission.QuotaTypeId);
+            ViewBag.QuotaTypes = _selectListRepository.GetSelectListQuotaTypes(eduNapravlId ?? 0, applicationForAdmission.QuotaTypeId);
 
             return View(applicationForAdmission);
         }
@@ -424,6 +328,177 @@ namespace KisVuzDotNetCore2.Controllers
         }
         #endregion
 
+        #region Индивидуальные достижения абитуриента
+        public async Task<IActionResult> CreateAbiturientIndividualAchievment()
+        {
+            var abiturient = await _abiturRepository.GetAbiturientAsync(User.Identity.Name);
+
+            var abiturientIndividualAchievment = new AbiturientIndividualAchievment
+            {
+                AbiturientId = abiturient.AbiturientId,
+                Abiturient = abiturient
+            };
+
+            ViewBag.AbiturientIndividualAchievmentTypes = _selectListRepository.GetSelectListAbiturientIndividualAchievmentTypes();
+            return View(abiturientIndividualAchievment);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAbiturientIndividualAchievment(AbiturientIndividualAchievment abiturientIndividualAchievment,
+            IFormFile uploadedFile)
+        {
+            await _abiturRepository.AddAbiturientIndividualAchievment(abiturientIndividualAchievment);
+            if (uploadedFile != null)
+            {
+                await _abiturRepository.UpdateAbiturientIndividualAchievmentFileAsync(abiturientIndividualAchievment.AbiturientIndividualAchievmentId,
+                uploadedFile);
+            }
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "abiturientAchievments" });
+        }
+
+        /// <summary>
+        /// Представление загрузки скан-копии подтверждающего документа
+        /// индивидуального достижения абитуриента
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> LoadAbiturientIndividualAchievmentFile(int abiturientIndividualAchievmentId)
+        {
+            var abiturAchievment = await _abiturRepository.GetAbiturientIndividualAchievmentAsync(abiturientIndividualAchievmentId);
+
+            return View(abiturAchievment);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LoadAbiturientIndividualAchievmentFile(int abiturientIndividualAchievmentId,
+            IFormFile uploadedFile)
+        {
+            await _abiturRepository.UpdateAbiturientIndividualAchievmentFileAsync(abiturientIndividualAchievmentId, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "abiturientAchievments" });
+        }
+
+        /// <summary>
+        /// Редактирование записи об индивидуальном достижении абитуриента
+        /// </summary>
+        /// <param name="abiturientIndividualAchievmentId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> AbiturientIndividualAchievmentEdit(int abiturientIndividualAchievmentId)
+        {
+            var abiturientIndividualAchievment = await _abiturRepository.GetAbiturientIndividualAchievmentAsync(abiturientIndividualAchievmentId);
+            ViewBag.AbiturientIndividualAchievmentTypes = _selectListRepository.GetSelectListAbiturientIndividualAchievmentTypes(abiturientIndividualAchievment.AbiturientIndividualAchievmentTypeId);
+            return View(abiturientIndividualAchievment);
+        }
+
+        /// <summary>
+        /// Редактирование записи об индиальном достижении абитуриента (HttpPost)
+        /// </summary>
+        /// <param name="abiturientIndividualAchievment"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AbiturientIndividualAchievmentEdit(AbiturientIndividualAchievment abiturientIndividualAchievment,
+            IFormFile uploadedFile)
+        {
+            await _abiturRepository.UpdateAbiturientIndividualAchievment(abiturientIndividualAchievment, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "abiturientAchievments" });
+        }
+
+
+        public async Task<IActionResult> AbiturientIndividualAchievmentRemove(int abiturientIndividualAchievmentId)
+        {
+            var abiturientIndividualAchievment = await _abiturRepository.GetAbiturientIndividualAchievmentAsync(abiturientIndividualAchievmentId);
+
+            return View(abiturientIndividualAchievment);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AbiturientIndividualAchievmentRemove(AbiturientIndividualAchievment abiturientIndividualAchievment)
+        {
+            await _abiturRepository.RemoveAbiturientIndividualAchievmentAsync(abiturientIndividualAchievment.AbiturientIndividualAchievmentId);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "abiturientAchievments" });
+        }
+        #endregion
+
+        #region Льготы
+        public async Task<IActionResult> CreateAbiturientAdmissionPrivilege()
+        {
+            var abiturient = await _abiturRepository.GetAbiturientAsync(User.Identity.Name);
+            ViewBag.ApplicationForAdmissions = _selectListRepository.GetSelectListApplicationForAdmissions(abiturient.AbiturientId);
+            ViewBag.AdmissionPrivilegeTypes = _selectListRepository.GetSelectListAdmissionPrivilegeTypes();
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAbiturientAdmissionPrivilege(AdmissionPrivilege admissionPrivilege,
+            IFormFile uploadedFile)
+        {
+            await _abiturRepository.CreateAdmissionPrivilegeAsync(User.Identity.Name, admissionPrivilege, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "admissionPrivileges" });
+        }
+
+        /// <summary>
+        /// Удаление льготы абитуриента при поступлении
+        /// </summary>
+        /// <param name="abiturientAdmissionPrivilegeId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> AbiturientAdmissionPrivilegeRemove( int abiturientAdmissionPrivilegeId)
+        {
+            AdmissionPrivilege admissionPrivilege = await _abiturRepository.GetAdmissionPrivilegeAsync(User.Identity.Name, abiturientAdmissionPrivilegeId);
+
+            if (admissionPrivilege == null)
+                return NotFound();
+
+            return View(admissionPrivilege);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AbiturientAdmissionPrivilegeRemove(AdmissionPrivilege admissionPrivilege)
+        {
+            await _abiturRepository.RemoveAdmissionPrivilegeAsync(User.Identity.Name, admissionPrivilege.AdmissionPrivilegeId);                       
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "admissionPrivileges" });
+        }
+
+        /// <summary>
+        /// Редактирование льготы для поступления
+        /// </summary>
+        /// <param name="abiturientAdmissionPrivilegeId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> AbiturientAdmissionPrivilegeEdit(int abiturientAdmissionPrivilegeId)
+        {
+            AdmissionPrivilege admissionPrivilege = await _abiturRepository.GetAdmissionPrivilegeAsync(User.Identity.Name, abiturientAdmissionPrivilegeId);
+
+            if (admissionPrivilege == null)
+                return NotFound();
+
+            ViewBag.ApplicationForAdmissions = _selectListRepository.GetSelectListApplicationForAdmissions(admissionPrivilege.ApplicationForAdmission.AbiturientId);
+            ViewBag.AdmissionPrivilegeTypes = _selectListRepository.GetSelectListAdmissionPrivilegeTypes(admissionPrivilege.AdmissionPrivilegeTypeId);
+
+            return View(admissionPrivilege);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AbiturientAdmissionPrivilegeEdit(AdmissionPrivilege admissionPrivilege,
+            IFormFile uploadedFile)
+        {
+            await _abiturRepository.UpdateAdmissionPrivilegeAsync(User.Identity.Name, admissionPrivilege, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "admissionPrivileges" });
+        }
+        #endregion
+
 
         #region Паспортные данные
         public async Task<IActionResult> CreatePassportData()
@@ -457,6 +532,44 @@ namespace KisVuzDotNetCore2.Controllers
             if(ModelState.IsValid)
             {
                 await _abiturRepository.AddPassportDataAsync(passportData);
+            }
+            else
+            {
+                ViewBag.PopulatedLocalities = _selectListRepository.GetSelectListPopulatedLocalities();
+                return View(passportData);
+            }
+
+            return RedirectToAction(nameof(Start));
+        }
+
+        /// <summary>
+        /// Изменение паспортных данных
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> ChangePassportData()
+        {
+            var passport = await _abiturRepository.GetPassportDataAsync(User.Identity.Name);
+            if (passport == null) return NotFound();
+
+            if (passport == null)
+            {
+                passport = new PassportData
+                {
+                    RowStatusId = (int)RowStatusEnum.ChangedByUser
+                };
+            }
+
+            ViewBag.PopulatedLocalities = _selectListRepository.GetSelectListPopulatedLocalities(passport.Address.PopulatedLocalityId ?? 0);
+            return View(passport);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassportData(PassportData passportData)
+        {
+            if (ModelState.IsValid)
+            {
+                await _abiturRepository.ChangePassportData(User.Identity.Name, passportData);
             }
             else
             {

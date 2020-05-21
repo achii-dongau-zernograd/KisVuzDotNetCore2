@@ -62,6 +62,17 @@ namespace KisVuzDotNetCore2.Models.Abitur
                 .Include(afa => afa.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(afa => afa.QuotaType)
                 .Include(afa => afa.RowStatus)
+                // Льготы
+                .Include(afa => afa.AdmissionPrivileges)
+                    .ThenInclude(ap => ap.AdmissionPrivilegeType)
+                .Include(afa => afa.AdmissionPrivileges)
+                    .ThenInclude(ap => ap.RowStatus)
+                .Include(afa => afa.AdmissionPrivileges)
+                    .ThenInclude(ap => ap.FileModel)
+                        .ThenInclude(fm => fm.FileToFileTypes)
+                            .ThenInclude(ftft => ftft.FileDataType)
+                                .ThenInclude(fdt => fdt.FileDataTypeGroup)
+                // Файл заявления о приёме
                 .Include(afa => afa.FileModel)
                     .ThenInclude(fm => fm.FileToFileTypes)
                         .ThenInclude(ftft => ftft.FileDataType)

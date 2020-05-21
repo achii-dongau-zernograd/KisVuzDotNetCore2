@@ -168,6 +168,22 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает список форм обучения, доступных абитуриенту
+        /// при подаче заявления о приёме на указанное направление подготовки
+        /// </summary>
+        /// <param name="EduNapravlId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEduFormsForAbiturient(int EduNapravlId, int selectedId = 0)
+        {
+            var data = _context                
+                .EduNapravlEduForms
+                .Include(enef => enef.EduForm)
+                .Where(enef => enef.EduNapravlId == EduNapravlId);
+            return new SelectList(data, "EduFormId", "EduForm.EduFormName", selectedId);
+        }
+
+        /// <summary>
         /// Возвращает список полных наименований
         /// реализуемых направлений подготовки
         /// </summary>
@@ -579,6 +595,22 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает список типов квот набора для указанного направления подготовки
+        /// </summary>
+        /// <param name="eduNapravlId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListQuotaTypes(int eduNapravlId, int selectedId = 0)
+        {
+            var data = _context.EduNapravlQuotaTypes
+                .Include(q => q.QuotaType)
+                .Where(q => q.EduNapravlId == eduNapravlId)
+                .OrderBy(q => q.QuotaType.QuotaTypeName);
+            return new SelectList(data,
+                 "QuotaTypeId", "QuotaType.QuotaTypeName", selectedId);
+        }
+
+        /// <summary>
         /// Возвращает список уровней образования
         /// </summary>
         /// <param name="selectedId"></param>
@@ -649,5 +681,31 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(data,
                  "FamilyMemberTypeId", "FamilyMemberTypeName", selectedId);
         }
+
+        /// <summary>
+        /// Возвращает список типов привилегий абитуриента при приёме
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAdmissionPrivilegeTypes(int selectedId = 0)
+        {
+            var data = _context.AdmissionPrivilegeTypes;
+            return new SelectList(data,
+                 "AdmissionPrivilegeTypeId", "AdmissionPrivilegeTypeName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список заявлений о приёме абитуриента
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListApplicationForAdmissions(int abiturientId, int selectedId = 0)
+        {
+            var data = _context.ApplicationForAdmissions.Where(a => a.AbiturientId == abiturientId);
+            return new SelectList(data,
+                 "ApplicationForAdmissionId", "ApplicationForAdmissionFullName", selectedId);
+        }
+
+        
     }
 }

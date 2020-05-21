@@ -1,10 +1,10 @@
 ﻿@model KisVuzDotNetCore2.Models.Users.PassportData
 
 @{
-    ViewData["Title"] = "CreatePassportData";
+    ViewData["Title"] = "Изменение паспортных данных";
 }
 
-<h2>Добавление паспортных данных</h2>
+<h2>Изменение паспортных данных</h2>
 
 <h4>@Model.AppUser?.GetFullName</h4>
 <h4><a href="/@Model.UserDocument?.FileModel?.Path">Скан-копия паспорта</a></h4>
@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreatePassportData">
+        <form asp-action="ChangePassportData">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <h4>Общие сведения</h4>
@@ -96,9 +96,11 @@
 
 
             <div class="form-group">
+                <input type="hidden" asp-for="PassportDataId" />
                 <input type="hidden" asp-for="AppUserId" />
                 <input type="hidden" asp-for="UserDocumentId" />
-                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Start" asp-route-selectedTab="passportData">Отмена</a>
             </div>
         </form>
     </div>

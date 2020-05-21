@@ -56,6 +56,17 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public QuotaType QuotaType { get; set; }
 
         /// <summary>
+        /// Возвращает полное наименование заявления о приёме
+        /// </summary>
+        public string ApplicationForAdmissionFullName
+        {
+            get
+            {
+                return $"{EduProfile?.GetEduProfileFullName} - {EduForm?.EduFormName} - {QuotaType?.QuotaTypeName}";
+            }
+        }
+
+        /// <summary>
         /// Приоритет
         /// </summary>
         [Display(Name = "Приоритет")]

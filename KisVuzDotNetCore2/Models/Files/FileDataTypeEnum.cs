@@ -223,6 +223,10 @@
         /// <summary>
         /// Заявление о приёме
         /// </summary>
-        ApplicationForAdmission = 62
+        ApplicationForAdmission = 62,
+        /// <summary>
+        /// Файл, подтверждающий льготу абитуриента при приёме
+        /// </summary>
+        AdmissionPrivilege = 63
     }
 }

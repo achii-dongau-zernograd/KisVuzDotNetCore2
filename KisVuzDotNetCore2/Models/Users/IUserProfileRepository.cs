@@ -265,5 +265,12 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="familyMemberContact"></param>
         /// <returns></returns>
         Task AddFamilyMemberContact(FamilyMemberContact familyMemberContact);
+        
+        /// <summary>
+        /// Обновляет паспортные данные
+        /// </summary>
+        /// <param name="passportData"></param>
+        /// <returns></returns>
+        Task UpdatePassportDataAsync(PassportData passportData);
     }
 }

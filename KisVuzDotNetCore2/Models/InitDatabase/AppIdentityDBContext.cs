@@ -561,6 +561,16 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<QuotaType> QuotaTypes { get; set; }
 
         /// <summary>
+        /// Сопоставления направлений подготовки и типов квот приёма
+        /// </summary>
+        public DbSet<EduNapravlQuotaType> EduNapravlQuotaTypes { get; set; }
+
+        /// <summary>
+        /// Сопоставления направлений подготовки и форм обучения при приёме
+        /// </summary>
+        public DbSet<EduNapravlEduForm> EduNapravlEduForms { get; set; }
+
+        /// <summary>
         /// Заявления о приёме
         /// </summary>
         public DbSet<ApplicationForAdmission> ApplicationForAdmissions { get; set; }
@@ -579,6 +589,9 @@ namespace KisVuzDotNetCore2.Models
         /// Льготы при приёме
         /// </summary>
         public DbSet<AdmissionPrivilege> AdmissionPrivileges { get; set; }
+
+
+
 
 
         /// <summary>

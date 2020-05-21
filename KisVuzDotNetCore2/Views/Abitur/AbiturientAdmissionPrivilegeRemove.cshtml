@@ -1,0 +1,58 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.AdmissionPrivilege
+
+@{
+    ViewData["Title"] = "AbiturientAdmissionPrivilegeRemove";
+}
+
+<h2>Удаление сведений о льготе абитуриента</h2>
+
+<h3>Вы действительно хотите удалить сведения о льготе?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationForAdmissionId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationForAdmission.ApplicationForAdmissionFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AdmissionPrivilegeTypeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AdmissionPrivilegeType.AdmissionPrivilegeTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModelId)
+        </dt>
+        <dd>
+            @if(Model.FileModel == null)
+            {
+                <p>Не загружено</p>
+            }
+            else
+            {
+                <a href="/@Model.FileModel.Path">Открыть</a>
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RowStatusId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RowStatus.RowStatusName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+    </dl>
+    
+    <form asp-action="AbiturientAdmissionPrivilegeRemove">
+        <input type="hidden" asp-for="AdmissionPrivilegeId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Start" asp-route-selectedTab="admissionPrivileges" class="btn btn-default">Отмена</a>
+    </form>
+</div>

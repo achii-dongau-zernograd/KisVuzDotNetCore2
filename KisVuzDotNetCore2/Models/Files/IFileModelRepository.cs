@@ -37,6 +37,13 @@ namespace KisVuzDotNetCore2.Models.Files
         Task<FileModel> UploadRabProgramAsync(IFormFile uploadedFile);
 
         /// <summary>
+        /// Загружает файл, подтверждающий льготу абитуриента при приёме
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadAdmissionPrivilegeFileAsync(IFormFile uploadedFile);
+
+        /// <summary>
         /// Загружает файл фонда оценочных средств на диск
         /// </summary>
         /// <param name="uploadedFile"></param>
@@ -131,7 +138,7 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task<FileModel> UploadApplicationForAdmissionFileAsync(IFormFile uploadedFile);
-
+        
         /// <summary>
         /// Удаляет документ пользователя
         /// </summary>
@@ -152,7 +159,15 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="fileModel"></param>
         /// <param name="uploadedFile"></param>
         Task ReloadFileAsync(FileModel fileModel, IFormFile uploadedFile);
-        
+
+        /// <summary>
+        /// Заменяет файл на диске
+        /// </summary>
+        /// <param name="fileModelId"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task ReloadFileAsync(int? fileModelId, IFormFile uploadedFile);
+
         /// <summary>
         /// Возвращает объект файловой модели
         /// </summary>

@@ -1,0 +1,30 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.EduNapravlQuotaType
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EduNapravlQuotaType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravlId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.QuotaType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.QuotaType.QuotaTypeId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.EduNapravlQuotaTypeId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

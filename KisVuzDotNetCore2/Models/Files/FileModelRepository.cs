@@ -52,6 +52,7 @@ namespace KisVuzDotNetCore2.Models.Files
             if (fileModel == null) return;
             _context.Files.Remove(fileModel);
             RemoveFileFromDisk(fileModel);
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -343,6 +344,19 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает файл, подтверждающий льготу абитуриента при приёме
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadAdmissionPrivilegeFileAsync(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                 "Подтверждение льготы абитуриента",
+                 FileDataTypeEnum.AdmissionPrivilege);
+            return fileModel;
+        }
+
+        /// <summary>
         /// Загружает файл паспорта
         /// </summary>
         /// <param name="uploadedFile"></param>
@@ -454,6 +468,20 @@ namespace KisVuzDotNetCore2.Models.Files
             }
 
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Заменяет файл на диске
+        /// </summary>
+        /// <param name="fileModelId"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task ReloadFileAsync(int? fileModelId, IFormFile uploadedFile)
+        {
+            if (fileModelId == null) return;
+            var fileModel = await GetFileModelAsync(fileModelId);
+
+            await ReloadFileAsync(fileModel, uploadedFile);
         }
 
         /// <summary>
