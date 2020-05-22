@@ -4,7 +4,7 @@
     var abiturient = (Abiturient)ViewBag.Abiturient;
     var passport = abiturient.AppUser.PassportData;
     var selectedTab = (string)ViewBag.SelectedTab;
-    if(string.IsNullOrWhiteSpace(selectedTab))
+    if (string.IsNullOrWhiteSpace(selectedTab))
     {
         selectedTab = "userDocuments";
     }
@@ -46,6 +46,69 @@
 
 <h2>Личный кабинет абитуриента</h2>
 
+@*///////////////////////////////////////////////////////// Замечания //////////////////////////////////////////////////////////////////*@
+
+@{
+    // Документы пользователя с замечаниями или возвращённые на доработку
+    var userDocumentsWithRemarksOrReturnedForCorrection = abiturient.AppUser.UserDocuments.Where(a => !string.IsNullOrWhiteSpace(a.Remark) ||
+      a.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection);
+    // Заявления о приёме с замечаниями или возвращённые на доработку
+    var applicationForAdmissionsWithRemarksOrReturnedForCorrection = abiturient.ApplicationForAdmissions.Where(a => !string.IsNullOrWhiteSpace(a.Remark) ||
+      a.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection);
+    // Индивидуальные достижения абитуриента с замечаниями или возвращённые на доработку
+    var abiturientIndividualAchievmentsWithRemarksOrReturnedForCorrection = abiturient.AbiturientIndividualAchievments.Where(a => !string.IsNullOrWhiteSpace(a.Remark) ||
+      a.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection);
+    // Льготы абитуриента с замечаниями или возвращённые на доработку
+    var abiturientAdmissionPrivilegesWithRemarksOrReturnedForCorrection = new List<AdmissionPrivilege>();
+    foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions)
+    {
+        foreach (var admissionPrivilege in applicationForAdmission.AdmissionPrivileges)
+        {
+            if(!string.IsNullOrWhiteSpace(admissionPrivilege.Remark) || admissionPrivilege.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+            {
+                abiturientAdmissionPrivilegesWithRemarksOrReturnedForCorrection.Add(admissionPrivilege);
+            }
+        }
+    }
+ }
+
+@if (userDocumentsWithRemarksOrReturnedForCorrection.Any())
+{
+    <div class="panel panel-danger">
+        <div class="panel-heading">Замечания</div>
+        <div class="panel-body">
+            <ol>
+                @foreach (var userDocument in userDocumentsWithRemarksOrReturnedForCorrection)
+                {
+                    <li>
+                        <a asp-action="ReloadUserDocument" asp-route-userDocumentId="@userDocument.UserDocumentId">@userDocument.FileDataType.FileDataTypeName - @userDocument.Remark</a>
+                    </li>
+                }
+                @foreach (var applicationForAdmission in applicationForAdmissionsWithRemarksOrReturnedForCorrection)
+                {
+                    <li>
+                        <a asp-action="ApplicationForAdmissionEdit" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">@applicationForAdmission.ApplicationForAdmissionFullName - @applicationForAdmission.Remark</a>
+                    </li>
+                }
+                @foreach (var abiturientIndividualAchievment in abiturientIndividualAchievmentsWithRemarksOrReturnedForCorrection)
+                {
+                    <li>
+                        <a asp-action="AbiturientIndividualAchievmentEdit" asp-route-abiturientIndividualAchievmentId="@abiturientIndividualAchievment.AbiturientIndividualAchievmentId">@abiturientIndividualAchievment.AbiturientIndividualAchievmentType.AbiturientIndividualAchievmentTypeName - @abiturientIndividualAchievment.Remark</a>
+                    </li>
+                }
+                @foreach (var admissionPrivilege in abiturientAdmissionPrivilegesWithRemarksOrReturnedForCorrection)
+                {
+                    <li>
+                        <a asp-action="AbiturientAdmissionPrivilegeEdit" asp-route-abiturientAdmissionPrivilegeId="@admissionPrivilege.AdmissionPrivilegeId">@admissionPrivilege.ApplicationForAdmission.ApplicationForAdmissionFullName - @admissionPrivilege.AdmissionPrivilegeType.AdmissionPrivilegeTypeName - @admissionPrivilege.Remark</a>
+                    </li>
+                }
+            </ol>
+        </div>
+    </div>
+}
+
+
+
 @*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*@
 
 <ul class="nav nav-tabs" id="myTab">
@@ -64,7 +127,7 @@
         <br />
         @if (passport.RowStatusId != (int)RowStatusEnum.Confirmed)
         {
-            <a asp-action="ChangePassportData" class="btn btn-primary">Изменить паспортные данные</a>            
+            <a asp-action="ChangePassportData" class="btn btn-primary">Изменить паспортные данные</a>
         }
 
         <table class="table table-hover">
@@ -458,7 +521,7 @@
 
         <table class="table table-hover">
             <thead>
-                <tr>                    
+                <tr>
                     <th>Вид льготы</th>
                     <th>Скан-копия подтверждающего документа</th>
                     <th>Статус</th>
@@ -468,7 +531,7 @@
             </thead>
             <tbody>
                 @if (abiturient.ApplicationForAdmissions == null ||
-                abiturient.ApplicationForAdmissions.Count() == 0)
+              abiturient.ApplicationForAdmissions.Count() == 0)
                 {
                     <tr>
                         <td colspan="5" class="text-center">
@@ -478,7 +541,7 @@
                 }
                 else
                 {
-                    
+
                     foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions)
                     {
                         <tr>
@@ -488,57 +551,57 @@
                         </tr>
 
                         <tr>
-                                @if (applicationForAdmission.AdmissionPrivileges == null || applicationForAdmission.AdmissionPrivileges.Count == 0)
+                            @if (applicationForAdmission.AdmissionPrivileges == null || applicationForAdmission.AdmissionPrivileges.Count == 0)
+                            {
+                                <td colspan="5" class="text-center">
+                                    Льготы для поступления отсутствуют
+                                </td>
+                            }
+                            else
+                            {
+                                foreach (var admissionPrivilege in applicationForAdmission.AdmissionPrivileges)
                                 {
-                                    <td colspan="5" class="text-center">
-                                        Льготы для поступления отсутствуют
+                                    var rowStatus = admissionPrivilege.RowStatus;
+                                    <td>@admissionPrivilege.AdmissionPrivilegeType?.AdmissionPrivilegeTypeName</td>
+                                    <td>
+                                        @if (admissionPrivilege.FileModel != null)
+                                        {
+                                            <a href="/@admissionPrivilege.FileModel.Path" target="_blank">Открыть</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-action="LoadAbiturientAdmissionPrivilegeFile"
+                                               asp-route-abiturientAdmissionPrivilegeId="@admissionPrivilege.AdmissionPrivilegeId">Загрузить</a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (rowStatus.RowStatusId == (int)RowStatusEnum.Confirmed)
+                                        {
+                                            <p class="text-primary">Подтверждено</p>
+                                        }
+                                        else if (rowStatus.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                                        {
+                                            <p class="text-danger">Возвращено на доработку</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="text-warning">На проверке</p>
+                                        }
+                                    </td>
+                                    <td>@admissionPrivilege.Remark</td>
+                                    <td>
+                                        @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
+                                        {
+                                            <a class="btn btn-primary btn-block" asp-action="AbiturientAdmissionPrivilegeEdit" asp-route-abiturientAdmissionPrivilegeId="@admissionPrivilege.AdmissionPrivilegeId">Изменить</a>
+                                            <a class="btn btn-danger  btn-block" asp-action="AbiturientAdmissionPrivilegeRemove" asp-route-abiturientAdmissionPrivilegeId="@admissionPrivilege.AdmissionPrivilegeId">Удалить</a>
+                                        }
                                     </td>
                                 }
-                                else
-                                {
-                                    foreach (var admissionPrivilege in applicationForAdmission.AdmissionPrivileges)
-                                    {
-                                        var rowStatus = admissionPrivilege.RowStatus;
-                                        <td>@admissionPrivilege.AdmissionPrivilegeType?.AdmissionPrivilegeTypeName</td>
-                                        <td>
-                                            @if (admissionPrivilege.FileModel != null)
-                                            {
-                                                <a href="/@admissionPrivilege.FileModel.Path" target="_blank">Открыть</a>
-                                            }
-                                            else
-                                            {
-                                                <a asp-action="LoadAbiturientAdmissionPrivilegeFile"
-                                                   asp-route-abiturientAdmissionPrivilegeId="@admissionPrivilege.AdmissionPrivilegeId">Загрузить</a>
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (rowStatus.RowStatusId == (int)RowStatusEnum.Confirmed)
-                                            {
-                                                <p class="text-primary">Подтверждено</p>
-                                            }
-                                            else if (rowStatus.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
-                                            {
-                                                <p class="text-danger">Возвращено на доработку</p>
-                                            }
-                                            else
-                                            {
-                                                <p class="text-warning">На проверке</p>
-                                            }
-                                        </td>
-                                        <td>@admissionPrivilege.Remark</td>
-                                        <td>
-                                            @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
-                                            {
-                                                <a class="btn btn-primary btn-block" asp-action="AbiturientAdmissionPrivilegeEdit"   asp-route-abiturientAdmissionPrivilegeId="@admissionPrivilege.AdmissionPrivilegeId">Изменить</a>
-                                                <a class="btn btn-danger  btn-block" asp-action="AbiturientAdmissionPrivilegeRemove" asp-route-abiturientAdmissionPrivilegeId="@admissionPrivilege.AdmissionPrivilegeId">Удалить</a>
-                                            }
-                                        </td>
-                                }
                             }
-                                
-                            </tr>
-                        }
+
+                        </tr>
                     }
+                }
             </tbody>
         </table>
 

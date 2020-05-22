@@ -1,0 +1,90 @@
+﻿@model List<UserDocument>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Проверка основных документов абитуриентов</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Фильтр</div>
+    <div class="panel-body">
+        <form class="form-inline" asp-action="Index">
+            <div class="form-group">
+                <label for="filterLastNameFragment">Фамилия (фрагмент)</label>
+                <input type="text" name="filterLastNameFragment" value="@ViewBag.filterLastNameFragment" class="form-control" id="filterLastNameFragment" placeholder="Все абитуриенты">
+            </div>
+            <div class="form-group">
+                <label for="filterDocumentType">Тип документа</label>
+                <select name="filterDocumentType" class="form-control" asp-items="ViewBag.UserDocumentTypes">
+                    <option>Все документы</option>                    
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="filterRowStatus">Статус документа</label>
+                <select name="filterRowStatus" class="form-control" asp-items="ViewBag.RowStatuses">
+                    <option>Все статусы</option>
+                </select>
+            </div>
+
+            <input type="hidden" name="isRequestDataImmediately" value="true" />
+            <button type="submit" class="btn btn-default">Применить фильтр</button>
+        </form>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>№ п.п.</th>
+                <th>ФИО подтверждённого абитуриента</th>
+                <th>Загруженный документ</th>
+                <th>Дата/время загрузки</th>
+                <th>Статус</th>
+                <th>Замечания</th>
+                <th>
+                    Действия
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || Model.Count == 0)
+            {
+                <tr><td colspan="7" class="text-center">Введите параметры поиска и нажмите на кнопку "Применить фильтр"</td></tr>
+            }
+            else
+            {
+                int counter = 1;
+
+                foreach (var userDocument in Model.OrderByDescending(ud => ud.FileModel.UploadDate))
+                {
+                    <tr>
+                        <td>@(counter++)</td>
+                        <td>
+                            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@userDocument.AppUser.Id" target="_blank">@userDocument.AppUser.GetFullName</a>
+                        </td>
+                        <td>
+                            <a href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileDataType.FileDataTypeName</a>
+                        </td>
+                        <td>@userDocument.FileModel.UploadDate</td>
+                        <td>@(userDocument.RowStatus?.RowStatusName ?? "-")</td>
+                        <td>@userDocument.Remark</td>
+                        <td>
+                            <a asp-action="Edit"
+                               asp-route-id="@userDocument.UserDocumentId"
+                               asp-route-filterLastNameFragment="@ViewBag.filterLastNameFragment"
+                               asp-route-filterDocumentType="@ViewBag.filterDocumentType"
+                               asp-route-filterRowStatus="@ViewBag.filterRowStatus"
+                               class="btn btn-primary">Редактировать</a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@userDocument.UserDocumentId"
+                               asp-route-filterLastNameFragment="@ViewBag.filterLastNameFragment"
+                               asp-route-filterDocumentType="@ViewBag.filterDocumentType"
+                               asp-route-filterRowStatus="@ViewBag.filterRowStatus"
+                               class="btn btn-danger">Удалить</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

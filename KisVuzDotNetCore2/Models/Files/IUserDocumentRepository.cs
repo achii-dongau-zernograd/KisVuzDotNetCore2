@@ -29,6 +29,12 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="typeOfEducationDocument">Тип документа об образовании</param>
         /// <returns></returns>
         Task<UserDocument> CreateEducationDocumentAsync(string userName, IFormFile uploadedFile, FileDataTypeEnum typeOfEducationDocument);
+        
+        /// <summary>
+        /// Возвращает запрос на выборку всех пользовательских документов
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<UserDocument> GetUserDocuments();
 
         /// <summary>
         /// Загружает на сервер паспорт и
@@ -45,7 +51,7 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="userDocumentId">УИД документа пользователя</param>
         /// <returns></returns>
         Task RemoveUserDocumentAsync(int userDocumentId);
-
+        
         /// <summary>
         /// Проверяет наличие у пользователя документов указанного типа
         /// </summary>
@@ -61,6 +67,14 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="fileDataType"></param>
         /// <returns></returns>
         bool IsLoadedUserDocument(AppUser appUser, FileDataTypeEnum fileDataType);
+        
+        /// <summary>
+        /// Обновляет документ пользователя
+        /// </summary>
+        /// <param name="userDocument"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task UpdateUserDocument(UserDocument userDocument, IFormFile uploadedFile);
 
         /// <summary>
         /// Проверяет наличие у пользователя документов указанной группы типов
@@ -108,7 +122,7 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="appUser"></param>
         /// <returns></returns>
         Task<bool> IsUserEducationDataExistsAsync(AppUser appUser);
-
+        
         /// <summary>
         /// Возвращает запрос на выборку документов об образовании пользователя, не имеющих заполненных сведений
         /// </summary>

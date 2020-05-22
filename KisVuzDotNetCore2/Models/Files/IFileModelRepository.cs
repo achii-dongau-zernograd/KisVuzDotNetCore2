@@ -174,5 +174,13 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="fileModelId"></param>
         /// <returns></returns>
         Task<FileModel> GetFileModelAsync(int? fileModelId);
+        
+        /// <summary>
+        /// Загружает на сервер файл указанного типа
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <param name="fileDataType"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadFileAsync(IFormFile uploadedFile, FileDataTypeEnum fileDataType);
     }
 }

@@ -531,7 +531,8 @@ namespace KisVuzDotNetCore2.Infrastructure
         {
             var dataTypes = _context.FileDataTypes.Where(fdt=>fdt.FileDataTypeGroupId == (int)FileDataTypeGroupEnum.EducationDocuments);
             var dataTypesForAbiturients = dataTypes
-                .Where(fdt => fdt.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
+                .Where(fdt => fdt.FileDataTypeId == (int)FileDataTypeEnum.AttestatObOsnovnomObshemObrazovanii ||
+                              fdt.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
                               fdt.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO ||
                               fdt.FileDataTypeId == (int)FileDataTypeEnum.DiplomVO)
                 .OrderBy(fdt => fdt.FileDataTypeName);
@@ -706,6 +707,34 @@ namespace KisVuzDotNetCore2.Infrastructure
                  "ApplicationForAdmissionId", "ApplicationForAdmissionFullName", selectedId);
         }
 
-        
+        /// <summary>
+        /// Возвращает список типов документов, загружаемых абитуриентами,
+        /// доступных для фильтрации приёмной комиссией при проверке
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAbiturientsUserDocumentTypes(int selectedId = 0)
+        {
+            var data = _context.FileDataTypes
+                .Where(fdt => fdt.FileDataTypeGroupId == (int)FileDataTypeGroupEnum.UserDocuments ||
+                    fdt.FileDataTypeId == (int) FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
+                    fdt.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO ||
+                    fdt.FileDataTypeId == (int)FileDataTypeEnum.DiplomVO)
+                .OrderBy(fdt => fdt.FileDataTypeName);
+            return new SelectList(data,
+                 "FileDataTypeId", "FileDataTypeName", selectedId);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListFileDataTypes(int selectedId)
+        {
+            var data = _context.FileDataTypes.OrderBy(fdt => fdt.FileDataTypeName);
+            return new SelectList(data,
+                 "FileDataTypeId", "FileDataTypeName", selectedId);
+        }
     }
 }

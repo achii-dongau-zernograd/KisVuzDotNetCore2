@@ -209,7 +209,7 @@
         /// </summary>
         SoglasieNaObrabotkuPersonalnihDannih = 58,
         /// <summary>
-        /// Аттестат о среднем общем образовании
+        /// Аттестат о среднем общем образовании (после 11 класса)
         /// </summary>
         AttestatOSrednemObshemObrazovanii = 59,
         /// <summary>
@@ -227,6 +227,10 @@
         /// <summary>
         /// Файл, подтверждающий льготу абитуриента при приёме
         /// </summary>
-        AdmissionPrivilege = 63
+        AdmissionPrivilege = 63,
+        /// <summary>
+        /// Аттестат об основном общем образовании (после 9го класса)
+        /// </summary>
+        AttestatObOsnovnomObshemObrazovanii = 64
     }
 }

@@ -33,7 +33,7 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
         /// <returns></returns>
         public IActionResult Index()
         {
-            var abiturs = _abiturRepository.GetAbiturients();
+            var abiturs = _abiturRepository.GetAbiturients().OrderByDescending(a => a.AppUser.RegisterDateTime);
             
             return View(abiturs.ToList());
         }

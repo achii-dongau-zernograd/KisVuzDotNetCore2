@@ -26,6 +26,14 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListEduNapravlFullNamesOfEduLevel(int? eduLevelId, int selectedId = 0);
+        
+        /// <summary>
+        /// Возвращает список типов документов, загружаемых абитуриентами,
+        /// доступных для фильтрации приёмной комиссией при проверке
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAbiturientsUserDocumentTypes(int selectedId = 0);
 
         /// <summary>
         /// Возвращает список полных наименований
@@ -53,6 +61,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId">УИД выбранного объекта</param>
         /// <returns></returns>
         SelectList GetSelectListEduProfileFullNamesOfMethodicalCommission(IEnumerable<MetodKomissiya> metodKomissii, int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список типов файлов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListFileDataTypes(int selectedId);
 
         /// <summary>
         /// Возвращает список методкомиссий

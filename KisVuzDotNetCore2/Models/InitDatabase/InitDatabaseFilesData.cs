@@ -616,6 +616,20 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = (int)FileDataTypeGroupEnum.AbiturientFiles
                     };
 
+                    FileDataType fileDataType63 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.AdmissionPrivilege,
+                        FileDataTypeName = "Файл, подтверждающий льготу абитуриента при приёме",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.AbiturientFiles
+                    };
+
+                    FileDataType fileDataType64 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.AttestatObOsnovnomObshemObrazovanii,
+                        FileDataTypeName = "Аттестат об основном общем образовании",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.EducationDocuments
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -677,7 +691,9 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType59,
                         fileDataType60,
                         fileDataType61,
-                        fileDataType62
+                        fileDataType62,
+                        fileDataType63,
+                        fileDataType64
                         );
                     await context.SaveChangesAsync();
                 }

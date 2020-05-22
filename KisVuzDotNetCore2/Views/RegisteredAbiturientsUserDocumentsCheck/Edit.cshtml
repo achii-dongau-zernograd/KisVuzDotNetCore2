@@ -1,0 +1,67 @@
+﻿@model KisVuzDotNetCore2.Models.Files.UserDocument
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Редактирование документа пользователя</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="AppUserId" class="control-label"></label>
+                <br />
+                <label class="control-label">
+                    <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.AppUser.Id" target="_blank">@Model.AppUser.GetFullName</a>
+                </label>
+                <span asp-validation-for="AppUserId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FileDataTypeId" class="control-label"></label>
+                <select asp-for="FileDataTypeId" class="form-control" asp-items="ViewBag.FileDataTypes"></select>
+                <span asp-validation-for="FileDataTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label">Загруженный файл</label>
+                <br />
+                <label class="control-label"><a href="/@Model.FileModel.Path">Просмотр</a></label>
+                <span asp-validation-for="FileModelId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Для замены выберите новый файл</label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="RowStatusId" class="control-label"></label>
+                <select asp-for="RowStatusId" class="form-control" asp-items="ViewBag.RowStatuses"></select>
+                <span asp-validation-for="RowStatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label"></label>
+                <input asp-for="Remark" class="form-control" />
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="UserDocumentId" />
+                <input type="hidden" asp-for="AppUserId" />
+
+                <input type="hidden" name="filterLastNameFragment" value="@ViewBag.filterLastNameFragment" />
+                <input type="hidden" name="filterDocumentType"     value="@ViewBag.filterDocumentType" />
+                <input type="hidden" name="filterRowStatus"        value="@ViewBag.filterRowStatus" />
+
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index"
+                   asp-route-filterLastNameFragment="@ViewBag.filterLastNameFragment"
+                   asp-route-filterDocumentType="@ViewBag.filterDocumentType"
+                   asp-route-filterRowStatus="@ViewBag.filterRowStatus"
+                   asp-route-isRequestDataImmediately="true"
+                   class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

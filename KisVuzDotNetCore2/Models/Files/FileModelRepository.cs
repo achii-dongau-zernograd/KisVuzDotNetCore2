@@ -103,6 +103,18 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает на сервер файл указанного типа
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <param name="fileDataType"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadFileAsync(IFormFile uploadedFile, FileDataTypeEnum fileDataType)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile, fileDataType.ToString(), fileDataType);
+            return fileModel;
+        }
+
+        /// <summary>
         /// Создаёт объект FileModel и загружает его в папку www/files
         /// </summary>
         /// <param name="_context"></param>
@@ -114,6 +126,7 @@ namespace KisVuzDotNetCore2.Models.Files
         {
             FileModel fileModel = new FileModel();
             fileModel.ContentType = uploadedFile.ContentType;
+            fileModel.UploadDate = DateTime.Now;
 
             fileModel.Name = name;
             string fileName = await UploadFileToDisk(uploadedFile);
@@ -140,6 +153,7 @@ namespace KisVuzDotNetCore2.Models.Files
 
             return fileModel;
         }
+
 
         private async Task<string> UploadFileToDisk(IFormFile uploadedFile)
         {
@@ -466,6 +480,8 @@ namespace KisVuzDotNetCore2.Models.Files
             {
                 fileModel.ContentType = "application/pdf";
             }
+
+            fileModel.UploadDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
         }

@@ -1,0 +1,63 @@
+﻿@model KisVuzDotNetCore2.Models.Files.UserDocument
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление документа пользователя</h2>
+
+<h3>Вы действительно хотите удалить документ пользователя?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUserId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.GetFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileDataType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileDataType.FileDataTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModelId)
+        </dt>
+        <dd>
+            @if(Model.FileModel == null)
+            {
+                <p>-</p>
+            }
+            else
+            {
+                <a href="/@Model.FileModel.Path" target="_blank">Открыть</a>
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RowStatusId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RowStatus.RowStatusName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="UserDocumentId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index"
+           asp-route-filterLastNameFragment="@ViewBag.filterLastNameFragment"
+           asp-route-filterDocumentType="@ViewBag.filterDocumentType"
+           asp-route-filterRowStatus="@ViewBag.filterRowStatus"
+           asp-route-isRequestDataImmediately="true"
+           class="btn btn-default">Отмена</a>
+    </form>
+</div>

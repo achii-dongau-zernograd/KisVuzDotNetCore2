@@ -218,11 +218,21 @@ namespace KisVuzDotNetCore2.Models.Files
         /// </summary>
         IQueryable<UserDocument> UserDocuments => _context.UserDocuments
             .Include(ud => ud.AppUser)
+                .ThenInclude(ud => ud.Abiturient)
             .Include(ud => ud.FileModel.FileToFileTypes)
             .Include(ud => ud.FileDataType)
             .Include(ud => ud.RowStatus)
             .Include(ud => ud.UserEducations)
             .Include(ud => ud.PassportData);
+
+        /// <summary>
+        /// Возвращает запрос на выборку всех пользовательских документов со связями
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<UserDocument> GetUserDocuments()
+        {
+            return UserDocuments;
+        }
 
         /// <summary>
         /// Возвращает документ пользователя
@@ -381,6 +391,46 @@ namespace KisVuzDotNetCore2.Models.Files
             throw new NotImplementedException();
         }
 
-        
+        /// <summary>
+        /// Обновляет документ пользователя
+        /// </summary>
+        /// <param name="userDocument"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task UpdateUserDocument(UserDocument userDocument, IFormFile uploadedFile)
+        {
+            if (userDocument == null) throw new NullReferenceException();
+            var entry = await GetUserDocumentAsync(userDocument.UserDocumentId);
+
+            entry.AppUserId      = userDocument.AppUserId;            
+            entry.RowStatusId    = userDocument.RowStatusId;
+            entry.Remark         = userDocument.Remark;
+
+            if(userDocument.FileDataTypeId != entry.FileDataTypeId)
+            {
+                entry.FileDataTypeId = userDocument.FileDataTypeId;
+                foreach (var fileToFileType in entry.FileModel.FileToFileTypes)
+                {
+                    fileToFileType.FileDataTypeId = userDocument.FileDataTypeId;
+                }
+            }
+            
+            if (uploadedFile != null)
+            {
+                if(entry.FileModelId == 0)
+                {
+                    var newFileModel = await _fileModelRepository.UploadFileAsync(uploadedFile, (FileDataTypeEnum)entry.FileDataTypeId);
+                }
+                else
+                {
+                    await _fileModelRepository.ReloadFileAsync(entry.FileModelId, uploadedFile);
+                }
+                                
+            }
+
+            _context.UserDocuments.Update(entry);
+
+            await _context.SaveChangesAsync();
+        }
     }
 }
