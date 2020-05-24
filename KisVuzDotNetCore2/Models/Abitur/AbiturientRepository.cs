@@ -177,7 +177,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
                         .ThenInclude(fm => fm.FileToFileTypes)
                             .ThenInclude(ftf => ftf.FileDataType)
                 // Паспортные данные пользователя
-                .Include(a => a.AppUser.PassportData.Address)
+                .Include(a => a.AppUser.PassportData.Address)                
                 // Личные данные пользователя
                 .Include(a => a.AppUser.Gender)
                 .Include(a => a.AppUser.MilitaryServiceStatus)
@@ -225,7 +225,15 @@ namespace KisVuzDotNetCore2.Models.Abitur
                     .ThenInclude(afa => afa.AdmissionPrivileges)
                         .ThenInclude(ap => ap.FileModel)
                             .ThenInclude(fm => fm.FileToFileTypes)
-                                .ThenInclude(ftft => ftft.FileDataType);
+                                .ThenInclude(ftft => ftft.FileDataType)
+                // Мероприятия СДО
+                .Include(a => a.AppUser)
+                    .ThenInclude(au => au.AppUserLmsEvents)
+                        .ThenInclude(aue => aue.AppUserLmsEventUserRole)
+                .Include(a => a.AppUser)
+                    .ThenInclude(au => au.AppUserLmsEvents)
+                        .ThenInclude(aue => aue.LmsEvent.LmsEventType.LmsEventTypeGroup)
+                ;
             return abiturs;
         }
 

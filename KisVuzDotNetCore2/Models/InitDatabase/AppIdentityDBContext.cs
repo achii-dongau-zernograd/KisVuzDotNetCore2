@@ -105,6 +105,26 @@ namespace KisVuzDotNetCore2.Models
         /// Сопоставления наборов заданий СДО с событиями СДО
         /// </summary>
         public DbSet<LmsEventLmsTaskSet> LmsEventLmsTaskSets { get; set; }
+
+        /// <summary>
+        /// Пользователи, участвующие в мероприятиях СДО
+        /// </summary>
+        public DbSet<AppUserLmsEvent> AppUserLmsEvents { get; set; }
+
+        /// <summary>
+        /// Справочник ролей пользователей, участвующих в мероприятиях СДО
+        /// </summary>
+        public DbSet<AppUserLmsEventUserRole> AppUserLmsEventUserRoles { get; set; }
+
+        /// <summary>
+        /// Дополнительные материалы к мероприятиям СДО
+        /// </summary>
+        public DbSet<LmsEventAdditionalMaterial> LmsEventAdditionalMaterials { get; set; }
+
+        /// <summary>
+        /// Чат мероприятия СДО
+        /// </summary>
+        public DbSet<LmsEventChatMessage> LmsEventChatMessages { get; set; }
         #endregion
 
         #region Образовательная деятельность (Education)
@@ -590,10 +610,6 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<AdmissionPrivilege> AdmissionPrivileges { get; set; }
 
-
-
-
-
         /// <summary>
         /// Типы индивидуальных достижений абитуриентов
         /// </summary>
@@ -602,7 +618,12 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Назначения абитуриентам мероприятий системы дистанционного образования
         /// </summary>
-        public DbSet<AbiturientLmsEvent> AbiturientLmsEvents { get; set; }
+        //public DbSet<AbiturientLmsEvent> AbiturientLmsEvents { get; set; }
+
+
+
+
+
 
         /// <summary>
         /// Таблица 24. Информация о количестве мест для приёма на обучение
@@ -1211,6 +1232,8 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseMilitaryServiceStatuses.CreateMilitaryServiceStatuses(serviceProvider, configuration);
 
             await InitDatabaseAdmissionPrivilegeTypes.CreateAdmissionPrivilegeTypes(serviceProvider, configuration);
+
+            await InitDatabaseAppUserLmsEventUserRoles.CreateAppUserLmsEventUserRoles(serviceProvider, configuration);
         }        
     
     }

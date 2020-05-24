@@ -1,6 +1,7 @@
 ﻿using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.LMS;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Students;
@@ -241,5 +242,10 @@ namespace KisVuzDotNetCore2.Models
         /// Сведения об образовании пользователя
         /// </summary>
         public List<UserEducation> UserEducations { get; set; }
+
+        /// <summary>
+        /// Список привязок пользователя к мероприятиям СДО
+        /// </summary>
+        public List<AppUserLmsEvent> AppUserLmsEvents { get; set; }
     }
 }

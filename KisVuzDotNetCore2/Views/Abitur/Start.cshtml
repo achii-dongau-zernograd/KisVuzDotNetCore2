@@ -610,10 +610,13 @@
     @*///////////////////////////////////////////////////// Вступительные испытания /////////////////////////////////////////////////////*@
     <div class="tab-pane @entranceTestsClass" id="entranceTests">
         <br />
-        <p>Вступительные испытания</p>
-        @*@foreach (var entranceTest in abiturient.EntranceTests)
+        <ol>
+            @foreach (var entranceTest in abiturient.AppUser.AppUserLmsEvents)
             {
-                <p></p>
-            }*@
+            <li>
+                @entranceTest.LmsEvent.DateTimeStart - @entranceTest.LmsEvent.Description
+            </li>
+            }
+        </ol>        
     </div>
 </div>

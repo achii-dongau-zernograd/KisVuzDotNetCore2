@@ -1,0 +1,39 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.AppUserLmsEvent
+
+@{
+    ViewData["Title"] = "LmsEventParticipantsDeleteParticipant";
+}
+
+<h2>Удаление участника мероприятия</h2>
+
+<h3>Вы действительно хотите удалить участника мероприятия?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUserId)
+        </dt>
+        <dd>
+            <a asp-controller="UserProfile" asp-action="Index" asp-route-Id="@Model.AppUserId" target="_blank">@Model.AppUser.GetFullName</a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUserLmsEventUserRoleId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUserLmsEventUserRole.AppUserLmsEventUserRoleName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LmsEventId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LmsEvent.Description)
+        </dd>
+    </dl>
+    
+    <form asp-action="LmsEventParticipantsDeleteParticipant">
+        <input type="hidden" asp-for="AppUserLmsEventId" />
+        <input type="hidden" asp-for="LmsEventId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="LmsEventParticipants" asp-route-lmsEventId="@Model.LmsEventId" class="btn btn-default">Отмена</a>
+    </form>
+</div>

@@ -39,11 +39,17 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// Индивидуальные достижения абитуриента
         /// </summary>
         public List<AbiturientIndividualAchievment> AbiturientIndividualAchievments { get; set; }
-
+        
         /// <summary>
-        /// Список назначенных мероприятий СДО абитуриента
-        /// (в т.ч. вступительных испытаний)
+        /// Возвращает строку описания абитуриента, включающую
+        /// ФИО, дату рождения и email
         /// </summary>
-        public List<AbiturientLmsEvent> AbiturientLmsEvents { get; set; }
+        public string AbiturientFioBirthdayEmail
+        {
+            get
+            {
+                return $"{AppUser?.GetFullName ?? " - "}, {(AppUser?.Birthdate != null ? ((DateTime)AppUser?.Birthdate).ToString("d") : " - ")}, {AppUser?.Email ?? " - "}";
+            }
+        }
     }
 }

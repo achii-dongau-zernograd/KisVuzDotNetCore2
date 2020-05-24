@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
@@ -735,6 +736,39 @@ namespace KisVuzDotNetCore2.Infrastructure
             var data = _context.FileDataTypes.OrderBy(fdt => fdt.FileDataTypeName);
             return new SelectList(data,
                  "FileDataTypeId", "FileDataTypeName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список типов мероприятий СДО
+        /// для указанной группы типов мероприятий СДО
+        /// </summary>
+        /// <param name="lmsEventTypeGroupId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListLmsEventTypes(int lmsEventTypeGroupId, int selectedId = 0)
+        {
+            var data = _context.LmsEventTypes
+                .Where(t => t.LmsEventTypeGroupId == lmsEventTypeGroupId)
+                .OrderBy(t => t.LmsEventTypeName);
+
+            return new SelectList(data,
+                 "LmsEventTypeId", "LmsEventTypeName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список абитуриентов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAppUsersAbiturientsConfirmed(string selectedId = "")
+        {
+            var data = _context.Abiturients
+                .Include(a => a.AppUser)
+                .Where(a => a.AbiturientStatusId == (int) AbiturientStatusEnum.ConfirmedAbiturient)
+                .OrderBy(a => a.AbiturientFioBirthdayEmail);
+
+            return new SelectList(data,
+                 "AppUser.Id", "AbiturientFioBirthdayEmail", selectedId);
         }
     }
 }

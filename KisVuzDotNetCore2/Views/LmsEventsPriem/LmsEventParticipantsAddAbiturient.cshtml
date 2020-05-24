@@ -1,0 +1,28 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.AppUserLmsEvent
+
+@{
+    ViewData["Title"] = "Добавление";
+}
+
+<h2>Добавление участника мероприятия</h2>
+
+<h4>@Model.LmsEvent.DateTimeStart</h4>
+<h4>@Model.LmsEvent.Description</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="LmsEventParticipantsAddAbiturient">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AppUserId" class="control-label"></label>
+                <select asp-for="AppUserId" class ="form-control" asp-items="ViewBag.AppUsersAbiturients"></select>
+            </div>            
+            <div class="form-group">
+                <input type="hidden" asp-for="LmsEventId" />
+                <input type="hidden" asp-for="AppUserLmsEventUserRoleId" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="LmsEventParticipants" asp-route-lmsEventId="@Model.LmsEventId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

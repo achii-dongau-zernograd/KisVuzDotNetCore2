@@ -1,0 +1,89 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.LMS.LmsEvent>
+
+@{
+    ViewData["Title"] = "Расписание";
+}
+
+<h2>Расписание мероприятий, проводимых приёмной комиссией</h2>
+
+<p>
+    <a asp-action="CreateLmsEvent" class="btn btn-primary">Запланировать новое мероприятие</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTimeStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LmsEventTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WebLink)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsLmsEventStartedManual)
+            </th>
+            <th>Участники</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="6" class="text-center">Запланированные мероприятия отсутствуют</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTimeStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LmsEventType.LmsEventTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WebLink)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsLmsEventStartedManual)
+                    </td>
+                    <td>
+                        @{
+                            string abiturientLmsEventParticipantsText = "Добавить участников";
+                            if (item.AppUserLmsEvents != null && item.AppUserLmsEvents.Count > 0)
+                            {
+                                abiturientLmsEventParticipantsText =  $"Редактировать список участников ({item.AppUserLmsEvents.Count.ToString()})";
+                            }
+
+                            <a asp-action="LmsEventParticipants"
+                               asp-route-lmsEventId="@item.LmsEventId">@abiturientLmsEventParticipantsText</a>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="EditLmsEvent" asp-route-lmsEventId="@item.LmsEventId">Редактировать</a> |
+                        <a asp-action="DetailsLmsEvent" asp-route-lmsEventId="@item.LmsEventId">Сведения</a> |
+                        <a asp-action="DeleteLmsEvent" asp-route-lmsEventId="@item.LmsEventId" class="text-danger">Удалить</a>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

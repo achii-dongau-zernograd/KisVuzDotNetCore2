@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.LMS;
 using KisVuzDotNetCore2.Models.Struct;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -34,6 +35,14 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListAbiturientsUserDocumentTypes(int selectedId = 0);
+        
+        /// <summary>
+        /// Возвращает список типов событий СДО
+        /// для указанной группы типов событий
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListLmsEventTypes(int lmsEventTypeGroupId, int selectedId = 0);
 
         /// <summary>
         /// Возвращает список полных наименований
@@ -82,6 +91,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <returns></returns>
         SelectList GetSelectListStudentGroups(int selectedId = 0);
         
+        /// <summary>
+        /// Возвращает список пользователей, являющихся подтверждёнными абитуриентов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAppUsersAbiturientsConfirmed(string selectedId = "");
+
         /// <summary>
         /// Возвращает список статусов пользователей
         /// </summary>

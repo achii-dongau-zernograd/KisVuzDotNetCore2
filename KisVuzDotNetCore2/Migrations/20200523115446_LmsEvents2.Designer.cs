@@ -4,14 +4,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200523115446_LmsEvents2")]
+    partial class LmsEvents2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,6 +82,26 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("AbiturientIndividualAchievmentTypeId");
 
                     b.ToTable("AbiturientIndividualAchievmentTypes");
+                });
+
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.AbiturientLmsEvent", b =>
+                {
+                    b.Property<int>("AbiturientLmsEventId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AbiturientId");
+
+                    b.Property<bool>("IsAccepted");
+
+                    b.Property<int>("LmsEventId");
+
+                    b.HasKey("AbiturientLmsEventId");
+
+                    b.HasIndex("AbiturientId");
+
+                    b.HasIndex("LmsEventId");
+
+                    b.ToTable("AbiturientLmsEvents");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.AbiturientStatus", b =>
@@ -1497,7 +1520,9 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("AppUserLmsEventUserRoleId");
 
-                    b.Property<int>("LmsEventId");
+                    b.Property<string>("LmsEventId");
+
+                    b.Property<int?>("LmsEventId1");
 
                     b.HasKey("AppUserLmsEventId");
 
@@ -1505,7 +1530,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasIndex("AppUserLmsEventUserRoleId");
 
-                    b.HasIndex("LmsEventId");
+                    b.HasIndex("LmsEventId1");
 
                     b.ToTable("AppUserLmsEvents");
                 });
@@ -4014,6 +4039,19 @@ namespace KisVuzDotNetCore2.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.AbiturientLmsEvent", b =>
+                {
+                    b.HasOne("KisVuzDotNetCore2.Models.Abitur.Abiturient", "Abiturient")
+                        .WithMany("AbiturientLmsEvents")
+                        .HasForeignKey("AbiturientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KisVuzDotNetCore2.Models.LMS.LmsEvent", "LmsEvent")
+                        .WithMany("AbiturientLmsEvents")
+                        .HasForeignKey("LmsEventId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.AdmissionPrivilege", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.Abitur.AdmissionPrivilegeType", "AdmissionPrivilegeType")
@@ -4653,8 +4691,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasOne("KisVuzDotNetCore2.Models.LMS.LmsEvent", "LmsEvent")
                         .WithMany("AppUserLmsEvents")
-                        .HasForeignKey("LmsEventId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("LmsEventId1");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.LMS.LmsEvent", b =>

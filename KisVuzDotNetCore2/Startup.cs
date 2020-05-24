@@ -7,6 +7,7 @@ using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.LMS;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Students;
@@ -71,6 +72,8 @@ namespace KisVuzDotNetCore2
             services.AddTransient<IPopulatedLocalityRepository, PopulatedLocalityRepository>();
             services.AddTransient<IApplicationForAdmissionRepository, ApplicationForAdmissionRepository>();
             services.AddTransient<IAdmissionPrivilegeRepository, AdmissionPrivilegeRepository>();
+            services.AddTransient<ILmsEventsRepository, LmsEventsRepository>();
+            services.AddTransient<IAppUserLmsEventsRepository, AppUserLmsEventsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

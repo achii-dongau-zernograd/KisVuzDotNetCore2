@@ -1,0 +1,47 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.LmsEvent
+
+@{
+    ViewData["Title"] = "Участники";
+}
+
+<h2>Участники мероприятия</h2>
+<h4>@Model.DateTimeStart</h4>
+<h4>@Model.Description</h4>
+
+<p>
+    <a asp-action="LmsEventParticipantsAddAbiturient" asp-route-lmsEventId="@Model.LmsEventId" class="btn btn-primary">Добавить абитуриента</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Пользователь
+            </th>            
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model.AppUserLmsEvents.GroupBy(a => a.AppUserLmsEventUserRole.AppUserLmsEventUserRoleName))
+        {
+            <tr>
+                <td colspan="2" class="text-center">Роль пользователя: @group.Key</td>
+            </tr>
+            foreach (var item in group.OrderBy(g=>g.AppUser.GetFullName))
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUser.Id" target="_blank">@item.AppUser.GetFullName</a>
+                    </td>                    
+                    <td>
+                        <a asp-action="LmsEventParticipantsDeleteParticipant" asp-route-appUserLmsEventId="@item.AppUserLmsEventId" class="btn btn-danger">Удалить участника</a>
+                    </td>
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Назад</a>
+</div>
