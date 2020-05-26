@@ -1,0 +1,62 @@
+﻿@model KisVuzDotNetCore2.Models.Files.DocumentSample
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<h2>Редактирование бланка или примера заполнения документа</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DocumentSampleId" />
+            <div class="form-group">
+                <label asp-for="FileDataTypeId" class="control-label"></label>
+                <select asp-for="FileDataTypeId" class="form-control" asp-items="ViewBag.FileDataTypes"></select>
+                <span asp-validation-for="FileDataTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DocumentSampleName" class="control-label"></label>
+                <input asp-for="DocumentSampleName" class="form-control" />
+                <span asp-validation-for="DocumentSampleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsBlank" /> @Html.DisplayNameFor(model => model.IsBlank)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">                    
+                    @if (Model.FileModel != null)
+                    {
+                        <text>
+                            Укажите ссылку на существующий ресурс или выберите новый файл для замены
+                            <a href="/@Model.FileModel.Path" target="_blank">загруженного</a>
+                        </text>
+                    }
+                    else
+                    {
+                        <text>Укажите ссылку на существующий ресурс или выберите новый файл для загрузки</text>
+                    }
+                </label>
+                <input asp-for="Link" class="form-control" />                
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="EduProfileId" class="control-label"></label>
+                <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfiles">
+                    <option value="null">Документ не относится к направленностям подготовки</option>
+                </select>
+                <span asp-validation-for="EduProfileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

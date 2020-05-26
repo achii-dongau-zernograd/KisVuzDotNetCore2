@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200526054557_ConsentToEnrollment")]
+    partial class ConsentToEnrollment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,8 +184,6 @@ namespace KisVuzDotNetCore2.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("ApplicationForAdmissionId");
-
-                    b.Property<DateTime>("ChangingDateTime");
 
                     b.Property<int?>("FileModelId");
 

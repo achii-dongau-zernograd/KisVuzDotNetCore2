@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200525143710_DocumentSamples")]
+    partial class DocumentSamples
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,32 +176,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasIndex("RowStatusId");
 
                     b.ToTable("ApplicationForAdmissions");
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.ConsentToEnrollment", b =>
-                {
-                    b.Property<int>("ConsentToEnrollmentId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ApplicationForAdmissionId");
-
-                    b.Property<DateTime>("ChangingDateTime");
-
-                    b.Property<int?>("FileModelId");
-
-                    b.Property<string>("Remark");
-
-                    b.Property<int>("RowStatusId");
-
-                    b.HasKey("ConsentToEnrollmentId");
-
-                    b.HasIndex("ApplicationForAdmissionId");
-
-                    b.HasIndex("FileModelId");
-
-                    b.HasIndex("RowStatusId");
-
-                    b.ToTable("ConsentToEnrollments");
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.EduNapravlEduForm", b =>
@@ -4117,23 +4092,6 @@ namespace KisVuzDotNetCore2.Migrations
                         .WithMany()
                         .HasForeignKey("QuotaTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
-                        .WithMany()
-                        .HasForeignKey("RowStatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("KisVuzDotNetCore2.Models.Abitur.ConsentToEnrollment", b =>
-                {
-                    b.HasOne("KisVuzDotNetCore2.Models.Abitur.ApplicationForAdmission", "ApplicationForAdmission")
-                        .WithMany()
-                        .HasForeignKey("ApplicationForAdmissionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
-                        .WithMany()
-                        .HasForeignKey("FileModelId");
 
                     b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
                         .WithMany()

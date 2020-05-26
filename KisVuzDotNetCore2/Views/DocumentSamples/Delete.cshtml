@@ -1,0 +1,63 @@
+﻿@model KisVuzDotNetCore2.Models.Files.DocumentSample
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление бланка или примера заполнения документа</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DocumentSampleName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DocumentSampleName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsBlank)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsBlank)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfileId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileDataTypeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileDataType.FileDataTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModelId)
+        </dt>
+        <dd>
+            @if(Model.FileModel != null)
+            {
+                <a href="/@Model.FileModel.Path" target="_blank">Открыть</a>
+            }
+            else
+            {
+                <text>-</text>
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Link)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Link)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="DocumentSampleId" />
+        <input type="submit" value="Удаление" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

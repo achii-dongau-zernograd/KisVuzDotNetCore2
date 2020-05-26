@@ -14,6 +14,7 @@
     string abiturientAchievmentsClass = "";
     string admissionPrivilegesClass = "";
     string applicationForAdmissionsClass = "";
+    string consentToEnrollmentsClass = "";
     string entranceTestsClass = "";
     string personalInformationClass = "";
 
@@ -36,6 +37,9 @@
             break;
         case "applicationForAdmissions":
             applicationForAdmissionsClass = "active";
+            break;
+        case "consentToEnrollments":
+            consentToEnrollmentsClass = "active";
             break;
         case "entranceTests":
             entranceTestsClass = "active";
@@ -116,6 +120,7 @@
     <li class="@passportDataClass"><a href="#passportData" data-toggle="tab">Паспортные данные</a></li>
     <li class="@personalInformationClass"><a href="#personalInformation" data-toggle="tab">Личные сведения</a></li>
     <li class="@applicationForAdmissionsClass"><a href="#applicationForAdmissions" data-toggle="tab">Заявления о приёме</a></li>
+    <li class="@consentToEnrollmentsClass"><a href="#consentToEnrollments" data-toggle="tab">Заявления о согласии на зачисление</a></li>
     <li class="@abiturientAchievmentsClass"><a href="#abiturientAchievments" data-toggle="tab">Индивидуальные достижения</a></li>
     <li class="@admissionPrivilegesClass"><a href="#abiturientAdmissionPrivileges" data-toggle="tab">Льготы</a></li>
     <li class="@entranceTestsClass"><a href="#entranceTests" data-toggle="tab">Вступительные испытания</a></li>
@@ -444,6 +449,102 @@
         </table>
     </div>
 
+
+    @*///////////////////////////////////////////////////////////////// Заявления о согласии на зачисление ///////////////////////////////////////////////////////////*@
+    <div class="tab-pane @consentToEnrollmentsClass" id="consentToEnrollments">
+        <br />
+        
+        <table class="table table-hover">
+            <thead>
+                <tr>                    
+                    <th>Скан-копия подтверждающего документа</th>
+                    <th>Статус</th>
+                    <th>Замечания</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (abiturient.ApplicationForAdmissions == null ||
+            abiturient.ApplicationForAdmissions.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            Заявления на поступление не оформлены
+                        </td>
+                    </tr>
+                }
+                else
+                {
+
+                    foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions)
+                    {
+                        <tr>
+                            <td colspan="3" class="">
+                                Заявление о приёме: @applicationForAdmission.EduProfile.GetEduProfileFullName - @applicationForAdmission.QuotaType.QuotaTypeName
+                            </td>
+                            <td>
+                                <a asp-action="CreateAbiturientConsentToEnrollment" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId" class="btn btn-primary btn-block">Добавить заявление о согласии на зачисление</a>
+                            </td>
+                        </tr>
+
+                        @if (applicationForAdmission.ConsentToEnrollments == null || applicationForAdmission.ConsentToEnrollments.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    Заявления о согласии на зачисление отсутствуют
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var consentToEnrollment in applicationForAdmission.ConsentToEnrollments)
+                            {
+                                var rowStatus = consentToEnrollment.RowStatus;
+                                <tr>
+                                    <td>
+                                        @if (consentToEnrollment.FileModel != null)
+                                        {
+                                            <a href="/@consentToEnrollment.FileModel.Path" target="_blank">Открыть</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-action="LoadConsentToEnrollmentFile"
+                                               asp-route-abiturientAdmissionPrivilegeId="@consentToEnrollment.ConsentToEnrollmentId">Загрузить</a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (rowStatus.RowStatusId == (int)RowStatusEnum.Confirmed)
+                                        {
+                                            <p class="text-primary">Подтверждено</p>
+                                        }
+                                        else if (rowStatus.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                                        {
+                                            <p class="text-danger">Возвращено на доработку</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="text-warning">На проверке</p>
+                                        }
+                                    </td>
+                                    <td>@consentToEnrollment.Remark</td>
+                                    <td>
+                                        @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
+                                        {
+                                            <a class="btn btn-primary btn-block" asp-action="AbiturientConsentToEnrollmentEdit" asp-route-abiturientConsentToEnrollmentId="@consentToEnrollment.ConsentToEnrollmentId">Изменить</a>
+                                            <a class="btn btn-danger  btn-block" asp-action="AbiturientConsentToEnrollmentRemove" asp-route-abiturientConsentToEnrollmentId="@consentToEnrollment.ConsentToEnrollmentId">Удалить</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+
     @*//////////////////////////////////////////////////////// Индивидуальные достижения /////////////////////////////////////////////////*@
     <div class="tab-pane @abiturientAchievmentsClass" id="abiturientAchievments">
         <br />
@@ -531,7 +632,7 @@
             </thead>
             <tbody>
                 @if (abiturient.ApplicationForAdmissions == null ||
-              abiturient.ApplicationForAdmissions.Count() == 0)
+             abiturient.ApplicationForAdmissions.Count() == 0)
                 {
                     <tr>
                         <td colspan="5" class="text-center">
@@ -546,7 +647,7 @@
                     {
                         <tr>
                             <td colspan="5" class="">
-                                Заявление о приёме: @applicationForAdmission.EduProfile.GetEduProfileFullName
+                                Заявление о приёме: @applicationForAdmission.EduProfile.GetEduProfileFullName - @applicationForAdmission.QuotaType.QuotaTypeName
                             </td>
                         </tr>
 
@@ -613,10 +714,10 @@
         <ol>
             @foreach (var entranceTest in abiturient.AppUser.AppUserLmsEvents)
             {
-            <li>
-                @entranceTest.LmsEvent.DateTimeStart - @entranceTest.LmsEvent.Description
-            </li>
+                <li>
+                    @entranceTest.LmsEvent.DateTimeStart - @entranceTest.LmsEvent.Description
+                </li>
             }
-        </ol>        
+        </ol>
     </div>
 </div>

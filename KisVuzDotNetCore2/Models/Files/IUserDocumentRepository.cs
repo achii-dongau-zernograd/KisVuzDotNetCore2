@@ -152,7 +152,6 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="appUser"></param>
         /// <returns></returns>
         Task RemoveUserDocumentsAsync(AppUser appUser);
-
-        
+                
     }
 }

@@ -42,6 +42,7 @@ namespace KisVuzDotNetCore2.Controllers
         private readonly IFileModelRepository _fileModelRepository;
         private readonly IUserDocumentRepository _userDocumentRepository;
         private readonly ISelectListRepository _selectListRepository;
+        private readonly IDocumentSamplesRepository _documentSamplesRepository;
 
         public AbiturController(AppIdentityDBContext context,
             UserManager<AppUser> userManager,
@@ -49,7 +50,8 @@ namespace KisVuzDotNetCore2.Controllers
             IAbiturientRepository abiturRepository,
             IFileModelRepository fileModelRepository,
             IUserDocumentRepository userDocumentRepository,
-            ISelectListRepository selectListRepository)
+            ISelectListRepository selectListRepository,
+            IDocumentSamplesRepository documentSamplesRepository)
         {
             _context = context;
             _userManager = userManager;
@@ -58,6 +60,7 @@ namespace KisVuzDotNetCore2.Controllers
             _fileModelRepository = fileModelRepository;
             _userDocumentRepository = userDocumentRepository;
             _selectListRepository = selectListRepository;
+            _documentSamplesRepository = documentSamplesRepository;
         }
 
         public IActionResult Index()
@@ -84,7 +87,8 @@ namespace KisVuzDotNetCore2.Controllers
             // Проверяем наличие у абитуриента загруженного заявления
             // на обработку персональных данных
             if (!_abiturRepository.IsLoadedFileApplicationForProcessingPersonalData(abiturient))
-                return View("LoadFileApplicationForProcessingPersonalData");                        
+                //return View("LoadFileApplicationForProcessingPersonalData");
+                return RedirectToAction(nameof(LoadFileApplicationForProcessingPersonalData));
 
             // Проверяем наличие у абитуриента загруженного документа об образовании
             if (!_abiturRepository.IsLoadedFileEducationDocuments(abiturient))
@@ -315,6 +319,9 @@ namespace KisVuzDotNetCore2.Controllers
         {
             var applicationForAdmission = await _abiturRepository.GetApplicationForAdmissionAsync(User.Identity.Name, applicationForAdmissionId);
 
+            var documentSamples = _documentSamplesRepository.GetDocumentSamples(applicationForAdmission.EduProfileId, FileDataTypeEnum.ApplicationForAdmission);
+            ViewBag.DocumentSamples = await documentSamples.ToListAsync();
+
             return View(applicationForAdmission);
         }
 
@@ -499,6 +506,66 @@ namespace KisVuzDotNetCore2.Controllers
         }
         #endregion
 
+        #region Заявления о согласии на зачисление
+        public async Task<IActionResult> CreateAbiturientConsentToEnrollment(int applicationForAdmissionId)
+        {
+            var applicationForAdmission = await _abiturRepository.GetApplicationForAdmissionAsync(User.Identity.Name, applicationForAdmissionId);
+
+            var documentSamples = _documentSamplesRepository.GetDocumentSamples(applicationForAdmission.EduProfileId, FileDataTypeEnum.ConsentToEnrollment);
+            ViewBag.DocumentSamples = await documentSamples.ToListAsync();
+
+            var consentToEnrollment = new ConsentToEnrollment
+            {
+                ApplicationForAdmission = applicationForAdmission,
+                ApplicationForAdmissionId = applicationForAdmission.ApplicationForAdmissionId
+            };
+
+            return View(consentToEnrollment);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAbiturientConsentToEnrollment(ConsentToEnrollment consentToEnrollment,
+            IFormFile uploadedFile)
+        {
+            await _abiturRepository.CreateConsentToEnrollmentAsync(User.Identity.Name, consentToEnrollment, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "consentToEnrollments" });
+        }
+
+        /// <summary>
+        /// Редактирование заявления о согласии на зачисление абитуриента
+        /// </summary>
+        /// <param name="abiturientConsentToEnrollmentId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> AbiturientConsentToEnrollmentEdit(int abiturientConsentToEnrollmentId)
+        {
+            if (abiturientConsentToEnrollmentId == 0)
+                return NotFound();
+
+            var consentToEnrollment = await _abiturRepository.GetConsentToEnrollment(User.Identity.Name, abiturientConsentToEnrollmentId);
+            if (consentToEnrollment == null)
+                return NotFound();
+
+            ViewBag.ApplicationForAdmissions = _selectListRepository
+                .GetSelectListApplicationForAdmissions(consentToEnrollment.ApplicationForAdmission.AbiturientId,
+                consentToEnrollment.ApplicationForAdmissionId);
+
+            return View(consentToEnrollment);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AbiturientConsentToEnrollmentEdit(ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile)
+        {
+            if (consentToEnrollment == null)
+                return NotFound();
+
+            await _abiturRepository.UpdateConsentToEnrollment(User.Identity.Name, consentToEnrollment, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "consentToEnrollments" });
+        }
+        #endregion
 
         #region Паспортные данные
         public async Task<IActionResult> CreatePassportData()
@@ -622,8 +689,13 @@ namespace KisVuzDotNetCore2.Controllers
         /// Загрузка заявления
         /// на обработку персональных данных
         /// </summary>
-        /// <param name="uploadedFile"></param>
-        /// <returns></returns>
+        public async Task<IActionResult> LoadFileApplicationForProcessingPersonalData()
+        {
+            var documentSamples = _documentSamplesRepository.GetDocumentSamples(FileDataTypeEnum.SoglasieNaObrabotkuPersonalnihDannih);
+            ViewBag.DocumentSamples = await documentSamples.ToListAsync();
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> LoadFileApplicationForProcessingPersonalData(IFormFile uploadedFile)
         {

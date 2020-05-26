@@ -66,6 +66,15 @@ namespace KisVuzDotNetCore2.Models.Abitur
             }
         }
 
+        public string ApplicationForAdmissionFullNameWithAppUserInfo
+        {
+            get
+            {
+                string birthdate = Abiturient?.AppUser?.Birthdate == null ? "" : ", " + ((DateTime)Abiturient?.AppUser?.Birthdate).ToString("d");
+                return $"{Abiturient?.AppUser?.GetFullName}{birthdate}. " + ApplicationForAdmissionFullName;
+            }
+        }
+
         /// <summary>
         /// Приоритет
         /// </summary>
@@ -97,5 +106,11 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// </summary>
         [Display(Name = "Льготы")]
         public List<AdmissionPrivilege> AdmissionPrivileges { get; set; }
+
+        /// <summary>
+        /// Заявления о согласии на зачисление
+        /// </summary>
+        [Display(Name = "Заявления о согласии на зачисление")]
+        public List<ConsentToEnrollment> ConsentToEnrollments { get; set; }
     }
 }

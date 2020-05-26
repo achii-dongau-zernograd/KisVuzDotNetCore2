@@ -1,0 +1,53 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.ConsentToEnrollment
+
+@{
+    ViewData["Title"] = "Добавление";
+    var documentSamples = (List<DocumentSample>)ViewBag.DocumentSamples;
+}
+
+<h2>Добавление заявления о согласии на зачисление</h2>
+
+<p>Скачайте бланк заявления о согласии на зачисление, заполните согласно образцу, отсканируйте и загрузите в систему.</p>
+<p>Дополнительные материалы:</p>
+<ol>
+    @foreach (var item in documentSamples.Where(d => d.IsBlank))
+    {
+        <li>
+            <a href="@item.GetHref" target="_blank">@item.DocumentSampleName</a>
+        </li>
+    }
+    @foreach (var item in documentSamples.Where(d => !d.IsBlank))
+    {
+        <li>
+            <a href="@item.GetHref" target="_blank">@item.DocumentSampleName</a>
+        </li>
+    }
+</ol>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateAbiturientConsentToEnrollment" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ApplicationForAdmissionId" class="control-label"></label>
+                <label class="control-label">@Model.ApplicationForAdmission.ApplicationForAdmissionFullName</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Выберите файл, содержащий скан-копию заполненного заявления о согласии на зачисление: </label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label"></label>
+                <input asp-for="Remark" class="form-control" />
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ApplicationForAdmissionId" />
+                <input type="hidden" asp-for=RowStatusId />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

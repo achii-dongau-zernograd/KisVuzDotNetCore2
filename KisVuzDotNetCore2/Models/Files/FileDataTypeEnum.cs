@@ -231,6 +231,10 @@
         /// <summary>
         /// Аттестат об основном общем образовании (после 9го класса)
         /// </summary>
-        AttestatObOsnovnomObshemObrazovanii = 64
+        AttestatObOsnovnomObshemObrazovanii = 64,
+        /// <summary>
+        /// Заявление о согласии на зачисление
+        /// </summary>
+        ConsentToEnrollment = 65
     }
 }

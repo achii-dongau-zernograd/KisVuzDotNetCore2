@@ -1,0 +1,54 @@
+﻿@model KisVuzDotNetCore2.Models.Files.DocumentSample
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DocumentSample</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DocumentSampleName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DocumentSampleName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsBlank)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsBlank)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Link)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Link)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduProfile)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduProfile.EduProfileId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileDataType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileDataType.FileDataTypeId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileModel.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.DocumentSampleId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

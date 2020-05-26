@@ -43,7 +43,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListLmsEventTypes(int lmsEventTypeGroupId, int selectedId = 0);
-
+        
         /// <summary>
         /// Возвращает список полных наименований
         /// реализуемых профилей подготовки
@@ -76,7 +76,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// </summary>
         /// <param name="selectedId"></param>
         /// <returns></returns>
-        SelectList GetSelectListFileDataTypes(int selectedId);
+        SelectList GetSelectListFileDataTypes(int selectedId = 0);
 
         /// <summary>
         /// Возвращает список методкомиссий
@@ -403,5 +403,12 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListApplicationForAdmissions(int abiturientId, int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список заявлений о приёме
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListApplicationForAdmissions(int selectedId = 0);
     }
 }

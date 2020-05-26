@@ -74,6 +74,8 @@ namespace KisVuzDotNetCore2
             services.AddTransient<IAdmissionPrivilegeRepository, AdmissionPrivilegeRepository>();
             services.AddTransient<ILmsEventsRepository, LmsEventsRepository>();
             services.AddTransient<IAppUserLmsEventsRepository, AppUserLmsEventsRepository>();
+            services.AddTransient<IDocumentSamplesRepository, DocumentSamplesRepository>();
+            services.AddTransient<IConsentToEnrollmentRepository, ConsentToEnrollmentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -379,5 +379,31 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="passportData"></param>
         /// <returns></returns>
         Task ChangePassportData(string userName, PassportData passportData);
+
+        /// <summary>
+        /// Создание нового заявления о согласии на зачисление
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="consentToEnrollment"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task CreateConsentToEnrollmentAsync(string userName, ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Возвращает заявление о согласии на зачисление абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="abiturientConsentToEnrollmentId"></param>
+        /// <returns></returns>
+        Task<ConsentToEnrollment> GetConsentToEnrollment(string userName, int abiturientConsentToEnrollmentId);
+
+        /// <summary>
+        /// Обновляет заявление о согласии на зачисление абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="consentToEnrollment"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task UpdateConsentToEnrollment(string userName, ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile);
     }
 }

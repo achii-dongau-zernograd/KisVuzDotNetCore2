@@ -697,13 +697,38 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает список заявлений о приёме
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListApplicationForAdmissions(int selectedId = 0)
+        {
+            var data = _context.ApplicationForAdmissions
+                .Include(a => a.Abiturient.AppUser)
+                .Include(a => a.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(a => a.EduForm)
+                .Include(a => a.QuotaType)
+                .OrderBy(a => a.Abiturient.AppUser.GetFullName)
+                .ThenBy(a => a.EduProfile.GetEduProfileFullName);
+            return new SelectList(data,
+                 "ApplicationForAdmissionId", "ApplicationForAdmissionFullNameWithAppUserInfo", selectedId);
+        }
+
+        /// <summary>
         /// Возвращает список заявлений о приёме абитуриента
         /// </summary>
         /// <param name="selectedId"></param>
         /// <returns></returns>
         public SelectList GetSelectListApplicationForAdmissions(int abiturientId, int selectedId = 0)
         {
-            var data = _context.ApplicationForAdmissions.Where(a => a.AbiturientId == abiturientId);
+            var data = _context.ApplicationForAdmissions
+                .Include(a => a.Abiturient.AppUser)
+                .Include(a => a.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(a => a.EduForm)
+                .Include(a => a.QuotaType)
+                .OrderBy(a => a.Abiturient.AppUser.GetFullName)
+                .ThenBy(a => a.EduProfile.GetEduProfileFullName)
+                .Where(a => a.AbiturientId == abiturientId);
             return new SelectList(data,
                  "ApplicationForAdmissionId", "ApplicationForAdmissionFullName", selectedId);
         }
@@ -731,7 +756,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// </summary>
         /// <param name="selectedId"></param>
         /// <returns></returns>
-        public SelectList GetSelectListFileDataTypes(int selectedId)
+        public SelectList GetSelectListFileDataTypes(int selectedId = 0)
         {
             var data = _context.FileDataTypes.OrderBy(fdt => fdt.FileDataTypeName);
             return new SelectList(data,
@@ -770,5 +795,7 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(data,
                  "AppUser.Id", "AbiturientFioBirthdayEmail", selectedId);
         }
+
+        
     }
 }

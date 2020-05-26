@@ -630,6 +630,13 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = (int)FileDataTypeGroupEnum.EducationDocuments
                     };
 
+                    FileDataType fileDataType65 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.ConsentToEnrollment,
+                        FileDataTypeName = "Заявление о согласии на зачисление",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.AbiturientFiles
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -693,7 +700,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType61,
                         fileDataType62,
                         fileDataType63,
-                        fileDataType64
+                        fileDataType64,
+                        fileDataType65
                         );
                     await context.SaveChangesAsync();
                 }

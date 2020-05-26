@@ -1,0 +1,47 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.ConsentToEnrollment
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<h2>Редактирование заявления о согласии на зачислении</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AbiturientConsentToEnrollmentEdit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ConsentToEnrollmentId" />
+            <div class="form-group">
+                <label asp-for="ApplicationForAdmissionId" class="control-label"></label>
+                <select asp-for="ApplicationForAdmissionId" class="form-control" asp-items="ViewBag.ApplicationForAdmissions"></select>
+                <span asp-validation-for="ApplicationForAdmissionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                @if (Model.FileModel == null)
+                {
+                    <label class="control-label">Выберите файл, содержащий скан-копию заполненного заявления о согласии на зачисление: </label>
+                }
+                else
+                {
+                    <label class="control-label">
+                        Для замены <a href="/@Model.FileModel.Path" target="_blank">загруженного</a>  файла выберите файл, содержащий скан-копию заполненного заявления о согласии на зачисление:
+                    </label>
+                }
+
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>            
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label"></label>
+                <input asp-for="Remark" class="form-control" />
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <input type="hidden" asp-for="FileModelId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Start" asp-route-selectedTab="consentToEnrollments" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

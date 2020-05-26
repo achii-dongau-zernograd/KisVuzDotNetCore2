@@ -1,11 +1,28 @@
 ﻿
 @{
     ViewData["Title"] = "Заявление об обработке персональных данных";
+    var documentSamples = (List<DocumentSample>)ViewBag.DocumentSamples;
 }
 
-<h2>Заявление об обработке персональных данных</h2>
+<h2>Согласие на обработку персональных данных</h2>
 
-<p>Скачайте бланк заявления об обработке персональных данных, заполните, отсканируйте и загрузите в систему.</p>
+<p>Скачайте бланк согласия на обработку персональных данных, заполните, отсканируйте и загрузите в систему.</p>
+<p>Дополнительные материалы:</p>
+<ol>
+    @foreach (var item in documentSamples.Where(d => d.IsBlank))
+    {
+        <li>
+            <a href="@item.GetHref" target="_blank">@item.DocumentSampleName</a>
+        </li>
+    }
+    @foreach (var item in documentSamples.Where(d => ! d.IsBlank))
+    {
+        <li>
+            <a href="@item.GetHref" target="_blank">@item.DocumentSampleName</a>
+        </li>
+    }
+</ol>
+
 
 <hr />
 <div class="row">

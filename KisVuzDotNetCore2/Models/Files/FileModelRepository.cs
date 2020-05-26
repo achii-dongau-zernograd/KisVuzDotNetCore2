@@ -371,6 +371,19 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает заявление о согласии на зачисление
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadConsentToEnrollmentFileAsync(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                 "Заявление о согласии на зачисление",
+                 FileDataTypeEnum.ConsentToEnrollment);
+            return fileModel;
+        }
+
+        /// <summary>
         /// Загружает файл паспорта
         /// </summary>
         /// <param name="uploadedFile"></param>

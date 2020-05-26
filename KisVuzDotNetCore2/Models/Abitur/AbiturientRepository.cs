@@ -22,6 +22,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         private readonly IApplicationForAdmissionRepository _applicationForAdmissionRepository;
         private readonly IAdmissionPrivilegeRepository _admissionPrivilegeRepository;
         private readonly IFileModelRepository _fileModelRepository;
+        private readonly IConsentToEnrollmentRepository _consentToEnrollmentRepository;
 
         public AbiturientRepository(AppIdentityDBContext context,
             IUserDocumentRepository userDocumentRepository,
@@ -29,7 +30,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
             IUserEducationRepository userEducationRepository,
             IApplicationForAdmissionRepository applicationForAdmissionRepository,
             IAdmissionPrivilegeRepository admissionPrivilegeRepository,
-            IFileModelRepository fileModelRepository
+            IFileModelRepository fileModelRepository,
+            IConsentToEnrollmentRepository consentToEnrollmentRepository
             )
         {
             _context = context;
@@ -39,6 +41,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
             _applicationForAdmissionRepository = applicationForAdmissionRepository;
             _admissionPrivilegeRepository = admissionPrivilegeRepository;
             _fileModelRepository = fileModelRepository;
+            _consentToEnrollmentRepository = consentToEnrollmentRepository;
         }
 
         /// <summary>
@@ -224,6 +227,15 @@ namespace KisVuzDotNetCore2.Models.Abitur
                 .Include(a => a.ApplicationForAdmissions)
                     .ThenInclude(afa => afa.AdmissionPrivileges)
                         .ThenInclude(ap => ap.FileModel)
+                            .ThenInclude(fm => fm.FileToFileTypes)
+                                .ThenInclude(ftft => ftft.FileDataType)
+                // Заявления о согласии на зачисление
+                .Include(a => a.ApplicationForAdmissions)
+                    .ThenInclude(afa => afa.ConsentToEnrollments)
+                        .ThenInclude(ce => ce.RowStatus)
+                .Include(a => a.ApplicationForAdmissions)
+                    .ThenInclude(afa => afa.ConsentToEnrollments)
+                        .ThenInclude(ce => ce.FileModel)
                             .ThenInclude(fm => fm.FileToFileTypes)
                                 .ThenInclude(ftft => ftft.FileDataType)
                 // Мероприятия СДО
@@ -827,6 +839,56 @@ namespace KisVuzDotNetCore2.Models.Abitur
             entryPassportData.Address.PopulatedLocalityId = passportData.Address.PopulatedLocalityId;
 
             await _userProfileRepository.UpdatePassportDataAsync(entryPassportData);
+        }
+
+        /// <summary>
+        /// Создание нового заявления о согласии на зачисление
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="consentToEnrollment"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task CreateConsentToEnrollmentAsync(string userName, ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile)
+        {
+            var applicationForAdmission = await _applicationForAdmissionRepository.GetApplicationForAdmissionAsync(consentToEnrollment.ApplicationForAdmissionId);
+            if (applicationForAdmission.Abiturient.AppUser.UserName != userName)
+                return;
+
+            await _consentToEnrollmentRepository.CreateConsentToEnrollmentAsync(consentToEnrollment, uploadedFile);
+        }
+
+        /// <summary>
+        /// Возвращает заявление о согласии на зачисление абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="abiturientConsentToEnrollmentId"></param>
+        /// <returns></returns>
+        public async Task<ConsentToEnrollment> GetConsentToEnrollment(string userName, int abiturientConsentToEnrollmentId)
+        {
+            var consentToEnrollment = await _consentToEnrollmentRepository.GetConsentToEnrollmentAsync(abiturientConsentToEnrollmentId);
+            if (consentToEnrollment == null) return null;
+            if (consentToEnrollment.ApplicationForAdmission.Abiturient.AppUser.UserName != userName) return null;
+
+            return consentToEnrollment;
+        }
+
+        /// <summary>
+        /// Обновляет заявление о согласии на зачисление абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="consentToEnrollment"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task UpdateConsentToEnrollment(string userName, ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile)
+        {
+            var entry = await GetConsentToEnrollment(userName, consentToEnrollment.ConsentToEnrollmentId);
+            if (entry == null) return;
+
+            entry.ApplicationForAdmissionId = consentToEnrollment.ApplicationForAdmissionId;
+            entry.Remark = consentToEnrollment.Remark;
+            entry.RowStatusId = (int)RowStatusEnum.ChangedByUser;
+
+            await _consentToEnrollmentRepository.UpdateConsentToEnrollmentAsync(entry, uploadedFile);
         }
     }
 }

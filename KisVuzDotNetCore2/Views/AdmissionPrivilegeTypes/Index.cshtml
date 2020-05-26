@@ -1,0 +1,34 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Abitur.AdmissionPrivilegeType>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Типы льгот при поступлении</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AdmissionPrivilegeTypeName)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdmissionPrivilegeTypeName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AdmissionPrivilegeTypeId" class="btn btn-primary">Редактировать</a> 
+                <a asp-action="Delete" asp-route-id="@item.AdmissionPrivilegeTypeId" class="btn btn-danger">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

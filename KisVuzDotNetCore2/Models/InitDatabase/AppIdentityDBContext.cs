@@ -616,9 +616,9 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<AbiturientIndividualAchievmentType> AbiturientIndividualAchievmentTypes { get; set; }
 
         /// <summary>
-        /// Назначения абитуриентам мероприятий системы дистанционного образования
+        /// Заявления о согласии на зачислении
         /// </summary>
-        //public DbSet<AbiturientLmsEvent> AbiturientLmsEvents { get; set; }
+        public DbSet<ConsentToEnrollment> ConsentToEnrollments { get; set; }
 
 
 
@@ -714,6 +714,11 @@ namespace KisVuzDotNetCore2.Models
         /// Документы пользователя
         /// </summary>
         public DbSet<UserDocument> UserDocuments { get; set; }
+
+        /// <summary>
+        /// Бланки и примеры заполнения документов
+        /// </summary>
+        public DbSet<DocumentSample> DocumentSamples { get; set; }
         #endregion
 
         #region Прием
