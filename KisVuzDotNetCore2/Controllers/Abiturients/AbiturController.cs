@@ -437,7 +437,7 @@ namespace KisVuzDotNetCore2.Controllers
         public async Task<IActionResult> CreateAbiturientAdmissionPrivilege()
         {
             var abiturient = await _abiturRepository.GetAbiturientAsync(User.Identity.Name);
-            ViewBag.ApplicationForAdmissions = _selectListRepository.GetSelectListApplicationForAdmissions(abiturient.AbiturientId);
+            ViewBag.ApplicationForAdmissions = _selectListRepository.GetSelectListApplicationForAdmissions(abiturient.AbiturientId, 0);
             ViewBag.AdmissionPrivilegeTypes = _selectListRepository.GetSelectListAdmissionPrivilegeTypes();
 
             return View();
