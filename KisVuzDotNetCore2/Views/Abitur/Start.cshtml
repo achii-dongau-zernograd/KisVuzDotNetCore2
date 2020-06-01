@@ -647,23 +647,25 @@
                     {
                         <tr>
                             <td colspan="5" class="">
-                                Заявление о приёме: @applicationForAdmission.EduProfile.GetEduProfileFullName - @applicationForAdmission.QuotaType.QuotaTypeName
+                                <b>Заявление о приёме: @applicationForAdmission.EduProfile.GetEduProfileFullName - @applicationForAdmission.QuotaType.QuotaTypeName</b>
                             </td>
                         </tr>
 
-                        <tr>
-                            @if (applicationForAdmission.AdmissionPrivileges == null || applicationForAdmission.AdmissionPrivileges.Count == 0)
+                        @if (applicationForAdmission.AdmissionPrivileges == null || applicationForAdmission.AdmissionPrivileges.Count == 0)
                             {
-                                <td colspan="5" class="text-center">
-                                    Льготы для поступления отсутствуют
-                                </td>
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        Льготы для поступления отсутствуют
+                                    </td>
+                                </tr>
                             }
                             else
                             {
                                 foreach (var admissionPrivilege in applicationForAdmission.AdmissionPrivileges)
                                 {
                                     var rowStatus = admissionPrivilege.RowStatus;
-                                    <td>@admissionPrivilege.AdmissionPrivilegeType?.AdmissionPrivilegeTypeName</td>
+                                    <tr>
+                                        <td>@admissionPrivilege.AdmissionPrivilegeType?.AdmissionPrivilegeTypeName</td>
                                     <td>
                                         @if (admissionPrivilege.FileModel != null)
                                         {
@@ -697,10 +699,9 @@
                                             <a class="btn btn-danger  btn-block" asp-action="AbiturientAdmissionPrivilegeRemove" asp-route-abiturientAdmissionPrivilegeId="@admissionPrivilege.AdmissionPrivilegeId">Удалить</a>
                                         }
                                     </td>
+                                    </tr>
                                 }
                             }
-
-                        </tr>
                     }
                 }
             </tbody>

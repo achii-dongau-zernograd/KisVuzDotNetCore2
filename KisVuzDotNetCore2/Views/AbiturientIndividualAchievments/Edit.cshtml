@@ -1,0 +1,51 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.AbiturientIndividualAchievment
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+    <h2>Редактирование индивидуального достижения абитуриента</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AbiturientId" class="control-label"></label>
+                <input asp-for="Abiturient.AbiturientFioBirthdayEmail" class="form-control" disabled />
+                <span asp-validation-for="AbiturientId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AbiturientIndividualAchievmentTypeId" class="control-label"></label>
+                <select asp-for="AbiturientIndividualAchievmentTypeId" class="form-control" asp-items="ViewBag.AbiturientIndividualAchievmentTypes"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                @if (Model.FileModel != null)
+                {
+                    <label class="form-control"><a href="/@Model.FileModel.Path" target="_blank">Открыть загруженный файл</a></label>
+                    <label asp-for="FileModelId" class="control-label">Для замены выберите новый файл</label>
+                }
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="RowStatusId" class="control-label"></label>
+                <select asp-for="RowStatusId" class="form-control" asp-items="ViewBag.RowStatuses"></select>
+                <span asp-validation-for="RowStatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label"></label>
+                <input asp-for="Remark" class="form-control" />
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="AbiturientIndividualAchievmentId" />
+                <input type="hidden" asp-for="AbiturientId" />
+                <input type="hidden" asp-for="FileModelId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.AdmissionPrivilege
+
+@{
+    ViewData["Title"] = "Добавление";
+}
+
+<h2>Добавление сведений о льготе при поступлении<</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ApplicationForAdmissionId" class="control-label"></label>
+                <select asp-for="ApplicationForAdmissionId" class="form-control" asp-items="ViewBag.ApplicationForAdmissions"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdmissionPrivilegeTypeId" class="control-label"></label>
+                <select asp-for="AdmissionPrivilegeTypeId" class="form-control" asp-items="ViewBag.AdmissionPrivilegeTypes"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>                
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="RowStatusId" class="control-label"></label>
+                <select asp-for="RowStatusId" class="form-control" asp-items="ViewBag.RowStatuses"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label"></label>
+                <input asp-for="Remark" class="form-control" />
+            </div>
+            <div class="form-group">                
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

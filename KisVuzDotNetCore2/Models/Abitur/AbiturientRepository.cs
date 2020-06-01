@@ -23,6 +23,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         private readonly IAdmissionPrivilegeRepository _admissionPrivilegeRepository;
         private readonly IFileModelRepository _fileModelRepository;
         private readonly IConsentToEnrollmentRepository _consentToEnrollmentRepository;
+        private readonly IAbiturientIndividualAchievmentRepository _abiturientIndividualAchievmentRepository;
 
         public AbiturientRepository(AppIdentityDBContext context,
             IUserDocumentRepository userDocumentRepository,
@@ -31,7 +32,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
             IApplicationForAdmissionRepository applicationForAdmissionRepository,
             IAdmissionPrivilegeRepository admissionPrivilegeRepository,
             IFileModelRepository fileModelRepository,
-            IConsentToEnrollmentRepository consentToEnrollmentRepository
+            IConsentToEnrollmentRepository consentToEnrollmentRepository,
+            IAbiturientIndividualAchievmentRepository abiturientIndividualAchievmentRepository
             )
         {
             _context = context;
@@ -42,6 +44,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
             _admissionPrivilegeRepository = admissionPrivilegeRepository;
             _fileModelRepository = fileModelRepository;
             _consentToEnrollmentRepository = consentToEnrollmentRepository;
+            _abiturientIndividualAchievmentRepository = abiturientIndividualAchievmentRepository;
         }
 
         /// <summary>
@@ -587,29 +590,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="abiturientIndividualAchievment"></param>
         /// <returns></returns>
         public async Task UpdateAbiturientIndividualAchievment(AbiturientIndividualAchievment abiturientIndividualAchievment, IFormFile uploadedFile)
-        {            
-            if(uploadedFile != null)
-            {
-                if(abiturientIndividualAchievment.FileModelId != null)
-                {
-                    if(abiturientIndividualAchievment.FileModel == null)
-                    {
-                        var entryFileModel = await _fileModelRepository.GetFileModelAsync(abiturientIndividualAchievment.FileModelId);
-                        abiturientIndividualAchievment.FileModel = entryFileModel;
-                    }
-
-                    await _fileModelRepository.ReloadFileAsync(abiturientIndividualAchievment.FileModel, uploadedFile);
-                }
-                else
-                {
-                    var loadedFileModel = await _fileModelRepository.UploadIndividualAchievmentFile(uploadedFile);
-                    abiturientIndividualAchievment.FileModel = loadedFileModel;
-                    abiturientIndividualAchievment.FileModelId = loadedFileModel.Id;
-                }
-            }
-            
-            _context.AbiturientIndividualAchievments.Update(abiturientIndividualAchievment);
-            await _context.SaveChangesAsync();
+        {
+            await _abiturientIndividualAchievmentRepository.Update(abiturientIndividualAchievment, uploadedFile);            
         }
 
         /// <summary>
@@ -619,13 +601,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <returns></returns>
         public async Task RemoveAbiturientIndividualAchievmentAsync(int abiturientIndividualAchievmentId)
         {
-            var entry = await GetAbiturientIndividualAchievmentAsync(abiturientIndividualAchievmentId);
+            await _abiturientIndividualAchievmentRepository.Remove(abiturientIndividualAchievmentId);
+            //var entry = await GetAbiturientIndividualAchievmentAsync(abiturientIndividualAchievmentId);
 
-            if(entry.FileModel != null)
-                await _fileModelRepository.RemoveFileModelAsync(entry.FileModel);
+            //if(entry.FileModel != null)
+            //    await _fileModelRepository.RemoveFileModelAsync(entry.FileModel);
 
-            _context.AbiturientIndividualAchievments.Remove(entry);
-            await _context.SaveChangesAsync();
+            //_context.AbiturientIndividualAchievments.Remove(entry);
+            //await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -757,6 +740,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
         {
             var applicationForAdmission = await GetApplicationForAdmissionAsync(userName, admissionPrivilege.ApplicationForAdmissionId);
             if (applicationForAdmission == null) return;
+
+            admissionPrivilege.RowStatusId = (int)RowStatusEnum.NotConfirmed;
 
             await _admissionPrivilegeRepository.CreateAdmissionPrivilegeAsync(admissionPrivilege, uploadedFile);
         }

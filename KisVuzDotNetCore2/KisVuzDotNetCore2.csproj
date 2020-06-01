@@ -592,6 +592,8 @@
     <Compile Remove="Migrations\20200524140936_t.Designer.cs" />
     <Compile Remove="Migrations\20200525142015_DocumentSamples.cs" />
     <Compile Remove="Migrations\20200525142015_DocumentSamples.Designer.cs" />
+    <Compile Remove="Migrations\20200531125849_AppUserConsultant.cs" />
+    <Compile Remove="Migrations\20200531125849_AppUserConsultant.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

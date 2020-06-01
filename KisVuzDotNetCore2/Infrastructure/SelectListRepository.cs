@@ -796,6 +796,19 @@ namespace KisVuzDotNetCore2.Infrastructure
                  "AppUser.Id", "AbiturientFioBirthdayEmail", selectedId);
         }
 
-        
+        /// <summary>
+        /// Возвращает список подтверждённых абитуриентов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAbiturientsConfirmed(int selectedId = 0)
+        {
+            var data = _context.Abiturients
+                .Include(a => a.AppUser)
+                .Where(a => a.AbiturientStatusId == (int)AbiturientStatusEnum.ConfirmedAbiturient);
+
+            return new SelectList(data,
+                 "AbiturientId", "AbiturientFioBirthdayEmail", selectedId);
+        }
     }
 }

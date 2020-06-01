@@ -16,7 +16,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         [Display(Name ="Пользователь")]
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
-
+        
         /// <summary>
         /// Необходимость общежития
         /// </summary>

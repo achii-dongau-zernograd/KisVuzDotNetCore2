@@ -40,8 +40,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
             if (fileModel == null) return;
 
             admissionPrivilege.FileModelId = fileModel.Id;
-            admissionPrivilege.RowStatusId = (int)RowStatusEnum.NotConfirmed;
-
+            
             _context.AdmissionPrivileges.Add(admissionPrivilege);
             await _context.SaveChangesAsync();
         }
@@ -119,11 +118,18 @@ namespace KisVuzDotNetCore2.Models.Abitur
         {
             if (admissionPrivilege == null) return;
 
+            //var entry = await GetAdmissionPrivilegeAsync(admissionPrivilege.AdmissionPrivilegeId);
+            //entry.AdmissionPrivilegeTypeId = admissionPrivilege.AdmissionPrivilegeTypeId;
+            //entry.ApplicationForAdmissionId = admissionPrivilege.ApplicationForAdmissionId;
+            ////entry.FileModelId = admissionPrivilege.FileModelId;
+            //entry.Remark = admissionPrivilege.Remark;
+            //entry.RowStatusId = admissionPrivilege.RowStatusId;
+
             if (uploadedFile != null)//Если пользователь загрузил новый файл
             {
                 if(admissionPrivilege.FileModelId == null)//Если ранее загруженный файл отсутствует, создаём новую файловую модель
                 {
-                    var newFileModel = _fileModelRepository.UploadAdmissionPrivilegeFileAsync(uploadedFile);
+                    var newFileModel = await _fileModelRepository.UploadAdmissionPrivilegeFileAsync(uploadedFile);
                     admissionPrivilege.FileModelId = newFileModel.Id;
                 }
                 else//Иначе заменяем имеющуюся модель на новую

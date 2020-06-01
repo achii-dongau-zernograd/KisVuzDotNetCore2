@@ -37,6 +37,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListAbiturientsUserDocumentTypes(int selectedId = 0);
         
         /// <summary>
+        /// Возвращает список подтверждённых абитуриентов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAbiturientsConfirmed(int selectedId = 0);
+
+        /// <summary>
         /// Возвращает список типов событий СДО
         /// для указанной группы типов событий
         /// </summary>
