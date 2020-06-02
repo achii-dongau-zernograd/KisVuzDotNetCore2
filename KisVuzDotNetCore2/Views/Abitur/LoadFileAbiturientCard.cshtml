@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Карточка абитуриента";
+    var documentSamples = (List<DocumentSample>)ViewBag.DocumentSamples;
+}
+
+<h2>Карточка абитуриента</h2>
+
+<p>Скачайте бланк карточки абитуриента, заполните, отсканируйте и загрузите в систему.</p>
+<p>Дополнительные материалы:</p>
+<ol>
+    @foreach (var item in documentSamples.Where(d => d.IsBlank))
+    {
+        <li>
+            <a href="@item.GetHref" target="_blank">@item.DocumentSampleName</a>
+        </li>
+    }
+    @foreach (var item in documentSamples.Where(d => ! d.IsBlank))
+    {
+        <li>
+            <a href="@item.GetHref" target="_blank">@item.DocumentSampleName</a>
+        </li>
+    }
+</ol>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="LoadFileAbiturientCard" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Выберите файл: </label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">                
+                <input type="submit" value="Загрузить" class="btn btn-primary" />                
+            </div>
+        </form>
+    </div>
+</div>
+

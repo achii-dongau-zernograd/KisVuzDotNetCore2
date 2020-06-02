@@ -58,6 +58,16 @@ namespace KisVuzDotNetCore2.Models
         /// Паспортные данные
         /// </summary>
         public DbSet<PassportData> PassportDataSet { get; set; }
+
+        /// <summary>
+        /// Договоры
+        /// </summary>
+        public DbSet<Contract> Contracts { get; set; }
+
+        /// <summary>
+        /// Типы договоров
+        /// </summary>
+        public DbSet<ContractType> ContractTypes { get; set; }
         #endregion
 
         #region Система дистанционного образования (СДО, LMS)
@@ -1239,6 +1249,8 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseAdmissionPrivilegeTypes.CreateAdmissionPrivilegeTypes(serviceProvider, configuration);
 
             await InitDatabaseAppUserLmsEventUserRoles.CreateAppUserLmsEventUserRoles(serviceProvider, configuration);
+
+            await InitDatabaseContractTypes.CreateContractTypes(serviceProvider, configuration);
         }        
     
     }

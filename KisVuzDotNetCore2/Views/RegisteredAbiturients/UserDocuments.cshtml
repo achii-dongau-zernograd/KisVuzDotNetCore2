@@ -376,6 +376,108 @@
         }
 
 
+        @{
+            var abiturientCards = Model.AppUser.UserDocuments.Where(ud => ud.FileDataTypeId == (int)FileDataTypeEnum.AbiturientCard);
+
+            if (abiturientCards == null || abiturientCards.Count() == 0)
+            {
+                <tr>
+                    <td>
+                        Карточка абитуриента
+                    </td>
+                    <td class="text-danger">
+                        Не загружено!
+                    </td>
+                </tr>
+            }
+            else
+            {
+
+                foreach (var userDocument in abiturientCards)
+                {
+                    <tr>
+                        <td>Карточка абитуриента</td>
+                        <td><a href="/@userDocument.FileModel.Path" target="_blank">Открыть</a></td>
+                        <td>
+                            @if (mode == "ChangeRowStatus" && userDocumentId == userDocument.UserDocumentId)
+                            {
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <select name="RowStatusId" class="form-control" asp-items="ViewBag.RowStatuses">
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="hidden" name="userName" value="@Model.AppUser.UserName" />
+                                            <input type="hidden" name="mode" value="ChangeRowStatusSave" />
+                                            <input type="hidden" name="userDocumentId" value="@userDocument.UserDocumentId" />
+                                            <input type="submit" class="btn btn-primary" value="Сохранить" />
+                                            <a asp-route-userName="@Model.AppUser.UserName">Отмена</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+                            else
+                            {
+                                string rowStatusString = "";
+                                string rowStatusClass = "";
+                                if (userDocument.RowStatusId == (int?)RowStatusEnum.Confirmed)
+                                {
+                                    rowStatusString = userDocument.RowStatus.RowStatusName;
+                                    rowStatusClass = "text-primary";
+                                }
+                                else if (userDocument.RowStatusId == (int?)RowStatusEnum.ReturnedForCorrection)
+                                {
+                                    rowStatusString = userDocument.RowStatus.RowStatusName;
+                                    rowStatusClass = "text-info";
+                                }
+                                else
+                                {
+                                    rowStatusString = "Не проверено";
+                                    rowStatusClass = "text-danger";
+                                }
+                                <a asp-route-userName="@Model.AppUser.UserName" asp-route-mode="ChangeRowStatus" asp-route-userDocumentId="@userDocument.UserDocumentId" class="@rowStatusClass">@rowStatusString</a>
+                            }
+                        </td>
+
+                        <td>
+                            @if (mode == "ChangeRowRemark" && userDocumentId == userDocument.UserDocumentId)
+                            {
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input class="form-control" name="remark" value="@userDocument.Remark" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="hidden" name="userName" value="@Model.AppUser.UserName" />
+                                            <input type="hidden" name="mode" value="ChangeRowRemarkSave" />
+                                            <input type="hidden" name="userDocumentId" value="@userDocument.UserDocumentId" />
+                                            <input type="submit" class="btn btn-primary" value="Сохранить" />
+                                            <a asp-route-userName="@Model.AppUser.UserName">Отмена</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+                            else
+                            {
+                                string remark = string.IsNullOrWhiteSpace(userDocument.Remark) ? "Добавить замечание" : userDocument.Remark;
+                                <a asp-route-userName="@Model.AppUser.UserName"
+                                   asp-route-mode="ChangeRowRemark"
+                                   asp-route-userDocumentId="@userDocument.UserDocumentId">@remark</a>
+                            }
+                        </td>
+
+                        <td>
+                            <a asp-route-action="UserDocumentDelete"
+                               asp-route-userName="@Model.AppUser.UserName"
+                               asp-route-userDocumentId="@userDocument.UserDocumentId" class="btn btn-danger btn-block">Удалить</a>
+                        </td>
+                    </tr>
+                }
+            }
+
+        }
+
     </tbody>
 </table>
 

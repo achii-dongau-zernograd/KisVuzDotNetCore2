@@ -1,0 +1,45 @@
+﻿@model KisVuzDotNetCore2.Models.Common.Contract
+
+@{
+    ViewData["Title"] = "Добавление договора";
+    var documentSamples = (List<DocumentSample>)ViewBag.DocumentSamples;
+}
+
+<h2>Добавление договора</h2>
+
+<p>Скачайте бланк договора, заполните согласно образцу, отсканируйте и загрузите в систему.</p>
+<p>Дополнительные материалы:</p>
+<ol>
+    @foreach (var item in documentSamples.Where(d => d.IsBlank))
+    {
+        <li>
+            <a href="@item.GetHref" target="_blank">@item.DocumentSampleName</a>
+        </li>
+    }
+    @foreach (var item in documentSamples.Where(d => !d.IsBlank))
+    {
+        <li>
+            <a href="@item.GetHref" target="_blank">@item.DocumentSampleName</a>
+        </li>
+    }
+</ol>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateAbiturientContract" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="AppUserId" />
+                <input type="hidden" asp-for="ContractTypeId" />
+                <input type="hidden" asp-for="ApplicationForAdmissionId" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Start" asp-route-selectedTab="contracts" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -396,7 +396,18 @@ namespace KisVuzDotNetCore2.Models.Files
             return fileModel;
         }
 
-
+        /// <summary>
+        /// Загружает файл карточки абитуриента
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadAbiturientCardAsync(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                "Карточка абитуриента",
+                FileDataTypeEnum.AbiturientCard);
+            return fileModel;
+        }
 
         /// <summary>
         /// Загружайт скан-копию файла, подтверждающего индивидуальное достижение абитуриента

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Common.Contract>
+
+@{
+    ViewData["Title"] = "Договоры";
+}
+
+<h2>Договоры</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppUserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileModelId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RowStatusId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remark)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationForAdmissionId)
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>            
+            <td>
+                @Html.DisplayFor(modelItem => item.ContractType.ContractTypeName)
+            </td>
+            <td>
+                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
+            </td>
+            <td>
+                @if(item.FileModel != null)
+                {
+                    <a href="/@item.FileModel.Path">Открыть</a>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RowStatus.RowStatusName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationForAdmission.ApplicationForAdmissionFullName)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать",   "Edit",   new { id = item.ContractId }, new { @class = "btn btn-primary" })
+                
+                @Html.ActionLink("Удалить", "Delete", new { id = item.ContractId }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

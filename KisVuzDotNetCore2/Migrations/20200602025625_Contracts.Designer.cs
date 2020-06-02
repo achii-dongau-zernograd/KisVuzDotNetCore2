@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200602025625_Contracts")]
+    partial class Contracts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -425,8 +426,6 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<string>("AppUserId");
 
-                    b.Property<int?>("ApplicationForAdmissionId");
-
                     b.Property<int>("ContractTypeId");
 
                     b.Property<DateTime?>("DateEnd");
@@ -442,8 +441,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasKey("ContractId");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("ApplicationForAdmissionId");
 
                     b.HasIndex("ContractTypeId");
 
@@ -4257,12 +4254,8 @@ namespace KisVuzDotNetCore2.Migrations
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.Contract", b =>
                 {
                     b.HasOne("KisVuzDotNetCore2.Models.AppUser", "AppUser")
-                        .WithMany("Contracts")
+                        .WithMany()
                         .HasForeignKey("AppUserId");
-
-                    b.HasOne("KisVuzDotNetCore2.Models.Abitur.ApplicationForAdmission", "ApplicationForAdmission")
-                        .WithMany("Contracts")
-                        .HasForeignKey("ApplicationForAdmissionId");
 
                     b.HasOne("KisVuzDotNetCore2.Models.Common.ContractType", "ContractType")
                         .WithMany()

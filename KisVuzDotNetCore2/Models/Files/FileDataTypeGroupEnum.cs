@@ -10,12 +10,16 @@
         /// </summary>
         EducationDocuments = 4,
         /// <summary>
+        /// Договоры
+        /// </summary>
+        Contracts = 10,
+        /// <summary>
         /// Документы пользователей
         /// </summary>
         UserDocuments = 13,
         /// <summary>
         /// Файлы абитуриентов
         /// </summary>
-        AbiturientFiles = 14
+        AbiturientFiles = 14        
     }
 }

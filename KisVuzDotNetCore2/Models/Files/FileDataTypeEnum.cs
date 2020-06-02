@@ -235,6 +235,18 @@
         /// <summary>
         /// Заявление о согласии на зачисление
         /// </summary>
-        ConsentToEnrollment = 65
+        ConsentToEnrollment = 65,
+        /// <summary>
+        /// Карточка абитуриента
+        /// </summary>
+        AbiturientCard = 66,
+        /// <summary>
+        /// Договор о целевом обучении
+        /// </summary>
+        DogovorOCelevomObuchenii = 67,
+        /// <summary>
+        /// Договор об оказании платных образовательных услуг
+        /// </summary>
+        DogovorObOkazaniiPlatnihObrazovatelnihUslug = 68
     }
 }

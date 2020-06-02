@@ -34,7 +34,10 @@ namespace KisVuzDotNetCore2.Controllers.Files
         {
             IQueryable<DocumentSample> documentSamples = _documentSamplesRepository.GetDocumentSamples(FileDataTypeEnum.ApplicationForAdmission,
                 FileDataTypeEnum.SoglasieNaObrabotkuPersonalnihDannih,
-                FileDataTypeEnum.ConsentToEnrollment);
+                FileDataTypeEnum.ConsentToEnrollment,
+                FileDataTypeEnum.AbiturientCard,
+                FileDataTypeEnum.DogovorOCelevomObuchenii,
+                FileDataTypeEnum.DogovorObOkazaniiPlatnihObrazovatelnihUslug);
             
             return View(await documentSamples.ToListAsync());
         }

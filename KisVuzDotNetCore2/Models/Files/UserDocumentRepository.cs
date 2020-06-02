@@ -122,6 +122,33 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает на сервер карточку абитуриента и
+        /// создаёт соответствующую запись в таблице UserDocuments
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<UserDocument> CreateAbiturientCard(string userName, IFormFile uploadedFile)
+        {
+            var userId = _userProfileRepository.GetAppUserId(userName);
+            var fileModel = await _fileModelRepository.UploadAbiturientCardAsync(uploadedFile);
+            if (fileModel == null)
+                return null;
+
+            var userDocument = new UserDocument
+            {
+                AppUserId = userId,
+                FileModelId = fileModel.Id,
+                FileDataTypeId = (int)FileDataTypeEnum.AbiturientCard
+            };
+
+            await _context.AddAsync(userDocument);
+            await _context.SaveChangesAsync();
+
+            return userDocument;
+        }
+
+        /// <summary>
         /// Проверяет наличие у пользователя наличия документов указанного типа
         /// </summary>
         /// <param name="userName"></param>
@@ -432,5 +459,7 @@ namespace KisVuzDotNetCore2.Models.Files
 
             await _context.SaveChangesAsync();
         }
+
+        
     }
 }

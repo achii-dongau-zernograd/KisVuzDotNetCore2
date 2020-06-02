@@ -24,6 +24,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         private readonly IFileModelRepository _fileModelRepository;
         private readonly IConsentToEnrollmentRepository _consentToEnrollmentRepository;
         private readonly IAbiturientIndividualAchievmentRepository _abiturientIndividualAchievmentRepository;
+        private readonly IContractRepository _contractRepository;
 
         public AbiturientRepository(AppIdentityDBContext context,
             IUserDocumentRepository userDocumentRepository,
@@ -33,7 +34,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
             IAdmissionPrivilegeRepository admissionPrivilegeRepository,
             IFileModelRepository fileModelRepository,
             IConsentToEnrollmentRepository consentToEnrollmentRepository,
-            IAbiturientIndividualAchievmentRepository abiturientIndividualAchievmentRepository
+            IAbiturientIndividualAchievmentRepository abiturientIndividualAchievmentRepository,
+            IContractRepository contractRepository
             )
         {
             _context = context;
@@ -45,6 +47,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
             _fileModelRepository = fileModelRepository;
             _consentToEnrollmentRepository = consentToEnrollmentRepository;
             _abiturientIndividualAchievmentRepository = abiturientIndividualAchievmentRepository;
+            _contractRepository = contractRepository;
         }
 
         /// <summary>
@@ -248,6 +251,16 @@ namespace KisVuzDotNetCore2.Models.Abitur
                 .Include(a => a.AppUser)
                     .ThenInclude(au => au.AppUserLmsEvents)
                         .ThenInclude(aue => aue.LmsEvent.LmsEventType.LmsEventTypeGroup)
+                // Договоры
+                .Include(a => a.ApplicationForAdmissions)
+                    .ThenInclude(aa => aa.Contracts)
+                        .ThenInclude(c => c.ContractType)
+                .Include(a => a.ApplicationForAdmissions)
+                    .ThenInclude(aa => aa.Contracts)
+                        .ThenInclude(c => c.RowStatus)
+                .Include(a => a.ApplicationForAdmissions)
+                    .ThenInclude(aa => aa.Contracts)
+                        .ThenInclude(c => c.FileModel.FileToFileTypes)
                 ;
             return abiturs;
         }
@@ -407,6 +420,18 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public bool IsLoadedFilePassport(Abiturient abiturient)
         {
             bool isLoadedFile = _userDocumentRepository.IsLoadedUserDocument(abiturient.AppUser, FileDataTypeEnum.Passport);
+
+            return isLoadedFile;
+        }
+
+        /// <summary>
+        /// Проверяет наличие у абитуриента загруженной карточки абитуриента
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        public bool IsLoadedFileAbiturientCard(Abiturient abiturient)
+        {
+            bool isLoadedFile = _userDocumentRepository.IsLoadedUserDocument(abiturient.AppUser, FileDataTypeEnum.AbiturientCard);
 
             return isLoadedFile;
         }
@@ -747,6 +772,23 @@ namespace KisVuzDotNetCore2.Models.Abitur
         }
 
         /// <summary>
+        /// Создаёт договор абитуриента с образовательной организацией
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="contract"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task CreateContractAsync(string userName, Contract contract, IFormFile uploadedFile)
+        {
+            var applicationForAdmission = await GetApplicationForAdmissionAsync(userName, contract.ApplicationForAdmissionId ?? 0);
+            if (applicationForAdmission == null) return;
+
+            contract.RowStatusId = (int)RowStatusEnum.NotConfirmed;
+
+            await _contractRepository.CreateContractAsync(contract, uploadedFile);
+        }
+
+        /// <summary>
         /// Возвращает объект льготы абитуриента при поступлении
         /// </summary>
         /// <param name="userName"></param>
@@ -874,6 +916,6 @@ namespace KisVuzDotNetCore2.Models.Abitur
             entry.RowStatusId = (int)RowStatusEnum.ChangedByUser;
 
             await _consentToEnrollmentRepository.UpdateConsentToEnrollmentAsync(entry, uploadedFile);
-        }
+        }        
     }
 }

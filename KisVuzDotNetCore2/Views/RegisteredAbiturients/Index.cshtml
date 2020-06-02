@@ -11,6 +11,7 @@
         <tr>
             <th>Дата/время регистрации</th>
             <th>ФИО</th>
+            <th>Основные документы</th>
             <th>Статус</th>
             <th>Действия</th>
         </tr>        
@@ -23,6 +24,63 @@
                 <tr>
                     <td>@item.AppUser.RegisterDateTime</td>
                     <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUser.Id">@item.AppUser.GetFullName</a></td>
+                    <td>
+                        @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.SoglasieNaObrabotkuPersonalnihDannih))
+                        {
+                            string userDocumentClass = "";
+                            if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
+                            { userDocumentClass = "text-success"; }
+                            else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                            { userDocumentClass = "text-danger"; }
+                            else
+                            { userDocumentClass = "text-warning"; }
+
+                            <p><a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a></p>
+                        }
+
+                        @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.Passport))
+                        {
+                            string userDocumentClass = "";
+                            if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
+                            { userDocumentClass = "text-success"; }
+                            else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                            { userDocumentClass = "text-danger"; }
+                            else
+                            { userDocumentClass = "text-warning"; }
+
+                            <p><a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a></p>
+                        }
+
+                        @foreach (var userDocument in item.AppUser.UserDocuments
+                         .Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.AttestatObOsnovnomObshemObrazovanii ||
+                                     d.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
+                                     d.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO ||
+                                     d.FileDataTypeId == (int)FileDataTypeEnum.DiplomVO))
+                        {
+                            string userDocumentClass = "";
+                            if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
+                            { userDocumentClass = "text-success"; }
+                            else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                            { userDocumentClass = "text-danger"; }
+                            else
+                            { userDocumentClass = "text-warning"; }
+
+                            <p><a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a></p>
+                        }
+
+                        @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.AbiturientCard))
+                        {
+                            string userDocumentClass = "";
+                            if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
+                            { userDocumentClass = "text-success"; }
+                            else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                            { userDocumentClass = "text-danger"; }
+                            else
+                            { userDocumentClass = "text-warning"; }
+
+                            <p><a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a></p>
+                        }
+                    </td>
                     <td>@item.AbiturientStatus?.AbiturientStatusName</td>
                     <td>
                         <a asp-action="Details" asp-route-userName="@item.AppUser.UserName" class="btn btn-primary">Сведения</a>

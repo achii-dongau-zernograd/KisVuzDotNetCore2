@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Abitur;
+using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.LMS;
@@ -247,5 +248,10 @@ namespace KisVuzDotNetCore2.Models
         /// Список привязок пользователя к мероприятиям СДО
         /// </summary>
         public List<AppUserLmsEvent> AppUserLmsEvents { get; set; }
+
+        /// <summary>
+        /// Список договоров, заключенных между пользователем и образовательной организацией
+        /// </summary>
+        public List<Contract> Contracts { get; set; }
     }
 }

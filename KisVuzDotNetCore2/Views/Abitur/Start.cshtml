@@ -17,6 +17,7 @@
     string consentToEnrollmentsClass = "";
     string entranceTestsClass = "";
     string personalInformationClass = "";
+    string contractsClass = "";
 
     switch (selectedTab)
     {
@@ -43,6 +44,9 @@
             break;
         case "entranceTests":
             entranceTestsClass = "active";
+            break;
+        case "contracts":
+            contractsClass = "active";
             break;
     }
 
@@ -117,12 +121,13 @@
 
 <ul class="nav nav-tabs" id="myTab">
     <li class="@userDocumentsClass"><a href="#userDocuments" data-toggle="tab">Основные документы</a></li>
-    <li class="@passportDataClass"><a href="#passportData" data-toggle="tab">Паспортные данные</a></li>
-    <li class="@personalInformationClass"><a href="#personalInformation" data-toggle="tab">Личные сведения</a></li>
+    @*<li class="@passportDataClass"><a href="#passportData" data-toggle="tab">Паспортные данные</a></li>*@
+    @*<li class="@personalInformationClass"><a href="#personalInformation" data-toggle="tab">Личные сведения</a></li>*@
     <li class="@applicationForAdmissionsClass"><a href="#applicationForAdmissions" data-toggle="tab">Заявления о приёме</a></li>
     <li class="@consentToEnrollmentsClass"><a href="#consentToEnrollments" data-toggle="tab">Заявления о согласии на зачисление</a></li>
     <li class="@abiturientAchievmentsClass"><a href="#abiturientAchievments" data-toggle="tab">Индивидуальные достижения</a></li>
     <li class="@admissionPrivilegesClass"><a href="#abiturientAdmissionPrivileges" data-toggle="tab">Льготы</a></li>
+    <li class="@contractsClass"><a href="#contracts" data-toggle="tab">Договоры</a></li>
     <li class="@entranceTestsClass"><a href="#entranceTests" data-toggle="tab">Вступительные испытания</a></li>
 </ul>
 
@@ -130,202 +135,211 @@
     @*//////////////////////////////////////////////////////////// Паспортные данные /////////////////////////////////////////////////////*@
     <div class="tab-pane @passportDataClass" id="passportData">
         <br />
-        @if (passport.RowStatusId != (int)RowStatusEnum.Confirmed)
+
+        @if (passport != null)
         {
-            <a asp-action="ChangePassportData" class="btn btn-primary">Изменить паспортные данные</a>
+            if (passport.RowStatusId != (int)RowStatusEnum.Confirmed)
+            {
+                <a asp-action="ChangePassportData" class="btn btn-primary">Изменить паспортные данные</a>
+            }
+
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th colspan="2" class="text-center">Основные сведения</th>
+                    </tr>
+                    <tr>
+                        <th>Фамилия</th>
+                        <td>@passport.AppUser.LastName</td>
+                    </tr>
+                    <tr>
+                        <th>Имя</th>
+                        <td>@passport.AppUser.FirstName</td>
+                    </tr>
+                    <tr>
+                        <th>Отчество</th>
+                        <td>@passport.AppUser.Patronymic</td>
+                    </tr>
+                    <tr>
+                        <th>Дата рождения</th>
+                        <td>@(passport.AppUser.Birthdate == null ? "Не указано" : ((DateTime)passport.AppUser.Birthdate).ToString("d"))</td>
+                    </tr>
+                    <tr>
+                        <th>Место рождения</th>
+                        <td>@passport.MestoRojdeniya</td>
+                    </tr>
+                    <tr>
+                        <th>Серия паспорта</th>
+                        <td>@passport.PassportSeriya</td>
+                    </tr>
+                    <tr>
+                        <th>Номер паспорта</th>
+                        <td>@passport.PassportNumber</td>
+                    </tr>
+                    <tr>
+                        <th>Кем выдан</th>
+                        <td>@passport.KemVidan</td>
+                    </tr>
+                    <tr>
+                        <th>Когда выдан</th>
+                        <td>@passport.DataVidachi.ToString("d")</td>
+                    </tr>
+                    <tr>
+                        <th>Код подразделения</th>
+                        <td>@passport.KodPodrazdeleniya</td>
+                    </tr>
+
+                    <tr>
+                        <th colspan="2" class="text-center">Адрес по прописке</th>
+                    </tr>
+                    <tr>
+                        <th>Индекс</th>
+                        <td>@passport.Address?.PostCode</td>
+                    </tr>
+                    <tr>
+                        <th>Страна</th>
+                        <td>@passport.Address?.Country</td>
+                    </tr>
+                    <tr>
+                        <th>Регион (область, край)</th>
+                        <td>@passport.Address?.Region</td>
+                    </tr>
+                    <tr>
+                        <th>Населённый пункт</th>
+                        <td>@passport.Address?.Settlement</td>
+                    </tr>
+                    <tr>
+                        <th>Улица</th>
+                        <td>@passport.Address?.Street</td>
+                    </tr>
+                    <tr>
+                        <th>Номер дома</th>
+                        <td>@passport.Address?.HouseNumber</td>
+                    </tr>
+                    @*<tr>
+                            <th>Скан-копия паспорта</th>
+                            <td><a href="/@passport.UserDocument?.FileModel?.Path" target="_blank">Просмотр</a></td>
+                        </tr>*@
+                </tbody>
+            </table>
         }
 
-        <table class="table table-hover">
-            <tbody>
-                <tr>
-                    <th colspan="2" class="text-center">Основные сведения</th>
-                </tr>
-                <tr>
-                    <th>Фамилия</th>
-                    <td>@passport.AppUser.LastName</td>
-                </tr>
-                <tr>
-                    <th>Имя</th>
-                    <td>@passport.AppUser.FirstName</td>
-                </tr>
-                <tr>
-                    <th>Отчество</th>
-                    <td>@passport.AppUser.Patronymic</td>
-                </tr>
-                <tr>
-                    <th>Дата рождения</th>
-                    <td>@(passport.AppUser.Birthdate == null ? "Не указано" : ((DateTime)passport.AppUser.Birthdate).ToString("d"))</td>
-                </tr>
-                <tr>
-                    <th>Место рождения</th>
-                    <td>@passport.MestoRojdeniya</td>
-                </tr>
-                <tr>
-                    <th>Серия паспорта</th>
-                    <td>@passport.PassportSeriya</td>
-                </tr>
-                <tr>
-                    <th>Номер паспорта</th>
-                    <td>@passport.PassportNumber</td>
-                </tr>
-                <tr>
-                    <th>Кем выдан</th>
-                    <td>@passport.KemVidan</td>
-                </tr>
-                <tr>
-                    <th>Когда выдан</th>
-                    <td>@passport.DataVidachi.ToString("d")</td>
-                </tr>
-                <tr>
-                    <th>Код подразделения</th>
-                    <td>@passport.KodPodrazdeleniya</td>
-                </tr>
 
-                <tr>
-                    <th colspan="2" class="text-center">Адрес по прописке</th>
-                </tr>
-                <tr>
-                    <th>Индекс</th>
-                    <td>@passport.Address?.PostCode</td>
-                </tr>
-                <tr>
-                    <th>Страна</th>
-                    <td>@passport.Address?.Country</td>
-                </tr>
-                <tr>
-                    <th>Регион (область, край)</th>
-                    <td>@passport.Address?.Region</td>
-                </tr>
-                <tr>
-                    <th>Населённый пункт</th>
-                    <td>@passport.Address?.Settlement</td>
-                </tr>
-                <tr>
-                    <th>Улица</th>
-                    <td>@passport.Address?.Street</td>
-                </tr>
-                <tr>
-                    <th>Номер дома</th>
-                    <td>@passport.Address?.HouseNumber</td>
-                </tr>
-                @*<tr>
-                        <th>Скан-копия паспорта</th>
-                        <td><a href="/@passport.UserDocument?.FileModel?.Path" target="_blank">Просмотр</a></td>
-                    </tr>*@
-            </tbody>
-        </table>
     </div>
 
     @*///////////////////////////////////////////////////////////// Личные сведения /////////////////////////////////////////////////////*@
     <div class="tab-pane @personalInformationClass" id="personalInformation">
-        <br />
-        <a asp-action="ChangePersonalInformation" class="btn btn-primary">Изменить личные сведения</a>
-        <table class="table table-hover">
-            <tbody>
-                <tr>
-                    <th>Пол</th>
-                    <td>
-                        @if (abiturient.AppUser.GenderId == null)
-                        {
-                            <a asp-action="ChangePersonalInformation" class="text-danger">Не указано</a>
-                        }
-                        else
-                        {
-                            <p>@abiturient.AppUser.Gender.GenderName</p>
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <th>Гражданство</th>
-                    <td>
-                        @if (string.IsNullOrWhiteSpace(abiturient.AppUser.Citizenship))
-                        {
-                            <a asp-action="ChangePersonalInformation" class="text-danger">Не указано</a>
-                        }
-                        else
-                        {
-                            <p>@abiturient.AppUser.Citizenship</p>
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <th>Национальность</th>
-                    <td>
-                        @if (string.IsNullOrWhiteSpace(abiturient.AppUser.Nationality))
-                        {
-                            <a asp-action="ChangePersonalInformation" class="text-danger">Не указано</a>
-                        }
-                        else
-                        {
-                            <p>@abiturient.AppUser.Nationality</p>
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <th>Отношение к военной службе</th>
-                    <td>
-                        @if (abiturient.AppUser.MilitaryServiceStatusId == null)
-                        {
-                            <a asp-action="ChangePersonalInformation" class="text-danger">Не указано</a>
-                        }
-                        else
-                        {
-                            <p>@abiturient.AppUser.MilitaryServiceStatus.MilitaryServiceStatusName</p>
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <th>Нуждаюсь в общежитии</th>
-                    <td>
-                        @(abiturient.IsHostelRequired?"Да":"Нет")
-                    </td>
-                </tr>
-                <tr>
-                    <th>Иностранные языки</th>
-                    <td>
-                        @if (abiturient.AppUser.AppUserForeignLanguages == null || abiturient.AppUser.AppUserForeignLanguages.Count == 0)
-                        {
-                            <a asp-action="AddAppUserForeignLanguage" class="text-danger">Добавить</a>
-                        }
-                        else
-                        {
-                            @foreach (var item in abiturient.AppUser.AppUserForeignLanguages)
+        @if (false)
+        {
+            <br />
+            <a asp-action="ChangePersonalInformation" class="btn btn-primary">Изменить личные сведения</a>
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>Пол</th>
+                        <td>
+                            @if (abiturient.AppUser.GenderId == null)
                             {
-                                <p> @item.ForeignLanguage.ForeignLanguageName </p>
+                                <a asp-action="ChangePersonalInformation" class="text-danger">Не указано</a>
                             }
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <th>Дополнительные контактные данные</th>
-                    <td>
-                        @if (abiturient.AppUser.FamilyMemberContacts == null || abiturient.AppUser.FamilyMemberContacts.Count == 0)
-                        {
-                            <a asp-action="AddFamilyMemberContact" class="text-danger">Не указано</a>
-                        }
-                        else
-                        {
-                            @foreach (var familyMemberContact in abiturient.AppUser.FamilyMemberContacts)
+                            else
                             {
-                                <p>
-                                    @familyMemberContact.GetFamilyMemberContactString
-                                </p>
+                                <p>@abiturient.AppUser.Gender.GenderName</p>
                             }
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <th>Домашний адрес</th>
-                    <td>
-                        @if (abiturient.AppUser.AddressCurrentId == null)
-                        {
-                            <p>@abiturient.AppUser.PassportData.Address.GetAddress</p>
-                            <p>(совпадает с адресом по прописке)</p>
-                        }
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Гражданство</th>
+                        <td>
+                            @if (string.IsNullOrWhiteSpace(abiturient.AppUser.Citizenship))
+                            {
+                                <a asp-action="ChangePersonalInformation" class="text-danger">Не указано</a>
+                            }
+                            else
+                            {
+                                <p>@abiturient.AppUser.Citizenship</p>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Национальность</th>
+                        <td>
+                            @if (string.IsNullOrWhiteSpace(abiturient.AppUser.Nationality))
+                            {
+                                <a asp-action="ChangePersonalInformation" class="text-danger">Не указано</a>
+                            }
+                            else
+                            {
+                                <p>@abiturient.AppUser.Nationality</p>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Отношение к военной службе</th>
+                        <td>
+                            @if (abiturient.AppUser.MilitaryServiceStatusId == null)
+                            {
+                                <a asp-action="ChangePersonalInformation" class="text-danger">Не указано</a>
+                            }
+                            else
+                            {
+                                <p>@abiturient.AppUser.MilitaryServiceStatus.MilitaryServiceStatusName</p>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Нуждаюсь в общежитии</th>
+                        <td>
+                            @(abiturient.IsHostelRequired?"Да":"Нет")
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Иностранные языки</th>
+                        <td>
+                            @if (abiturient.AppUser.AppUserForeignLanguages == null || abiturient.AppUser.AppUserForeignLanguages.Count == 0)
+                            {
+                                <a asp-action="AddAppUserForeignLanguage" class="text-danger">Добавить</a>
+                            }
+                            else
+                            {
+                                @foreach (var item in abiturient.AppUser.AppUserForeignLanguages)
+                                {
+                                    <p> @item.ForeignLanguage.ForeignLanguageName </p>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Дополнительные контактные данные</th>
+                        <td>
+                            @if (abiturient.AppUser.FamilyMemberContacts == null || abiturient.AppUser.FamilyMemberContacts.Count == 0)
+                            {
+                                <a asp-action="AddFamilyMemberContact" class="text-danger">Не указано</a>
+                            }
+                            else
+                            {
+                                @foreach (var familyMemberContact in abiturient.AppUser.FamilyMemberContacts)
+                                {
+                                    <p>
+                                        @familyMemberContact.GetFamilyMemberContactString
+                                    </p>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Домашний адрес</th>
+                        <td>
+                            @if (abiturient.AppUser.AddressCurrentId == null)
+                            {
+                                <p>@abiturient.AppUser.PassportData.Address.GetAddress</p>
+                                <p>(совпадает с адресом по прописке)</p>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        }
     </div>
 
     @*////////////////////////////////////////////////////////// Загруженные документы ///////////////////////////////////////////////////*@
@@ -348,7 +362,7 @@
 
                                     @if (userDocumentRowStatus == RowStatusEnum.Confirmed)
                                     {
-                                        <p class="text-primary">Подтверждено</p>
+                                        <p class="text-success">Подтверждено</p>
                                     }
                                     else if (userDocumentRowStatus == RowStatusEnum.ReturnedForCorrection)
                                     {
@@ -453,10 +467,10 @@
     @*///////////////////////////////////////////////////////////////// Заявления о согласии на зачисление ///////////////////////////////////////////////////////////*@
     <div class="tab-pane @consentToEnrollmentsClass" id="consentToEnrollments">
         <br />
-        
+
         <table class="table table-hover">
             <thead>
-                <tr>                    
+                <tr>
                     <th>Скан-копия подтверждающего документа</th>
                     <th>Статус</th>
                     <th>Замечания</th>
@@ -465,7 +479,7 @@
             </thead>
             <tbody>
                 @if (abiturient.ApplicationForAdmissions == null ||
-            abiturient.ApplicationForAdmissions.Count() == 0)
+           abiturient.ApplicationForAdmissions.Count() == 0)
                 {
                     <tr>
                         <td colspan="4" class="text-center">
@@ -632,7 +646,7 @@
             </thead>
             <tbody>
                 @if (abiturient.ApplicationForAdmissions == null ||
-             abiturient.ApplicationForAdmissions.Count() == 0)
+            abiturient.ApplicationForAdmissions.Count() == 0)
                 {
                     <tr>
                         <td colspan="5" class="text-center">
@@ -652,20 +666,20 @@
                         </tr>
 
                         @if (applicationForAdmission.AdmissionPrivileges == null || applicationForAdmission.AdmissionPrivileges.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    Льготы для поступления отсутствуют
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var admissionPrivilege in applicationForAdmission.AdmissionPrivileges)
                             {
+                                var rowStatus = admissionPrivilege.RowStatus;
                                 <tr>
-                                    <td colspan="5" class="text-center">
-                                        Льготы для поступления отсутствуют
-                                    </td>
-                                </tr>
-                            }
-                            else
-                            {
-                                foreach (var admissionPrivilege in applicationForAdmission.AdmissionPrivileges)
-                                {
-                                    var rowStatus = admissionPrivilege.RowStatus;
-                                    <tr>
-                                        <td>@admissionPrivilege.AdmissionPrivilegeType?.AdmissionPrivilegeTypeName</td>
+                                    <td>@admissionPrivilege.AdmissionPrivilegeType?.AdmissionPrivilegeTypeName</td>
                                     <td>
                                         @if (admissionPrivilege.FileModel != null)
                                         {
@@ -699,9 +713,108 @@
                                             <a class="btn btn-danger  btn-block" asp-action="AbiturientAdmissionPrivilegeRemove" asp-route-abiturientAdmissionPrivilegeId="@admissionPrivilege.AdmissionPrivilegeId">Удалить</a>
                                         }
                                     </td>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+    @*///////////////////////////////////////////////////////////////// Договоры ///////////////////////////////////////////////////////////*@
+    <div class="tab-pane @contractsClass" id="contracts">
+        <br />
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Скан-копия договора</th>
+                    <th>Статус</th>
+                    <th>Замечания</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (abiturient.ApplicationForAdmissions == null || abiturient.ApplicationForAdmissions.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            Заявления на поступление не оформлены
+                        </td>
+                    </tr>
+                }
+                else
+                {
+
+                    foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions)
+                    {
+                        if (applicationForAdmission.QuotaTypeId == (int)QuotaTypesEnum.CelevoyPriem || applicationForAdmission.QuotaTypeId == (int)QuotaTypesEnum.DogovorObOkazaniiPlatnihObrazovatUslug)
+                        {
+                            <tr>
+                                <td colspan="3" class="">
+                                    <b>Заявление о приёме: @applicationForAdmission.EduProfile.GetEduProfileFullName - @applicationForAdmission.QuotaType.QuotaTypeName</b>
+                                </td>
+                                @if(applicationForAdmission.Contracts == null || applicationForAdmission.Contracts.Count == 0)
+                                {
+                                    <td>
+                                    <a asp-action="CreateAbiturientContract" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId" class="btn btn-primary btn-block">Добавить договор</a>
+                                </td>
+                                }                                
+                            </tr>
+
+                            @if (applicationForAdmission.Contracts == null || applicationForAdmission.Contracts.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center">
+                                        Договоры отсутствуют
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var contract in applicationForAdmission.Contracts)
+                                {
+                                    var rowStatus = contract.RowStatus;
+                                    <tr>
+                                        <td>
+                                            @if (contract.FileModel != null)
+                                            {
+                                                <a href="/@contract.FileModel.Path" target="_blank">Открыть</a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-action="LoadContractFile"
+                                                   asp-route-contractId="">Загрузить</a>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (rowStatus.RowStatusId == (int)RowStatusEnum.Confirmed)
+                                            {
+                                                <p class="text-primary">Подтверждено</p>
+                                            }
+                                            else if (rowStatus.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                                            {
+                                                <p class="text-danger">Возвращено на доработку</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-warning">На проверке</p>
+                                            }
+                                        </td>
+                                        <td>@contract.Remark</td>
+                                        <td>
+                                            @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
+                                            {
+                                                <a class="btn btn-primary btn-block" asp-action="AbiturientContractEdit" asp-route-abiturientContractId="@contract.ContractId">Изменить</a>
+                                                <a class="btn btn-danger  btn-block" asp-action="AbiturientContractRemove" asp-route-abiturientContractId="@contract.ContractId">Удалить</a>
+                                            }
+                                        </td>
                                     </tr>
                                 }
                             }
+                        }
                     }
                 }
             </tbody>

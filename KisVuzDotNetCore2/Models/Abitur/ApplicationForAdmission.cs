@@ -1,4 +1,5 @@
-﻿using KisVuzDotNetCore2.Models.Education;
+﻿using KisVuzDotNetCore2.Models.Common;
+using KisVuzDotNetCore2.Models.Education;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,11 +18,13 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <summary>
         /// Дата создания
         /// </summary>
+        [Display(Name = "Дата/время загрузки")]
         public DateTime CreationDate { get; set; }
 
         /// <summary>
         /// Регистрационный номер
         /// </summary>
+        [Display(Name = "Регистрационный номер")]
         public string RegNumber { get; set; } //////////////////////////////////////////////////// int или string?
 
         /// <summary>
@@ -112,5 +115,11 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// </summary>
         [Display(Name = "Заявления о согласии на зачисление")]
         public List<ConsentToEnrollment> ConsentToEnrollments { get; set; }
+
+        /// <summary>
+        /// Договоры
+        /// </summary>
+        [Display(Name = "Договоры")]
+        public List<Contract> Contracts { get; set; }
     }
 }

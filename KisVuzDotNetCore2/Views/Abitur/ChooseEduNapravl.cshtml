@@ -3,17 +3,16 @@
     ViewData["Title"] = "Выбор направления подготовки";
 }
 
-<h2>Выбор уровня образования и направления подготовки</h2>
-<hr />
-
 @if (ViewBag.EduLevels != null)
 {
+    <h2>Выбор уровня образования</h2>    
+    <hr />
     <div class="row">
         <div class="col-md-4">
             <form asp-action="ChooseEduNapravl">
 
                 <div class="form-group">
-                    <label for="eduLevelId" class="control-label">Выберите уровень образования</label>
+                    <label for="eduLevelId" class="control-label">Выберите уровень образования, на котором вы хотите обучаться</label>
                     <select name="eduLevelId" class="form-control" asp-items="ViewBag.EduLevels"></select>
                 </div>
 
@@ -27,6 +26,8 @@
 
 @if (ViewBag.EduNapravls != null)
 {
+    <h2>Выбор направления подготовки</h2>
+    <hr />
     <div class="row">
         <div class="col-md-4">
             <form asp-action="ChooseEduNapravl">

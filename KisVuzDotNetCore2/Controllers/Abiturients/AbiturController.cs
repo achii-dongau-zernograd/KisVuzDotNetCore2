@@ -95,16 +95,20 @@ namespace KisVuzDotNetCore2.Controllers
                 return RedirectToAction(nameof(LoadFileEducationDocument));
             
             // Проверяем наличие сведений об образовании
-            if (! await _abiturRepository.IsUserEducationDataExists(abiturient))
-                return RedirectToAction(nameof(CreateUserEducation));
+            //if (! await _abiturRepository.IsUserEducationDataExists(abiturient))
+            //    return RedirectToAction(nameof(CreateUserEducation));
 
             // Проверяем наличие у абитуриента загруженной скан-копии паспорта
             if (!_abiturRepository.IsLoadedFilePassport(abiturient))
                 return RedirectToAction(nameof(LoadFilePassport));
 
             // Проверяем наличие паспортных данных
-            if (!_abiturRepository.IsPassportDataExists(abiturient))
-                return RedirectToAction(nameof(CreatePassportData));
+            //if (!_abiturRepository.IsPassportDataExists(abiturient))
+            //    return RedirectToAction(nameof(CreatePassportData));
+
+            // Проверяем наличие у абитуриента загруженной карточки абитуриента
+            if (!_abiturRepository.IsLoadedFileAbiturientCard(abiturient))
+                return RedirectToAction(nameof(LoadFileAbiturientCard));
 
             // Проверяем наличие заявлений о приёме
             if (!_abiturRepository.IsApplicationForAdmissionExists(abiturient))
@@ -567,6 +571,88 @@ namespace KisVuzDotNetCore2.Controllers
         }
         #endregion
 
+        #region Договоры
+        public async Task<IActionResult> CreateAbiturientContract(int applicationForAdmissionId)
+        {
+            var applicationForAdmission = await _abiturRepository.GetApplicationForAdmissionAsync(User.Identity.Name, applicationForAdmissionId);
+
+            int contractTypeId = 0;
+            IQueryable<DocumentSample> documentSamples = null;
+            if (applicationForAdmission.QuotaTypeId == (int)QuotaTypesEnum.CelevoyPriem)
+            {
+                contractTypeId = (int)ContractTypesEnum.ContractTargetTraining;
+                documentSamples = _documentSamplesRepository.GetDocumentSamples(FileDataTypeEnum.DogovorOCelevomObuchenii);
+            }
+
+            if (applicationForAdmission.QuotaTypeId == (int)QuotaTypesEnum.DogovorObOkazaniiPlatnihObrazovatUslug)
+            {
+                contractTypeId = (int)ContractTypesEnum.ContractPaidTraining;
+                documentSamples = _documentSamplesRepository.GetDocumentSamples(FileDataTypeEnum.DogovorObOkazaniiPlatnihObrazovatelnihUslug);
+            }
+
+            if(documentSamples != null)
+            {
+                ViewBag.DocumentSamples = await documentSamples.ToListAsync();
+            }
+
+            
+
+            var contract = new Contract
+            {
+                AppUserId = applicationForAdmission.Abiturient.AppUserId,
+                ApplicationForAdmission = applicationForAdmission,
+                ApplicationForAdmissionId = applicationForAdmission.ApplicationForAdmissionId,
+                ContractTypeId = contractTypeId,
+                RowStatusId = (int) RowStatusEnum.NotConfirmed
+            };
+
+            return View(contract);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAbiturientContract(Contract contract,
+            IFormFile uploadedFile)
+        {
+            await _abiturRepository.CreateContractAsync(User.Identity.Name, contract, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "contracts" });
+        }
+
+        /// <summary>
+        /// Редактирование заявления о согласии на зачисление абитуриента
+        /// </summary>
+        /// <param name="abiturientConsentToEnrollmentId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> AbiturientContractEdit(int abiturientConsentToEnrollmentId)
+        {
+            if (abiturientConsentToEnrollmentId == 0)
+                return NotFound();
+
+            var consentToEnrollment = await _abiturRepository.GetConsentToEnrollment(User.Identity.Name, abiturientConsentToEnrollmentId);
+            if (consentToEnrollment == null)
+                return NotFound();
+
+            ViewBag.ApplicationForAdmissions = _selectListRepository
+                .GetSelectListApplicationForAdmissions(consentToEnrollment.ApplicationForAdmission.AbiturientId,
+                consentToEnrollment.ApplicationForAdmissionId);
+
+            return View(consentToEnrollment);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AbiturientContractEdit(ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile)
+        {
+            if (consentToEnrollment == null)
+                return NotFound();
+
+            await _abiturRepository.UpdateConsentToEnrollment(User.Identity.Name, consentToEnrollment, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "contracts" });
+        }
+        #endregion
+
         #region Паспортные данные
         public async Task<IActionResult> CreatePassportData()
         {
@@ -647,7 +733,6 @@ namespace KisVuzDotNetCore2.Controllers
             return RedirectToAction(nameof(Start));
         }
         #endregion
-
 
         #region Добавление сведений об образовании абитуриента для первого незаполненного загруженного документа об образовании
         /// <summary>
@@ -764,6 +849,28 @@ namespace KisVuzDotNetCore2.Controllers
 
             UserDocument newUserDocument = await _userDocumentRepository
                 .CreatePassport(User.Identity.Name, uploadedFile);
+
+            return RedirectToAction(nameof(Start));
+        }
+        #endregion
+
+        #region Загрузка карточки абитуриента
+        public async Task<IActionResult> LoadFileAbiturientCard()
+        {
+            var documentSamples = _documentSamplesRepository.GetDocumentSamples(FileDataTypeEnum.AbiturientCard);
+            ViewBag.DocumentSamples = await documentSamples.ToListAsync();
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoadFileAbiturientCard(IFormFile uploadedFile)
+        {
+            if (uploadedFile == null)
+                RedirectToAction(nameof(Start));
+
+            UserDocument newUserDocument = await _userDocumentRepository
+                .CreateAbiturientCard(User.Identity.Name, uploadedFile);
 
             return RedirectToAction(nameof(Start));
         }

@@ -66,6 +66,13 @@ namespace KisVuzDotNetCore2.Models.Abitur
         bool IsLoadedFileEducationDocuments(Abiturient abiturient);
 
         /// <summary>
+        /// Проверяет наличие у абитуриента загруженной карточки абитуриента
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        bool IsLoadedFileAbiturientCard(Abiturient abiturient);
+
+        /// <summary>
         /// Удаляет личный кабинет абитуриента и все связанные данные
         /// с возможностью пометки аккаунта к удалению
         /// </summary>
@@ -127,7 +134,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="abiturient"></param>
         /// <returns></returns>
         Task<bool> IsUserEducationDataExists(Abiturient abiturient);
-
+                
         /// <summary>
         /// Возвращает запрос на выборку документов об образовании пользователя, не имеющих сведений 
         /// </summary>
@@ -348,6 +355,15 @@ namespace KisVuzDotNetCore2.Models.Abitur
         Task CreateAdmissionPrivilegeAsync(string userName, AdmissionPrivilege admissionPrivilege, IFormFile uploadedFile);
 
         /// <summary>
+        /// Создаёт договор абитуриента с образовательной организацией
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="contract"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task CreateContractAsync(string userName, Contract contract, IFormFile uploadedFile);
+
+        /// <summary>
         /// Возвращает объект льготы абитуриента при поступлении
         /// </summary>
         /// <param name="userName"></param>
@@ -404,6 +420,6 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="consentToEnrollment"></param>
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
-        Task UpdateConsentToEnrollment(string userName, ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile);
+        Task UpdateConsentToEnrollment(string userName, ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile);                
     }
 }
