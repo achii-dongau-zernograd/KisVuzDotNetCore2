@@ -810,5 +810,18 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(data,
                  "AbiturientId", "AbiturientFioBirthdayEmail", selectedId);
         }
+
+        /// <summary>
+        /// Возвращает список типов договоров
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListContractTypes(int selectedId = 0)
+        {
+            var data = _context.ContractTypes;
+
+            return new SelectList(data,
+                 "ContractTypeId", "ContractTypeName", selectedId);
+        }
     }
 }

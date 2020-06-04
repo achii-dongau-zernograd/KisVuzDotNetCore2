@@ -1,0 +1,51 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.ConsentToEnrollment
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление заявления о согласии на зачисление</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationForAdmissionId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationForAdmission.ApplicationForAdmissionFullNameWithAppUserInfo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModelId)
+        </dt>
+        <dd>
+            @if (Model.FileModel == null)
+            {
+                <text>-</text>
+            }
+            else
+            {
+                <a href="/@Model.FileModel.Path" target="_blank">Открыть</a>
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RowStatusId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RowStatus.RowStatusName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+    </dl>
+
+    <form asp-action="AbiturientConsentToEnrollmentRemove">
+        <input type="hidden" asp-for="ConsentToEnrollmentId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

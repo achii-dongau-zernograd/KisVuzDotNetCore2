@@ -2,6 +2,7 @@
 using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.Priem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,11 +32,26 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
         /// Список абитуриентов
         /// </summary>
         /// <returns></returns>
-        public IActionResult Index()
+        public IActionResult Index(AbiturientsFilterAndSortModel filterAndSortModel)
         {
-            var abiturs = _abiturRepository.GetAbiturients().OrderByDescending(a => a.AppUser.RegisterDateTime);
+            ViewBag.AbiturientsFilterAndSortModel = filterAndSortModel;
+
+            ViewBag.AbiturientStatuses = _selectListRepository.GetSelectListAbiturientStatuses(filterAndSortModel.FilterAbiturientStatus ?? 0);
+
+            var abiturs = _abiturRepository.GetAbiturients();
             
-            return View(abiturs.ToList());
+            if(! string.IsNullOrWhiteSpace(filterAndSortModel.FilterLastNameFragment))
+                abiturs = abiturs.Where(a => a.AppUser.LastName.Contains(filterAndSortModel.FilterLastNameFragment));
+
+            if (filterAndSortModel.FilterAbiturientStatus != null)
+                abiturs = abiturs.Where(a => a.AbiturientStatusId == filterAndSortModel.FilterAbiturientStatus);
+
+            abiturs = abiturs.OrderByDescending(a => a.AppUser.RegisterDateTime);
+
+            if (filterAndSortModel.IsRequestDataImmediately)
+                return View(abiturs.ToList());
+            else
+                return View();
         }
 
         /// <summary>

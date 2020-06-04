@@ -916,6 +916,78 @@ namespace KisVuzDotNetCore2.Models.Abitur
             entry.RowStatusId = (int)RowStatusEnum.ChangedByUser;
 
             await _consentToEnrollmentRepository.UpdateConsentToEnrollmentAsync(entry, uploadedFile);
-        }        
+        }
+
+        /// <summary>
+        /// Удаляет заявление о согласии на зачисление абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="consentToEnrollmentId"></param>
+        /// <returns></returns>
+        public async Task RemoveConsentToEnrollment(string userName, int consentToEnrollmentId)
+        {
+            var entry = await GetConsentToEnrollment(userName, consentToEnrollmentId);
+
+            if (entry == null) return;
+
+            await _consentToEnrollmentRepository.RemoveConsentToEnrollmentAsync(entry);
+        }
+
+        #region Договоры абитуриентов
+        /// <summary>
+        /// Возвращает договор абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="abiturientContractId"></param>
+        /// <returns></returns>
+        public async Task<Contract> GetContractAsync(string userName, int abiturientContractId)
+        {
+            var entry = await _contractRepository.GetContractAsync(abiturientContractId);
+            if (entry == null) return null;
+
+            if (entry.AppUser.UserName != userName) return null;
+
+            return entry;
+        }
+
+        /// <summary>
+        /// Обновляет договор абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="contract"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task UpdateContractAsync(string userName, Contract contract, IFormFile uploadedFile)
+        {
+            if (contract == null) return;
+            if (uploadedFile == null) return;
+
+            var entry = await GetContractAsync(userName, contract.ContractId);
+            if (entry == null) return;
+
+            if (entry.AppUser.UserName != userName) return;
+
+            entry.RowStatusId = (int)RowStatusEnum.ChangedByUser;
+            await _contractRepository.UpdateContractAsync(entry, uploadedFile);
+        }
+
+        /// <summary>
+        /// Удаляет договор абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="contract"></param>
+        /// <returns></returns>
+        public async Task RemoveContractAsync(string userName, Contract contract)
+        {
+            if (contract == null) return;            
+
+            var entry = await GetContractAsync(userName, contract.ContractId);
+            if (entry == null) return;
+
+            if (entry.AppUser.UserName != userName) return;
+                        
+            await _contractRepository.RemoveContractAsync(entry);
+        }
+        #endregion
     }
 }

@@ -29,6 +29,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListEduNapravlFullNamesOfEduLevel(int? eduLevelId, int selectedId = 0);
         
         /// <summary>
+        /// Возвращает список типов договоров
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListContractTypes(int selectedId = 0);
+
+        /// <summary>
         /// Возвращает список типов документов, загружаемых абитуриентами,
         /// доступных для фильтрации приёмной комиссией при проверке
         /// </summary>

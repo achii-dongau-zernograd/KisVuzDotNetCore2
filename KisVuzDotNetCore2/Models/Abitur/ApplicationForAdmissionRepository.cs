@@ -205,5 +205,24 @@ namespace KisVuzDotNetCore2.Models.Abitur
             _context.ApplicationForAdmissions.Remove(entry);
             await _context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Создаёт заявление о приёме
+        /// </summary>
+        /// <param name="applicationForAdmission"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task CreateApplicationForAdmissionAsync(ApplicationForAdmission applicationForAdmission, IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+                var loadedFileModel = await _fileModelRepository.UploadApplicationForAdmissionFileAsync(uploadedFile);
+                applicationForAdmission.FileModel = loadedFileModel;
+                applicationForAdmission.FileModelId = loadedFileModel.Id;
+            }
+
+            _context.ApplicationForAdmissions.Add(applicationForAdmission);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -569,6 +569,30 @@ namespace KisVuzDotNetCore2.Controllers
 
             return RedirectToAction(nameof(Start), new { selectedTab = "consentToEnrollments" });
         }
+
+        public async Task<IActionResult> AbiturientConsentToEnrollmentRemove(int abiturientConsentToEnrollmentId)
+        {
+            if (abiturientConsentToEnrollmentId == 0)
+                return NotFound();
+
+            var consentToEnrollment = await _abiturRepository.GetConsentToEnrollment(User.Identity.Name, abiturientConsentToEnrollmentId);
+            if (consentToEnrollment == null)
+                return NotFound();
+
+            return View(consentToEnrollment);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AbiturientConsentToEnrollmentRemove(ConsentToEnrollment consentToEnrollment)
+        {
+            if (consentToEnrollment == null)
+                return NotFound();
+                        
+            await _abiturRepository.RemoveConsentToEnrollment(User.Identity.Name, consentToEnrollment.ConsentToEnrollmentId);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "consentToEnrollments" });
+        }
         #endregion
 
         #region Договоры
@@ -594,9 +618,7 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 ViewBag.DocumentSamples = await documentSamples.ToListAsync();
             }
-
             
-
             var contract = new Contract
             {
                 AppUserId = applicationForAdmission.Abiturient.AppUserId,
@@ -620,34 +642,59 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         /// <summary>
-        /// Редактирование заявления о согласии на зачисление абитуриента
+        /// Редактирование договора абитуриента
         /// </summary>
         /// <param name="abiturientConsentToEnrollmentId"></param>
         /// <returns></returns>
-        public async Task<IActionResult> AbiturientContractEdit(int abiturientConsentToEnrollmentId)
+        public async Task<IActionResult> AbiturientContractEdit(int abiturientContractId)
         {
-            if (abiturientConsentToEnrollmentId == 0)
+            if (abiturientContractId == 0)
                 return NotFound();
 
-            var consentToEnrollment = await _abiturRepository.GetConsentToEnrollment(User.Identity.Name, abiturientConsentToEnrollmentId);
-            if (consentToEnrollment == null)
-                return NotFound();
+            var abiturientContract = await _abiturRepository.GetContractAsync(User.Identity.Name, abiturientContractId);
+            if (abiturientContract == null)
+                return NotFound();                        
 
-            ViewBag.ApplicationForAdmissions = _selectListRepository
-                .GetSelectListApplicationForAdmissions(consentToEnrollment.ApplicationForAdmission.AbiturientId,
-                consentToEnrollment.ApplicationForAdmissionId);
-
-            return View(consentToEnrollment);
+            return View(abiturientContract);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AbiturientContractEdit(ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile)
+        public async Task<IActionResult> AbiturientContractEdit(Contract contract, IFormFile uploadedFile)
         {
-            if (consentToEnrollment == null)
+            if (contract == null)
                 return NotFound();
 
-            await _abiturRepository.UpdateConsentToEnrollment(User.Identity.Name, consentToEnrollment, uploadedFile);
+            await _abiturRepository.UpdateContractAsync(User.Identity.Name, contract, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "contracts" });
+        }
+
+        /// <summary>
+        /// Удаление договора абитуриента
+        /// </summary>
+        /// <param name="abiturientConsentToEnrollmentId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> AbiturientContractRemove(int abiturientContractId)
+        {
+            if (abiturientContractId == 0)
+                return NotFound();
+
+            var abiturientContract = await _abiturRepository.GetContractAsync(User.Identity.Name, abiturientContractId);
+            if (abiturientContract == null)
+                return NotFound();
+
+            return View(abiturientContract);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AbiturientContractRemove(Contract contract)
+        {
+            if (contract == null)
+                return NotFound();
+
+            await _abiturRepository.RemoveContractAsync(User.Identity.Name, contract);
 
             return RedirectToAction(nameof(Start), new { selectedTab = "contracts" });
         }

@@ -1,0 +1,48 @@
+﻿@model KisVuzDotNetCore2.Models.Common.Contract
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<h2>Редактирование договора</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AbiturientContractEdit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+            
+            <div class="form-group">
+                @if (Model.FileModel == null)
+                {
+                    <label class="control-label text-danger">Скан-копия договора не загружена!</label>
+                    <label class="control-label">Выберите файл, содержащий скан-копию договора: </label>
+                }
+                else
+                {
+                    <label class="control-label">Загруженная скан-копия договора: </label>
+                    <br />
+                    <a href="/@Model.FileModel.Path">@Model.FileModel.FileName</a>
+                    <br />
+                    <label class="control-label">Для замены выберите другой файл: </label>
+                }
+
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>            
+            
+            <div class="form-group">
+                <input type="hidden" asp-for="ContractId" />
+                <input type="hidden" asp-for="ContractTypeId" />
+                <input type="hidden" asp-for="AppUserId" />
+                <input type="hidden" asp-for="DateStart" />
+                <input type="hidden" asp-for="DateEnd" />
+                <input type="hidden" asp-for="RowStatusId" />
+                <input type="hidden" asp-for="Remark" />
+                <input type="hidden" asp-for="ApplicationForAdmissionId" />
+                <input type="hidden" asp-for="FileModelId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Start" asp-route-selectedTab="contracts" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

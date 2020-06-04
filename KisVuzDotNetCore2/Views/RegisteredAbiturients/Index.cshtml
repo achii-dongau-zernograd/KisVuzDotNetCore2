@@ -6,15 +6,45 @@
 
 <h2>Абитуриенты</h2>
 
+<div class="panel panel-default">
+    <div class="panel-heading">Фильтр</div>
+    <div class="panel-body">
+        <form asp-action="Index" class="form-inline">
+            <div class="form-group">
+                <label for="FilterLastNameFragment">Фамилия (фрагмент)</label>
+                <input type="text" name="FilterLastNameFragment" value="@ViewBag.AbiturientsFilterAndSortModel.FilterLastNameFragment" class="form-control" id="FilterLastNameFragment" placeholder="Все абитуриенты">
+            </div>
+            <div class="form-group">
+                <label for="FilterAbiturientStatus">Статус абитуриента</label>
+                <select name="FilterAbiturientStatus" class="form-control" asp-items="ViewBag.AbiturientStatuses">
+                    <option>Все статусы</option>
+                </select>
+            </div>
+
+            <input type="hidden" name="IsRequestDataImmediately" value="true" />
+            <button type="submit" class="btn btn-info">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                Применить фильтр
+            </button>
+        </form>
+    </div>
+</div>
+
+
 <table class="table">
     <thead>
         <tr>
             <th>Дата/время регистрации</th>
             <th>ФИО</th>
             <th>Основные документы</th>
+            <th>Заявления о приёме</th>
+            <th>Заявления о согласии на зачисление</th>
+            <th>Индивидуальные достижения</th>
+            <th>Льготы</th>
+            <th>Договоры</th>
             <th>Статус</th>
             <th>Действия</th>
-        </tr>        
+        </tr>
     </thead>
     <tbody>
         @if (Model != null && Model.Count > 0)
@@ -52,10 +82,10 @@
                         }
 
                         @foreach (var userDocument in item.AppUser.UserDocuments
-                         .Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.AttestatObOsnovnomObshemObrazovanii ||
-                                     d.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
-                                     d.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO ||
-                                     d.FileDataTypeId == (int)FileDataTypeEnum.DiplomVO))
+                        .Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.AttestatObOsnovnomObshemObrazovanii ||
+                                    d.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
+                                    d.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO ||
+                                    d.FileDataTypeId == (int)FileDataTypeEnum.DiplomVO))
                         {
                             string userDocumentClass = "";
                             if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
@@ -81,10 +111,154 @@
                             <p><a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a></p>
                         }
                     </td>
-                    <td>@item.AbiturientStatus?.AbiturientStatusName</td>
+
+                    @*Заявления о приёме*@
                     <td>
-                        <a asp-action="Details" asp-route-userName="@item.AppUser.UserName" class="btn btn-primary">Сведения</a>
-                        <a asp-action="Delete" asp-route-userName="@item.AppUser.UserName" class="btn btn-danger">Удалить</a>
+                        @if(item.ApplicationForAdmissions == null || item.ApplicationForAdmissions.Count == 0)
+                        {
+                            <p class="text-info">Нет</p>
+                        }
+                        else
+                        {
+                            foreach (var applicationForAdmission in item.ApplicationForAdmissions)
+                            {
+                                string textClass = "";
+                                if (applicationForAdmission.RowStatusId == (int)RowStatusEnum.Confirmed) { textClass = "text-success"; }
+                                if (applicationForAdmission.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection) { textClass = "text-danger"; }
+                                if (applicationForAdmission.RowStatusId == (int)RowStatusEnum.ChangedByUser) { textClass = "text-warning"; }
+
+                                <p class="@textClass">
+                                    @applicationForAdmission.EduProfile.EduNapravl.EduNapravlCode
+                                </p>
+                            }
+                        }
+                    </td>
+
+                    @*Заявления о согласии на зачисление*@
+                    <td>
+                        @if(item.ApplicationForAdmissions == null || item.ApplicationForAdmissions.Count == 0)
+                        {
+                            <p>Нет</p>
+                        }
+                        else
+                        {
+                            foreach (var applicationForAdmission in item.ApplicationForAdmissions)
+                            {
+                                if(applicationForAdmission.ConsentToEnrollments == null || applicationForAdmission.ConsentToEnrollments.Count == 0)
+                                {
+                                    <p>Нет</p>
+                                }
+                                else
+                                {
+                                    foreach (var consentToEnrollment in applicationForAdmission.ConsentToEnrollments)
+                                    {
+                                        string textClass = "";
+                                        if (consentToEnrollment.RowStatusId == (int)RowStatusEnum.Confirmed) { textClass = "text-success"; }
+                                        if (consentToEnrollment.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection) { textClass = "text-danger"; }
+                                        if (consentToEnrollment.RowStatusId == (int)RowStatusEnum.ChangedByUser) { textClass = "text-warning"; }
+
+                                        <p class="@textClass">
+                                            @consentToEnrollment.ApplicationForAdmission.EduProfile.EduNapravl.EduNapravlCode
+                                        </p>
+                                    }
+                                }                                
+                            }
+                        }
+                    </td>
+
+                    @*Индивидуальные достижения*@
+                    <td>
+                        @if(item.AbiturientIndividualAchievments == null || item.AbiturientIndividualAchievments.Count == 0)
+                        {
+                            <p class="text-info">Нет</p>
+                        }
+                        else
+                        {
+                            foreach (var abiturientIndividualAchievment in item.AbiturientIndividualAchievments)
+                            {
+                                string textClass = "";
+                                if (abiturientIndividualAchievment.RowStatusId == (int)RowStatusEnum.Confirmed) { textClass = "text-success"; }
+                                if (abiturientIndividualAchievment.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection) { textClass = "text-danger"; }
+                                if (abiturientIndividualAchievment.RowStatusId == (int)RowStatusEnum.ChangedByUser) { textClass = "text-warning"; }
+
+                                <p class="@textClass">
+                                    @abiturientIndividualAchievment.AbiturientIndividualAchievmentType.AbiturientIndividualAchievmentTypeName
+                                </p>
+                            }
+                        }
+                    </td>
+
+                    @*Льготы*@
+                    <td>
+                        @if(item.ApplicationForAdmissions == null || item.ApplicationForAdmissions.Count == 0)
+                        {
+                            <p>Нет</p>
+                        }
+                        else
+                        {
+                            foreach (var applicationForAdmission in item.ApplicationForAdmissions)
+                            {
+                                if(applicationForAdmission.AdmissionPrivileges == null || applicationForAdmission.AdmissionPrivileges.Count == 0)
+                                {
+                                    <p>Нет</p>
+                                }
+                                else
+                                {
+                                    foreach (var admissionPrivilege in applicationForAdmission.AdmissionPrivileges)
+                                    {
+                                        string textClass = "";
+                                        if (admissionPrivilege.RowStatusId == (int)RowStatusEnum.Confirmed) { textClass = "text-success"; }
+                                        if (admissionPrivilege.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection) { textClass = "text-danger"; }
+                                        if (admissionPrivilege.RowStatusId == (int)RowStatusEnum.ChangedByUser) { textClass = "text-warning"; }
+
+                                        <p class="@textClass">
+                                            @admissionPrivilege.AdmissionPrivilegeType.AdmissionPrivilegeTypeName
+                                        </p>
+                                    }
+                                }                                
+                            }
+                        }
+                    </td>
+
+                    @*Договоры*@
+                    <td>
+                        @if(item.ApplicationForAdmissions == null || item.ApplicationForAdmissions.Count == 0)
+                        {
+                            <p>Нет</p>
+                        }
+                        else
+                        {
+                            foreach (var applicationForAdmission in item.ApplicationForAdmissions)
+                            {
+                                if(applicationForAdmission.Contracts == null || applicationForAdmission.Contracts.Count == 0)
+                                {
+                                    <p>Нет</p>
+                                }
+                                else
+                                {
+                                    foreach (var contract in applicationForAdmission.Contracts)
+                                    {
+                                        string textClass = "";
+                                        if (contract.RowStatusId == (int)RowStatusEnum.Confirmed) { textClass = "text-success"; }
+                                        if (contract.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection) { textClass = "text-danger"; }
+                                        if (contract.RowStatusId == (int)RowStatusEnum.ChangedByUser) { textClass = "text-warning"; }
+
+                                        <p class="@textClass">
+                                            @contract.ContractType.ContractTypeName
+                                        </p>
+                                    }
+                                }                                
+                            }
+                        }
+                    </td>
+
+                    @*Статус*@
+                    <td>@item.AbiturientStatus?.AbiturientStatusName</td>
+
+                    @*Действия*@
+                    <td>
+                        <a asp-action="Details" asp-route-userName="@item.AppUser.UserName" class="btn btn-primary btn-block">Сведения</a>
+                        <a asp-action="Delete"  asp-route-userName="@item.AppUser.UserName" class="btn btn-danger  btn-block">Удалить</a>
                     </td>
                 </tr>
             }
@@ -92,7 +266,7 @@
         else
         {
             <tr>
-                <td colspan="2" class="text-center">Абитуриенты не зарегистрированы</td>                
+                <td colspan="10" class="text-center text-info"><b>Для поиска абитуриентов выберите условия поиска и нажмите "Применить фильтр"</b></td>
             </tr>
         }
 

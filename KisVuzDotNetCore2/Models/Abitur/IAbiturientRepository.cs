@@ -420,6 +420,39 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="consentToEnrollment"></param>
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
-        Task UpdateConsentToEnrollment(string userName, ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile);                
+        Task UpdateConsentToEnrollment(string userName, ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Удаляет заявление о согласии на зачисление абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="consentToEnrollmentId"></param>
+        /// <returns></returns>
+        Task RemoveConsentToEnrollment(string userName, int consentToEnrollmentId);
+        
+        /// <summary>
+        /// Возвращает договор абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="abiturientContractId"></param>
+        /// <returns></returns>
+        Task<Contract> GetContractAsync(string userName, int abiturientContractId);
+        
+        /// <summary>
+        /// Обновляет договор абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="contract"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task UpdateContractAsync(string userName, Contract contract, IFormFile uploadedFile);
+        
+        /// <summary>
+        /// Удаляет договвор абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="contract"></param>
+        /// <returns></returns>
+        Task RemoveContractAsync(string userName, Contract contract);
     }
 }

@@ -61,6 +61,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         Task ApplicationForAdmissionFileLoadAsync(string userName, int applicationForAdmissionId, IFormFile uploadedFile);
         
         /// <summary>
+        /// Создаёт заявление о приёме
+        /// </summary>
+        /// <param name="applicationForAdmission"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task CreateApplicationForAdmissionAsync(ApplicationForAdmission applicationForAdmission, IFormFile uploadedFile);
+
+        /// <summary>
         /// Обновляет заявление о приёме
         /// </summary>
         /// <param name="applicationForAdmission"></param>

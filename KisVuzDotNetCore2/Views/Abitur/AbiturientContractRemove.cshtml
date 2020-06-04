@@ -1,0 +1,59 @@
+﻿@model KisVuzDotNetCore2.Models.Common.Contract
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление договора</h2>
+
+<h3>Вы действительно хотите удалить договор?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ContractTypeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContractType.ContractTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUserId)
+        </dt>
+        <dd>
+            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.AppUserId" target="_blank">@Model.AppUser.GetFullName</a>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationForAdmissionId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationForAdmission.ApplicationForAdmissionFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModelId)
+        </dt>
+        <dd>
+            @if (Model.FileModel != null)
+            {
+                <a href="/@Model.FileModel.Path" target="_blank">Открыть</a>
+            }
+        </dd>        
+        <dt>
+            @Html.DisplayNameFor(model => model.RowStatusId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RowStatus.RowStatusName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+    </dl>
+    
+    <form asp-action="AbiturientContractRemove">
+        <input type="hidden" asp-for="ContractId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Start" asp-route-selectedTab="contracts" class="btn btn-default">Отмена</a>
+    </form>
+</div>

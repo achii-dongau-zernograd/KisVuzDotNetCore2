@@ -24,5 +24,27 @@ namespace KisVuzDotNetCore2.Models.Common
         /// </summary>
         /// <returns></returns>
         IQueryable<Contract> GetContracts();
+
+        /// <summary>
+        /// Возвращает договор
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<Contract> GetContractAsync(int id);
+        
+        /// <summary>
+        /// Обновляет договор
+        /// </summary>
+        /// <param name="contract"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task UpdateContractAsync(Contract contract, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Удаляет договор
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <returns></returns>
+        Task RemoveContractAsync(Contract contract);
     }
 }

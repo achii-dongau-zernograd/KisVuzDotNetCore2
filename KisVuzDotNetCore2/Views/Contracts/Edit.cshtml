@@ -1,0 +1,79 @@
+﻿@model KisVuzDotNetCore2.Models.Common.Contract
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<h2>Редактирование договора</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AppUserId" class="control-label"></label>
+                <br />
+                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.AppUserId" target="_blank">@Model.AppUser.GetFullName</a>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationForAdmissionId" class="control-label"></label>
+                <br />
+                @if (Model.ApplicationForAdmission.FileModel == null)
+                {
+                    <p>@Model.ApplicationForAdmission.ApplicationForAdmissionFullName</p>
+                }
+                else
+                {
+                    <a href="/@Model.ApplicationForAdmission.FileModel.Path" target="_blank">@Model.ApplicationForAdmission.ApplicationForAdmissionFullName</a>
+                }
+
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                <br />
+                @if (Model.FileModel == null)
+                {
+                    <p>-</p>
+                }
+                else
+                {
+                    <p>Загруженный файл: <a href="/@Model.FileModel.Path" target="_blank">Открыть</a></p>
+                    <p>Для замены выберите новый файл</p>
+                }
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="ContractTypeId" class="control-label"></label>
+                <select asp-for="ContractTypeId" asp-items="ViewBag.ContractTypes" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateStart" class="control-label"></label>
+                <input type="date" asp-for="DateStart" class="form-control" />
+                <span asp-validation-for="DateStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateEnd" class="control-label"></label>
+                <input type="date" asp-for="DateEnd" class="form-control" />
+                <span asp-validation-for="DateEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RowStatusId" class="control-label"></label>
+                <select asp-for="RowStatusId" asp-items="ViewBag.RowStatuses" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label"></label>
+                <input asp-for="Remark" class="form-control" />
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ContractId" />
+                <input type="hidden" asp-for="AppUserId" />
+                <input type="hidden" asp-for="ApplicationForAdmissionId" />
+                <input type="hidden" asp-for="FileModelId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

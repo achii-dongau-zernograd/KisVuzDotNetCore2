@@ -36,6 +36,8 @@ namespace KisVuzDotNetCore2.Models.Common
                 .Include(c => c.ApplicationForAdmission.EduForm)
                 .Include(c => c.ApplicationForAdmission.QuotaType)
                 .Include(c => c.ApplicationForAdmission.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .Include(c => c.ApplicationForAdmission)
+                    .ThenInclude(afa => afa.FileModel.FileToFileTypes)
                 .Include(c => c.FileModel.FileToFileTypes);
 
             return contracts;
@@ -66,6 +68,73 @@ namespace KisVuzDotNetCore2.Models.Common
             await _context.SaveChangesAsync();
         }
 
-        
+        /// <summary>
+        /// Возвращает договор
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<Contract> GetContractAsync(int id)
+        {
+            var contract = await GetContracts().SingleOrDefaultAsync(c => c.ContractId == id);
+
+            return contract;
+        }
+
+        /// <summary>
+        /// Обновляет договор
+        /// </summary>
+        /// <param name="contract"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task UpdateContractAsync(Contract contract, IFormFile uploadedFile)
+        {
+            if (contract == null) return;
+
+            if (uploadedFile != null)
+            {
+                if (contract.FileModelId != null)
+                {
+                    if (contract.FileModel == null)
+                    {
+                        var entryFileModel = await _fileModelRepository.GetFileModelAsync(contract.FileModelId);
+                        contract.FileModel = entryFileModel;
+                    }
+
+                    await _fileModelRepository.ReloadFileAsync(contract.FileModel, uploadedFile);
+                }
+                else
+                {
+                    var loadedFileModel = await _fileModelRepository.UploadIndividualAchievmentFile(uploadedFile);
+                    contract.FileModel = loadedFileModel;
+                    contract.FileModelId = loadedFileModel.Id;
+                }
+            }
+
+            _context.Contracts.Update(contract);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет договор
+        /// </summary>
+        /// <param name="contract"></param>
+        /// <returns></returns>
+        public async Task RemoveContractAsync(Contract contract)
+        {
+            if (contract == null) return;
+
+            if(contract.FileModelId != null)
+            {
+                if(contract.FileModel == null)
+                {
+                    var entryFileModel = await _fileModelRepository.GetFileModelAsync(contract.FileModelId);
+                    contract.FileModel = entryFileModel;
+                }
+                await _fileModelRepository.RemoveFileModelAsync(contract.FileModel);
+            }
+
+            _context.Contracts.Remove(contract);
+            await _context.SaveChangesAsync();
+        }
     }
 }
