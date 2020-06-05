@@ -423,6 +423,32 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает jpg-файл нового задания в базу заданий СДО
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadLmsTaskJpg(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                "Задание СДО",
+                FileDataTypeEnum.Lms_Zadanie);
+            return fileModel;
+        }
+
+        /// <summary>
+        /// Загружает jpg-файл иллюстрации к варианту ответа на задание СДО
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadLmsTaskAnswerJpg(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                "Иллюстрация к варианту ответа на задание СДО",
+                FileDataTypeEnum.Lms_LmsTaskAnswer);
+            return fileModel;
+        }
+
+        /// <summary>
         /// Загружает файл документа об образовании
         /// </summary>
         /// <param name="uploadedFile"></param>
@@ -436,7 +462,7 @@ namespace KisVuzDotNetCore2.Models.Files
                 typeOfEducationDocument);
             return fileModel;
         }
-
+                
         /// <summary>
         /// Возвращает тип файлов
         /// </summary>

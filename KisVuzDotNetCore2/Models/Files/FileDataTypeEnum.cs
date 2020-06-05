@@ -247,6 +247,14 @@
         /// <summary>
         /// Договор об оказании платных образовательных услуг
         /// </summary>
-        DogovorObOkazaniiPlatnihObrazovatelnihUslug = 68
+        DogovorObOkazaniiPlatnihObrazovatelnihUslug = 68,
+        /// <summary>
+        /// Задание СДО
+        /// </summary>
+        Lms_Zadanie = 69,
+        /// <summary>
+        /// Иллюстрация к варианту ответа на задание СДО
+        /// </summary>
+        Lms_LmsTaskAnswer = 70
     }
 }

@@ -1,0 +1,26 @@
+﻿<ul class="nav navbar-nav navbar-left">
+    @if (User.IsInRole("Приёмная комиссия (консультанты)"))
+    {
+    <!-- Выпадающий список -->
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Приёмная комиссия (консультанты)<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a asp-controller="RegisteredAbiturients" asp-action="Index">Абитуриенты</a></li>
+            <li><a asp-controller="RegisteredAbiturientsUserDocumentsCheck" asp-action="Index">Основные документы абитуриентов</a></li>
+            <li><a asp-controller="ApplicationForAdmissions" asp-action="Index">Заявления о приёме</a></li>
+            <li><a asp-controller="ConsentToEnrollments" asp-action="Index">Заявления о согласии на зачисление</a></li>
+            <li><a asp-controller="AbiturientIndividualAchievments" asp-action="Index">Индивидуальные достижения</a></li>
+            <li><a asp-controller="AdmissionPrivileges" asp-action="Index">Льготы</a></li>
+            <li><a asp-controller="Contracts" asp-action="Index">Договоры</a></li>
+            
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Мероприятия <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a asp-controller="LmsEventsPriem" asp-action="Index">Вступительные испытания</a></li>
+                </ul>
+            </li>
+                        
+        </ul>
+    </li>
+    }    
+</ul>

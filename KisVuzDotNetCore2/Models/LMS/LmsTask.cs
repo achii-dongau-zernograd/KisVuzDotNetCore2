@@ -37,6 +37,12 @@ namespace KisVuzDotNetCore2.Models.LMS
         public FileModel LmsTaskJpg { get; set; }
 
         /// <summary>
+        /// Количество баллов
+        /// </summary>
+        [Display(Name = "Количество баллов")]
+        public int NumberOfPoints { get; set; } = 5;
+
+        /// <summary>
         /// Автор
         /// </summary>
         [Display(Name = "Автор")]
@@ -53,5 +59,10 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// Список сопоставлений задания с наименованиями учебных дисциплин
         /// </summary>
         public List<LmsTaskDisciplineName> LmsTaskDisciplineNames { get; set; }
+
+        /// <summary>
+        /// Варианты ответов
+        /// </summary>
+        public List<LmsTaskAnswer> LmsTaskAnswers { get; set; }
     }
 }

@@ -1,0 +1,84 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.LmsTaskAnswer
+
+@{
+    ViewData["Title"] = "Добавление";
+}
+
+<h2>Добавление вариантов ответов</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <h4>Задание</h4>
+        <p>@Model.LmsTask.LmsTaskText</p>
+        @if (Model.LmsTask.LmsTaskJpg != null)
+        {
+            <img src="/@Model.LmsTask.LmsTaskJpg.Path" class="img-responsive center-block" />
+        }
+
+
+        <hr />
+
+        <h4>Варианты ответов</h4>
+
+        @if (Model.LmsTask.LmsTaskAnswers == null || Model.LmsTask.LmsTaskAnswers.Count == 0)
+        {
+            <p class="text-danger">Варианты ответов отсутствуют</p>
+        }
+        else
+        {
+            <ol>
+                @foreach (var lmsTaskAnswer in Model.LmsTask.LmsTaskAnswers)
+                {
+                    string classText = "text-danger";
+                    if (lmsTaskAnswer.IsCorrect)
+                    {
+                        classText = "text-success";
+                    }
+
+                    <li class="@classText">
+                        @lmsTaskAnswer.LmsTaskAnswerText
+                        @if (lmsTaskAnswer.FileModel != null)
+                        {
+                            <img src="/@lmsTaskAnswer.FileModel.Path" class="img-responsive">
+                        }
+                    </li>
+                }
+            </ol>
+        }
+
+        <hr />
+        <h4>Новый вариант ответа</h4>
+        <form asp-action="CreateLmsTaskAnswers" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LmsTaskAnswerText" class="control-label"></label>
+                <input asp-for="LmsTaskAnswerText" class="form-control" />
+                <span asp-validation-for="LmsTaskAnswerText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Иллюстрация к варианту ответа (jpg)</label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsCorrect" /> @Html.DisplayNameFor(model => model.IsCorrect)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="addLmsTaskAnswer" value="true" />
+                <input type="hidden" asp-for="LmsTaskId" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr />
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Завершить добавление вариантов ответов</a>
+</div>
+

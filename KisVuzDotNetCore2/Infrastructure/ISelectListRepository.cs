@@ -29,6 +29,20 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListEduNapravlFullNamesOfEduLevel(int? eduLevelId, int selectedId = 0);
         
         /// <summary>
+        /// Возвращает список типов заданий СДО
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListLmsTaskTypes(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список пользователей, являющихся авторами
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAppUsersAuthors(string selectedId = "");
+
+        /// <summary>
         /// Возвращает список типов договоров
         /// </summary>
         /// <param name="selectedId"></param>

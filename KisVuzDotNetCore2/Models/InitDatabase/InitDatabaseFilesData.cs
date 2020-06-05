@@ -113,6 +113,12 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupName = "Файлы абитуриентов"
                     };
 
+                    FileDataTypeGroup fileDataTypeGroup15 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.LMS,
+                        FileDataTypeGroupName = "Система дистанционного образования"
+                    };
+
                     await context.FileDataTypeGroups.AddRangeAsync(
                         fileDataTypeGroup1,
                         fileDataTypeGroup2,
@@ -127,7 +133,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataTypeGroup11,
                         fileDataTypeGroup12,
                         fileDataTypeGroup13,
-                        fileDataTypeGroup14
+                        fileDataTypeGroup14,
+                        fileDataTypeGroup15
                     );
                     await context.SaveChangesAsync();
                 }
@@ -658,6 +665,20 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = (int)FileDataTypeGroupEnum.Contracts
                     };
 
+                    FileDataType fileDataType69 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.Lms_Zadanie,
+                        FileDataTypeName = "Задание",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.LMS
+                    };
+
+                    FileDataType fileDataType70 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.Lms_LmsTaskAnswer,
+                        FileDataTypeName = "Иллюстрация к варианту ответа на задание СДО",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.LMS
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -725,7 +746,9 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType65,
                         fileDataType66,
                         fileDataType67,
-                        fileDataType68
+                        fileDataType68,
+                        fileDataType69,
+                        fileDataType70
                         );
                     await context.SaveChangesAsync();
                 }

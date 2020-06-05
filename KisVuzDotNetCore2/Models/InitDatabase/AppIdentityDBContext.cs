@@ -102,6 +102,11 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<LmsTaskDisciplineName> LmsTaskDisciplineNames { get; set; }
 
         /// <summary>
+        /// Варианты ответов на задания СДО
+        /// </summary>
+        public DbSet<LmsTaskAnswer> LmsTaskAnswers { get; set; }
+
+        /// <summary>
         /// Наборы заданий СДО
         /// </summary>
         public DbSet<LmsTaskSet> LmsTaskSets { get; set; }
@@ -1251,6 +1256,8 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseAppUserLmsEventUserRoles.CreateAppUserLmsEventUserRoles(serviceProvider, configuration);
 
             await InitDatabaseContractTypes.CreateContractTypes(serviceProvider, configuration);
+
+            await InitDatabaseLmsTaskTypes.CreateLmsTaskTypes(serviceProvider, configuration);
         }        
     
     }

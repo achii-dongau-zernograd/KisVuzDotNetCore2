@@ -1,0 +1,128 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.LMS.LmsTask>
+
+@{
+    ViewData["Title"] = "Задания СДО";
+}
+
+<h2>Задания СДО</h2>
+
+<p>
+    <a asp-action="CreateLmsTask" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LmsTaskTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LmsTaskText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LmsTaskJpgId)
+            </th>
+            <th>
+                Количество баллов
+            </th>
+            <th>
+                Варианты ответов
+            </th>
+            <th>
+                Дисциплины
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppUserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTimeOfCreation)
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LmsTaskId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LmsTaskType.LmsTaskTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LmsTaskText)
+            </td>
+            <td>
+                @if(item.LmsTaskJpg != null)
+                {
+                    <a href="/@item.LmsTaskJpg.Path" target="_blank">Открыть</a>
+                }
+            </td>
+            <td>
+                @item.NumberOfPoints
+            </td>
+            <td>
+                @if(item.LmsTaskAnswers != null && item.LmsTaskAnswers.Count > 0)
+                {
+                    <ol>
+                        @foreach (var lmsTaskAnswer in item.LmsTaskAnswers)
+                        {
+                            string classText = "text-danger";
+                            if(lmsTaskAnswer.IsCorrect)
+                            {
+                                classText = "text-success";
+                            }
+
+                            if(lmsTaskAnswer.FileModel == null)
+                            {
+                                <li class="@classText">@lmsTaskAnswer.LmsTaskAnswerText</li>
+                            }
+                            else
+                            {
+                                <li class="@classText">
+                                    <a href="/@lmsTaskAnswer.FileModel.Path" target="_blank">@(lmsTaskAnswer.LmsTaskAnswerText ?? "Ответ не содержит текст")</a>
+                                </li>
+                            }
+                        }
+                    </ol>
+                }
+                else
+                {
+                    <a asp-action="CreateLmsTaskAnswers" asp-route-lmsTaskId="@item.LmsTaskId" class="btn btn-primary btn-block">Добавить</a>
+                }
+            </td>
+            <td>
+                @if(item.LmsTaskDisciplineNames != null && item.LmsTaskDisciplineNames.Count > 0)
+                {
+                    foreach(var lmsTaskDisciplineName in item.LmsTaskDisciplineNames)
+                    {
+                        <p>@lmsTaskDisciplineName.DisciplineName.DisciplineNameName</p>
+                    }
+                }
+                else
+                {
+                    <a asp-action="CreateLmsTaskDisciplineNames" asp-route-lmsTaskId="@item.LmsTaskId" class="btn btn-primary btn-block">Добавить</a>
+                }
+            </td>
+            <td>
+                @if(item.AppUser != null)
+                {
+                    <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTimeOfCreation)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "EditLmsTask",    new { id = item.LmsTaskId }, new { @class = "btn btn-primary btn-block" })
+                @Html.ActionLink("Просмотр",      "DetailsLmsTask", new { id = item.LmsTaskId }, new { @class = "btn btn-info    btn-block" })
+                @Html.ActionLink("Удаление",      "RemoveLmsTask",  new { id = item.LmsTaskId }, new { @class = "btn btn-danger  btn-block" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

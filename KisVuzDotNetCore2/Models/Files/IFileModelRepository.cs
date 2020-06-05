@@ -51,6 +51,20 @@ namespace KisVuzDotNetCore2.Models.Files
         Task<FileModel> UploadAdmissionPrivilegeFileAsync(IFormFile uploadedFile);
 
         /// <summary>
+        /// Загружает jpg-файл нового задания в базу заданий СДО
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadLmsTaskJpg(IFormFile uploadedFile);
+
+        /// <summary>
+        /// Загружает jpg-файл иллюстрации к варианту ответа на задание СДО
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadLmsTaskAnswerJpg(IFormFile uploadedFile);
+
+        /// <summary>
         /// Загружает файл фонда оценочных средств на диск
         /// </summary>
         /// <param name="uploadedFile"></param>
@@ -93,7 +107,7 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="uploadedFile">Загружаемый файл</param>
         /// <returns></returns>
         Task<FileModel> UploadPatentAsync(Patent patent, IFormFile uploadedFile);
-
+        
         /// <summary>
         /// Загружает файл монографии
         /// </summary>

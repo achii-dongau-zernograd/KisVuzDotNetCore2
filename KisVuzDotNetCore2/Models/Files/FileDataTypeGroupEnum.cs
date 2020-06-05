@@ -20,6 +20,10 @@
         /// <summary>
         /// Файлы абитуриентов
         /// </summary>
-        AbiturientFiles = 14        
+        AbiturientFiles = 14,
+        /// <summary>
+        /// Система дистанционного образования
+        /// </summary>
+        LMS = 15
     }
 }

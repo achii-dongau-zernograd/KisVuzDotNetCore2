@@ -823,5 +823,33 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(data,
                  "ContractTypeId", "ContractTypeName", selectedId);
         }
+
+        /// <summary>
+        /// Возвращает список пользователей, являющихся авторами
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAppUsersAuthors(string selectedId = "")
+        {
+            var data = _context.Author
+                .Include(a => a.AppUser)
+                .Where(a => a.AppUserId != null);
+
+            return new SelectList(data,
+                 "AppUserId", "AppUser.GetFullName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список типов заданий СДО
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListLmsTaskTypes(int selectedId = 0)
+        {
+            var data = _context.LmsTaskTypes;
+
+            return new SelectList(data,
+                 "LmsTaskTypeId", "LmsTaskTypeName", selectedId);
+        }
     }
 }

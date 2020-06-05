@@ -596,6 +596,8 @@
     <Compile Remove="Migrations\20200531125849_AppUserConsultant.Designer.cs" />
     <Compile Remove="Migrations\20200602025306_Contracts.cs" />
     <Compile Remove="Migrations\20200602025306_Contracts.Designer.cs" />
+    <Compile Remove="Migrations\20200604155703_LmsTaskAnswer.cs" />
+    <Compile Remove="Migrations\20200604155703_LmsTaskAnswer.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

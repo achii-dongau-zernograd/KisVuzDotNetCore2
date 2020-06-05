@@ -411,6 +411,7 @@
                     <th>Тип квоты</th>
                     <th>Приоритет</th>
                     <th>Скан-копия заявления</th>
+                    <th>Регистрационный номер</th>
                     <th>Статус</th>
                     <th>Замечания</th>
                     <th>Действия</th>
@@ -435,6 +436,9 @@
                         {
                             <a asp-action="ApplicationForAdmissionFileLoad" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Загрузить</a>
                         }
+                    </td>
+                    <td>
+                        @applicationForAdmission.RegNumber
                     </td>
                     <td>
                         @if (rowStatus.RowStatusId == (int)RowStatusEnum.Confirmed)
@@ -497,7 +501,10 @@
                                 Заявление о приёме: @applicationForAdmission.EduProfile.GetEduProfileFullName - @applicationForAdmission.QuotaType.QuotaTypeName
                             </td>
                             <td>
-                                <a asp-action="CreateAbiturientConsentToEnrollment" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId" class="btn btn-primary btn-block">Добавить заявление о согласии на зачисление</a>
+                                @if (applicationForAdmission.ConsentToEnrollments == null || applicationForAdmission.ConsentToEnrollments.Count == 0)
+                                {
+                                    <a asp-action="CreateAbiturientConsentToEnrollment" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId" class="btn btn-primary btn-block">Добавить заявление о согласии на зачисление</a>
+                                }
                             </td>
                         </tr>
 

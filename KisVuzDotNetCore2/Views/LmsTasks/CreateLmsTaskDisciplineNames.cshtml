@@ -1,0 +1,40 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.LmsTaskDisciplineName
+
+@{
+    ViewData["Title"] = "CreateLmsTaskDisciplineNames";
+}
+
+<h2>Добавление дисциплины к заданию</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="CreateLmsTaskDisciplineNames" class="form-inline">
+            <label class="control-label">Дисциплины</label>
+            @if (Model.LmsTask != null &&
+            Model.LmsTask.LmsTaskDisciplineNames != null &&
+            Model.LmsTask.LmsTaskDisciplineNames.Count > 0)
+            {
+                foreach (var lmsTaskDisciplineName in Model.LmsTask.LmsTaskDisciplineNames)
+                {
+                    <p>@lmsTaskDisciplineName.DisciplineName.DisciplineNameName</p>
+                }
+            }
+            else
+            {
+                <p class="text-danger">Дисциплины отсутствуют!</p>
+            }
+
+            <hr />
+
+            <label class="control-label">Для добавления дисциплины выберите её из списка и нажмите "Добавить"</label>
+            <br />
+            <select asp-for="DisciplineNameId" asp-items="ViewBag.DisciplineNames" class="form-control"></select>
+            <input type="submit" value="Добавить" class="btn btn-primary" />
+            
+            <hr />
+            <input type="hidden" asp-for="LmsTaskId" />
+            <a asp-action="Index" class="btn btn-primary">Завершить добавление дисциплин</a>
+        </form>
+    </div>
+</div>
