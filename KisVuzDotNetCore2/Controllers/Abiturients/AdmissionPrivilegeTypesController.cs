@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Abitur;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Abiturients
 {
+    [Authorize(Roles = "Администраторы, Приёмная комиссия, Приёмная комиссия (консультанты)")]
     public class AdmissionPrivilegeTypesController : Controller
     {
         private readonly AppIdentityDBContext _context;

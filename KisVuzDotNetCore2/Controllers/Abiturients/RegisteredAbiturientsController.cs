@@ -15,7 +15,7 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
     /// <summary>
     /// Контроллер для работы с зарегистрированными абитуриентами
     /// </summary>
-    [Authorize(Roles = "Администраторы, Приёмная комиссия")]
+    [Authorize(Roles = "Администраторы, Приёмная комиссия, Приёмная комиссия (консультанты)")]
     public class RegisteredAbiturientsController : Controller
     {
         private readonly IAbiturientRepository _abiturRepository;

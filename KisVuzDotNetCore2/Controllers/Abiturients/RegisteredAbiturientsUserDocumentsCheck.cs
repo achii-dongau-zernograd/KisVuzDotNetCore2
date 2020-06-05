@@ -1,6 +1,7 @@
 ﻿using KisVuzDotNetCore2.Infrastructure;
 using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.Files;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Controllers.Abiturients
 {
+    [Authorize(Roles = "Администраторы, Приёмная комиссия, Приёмная комиссия (консультанты)")]
     public class RegisteredAbiturientsUserDocumentsCheck : Controller
     {
         private readonly IUserDocumentRepository _userDocumentRepository;

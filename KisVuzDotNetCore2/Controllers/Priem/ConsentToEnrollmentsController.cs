@@ -9,9 +9,11 @@ using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Abitur;
 using Microsoft.AspNetCore.Http;
 using KisVuzDotNetCore2.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers.Priem
 {
+    [Authorize(Roles = "Администраторы, Приёмная комиссия, Приёмная комиссия (консультанты)")]
     public class ConsentToEnrollmentsController : Controller
     {        
         private readonly IConsentToEnrollmentRepository _consentToEnrollmentRepository;

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Controllers.Priem
 {
-    [Authorize(Roles ="Администраторы, Приёмная комиссия")]
+    [Authorize(Roles = "Администраторы, Приёмная комиссия, Приёмная комиссия (консультанты)")]
     public class AbiturientIndividualAchievmentsController : Controller
     {
         private readonly IAbiturientIndividualAchievmentRepository _abiturientIndividualAchievmentRepository;

@@ -1,6 +1,7 @@
 ﻿using KisVuzDotNetCore2.Infrastructure;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Abitur;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Controllers.Priem
 {
+    [Authorize(Roles = "Администраторы, Приёмная комиссия, Приёмная комиссия (консультанты)")]
     public class AdmissionPrivilegesController : Controller
     {
         private readonly IAdmissionPrivilegeRepository _admissionPrivilegeRepository;

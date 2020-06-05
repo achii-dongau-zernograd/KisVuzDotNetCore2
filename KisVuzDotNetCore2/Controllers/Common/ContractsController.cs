@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Controllers.Common
 {
-    [Authorize(Roles = "Администраторы, Приёмная комиссия, Юротдел")]
+    [Authorize(Roles = "Администраторы, Приёмная комиссия, Приёмная комиссия (консультанты), Юротдел")]
     public class ContractsController : Controller
     {
         private readonly IContractRepository _contractRepository;
