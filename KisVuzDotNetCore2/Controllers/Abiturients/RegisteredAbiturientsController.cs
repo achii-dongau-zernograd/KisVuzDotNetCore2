@@ -126,6 +126,11 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
                         await _abiturRepository.SetAbiturientEntranceTestGroupIdAsync(abiturient, entranceTestGroupId);
                         return RedirectToAction(nameof(Details), new { userName });
                     }
+                    else
+                    {
+                        await _abiturRepository.SetAbiturientEntranceTestGroupIdAsync(abiturient, null);
+                        return RedirectToAction(nameof(Details), new { userName });
+                    }
                     break;
                 default:
                     break;

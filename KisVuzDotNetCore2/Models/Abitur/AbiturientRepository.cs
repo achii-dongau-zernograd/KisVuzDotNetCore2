@@ -603,7 +603,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="abiturient"></param>
         /// <param name="entranceTestGroupId"></param>
         /// <returns></returns>
-        public async Task SetAbiturientEntranceTestGroupIdAsync(Abiturient abiturient, int entranceTestGroupId)
+        public async Task SetAbiturientEntranceTestGroupIdAsync(Abiturient abiturient, int? entranceTestGroupId)
         {
             abiturient.EntranceTestGroupId = entranceTestGroupId;
             await _context.SaveChangesAsync();

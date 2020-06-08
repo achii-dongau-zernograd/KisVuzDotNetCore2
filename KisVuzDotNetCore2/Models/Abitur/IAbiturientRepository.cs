@@ -148,7 +148,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="abiturient"></param>
         /// <param name="entranceTestGroupId"></param>
         /// <returns></returns>
-        Task SetAbiturientEntranceTestGroupIdAsync(Abiturient abiturient, int entranceTestGroupId);
+        Task SetAbiturientEntranceTestGroupIdAsync(Abiturient abiturient, int? entranceTestGroupId);
 
         /// <summary>
         /// Возвращает запрос на выборку уже имеющихся квалификаций абитуриента
