@@ -836,7 +836,7 @@
             @foreach (var entranceTest in abiturient.AppUser.AppUserLmsEvents)
             {
                 <li>
-                    @entranceTest.LmsEvent.DateTimeStart - @entranceTest.LmsEvent.Description
+                    <a asp-controller="AppUserLmsEvents" asp-action="AppUserLmsEventStartForm" asp-route-appUserLmsEventId="@entranceTest.AppUserLmsEventId">@entranceTest.LmsEvent.DateTimeStart - @entranceTest.LmsEvent.Description</a>                    
                 </li>
             }
         </ol>

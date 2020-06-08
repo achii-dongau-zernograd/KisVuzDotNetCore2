@@ -140,6 +140,16 @@ namespace KisVuzDotNetCore2.Models
         /// Чат мероприятия СДО
         /// </summary>
         public DbSet<LmsEventChatMessage> LmsEventChatMessages { get; set; }
+
+        /// <summary>
+        /// Ответы пользователей на задания СДО
+        /// </summary>
+        public DbSet<LmsEventLmsTasksetAppUserAnswer> LmsEventLmsTasksetsAppUserAnswers { get; set; }
+
+        /// <summary>
+        /// Ответы пользователей на задания СДО, выбранные из предложенного списка ответов
+        /// </summary>
+        public DbSet<LmsEventLmsTasksetAppUserAnswerTaskAnswer> LmsEventLmsTasksetAppUserAnswerTaskAnswers { get; set; }
         #endregion
 
         #region Образовательная деятельность (Education)

@@ -19,7 +19,7 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// <summary>
         /// Сопоставления данного набора заданий СДО с заданиями СДО
         /// </summary>
-        public List<LmsTaskSetLmsTask> lmsTaskSetLmsTasks { get; set; }
+        public List<LmsTaskSetLmsTask> LmsTaskSetLmsTasks { get; set; }
 
         /// <summary>
         /// Сопоставления данного набора заданий СДО с событиями СДО

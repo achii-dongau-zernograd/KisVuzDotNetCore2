@@ -16,10 +16,10 @@ namespace KisVuzDotNetCore2.Controllers.Priem
     [Authorize(Roles="Администраторы, Приёмная комиссия")]
     public class LmsEventsPriemController : Controller
     {
-        private readonly ILmsEventsRepository _lmsEventsRepository;
+        private readonly ILmsEventRepository _lmsEventsRepository;
         private readonly ISelectListRepository _selectListRepository;
 
-        public LmsEventsPriemController(ILmsEventsRepository lmsEventsRepository,
+        public LmsEventsPriemController(ILmsEventRepository lmsEventsRepository,
             ISelectListRepository selectListRepository)
         {
             _lmsEventsRepository = lmsEventsRepository;
@@ -131,6 +131,34 @@ namespace KisVuzDotNetCore2.Controllers.Priem
             await _lmsEventsRepository.RemoveAppUserLmsEventAsync(appUserLmsEvent);
 
             return RedirectToAction(nameof(LmsEventParticipants), new { lmsEventId = appUserLmsEvent.LmsEventId });
+        }
+        #endregion
+
+        #region Редактирование набора заданий для мероприятия
+        public async Task<IActionResult> EditLmsEventLmsTaskSets(int lmsEventId)
+        {
+            var lmsEvent = await _lmsEventsRepository.GetLmsEventAsync(lmsEventId);
+            if (lmsEvent == null) return NotFound();
+
+            ViewBag.LmsTaskSets = _selectListRepository.GetSelectListLmsTaskSets();
+
+            return View(lmsEvent);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddLmsEventLmsTaskSet(LmsEventLmsTaskSet lmsEventLmsTaskSet)
+        {
+            await _lmsEventsRepository.AddLmsEventLmsTaskSet(lmsEventLmsTaskSet);
+            return RedirectToAction(nameof(EditLmsEventLmsTaskSets), new { lmsEventLmsTaskSet.LmsEventId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveLmsEventLmsTaskSet(LmsEventLmsTaskSet lmsEventLmsTaskSet)
+        {
+            await _lmsEventsRepository.RemoveLmsEventLmsTaskSet(lmsEventLmsTaskSet);
+            return RedirectToAction(nameof(EditLmsEventLmsTaskSets), new { lmsEventLmsTaskSet.LmsEventId });
         }
         #endregion
     }

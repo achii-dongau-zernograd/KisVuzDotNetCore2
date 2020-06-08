@@ -255,6 +255,10 @@
         /// <summary>
         /// Иллюстрация к варианту ответа на задание СДО
         /// </summary>
-        Lms_LmsTaskAnswer = 70
+        Lms_LmsTaskAnswer = 70,
+        /// <summary>
+        /// Файл с решением задания, загруженный пользователем
+        /// </summary>
+        Lms_AppUserAnswer = 71
     }
 }

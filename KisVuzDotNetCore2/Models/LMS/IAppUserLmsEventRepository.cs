@@ -5,7 +5,7 @@ namespace KisVuzDotNetCore2.Models.LMS
     /// <summary>
     /// Интерфейс репозитория привязок пользователей к событиям СДО
     /// </summary>
-    public interface IAppUserLmsEventsRepository
+    public interface IAppUserLmsEventRepository
     {
         /// <summary>
         /// Добавляет привязку пользователя к событию СДО 

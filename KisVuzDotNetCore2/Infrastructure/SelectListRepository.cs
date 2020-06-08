@@ -781,6 +781,21 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает список типов событий СДО
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListLmsEventTypes(int selectedId = 0)
+        {
+            var data = _context.LmsEventTypes
+                .Include(t => t.LmsEventTypeGroup)
+                .OrderBy(t => t.LmsEventTypeFullName);
+
+            return new SelectList(data,
+                 "LmsEventTypeId", "LmsEventTypeFullName", selectedId);
+        }
+
+        /// <summary>
         /// Возвращает список абитуриентов
         /// </summary>
         /// <param name="selectedId"></param>
@@ -850,6 +865,52 @@ namespace KisVuzDotNetCore2.Infrastructure
 
             return new SelectList(data,
                  "LmsTaskTypeId", "LmsTaskTypeName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список наборов заданий
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListLmsTaskSets(int selectedId = 0)
+        {
+            var data = _context.LmsTaskSets.OrderBy(ts => ts.LmsTaskSetDescription);
+
+            return new SelectList(data,
+                 "LmsTaskSetId", "LmsTaskSetDescription", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список мероприятий указанного типа
+        /// </summary>
+        /// <param name="lmsEventTypeId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListLmsEvents(int lmsEventTypeId, int selectedId = 0)
+        {
+            var data = _context.LmsEvents
+                .Where(e => e.LmsEventTypeId == lmsEventTypeId)
+                .OrderByDescending(e => e.DateTimeStart);
+
+            return new SelectList(data,
+                 "LmsEventId", "GetFullDescription", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список пользователей-участников мероприятия
+        /// </summary>
+        /// <param name="lmsEventId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListLmsEventParticipants(int lmsEventId, int selectedId = 0)
+        {
+            var data = _context.AppUserLmsEvents
+                .Include(e => e.AppUser)
+                .Where(e => e.LmsEventId == lmsEventId)
+                .OrderBy(e => e.AppUser.GetFullName);
+
+            return new SelectList(data,
+                 "AppUser.UserName", "AppUser.GetFullName", selectedId);
         }
     }
 }

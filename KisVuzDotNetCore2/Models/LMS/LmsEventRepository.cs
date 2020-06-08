@@ -9,16 +9,19 @@ namespace KisVuzDotNetCore2.Models.LMS
     /// <summary>
     /// Репозиторий событий СДО
     /// </summary>
-    public class LmsEventsRepository : ILmsEventsRepository
+    public class LmsEventRepository : ILmsEventRepository
     {
         private readonly AppIdentityDBContext _context;
-        private readonly IAppUserLmsEventsRepository _appUserLmsEventsRepository;
+        private readonly IAppUserLmsEventRepository _appUserLmsEventsRepository;
+        private readonly ILmsTaskSetRepository _lmsTaskSetRepository;
 
-        public LmsEventsRepository(AppIdentityDBContext context,
-            IAppUserLmsEventsRepository appUserLmsEventsRepository)
+        public LmsEventRepository(AppIdentityDBContext context,
+            IAppUserLmsEventRepository appUserLmsEventsRepository,
+            ILmsTaskSetRepository lmsTaskSetRepository)
         {
             _context = context;
             _appUserLmsEventsRepository = appUserLmsEventsRepository;
+            _lmsTaskSetRepository = lmsTaskSetRepository;
         }
 
         
@@ -35,7 +38,9 @@ namespace KisVuzDotNetCore2.Models.LMS
                 .Include(l => l.AppUserLmsEvents)
                     .ThenInclude(l => l.AppUser)                
                         .ThenInclude(l => l.Abiturient.AppUser)
-                .OrderBy(l => l.DateTimeStart);
+                .OrderBy(l => l.DateTimeStart)
+                .Include(l => l.LmsEventLmsTaskSets)
+                    .ThenInclude(lt=>lt.LmsTaskSet);
 
             return query;
         }
@@ -142,6 +147,58 @@ namespace KisVuzDotNetCore2.Models.LMS
         public async Task RemoveAppUserLmsEventAsync(AppUserLmsEvent appUserLmsEvent)
         {
             await _appUserLmsEventsRepository.RemoveAppUserLmsEventAsync(appUserLmsEvent);
+        }
+
+        /// <summary>
+        /// Добавляет набор заданий к мероприятию
+        /// </summary>
+        /// <param name="lmsEventLmsTaskSet"></param>
+        /// <returns></returns>
+        public async Task AddLmsEventLmsTaskSet(LmsEventLmsTaskSet lmsEventLmsTaskSet)
+        {
+            if (lmsEventLmsTaskSet.LmsEventId == 0 ||
+                lmsEventLmsTaskSet.LmsTaskSetId == 0)
+                return;
+
+            var isExists = await _context.LmsEventLmsTaskSets
+                .AnyAsync(t => t.LmsEventId == lmsEventLmsTaskSet.LmsEventId &&
+                                t.LmsTaskSetId == lmsEventLmsTaskSet.LmsTaskSetId);
+
+            if(!isExists)
+            {
+                _context.LmsEventLmsTaskSets.Add(lmsEventLmsTaskSet);
+                await _context.SaveChangesAsync();
+            }    
+        }
+
+        /// <summary>
+        /// Удаляет набор заданий из списка наборов заданий к мероприятию
+        /// </summary>
+        /// <param name="lmsEventLmsTaskSet"></param>
+        /// <returns></returns>
+        public async Task RemoveLmsEventLmsTaskSet(LmsEventLmsTaskSet lmsEventLmsTaskSet)
+        {
+            _context.LmsEventLmsTaskSets.Remove(lmsEventLmsTaskSet);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Возвращает запрос на выборку всех заданий мероприятия СДО
+        /// </summary>
+        /// <param name="lmsEventId"></param>
+        /// <returns></returns>
+        public async Task<List<LmsTask>> GetLmsEventTasks(int lmsEventId)
+        {
+            var lmsEvent = await GetLmsEventAsync(lmsEventId);
+
+            var lmsTasks = new List<LmsTask>();
+            foreach (var lmsEventLmsTaskSet in lmsEvent.LmsEventLmsTaskSets)
+            {
+                var lmsTaskSetEntry = await _lmsTaskSetRepository.GetLmsTaskSetAsync(lmsEventLmsTaskSet.LmsTaskSetId);
+                lmsTaskSetEntry.LmsTaskSetLmsTasks.ForEach(tst => lmsTasks.Add(tst.LmsTask));
+            }
+
+            return lmsTasks;
         }
     }
 }

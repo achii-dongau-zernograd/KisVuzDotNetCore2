@@ -679,6 +679,13 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = (int)FileDataTypeGroupEnum.LMS
                     };
 
+                    FileDataType fileDataType71 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.Lms_AppUserAnswer,
+                        FileDataTypeName = "Файл с решением задания, загруженный пользователем",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.LMS
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -748,7 +755,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType67,
                         fileDataType68,
                         fileDataType69,
-                        fileDataType70
+                        fileDataType70,
+                        fileDataType71
                         );
                     await context.SaveChangesAsync();
                 }

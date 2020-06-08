@@ -449,6 +449,19 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает файл с решением задания, загруженный пользователем
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadLmsAppUserAnswer(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                "Файл с решением задания, загруженный пользователем",
+                FileDataTypeEnum.Lms_AppUserAnswer);
+            return fileModel;
+        }
+
+        /// <summary>
         /// Загружает файл документа об образовании
         /// </summary>
         /// <param name="uploadedFile"></param>

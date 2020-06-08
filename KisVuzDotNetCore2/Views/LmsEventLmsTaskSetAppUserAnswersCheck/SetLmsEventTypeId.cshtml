@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "Выбор типа мероприятия";
+}
+
+<h2>Выберите тип мероприятия</h2>
+
+<form method="post" class="form-inline">
+    <select name="lmsEventTypeId" asp-items="ViewBag.LmsEventTypes" class="form-control"></select>
+    <input type="submit" value="Выбрать" class="btn btn-primary" />
+</form>
+

@@ -63,6 +63,11 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// <summary>
         /// Варианты ответов
         /// </summary>
-        public List<LmsTaskAnswer> LmsTaskAnswers { get; set; }
+        public List<LmsTaskAnswer> LmsTaskAnswers { get; set; } 
+
+        /// <summary>
+        /// Список всех ответов на данное задание
+        /// </summary>
+        public List<LmsEventLmsTasksetAppUserAnswer> LmsEventLmsTaskSetAppUserAnswers { get; set; }
     }
 }

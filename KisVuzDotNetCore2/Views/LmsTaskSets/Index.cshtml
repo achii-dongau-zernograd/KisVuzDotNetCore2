@@ -1,0 +1,56 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.LMS.LmsTaskSet>
+
+@{
+    ViewData["Title"] = "Наборы заданий";
+}
+
+<h2>Наборы заданий</h2>
+
+<p>
+    <a asp-action="CreateLmsTaskSet" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LmsTaskSetDescription)
+            </th>
+            <th>
+                Набор заданий
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LmsTaskSetId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LmsTaskSetDescription)
+            </td>
+            <td>
+                @if (item.LmsTaskSetLmsTasks == null || item.LmsTaskSetLmsTasks.Count == 0)
+                {
+                    <a asp-action="EditLmsTaskSetLmsTasks" asp-route-LmsTaskSetId="@item.LmsTaskSetId" class="btn btn-primary">Добавить задания</a>
+                }
+                else
+                {
+                    <a asp-action="EditLmsTaskSetLmsTasks" asp-route-LmsTaskSetId="@item.LmsTaskSetId">Кол-во заданий: @item.LmsTaskSetLmsTasks.Count</a>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Список заданий", "EditLmsTaskSetLmsTasks", new { id = item.LmsTaskSetId }) |
+                @Html.ActionLink("Удалить", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

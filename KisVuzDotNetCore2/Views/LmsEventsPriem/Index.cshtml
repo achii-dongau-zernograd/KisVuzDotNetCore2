@@ -31,6 +31,7 @@
                 @Html.DisplayNameFor(model => model.IsLmsEventStartedManual)
             </th>
             <th>Участники</th>
+            <th>Наборы заданий</th>
             <th>Действия</th>
         </tr>
     </thead>
@@ -77,6 +78,16 @@
                         }
                     </td>
                     <td>
+                        @if(item.LmsEventLmsTaskSets == null || item.LmsEventLmsTaskSets.Count == 0)
+                        {
+                            <a asp-action="EditLmsEventLmsTaskSets" asp-route-lmsEventId="@item.LmsEventId">Добавить наборы заданий</a>
+                        }
+                        else
+                        {
+                            <a asp-action="EditLmsEventLmsTaskSets" asp-route-lmsEventId="@item.LmsEventId">Наборов заданий: @item.LmsEventLmsTaskSets.Count</a>
+                        }
+                    </td>
+                    <td>
                         <a asp-action="EditLmsEvent" asp-route-lmsEventId="@item.LmsEventId">Редактировать</a> |
                         <a asp-action="DetailsLmsEvent" asp-route-lmsEventId="@item.LmsEventId">Сведения</a> |
                         <a asp-action="DeleteLmsEvent" asp-route-lmsEventId="@item.LmsEventId" class="text-danger">Удалить</a>
@@ -87,3 +98,8 @@
 
     </tbody>
 </table>
+
+<hr />
+<div>
+    <p>Время сервера: @DateTime.Now  (UTC: @DateTime.UtcNow)</p>
+</div>

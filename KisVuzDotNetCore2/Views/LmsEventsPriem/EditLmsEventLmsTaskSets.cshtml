@@ -1,0 +1,67 @@
+﻿@model LmsEvent
+
+@{
+    ViewData["Title"] = "Наборы заданий";
+}
+
+<h2>Наборы заданий</h2>
+
+<h4>@Model.Description</h4>
+
+<hr />
+<div class="form-inline">
+    <form asp-action="AddLmsEventLmsTaskSet" method="post">
+        <select name="LmsTaskSetId" asp-items="ViewBag.LmsTaskSets" class="form-control">
+            <option value="0">Выберите набор заданий</option>
+        </select>
+        <input type="hidden" name="LmsEventId" value="@Model.LmsEventId" />
+        <input type="submit" value="Добавить" class="btn btn-primary" />
+    </form>    
+</div>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Наименование набора заданий
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.LmsEventLmsTaskSets == null || Model.LmsEventLmsTaskSets.Count == 0)
+        {
+            <tr>
+                <td colspan="2" class="text-center">
+                    Наборы заданий отсутствуют
+                </td>
+            </tr>
+        }
+        else
+        {            
+            foreach (var item in Model.LmsEventLmsTaskSets)
+            {
+                <tr>
+                    <td>
+                        @item.LmsTaskSet.LmsTaskSetDescription
+                    </td>
+                    <td>
+                        <form asp-action="RemoveLmsEventLmsTaskSet" method="post">
+                            <input type="hidden" name="LmsEventLmsTaskSetId" value="@item.LmsEventLmsTaskSetId" />                                
+                            <input type="hidden" name="LmsEventId" value="@Model.LmsEventId" />
+                            <input type="submit" value="Удалить" class="btn btn-danger" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<hr />
+<div>
+    <a asp-action="Index" class="btn btn-primary">К списку мероприятий</a>
+</div>

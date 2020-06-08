@@ -1,0 +1,62 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.AppUserLmsEvent
+
+@{
+    ViewData["Title"] = "Событие пользователя";
+}
+
+<h2>@Model.LmsEvent.LmsEventType.LmsEventTypeName</h2>
+
+<h3>@Model.LmsEvent.Description</h3>
+
+<h4>Роль в мероприятии: @Model.AppUserLmsEventUserRole.AppUserLmsEventUserRoleName</h4>
+<h4>Начало: @Model.LmsEvent.DateTimeStart</h4>
+<h4>Длительность: @Model.LmsEvent.Duration</h4>
+<hr />
+
+@if (Model.LmsEvent.LmsEventAdditionalMaterials != null && Model.LmsEvent.LmsEventAdditionalMaterials.Count > 0)
+{
+    <ul>
+        @foreach (var lmsEventAdditionalMaterial in Model.LmsEvent.LmsEventAdditionalMaterials)
+        {
+            @if (string.IsNullOrWhiteSpace(lmsEventAdditionalMaterial.LmsEventAdditionalMaterialLink))
+            {
+                <li>@lmsEventAdditionalMaterial.LmsEventAdditionalMaterialName</li>
+            }
+            else
+            {
+                <li>
+                    <a href="@lmsEventAdditionalMaterial.LmsEventAdditionalMaterialLink" target="_blank">@lmsEventAdditionalMaterial.LmsEventAdditionalMaterialName</a>
+                </li>
+            }
+        }
+    </ul>
+    <hr />
+}
+
+
+@if (Model.LmsEvent.LmsEventLmsTaskSets != null && Model.LmsEvent.LmsEventLmsTaskSets.Count > 0)
+{
+    string classDisabled = "";
+    if (!Model.LmsEvent.IsLmsEventStarted)
+    {
+        classDisabled = "disabled";
+    }
+
+
+    int tasksNumber = (int)ViewBag.TasksNumber;
+    int tasksNumberReceived = (int)ViewBag.TasksNumberReceived;
+    if (tasksNumber == tasksNumberReceived)
+    {
+        <h2>Тестирование окончено</h2>
+
+        <h4>Всего вопросов: @ViewBag.TasksNumber</h4>
+        <h4>Принято ответов: @ViewBag.TasksNumberReceived</h4>
+    }
+    else
+    {
+        <a asp-controller="LmsEventLmsTasksetAppUserAnswers" asp-action="Testing" asp-route-lmsEventId="@Model.LmsEventId" class="btn btn-primary btn-block @classDisabled">Приступить к тестированию</a>
+    }
+
+}
+
+

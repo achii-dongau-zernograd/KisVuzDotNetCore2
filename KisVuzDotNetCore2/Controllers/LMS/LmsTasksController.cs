@@ -1,5 +1,6 @@
 ﻿using KisVuzDotNetCore2.Infrastructure;
 using KisVuzDotNetCore2.Models.LMS;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace KisVuzDotNetCore2.Controllers.LMS
     /// <summary>
     /// Контроллер "Банк заданий"
     /// </summary>
+    [Authorize(Roles = "Администраторы СДО")]
     public class LmsTasksController : Controller
     {
         private readonly ILmsTaskRepository _lmsTaskRepository;
@@ -58,7 +60,7 @@ namespace KisVuzDotNetCore2.Controllers.LMS
         #region Добавление вариантов ответов
         public async Task<IActionResult> CreateLmsTaskAnswers(LmsTaskAnswer lmsTaskAnswer, IFormFile uploadedFile, bool addLmsTaskAnswer)
         {            
-            lmsTaskAnswer.LmsTask = await _lmsTaskRepository.GetLmsTask(lmsTaskAnswer.LmsTaskId);
+            lmsTaskAnswer.LmsTask = await _lmsTaskRepository.GetLmsTaskAsync(lmsTaskAnswer.LmsTaskId);
 
             if(addLmsTaskAnswer)
             {
@@ -74,7 +76,7 @@ namespace KisVuzDotNetCore2.Controllers.LMS
         {
             if(lmsTaskDisciplineName.LmsTaskId != 0)
             {
-                lmsTaskDisciplineName.LmsTask = await _lmsTaskRepository.GetLmsTask(lmsTaskDisciplineName.LmsTaskId);
+                lmsTaskDisciplineName.LmsTask = await _lmsTaskRepository.GetLmsTaskAsync(lmsTaskDisciplineName.LmsTaskId);
 
                 if (lmsTaskDisciplineName.DisciplineNameId != 0)
                 {

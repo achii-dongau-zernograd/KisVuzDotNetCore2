@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200606093623_LmsEventLmsTasksetAppUserAnswer")]
+    partial class LmsEventLmsTasksetAppUserAnswer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1725,7 +1726,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("LmsTaskId");
 
-                    b.Property<int?>("NumberOfPoints");
+                    b.Property<int>("NumberOfPoints");
 
                     b.HasKey("LmsEventLmsTasksetAppUserAnswerId");
 

@@ -1,0 +1,63 @@
+﻿@model LmsTaskSetLmsTask
+
+@{
+    ViewData["Title"] = "Редактирование списка заданий";
+    var lmsTasks = (IEnumerable<LmsTask>)ViewBag.LmsTasks;
+}
+
+<h2>Редактирование списка заданий</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Текст задания
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in lmsTasks) {
+        <tr>            
+            <td>
+                @item.LmsTaskId
+            </td>
+            <td>
+                @item.LmsTaskText
+
+                @if(item.LmsTaskJpg != null)
+                {
+                    <br />
+                    <img src="/@item.LmsTaskJpg.Path" class="img-responsive" />
+                }
+            </td>
+            <td>
+                @{
+                    bool isTaskAdded = false;
+                    foreach (var existedLmsTaskSetLmsTask in Model.LmsTaskSet.LmsTaskSetLmsTasks)
+                    {
+                        if (existedLmsTaskSetLmsTask.LmsTaskId == item.LmsTaskId)
+                        {
+                            isTaskAdded = true;
+                        }
+                    }
+                }
+
+                @if (!isTaskAdded)
+                {
+                    <form>
+                        <input type="hidden" asp-for="LmsTaskSetId" />
+                        <input type="hidden" asp-for="LmsTaskId" value="@item.LmsTaskId" />
+                        <input type="submit" value="Добавить" class="btn btn-primary" />
+                    </form>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

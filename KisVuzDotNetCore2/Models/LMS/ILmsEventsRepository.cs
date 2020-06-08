@@ -8,7 +8,7 @@ namespace KisVuzDotNetCore2.Models.LMS
     /// <summary>
     /// Интерфейс репозитория мероприятий СДО
     /// </summary>
-    public interface ILmsEventsRepository
+    public interface ILmsEventRepository
     {
         /// <summary>
         /// Возвращает запрос на выборку всех мероприятий СДО
@@ -66,5 +66,26 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// <param name="appUserLmsEvent"></param>
         /// <returns></returns>
         Task RemoveAppUserLmsEventAsync(AppUserLmsEvent appUserLmsEvent);
+        
+        /// <summary>
+        /// Добавляет набор заданий к мероприятию
+        /// </summary>
+        /// <param name="lmsEventLmsTaskSet"></param>
+        /// <returns></returns>
+        Task AddLmsEventLmsTaskSet(LmsEventLmsTaskSet lmsEventLmsTaskSet);
+
+        /// <summary>
+        /// Удаляет набор заданий из списка наборов заданий к мероприятию
+        /// </summary>
+        /// <param name="lmsEventLmsTaskSet"></param>
+        /// <returns></returns>
+        Task RemoveLmsEventLmsTaskSet(LmsEventLmsTaskSet lmsEventLmsTaskSet);
+
+        /// <summary>
+        /// Возвращает запрос на выборку всех заданий мероприятия СДО
+        /// </summary>
+        /// <param name="lmsEventId"></param>
+        /// <returns></returns>
+        Task<List<LmsTask>> GetLmsEventTasks(int lmsEventId);
     }
 }

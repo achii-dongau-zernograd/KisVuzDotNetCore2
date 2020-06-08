@@ -67,7 +67,7 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// </summary>
         /// <param name="lmsTaskId"></param>
         /// <returns></returns>
-        public async Task<LmsTask> GetLmsTask(int lmsTaskId)
+        public async Task<LmsTask> GetLmsTaskAsync(int lmsTaskId)
         {
             if (lmsTaskId == 0) return null;
 

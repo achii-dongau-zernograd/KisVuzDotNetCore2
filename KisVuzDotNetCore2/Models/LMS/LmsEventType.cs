@@ -22,5 +22,16 @@ namespace KisVuzDotNetCore2.Models.LMS
         [Display(Name = "Группа типов мероприятий СДО")]
         public int LmsEventTypeGroupId { get; set; }
         public LmsEventTypeGroup LmsEventTypeGroup { get; set; }
+
+        /// <summary>
+        /// Полное наименование типа мероприятия СДО
+        /// </summary>
+        [Display(Name = "Полное наименование типа мероприятия СДО")]
+        public object LmsEventTypeFullName {
+            get
+            {
+                return $"{LmsEventTypeGroup?.LmsEventTypeGroupName} - {LmsEventTypeName}";
+            }
+        }
     }
 }

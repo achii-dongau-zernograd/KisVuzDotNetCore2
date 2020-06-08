@@ -166,7 +166,14 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task<FileModel> UploadApplicationForAdmissionFileAsync(IFormFile uploadedFile);
-        
+
+        /// <summary>
+        /// Файл с решением задания, загруженный пользователем
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadLmsAppUserAnswer(IFormFile uploadedFile);
+
         /// <summary>
         /// Удаляет документ пользователя
         /// </summary>

@@ -103,5 +103,21 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// Чат мероприятия
         /// </summary>
         public List<LmsEventChatMessage> LmsEventChatMessages { get; set; }
+
+        /// <summary>
+        /// Наборы заданий к мероприятию
+        /// </summary>
+        public List<LmsEventLmsTaskSet> LmsEventLmsTaskSets { get; set; }
+
+        /// <summary>
+        /// Полное описание мероприятия (время - описание)
+        /// </summary>
+        public string GetFullDescription
+        {
+            get
+            {
+                return $"{DateTimeStart} - {Description}";
+            }
+        }
     }
 }

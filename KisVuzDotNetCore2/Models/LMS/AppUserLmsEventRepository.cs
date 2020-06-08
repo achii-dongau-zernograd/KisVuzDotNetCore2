@@ -9,11 +9,11 @@ namespace KisVuzDotNetCore2.Models.LMS
     /// <summary>
     /// Репозиторий привязок пользователей к событиям СДО
     /// </summary>
-    public class AppUserLmsEventsRepository : IAppUserLmsEventsRepository
+    public class AppUserLmsEventRepository : IAppUserLmsEventRepository
     {
         private readonly AppIdentityDBContext _context;
 
-        public AppUserLmsEventsRepository(AppIdentityDBContext context)
+        public AppUserLmsEventRepository(AppIdentityDBContext context)
         {
             _context = context;
         }
@@ -47,7 +47,11 @@ namespace KisVuzDotNetCore2.Models.LMS
             var query = _context.AppUserLmsEvents
                 .Include(a => a.AppUserLmsEventUserRole)
                 .Include(a => a.AppUser)
-                .Include(a => a.LmsEvent.LmsEventType);
+                .Include(a => a.LmsEvent.LmsEventType.LmsEventTypeGroup)
+                .Include(a => a.LmsEvent.LmsEventAdditionalMaterials)
+                .Include(a => a.LmsEvent.LmsEventChatMessages)
+                    .ThenInclude(c => c.AppUser)
+                .Include(a => a.LmsEvent.LmsEventLmsTaskSets);
 
             return query;
         }

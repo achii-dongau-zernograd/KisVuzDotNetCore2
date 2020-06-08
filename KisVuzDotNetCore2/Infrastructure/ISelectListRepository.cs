@@ -48,7 +48,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListContractTypes(int selectedId = 0);
-
+        
         /// <summary>
         /// Возвращает список типов документов, загружаемых абитуриентами,
         /// доступных для фильтрации приёмной комиссией при проверке
@@ -57,6 +57,14 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <returns></returns>
         SelectList GetSelectListAbiturientsUserDocumentTypes(int selectedId = 0);
         
+        /// <summary>
+        /// Возвращает список мероприятий указанного типа
+        /// </summary>
+        /// <param name="lmsEventTypeId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListLmsEvents(int lmsEventTypeId, int selectedId = 0);
+
         /// <summary>
         /// Возвращает список подтверждённых абитуриентов
         /// </summary>
@@ -72,6 +80,21 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <returns></returns>
         SelectList GetSelectListLmsEventTypes(int lmsEventTypeGroupId, int selectedId = 0);
         
+        /// <summary>
+        /// Возвращает список пользователей-участников мероприятия
+        /// </summary>
+        /// <param name="lmsEventId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListLmsEventParticipants(int lmsEventId, int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список типов событий СДО
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListLmsEventTypes(int selectedId = 0);
+
         /// <summary>
         /// Возвращает список полных наименований
         /// реализуемых профилей подготовки
@@ -138,6 +161,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListAbiturientStatuses(int selectedId = 0);
+        
+        /// <summary>
+        /// Возвращает список наборов заданий
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListLmsTaskSets(int selectedId = 0);
 
         /// <summary>
         /// Возвращает список баз цитирования

@@ -30,7 +30,7 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// </summary>
         /// <param name="lmsTaskId"></param>
         /// <returns></returns>
-        Task<LmsTask> GetLmsTask(int lmsTaskId);
+        Task<LmsTask> GetLmsTaskAsync(int lmsTaskId);
         
         /// <summary>
         /// Добавляет к заданию СДО дисциплину

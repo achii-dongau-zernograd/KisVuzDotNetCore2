@@ -1,0 +1,184 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.LMS.LmsTask>
+
+@{
+    ViewData["Title"] = "Index";
+    int questionCounter = 1;
+}
+
+<h2>Проверка ответов</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                № п.п.
+            </th>
+
+            <th>
+                Дата/время ответа
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.LmsTaskTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LmsTaskText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LmsTaskJpgId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfPoints)
+            </th>
+            <th>Варианты ответов</th>
+            <th>Ответ пользователя</th>
+            <th>Оценка</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @(questionCounter++)
+            </td>
+
+            <td>
+                @if (item.LmsEventLmsTaskSetAppUserAnswers != null && item.LmsEventLmsTaskSetAppUserAnswers.Count > 0)
+                {
+                    foreach (var lmsEventLmsTaskSetAppUserAnswer in item.LmsEventLmsTaskSetAppUserAnswers)
+                    {
+                        <p>@lmsEventLmsTaskSetAppUserAnswer.AnswerDateTime</p>
+                    }
+                }
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.LmsTaskType.LmsTaskTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LmsTaskText)
+            </td>
+            <td>
+                @if (item.LmsTaskJpg != null)
+                {
+                    <a href="/@item.LmsTaskJpg.Path" target="_blank">Открыть</a>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfPoints)
+            </td>
+
+            @*Варианты ответов*@
+            <td>
+                @if(item.LmsTaskAnswers != null && item.LmsTaskAnswers.Count > 0)
+                {
+                    <ol>
+                        @foreach (var lmsTaskAnswer in item.LmsTaskAnswers)
+                        {
+                            string textColor = "text-danger";
+                            if(lmsTaskAnswer.IsCorrect)
+                            {
+                                textColor = "text-success";
+                            }
+
+                            if(lmsTaskAnswer.FileModel != null)
+                            {
+                                <li class="@textColor">
+                                    @lmsTaskAnswer.LmsTaskAnswerText
+                                    <a href="/@lmsTaskAnswer.FileModel.Path">Открыть</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="@textColor">@lmsTaskAnswer.LmsTaskAnswerText</li>
+                            }                            
+                        }
+                    </ol>
+                }
+            </td>
+            @*Ответы пользователя*@
+            <td>
+                @if(item.LmsEventLmsTaskSetAppUserAnswers != null && item.LmsEventLmsTaskSetAppUserAnswers.Count > 0)
+                {
+                    
+                        foreach (var lmsEventLmsTaskSetAppUserAnswer in item.LmsEventLmsTaskSetAppUserAnswers)
+                        {
+                        
+                            @lmsEventLmsTaskSetAppUserAnswer.AnswerAsText
+
+                            @if(lmsEventLmsTaskSetAppUserAnswer.AnswerAsFile != null)
+                            {
+                                <a href="/@lmsEventLmsTaskSetAppUserAnswer.AnswerAsFile.Path" target="_blank">Открыть</a>
+                            }                                                        
+                        
+                            @if(lmsEventLmsTaskSetAppUserAnswer.LmsEventLmsTasksetAppUserAnswerTaskAnswers != null &&
+                                lmsEventLmsTaskSetAppUserAnswer.LmsEventLmsTasksetAppUserAnswerTaskAnswers.Count > 0)
+                            {
+                                @foreach (var lmsEventLmsTasksetAppUserAnswerTaskAnswer in lmsEventLmsTaskSetAppUserAnswer.LmsEventLmsTasksetAppUserAnswerTaskAnswers)
+                                {
+                                    <p>
+                                        @lmsEventLmsTasksetAppUserAnswerTaskAnswer.LmsTaskAnswer.LmsTaskAnswerText
+                                    </p>
+                                 }
+                            }
+                        }
+                    
+                }
+            </td>
+            <td>
+                @if (item.LmsEventLmsTaskSetAppUserAnswers != null && item.LmsEventLmsTaskSetAppUserAnswers.Count > 0)
+                {
+                    foreach (var lmsEventLmsTaskSetAppUserAnswer in item.LmsEventLmsTaskSetAppUserAnswers)
+                    {
+                        if (lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints != null)
+                        {
+                            <p>@lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints</p>
+                        }
+                        else
+                        {
+                            <form asp-action="AddNumberOfPoints" class="form-inline">
+                                <select name="mark" class="form-control">
+                                    @for (int i=0; i <= lmsEventLmsTaskSetAppUserAnswer.LmsTask.NumberOfPoints; i++)
+                                    {
+                                        <option>@i</option>
+                                    }
+                                </select>
+                                <input type="hidden" name="lmsEventId" value="@ViewBag.LmsEventId" />
+                                <input type="hidden" name="userName" value="@ViewBag.UserName" />
+                                <input type="hidden" name="lmsEventLmsTasksetAppUserAnswerId" value="@lmsEventLmsTaskSetAppUserAnswer.LmsEventLmsTasksetAppUserAnswerId" />
+                                <input type="submit" value="Оценить" class="btn btn-primary" />
+                            </form>
+                        }
+                    }
+                }
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+            </td>
+        </tr>
+}
+        @{ 
+            double sumMax = Model.Sum(item => item.NumberOfPoints);
+            double sumAnswers = Model.Sum(item => item.LmsEventLmsTaskSetAppUserAnswers.Sum(a => a.NumberOfPoints)) ?? 0;
+            double mark = Math.Round(sumAnswers * 100 / sumMax, 0, MidpointRounding.AwayFromZero);
+            
+        }
+
+        <tr class="bg-info">
+            <th colspan="5"></th>
+            <th>
+                @sumMax
+            </th>
+            <th colspan="2"></th>
+            <th>
+                @sumAnswers
+            </th>
+            <th></th>
+        </tr>
+    </tbody>
+</table>
+
+<h4>Оценка по 100-балльной шкале: @mark</h4>
