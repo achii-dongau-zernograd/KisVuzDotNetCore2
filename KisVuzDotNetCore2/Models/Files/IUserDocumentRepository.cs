@@ -55,6 +55,15 @@ namespace KisVuzDotNetCore2.Models.Files
         Task<UserDocument> CreateAbiturientCard(string userName, IFormFile uploadedFile);
 
         /// <summary>
+        /// Загружает на сервер фотографию абитуриента и
+        /// создаёт соответствующую запись в таблице UserDocuments
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<UserDocument> CreatePhoto(string userName, IFormFile uploadedFile);
+
+        /// <summary>
         /// Удаляет документ пользователя
         /// </summary>
         /// <param name="userDocumentId">УИД документа пользователя</param>
@@ -161,8 +170,6 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="appUser"></param>
         /// <returns></returns>
         Task RemoveUserDocumentsAsync(AppUser appUser);
-        
-
         
     }
 }

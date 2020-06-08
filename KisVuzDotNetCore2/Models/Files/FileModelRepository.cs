@@ -410,6 +410,19 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает на сервер фотографию абитуриента
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadUserPhotoAsync(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                "Фотография пользователя",
+                FileDataTypeEnum.UserDocuments_Photo);
+            return fileModel;
+        }
+
+        /// <summary>
         /// Загружайт скан-копию файла, подтверждающего индивидуальное достижение абитуриента
         /// </summary>
         /// <param name="uploadedFile"></param>

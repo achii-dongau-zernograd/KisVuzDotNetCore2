@@ -149,6 +149,33 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает на сервер фотографию абитуриента и
+        /// создаёт соответствующую запись в таблице UserDocuments
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<UserDocument> CreatePhoto(string userName, IFormFile uploadedFile)
+        {
+            var userId = _userProfileRepository.GetAppUserId(userName);
+            var fileModel = await _fileModelRepository.UploadUserPhotoAsync(uploadedFile);
+            if (fileModel == null)
+                return null;
+
+            var userDocument = new UserDocument
+            {
+                AppUserId = userId,
+                FileModelId = fileModel.Id,
+                FileDataTypeId = (int)FileDataTypeEnum.UserDocuments_Photo
+            };
+
+            await _context.AddAsync(userDocument);
+            await _context.SaveChangesAsync();
+
+            return userDocument;
+        }
+
+        /// <summary>
         /// Проверяет наличие у пользователя наличия документов указанного типа
         /// </summary>
         /// <param name="userName"></param>

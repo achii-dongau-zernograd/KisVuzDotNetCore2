@@ -86,9 +86,13 @@ namespace KisVuzDotNetCore2.Controllers
 
             // Проверяем наличие у абитуриента загруженного заявления
             // на обработку персональных данных
-            if (!_abiturRepository.IsLoadedFileApplicationForProcessingPersonalData(abiturient))
-                //return View("LoadFileApplicationForProcessingPersonalData");
+            if (!_abiturRepository.IsLoadedFileApplicationForProcessingPersonalData(abiturient))                
                 return RedirectToAction(nameof(LoadFileApplicationForProcessingPersonalData));
+
+            // Проверяем наличие у абитуриента загруженной фотографии
+            if (!_abiturRepository.IsLoadedFilePhoto(abiturient))
+                return RedirectToAction(nameof(LoadFilePhoto));
+
 
             // Проверяем наличие у абитуриента загруженного документа об образовании
             if (!_abiturRepository.IsLoadedFileEducationDocuments(abiturient))
@@ -918,6 +922,25 @@ namespace KisVuzDotNetCore2.Controllers
 
             UserDocument newUserDocument = await _userDocumentRepository
                 .CreateAbiturientCard(User.Identity.Name, uploadedFile);
+
+            return RedirectToAction(nameof(Start));
+        }
+        #endregion
+
+        #region Загрузка фотографии абитуриента
+        public IActionResult LoadFilePhoto()
+        {            
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoadFilePhoto(IFormFile uploadedFile)
+        {
+            if (uploadedFile == null)
+                RedirectToAction(nameof(Start));
+
+            UserDocument newUserDocument = await _userDocumentRepository
+                .CreatePhoto(User.Identity.Name, uploadedFile);
 
             return RedirectToAction(nameof(Start));
         }

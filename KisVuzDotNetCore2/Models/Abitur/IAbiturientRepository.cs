@@ -178,6 +178,13 @@ namespace KisVuzDotNetCore2.Models.Abitur
         bool IsLoadedFilePassport(Abiturient abiturient);
 
         /// <summary>
+        /// Проверяем наличие у абитуриента загруженной фотографии
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        bool IsLoadedFilePhoto(Abiturient abiturient);
+
+        /// <summary>
         /// Обновляет данные абитуриента
         /// </summary>
         /// <param name="abiturient"></param>

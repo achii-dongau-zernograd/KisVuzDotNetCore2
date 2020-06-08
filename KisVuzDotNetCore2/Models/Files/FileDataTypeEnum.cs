@@ -259,6 +259,10 @@
         /// <summary>
         /// Файл с решением задания, загруженный пользователем
         /// </summary>
-        Lms_AppUserAnswer = 71
+        Lms_AppUserAnswer = 71,
+        /// <summary>
+        /// Документы пользователя - Фотография
+        /// </summary>
+        UserDocuments_Photo = 72
     }
 }

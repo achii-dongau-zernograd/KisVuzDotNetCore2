@@ -161,6 +161,13 @@ namespace KisVuzDotNetCore2.Models.Files
         IQueryable<FileDataType> GetFileDataTypes(FileDataTypeGroupEnum fileDataTypeGroup);
 
         /// <summary>
+        /// Загружает на сервер фотографию абитуриента
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadUserPhotoAsync(IFormFile uploadedFile);
+
+        /// <summary>
         /// Загрузка скан-копии заявления о приёме
         /// </summary>
         /// <param name="uploadedFile"></param>

@@ -686,6 +686,13 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = (int)FileDataTypeGroupEnum.LMS
                     };
 
+                    FileDataType fileDataType72 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.UserDocuments_Photo,
+                        FileDataTypeName = "Фотография",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.UserDocuments
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                         fileDataType1,
                         fileDataType2,
@@ -756,7 +763,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType68,
                         fileDataType69,
                         fileDataType70,
-                        fileDataType71
+                        fileDataType71,
+                        fileDataType72
                         );
                     await context.SaveChangesAsync();
                 }

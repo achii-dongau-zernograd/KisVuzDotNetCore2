@@ -437,6 +437,18 @@ namespace KisVuzDotNetCore2.Models.Abitur
         }
 
         /// <summary>
+        /// Проверяем наличие у абитуриента загруженной фотографии
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        public bool IsLoadedFilePhoto(Abiturient abiturient)
+        {
+            bool isLoadedFile = _userDocumentRepository.IsLoadedUserDocument(abiturient.AppUser, FileDataTypeEnum.UserDocuments_Photo);
+
+            return isLoadedFile;
+        }
+
+        /// <summary>
         /// Проверяет наличие наспортных данных
         /// </summary>
         /// <param name="userName"></param>
@@ -987,7 +999,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
             if (entry.AppUser.UserName != userName) return;
                         
             await _contractRepository.RemoveContractAsync(entry);
-        }
+        }        
         #endregion
     }
 }
