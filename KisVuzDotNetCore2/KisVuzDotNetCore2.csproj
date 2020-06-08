@@ -598,6 +598,10 @@
     <Compile Remove="Migrations\20200602025306_Contracts.Designer.cs" />
     <Compile Remove="Migrations\20200604155703_LmsTaskAnswer.cs" />
     <Compile Remove="Migrations\20200604155703_LmsTaskAnswer.Designer.cs" />
+    <Compile Remove="Migrations\20200608121841_IntranceTestGroupId.cs" />
+    <Compile Remove="Migrations\20200608121841_IntranceTestGroupId.Designer.cs" />
+    <Compile Remove="Migrations\20200608122527_EntranceTestGroupId.cs" />
+    <Compile Remove="Migrations\20200608122527_EntranceTestGroupId.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

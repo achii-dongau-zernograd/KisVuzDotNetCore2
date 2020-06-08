@@ -35,7 +35,7 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
             ViewBag.RowStatuses = _selectListRepository.GetSelectListRowStatuses(filterRowStatus ?? 0);
             
             var userDocuments = _userDocumentRepository.GetUserDocuments()
-                .Where(ud => ud.AppUser.Abiturient != null && ud.AppUser.Abiturient.AbiturientStatusId == (int) AbiturientStatusEnum.ConfirmedAbiturient);
+                .Where(ud => ud.AppUser.Abiturient != null /*&& ud.AppUser.Abiturient.AbiturientStatusId == (int) AbiturientStatusEnum.ConfirmedAbiturient*/);
 
             if (!isRequestDataImmediately)
                 return View();

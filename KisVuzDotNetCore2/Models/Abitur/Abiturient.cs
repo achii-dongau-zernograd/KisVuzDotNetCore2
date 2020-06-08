@@ -31,6 +31,12 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public AbiturientStatus AbiturientStatus { get; set; }
 
         /// <summary>
+        /// Номер группы для прохождения вступительных испытаний
+        /// </summary>
+        [Display(Name = "Номер группы для прохождения вступительных испытаний")]
+        public int? EntranceTestGroupId { get; set; }
+
+        /// <summary>
         /// Заявления о приёме
         /// </summary>
         public List<ApplicationForAdmission> ApplicationForAdmissions { get; set; }

@@ -20,6 +20,12 @@
                     <option>Все статусы</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="FilterEntranceTestGroupId">№ группы вст. исп.</label>
+                <select name="FilterEntranceTestGroupId" class="form-control" asp-items="ViewBag.EntranceTestGroups">
+                    <option>Все абитуриенты</option>                    
+                </select>
+            </div>
 
             <input type="hidden" name="IsRequestDataImmediately" value="true" />
             <button type="submit" class="btn btn-info">
@@ -34,6 +40,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Дата/время регистрации</th>
             <th>ФИО</th>
             <th>Основные документы</th>
@@ -43,6 +50,7 @@
             <th>Льготы</th>
             <th>Договоры</th>
             <th>Статус</th>
+            <th>Номер группы для прохождения вступительных испытаний</th>
             <th>Действия</th>
         </tr>
     </thead>
@@ -52,6 +60,7 @@
             foreach (var item in Model)
             {
                 <tr>
+                    <td>@item.AbiturientId</td>
                     <td>@item.AppUser.RegisterDateTime</td>
                     <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUser.Id">@item.AppUser.GetFullName</a></td>
                     <td>
@@ -254,6 +263,8 @@
 
                     @*Статус*@
                     <td>@item.AbiturientStatus?.AbiturientStatusName</td>
+
+                    <td>@item.EntranceTestGroupId</td>
 
                     @*Действия*@
                     <td>

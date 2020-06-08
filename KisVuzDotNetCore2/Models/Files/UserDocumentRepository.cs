@@ -272,7 +272,7 @@ namespace KisVuzDotNetCore2.Models.Files
         /// </summary>
         IQueryable<UserDocument> UserDocuments => _context.UserDocuments
             .Include(ud => ud.AppUser)
-                .ThenInclude(ud => ud.Abiturient)
+                .ThenInclude(ud => ud.Abiturient.AbiturientStatus)
             .Include(ud => ud.FileModel.FileToFileTypes)
             .Include(ud => ud.FileDataType)
             .Include(ud => ud.RowStatus)

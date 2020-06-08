@@ -21,9 +21,15 @@ namespace KisVuzDotNetCore2.Models.Priem
         public int? FilterAbiturientStatus { get; set; }
 
         /// <summary>
+        /// Номер группы абитуриентов к вступительным испытаниям
+        /// </summary>
+        public int? FilterEntranceTestGroupId { get; set; }
+
+        /// <summary>
         /// Флаг, указывающий на необходимость немедленной загрузки данных
         /// (из запроса GET)
         /// </summary>
         public bool IsRequestDataImmediately { get; set; }
+        
     }
 }

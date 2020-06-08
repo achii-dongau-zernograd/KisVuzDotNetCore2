@@ -35,7 +35,8 @@
         <thead>
             <tr>
                 <th>№ п.п.</th>
-                <th>ФИО подтверждённого абитуриента</th>
+                <th>ФИО абитуриента</th>
+                <th>Статус абитуриента</th>
                 <th>Загруженный документ</th>
                 <th>Дата/время загрузки</th>
                 <th>Статус</th>
@@ -60,6 +61,9 @@
                         <td>@(counter++)</td>
                         <td>
                             <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@userDocument.AppUser.Id" target="_blank">@userDocument.AppUser.GetFullName</a>
+                        </td>
+                        <td>
+                            @userDocument.AppUser.Abiturient?.AbiturientStatus?.AbiturientStatusName
                         </td>
                         <td>
                             <a href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileDataType.FileDataTypeName</a>

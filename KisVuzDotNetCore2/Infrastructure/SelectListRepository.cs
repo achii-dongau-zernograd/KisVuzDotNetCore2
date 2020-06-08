@@ -912,5 +912,25 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(data,
                  "AppUser.UserName", "AppUser.GetFullName", selectedId);
         }
+
+        /// <summary>
+        /// Возвращает список номеров групп абитуриентов для прохождения вступительных испытаний
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEntranceTestGroups(int selectedId = 0)
+        {
+            var maxGroupId = _context.Abiturients.Max(a => a.EntranceTestGroupId);
+
+            if(maxGroupId == null)
+            {
+                return null;
+            }
+            else
+            {
+                return new SelectList(Enumerable.Range(1, (int)maxGroupId), selectedId);
+            }
+            
+        }
     }
 }

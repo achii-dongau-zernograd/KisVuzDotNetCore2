@@ -37,6 +37,7 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
             ViewBag.AbiturientsFilterAndSortModel = filterAndSortModel;
 
             ViewBag.AbiturientStatuses = _selectListRepository.GetSelectListAbiturientStatuses(filterAndSortModel.FilterAbiturientStatus ?? 0);
+            ViewBag.EntranceTestGroups = _selectListRepository.GetSelectListEntranceTestGroups(filterAndSortModel.FilterEntranceTestGroupId ?? 0);
 
             var abiturs = _abiturRepository.GetAbiturients();
             
@@ -45,6 +46,9 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
 
             if (filterAndSortModel.FilterAbiturientStatus != null)
                 abiturs = abiturs.Where(a => a.AbiturientStatusId == filterAndSortModel.FilterAbiturientStatus);
+
+            if (filterAndSortModel.FilterEntranceTestGroupId != null)
+                abiturs = abiturs.Where(a => a.EntranceTestGroupId == filterAndSortModel.FilterEntranceTestGroupId);
 
             abiturs = abiturs.OrderByDescending(a => a.AppUser.RegisterDateTime);
 
@@ -105,6 +109,21 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
                     if(int.TryParse(abiturientStatusIdString, out abiturientStatusId))
                     {
                         await _abiturRepository.SetAbiturientStatusAsync(abiturient, (AbiturientStatusEnum)abiturientStatusId);
+                        return RedirectToAction(nameof(Details), new { userName });
+                    }
+                    break;
+                // Режим изменения номера группы для прохождения вступительных испытаний
+                case "ChangeEntranceTestGroupId":
+                    ViewBag.Mode = mode;
+                    ViewBag.AbiturientStatuses = _selectListRepository.GetSelectListAbiturientStatuses(abiturient.AbiturientStatusId);
+                    break;
+                // Режим сохранения изменения номера группы для прохождения вступительных испытаний
+                case "ChangeEntranceTestGroupIdSave":
+                    string entranceTestGroupIdString = HttpContext.Request.Query["EntranceTestGroupId"];
+                    int entranceTestGroupId;
+                    if (int.TryParse(entranceTestGroupIdString, out entranceTestGroupId))
+                    {
+                        await _abiturRepository.SetAbiturientEntranceTestGroupIdAsync(abiturient, entranceTestGroupId);
                         return RedirectToAction(nameof(Details), new { userName });
                     }
                     break;

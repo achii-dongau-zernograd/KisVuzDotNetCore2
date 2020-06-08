@@ -597,7 +597,17 @@ namespace KisVuzDotNetCore2.Models.Abitur
             await _context.SaveChangesAsync();
         }
 
-
+        /// <summary>
+        /// Устанавливает абитуриенту номер группы для прохождения вступительных испытаний
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <param name="entranceTestGroupId"></param>
+        /// <returns></returns>
+        public async Task SetAbiturientEntranceTestGroupIdAsync(Abiturient abiturient, int entranceTestGroupId)
+        {
+            abiturient.EntranceTestGroupId = entranceTestGroupId;
+            await _context.SaveChangesAsync();
+        }
 
         /// <summary>
         /// Устанавливает замечание к документу
@@ -999,7 +1009,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
             if (entry.AppUser.UserName != userName) return;
                         
             await _contractRepository.RemoveContractAsync(entry);
-        }        
+        }                
         #endregion
     }
 }

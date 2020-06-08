@@ -41,6 +41,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListAppUsersAuthors(string selectedId = "");
+        
+        /// <summary>
+        /// Возвращает список номеров групп абитуриентов для прохождения вступительных испытаний
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListEntranceTestGroups(int selectedId = 0);
 
         /// <summary>
         /// Возвращает список типов договоров

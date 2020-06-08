@@ -143,6 +143,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         IQueryable<UserDocument> GetUserDocumentsWithoutUserEducationDataAsync(string userName);
 
         /// <summary>
+        /// Устанавливает абитуриенту номер группы для прохождения вступительных испытаний
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <param name="entranceTestGroupId"></param>
+        /// <returns></returns>
+        Task SetAbiturientEntranceTestGroupIdAsync(Abiturient abiturient, int entranceTestGroupId);
+
+        /// <summary>
         /// Возвращает запрос на выборку уже имеющихся квалификаций абитуриента
         /// </summary>
         /// <param name="userName"></param>
