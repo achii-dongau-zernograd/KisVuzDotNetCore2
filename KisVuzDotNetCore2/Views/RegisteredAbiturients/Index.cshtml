@@ -50,7 +50,8 @@
             <th>Льготы</th>
             <th>Договоры</th>
             <th>Статус</th>
-            <th>Номер группы для прохождения вступительных испытаний</th>
+            <th>№ группы для прохождения вступ. исп.</th>
+            <th>Консультант</th>
             <th>Действия</th>
         </tr>
     </thead>
@@ -135,10 +136,9 @@
                                 if (applicationForAdmission.RowStatusId == (int)RowStatusEnum.Confirmed) { textClass = "text-success"; }
                                 if (applicationForAdmission.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection) { textClass = "text-danger"; }
                                 if (applicationForAdmission.RowStatusId == (int)RowStatusEnum.ChangedByUser) { textClass = "text-warning"; }
-
-                                <p class="@textClass">
-                                    @applicationForAdmission.EduProfile.EduNapravl.EduNapravlCode
-                                </p>
+                                                                
+                                <a asp-controller="ApplicationForAdmissions" asp-action="Edit" asp-route-id="@applicationForAdmission.ApplicationForAdmissionId" target="_blank" class="@textClass">@applicationForAdmission.EduProfile.EduNapravl.EduNapravlCode</a>
+                                
                             }
                         }
                     </td>
@@ -265,6 +265,25 @@
                     <td>@item.AbiturientStatus?.AbiturientStatusName</td>
 
                     <td>@item.EntranceTestGroupId</td>
+
+                    @*Консультант абитуриента*@
+                    <td>
+                        @{
+                            var consultant = item.AppUserAbiturientConsultants.FirstOrDefault()?.AppUser;
+                        }
+
+                        @if (consultant != null)
+                        {
+                            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@consultant.Id" target="_blank">@consultant.GetFullName</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Details"
+                               asp-route-userName="@item.AppUser.UserName"
+                               asp-route-mode="ChangeAppUserAbiturientConsultant"
+                               class="btn btn-primary">Назначить</a>
+                        }
+                    </td>
 
                     @*Действия*@
                     <td>

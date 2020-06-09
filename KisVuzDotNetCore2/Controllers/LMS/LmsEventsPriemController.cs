@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Infrastructure;
+using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.LMS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,15 @@ namespace KisVuzDotNetCore2.Controllers.Priem
     public class LmsEventsPriemController : Controller
     {
         private readonly ILmsEventRepository _lmsEventsRepository;
+        private readonly IAbiturientRepository _abiturientRepository;
         private readonly ISelectListRepository _selectListRepository;
 
         public LmsEventsPriemController(ILmsEventRepository lmsEventsRepository,
+            IAbiturientRepository abiturientRepository,
             ISelectListRepository selectListRepository)
         {
             _lmsEventsRepository = lmsEventsRepository;
+            _abiturientRepository = abiturientRepository;
             _selectListRepository = selectListRepository;
         }
 
@@ -111,6 +115,35 @@ namespace KisVuzDotNetCore2.Controllers.Priem
 
             return RedirectToAction(nameof(LmsEventParticipants), new { lmsEventId = appUserLmsEvent.LmsEventId });
         }
+
+        #region Добавление группы абитуриентов        
+        /// <summary>
+        /// Выбор группы абитуриентов для вступительных испытаний
+        /// </summary>
+        /// <param name="lmsEventId"></param>
+        /// <returns></returns>
+        public IActionResult LmsEventParticipantsAddAbiturientsGroup(int lmsEventId, int? entranceTestGroupId)
+        {
+            if(entranceTestGroupId != null)
+            {
+                ViewBag.EntranceTestGroupAbiturients = _abiturientRepository.GetAbiturients().Where(a => a.EntranceTestGroupId == entranceTestGroupId);
+            }
+
+            ViewBag.EntranceTestGroups = _selectListRepository.GetSelectListEntranceTestGroups(); 
+            ViewBag.LmsEventId = lmsEventId;
+            ViewBag.EntranceTestGroupId = entranceTestGroupId;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LmsEventParticipantsAddAbiturientsGroup(int lmsEventId, int entranceTestGroupId)
+        {
+            await _lmsEventsRepository.AddAppUserLmsEventsByAbiturientsEntranceTestGroupAsync(lmsEventId, entranceTestGroupId);
+            return RedirectToAction(nameof(LmsEventParticipants), new { lmsEventId });
+        }
+        #endregion
 
         /// <summary>
         /// Удаление участника мероприятия

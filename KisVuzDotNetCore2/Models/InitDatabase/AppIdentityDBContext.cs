@@ -645,8 +645,10 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<ConsentToEnrollment> ConsentToEnrollments { get; set; }
 
-
-
+        /// <summary>
+        /// Назначение абитуриенту пользователя - консультанта
+        /// </summary>
+        public DbSet<AppUserAbiturientConsultant> AppUserAbiturientConsultants { get; set; }
 
 
 

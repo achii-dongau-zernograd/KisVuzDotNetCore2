@@ -38,6 +38,33 @@
         </div>
     }
 </div>
+
+<div class="row">
+    <div class="col-md-2">Консультант абитуриента: </div>
+    @if (mode == "ChangeAppUserAbiturientConsultant")
+    {
+        <form>
+            <div class="col-md-2">
+                <select name="AppUserAbiturientConsultantId" class="form-control" asp-items="ViewBag.AppUserAbiturientConsultants">
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input type="hidden" name="userName" value="@Model.AppUser.UserName" />
+                <input type="hidden" name="mode" value="ChangeAppUserAbiturientConsultantSave" />
+                <input type="submit" class="btn btn-primary" value="Сохранить" />
+                <a asp-route-userName="@Model.AppUser.UserName">Отмена</a>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="col-md-2">@Model.AppUserAbiturientConsultants?.FirstOrDefault().AppUser.GetFullName</div>
+        <div class="col-md-1">
+            <a asp-route-userName="@Model.AppUser.UserName" asp-route-mode="ChangeAppUserAbiturientConsultant">Изменить</a>
+        </div>
+    }
+</div>
+
 <div class="row">
     <div class="col-md-2">Номер группы для прохождения вступительных испытаний: </div>
     @if (mode == "ChangeEntranceTestGroupId")

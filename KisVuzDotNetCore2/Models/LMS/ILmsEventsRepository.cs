@@ -87,5 +87,15 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// <param name="lmsEventId"></param>
         /// <returns></returns>
         Task<List<LmsTask>> GetLmsEventTasks(int lmsEventId);
+        
+        /// <summary>
+        /// Добавляет пользователей, являющихся абитуриентами - участниками группы,
+        /// сформированной приёмной комиссией для прохождения вступительных испытаний,
+        /// к соответствующему мероприятию СДО
+        /// </summary>
+        /// <param name="lmsEventId"></param>
+        /// <param name="entranceTestGroupId"></param>
+        /// <returns></returns>
+        Task AddAppUserLmsEventsByAbiturientsEntranceTestGroupAsync(int lmsEventId, int entranceTestGroupId);
     }
 }

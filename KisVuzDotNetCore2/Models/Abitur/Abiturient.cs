@@ -47,6 +47,11 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public List<AbiturientIndividualAchievment> AbiturientIndividualAchievments { get; set; }
         
         /// <summary>
+        /// Консультанты абитуриента
+        /// </summary>
+        public List<AppUserAbiturientConsultant> AppUserAbiturientConsultants { get; set; }
+
+        /// <summary>
         /// Возвращает строку описания абитуриента, включающую
         /// ФИО, дату рождения и email
         /// </summary>

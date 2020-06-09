@@ -3,6 +3,7 @@ using KisVuzDotNetCore2.Models.LMS;
 using KisVuzDotNetCore2.Models.Struct;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Infrastructure
 {
@@ -161,6 +162,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// </summary>
         /// <returns></returns>
         SelectList GetSelectListAppUserStatuses(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список пользователей, назначаемых абитуриентам консультантами
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        Task<SelectList> GetSelectListAppUserAbiturientConsultantsAsync(int selectedId = 0);
 
         /// <summary>
         /// Возвращает список статусов абитуриентов

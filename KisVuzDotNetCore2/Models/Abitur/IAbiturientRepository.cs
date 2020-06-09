@@ -177,6 +177,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="userName"></param>
         /// <returns></returns>
         bool IsLoadedFilePassport(string userName);
+        
+        /// <summary>
+        /// Назначает абитуриенту консультанта
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <param name="appUserAbiturientConsultantId"></param>
+        /// <returns></returns>
+        Task SetAppUserAbiturientConsultantAsync(Abiturient abiturient, string appUserAbiturientConsultantId);
 
         /// <summary>
         /// Проверяем наличие у абитуриента загруженной скан-копии паспорта

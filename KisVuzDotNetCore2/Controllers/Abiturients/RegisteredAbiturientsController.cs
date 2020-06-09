@@ -131,7 +131,17 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
                         await _abiturRepository.SetAbiturientEntranceTestGroupIdAsync(abiturient, null);
                         return RedirectToAction(nameof(Details), new { userName });
                     }
+                // Режим добавления сотрудника-консультанта
+                case "ChangeAppUserAbiturientConsultant":
+                    ViewBag.Mode = mode;
+                    ViewBag.AppUserAbiturientConsultants = await _selectListRepository.GetSelectListAppUserAbiturientConsultantsAsync();
                     break;
+                // Режим сохранения сотрудника-консультанта
+                case "ChangeAppUserAbiturientConsultantSave":
+                    string appUserAbiturientConsultantId = HttpContext.Request.Query["AppUserAbiturientConsultantId"];
+                    await _abiturRepository.SetAppUserAbiturientConsultantAsync(abiturient, appUserAbiturientConsultantId);
+                    return RedirectToAction(nameof(Details), new { userName });
+                    
                 default:
                     break;
             }

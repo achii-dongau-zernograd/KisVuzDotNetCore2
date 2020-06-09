@@ -200,5 +200,41 @@ namespace KisVuzDotNetCore2.Models.LMS
 
             return lmsTasks;
         }
+
+        /// <summary>
+        /// Добавляет пользователей, являющихся абитуриентами - участниками группы,
+        /// сформированной приёмной комиссией для прохождения вступительных испытаний,
+        /// к соответствующему мероприятию СДО
+        /// </summary>
+        /// <param name="lmsEventId"></param>
+        /// <param name="entranceTestGroupId"></param>
+        /// <returns></returns>
+        public async Task AddAppUserLmsEventsByAbiturientsEntranceTestGroupAsync(int lmsEventId, int entranceTestGroupId)
+        {
+            var appUsers = _context.Users
+                .Include(u => u.Abiturient)
+                .Where(u => u.Abiturient.EntranceTestGroupId == entranceTestGroupId);
+
+            var newItems = new List<AppUserLmsEvent>();
+            foreach(var appUser in appUsers)
+            {
+                if (! _context.AppUserLmsEvents.Any(ue => ue.AppUserId == appUser.Id &&
+                                                          ue.LmsEventId == lmsEventId &&
+                                                          ue.AppUserLmsEventUserRoleId == (int)AppUserLmsEventUserRolesEnum.Participant))
+                {
+                    var newItem = new AppUserLmsEvent
+                    {
+                        AppUserId = appUser.Id,
+                        LmsEventId = lmsEventId,
+                        AppUserLmsEventUserRoleId = (int)AppUserLmsEventUserRolesEnum.Participant
+                    };
+
+                    newItems.Add(newItem);
+                }
+            }
+
+            _context.AppUserLmsEvents.AddRange(newItems);
+            await _context.SaveChangesAsync();
+        }
     }
 }

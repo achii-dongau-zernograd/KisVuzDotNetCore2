@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "ChooseEntranceTestGroupId";
+    var abiturients = (IEnumerable<Abiturient>)ViewBag.EntranceTestGroupAbiturients;
+}
+
+<h2>Запись группы абитуриентов на мероприятие</h2>
+
+<form class="form-inline">
+    <label class="">Выберите группу абитуриентов:</label>    
+    <select name="entranceTestGroupId" asp-items="ViewBag.EntranceTestGroups" class="form-control"></select>
+    <input type="hidden" name="lmsEventId" value="@ViewBag.LmsEventId" />
+    <input type="submit" value="Выбрать" class="btn btn-primary" />
+</form>
+
+@if(abiturients != null && abiturients.Count() > 0)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Абитуриент
+            </th>
+            <th>
+                Статус абитуриента
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in abiturients) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AbiturientFioBirthdayEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AbiturientStatus.AbiturientStatusName)
+            </td>            
+        </tr>
+    }
+    </tbody>
+</table>
+
+<form asp-action="LmsEventParticipantsAddAbiturientsGroup">
+    <input type="hidden" name="lmsEventId" value="@ViewBag.LmsEventId" />
+    <input type="hidden" name="entranceTestGroupId" value="@ViewBag.EntranceTestGroupId" />
+    <input type="submit" value="Записать на мероприятие" class="btn btn-primary" />
+</form>
+}

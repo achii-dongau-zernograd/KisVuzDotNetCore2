@@ -176,6 +176,9 @@ namespace KisVuzDotNetCore2.Models.Abitur
         {
             var abiturs = _context.Abiturients
                 .Include(a => a.AbiturientStatus)
+                // Консультанты абитуриента
+                .Include(a => a.AppUserAbiturientConsultants)
+                    .ThenInclude(aa => aa.AppUser)
                 // Индивидуальные достижения
                 .Include(a => a.AbiturientIndividualAchievments)
                     .ThenInclude(aia => aia.AbiturientIndividualAchievmentType)
@@ -1009,7 +1012,29 @@ namespace KisVuzDotNetCore2.Models.Abitur
             if (entry.AppUser.UserName != userName) return;
                         
             await _contractRepository.RemoveContractAsync(entry);
-        }                
+        }
+
+        /// <summary>
+        /// Назначает абитуриенту консультанта
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <param name="appUserIdAbiturientConsultant"></param>
+        /// <returns></returns>
+        public async Task SetAppUserAbiturientConsultantAsync(Abiturient abiturient, string appUserIdAbiturientConsultant)
+        {
+            var entry = abiturient.AppUserAbiturientConsultants.FirstOrDefault();
+            if(entry == null)
+            {
+                abiturient.AppUserAbiturientConsultants
+                    .Add(new AppUserAbiturientConsultant { AppUserId = appUserIdAbiturientConsultant });
+            }
+            else
+            {
+                entry.AppUserId = appUserIdAbiturientConsultant;
+            }
+
+            await _context.SaveChangesAsync();
+        }
         #endregion
     }
 }

@@ -9,6 +9,7 @@ using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,8 @@ namespace KisVuzDotNetCore2.Infrastructure
         private readonly IUserProfileRepository _userProfileRepository;
         private readonly IEducationalInstitutionRepository _educationalInstitutionRepository;
         private readonly IPopulatedLocalityRepository _populatedLocalityRepository;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<AppUser> _userManager;
 
         /// <summary>
         /// Внедрение зависимостей
@@ -31,12 +34,16 @@ namespace KisVuzDotNetCore2.Infrastructure
         public SelectListRepository(AppIdentityDBContext context,
             IUserProfileRepository userProfileRepository,
             IEducationalInstitutionRepository educationalInstitutionRepository,
-            IPopulatedLocalityRepository populatedLocalityRepository)
+            IPopulatedLocalityRepository populatedLocalityRepository,
+            RoleManager<IdentityRole> roleManager,
+            UserManager<AppUser> userManager)
         {
             _context = context;
             _userProfileRepository = userProfileRepository;
             _educationalInstitutionRepository = educationalInstitutionRepository;
             _populatedLocalityRepository = populatedLocalityRepository;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -931,6 +938,27 @@ namespace KisVuzDotNetCore2.Infrastructure
                 return new SelectList(Enumerable.Range(1, (int)maxGroupId), selectedId);
             }
             
+        }
+
+        /// <summary>
+        /// Возвращает список пользователей, назначаемых абитуриентам консультантами
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public async Task<SelectList> GetSelectListAppUserAbiturientConsultantsAsync(int selectedId = 0)
+        {            
+            var u1 = await _userManager.GetUsersInRoleAsync("Приёмная комиссия");
+            var u2 = await _userManager.GetUsersInRoleAsync("Приёмная комиссия (консультанты)");
+            var data = new List<AppUser>(u1);
+
+            foreach (var appUser in u2)
+            {
+                if (!data.Contains(appUser))
+                    data.Add(appUser);
+            }
+            
+            return new SelectList(data.OrderBy(u => u.GetFullName),
+                 "Id", "GetFullName", selectedId);
         }
     }
 }
