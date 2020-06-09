@@ -63,7 +63,8 @@
                 <tr>
                     <td>@item.AbiturientId</td>
                     <td>@item.AppUser.RegisterDateTime</td>
-                    <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUser.Id">@item.AppUser.GetFullName</a></td>
+                    <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUser.Id">@item.AppUser.Abiturient.AbiturientFioBirthdayEmail</a></td>
+                    @*Основные документы*@
                     <td>
                         @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.SoglasieNaObrabotkuPersonalnihDannih))
                         {
@@ -75,7 +76,15 @@
                             else
                             { userDocumentClass = "text-warning"; }
 
-                            <p><a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a></p>
+                            <p>
+                                <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                                <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
+                                   asp-action="Edit"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </p>
                         }
 
                         @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.Passport))
@@ -88,7 +97,15 @@
                             else
                             { userDocumentClass = "text-warning"; }
 
-                            <p><a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a></p>
+                            <p>
+                                <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                                <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
+                                   asp-action="Edit"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </p>
                         }
 
                         @foreach (var userDocument in item.AppUser.UserDocuments
@@ -105,7 +122,15 @@
                             else
                             { userDocumentClass = "text-warning"; }
 
-                            <p><a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a></p>
+                            <p>
+                                <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                                <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
+                                   asp-action="Edit"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </p>
                         }
 
                         @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.AbiturientCard))
@@ -118,7 +143,15 @@
                             else
                             { userDocumentClass = "text-warning"; }
 
-                            <p><a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a></p>
+                            <p>
+                                <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                                <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
+                                   asp-action="Edit"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </p>
                         }
 
                         @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.UserDocuments_Photo))
@@ -150,8 +183,26 @@
                                 if (applicationForAdmission.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection) { textClass = "text-danger"; }
                                 if (applicationForAdmission.RowStatusId == (int)RowStatusEnum.ChangedByUser) { textClass = "text-warning"; }
                                                                 
-                                <a asp-controller="ApplicationForAdmissions" asp-action="Edit" asp-route-id="@applicationForAdmission.ApplicationForAdmissionId" target="_blank" class="@textClass">@applicationForAdmission.EduProfile.EduNapravl.EduNapravlCode</a>
                                 
+                                <p>
+                                    @if(applicationForAdmission.FileModel != null)
+                                    {
+                                        <a class="@textClass" href="/@applicationForAdmission.FileModel.Path" target="_blank">
+                                            @applicationForAdmission.ApplicationForAdmissionFullName
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        @applicationForAdmission.ApplicationForAdmissionFullName
+                                    }
+
+                                    <a asp-controller="ApplicationForAdmissions"
+                                       asp-action="Edit"
+                                       asp-route-id="@applicationForAdmission.ApplicationForAdmissionId"
+                                       target="_blank">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
+                                </p>
                             }
                         }
                     </td>
@@ -180,7 +231,23 @@
                                         if (consentToEnrollment.RowStatusId == (int)RowStatusEnum.ChangedByUser) { textClass = "text-warning"; }
 
                                         <p class="@textClass">
-                                            @consentToEnrollment.ApplicationForAdmission.EduProfile.EduNapravl.EduNapravlCode
+                                            @if(consentToEnrollment.FileModel !=null)
+                                            {
+                                                <a class="@textClass" href="/@consentToEnrollment.FileModel.Path" target="_blank">
+                                                    @consentToEnrollment.ApplicationForAdmission.ApplicationForAdmissionFullName
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                @consentToEnrollment.ApplicationForAdmission.ApplicationForAdmissionFullName
+                                            }
+                                            
+                                            <a asp-controller="ConsentToEnrollments"
+                                               asp-action="Edit"
+                                               asp-route-id="@consentToEnrollment.ConsentToEnrollmentId"
+                                               target="_blank">
+                                                <span class="glyphicon glyphicon-edit"></span>
+                                            </a>
                                         </p>
                                     }
                                 }                                
@@ -204,7 +271,23 @@
                                 if (abiturientIndividualAchievment.RowStatusId == (int)RowStatusEnum.ChangedByUser) { textClass = "text-warning"; }
 
                                 <p class="@textClass">
-                                    @abiturientIndividualAchievment.AbiturientIndividualAchievmentType.AbiturientIndividualAchievmentTypeName
+                                    @if(abiturientIndividualAchievment.FileModel != null)
+                                    {
+                                        <a class="@textClass" href="/@abiturientIndividualAchievment.FileModel.Path" target="_blank">
+                                            @abiturientIndividualAchievment.AbiturientIndividualAchievmentType.AbiturientIndividualAchievmentTypeName
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        @abiturientIndividualAchievment.AbiturientIndividualAchievmentType.AbiturientIndividualAchievmentTypeName
+                                    }
+
+                                    <a asp-controller="AbiturientIndividualAchievments"
+                                       asp-action="Edit"
+                                       asp-route-id="@abiturientIndividualAchievment.AbiturientIndividualAchievmentId"
+                                       target="_blank">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </a>
                                 </p>
                             }
                         }
@@ -233,8 +316,25 @@
                                         if (admissionPrivilege.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection) { textClass = "text-danger"; }
                                         if (admissionPrivilege.RowStatusId == (int)RowStatusEnum.ChangedByUser) { textClass = "text-warning"; }
 
+                                        
                                         <p class="@textClass">
-                                            @admissionPrivilege.AdmissionPrivilegeType.AdmissionPrivilegeTypeName
+                                            @if (admissionPrivilege.FileModel != null)
+                                            {
+                                                <a class="@textClass" href="/@admissionPrivilege.FileModel.Path" target="_blank">
+                                                    @admissionPrivilege.AdmissionPrivilegeType.AdmissionPrivilegeTypeName
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                @admissionPrivilege.AdmissionPrivilegeType.AdmissionPrivilegeTypeName
+                                            }
+
+                                            <a asp-controller="AdmissionPrivileges"
+                                               asp-action="Edit"
+                                               asp-route-id="@admissionPrivilege.AdmissionPrivilegeId"
+                                               target="_blank">
+                                                <span class="glyphicon glyphicon-edit"></span>
+                                            </a>
                                         </p>
                                     }
                                 }                                
@@ -264,9 +364,25 @@
                                         if (contract.RowStatusId == (int)RowStatusEnum.Confirmed) { textClass = "text-success"; }
                                         if (contract.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection) { textClass = "text-danger"; }
                                         if (contract.RowStatusId == (int)RowStatusEnum.ChangedByUser) { textClass = "text-warning"; }
-
+                                                                                
                                         <p class="@textClass">
-                                            @contract.ContractType.ContractTypeName
+                                            @if (contract.FileModel != null)
+                                            {
+                                                <a class="@textClass" href="/@contract.FileModel.Path" target="_blank">
+                                                    @contract.ContractType.ContractTypeName
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                @contract.ContractType.ContractTypeName
+                                            }
+
+                                            <a asp-controller="Contracts"
+                                               asp-action="Edit"
+                                               asp-route-id="@contract.ContractId"
+                                               target="_blank">
+                                                <span class="glyphicon glyphicon-edit"></span>
+                                            </a>
                                         </p>
                                     }
                                 }                                
@@ -275,9 +391,26 @@
                     </td>
 
                     @*Статус*@
-                    <td>@item.AbiturientStatus?.AbiturientStatusName</td>
+                    <td>
+                        @item.AbiturientStatus?.AbiturientStatusName
+                        <a asp-action="Details"
+                           asp-route-userName="@item.AppUser.UserName"
+                           asp-route-mode="ChangeAbiturStatus"
+                           target="_blank">
+                                <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </td>
 
-                    <td>@item.EntranceTestGroupId</td>
+                    @*Номер группы для прохождения вступительных испытаний*@
+                    <td>
+                        @item.EntranceTestGroupId
+                        <a asp-action="Details"
+                           asp-route-userName="@item.AppUser.UserName"
+                           asp-route-mode="ChangeEntranceTestGroupId"
+                           target="_blank">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </td>
 
                     @*Консультант абитуриента*@
                     <td>
@@ -309,7 +442,7 @@
         else
         {
             <tr>
-                <td colspan="10" class="text-center text-info"><b>Для поиска абитуриентов выберите условия поиска и нажмите "Применить фильтр"</b></td>
+                <td colspan="13" class="text-center text-info"><b>Для поиска абитуриентов выберите условия поиска и нажмите "Применить фильтр"</b></td>
             </tr>
         }
 
