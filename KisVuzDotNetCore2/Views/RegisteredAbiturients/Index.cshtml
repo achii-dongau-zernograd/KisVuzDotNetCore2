@@ -63,7 +63,7 @@
                 <tr>
                     <td>@item.AbiturientId</td>
                     <td>@item.AppUser.RegisterDateTime</td>
-                    <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUser.Id">@item.AppUser.Abiturient.AbiturientFioBirthdayEmail</a></td>
+                    <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUser.Id">@item.AppUser.GetFullName</a></td>
                     @*Основные документы*@
                     <td>
                         @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.SoglasieNaObrabotkuPersonalnihDannih))
@@ -164,7 +164,15 @@
                             else
                             { userDocumentClass = "text-warning"; }
 
-                            <p><a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a></p>
+                            <p>
+                                <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                                <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
+                                   asp-action="Edit"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            </p>
                         }
                     </td>
 
@@ -188,12 +196,12 @@
                                     @if(applicationForAdmission.FileModel != null)
                                     {
                                         <a class="@textClass" href="/@applicationForAdmission.FileModel.Path" target="_blank">
-                                            @applicationForAdmission.ApplicationForAdmissionFullName
+                                            @applicationForAdmission.ApplicationForAdmissionShortName
                                         </a>
                                     }
                                     else
                                     {
-                                        @applicationForAdmission.ApplicationForAdmissionFullName
+                                        @applicationForAdmission.ApplicationForAdmissionShortName
                                     }
 
                                     <a asp-controller="ApplicationForAdmissions"
@@ -234,12 +242,12 @@
                                             @if(consentToEnrollment.FileModel !=null)
                                             {
                                                 <a class="@textClass" href="/@consentToEnrollment.FileModel.Path" target="_blank">
-                                                    @consentToEnrollment.ApplicationForAdmission.ApplicationForAdmissionFullName
+                                                    @consentToEnrollment.ApplicationForAdmission.ApplicationForAdmissionShortName
                                                 </a>
                                             }
                                             else
                                             {
-                                                @consentToEnrollment.ApplicationForAdmission.ApplicationForAdmissionFullName
+                                                @consentToEnrollment.ApplicationForAdmission.ApplicationForAdmissionShortName
                                             }
                                             
                                             <a asp-controller="ConsentToEnrollments"

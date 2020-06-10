@@ -69,6 +69,17 @@ namespace KisVuzDotNetCore2.Models.Abitur
             }
         }
 
+        /// <summary>
+        /// Возвращает краткое наименование заявления о приёме
+        /// </summary>
+        public string ApplicationForAdmissionShortName
+        {
+            get
+            {
+                return $"{EduProfile?.EduNapravl.EduNapravlCode} - {EduProfile?.EduProfileName} - {EduForm?.EduFormName} - {QuotaType?.QuotaTypeName}";
+            }
+        }
+
         public string ApplicationForAdmissionFullNameWithAppUserInfo
         {
             get
