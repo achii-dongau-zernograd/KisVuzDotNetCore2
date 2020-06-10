@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -166,7 +167,8 @@ namespace KisVuzDotNetCore2.Models.Files
             {
                 AppUserId = userId,
                 FileModelId = fileModel.Id,
-                FileDataTypeId = (int)FileDataTypeEnum.UserDocuments_Photo
+                FileDataTypeId = (int)FileDataTypeEnum.UserDocuments_Photo,
+                RowStatusId = (int) RowStatusEnum.NotConfirmed
             };
 
             await _context.AddAsync(userDocument);
