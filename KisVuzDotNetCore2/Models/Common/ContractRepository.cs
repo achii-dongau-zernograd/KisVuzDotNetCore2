@@ -38,7 +38,11 @@ namespace KisVuzDotNetCore2.Models.Common
                 .Include(c => c.ApplicationForAdmission.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(c => c.ApplicationForAdmission)
                     .ThenInclude(afa => afa.FileModel.FileToFileTypes)
-                .Include(c => c.FileModel.FileToFileTypes);
+                .Include(c => c.FileModel.FileToFileTypes)
+                .Include(c => c.Payments)
+                    .ThenInclude(cp => cp.RowStatus)
+                .Include(c => c.Payments)
+                    .ThenInclude(cp => cp.FileModel.FileToFileTypes);
 
             return contracts;
         }

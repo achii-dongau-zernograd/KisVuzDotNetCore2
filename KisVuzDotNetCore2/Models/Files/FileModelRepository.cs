@@ -488,7 +488,20 @@ namespace KisVuzDotNetCore2.Models.Files
                 typeOfEducationDocument);
             return fileModel;
         }
-                
+
+        /// <summary>
+        /// Загружает файл скан-копии подтверждения платежа
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadPaymentAsync(IFormFile uploadedFile)
+        {            
+            var fileModel = await UploadFileAsync(uploadedFile,
+                "Скан-копия подтверждения платежа",
+                FileDataTypeEnum.Payments_PaymentDocument);
+            return fileModel;
+        }
+
         /// <summary>
         /// Возвращает тип файлов
         /// </summary>

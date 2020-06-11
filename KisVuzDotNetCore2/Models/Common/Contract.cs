@@ -66,5 +66,11 @@ namespace KisVuzDotNetCore2.Models.Common
         [Display(Name = "Заявление о приёме")]
         public int? ApplicationForAdmissionId { get; set; }
         public ApplicationForAdmission ApplicationForAdmission { get; set; }
+
+        /// <summary>
+        /// Оплаты по договору
+        /// </summary>
+        [Display(Name = "Оплаты по договору")]
+        public List<Payment> Payments { get; set; }
     }
 }

@@ -46,6 +46,6 @@
     <form asp-action="RemoveUserDocumentConfirmed">
         <input type="hidden" asp-for="UserDocumentId" />
         <input type="submit" value="Удалить" class="btn btn-danger" />
-        <a asp-action="Start">Отмена</a>
+        <a asp-action="Start" asp-route-selectedTab="userDocuments" class="btn btn-default">Отмена</a>
     </form>
 </div>

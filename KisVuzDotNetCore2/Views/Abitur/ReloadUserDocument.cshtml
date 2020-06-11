@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Замена";
+    var documentSamples = (List<DocumentSample>)ViewBag.DocumentSamples;
 }
 
 <h2>Замена документа</h2>
@@ -44,10 +45,31 @@
     </dl>
 </div>
 
+@if (documentSamples != null && documentSamples.Count > 0)
+{
+    <p>Скачайте бланк документа, заполните, отсканируйте и загрузите в систему.</p>
+    <p>Дополнительные материалы:</p>
+    <ol>
+        @foreach (var item in documentSamples.Where(d => d.IsBlank))
+        {
+            <li>
+                <a href="@item.GetHref" target="_blank">@item.DocumentSampleName</a>
+            </li>
+        }
+        @foreach (var item in documentSamples.Where(d => !d.IsBlank))
+        {
+            <li>
+                <a href="@item.GetHref" target="_blank">@item.DocumentSampleName</a>
+            </li>
+        }
+    </ol>
+}
+
+
 <hr />
 <h4>Загружаемый документ</h4>
 <div>
-    <form asp-action="ReloadUserDocumentConfirmed" enctype="multipart/form-data">        
+    <form asp-action="ReloadUserDocumentConfirmed" enctype="multipart/form-data">
         <div class="form-group">
             <label class="control-label">Выберите файл: </label>
             <input type="file" name="uploadedFile" class="form-control" />

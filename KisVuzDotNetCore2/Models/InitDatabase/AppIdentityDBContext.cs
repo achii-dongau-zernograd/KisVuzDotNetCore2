@@ -31,7 +31,7 @@ namespace KisVuzDotNetCore2.Models
         #region Конструктор
         public AppIdentityDBContext(DbContextOptions<AppIdentityDBContext> options) : base(options)
         {
-            
+
         }
         #endregion
         #region Таблицы
@@ -68,6 +68,11 @@ namespace KisVuzDotNetCore2.Models
         /// Типы договоров
         /// </summary>
         public DbSet<ContractType> ContractTypes { get; set; }
+
+        /// <summary>
+        /// Оплаты
+        /// </summary>
+        public DbSet<Payment> Payments { get; set; }
         #endregion
 
         #region Система дистанционного образования (СДО, LMS)

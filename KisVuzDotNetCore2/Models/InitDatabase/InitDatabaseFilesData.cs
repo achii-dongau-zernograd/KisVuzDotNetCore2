@@ -119,6 +119,12 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupName = "Система дистанционного образования"
                     };
 
+                    FileDataTypeGroup fileDataTypeGroup16 = new FileDataTypeGroup
+                    {
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.Payments,
+                        FileDataTypeGroupName = "Скан-копия документа, подтверждающего платёж"
+                    };
+
                     await context.FileDataTypeGroups.AddRangeAsync(
                         fileDataTypeGroup1,
                         fileDataTypeGroup2,
@@ -134,7 +140,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataTypeGroup12,
                         fileDataTypeGroup13,
                         fileDataTypeGroup14,
-                        fileDataTypeGroup15
+                        fileDataTypeGroup15,
+                        fileDataTypeGroup16
                     );
                     await context.SaveChangesAsync();
                 }
@@ -693,78 +700,22 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = (int)FileDataTypeGroupEnum.UserDocuments
                     };
 
+                    FileDataType fileDataType73 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.Payments_PaymentDocument,
+                        FileDataTypeName = "Скан-копия документа, подтверждающего платёж",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.Payments
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
-                        fileDataType1,
-                        fileDataType2,
-                        fileDataType3,
-                        fileDataType4,
-                        fileDataType5,
-                        fileDataType6,
-                        fileDataType7,
-                        fileDataType8,
-                        fileDataType9,
-                        fileDataType10,
-                        fileDataType11,
-                        fileDataType12,
-                        fileDataType13,
-                        fileDataType14,
-                        fileDataType15,
-                        fileDataType16,
-                        fileDataType17,
-                        fileDataType18,
-                        fileDataType19,
-                        fileDataType20,
-                        fileDataType21,
-                        fileDataType22,
-                        fileDataType23,
-                        fileDataType24,
-                        fileDataType25,
-                        fileDataType26,
-                        fileDataType27,
-                        fileDataType28,
-                        fileDataType29,
-                        fileDataType30,
-                        fileDataType31,
-                        fileDataType32,
-                        fileDataType33,
-                        fileDataType34,
-                        fileDataType35,
-                        fileDataType36,
-                        fileDataType37,
-                        fileDataType38,
-                        fileDataType39,
-                        fileDataType40,
-                        fileDataType41,
-                        fileDataType42,
-                        fileDataType43,
-                        fileDataType44,
-                        fileDataType45,
-                        fileDataType46,
-                        fileDataType47,
-                        fileDataType48,
-                        fileDataType49,
-                        fileDataType50,
-                        fileDataType51,
-                        fileDataType52,
-                        fileDataType53,
-                        fileDataType54,                        
-                        fileDataType56,
-                        fileDataType57,
-                        fileDataType58,
-                        fileDataType59,
-                        fileDataType60,
-                        fileDataType61,
-                        fileDataType62,
-                        fileDataType63,
-                        fileDataType64,
-                        fileDataType65,
-                        fileDataType66,
-                        fileDataType67,
-                        fileDataType68,
-                        fileDataType69,
-                        fileDataType70,
-                        fileDataType71,
-                        fileDataType72
+                                        fileDataType1,  fileDataType2,  fileDataType3,  fileDataType4, fileDataType5, fileDataType6, fileDataType7, fileDataType8, fileDataType9,
+                        fileDataType10, fileDataType11, fileDataType12, fileDataType13, fileDataType14, fileDataType15, fileDataType16, fileDataType17, fileDataType18, fileDataType19,
+                        fileDataType20, fileDataType21, fileDataType22, fileDataType23, fileDataType24, fileDataType25, fileDataType26, fileDataType27, fileDataType28, fileDataType29,
+                        fileDataType30, fileDataType31, fileDataType32, fileDataType33, fileDataType34, fileDataType35, fileDataType36, fileDataType37, fileDataType38, fileDataType39,
+                        fileDataType40, fileDataType41, fileDataType42, fileDataType43, fileDataType44, fileDataType45, fileDataType46, fileDataType47, fileDataType48, fileDataType49,
+                        fileDataType50, fileDataType51, fileDataType52, fileDataType53, fileDataType54,                 fileDataType56, fileDataType57, fileDataType58, fileDataType59,
+                        fileDataType60, fileDataType61, fileDataType62, fileDataType63, fileDataType64, fileDataType65, fileDataType66, fileDataType67, fileDataType68, fileDataType69,
+                        fileDataType70, fileDataType71, fileDataType72, fileDataType73
                         );
                     await context.SaveChangesAsync();
                 }

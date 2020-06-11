@@ -28,6 +28,13 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task<FileModel> UploadEduAnnotationAsync(IFormFile uploadedFile);
+        
+        /// <summary>
+        /// Загружает файл скан-копии подтверждения платежа
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadPaymentAsync(IFormFile uploadedFile);
 
         /// <summary>
         /// Загружает файл рабочей программы на диск

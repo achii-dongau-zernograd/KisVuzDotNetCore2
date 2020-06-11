@@ -81,6 +81,7 @@ namespace KisVuzDotNetCore2
             services.AddTransient<ILmsTaskRepository, LmsTaskRepository>();
             services.AddTransient<ILmsTaskSetRepository, LmsTaskSetRepository>();
             services.AddTransient<ILmsEventLmsTasksetAppUserAnswerRepository, LmsEventLmsTasksetAppUserAnswerRepository>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

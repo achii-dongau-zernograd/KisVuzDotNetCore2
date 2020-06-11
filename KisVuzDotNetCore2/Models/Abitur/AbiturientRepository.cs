@@ -25,6 +25,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         private readonly IConsentToEnrollmentRepository _consentToEnrollmentRepository;
         private readonly IAbiturientIndividualAchievmentRepository _abiturientIndividualAchievmentRepository;
         private readonly IContractRepository _contractRepository;
+        private readonly IPaymentRepository _paymentRepository;
 
         public AbiturientRepository(AppIdentityDBContext context,
             IUserDocumentRepository userDocumentRepository,
@@ -35,7 +36,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
             IFileModelRepository fileModelRepository,
             IConsentToEnrollmentRepository consentToEnrollmentRepository,
             IAbiturientIndividualAchievmentRepository abiturientIndividualAchievmentRepository,
-            IContractRepository contractRepository
+            IContractRepository contractRepository,
+            IPaymentRepository paymentRepository
             )
         {
             _context = context;
@@ -48,6 +50,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
             _consentToEnrollmentRepository = consentToEnrollmentRepository;
             _abiturientIndividualAchievmentRepository = abiturientIndividualAchievmentRepository;
             _contractRepository = contractRepository;
+            _paymentRepository = paymentRepository;
         }
 
         /// <summary>
@@ -264,6 +267,15 @@ namespace KisVuzDotNetCore2.Models.Abitur
                 .Include(a => a.ApplicationForAdmissions)
                     .ThenInclude(aa => aa.Contracts)
                         .ThenInclude(c => c.FileModel.FileToFileTypes)
+                // Оплаты по договорам
+                .Include(a => a.ApplicationForAdmissions)
+                    .ThenInclude(aa => aa.Contracts)
+                        .ThenInclude(c => c.Payments)
+                            .ThenInclude(p => p.RowStatus)
+                .Include(a => a.ApplicationForAdmissions)
+                    .ThenInclude(aa => aa.Contracts)
+                        .ThenInclude(c => c.Payments)
+                            .ThenInclude(p => p.FileModel.FileToFileTypes)
                 ;
             return abiturs;
         }
@@ -1034,6 +1046,20 @@ namespace KisVuzDotNetCore2.Models.Abitur
             }
 
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Добавляет сведения об оплате по договору
+        /// </summary>
+        /// <param name="payment"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task CreateContractPaymentAsync(string userName, Payment payment, IFormFile uploadedFile)
+        {
+            var contract = await GetContractAsync(userName, payment.ContractId);
+            if (contract == null) return;
+
+            await _paymentRepository.AddPaymentAsync(payment, uploadedFile);
         }
         #endregion
     }

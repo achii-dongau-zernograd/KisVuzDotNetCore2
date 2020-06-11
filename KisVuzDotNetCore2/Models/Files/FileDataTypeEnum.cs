@@ -263,6 +263,10 @@
         /// <summary>
         /// Документы пользователя - Фотография
         /// </summary>
-        UserDocuments_Photo = 72
+        UserDocuments_Photo = 72,
+        /// <summary>
+        /// Платежи - Подтверждающий документ
+        /// </summary>
+        Payments_PaymentDocument = 73
     }
 }

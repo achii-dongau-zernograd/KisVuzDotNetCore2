@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200611103542_Payments")]
+    partial class Payments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -609,17 +610,11 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<DateTime>("PaymentDate");
 
-                    b.Property<string>("Remark");
-
-                    b.Property<int>("RowStatusId");
-
                     b.HasKey("PaymentId");
 
                     b.HasIndex("ContractId");
 
                     b.HasIndex("FileModelId");
-
-                    b.HasIndex("RowStatusId");
 
                     b.ToTable("Payments");
                 });
@@ -4460,11 +4455,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
                         .WithMany()
                         .HasForeignKey("FileModelId");
-
-                    b.HasOne("KisVuzDotNetCore2.Models.RowStatus", "RowStatus")
-                        .WithMany()
-                        .HasForeignKey("RowStatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Common.PopulatedLocality", b =>

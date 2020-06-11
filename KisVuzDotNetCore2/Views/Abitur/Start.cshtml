@@ -18,6 +18,7 @@
     string entranceTestsClass = "";
     string personalInformationClass = "";
     string contractsClass = "";
+    string paymentsClass = "";
 
     switch (selectedTab)
     {
@@ -48,11 +49,42 @@
         case "contracts":
             contractsClass = "active";
             break;
+        case "payments":
+            paymentsClass = "active";
+            break;
     }
 
+    AppUser personalConsultant = (AppUser)ViewBag.PersonalConsultant;
 }
 
 <h2>Личный кабинет абитуриента</h2>
+@*/////////////////////////////////////////////////////// Консультанты /////////////////////////////////////////////////////////////////*@
+
+<a class="btn btn-info btn-block" role="button" data-toggle="collapse" href="#collapseConsultants" aria-expanded="false" aria-controls="collapseConsultants">
+    <span class="glyphicon glyphicon-question-sign"></span>
+    В случае возникновения вопросов по электронной подаче документов, обращайтесь к нашим консультантам
+    <span class="glyphicon glyphicon-question-sign"></span>
+</a>
+<div class="collapse" id="collapseConsultants">
+    <div class="well">
+        <p>
+            <a href="http://ачгаа.рф/nash-vuz/podrazdeleniya-akademii/priemnaya-komissiya" target="_blank">Веб-страница приёмной комиссии на официальном сайте образовательной организации</a>
+        </p>
+        <p>
+            Телефон приемной комиссии для ответов на вопросы поступающих — 8-863-59-41-8-31
+        </p>
+        @if (abiturient.AppUserAbiturientConsultants != null && abiturient.AppUserAbiturientConsultants.Count > 0)
+        {
+            <p>
+                Ваш персональный консультант:
+                @foreach (var appUserAbiturientConsultant in abiturient.AppUserAbiturientConsultants)
+                {
+                    <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@appUserAbiturientConsultant.AppUserId" target="_blank">@appUserAbiturientConsultant.AppUser.GetFullName @appUserAbiturientConsultant.AppUser.PhoneNumber</a>
+                }
+            </p>
+        }
+    </div>
+</div>
 
 @*///////////////////////////////////////////////////////// Замечания //////////////////////////////////////////////////////////////////*@
 
@@ -72,13 +104,13 @@
     {
         foreach (var admissionPrivilege in applicationForAdmission.AdmissionPrivileges)
         {
-            if(!string.IsNullOrWhiteSpace(admissionPrivilege.Remark) || admissionPrivilege.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+            if (!string.IsNullOrWhiteSpace(admissionPrivilege.Remark) || admissionPrivilege.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
             {
                 abiturientAdmissionPrivilegesWithRemarksOrReturnedForCorrection.Add(admissionPrivilege);
             }
         }
     }
- }
+}
 
 @if (userDocumentsWithRemarksOrReturnedForCorrection.Any())
 {
@@ -128,6 +160,7 @@
     <li class="@abiturientAchievmentsClass"><a href="#abiturientAchievments" data-toggle="tab">Индивидуальные достижения</a></li>
     <li class="@admissionPrivilegesClass"><a href="#abiturientAdmissionPrivileges" data-toggle="tab">Льготы</a></li>
     <li class="@contractsClass"><a href="#contracts" data-toggle="tab">Договоры</a></li>
+    <li class="@paymentsClass"><a href="#payments" data-toggle="tab">Оплата</a></li>
     <li class="@entranceTestsClass"><a href="#entranceTests" data-toggle="tab">Вступительные испытания</a></li>
 </ul>
 
@@ -342,9 +375,12 @@
         }
     </div>
 
-    @*////////////////////////////////////////////////////////// Загруженные документы ///////////////////////////////////////////////////*@
+    @*////////////////////////////////////////////////////////// Основные документы ///////////////////////////////////////////////////*@
     <div class="tab-pane @userDocumentsClass" id="userDocuments">
         <br />
+        <a asp-action="LoadFilePassport" class="btn btn-primary">Загрузить паспорт</a>
+        <a asp-action="LoadFileEducationDocument" class="btn btn-primary">Загрузить документ об образовании</a>
+
         <table class="table table-hover">
             @foreach (var userDocumentGroup in abiturient.AppUser.UserDocuments.GroupBy(ud => ud.FileDataType.FileDataTypeName).OrderBy(g => g.Key))
             {
@@ -483,7 +519,7 @@
             </thead>
             <tbody>
                 @if (abiturient.ApplicationForAdmissions == null ||
-           abiturient.ApplicationForAdmissions.Count() == 0)
+       abiturient.ApplicationForAdmissions.Count() == 0)
                 {
                     <tr>
                         <td colspan="4" class="text-center">
@@ -653,7 +689,7 @@
             </thead>
             <tbody>
                 @if (abiturient.ApplicationForAdmissions == null ||
-            abiturient.ApplicationForAdmissions.Count() == 0)
+        abiturient.ApplicationForAdmissions.Count() == 0)
                 {
                     <tr>
                         <td colspan="5" class="text-center">
@@ -763,12 +799,12 @@
                                 <td colspan="3" class="">
                                     <b>Заявление о приёме: @applicationForAdmission.EduProfile.GetEduProfileFullName - @applicationForAdmission.QuotaType.QuotaTypeName</b>
                                 </td>
-                                @if(applicationForAdmission.Contracts == null || applicationForAdmission.Contracts.Count == 0)
+                                @if (applicationForAdmission.Contracts == null || applicationForAdmission.Contracts.Count == 0)
                                 {
                                     <td>
-                                    <a asp-action="CreateAbiturientContract" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId" class="btn btn-primary btn-block">Добавить договор</a>
-                                </td>
-                                }                                
+                                        <a asp-action="CreateAbiturientContract" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId" class="btn btn-primary btn-block">Добавить договор</a>
+                                    </td>
+                                }
                             </tr>
 
                             @if (applicationForAdmission.Contracts == null || applicationForAdmission.Contracts.Count == 0)
@@ -810,15 +846,138 @@
                                                 <p class="text-warning">На проверке</p>
                                             }
                                         </td>
+
                                         <td>@contract.Remark</td>
+
                                         <td>
                                             @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
                                             {
                                                 <a class="btn btn-primary btn-block" asp-action="AbiturientContractEdit" asp-route-abiturientContractId="@contract.ContractId">Изменить</a>
                                                 <a class="btn btn-danger  btn-block" asp-action="AbiturientContractRemove" asp-route-abiturientContractId="@contract.ContractId">Удалить</a>
-                                            }
+                                            }                                            
+                                        </td>
+                                    </tr>                                    
+                                }
+                            }
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+    @*/////////////////////////////////////////////////////////////////  Оплата ///////////////////////////////////////////////////////////*@
+    <div class="tab-pane @paymentsClass" id="payments">
+        <br />
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Скан-копия документа об оплате</th>
+                    <th>Статус</th>
+                    <th>Замечания</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (abiturient.ApplicationForAdmissions == null || abiturient.ApplicationForAdmissions.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            Заявления о приёме не оформлены
+                        </td>
+                    </tr>
+                }
+                else
+                {
+
+                    foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions)
+                    {
+                        if (applicationForAdmission.QuotaTypeId == (int)QuotaTypesEnum.CelevoyPriem || applicationForAdmission.QuotaTypeId == (int)QuotaTypesEnum.DogovorObOkazaniiPlatnihObrazovatUslug)
+                        {
+                            <tr>
+                                <td colspan="3" class="">
+                                    <b>Заявление о приёме: @applicationForAdmission.EduProfile.GetEduProfileFullName - @applicationForAdmission.QuotaType.QuotaTypeName</b>
+                                </td>
+                                @if (applicationForAdmission.Contracts == null || applicationForAdmission.Contracts.Count == 0)
+                                {
+                                    <td>
+                                        <a asp-action="CreateAbiturientContract" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId" class="btn btn-primary btn-block">Добавить договор</a>
+                                    </td>
+                                }
+                            </tr>
+
+                            @if (applicationForAdmission.Contracts == null || applicationForAdmission.Contracts.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center">
+                                        Договоры отсутствуют
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var contract in applicationForAdmission.Contracts)
+                                {
+                                    var rowStatus = contract.RowStatus;
+                                    <tr>
+                                        <td colspan="3">
+                                            @if (contract.FileModel != null)
+                                            {
+                                                <a href="/@contract.FileModel.Path" target="_blank">@contract.ContractType.ContractTypeName</a>
+                                            }                                            
+                                        </td>                                                                        
+
+                                        <td>
+                                            <a asp-action="CreateAbiturientContractPayment"
+                                               asp-route-abiturientContractId="@contract.ContractId"
+                                               class="btn btn-primary btn-block">
+                                                <span class="glyphicon glyphicon-plus"></span> Добавить оплату
+                                            </a>
                                         </td>
                                     </tr>
+
+                                    @*Оплата по договору*@
+                                    @if (contract.Payments != null && contract.Payments.Count > 0)
+                                    {
+                                        foreach (var payment in contract.Payments)
+                                        {
+                                            var paymentRowStatus = (RowStatusEnum)payment.RowStatusId;
+                                            <tr>
+                                                <td>
+                                                    <a href="/@payment.FileModel.Path" target="_blank">@payment.PaymentDate.ToString("d") - @payment.Amount.ToString("F") руб.</a>
+                                                </td>
+                                                <td>
+
+                                                    @if (paymentRowStatus == RowStatusEnum.Confirmed)
+                                                    {
+                                                        <p class="text-success">Подтверждено</p>
+                                                    }
+                                                    else if (paymentRowStatus == RowStatusEnum.ReturnedForCorrection)
+                                                    {
+                                                        <p class="text-danger">Возвращено на доработку</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="text-warning">На проверке</p>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @payment.Remark
+                                                </td>
+
+                                                <td>
+                                                    @if (paymentRowStatus != RowStatusEnum.Confirmed)
+                                                    {
+                                                        <a class="btn btn-primary btn-block" asp-action="EditPayment" asp-route-paymentId="@payment.PaymentId">Изменить</a>
+                                                        <a class="btn btn-danger  btn-block" asp-action="RemovePayment" asp-route-paymentId="@payment.PaymentId">Удалить</a>
+                                                    }
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -836,7 +995,7 @@
             @foreach (var entranceTest in abiturient.AppUser.AppUserLmsEvents)
             {
                 <li>
-                    <a asp-controller="AppUserLmsEvents" asp-action="AppUserLmsEventStartForm" asp-route-appUserLmsEventId="@entranceTest.AppUserLmsEventId">@entranceTest.LmsEvent.DateTimeStart - @entranceTest.LmsEvent.Description</a>                    
+                    <a asp-controller="AppUserLmsEvents" asp-action="AppUserLmsEventStartForm" asp-route-appUserLmsEventId="@entranceTest.AppUserLmsEventId">@entranceTest.LmsEvent.DateTimeStart - @entranceTest.LmsEvent.Description</a>
                 </li>
             }
         </ol>

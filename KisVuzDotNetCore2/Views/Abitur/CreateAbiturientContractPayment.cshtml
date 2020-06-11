@@ -1,0 +1,44 @@
+﻿@model KisVuzDotNetCore2.Models.Common.Payment
+
+@{
+    ViewData["Title"] = "Оплата";
+}
+
+<h2>Добавление сведений об оплате по договору</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateAbiturientContractPayment" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentDate" class="control-label"></label>
+                <input asp-for="PaymentDate" class="form-control" />
+                <span asp-validation-for="PaymentDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="PaymentId" />
+                <input type="hidden" asp-for="FileModelId" />
+                <input type="hidden" asp-for="ContractId" />
+                <input type="hidden" asp-for="RowStatusId" />
+                <input type="hidden" asp-for="Remark" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Start" asp-route-selectedTab="payments" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

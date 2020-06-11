@@ -120,6 +120,7 @@ namespace KisVuzDotNetCore2.Controllers
             
             ViewBag.Abiturient = abiturient;
             ViewBag.SelectedTab = selectedTab;
+            
             return View();
         }
         #endregion
@@ -704,6 +705,34 @@ namespace KisVuzDotNetCore2.Controllers
         }
         #endregion
 
+        #region Оплата по договору
+        public async Task<IActionResult> CreateAbiturientContractPayment(int abiturientContractId)
+        {
+            var contract = await _abiturRepository.GetContractAsync(User.Identity.Name, abiturientContractId);
+            ViewBag.Contract = contract;
+
+            var payment = new Payment
+            {
+                ContractId = contract.ContractId,
+                Contract = contract,
+                Description = $"Оплата по договору",
+                PaymentDate = DateTime.Now,
+                RowStatusId = (int)RowStatusEnum.NotConfirmed
+            };
+
+            return View(payment);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAbiturientContractPayment(Payment payment, IFormFile uploadedFile)
+        {
+            await _abiturRepository.CreateContractPaymentAsync(User.Identity.Name, payment, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "contracts" });
+        }
+        #endregion
+
         #region Паспортные данные
         public async Task<IActionResult> CreatePassportData()
         {
@@ -945,7 +974,7 @@ namespace KisVuzDotNetCore2.Controllers
             return RedirectToAction(nameof(Start));
         }
         #endregion
-
+                
         #region Регистрация абитуриентов и прием документов
         public IActionResult Register()
         {
@@ -1118,6 +1147,9 @@ namespace KisVuzDotNetCore2.Controllers
         public async Task<IActionResult> ReloadUserDocument(int userDocumentId)
         {
             var userDocument = await _abiturRepository.GetUserDocumentAsync(User.Identity.Name, userDocumentId);
+
+            var documentSamples = _documentSamplesRepository.GetDocumentSamples((FileDataTypeEnum)userDocument.FileDataTypeId);
+            ViewBag.DocumentSamples = await documentSamples.ToListAsync();
 
             return View(userDocument);
         }

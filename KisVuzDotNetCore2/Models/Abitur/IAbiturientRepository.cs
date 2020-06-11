@@ -471,11 +471,20 @@ namespace KisVuzDotNetCore2.Models.Abitur
         Task UpdateContractAsync(string userName, Contract contract, IFormFile uploadedFile);
         
         /// <summary>
-        /// Удаляет договвор абитуриента
+        /// Удаляет договор абитуриента
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="contract"></param>
         /// <returns></returns>
         Task RemoveContractAsync(string userName, Contract contract);
+
+        /// <summary>
+        /// Добавляет сведения об оплате по договору
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="payment"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task CreateContractPaymentAsync(string userName, Payment payment, IFormFile uploadedFile);
     }
 }
