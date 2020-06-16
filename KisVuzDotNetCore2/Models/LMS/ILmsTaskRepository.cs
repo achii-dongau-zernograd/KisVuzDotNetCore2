@@ -47,5 +47,20 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task AddLmsTaskAnswer(LmsTaskAnswer lmsTaskAnswer, IFormFile uploadedFile);
+        
+        /// <summary>
+        /// Обновляет задание СДО
+        /// </summary>
+        /// <param name="lmsTask"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task UpdateLmsTaskAsync(LmsTask lmsTask, IFormFile uploadedFile);
+        
+        /// <summary>
+        /// Удаляет задание СДО
+        /// </summary>
+        /// <param name="lmsTask"></param>
+        /// <returns></returns>
+        Task RemoveLmsTaskAsync(LmsTask lmsTask);
     }
 }

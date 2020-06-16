@@ -1,0 +1,79 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.LmsEventLmsTasksetAppUserAnswer
+
+@{
+    ViewData["Title"] = "Предпросмотр";
+}
+
+<h2>Предпросмотр задания</h2>
+
+<h4>@Model.LmsTask.LmsTaskText</h4>
+@if (Model.LmsTask.LmsTaskJpg != null)
+{
+    <img src="/@Model.LmsTask.LmsTaskJpg.Path" class="img-responsive" />
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UserAnswerProcessing" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @if (Model.LmsTask.LmsTaskTypeId == (int)LmsTaskTypesEnum.OneCorrectAnswer)
+            {
+                @foreach (var lmsTaskAnswer in Model.LmsTask.LmsTaskAnswers)
+                {
+
+                    <p>
+                        @Html.RadioButton("choosedAnswers", lmsTaskAnswer.LmsTaskAnswerId)    @lmsTaskAnswer.LmsTaskAnswerText
+                    </p>
+                    @if (lmsTaskAnswer.FileModel != null)
+                    {
+                        <img src="/@lmsTaskAnswer.FileModel.Path" class="img-responsive" />
+                    }
+                    <hr />
+                }
+            }
+
+
+            @if (Model.LmsTask.LmsTaskTypeId == (int)LmsTaskTypesEnum.SeveralCorrectAnswers)
+            {
+                @foreach (var lmsTaskAnswer in Model.LmsTask.LmsTaskAnswers)
+                {
+                    <p>
+                        <input name="choosedAnswers" type="checkbox" value="@lmsTaskAnswer.LmsTaskAnswerId" />
+                        @lmsTaskAnswer.LmsTaskAnswerText
+                    </p>
+                    @if (lmsTaskAnswer.FileModel != null)
+                    {
+                        <img src="/@lmsTaskAnswer.FileModel.Path" class="img-responsive" />
+                    }
+                    <hr />
+                }
+            }
+
+
+            @if (Model.LmsTask.LmsTaskTypeId == (int)LmsTaskTypesEnum.InputNumber ||
+             Model.LmsTask.LmsTaskTypeId == (int)LmsTaskTypesEnum.InputText)
+            {
+                <div class="form-group">
+                    <label asp-for="AnswerAsText" class="control-label"></label>
+                    <input asp-for="AnswerAsText" class="form-control" />
+                </div>
+            }
+
+            @if (Model.LmsTask.LmsTaskTypeId == (int)LmsTaskTypesEnum.FileUpload)
+            {
+                <div class="form-group">
+                    <label asp-for="AnswerAsFileId" class="control-label">Скан-копия ответа</label>
+                    <input type="file" name="uploadedFile" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="AnswerAsText" class="control-label">В случае невозможности загрузить скан-копию изображения, впишите решение в текстовую область</label>
+                    <textarea asp-for="AnswerAsText" class="form-control"></textarea>
+                </div>
+            }
+            
+        </form>
+    </div>
+</div>
+

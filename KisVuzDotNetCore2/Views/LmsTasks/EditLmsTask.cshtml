@@ -1,0 +1,54 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.LmsTask
+
+@{
+    ViewData["Title"] = "Редактирование задания";
+}
+
+<h2>Редактирование задания</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditLmsTask" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LmsTaskTypeId" class="control-label"></label>
+                <select asp-for="LmsTaskTypeId" asp-items="ViewBag.LmsTaskTypes" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="LmsTaskText" class="control-label"></label>
+                <input asp-for="LmsTaskText" class="form-control" />
+                <span asp-validation-for="LmsTaskText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LmsTaskJpgId" class="control-label"></label>
+                @if (Model.LmsTaskJpg != null)
+                {
+                    <br />
+                    <label class="control-label">
+                        <a href="/@Model.LmsTaskJpg.Path" target="_blank">Загруженный файл задания</a>
+                        (для замены выберите новый файл)
+                    </label>
+                }
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfPoints" class="control-label"></label>
+                <input type="number" asp-for="NumberOfPoints" class="form-control" />
+                <span asp-validation-for="NumberOfPoints" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppUserId" class="control-label"></label>
+                <select asp-for="AppUserId" asp-items="ViewBag.AppUsersAuthors" class="form-control"></select>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" asp-for="LmsTaskId" />
+                <input type="hidden" asp-for="LmsTaskJpgId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <input type="hidden" name="DateTimeOfCreation" value="@DateTime.Now" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

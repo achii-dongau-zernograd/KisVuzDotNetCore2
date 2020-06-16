@@ -1,0 +1,58 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.LmsTask
+
+@{
+    ViewData["Title"] = "RemoveLmsTask";
+}
+
+<h2>Удаление задания СДО</h2>
+
+<h3>Вы действительно хотите удалить задание СДО?</h3>
+<div>    
+    <dl class="dl-horizontal">        
+        <dt>
+            @Html.DisplayNameFor(model => model.LmsTaskTypeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LmsTaskType.LmsTaskTypeName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LmsTaskText)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LmsTaskText)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LmsTaskJpgId)
+        </dt>
+        <dd>
+            @if(Model.LmsTaskJpg != null)
+            {
+                <a href="/@Model.LmsTaskJpg.Path">Открыть</a>
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfPoints)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfPoints)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUserId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.GetFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTimeOfCreation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateTimeOfCreation)
+        </dd>
+    </dl>
+    
+    <form asp-action="RemoveLmsTask">
+        <input type="hidden" asp-for="LmsTaskId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

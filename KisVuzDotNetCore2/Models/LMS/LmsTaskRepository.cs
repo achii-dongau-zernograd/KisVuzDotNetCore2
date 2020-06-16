@@ -121,5 +121,81 @@ namespace KisVuzDotNetCore2.Models.LMS
             _context.LmsTaskAnswers.Add(lmsTaskAnswer);
             await _context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Обновляет задание СДО
+        /// </summary>
+        /// <param name="lmsTask"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task UpdateLmsTaskAsync(LmsTask lmsTask, IFormFile uploadedFile)
+        {
+            if (lmsTask == null) return;
+
+            if (uploadedFile != null)
+            {
+                if(lmsTask.LmsTaskJpgId != null)
+                {
+                    if(lmsTask.LmsTaskJpg == null)
+                    {
+                        lmsTask.LmsTaskJpg = await _fileModelRepository.GetFileModelAsync(lmsTask.LmsTaskJpgId);
+                    }
+
+                    await _fileModelRepository.ReloadFileAsync(lmsTask.LmsTaskJpg, uploadedFile);
+                }
+                else
+                {
+                    FileModel newFileModel = await _fileModelRepository.UploadLmsTaskJpg(uploadedFile);
+                    if (newFileModel == null) return;
+                    lmsTask.LmsTaskJpgId = newFileModel.Id;
+                }
+                
+            }
+
+            _context.LmsTasks.Update(lmsTask);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет задание СДО
+        /// </summary>
+        /// <param name="lmsTask"></param>
+        /// <returns></returns>
+        public async Task RemoveLmsTaskAsync(LmsTask lmsTask)
+        {
+            if(lmsTask.LmsTaskAnswers != null)
+            {
+                foreach (var lmsTaskAnswer in lmsTask.LmsTaskAnswers)
+                {
+                    if (lmsTaskAnswer.FileModelId != null)
+                    {
+                        if (lmsTaskAnswer.FileModel != null)
+                        {
+                            await _fileModelRepository.RemoveFileModelAsync(lmsTaskAnswer.FileModel);
+                        }
+                        else
+                        {
+                            await _fileModelRepository.RemoveFileAsync(lmsTaskAnswer.FileModelId);
+                        }
+                    }
+                }
+            }
+
+
+            if(lmsTask.LmsTaskJpgId != null)
+            {
+                if(lmsTask.LmsTaskJpg != null)
+                {
+                    await _fileModelRepository.RemoveFileModelAsync(lmsTask.LmsTaskJpg);
+                }
+                else
+                {
+                    await _fileModelRepository.RemoveFileAsync(lmsTask.LmsTaskJpgId);
+                }
+            }
+            
+            _context.LmsTasks.Remove(lmsTask);
+            await _context.SaveChangesAsync();
+        }
     }
 }

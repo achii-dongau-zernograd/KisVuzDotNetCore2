@@ -88,5 +88,60 @@ namespace KisVuzDotNetCore2.Controllers.LMS
             return View(lmsTaskDisciplineName);
         }
         #endregion
+
+        #region Просмотр задания
+        public async Task<IActionResult> DetailsLmsTask(int id)
+        {
+            var lmsTask = await _lmsTaskRepository.GetLmsTaskAsync(id);
+
+            var lmsEventLmsTasksetAppUserAnswer = new LmsEventLmsTasksetAppUserAnswer { LmsTask = lmsTask };
+
+            return View(lmsEventLmsTasksetAppUserAnswer);
+        }
+        #endregion
+
+        #region Редактирование задания
+        public async Task<IActionResult> EditLmsTask(int id)
+        {
+            var lmsTask = await _lmsTaskRepository.GetLmsTaskAsync(id);
+
+            ViewBag.AppUsersAuthors = _selectListRepository.GetSelectListAppUsersAuthors(lmsTask.AppUserId);
+            ViewBag.LmsTaskTypes = _selectListRepository.GetSelectListLmsTaskTypes(lmsTask.LmsTaskTypeId);
+
+            return View(lmsTask);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditLmsTask(LmsTask lmsTask,
+            IFormFile uploadedFile)
+        {
+            if (lmsTask == null) return NotFound();
+            await _lmsTaskRepository.UpdateLmsTaskAsync(lmsTask, uploadedFile);
+
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
+
+        #region Удаление задания
+        public async Task<IActionResult> RemoveLmsTask(int id)
+        {
+            var lmsTask = await _lmsTaskRepository.GetLmsTaskAsync(id);                       
+
+            return View(lmsTask);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveLmsTask(LmsTask lmsTask)
+        {
+            if (lmsTask == null) return NotFound();
+
+            var entry = await _lmsTaskRepository.GetLmsTaskAsync(lmsTask.LmsTaskId);
+            await _lmsTaskRepository.RemoveLmsTaskAsync(entry);
+
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
     }
 }
