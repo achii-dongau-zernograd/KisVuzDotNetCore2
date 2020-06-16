@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Абитуриенты";
+
+    bool isUserConsultant = (bool) ViewBag.IsUserConsultant;
 }
 
 <h2>Абитуриенты</h2>
@@ -412,12 +414,17 @@
                     @*Номер группы для прохождения вступительных испытаний*@
                     <td>
                         @item.EntranceTestGroupId
-                        <a asp-action="Details"
-                           asp-route-userName="@item.AppUser.UserName"
-                           asp-route-mode="ChangeEntranceTestGroupId"
-                           target="_blank">
-                            <span class="glyphicon glyphicon-edit"></span>
-                        </a>
+                        
+                        @if(! isUserConsultant)
+                        {
+                            <a asp-action="Details"
+                               asp-route-userName="@item.AppUser.UserName"
+                               asp-route-mode="ChangeEntranceTestGroupId"
+                               target="_blank">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                        }
+                        
                     </td>
 
                     @*Консультант абитуриента*@
@@ -442,7 +449,16 @@
                     @*Действия*@
                     <td>
                         <a asp-action="Details" asp-route-userName="@item.AppUser.UserName" class="btn btn-primary btn-block">Сведения</a>
-                        <a asp-action="Delete"  asp-route-userName="@item.AppUser.UserName" class="btn btn-danger  btn-block">Удалить</a>
+                        
+                        @if(! isUserConsultant)
+                        {
+                            <a asp-action="Delete"
+                               asp-route-userName="@item.AppUser.UserName"
+                               class="btn btn-danger  btn-block">
+                                Удалить
+                            </a>
+                        }
+                        
                     </td>
                 </tr>
             }

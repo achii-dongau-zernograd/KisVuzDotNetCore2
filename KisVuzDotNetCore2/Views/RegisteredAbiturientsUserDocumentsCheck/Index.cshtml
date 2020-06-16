@@ -1,6 +1,8 @@
 ﻿@model List<UserDocument>
 @{
     ViewData["Title"] = "Index";
+
+    bool isUserConsultant = (bool)ViewBag.IsUserConsultant;
 }
 
 <h2>Проверка основных документов абитуриентов</h2>
@@ -72,19 +74,22 @@
                         <td>@(userDocument.RowStatus?.RowStatusName ?? "-")</td>
                         <td>@userDocument.Remark</td>
                         <td>
-                            <a asp-action="Edit"
-                               asp-route-id="@userDocument.UserDocumentId"
-                               asp-route-filterLastNameFragment="@ViewBag.filterLastNameFragment"
-                               asp-route-filterDocumentType="@ViewBag.filterDocumentType"
-                               asp-route-filterRowStatus="@ViewBag.filterRowStatus"
-                               class="btn btn-primary">Редактировать</a>
+                            @if(!(isUserConsultant && userDocument.RowStatusId == (int) RowStatusEnum.Confirmed))
+                            {                            
+                                <a asp-action="Edit"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   asp-route-filterLastNameFragment="@ViewBag.filterLastNameFragment"
+                                   asp-route-filterDocumentType="@ViewBag.filterDocumentType"
+                                   asp-route-filterRowStatus="@ViewBag.filterRowStatus"
+                                   class="btn btn-primary">Редактировать</a>
 
-                            <a asp-action="Delete"
-                               asp-route-id="@userDocument.UserDocumentId"
-                               asp-route-filterLastNameFragment="@ViewBag.filterLastNameFragment"
-                               asp-route-filterDocumentType="@ViewBag.filterDocumentType"
-                               asp-route-filterRowStatus="@ViewBag.filterRowStatus"
-                               class="btn btn-danger">Удалить</a>
+                                <a asp-action="Delete"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   asp-route-filterLastNameFragment="@ViewBag.filterLastNameFragment"
+                                   asp-route-filterDocumentType="@ViewBag.filterDocumentType"
+                                   asp-route-filterRowStatus="@ViewBag.filterRowStatus"
+                                   class="btn btn-danger">Удалить</a>
+                            }
                         </td>
                     </tr>
                 }

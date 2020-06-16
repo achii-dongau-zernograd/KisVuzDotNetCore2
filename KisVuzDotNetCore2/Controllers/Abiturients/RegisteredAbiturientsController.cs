@@ -39,6 +39,8 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
             ViewBag.AbiturientStatuses = _selectListRepository.GetSelectListAbiturientStatuses(filterAndSortModel.FilterAbiturientStatus ?? 0);
             ViewBag.EntranceTestGroups = _selectListRepository.GetSelectListEntranceTestGroups(filterAndSortModel.FilterEntranceTestGroupId ?? 0);
 
+            ViewBag.IsUserConsultant = User.IsInRole("Приёмная комиссия (консультанты)") ? true : false;
+
             var abiturs = _abiturRepository.GetAbiturients();
             
             if(! string.IsNullOrWhiteSpace(filterAndSortModel.FilterLastNameFragment))
@@ -93,6 +95,8 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
         /// <returns></returns>
         public async Task<IActionResult> Details(string userName, string mode)
         {
+            ViewBag.IsUserConsultant = User.IsInRole("Приёмная комиссия (консультанты)") ? true : false;
+
             var abiturient = await _abiturRepository.GetAbiturientAsync(userName);
 
             switch (mode)

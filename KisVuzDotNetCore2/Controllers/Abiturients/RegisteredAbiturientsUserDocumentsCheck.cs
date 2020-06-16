@@ -26,7 +26,9 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
         }
 
         public async Task<IActionResult> Index(string filterLastNameFragment, int? filterDocumentType, int? filterRowStatus, bool isRequestDataImmediately = false)
-        {            
+        {
+            ViewBag.IsUserConsultant = User.IsInRole("Приёмная комиссия (консультанты)") ? true : false;
+
             ViewBag.filterLastNameFragment = filterLastNameFragment;
             ViewBag.filterDocumentType = filterDocumentType;
             ViewBag.filterRowStatus = filterRowStatus;
