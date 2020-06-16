@@ -6,7 +6,17 @@
 
 <h2>@Model.LmsEvent.LmsEventType.LmsEventTypeName</h2>
 
-<h3>@Model.LmsEvent.Description</h3>
+@if (!string.IsNullOrWhiteSpace(Model.LmsEvent.WebLink))
+{
+    <h3>
+        <a href="@Model.LmsEvent.WebLink" target="_blank">@Model.LmsEvent.Description</a>
+    </h3>
+}
+else
+{
+    <h3>@Model.LmsEvent.Description</h3>
+}
+
 
 <h4>Роль в мероприятии: @Model.AppUserLmsEventUserRole.AppUserLmsEventUserRoleName</h4>
 <h4>Начало: @Model.LmsEvent.DateTimeStart</h4>

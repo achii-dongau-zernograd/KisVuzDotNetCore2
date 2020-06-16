@@ -48,10 +48,24 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         AbiturientStatusName = "К зачислению"
                     };
 
+                    var row04 = new AbiturientStatus
+                    {
+                        AbiturientStatusId = (int)AbiturientStatusEnum.VObrabotke,
+                        AbiturientStatusName = "В обработке"
+                    };
+
+                    var row05 = new AbiturientStatus
+                    {
+                        AbiturientStatusId = (int)AbiturientStatusEnum.KEkzamenam,
+                        AbiturientStatusName = "К экзаменам"
+                    };
+
                     await context.AbiturientStatuses.AddRangeAsync(
                         row01,
                         row02,
-                        row03
+                        row03,
+                        row04,
+                        row05
                     );
                     await context.SaveChangesAsync();
                 }

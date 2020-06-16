@@ -21,6 +21,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <summary>
         /// К зачислению
         /// </summary>
-        Zachislenie = 3
+        Zachislenie = 3,
+        /// <summary>
+        /// В обработке
+        /// </summary>
+        VObrabotke = 4,
+        /// <summary>
+        /// К экзаменам
+        /// </summary>
+        KEkzamenam = 5
     }
 }

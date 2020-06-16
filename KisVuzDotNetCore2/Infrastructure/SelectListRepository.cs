@@ -811,7 +811,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         {
             var data = _context.Abiturients
                 .Include(a => a.AppUser)
-                .Where(a => a.AbiturientStatusId == (int) AbiturientStatusEnum.ConfirmedAbiturient)
+                //.Where(a => a.AbiturientStatusId == (int) AbiturientStatusEnum.ConfirmedAbiturient)
                 .OrderBy(a => a.AbiturientFioBirthdayEmail);
 
             return new SelectList(data,
