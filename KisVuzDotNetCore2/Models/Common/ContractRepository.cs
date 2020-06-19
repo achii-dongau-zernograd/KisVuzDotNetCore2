@@ -32,6 +32,8 @@ namespace KisVuzDotNetCore2.Models.Common
             var contracts = _context.Contracts
                 .Include(c => c.RowStatus)
                 .Include(c => c.AppUser)
+                    .ThenInclude(ca => ca.UserDocuments)
+                        .ThenInclude(cad => cad.FileModel)
                 .Include(c => c.ContractType)
                 .Include(c => c.ApplicationForAdmission.EduForm)
                 .Include(c => c.ApplicationForAdmission.QuotaType)

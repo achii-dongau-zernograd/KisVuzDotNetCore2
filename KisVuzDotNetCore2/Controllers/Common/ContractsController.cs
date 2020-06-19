@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Infrastructure;
+using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,12 +17,15 @@ namespace KisVuzDotNetCore2.Controllers.Common
     {
         private readonly IContractRepository _contractRepository;
         private readonly ISelectListRepository _selectListRepository;
+        private readonly IApplicationForAdmissionRepository _applicationForAdmissionRepository;
 
         public ContractsController(IContractRepository contractRepository,
-            ISelectListRepository selectListRepository)
+            ISelectListRepository selectListRepository,
+            IApplicationForAdmissionRepository applicationForAdmissionRepository)
         {
             _contractRepository = contractRepository;
             _selectListRepository = selectListRepository;
+            _applicationForAdmissionRepository = applicationForAdmissionRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -30,6 +34,38 @@ namespace KisVuzDotNetCore2.Controllers.Common
 
             return View(await contracts.ToListAsync());
         }
+
+        #region Создание
+        public IActionResult Create()
+        {
+            ViewBag.ApplicationForAdmissions = _selectListRepository.GetSelectListApplicationForAdmissions();
+            ViewBag.ContractTypes = _selectListRepository.GetSelectListContractTypes();
+            ViewBag.RowStatuses = _selectListRepository.GetSelectListRowStatuses();
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Contract contract, IFormFile uploadedFile)
+        {
+            if(contract.ApplicationForAdmissionId != null && contract.ApplicationForAdmissionId != 0)
+            {
+                var applicationForAdmission = await _applicationForAdmissionRepository.GetApplicationForAdmissionAsync(contract.ApplicationForAdmissionId ?? 0);
+                if (applicationForAdmission == null) return NotFound();
+
+                contract.AppUserId = applicationForAdmission.Abiturient.AppUserId;
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            await _contractRepository.CreateContractAsync(contract, uploadedFile);
+
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
 
         #region Редактирование
         public async Task<IActionResult> Edit(int id)
