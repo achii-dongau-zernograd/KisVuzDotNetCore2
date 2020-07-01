@@ -242,6 +242,12 @@ namespace KisVuzDotNetCore2.Infrastructure
             var data = _context.EduProfiles
                 .Include(p => p.EduNapravl.EduUgs.EduLevel)
                 .Where(p => p.EduNapravlId == eduNapravlId);
+
+            if(eduNapravlId == 15)// Фильтрация профилей для приёмной комиссии
+            {
+                data = data.Where(n => n.EduProfileName.Contains("Электрооборудование") || n.EduProfileName.Contains("Экономика") || n.EduProfileName.Contains("Технические системы") );                
+            }
+
             return new SelectList(data, "EduProfileId", "EduProfileName", selectedId);
         }
 

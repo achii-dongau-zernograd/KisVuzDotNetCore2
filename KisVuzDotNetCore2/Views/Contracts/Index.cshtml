@@ -47,9 +47,29 @@
             <td>
                 <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId" target="_blank">@item.AppUser.GetFullName</a>
 
-                @if (item.ApplicationForAdmission != null)
+                @if (item.AppUser.UserDocuments != null && item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.Passport && d.RowStatusId == (int)RowStatusEnum.Confirmed).Count() > 0)
                 {
                     <br /><br />
+                    <p>
+                        Скан-копия паспорта:
+                        <br />
+                        @foreach ( var passport in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.Passport && d.RowStatusId == (int)RowStatusEnum.Confirmed) )
+                        {
+                            if (passport.FileModel == null)
+                            {
+                                <div>-</div>
+                            }
+                            else
+                            {
+                                <a href="/@passport.FileModel.Path" target="_blank">Паспорт</a>
+                            }
+                        }                        
+                    </p>
+                }
+
+                @if (item.ApplicationForAdmission != null && item.ApplicationForAdmission.RowStatusId == (int)RowStatusEnum.Confirmed)
+                {
+                    <br />
                     <p>
                         Заявление о приёме:
                         <br />

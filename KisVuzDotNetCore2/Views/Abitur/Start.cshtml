@@ -68,13 +68,21 @@
 <div class="collapse" id="collapseConsultants">
     <div class="well">
         <p>
+            <a href="http://ачгаа.рф/files/achii/priem2020/instrAbitLK.pdf" target="_blank">Инструкция по работе абитуриента в личном кабинете</a>
+        </p>
+
+        <hr />
+
+        <p>
             <a href="http://ачгаа.рф/nash-vuz/podrazdeleniya-akademii/priemnaya-komissiya" target="_blank">Веб-страница приёмной комиссии на официальном сайте образовательной организации</a>
         </p>
         <p>
             Телефон приемной комиссии для ответов на вопросы поступающих — 8-863-59-41-8-31
         </p>
+
         @if (abiturient.AppUserAbiturientConsultants != null && abiturient.AppUserAbiturientConsultants.Count > 0)
         {
+            <hr />
             <p>
                 Ваш персональный консультант:
                 @foreach (var appUserAbiturientConsultant in abiturient.AppUserAbiturientConsultants)
@@ -470,7 +478,7 @@
                         }
                         else
                         {
-                            <a asp-action="ApplicationForAdmissionFileLoad" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId">Загрузить</a>
+                            <a asp-action="ApplicationForAdmissionFileLoad" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId" class="btn btn-primary">Загрузить</a>
                         }
                     </td>
                     <td>
