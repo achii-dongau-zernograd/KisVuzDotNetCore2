@@ -458,7 +458,8 @@ namespace KisVuzDotNetCore2.Models.Files
             if (userDocument == null) throw new NullReferenceException();
             var entry = await GetUserDocumentAsync(userDocument.UserDocumentId);
 
-            entry.AppUserId      = userDocument.AppUserId;            
+            entry.AppUserId      = userDocument.AppUserId;
+            entry.FileDataTypeId = userDocument.FileDataTypeId;
             entry.RowStatusId    = userDocument.RowStatusId;
             entry.Remark         = userDocument.Remark;
 

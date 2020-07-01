@@ -34,6 +34,8 @@
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                 Применить фильтр
             </button>
+
+            <a asp-action="FindDuplicates" class="btn btn-primary">Поиск дубликатов</a>
         </form>
     </div>
 </div>
@@ -125,7 +127,7 @@
                             { userDocumentClass = "text-warning"; }
 
                             <p>
-                                <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                                <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileDataType.FileDataTypeName</a>
                                 <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
                                    asp-action="Edit"
                                    asp-route-id="@userDocument.UserDocumentId"
@@ -430,7 +432,7 @@
                     @*Консультант абитуриента*@
                     <td>
                         @{
-                            var consultant = item.AppUserAbiturientConsultants.FirstOrDefault()?.AppUser;
+                            var consultant = item.AppUserAbiturientConsultants?.FirstOrDefault()?.AppUser;
                         }
 
                         @if (consultant != null)

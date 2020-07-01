@@ -61,6 +61,36 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
         }
 
         /// <summary>
+        /// Список дублирующихся абитуриентов
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult FindDuplicates(AbiturientsFilterAndSortModel filterAndSortModel)
+        {
+            ViewBag.AbiturientsFilterAndSortModel = filterAndSortModel;
+
+            ViewBag.AbiturientStatuses = _selectListRepository.GetSelectListAbiturientStatuses(filterAndSortModel.FilterAbiturientStatus ?? 0);
+            ViewBag.EntranceTestGroups = _selectListRepository.GetSelectListEntranceTestGroups(filterAndSortModel.FilterEntranceTestGroupId ?? 0);
+
+            ViewBag.IsUserConsultant = User.IsInRole("Приёмная комиссия (консультанты)");
+
+            var abiturs = _abiturRepository.GetAbiturients();
+            var groups = abiturs.GroupBy(a => a.AppUser.GetFullName).Where(g => g.Count() > 1).ToList();
+
+            var duplicateAbiturs = new List<Abiturient>();
+            foreach(var group in groups)
+            {
+                foreach (var item in group)
+                {
+                    var abiturient = _abiturRepository.GetAbiturients().FirstOrDefault(a => a.AbiturientId == item.AbiturientId);
+                    if(abiturient != null)
+                        duplicateAbiturs.Add(abiturient);
+                }                
+            }
+
+            return View(nameof(Index), duplicateAbiturs.OrderBy(a=>a.AppUser.GetFullName).ToList());
+        }
+
+        /// <summary>
         /// Удаление аккаунта и всех данных абитуриента
         /// </summary>
         /// <param name="userName"></param>

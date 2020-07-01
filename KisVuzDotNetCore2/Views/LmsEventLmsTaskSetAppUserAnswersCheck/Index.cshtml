@@ -6,6 +6,15 @@
 }
 
 <h2>Проверка ответов</h2>
+@if(Model != null && Model.Count() > 0)
+{
+    var appUser = Model.FirstOrDefault()?.LmsEventLmsTaskSetAppUserAnswers?.FirstOrDefault()?.AppUser;
+    if(appUser != null)
+    {
+        <h3>@appUser.GetFullName (@appUser.Abiturient?.AbiturientId)</h3>
+    }
+    
+}
 
 <table class="table">
     <thead>
@@ -162,7 +171,7 @@
 }
         @{ 
             double sumMax = Model.Sum(item => item.NumberOfPoints);
-            double sumAnswers = Model.Sum(item => item.LmsEventLmsTaskSetAppUserAnswers.Sum(a => a.NumberOfPoints)) ?? 0;
+            double sumAnswers = Model.Sum(item => item.LmsEventLmsTaskSetAppUserAnswers?.Sum(a => a.NumberOfPoints)) ?? 0;
             double mark = Math.Round(sumAnswers * 100 / sumMax, 0, MidpointRounding.AwayFromZero);
             
         }
@@ -182,3 +191,7 @@
 </table>
 
 <h4>Оценка по 100-балльной шкале: @mark</h4>
+
+<hr />
+
+<h4>Подпись экзаменатора: ________________________</h4>

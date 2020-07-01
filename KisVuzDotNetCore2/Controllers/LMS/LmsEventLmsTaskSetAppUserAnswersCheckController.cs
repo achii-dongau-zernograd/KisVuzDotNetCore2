@@ -43,7 +43,7 @@ namespace KisVuzDotNetCore2.Controllers.LMS
             var userAnswers = await _lmsEventLmsTasksetAppUserAnswerRepository.GetLmsEventAppUserAnswers(userName, lmsEventId).ToListAsync();
 
             ViewBag.LmsEventId = lmsEventId;
-            ViewBag.UserName = userName;
+            ViewBag.UserName = userName;                       
 
             return View(lmsEventTasks);
         }
