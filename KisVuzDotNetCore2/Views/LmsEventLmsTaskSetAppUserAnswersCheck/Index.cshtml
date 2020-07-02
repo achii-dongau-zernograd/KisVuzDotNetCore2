@@ -11,7 +11,7 @@
     var appUser = Model.FirstOrDefault()?.LmsEventLmsTaskSetAppUserAnswers?.FirstOrDefault()?.AppUser;
     if(appUser != null)
     {
-        <h3>@appUser.GetFullName (@appUser.Abiturient?.AbiturientId)</h3>
+        <h3>@appUser.Abiturient?.AbiturientId</h3>
     }
     
 }

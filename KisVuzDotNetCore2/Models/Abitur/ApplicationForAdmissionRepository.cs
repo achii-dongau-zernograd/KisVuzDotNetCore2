@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.Priem;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -223,6 +224,45 @@ namespace KisVuzDotNetCore2.Models.Abitur
 
             _context.ApplicationForAdmissions.Add(applicationForAdmission);
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Возвращает отфильтрованный запрос на выборку всех заявлений о приёме
+        /// </summary>
+        /// <param name="filterAndSortModel"></param>
+        /// <returns></returns>
+        public IQueryable<ApplicationForAdmission> GetApplicationForAdmissions(ApplicationForAdmissionsFilterAndSortModel filterAndSortModel)
+        {
+            var applicationForAdmissions = GetApplicationForAdmissions();
+
+            if (!string.IsNullOrWhiteSpace(filterAndSortModel.FilterLastNameFragment))
+            {
+                applicationForAdmissions = applicationForAdmissions.Where(a => a.Abiturient.AppUser.LastName.Contains(filterAndSortModel.FilterLastNameFragment));
+            }
+
+            if (filterAndSortModel.EduFormId != 0)
+            {
+                applicationForAdmissions = applicationForAdmissions.Where(a => a.EduFormId == filterAndSortModel.EduFormId);
+            }
+
+            if (filterAndSortModel.EduProfileId != 0)
+            {
+                applicationForAdmissions = applicationForAdmissions.Where(a => a.EduProfileId == filterAndSortModel.EduProfileId);
+            }
+
+            if (filterAndSortModel.QuotaTypeId != 0)
+            {
+                applicationForAdmissions = applicationForAdmissions.Where(a => a.QuotaTypeId == filterAndSortModel.QuotaTypeId);
+            }
+
+            if (filterAndSortModel.RowStatusId != 0)
+            {
+                applicationForAdmissions = applicationForAdmissions.Where(a => a.RowStatusId == filterAndSortModel.RowStatusId);
+            }
+
+            applicationForAdmissions = applicationForAdmissions.OrderByDescending(q => q.FileModel.UploadDate);
+
+            return applicationForAdmissions;
         }
     }
 }

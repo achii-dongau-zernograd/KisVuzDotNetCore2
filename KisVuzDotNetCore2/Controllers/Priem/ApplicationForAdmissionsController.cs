@@ -1,6 +1,7 @@
 ﻿using KisVuzDotNetCore2.Infrastructure;
 using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.Common;
+using KisVuzDotNetCore2.Models.Priem;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,12 +26,21 @@ namespace KisVuzDotNetCore2.Controllers.Priem
             _selectListRepository = selectListRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ApplicationForAdmissionsFilterAndSortModel filterAndSortModel)
         {
-            var applicationForAdmission = _applicationForAdmissionRepository.GetApplicationForAdmissions();
-            applicationForAdmission = applicationForAdmission.OrderByDescending(q => q.FileModel.UploadDate);
+            var applicationForAdmissions = _applicationForAdmissionRepository.GetApplicationForAdmissions(filterAndSortModel);                       
 
-            return View(await applicationForAdmission.ToListAsync());
+            ViewBag.FilterAndSortModel = filterAndSortModel;
+
+            ViewBag.EduForms = _selectListRepository.GetSelectListEduForms(filterAndSortModel.EduFormId);
+            ViewBag.EduProfiles = _selectListRepository.GetSelectListEduProfileFullNames(filterAndSortModel.EduProfileId);
+            ViewBag.QuotaTypes = _selectListRepository.GetSelectListQuotaTypes(filterAndSortModel.QuotaTypeId);
+            ViewBag.RowStatuses = _selectListRepository.GetSelectListRowStatuses(filterAndSortModel.RowStatusId);
+
+            if (filterAndSortModel.IsRequestDataImmediately)
+                return View(await applicationForAdmissions.ToListAsync());
+            else
+                return View(new List<ApplicationForAdmission>());
         }
 
         #region Создание

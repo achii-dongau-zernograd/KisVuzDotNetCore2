@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using KisVuzDotNetCore2.Models.Priem;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,12 +32,19 @@ namespace KisVuzDotNetCore2.Models.Abitur
         IQueryable<ApplicationForAdmission> GetApplicationForAdmissions(string userName);
 
         /// <summary>
+        /// Возвращает отфильтрованный запрос на выборку всех заявлений о приёме
+        /// </summary>
+        /// <param name="filterAndSortModel"></param>
+        /// <returns></returns>
+        IQueryable<ApplicationForAdmission> GetApplicationForAdmissions(ApplicationForAdmissionsFilterAndSortModel filterAndSortModel);
+
+        /// <summary>
         /// Возвращает количество заявлений о приёме, созданных указанным пользователем
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
         int GetNumberOfApplicationForAdmissions(string userName);
-
+        
         /// <summary>
         /// Возвращает заявление о зачислении абитуриента
         /// </summary>
