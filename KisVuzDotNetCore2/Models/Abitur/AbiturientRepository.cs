@@ -541,6 +541,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
             if (userDocument == null)
                 return;
 
+            userDocument.RowStatusId = (int)RowStatusEnum.ChangedByUser;
+
             await _userDocumentRepository.ReloadUserDocumentAsync(userDocumentId, uploadedFile);                        
         }
 
