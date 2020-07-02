@@ -1,0 +1,32 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.AbiturientStatus
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление статуса абитуриента</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Id
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AbiturientStatusId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AbiturientStatusName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AbiturientStatusName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="AbiturientStatusId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

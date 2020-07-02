@@ -4,21 +4,21 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Статусы абитуриентов</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
 <table class="table">
     <thead>
         <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.AbiturientStatusId)
+                    Id
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.AbiturientStatusName)
                 </th>
-            <th></th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody>
@@ -31,9 +31,8 @@
                 @Html.DisplayFor(modelItem => item.AbiturientStatusName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Редактировать", "Edit",   new { id = item.AbiturientStatusId }, new { @class="btn btn-primary" })                
+                @Html.ActionLink("Удалить",       "Delete", new { id = item.AbiturientStatusId }, new { @class = "btn btn-danger" })
             </td>
         </tr>
 }

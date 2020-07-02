@@ -39,5 +39,39 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
 
             return RedirectToAction(nameof(Index));
         }
+
+
+        public IActionResult Edit(int id)
+        {
+            var abiturientStatus = _context.AbiturientStatuses.FirstOrDefault(a=>a.AbiturientStatusId == id);
+            return View(abiturientStatus);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(AbiturientStatus abiturientStatus)
+        {
+            _context.AbiturientStatuses.Update(abiturientStatus);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        public IActionResult Delete(int id)
+        {
+            var abiturientStatus = _context.AbiturientStatuses.FirstOrDefault(a => a.AbiturientStatusId == id);
+            return View(abiturientStatus);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(AbiturientStatus abiturientStatus)
+        {
+            _context.AbiturientStatuses.Remove(abiturientStatus);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

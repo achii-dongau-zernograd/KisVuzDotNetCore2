@@ -1,15 +1,15 @@
 ﻿@model KisVuzDotNetCore2.Models.Abitur.AbiturientStatus
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Редактирование";
 }
 
-<h2>Добавление статуса абитуриента</h2>
+<h2>Редактирование статуса абитуриента</h2>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
             <div class="form-group">
                 <label asp-for="AbiturientStatusName" class="control-label"></label>
@@ -17,7 +17,8 @@
                 <span asp-validation-for="AbiturientStatusName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <input type="hidden" asp-for="AbiturientStatusId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-default">Отмена</a>
             </div>
         </form>
