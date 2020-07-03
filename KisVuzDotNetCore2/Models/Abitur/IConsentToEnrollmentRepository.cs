@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using KisVuzDotNetCore2.Models.Priem;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// </summary>
         /// <returns></returns>
         IQueryable<ConsentToEnrollment> GetConsentToEnrollments();
+
+        /// <summary>
+        /// Возвращает запрос на выборку всех объектов заявлений о согласии на зачисление,
+        /// удовлетворяющих заданному фильтру
+        /// </summary>
+        /// <param name="filterAndSortModel"></param>
+        /// <returns></returns>
+        IQueryable<ConsentToEnrollment> GetConsentToEnrollments(ConsentToEnrollmentsFilterAndSortModel filterAndSortModel);
 
         /// <summary>
         /// Удаляет заявление о согласии на зачисление

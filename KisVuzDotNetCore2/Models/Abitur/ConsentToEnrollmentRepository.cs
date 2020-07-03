@@ -1,5 +1,6 @@
 ﻿using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.Priem;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -85,6 +86,44 @@ namespace KisVuzDotNetCore2.Models.Abitur
                     .ThenInclude(afa => afa.QuotaType)
                 .Include(ap => ap.ApplicationForAdmission)
                     .ThenInclude(afa => afa.EduProfile.EduNapravl.EduUgs.EduLevel);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Возвращает запрос на выборку всех объектов заявлений о согласии на зачисление,
+        /// удовлетворяющих заданному фильтру
+        /// </summary>
+        /// <param name="filterAndSortModel"></param>
+        /// <returns></returns>
+        public IQueryable<ConsentToEnrollment> GetConsentToEnrollments(ConsentToEnrollmentsFilterAndSortModel filterAndSortModel)
+        {
+            var query = GetConsentToEnrollments();
+
+            if (!string.IsNullOrWhiteSpace(filterAndSortModel.FilterLastNameFragment))
+            {
+                query = query.Where(a => a.ApplicationForAdmission.Abiturient.AppUser.LastName.Contains(filterAndSortModel.FilterLastNameFragment));
+            }
+
+            if (filterAndSortModel.EduFormId != 0)
+            {
+                query = query.Where(a => a.ApplicationForAdmission.EduFormId == filterAndSortModel.EduFormId);
+            }
+
+            if (filterAndSortModel.EduProfileId != 0)
+            {
+                query = query.Where(a => a.ApplicationForAdmission.EduProfileId == filterAndSortModel.EduProfileId);
+            }
+
+            if (filterAndSortModel.QuotaTypeId != 0)
+            {
+                query = query.Where(a => a.ApplicationForAdmission.QuotaTypeId == filterAndSortModel.QuotaTypeId);
+            }
+
+            if (filterAndSortModel.RowStatusId != 0)
+            {
+                query = query.Where(a => a.RowStatusId == filterAndSortModel.RowStatusId);
+            }
 
             return query;
         }

@@ -10,6 +10,7 @@ using KisVuzDotNetCore2.Models.Abitur;
 using Microsoft.AspNetCore.Http;
 using KisVuzDotNetCore2.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
+using KisVuzDotNetCore2.Models.Priem;
 
 namespace KisVuzDotNetCore2.Controllers.Priem
 {
@@ -27,10 +28,23 @@ namespace KisVuzDotNetCore2.Controllers.Priem
         }
 
         // GET: ConsentToEnrollments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ConsentToEnrollmentsFilterAndSortModel filterAndSortModel)
         {
-            var consentToEnrollments = _consentToEnrollmentRepository.GetConsentToEnrollments().OrderByDescending(c => c.ChangingDateTime);
-            return View(await consentToEnrollments.ToListAsync());
+            var consentToEnrollments = _consentToEnrollmentRepository
+                .GetConsentToEnrollments(filterAndSortModel)
+                .OrderByDescending(c => c.ChangingDateTime);
+
+            ViewBag.FilterAndSortModel = filterAndSortModel;
+
+            ViewBag.EduForms    = _selectListRepository.GetSelectListEduForms(filterAndSortModel.EduFormId);
+            ViewBag.EduProfiles = _selectListRepository.GetSelectListEduProfileFullNames(filterAndSortModel.EduProfileId);
+            ViewBag.QuotaTypes  = _selectListRepository.GetSelectListQuotaTypes(filterAndSortModel.QuotaTypeId);
+            ViewBag.RowStatuses = _selectListRepository.GetSelectListRowStatuses(filterAndSortModel.RowStatusId);
+
+            if (filterAndSortModel.IsRequestDataImmediately)
+                return View(await consentToEnrollments.ToListAsync());
+            else
+                return View(new List<ConsentToEnrollment>());
         }
 
         // GET: ConsentToEnrollments/Details/5

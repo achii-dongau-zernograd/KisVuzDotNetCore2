@@ -1,0 +1,25 @@
+﻿@model KisVuzDotNetCore2.Models.AppUserStatus
+
+@{
+    ViewData["Title"] = "Добавление";
+}
+
+<h2>Добавление статуса пользователя</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AppUserStatusName" class="control-label"></label>
+                <input asp-for="AppUserStatusName" class="form-control" />
+                <span asp-validation-for="AppUserStatusName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
