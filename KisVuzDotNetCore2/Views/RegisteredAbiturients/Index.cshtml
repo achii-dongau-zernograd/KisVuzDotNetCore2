@@ -196,25 +196,25 @@
                                 if (applicationForAdmission.RowStatusId == (int)RowStatusEnum.ChangedByUser) { textClass = "text-warning"; }
                                                                 
                                 
-                                <p>
-                                    @if(applicationForAdmission.FileModel != null)
-                                    {
-                                        <a class="@textClass" href="/@applicationForAdmission.FileModel.Path" target="_blank">
-                                            @applicationForAdmission.ApplicationForAdmissionShortName
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        @applicationForAdmission.ApplicationForAdmissionShortName
-                                    }
+                    <p>
+                        @if (applicationForAdmission.FileModel != null)
+                        {
+                            <a class="@textClass" href="/@applicationForAdmission.FileModel.Path" target="_blank">
+                                @applicationForAdmission.ApplicationForAdmissionShortName (приоритет @applicationForAdmission.PriorityId)
+                            </a>
+                        }
+                        else
+                        {
+                            @applicationForAdmission.ApplicationForAdmissionShortName <text>(приоритет @applicationForAdmission.PriorityId)</text>
+                        }
 
-                                    <a asp-controller="ApplicationForAdmissions"
-                                       asp-action="Edit"
-                                       asp-route-id="@applicationForAdmission.ApplicationForAdmissionId"
-                                       target="_blank">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                    </a>
-                                </p>
+                        <a asp-controller="ApplicationForAdmissions"
+                           asp-action="Edit"
+                           asp-route-id="@applicationForAdmission.ApplicationForAdmissionId"
+                           target="_blank">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </p>
                             }
                         }
                     </td>
