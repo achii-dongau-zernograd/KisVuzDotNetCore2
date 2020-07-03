@@ -79,7 +79,11 @@ namespace KisVuzDotNetCore2.Models.Abitur
                         .ThenInclude(ftft => ftft.FileDataType)
                             .ThenInclude(fdt => fdt.FileDataTypeGroup)
                 .Include(ap => ap.ApplicationForAdmission)
-                    .ThenInclude(afa => afa.Abiturient.AppUser)
+                    .ThenInclude(afa => afa.Abiturient.AppUser.UserDocuments)
+                        .ThenInclude(ud => ud.FileDataType)
+                .Include(ap => ap.ApplicationForAdmission)
+                    .ThenInclude(afa => afa.Abiturient.AppUser.UserDocuments)
+                        .ThenInclude(ud => ud.FileModel)
                 .Include(ap => ap.ApplicationForAdmission)
                     .ThenInclude(afa => afa.EduForm)
                 .Include(ap => ap.ApplicationForAdmission)
@@ -103,6 +107,11 @@ namespace KisVuzDotNetCore2.Models.Abitur
             if (!string.IsNullOrWhiteSpace(filterAndSortModel.FilterLastNameFragment))
             {
                 query = query.Where(a => a.ApplicationForAdmission.Abiturient.AppUser.LastName.Contains(filterAndSortModel.FilterLastNameFragment));
+            }
+
+            if (filterAndSortModel.EducationDocumentFileDataTypeId != 0)
+            {
+                query = query.Where(a => a.ApplicationForAdmission.Abiturient.AppUser.UserDocuments.Any(ud => ud.FileDataTypeId == filterAndSortModel.EducationDocumentFileDataTypeId));
             }
 
             if (filterAndSortModel.EduFormId != 0)

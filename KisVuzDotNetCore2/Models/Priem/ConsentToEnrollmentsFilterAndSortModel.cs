@@ -17,6 +17,11 @@ namespace KisVuzDotNetCore2.Models.Priem
         public string FilterLastNameFragment { get; set; }
 
         /// <summary>
+        /// Тип документа об образовании
+        /// </summary>
+        public int EducationDocumentFileDataTypeId { get; set; }
+
+        /// <summary>
         /// Форма обучения
         /// </summary>
         public int EduFormId { get; set; }

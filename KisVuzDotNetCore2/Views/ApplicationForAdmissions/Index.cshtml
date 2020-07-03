@@ -21,11 +21,17 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="educationDocumentFileDataTypeId">Документ об образовании</label>
+                <select name="educationDocumentFileDataTypeId" class="form-control" asp-items="ViewBag.EducationDocuments">
+                    <option>Все документы об образовании</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="eduProfileId">Профиль подготовки</label>
                 <select name="eduProfileId" class="form-control" asp-items="ViewBag.EduProfiles">
                     <option>Все профили подготовки</option>
                 </select>
-            </div>            
+            </div>
             <div class="form-group">
                 <label for="quotaTypeId">Тип квоты на выделение мест для обучения</label>
                 <select name="quotaTypeId" class="form-control" asp-items="ViewBag.QuotaTypes">
@@ -59,6 +65,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.AbiturientId)
                 </th>
+                <th>Документ об образовании</th>
                 <th>
                     @Html.DisplayNameFor(model => model.EduFormId)
                 </th>
@@ -95,6 +102,17 @@
                     </td>
                     <td>
                         <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.Abiturient.AppUserId" target="_blank">@item.Abiturient.AbiturientFioBirthdayEmail</a>
+                    </td>
+                    <td>
+                        @foreach (var userDocument in item.Abiturient.AppUser.UserDocuments.Where(ud => ud.FileDataTypeId == (int)FileDataTypeEnum.AttestatObOsnovnomObshemObrazovanii ||
+                                                                                                        ud.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii   ||
+                                                                                                        ud.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO                           ||
+                                                                                                        ud.FileDataTypeId == (int)FileDataTypeEnum.DiplomVO ))
+                        {
+                            <p>
+                                <a href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileDataType.FileDataTypeName</a>
+                            </p>
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.EduForm.EduFormName)

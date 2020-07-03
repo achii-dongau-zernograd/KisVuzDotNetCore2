@@ -58,7 +58,10 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public IQueryable<ApplicationForAdmission> GetApplicationForAdmissions()
         {
             var query = _context.ApplicationForAdmissions
-                .Include(afa => afa.Abiturient.AppUser)
+                .Include(afa => afa.Abiturient.AppUser.UserDocuments)
+                    .ThenInclude(ud => ud.FileDataType)
+                .Include(afa => afa.Abiturient.AppUser.UserDocuments)
+                    .ThenInclude(ud => ud.FileModel)
                 .Include(afa => afa.EduForm)
                 .Include(afa => afa.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(afa => afa.QuotaType)
@@ -238,6 +241,11 @@ namespace KisVuzDotNetCore2.Models.Abitur
             if (!string.IsNullOrWhiteSpace(filterAndSortModel.FilterLastNameFragment))
             {
                 applicationForAdmissions = applicationForAdmissions.Where(a => a.Abiturient.AppUser.LastName.Contains(filterAndSortModel.FilterLastNameFragment));
+            }
+
+            if (filterAndSortModel.EducationDocumentFileDataTypeId != 0)
+            {
+                applicationForAdmissions = applicationForAdmissions.Where(a => a.Abiturient.AppUser.UserDocuments.Any(ud => ud.FileDataTypeId == filterAndSortModel.EducationDocumentFileDataTypeId));
             }
 
             if (filterAndSortModel.EduFormId != 0)

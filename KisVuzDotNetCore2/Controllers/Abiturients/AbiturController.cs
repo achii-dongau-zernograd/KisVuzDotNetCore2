@@ -274,7 +274,8 @@ namespace KisVuzDotNetCore2.Controllers
         {
             await _abiturRepository.AddApplicationForAdmission(applicationForAdmission);
 
-            return RedirectToAction(nameof(Start), new { selectedTab = "applicationForAdmissions" } );
+            //return RedirectToAction(nameof(Start), new { selectedTab = "applicationForAdmissions" } );
+            return RedirectToAction(nameof(ApplicationForAdmissionFileLoad), new { applicationForAdmission.ApplicationForAdmissionId });
         }
 
         public async Task<IActionResult> ApplicationForAdmissionEdit(int applicationForAdmissionId)
@@ -282,6 +283,9 @@ namespace KisVuzDotNetCore2.Controllers
             var applicationForAdmission = await _abiturRepository.GetApplicationForAdmissionAsync(User.Identity.Name, applicationForAdmissionId);
             if (applicationForAdmission == null)
                 return NotFound();
+
+            var documentSamples = _documentSamplesRepository.GetDocumentSamples(applicationForAdmission.EduProfileId, FileDataTypeEnum.ApplicationForAdmission);
+            ViewBag.DocumentSamples = await documentSamples.ToListAsync();
 
             ViewBag.EduProfiles = _selectListRepository.GetSelectListEduProfileFullNames(applicationForAdmission.EduProfileId);
             ViewBag.EduForms = _selectListRepository.GetSelectListEduFormsForAbiturient(applicationForAdmission.EduFormId);
@@ -555,6 +559,9 @@ namespace KisVuzDotNetCore2.Controllers
             var consentToEnrollment = await _abiturRepository.GetConsentToEnrollment(User.Identity.Name, abiturientConsentToEnrollmentId);
             if (consentToEnrollment == null)
                 return NotFound();
+
+            var documentSamples = _documentSamplesRepository.GetDocumentSamples(consentToEnrollment.ApplicationForAdmission.EduProfileId, FileDataTypeEnum.ConsentToEnrollment);
+            ViewBag.DocumentSamples = await documentSamples.ToListAsync();
 
             ViewBag.ApplicationForAdmissions = _selectListRepository
                 .GetSelectListApplicationForAdmissions(consentToEnrollment.ApplicationForAdmission.AbiturientId,

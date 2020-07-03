@@ -9,12 +9,17 @@ namespace KisVuzDotNetCore2.Models.Priem
     /// Модель фильтрации и сортировки заявлений о приёме
     /// </summary>
     public class ApplicationForAdmissionsFilterAndSortModel
-    {
+    {        
         #region Фильтрация
         /// <summary>
         /// Фрагмент фамилии абитуриента
         /// </summary>
         public string FilterLastNameFragment { get; set; }
+
+        /// <summary>
+        /// Тип документа об образовании
+        /// </summary>
+        public int EducationDocumentFileDataTypeId { get; set; }
 
         /// <summary>
         /// Форма обучения

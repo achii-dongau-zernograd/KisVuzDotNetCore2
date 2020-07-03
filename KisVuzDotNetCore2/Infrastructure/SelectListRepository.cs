@@ -756,7 +756,8 @@ namespace KisVuzDotNetCore2.Infrastructure
         {
             var data = _context.FileDataTypes
                 .Where(fdt => fdt.FileDataTypeGroupId == (int)FileDataTypeGroupEnum.UserDocuments ||
-                    fdt.FileDataTypeId == (int) FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
+                    fdt.FileDataTypeId == (int) FileDataTypeEnum.AttestatObOsnovnomObshemObrazovanii ||
+                    fdt.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
                     fdt.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO ||
                     fdt.FileDataTypeId == (int)FileDataTypeEnum.DiplomVO)
                 .OrderBy(fdt => fdt.FileDataTypeName);
