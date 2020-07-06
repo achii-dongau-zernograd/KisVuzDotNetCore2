@@ -37,6 +37,11 @@ namespace KisVuzDotNetCore2.Models.Priem
         public int QuotaTypeId { get; set; }
 
         /// <summary>
+        /// Приоритет
+        /// </summary>
+        public int PriorityId { get; set; }
+
+        /// <summary>
         /// Статус записи
         /// </summary>
         public int RowStatusId { get; set; }

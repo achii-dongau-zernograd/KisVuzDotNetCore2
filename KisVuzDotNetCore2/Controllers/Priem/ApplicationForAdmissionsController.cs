@@ -36,6 +36,7 @@ namespace KisVuzDotNetCore2.Controllers.Priem
             ViewBag.EducationDocuments = _selectListRepository.GetSelectListEducationDocumentsForAbiturients(filterAndSortModel.EducationDocumentFileDataTypeId);
             ViewBag.EduProfiles = _selectListRepository.GetSelectListEduProfileFullNames(filterAndSortModel.EduProfileId);
             ViewBag.QuotaTypes = _selectListRepository.GetSelectListQuotaTypes(filterAndSortModel.QuotaTypeId);
+            ViewBag.Priorities = _selectListRepository.GetSelectListPriorities(filterAndSortModel.PriorityId);
             ViewBag.RowStatuses = _selectListRepository.GetSelectListRowStatuses(filterAndSortModel.RowStatusId);
 
             if (filterAndSortModel.IsRequestDataImmediately)

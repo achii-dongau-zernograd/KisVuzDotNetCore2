@@ -39,6 +39,12 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="priorityId">Приоритет</label>
+                <select name="priorityId" asp-items="ViewBag.Priorities" class="form-control">
+                    <option>Все</option>                    
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="RowStatusId">Статус записи</label>
                 <select name="RowStatusId" class="form-control" asp-items="ViewBag.RowStatuses">
                     <option>Все статусы</option>

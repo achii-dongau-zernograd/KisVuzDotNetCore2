@@ -59,7 +59,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         {
             get
             {
-                return $"{AppUser?.GetFullName ?? " - "}, {(AppUser?.Birthdate != null ? ((DateTime)AppUser?.Birthdate).ToString("d") : " - ")}, {AppUser?.Email ?? " - "}";
+                return $"{AppUser?.GetFullName ?? " - "}, {(AppUser?.Birthdate != null ? ((DateTime)AppUser?.Birthdate).ToString("d") : " - ")}, {AppUser?.Email ?? " - "}, { AppUser?.PhoneNumber ?? " - "}";
             }
         }
     }

@@ -263,6 +263,11 @@ namespace KisVuzDotNetCore2.Models.Abitur
                 applicationForAdmissions = applicationForAdmissions.Where(a => a.QuotaTypeId == filterAndSortModel.QuotaTypeId);
             }
 
+            if (filterAndSortModel.PriorityId != 0)
+            {
+                applicationForAdmissions = applicationForAdmissions.Where(a => a.PriorityId == filterAndSortModel.PriorityId);
+            }
+
             if (filterAndSortModel.RowStatusId != 0)
             {
                 applicationForAdmissions = applicationForAdmissions.Where(a => a.RowStatusId == filterAndSortModel.RowStatusId);

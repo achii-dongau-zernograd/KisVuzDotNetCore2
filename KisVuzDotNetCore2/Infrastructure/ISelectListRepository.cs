@@ -51,6 +51,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListEntranceTestGroups(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список номеров приоритетов заявлений о приёме
+        /// </summary>
+        /// <param name="priorityId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListPriorities(int priorityId = 0);
+
+        /// <summary>
         /// Возвращает список типов договоров
         /// </summary>
         /// <param name="selectedId"></param>

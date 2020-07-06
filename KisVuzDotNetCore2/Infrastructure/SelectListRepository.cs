@@ -967,5 +967,24 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(data.OrderBy(u => u.GetFullName),
                  "Id", "GetFullName", selectedId);
         }
+
+        /// <summary>
+        /// Возвращает список номеров приоритетов заявлений о приёме
+        /// </summary>
+        /// <param name="priorityId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListPriorities(int selectedId = 0)
+        {
+            var priorityId = _context.ApplicationForAdmissions.Max(a => a.PriorityId);
+
+            if (priorityId == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return new SelectList(Enumerable.Range(1, priorityId), selectedId);
+            }
+        }
     }
 }
