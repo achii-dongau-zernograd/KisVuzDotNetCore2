@@ -16,7 +16,7 @@
         var t20hostelInfo = (IEnumerable<HostelInfo>)ViewData["t20hostelInfo"];
     }
 
-    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о наличии и условиях предоставления стипендии</a>
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о наличии и условиях предоставления обучающимся стипендий</a>
     <div class="collapse" id="spoiler-@spoilerCounter">
         @{spoilerCounter++;}
         <div class="well">
@@ -29,8 +29,15 @@
                         <li>Государственная академическая стипендия</li>
                         <li>Повышенная государственная академическая стипендия</li>
                         <li>Государственная социальная стипендия</li>
-                        <li>Стипендия Президента Российской Федерации</li>
-                        <li>Стипендия Правительства Российской Федерации</li>                        
+                        <li>Повышенная государственная социальная стипендия</li>
+                        <li>Стипендия Университета</li>
+                        <li>Стипендия Президента Российской Федерации для студентов и аспирантов, обучающихся по направлениям подготовки (специальностям), соответствующим приоритетным направлениям модернизации и технологического развития российской экономики</li>
+                        <li>Стипендия Правительства Российской Федерации для студентов и аспирантов (адъюнктов), обучающихся по образовательным программам высшего образования по очной форме по специальностям или направлениям подготовки, соответствующим приоритетным направлениям модернизации и технологического развития российской экономики</li>
+                        <li>Стипендия Президента Российской Федерации для студентов и аспирантов образовательных учреждений высшего образования</li>
+                        <li>Стипендия Правительства Российской Федерации для аспирантов и студентов, обучающихся за счет средств федерального бюджета по очной форме по основным образовательным программам высшего образования</li>
+                        <li>Стипендия Правительства Российской Федерации для лиц, обучающихся по очной форме обучения по образовательным программам среднего профессионального образования, соответствующим приоритетным направлениям модернизации и технологического развития экономики Российской Федерации</li>
+                        <li>Стипендия Правительства Российской Федерации для студентов, обучающихся за счет средств федерального бюджета по очной форме по образовательным программам среднего профессионального образования</li>
+                        <li>Стипендия Губернатора Ростовской области для студентов и аспирантов образовательных организаций высшего образования</li>
                     </ol>
                 </div>
             </div>
@@ -61,57 +68,11 @@
     </div>
 
 
-    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Наличие общежития, интерната, количество жилых помещений в общежитии, интернате для иногородних обучающихся</a>
-    <div class="collapse" id="spoiler-@spoilerCounter">
-        @{spoilerCounter++;}
-        <div class="well">
-
-            <table itemprop="hostelInfo" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Наименование показателя</th>
-                        <th>Значение</th>
-                    </tr>
-                </thead>
-                @foreach (var item in t20hostelInfo)
-                {
-                    <tr itemprop="hostelInfo">
-                        <td>@item.NameIndicator</td>
-                        @if (item.Link != String.Empty)
-                        {
-
-                            @if (item.Itemprop != String.Empty)
-                            {
-                                <td itemprop="@item.Itemprop"><a href="@item.Link">@item.Value</a></td>
-                            }
-                            else
-                            {
-                                <td><a href="@item.Link">@item.Value</a></td>
-                            }
-                        }
-                        else
-                        {
-                            @if (item.Itemprop != String.Empty)
-                            {
-                                <td itemprop="@item.Itemprop">@item.Value</td>
-                            }
-                            else
-                            {
-                                <td>@item.Value</td>
-                            }
-                            <td>@item.Link</td>
-                        }
-                    </tr>
-                }
-            </table>
-        </div>
-    </div>
-
-    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация об иных видах материальной поддержки обучающихся</a>
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о мерах социальной поддержки обучающихся</a>
     <div class="collapse" id="spoiler-@spoilerCounter">
         @{spoilerCounter++;}
         <div class="well" itemprop="support">
-            Раздел находится в разработке
+            <a href="http://ачгаа.рф/files/achii/2020/grant_support.pdf" target="_blank">Информация о мерах социальной поддержки обучающихся</a>
         </div>
     </div>
 
@@ -179,6 +140,62 @@
                 </tbody>
             </table>
 
+        </div>
+    </div>
+
+
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о наличии общежития, интерната, в том числе приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья, количестве жилых помещений в общежитии, интернате для иногородних обучающихся</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        @{spoilerCounter++;}
+        <div class="well">
+
+            <table itemprop="hostelInfo" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Наименование показателя</th>
+                        <th>Значение</th>
+                    </tr>
+                </thead>
+                @foreach (var item in t20hostelInfo)
+                {
+                    <tr itemprop="hostelInfo">
+                        <td>@item.NameIndicator</td>
+                        @if (item.Link != String.Empty)
+                        {
+
+                            @if (item.Itemprop != String.Empty)
+                            {
+                                <td itemprop="@item.Itemprop"><a href="@item.Link">@item.Value</a></td>
+                            }
+                            else
+                            {
+                                <td><a href="@item.Link">@item.Value</a></td>
+                            }
+                        }
+                        else
+                        {
+                            @if (item.Itemprop != String.Empty)
+                            {
+                                <td itemprop="@item.Itemprop">@item.Value</td>
+                            }
+                            else
+                            {
+                                <td>@item.Value</td>
+                            }
+                            <td>@item.Link</td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о формировании платы за проживание в общежитии</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        @{spoilerCounter++;}
+        <div class="well" itemprop="localActObSt">
+            <a href="http://ачгаа.рф/wp-content/uploads/2019/03/%D0%9F%D1%80%D0%B8%D0%BA%D0%B0%D0%B7%E2%84%96283-%D0%9E-%D0%BE%D1%82-29.10.18%D0%B3.-%D0%9E%D0%B1-%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B8-%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D0%B0-%D0%BE%D0%BF%D0%BB%D0%B0%D1%82%D1%8B-%D0%B7%D0%B0-%D0%BF%D1%80%D0%BE%D0%B6%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B2-%D0%9E%E2%84%964-2-%D1%8D%D1%82%D0%B0%D0%B6.pdf" target="_blank">Приказ № 283-O от «29» октября 2018 г. «Об установлении размера оплаты за проживание в общежитии №4 (2 этаж) и комнатах улучшенной планировки в общежитиях №3,5 с 1.11.2018»</a>
         </div>
     </div>
 
