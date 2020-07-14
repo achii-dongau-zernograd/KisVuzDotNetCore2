@@ -228,15 +228,12 @@
                                         @applicationForAdmission.ApplicationForAdmissionShortName <text>(приоритет @applicationForAdmission.PriorityId)</text>
                                     }
 
-                                    @if (!isUserConsultant || !(applicationForAdmission.RowStatusId == (int)RowStatusEnum.Confirmed))
-                                    {
-                                        <a asp-controller="ApplicationForAdmissions"
+                                    <a asp-controller="ApplicationForAdmissions"
                                            asp-action="Edit"
                                            asp-route-id="@applicationForAdmission.ApplicationForAdmissionId"
                                            target="_blank">
                                             <span class="glyphicon glyphicon-edit"></span>
-                                        </a>
-                                    }
+                                    </a>
                                 </p>
                             }
                         }
