@@ -41,7 +41,13 @@
     <div class="well" itemprop="volume">
         @foreach (var ftft in InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv.FileToFileTypes)
         {
-            <p itemprop="@ftft.FileDataType.Itemprop"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+            <div itemprop="finSred">
+                <div itemprop="finPost">
+                    <div itemprop="finRas">
+                        <p itemprop="@ftft.FileDataType.Itemprop"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+                    </div>
+                </div>                
+            </div>
         }
     </div>
 </div>

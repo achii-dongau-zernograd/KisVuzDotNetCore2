@@ -7,6 +7,16 @@
 
 <h1>Платные образовательные услуги</h1>
 
+<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Информация о порядке оказания платных образовательных услуг</a>
+<div class="collapse" id="spoiler-3">
+    <div class="well">
+        @foreach (var ftft in PoryadokOkazaniyaPlatnihObrazovatelnihUslug.FileToFileTypes)
+        {
+            <p itemprop="paidEdu"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+        }
+    </div>
+</div>
+
 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Образец договора об оказании платных образовательных услуг</a>
 <div class="collapse" id="spoiler-1">
     <div class="well">
@@ -23,16 +33,6 @@
         @foreach (var ftft in DocumentObUtverjdeniiStoimostiObucheniya.FileToFileTypes)
         {
             <p itemprop="@ftft.FileDataType.Itemprop"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
-        }
-    </div>
-</div>
-
-<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Порядок оказания платных образовательных услуг</a>
-<div class="collapse" id="spoiler-3">
-    <div class="well">
-        @foreach (var ftft in PoryadokOkazaniyaPlatnihObrazovatelnihUslug.FileToFileTypes)
-        {
-            <p itemprop="paidEdu"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
         }
     </div>
 </div>
