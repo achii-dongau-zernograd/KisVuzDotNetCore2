@@ -36,6 +36,7 @@
         @foreach (var item in vacantist)
         {
             string levelVacant;
+            string metRec19 = "naprVacant";
             switch (item.EduNapravl.EduUgs.EduLevel.EduLevelId)
             {
                 case 3:
@@ -46,25 +47,31 @@
                     break;
                 case 5:
                     levelVacant = "specialityVacant";
+                    metRec19 = "specVacant";
                     break;
                 case 6:
                     levelVacant = "postgraduateVacant";
                     break;
                 default:
                     levelVacant = "spoVacant";
+                    metRec19 = "specVacant";
                     break;
             }
 
             <tr itemprop="nameProgVacant">
                 <td align=center itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
-                <td align=center itemprop="specialVacant">@item.EduNapravl.EduNapravlName </td>
-                <td align=center itemprop="@levelVacant">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                <td align=center itemprop="specialVacant"><span itemprop="obrVacant">@item.EduNapravl.EduNapravlName</span></td>
+                <td align=center itemprop="@levelVacant"><span itemprop="@metRec19">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</span></td>
                 <td align=center itemprop="eduKurs">@item.EduKurs.EduKursNumber</td>
                 <td align=center itemprop="eduForm">@item.EduForm.EduFormName</td>
                 <td align=center itemprop="numberBFVacant">@item.NumberBFVacant</td>
                 <td align=center itemprop="numberBRVacant">@item.NumberBRVacant</td>
                 <td align=center itemprop="numberBMVacant">@item.NumberBMVacant</td>
                 <td align=center itemprop="numberPVacant">@item.NumberPVacant</td>
+            </tr>
+
+            <tr itemprop="profesVacant" class="hide">
+                <td class="hide">Не реализуется</td>
             </tr>
         }
 
