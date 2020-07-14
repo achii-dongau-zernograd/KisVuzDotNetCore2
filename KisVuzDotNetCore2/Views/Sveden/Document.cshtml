@@ -9,7 +9,7 @@
     @foreach (var fileDataType in Model.FileDataTypes)
     {
         <a href="#spoiler-@fileDataType.FileDataTypeId" data-toggle="collapse" class="btn btn-primary btn-block">@fileDataType.FileDataTypeName</a>
-        <div class="collapse" id="spoiler-@fileDataType.FileDataTypeId">
+        <div class="collapse" id="spoiler-@fileDataType.FileDataTypeId" itemprop="docLink">
             <div class="well">
                 @foreach (var ftft in fileDataType.FileToFileTypes)
                 {
@@ -20,6 +20,28 @@
             </div>
         </div>
     }
+
+    <a href="#spoiler-11111" data-toggle="collapse" class="btn btn-primary btn-block">Документ об установлении размера платы,
+        взимаемой с родителей (законных представителей) за присмотр и уход за детьми...</a>
+    <div class="collapse" id="spoiler-11111" itemprop="docLink">
+        <div class="well">
+            <h4>
+                Документ об установлении размера платы,
+                взимаемой с родителей (законных представителей) за присмотр и уход за детьми,
+                осваивающими образовательные программы дошкольного образования в организациях,
+                осуществляющих образовательную деятельность,
+                за содержание детей в образовательной организации,
+                реализующей образовательные программы начального общего,
+                основного общего или среднего общего образования,
+                если в такой образовательной организации созданы условия для проживания обучающихся в интернате,
+                либо за осуществление присмотра и ухода за детьми в группах продленного дня в образовательной организации,
+                реализующей образовательные программы начального общего, основного общего или среднего общего образования
+            </h4>
+            <p itemprop="paidParents">
+                В образовательной организации не реализуются образовательные программы дошкольного, начального общего, основного общего и среднего общего образования
+            </p>
+        </div>
+    </div>
 </span>
 
 <h3>Положения</h3>
