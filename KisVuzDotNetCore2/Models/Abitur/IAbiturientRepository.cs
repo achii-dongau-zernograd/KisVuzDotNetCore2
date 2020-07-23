@@ -111,7 +111,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="abiturientStatusId"></param>
         /// <returns></returns>
         Task SetAbiturientStatusAsync(Abiturient abiturient, AbiturientStatusEnum abiturientStatusId);
-                
+
+        /// <summary>
+        /// Устанавливает способ подачи документов
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <param name="submittingDocumentsTypeId"></param>
+        /// <returns></returns>
+        Task SetAbiturientSubmittingDocumentsTypeAsync(Abiturient abiturient, int submittingDocumentsTypeId);
 
         /// <summary>
         /// Удаляет документ пользователя
@@ -248,7 +255,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// </summary>
         /// <param name="passportData"></param>
         Task AddPassportDataAsync(PassportData passportData);
-
+                
         /// <summary>
         /// Добавляет контакт ближайшего родственника
         /// </summary>

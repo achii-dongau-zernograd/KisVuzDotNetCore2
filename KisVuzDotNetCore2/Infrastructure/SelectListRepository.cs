@@ -756,6 +756,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         {
             var data = _context.FileDataTypes
                 .Where(fdt => fdt.FileDataTypeGroupId == (int)FileDataTypeGroupEnum.UserDocuments ||
+                    fdt.FileDataTypeId == (int)FileDataTypeEnum.AbiturientCard ||
                     fdt.FileDataTypeId == (int) FileDataTypeEnum.AttestatObOsnovnomObshemObrazovanii ||
                     fdt.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
                     fdt.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO ||
@@ -985,6 +986,19 @@ namespace KisVuzDotNetCore2.Infrastructure
             {
                 return new SelectList(Enumerable.Range(1, priorityId), selectedId);
             }
+        }
+
+        /// <summary>
+        /// Возвращает список способов подачи документов о приёме абитуриентами
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSubmittingDocumentsTypes(int? selectedId = 0)
+        {
+            var data = _context.SubmittingDocumentsTypes;
+
+            return new SelectList(data,
+                 "SubmittingDocumentsTypeId", "SubmittingDocumentsTypeName", selectedId);
         }
     }
 }

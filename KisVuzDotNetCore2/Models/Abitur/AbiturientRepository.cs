@@ -276,6 +276,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
                     .ThenInclude(aa => aa.Contracts)
                         .ThenInclude(c => c.Payments)
                             .ThenInclude(p => p.FileModel.FileToFileTypes)
+                // Способ подачи документов
+                .Include(a => a.SubmittingDocumentsType)
                 ;
             return abiturs;
         }
@@ -611,6 +613,18 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public async Task SetAbiturientStatusAsync(Abiturient abiturient, AbiturientStatusEnum abiturientStatus)
         {
             abiturient.AbiturientStatusId = (int)abiturientStatus;
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Устанавливает способ подачи документов
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <param name="submittingDocumentsTypeId"></param>
+        /// <returns></returns>
+        public async Task SetAbiturientSubmittingDocumentsTypeAsync(Abiturient abiturient, int submittingDocumentsTypeId)
+        {
+            abiturient.SubmittingDocumentsTypeId = (int)submittingDocumentsTypeId;
             await _context.SaveChangesAsync();
         }
 
@@ -1063,6 +1077,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
 
             await _paymentRepository.AddPaymentAsync(payment, uploadedFile);
         }
+
+        
         #endregion
     }
 }

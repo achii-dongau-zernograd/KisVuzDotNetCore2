@@ -25,7 +25,14 @@
             <div class="form-group">
                 <label for="FilterEntranceTestGroupId">№ группы вст. исп.</label>
                 <select name="FilterEntranceTestGroupId" class="form-control" asp-items="ViewBag.EntranceTestGroups">
-                    <option>Все абитуриенты</option>                    
+                    <option>Все абитуриенты</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="FilterSubmittingDocumentsTypeId">Подача документов</label>
+                <select name="FilterSubmittingDocumentsType" class="form-control" asp-items="ViewBag.SubmittingDocumentsTypes">
+                    <option>Все способы</option>
                 </select>
             </div>
 
@@ -56,6 +63,7 @@
             <th>Статус</th>
             <th>№ группы для прохождения вступ. исп.</th>
             <th>Консультант</th>
+            <th>Подача документов</th>
             <th>Действия</th>
         </tr>
     </thead>
@@ -473,6 +481,18 @@
                                class="btn btn-primary">Назначить</a>
                         }
                     </td>
+
+                    @*Подача документов*@
+                <td>
+                    @(item.SubmittingDocumentsType?.SubmittingDocumentsTypeName ?? "-")
+
+                    <a asp-action="Details"
+                       asp-route-userName="@item.AppUser.UserName"
+                       asp-route-mode="ChangeSubmittingDocumentsType"
+                       target="_blank">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                </td>
 
                     @*Действия*@
                     <td>

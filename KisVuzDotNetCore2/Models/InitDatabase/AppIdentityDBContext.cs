@@ -655,6 +655,10 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<AppUserAbiturientConsultant> AppUserAbiturientConsultants { get; set; }
 
+        /// <summary>
+        /// Способы подачи документов
+        /// </summary>
+        public DbSet<SubmittingDocumentsType> SubmittingDocumentsTypes { get; set; }
 
 
         /// <summary>
@@ -1275,6 +1279,8 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseContractTypes.CreateContractTypes(serviceProvider, configuration);
 
             await InitDatabaseLmsTaskTypes.CreateLmsTaskTypes(serviceProvider, configuration);
+
+            await InitDatabaseSubmittingDocumentsTypes.CreateSubmittingDocumentsTypes(serviceProvider, configuration);
         }        
     
     }

@@ -37,6 +37,18 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public int? EntranceTestGroupId { get; set; }
 
         /// <summary>
+        /// УИД способа подачи документов (лично, дистанционно)
+        /// </summary>
+        [Display(Name = "УИД способа подачи документов")]
+        public int? SubmittingDocumentsTypeId { get; set; }
+
+        /// <summary>
+        /// Способ подачи документов (лично, дистанционно)
+        /// </summary>
+        [Display(Name = "Способ подачи документов")]
+        public SubmittingDocumentsType SubmittingDocumentsType { get; set; }
+
+        /// <summary>
         /// Заявления о приёме
         /// </summary>
         public List<ApplicationForAdmission> ApplicationForAdmissions { get; set; }

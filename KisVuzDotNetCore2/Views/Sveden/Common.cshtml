@@ -6,7 +6,9 @@
 }
 
 
-<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Основные сведения</a>
+<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о дате создания образовательной организации, о представительствах и филиалах образовательной организации,<br />
+    месте нахождения образовательной организации, ее представительств и филиалов (при наличии),<br />
+    режиме, графике работы, контактных телефонах и об адресах электронной почты</a>
 <div class="collapse" id="spoiler-1">
     <div class="well">
         <table class="table" itemprop="osnovSveden">
@@ -61,7 +63,7 @@
             @if (t4filInfo.Count() > 0)
             {
                 foreach (var item in t4filInfo)
-                {                    
+                {
                     <tr itemprop="filInfo">
                         <th>Наименование филиала</th>
                         <td itemprop="nameFil">@item.NameFil</td>
@@ -91,12 +93,18 @@
                     <td itemprop="websiteFil">Филиалов нет</td>
                 </tr>
             }
+            <tr>
+                <th>Представительства образовательной организации</th>
+                <td>
+                    Представительств нет
+                </td>
+            </tr>
         </table>
     </div>
 </div>
 
 
-<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об учредителях</a>
+<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об учредителе, учредителях образовательной организации</a>
 <div class="collapse" id="spoiler-2">
     <div class="well" itemprop="osnovSveden">        
             <table itemprop="uchredLaw" class="table table-hover">

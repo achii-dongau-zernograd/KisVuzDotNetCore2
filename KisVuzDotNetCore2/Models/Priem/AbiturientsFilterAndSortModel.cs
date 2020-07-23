@@ -21,6 +21,11 @@ namespace KisVuzDotNetCore2.Models.Priem
         public int? FilterAbiturientStatus { get; set; }
 
         /// <summary>
+        /// Способ подачи документов
+        /// </summary>
+        public int? FilterSubmittingDocumentsType { get; set; }
+
+        /// <summary>
         /// Номер группы абитуриентов к вступительным испытаниям
         /// </summary>
         public int? FilterEntranceTestGroupId { get; set; }

@@ -232,6 +232,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListRowStatuses(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список способов подачи документов о приёме абитуриентами
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSubmittingDocumentsTypes(int? selectedId = 0);
+
+        /// <summary>
         /// Возвращает список научных журналов
         /// </summary>
         /// <param name="selectedId"></param>

@@ -37,6 +37,7 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
             ViewBag.AbiturientsFilterAndSortModel = filterAndSortModel;
 
             ViewBag.AbiturientStatuses = _selectListRepository.GetSelectListAbiturientStatuses(filterAndSortModel.FilterAbiturientStatus ?? 0);
+            ViewBag.SubmittingDocumentsTypes = _selectListRepository.GetSubmittingDocumentsTypes(filterAndSortModel.FilterSubmittingDocumentsType ?? 0);
             ViewBag.EntranceTestGroups = _selectListRepository.GetSelectListEntranceTestGroups(filterAndSortModel.FilterEntranceTestGroupId ?? 0);
 
             ViewBag.IsUserConsultant = User.IsInRole("Приёмная комиссия (консультанты)") ? true : false;
@@ -48,6 +49,9 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
 
             if (filterAndSortModel.FilterAbiturientStatus != null)
                 abiturs = abiturs.Where(a => a.AbiturientStatusId == filterAndSortModel.FilterAbiturientStatus);
+
+            if (filterAndSortModel.FilterSubmittingDocumentsType != null)
+                abiturs = abiturs.Where(a => a.SubmittingDocumentsTypeId == filterAndSortModel.FilterSubmittingDocumentsType);
 
             if (filterAndSortModel.FilterEntranceTestGroupId != null)
                 abiturs = abiturs.Where(a => a.EntranceTestGroupId == filterAndSortModel.FilterEntranceTestGroupId);
@@ -175,7 +179,23 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
                     string appUserAbiturientConsultantId = HttpContext.Request.Query["AppUserAbiturientConsultantId"];
                     await _abiturRepository.SetAppUserAbiturientConsultantAsync(abiturient, appUserAbiturientConsultantId);
                     return RedirectToAction(nameof(Details), new { userName });
-                    
+                
+                // Режим изменения способа подачи документов
+                case "ChangeSubmittingDocumentsType":
+                    ViewBag.Mode = mode;
+                    ViewBag.SubmittingDocumentsTypes = _selectListRepository.GetSubmittingDocumentsTypes(abiturient.SubmittingDocumentsTypeId);
+                    break;
+                // Режим сохранения изменения способа подачи документов
+                case "ChangeSubmittingDocumentsTypeSave":
+                    string submittingDocumentsTypeIdString = HttpContext.Request.Query["SubmittingDocumentsTypeId"];
+                    int submittingDocumentsTypeId;
+                    if (int.TryParse(submittingDocumentsTypeIdString, out submittingDocumentsTypeId))
+                    {
+                        await _abiturRepository.SetAbiturientSubmittingDocumentsTypeAsync(abiturient, submittingDocumentsTypeId);
+                        return RedirectToAction(nameof(Details), new { userName });
+                    }
+                    break;
+
                 default:
                     break;
             }
