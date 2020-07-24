@@ -52,11 +52,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Remark" class="control-label"></label>
-                <input asp-for="Remark" class="form-control" />
+                <input asp-for="Remark" class="form-control" disabled />
                 <span asp-validation-for="Remark" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="hidden" asp-for="FileModelId" />
+                <input type="hidden" asp-for="Remark" />
                 <input type="submit" value="Сохранить" class="btn btn-primary" />
                 <a asp-action="Start" asp-route-selectedTab="consentToEnrollments" class="btn btn-default">Отмена</a>
             </div>
