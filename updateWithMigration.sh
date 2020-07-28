@@ -10,7 +10,9 @@ dotnet publish
 echo "Published"
 
 echo "Dotnet EF Database Updating..."
-dotnet ef database update --project KisVuzDotNetCore2
+cd KisVuzDotNetCore2
+dotnet ef database update
+cd ..
 echo "Updated"
 
 echo "Starting kestrel-kisvuz.service..."
