@@ -42,6 +42,13 @@ namespace KisVuzDotNetCore2.Models.LMS
         Task AddAppUserAnswerAsync(string userName, int lmsEventId, LmsEventLmsTasksetAppUserAnswer lmsEventLmsTasksetAppUserAnswer, int[] choosedAnswers, IFormFile uploadedFile);
         
         /// <summary>
+        /// Возвращает объект события СДО
+        /// </summary>
+        /// <param name="lmsEventId"></param>
+        /// <returns></returns>
+        Task<LmsEvent> GetLmsEvent(int lmsEventId);
+
+        /// <summary>
         /// Возвращает запрос на выборку всех ответов,
         /// данных пользователем на все вопросы,
         /// заданные на мероприятии СДО

@@ -330,5 +330,15 @@ namespace KisVuzDotNetCore2.Models.LMS
 
             return answer;
         }
+
+        /// <summary>
+        /// Возвращает объект события СДО
+        /// </summary>
+        /// <param name="lmsEventId"></param>
+        /// <returns></returns>
+        public async Task<LmsEvent> GetLmsEvent(int lmsEventId)
+        {
+            return await _lmsEventRepository.GetLmsEventAsync(lmsEventId);
+        }
     }
 }

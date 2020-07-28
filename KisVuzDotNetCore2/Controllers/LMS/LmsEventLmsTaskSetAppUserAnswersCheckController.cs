@@ -42,6 +42,8 @@ namespace KisVuzDotNetCore2.Controllers.LMS
 
             var userAnswers = await _lmsEventLmsTasksetAppUserAnswerRepository.GetLmsEventAppUserAnswers(userName, lmsEventId).ToListAsync();
 
+            ViewBag.LmsEvent = await _lmsEventLmsTasksetAppUserAnswerRepository.GetLmsEvent(lmsEventId);
+
             ViewBag.LmsEventId = lmsEventId;
             ViewBag.UserName = userName;                       
 
