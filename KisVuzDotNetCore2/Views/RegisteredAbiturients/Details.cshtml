@@ -128,7 +128,33 @@
         </div>
     }
 </div>
+<div class="row">
+    <div class="col-md-2">Оригинал документа об образовании: </div>
+    @if (mode == "ChangeIsEduDocumentOriginal")
+    {
+        <form>
+            <div class="col-md-2">
+                @Html.CheckBox("IsEduDocumentOriginal", Model.IsEduDocumentOriginal)
+            </div>
+            <div class="col-md-2">
+                <input type="hidden" name="userName" value="@Model.AppUser.UserName" />
+                <input type="hidden" name="mode" value="ChangeIsEduDocumentOriginalSave" />
+                
+                <input type="submit" class="btn btn-primary" value="Сохранить" />                
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="col-md-2">@(Model.IsEduDocumentOriginal==true ? "Предоставлен" : "Не предоставлен")</div>
+        <div class="col-md-1">
+            <a asp-route-userName="@Model.AppUser.UserName" asp-route-mode="ChangeIsEduDocumentOriginal">Изменить</a>
+        </div>
+    }
+</div>
+
 <hr />
+
 <div class="row">
     <div class="col-md-2">Дата рождения: </div>
     @if (!string.IsNullOrWhiteSpace(Model.AppUser.Birthdate.ToString()))

@@ -24,7 +24,9 @@ namespace KisVuzDotNetCore2.Controllers.Education
         // GET: DisciplineNames
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DisciplineNames.ToListAsync());
+            return View(await _context.DisciplineNames
+                .OrderBy(d => d.DisciplineNameName)
+                .ToListAsync());
         }
 
         // GET: DisciplineNames/Details/5

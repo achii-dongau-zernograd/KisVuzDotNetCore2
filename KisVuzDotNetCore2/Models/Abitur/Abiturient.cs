@@ -49,6 +49,12 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public SubmittingDocumentsType SubmittingDocumentsType { get; set; }
 
         /// <summary>
+        /// Предоставлен оригинал документа об образовании
+        /// </summary>
+        [Display(Name = "Предоставлен оригинал документа об образовании")]
+        public bool? IsEduDocumentOriginal { get; set; }
+
+        /// <summary>
         /// Заявления о приёме
         /// </summary>
         public List<ApplicationForAdmission> ApplicationForAdmissions { get; set; }

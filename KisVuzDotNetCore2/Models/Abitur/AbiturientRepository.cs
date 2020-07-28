@@ -1078,7 +1078,22 @@ namespace KisVuzDotNetCore2.Models.Abitur
             await _paymentRepository.AddPaymentAsync(payment, uploadedFile);
         }
 
-        
+        /// <summary>
+        /// Изменяет флаг наличия оригинала документа об образовании
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <param name="isEduDocumentOriginal"></param>
+        /// <returns></returns>
+        public async Task SetIsEduDocumentOriginalAsync(Abiturient abiturient, bool isEduDocumentOriginal)
+        {
+            if(abiturient.IsEduDocumentOriginal != isEduDocumentOriginal)
+            {
+                abiturient.IsEduDocumentOriginal = isEduDocumentOriginal;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+
         #endregion
     }
 }

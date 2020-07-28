@@ -49,7 +49,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListEntranceTestGroups(int selectedId = 0);
-
+        
         /// <summary>
         /// Возвращает список номеров приоритетов заявлений о приёме
         /// </summary>

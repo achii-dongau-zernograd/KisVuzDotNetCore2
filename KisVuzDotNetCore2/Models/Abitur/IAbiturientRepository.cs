@@ -288,6 +288,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         Task<AbiturientIndividualAchievment> GetAbiturientIndividualAchievmentAsync(int abiturientIndividualAchievmentId);
 
         /// <summary>
+        /// Изменяет флаг наличия оригинала документа об образовании
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <param name="IsEduDocumentOriginal"></param>
+        /// <returns></returns>
+        Task SetIsEduDocumentOriginalAsync(Abiturient abiturient, bool IsEduDocumentOriginal);
+
+        /// <summary>
         /// Загружает скан-копию файла, подтверждающего индивидуальное достижение абитуриента
         /// </summary>
         /// <param name="abiturientIndividualAchievmentId"></param>

@@ -31,6 +31,11 @@ namespace KisVuzDotNetCore2.Models.Priem
         public int? FilterEntranceTestGroupId { get; set; }
 
         /// <summary>
+        /// Флаг, указывающий предоставил ли абитуриент оригинал документа об образовании
+        /// </summary>
+        public bool? FilterIsEduDocumentOriginal { get; set; }
+
+        /// <summary>
         /// Флаг, указывающий на необходимость немедленной загрузки данных
         /// (из запроса GET)
         /// </summary>

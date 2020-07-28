@@ -36,6 +36,11 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label for="FilterIsEduDocumentOriginal">Предоставлен оригинал документа об образовании</label>                 
+                @Html.CheckBox("FilterIsEduDocumentOriginal", (bool?)ViewBag.AbiturientsFilterAndSortModel.FilterIsEduDocumentOriginal)
+            </div>
+
             <input type="hidden" name="IsRequestDataImmediately" value="true" />
             <button type="submit" class="btn btn-info">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -75,7 +80,28 @@
                 <tr>
                     <td>@item.AbiturientId</td>
                     <td>@item.AppUser.RegisterDateTime</td>
-                    <td><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUser.Id">@item.AppUser.GetFullName</a></td>
+                    <td>
+                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUser.Id">@item.AppUser.GetFullName</a>
+                        <hr />
+                        @if (item.IsEduDocumentOriginal == true)
+                        {
+                            <p class="text-success">Оригинал документа об образовании: Предоставлен</p>
+                        }
+                        else if (item.IsEduDocumentOriginal == false)
+                        {
+                            <p class="text-danger">Оригинал документа об образовании: Не предоставлен</p>
+                        }
+                        else
+                        {
+                            <p class="text-warning">Оригинал документа об образовании: Не указано</p>
+                        }
+                        <a asp-action="Details"
+                           asp-route-userName="@item.AppUser.UserName"
+                           asp-route-mode="ChangeIsEduDocumentOriginal"
+                           target="_blank">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </td>
                     @*Основные документы*@
                     <td>
                         @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.SoglasieNaObrabotkuPersonalnihDannih))

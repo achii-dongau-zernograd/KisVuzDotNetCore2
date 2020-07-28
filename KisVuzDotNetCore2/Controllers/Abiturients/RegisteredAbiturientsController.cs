@@ -35,12 +35,12 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
         public IActionResult Index(AbiturientsFilterAndSortModel filterAndSortModel)
         {
             ViewBag.AbiturientsFilterAndSortModel = filterAndSortModel;
-
             ViewBag.AbiturientStatuses = _selectListRepository.GetSelectListAbiturientStatuses(filterAndSortModel.FilterAbiturientStatus ?? 0);
             ViewBag.SubmittingDocumentsTypes = _selectListRepository.GetSubmittingDocumentsTypes(filterAndSortModel.FilterSubmittingDocumentsType ?? 0);
             ViewBag.EntranceTestGroups = _selectListRepository.GetSelectListEntranceTestGroups(filterAndSortModel.FilterEntranceTestGroupId ?? 0);
 
             ViewBag.IsUserConsultant = User.IsInRole("Приёмная комиссия (консультанты)") ? true : false;
+                       
 
             var abiturs = _abiturRepository.GetAbiturients();
             
@@ -55,6 +55,9 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
 
             if (filterAndSortModel.FilterEntranceTestGroupId != null)
                 abiturs = abiturs.Where(a => a.EntranceTestGroupId == filterAndSortModel.FilterEntranceTestGroupId);
+
+            if (filterAndSortModel.FilterIsEduDocumentOriginal == true)
+                abiturs = abiturs.Where(a => a.IsEduDocumentOriginal == true);
 
             abiturs = abiturs.OrderByDescending(a => a.AppUser.RegisterDateTime);
 
@@ -194,6 +197,29 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
                         await _abiturRepository.SetAbiturientSubmittingDocumentsTypeAsync(abiturient, submittingDocumentsTypeId);
                         return RedirectToAction(nameof(Details), new { userName });
                     }
+                    break;
+                // Режим изменения наличия оригинала документа об образовании
+                case "ChangeIsEduDocumentOriginal":
+                    ViewBag.Mode = mode;
+                    //ViewBag.AbiturientStatuses = _selectListRepository.GetSelectListAbiturientStatuses(abiturient.AbiturientStatusId);
+                    break;
+                // Режим сохранения изменения наличия оригинала документа об образовании
+                case "ChangeIsEduDocumentOriginalSave":
+                    string isEduDocumentOriginalString = HttpContext.Request.Query["IsEduDocumentOriginal"];
+                    if(isEduDocumentOriginalString.Contains("true,false"))
+                    {
+                        await _abiturRepository.SetIsEduDocumentOriginalAsync(abiturient, true);
+                    }
+                    else if(isEduDocumentOriginalString.Contains("false"))
+                    {
+                        await _abiturRepository.SetIsEduDocumentOriginalAsync(abiturient, false);
+                    }
+                    //int abiturientStatusId;
+                    //if (int.TryParse(abiturientStatusIdString, out abiturientStatusId))
+                    //{
+                    //    await _abiturRepository.SetAbiturientStatusAsync(abiturient, (AbiturientStatusEnum)abiturientStatusId);
+                    //    return RedirectToAction(nameof(Details), new { userName });
+                    //}
                     break;
 
                 default:
