@@ -9,6 +9,48 @@
 <p>
     <a asp-action="CreateLmsTask" class="btn btn-primary">Добавить</a>
 </p>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Фильтр</div>
+    <div class="panel-body">
+        <form asp-action="Index" class="form-inline">
+                        
+            <div class="form-group">
+                <label for="FilterLmsTaskId">УИДы заданий</label>
+                <input name="FilterLmsTaskId" value="@(ViewBag.LmsTasksFilterAndSortModel.FilterLmsTaskId ?? "")" />
+            </div>
+
+            <div class="form-group">
+                <label for="FilterLmsTaskTypeId">Тип задания</label>
+                <select name="FilterLmsTaskTypeId" class="form-control" asp-items="ViewBag.LmsTaskTypes">
+                    <option>Все типы</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="FilterDisciplineNameId">Дисциплина</label>
+                <select name="FilterDisciplineNameId" class="form-control" asp-items="ViewBag.DisciplineNames">
+                    <option>Все дисциплины</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="FilterAppUserId">Фамилия автора</label>
+                <select name="FilterAppUserId" class="form-control" asp-items="ViewBag.AppUsers">
+                    <option value="">Все авторы</option>
+                </select>
+            </div>
+
+
+            <input type="hidden" name="IsRequestDataImmediately" value="true" />
+            <button type="submit" class="btn btn-info">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                Применить фильтр
+            </button>
+        </form>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -45,84 +87,97 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LmsTaskId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LmsTaskType.LmsTaskTypeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LmsTaskText)
-            </td>
-            <td>
-                @if(item.LmsTaskJpg != null)
-                {
-                    <a href="/@item.LmsTaskJpg.Path" target="_blank">Открыть</a>
-                }
-            </td>
-            <td>
-                @item.NumberOfPoints
-            </td>
-            <td>
-                @if(item.LmsTaskAnswers != null && item.LmsTaskAnswers.Count > 0)
-                {
-                    <ol>
-                        @foreach (var lmsTaskAnswer in item.LmsTaskAnswers)
-                        {
-                            string classText = "text-danger";
-                            if(lmsTaskAnswer.IsCorrect)
-                            {
-                                classText = "text-success";
-                            }
 
-                            if(lmsTaskAnswer.FileModel == null)
+        @if (Model == null)
+        {
+            <tr>
+                <td colspan="10" class="text-center text-info">Настройте параметры фильтрации и нажмите на кнопку "Применить фильтр"</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LmsTaskId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LmsTaskType.LmsTaskTypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LmsTaskText)
+                    </td>
+                    <td>
+                        @if (item.LmsTaskJpg != null)
+                        {
+                            <a href="/@item.LmsTaskJpg.Path" target="_blank">Открыть</a>
+                        }
+                    </td>
+                    <td>
+                        @item.NumberOfPoints
+                    </td>
+                    <td>
+                        @if (item.LmsTaskAnswers != null && item.LmsTaskAnswers.Count > 0)
+                        {
+                            <ol>
+                                @foreach (var lmsTaskAnswer in item.LmsTaskAnswers)
+                                {
+                                    string classText = "text-danger";
+                                    if (lmsTaskAnswer.IsCorrect)
+                                    {
+                                        classText = "text-success";
+                                    }
+
+                                    if (lmsTaskAnswer.FileModel == null)
+                                    {
+                                        <li class="@classText">@lmsTaskAnswer.LmsTaskAnswerText</li>
+                                    }
+                                    else
+                                    {
+                                        <li class="@classText">
+                                            <a href="/@lmsTaskAnswer.FileModel.Path" target="_blank">@(lmsTaskAnswer.LmsTaskAnswerText ?? "Ответ не содержит текст")</a>
+                                        </li>
+                                    }
+                                }
+                            </ol>
+                        }
+                        else
+                        {
+                            <a asp-action="CreateLmsTaskAnswers" asp-route-lmsTaskId="@item.LmsTaskId" class="btn btn-primary btn-block">Добавить</a>
+                        }
+                    </td>
+                    <td>
+                        @if (item.LmsTaskDisciplineNames != null && item.LmsTaskDisciplineNames.Count > 0)
+                        {
+                            foreach (var lmsTaskDisciplineName in item.LmsTaskDisciplineNames)
                             {
-                                <li class="@classText">@lmsTaskAnswer.LmsTaskAnswerText</li>
-                            }
-                            else
-                            {
-                                <li class="@classText">
-                                    <a href="/@lmsTaskAnswer.FileModel.Path" target="_blank">@(lmsTaskAnswer.LmsTaskAnswerText ?? "Ответ не содержит текст")</a>
-                                </li>
+                                <p>@lmsTaskDisciplineName.DisciplineName.DisciplineNameName</p>
                             }
                         }
-                    </ol>
-                }
-                else
-                {
-                    <a asp-action="CreateLmsTaskAnswers" asp-route-lmsTaskId="@item.LmsTaskId" class="btn btn-primary btn-block">Добавить</a>
-                }
-            </td>
-            <td>
-                @if(item.LmsTaskDisciplineNames != null && item.LmsTaskDisciplineNames.Count > 0)
-                {
-                    foreach(var lmsTaskDisciplineName in item.LmsTaskDisciplineNames)
-                    {
-                        <p>@lmsTaskDisciplineName.DisciplineName.DisciplineNameName</p>
-                    }
-                }
-                else
-                {
-                    <a asp-action="CreateLmsTaskDisciplineNames" asp-route-lmsTaskId="@item.LmsTaskId" class="btn btn-primary btn-block">Добавить</a>
-                }
-            </td>
-            <td>
-                @if(item.AppUser != null)
-                {
-                    <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTimeOfCreation)
-            </td>
-            <td>
-                @Html.ActionLink("Редактировать", "EditLmsTask",    new { id = item.LmsTaskId }, new { @class = "btn btn-primary btn-block" })
-                @Html.ActionLink("Просмотр",      "DetailsLmsTask", new { id = item.LmsTaskId }, new { @class = "btn btn-info    btn-block" })
-                @Html.ActionLink("Удаление",      "RemoveLmsTask",  new { id = item.LmsTaskId }, new { @class = "btn btn-danger  btn-block" })
-            </td>
-        </tr>
-}
+                        else
+                        {
+                            <a asp-action="CreateLmsTaskDisciplineNames" asp-route-lmsTaskId="@item.LmsTaskId" class="btn btn-primary btn-block">Добавить</a>
+                        }
+                    </td>
+                    <td>
+                        @if (item.AppUser != null)
+                        {
+                            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTimeOfCreation)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Редактировать", "EditLmsTask", new { id = item.LmsTaskId }, new { @class = "btn btn-primary btn-block" })
+                        @Html.ActionLink("Просмотр", "DetailsLmsTask", new { id = item.LmsTaskId }, new { @class = "btn btn-info    btn-block" })
+                        @Html.ActionLink("Удаление", "RemoveLmsTask", new { id = item.LmsTaskId }, new { @class = "btn btn-danger  btn-block" })
+                    </td>
+                </tr>
+            }
+        }
+
+
     </tbody>
 </table>

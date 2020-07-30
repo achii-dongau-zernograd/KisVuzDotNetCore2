@@ -7,6 +7,48 @@
 
 <h2>Редактирование списка заданий</h2>
 
+<div class="panel panel-default">
+    <div class="panel-heading">Фильтр</div>
+    <div class="panel-body">
+        <form asp-action="EditLmsTaskSetLmsTasks" class="form-inline">
+
+            <div class="form-group">
+                <label for="FilterLmsTaskId">УИДы заданий</label>
+                <input name="FilterLmsTaskId" value="@(ViewBag.LmsTasksFilterAndSortModel.FilterLmsTaskId ?? "")" />
+            </div>
+
+            <div class="form-group">
+                <label for="FilterLmsTaskTypeId">Тип задания</label>
+                <select name="FilterLmsTaskTypeId" class="form-control" asp-items="ViewBag.LmsTaskTypes">
+                    <option>Все типы</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="FilterDisciplineNameId">Дисциплина</label>
+                <select name="FilterDisciplineNameId" class="form-control" asp-items="ViewBag.DisciplineNames">
+                    <option>Все дисциплины</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="FilterAppUserId">Фамилия автора</label>
+                <select name="FilterAppUserId" class="form-control" asp-items="ViewBag.AppUsers">
+                    <option value="">Все авторы</option>
+                </select>
+            </div>
+
+            <input type="hidden" asp-for="LmsTaskSetId" />
+
+            <input type="hidden" name="IsRequestDataImmediately" value="true" />
+            <button type="submit" class="btn btn-info">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                Применить фильтр
+            </button>            
+        </form>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -22,42 +64,77 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in lmsTasks) {
-        <tr>            
-            <td>
-                @item.LmsTaskId
-            </td>
-            <td>
-                @item.LmsTaskText
 
-                @if(item.LmsTaskJpg != null)
-                {
-                    <br />
-                    <img src="/@item.LmsTaskJpg.Path" class="img-responsive" />
-                }
-            </td>
-            <td>
-                @{
-                    bool isTaskAdded = false;
-                    foreach (var existedLmsTaskSetLmsTask in Model.LmsTaskSet.LmsTaskSetLmsTasks)
-                    {
-                        if (existedLmsTaskSetLmsTask.LmsTaskId == item.LmsTaskId)
+        @if (lmsTasks == null || Model == null || lmsTasks.Count() == 0)
+        {
+            <tr>
+                <td colspan="10" class="text-center text-info">Настройте параметры фильтрации и нажмите на кнопку "Применить фильтр"</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in lmsTasks)
+            {
+                <tr>
+                    <td>
+                        @item.LmsTaskId
+                    </td>
+                    <td>
+                        @item.LmsTaskText
+
+                        @if (item.LmsTaskJpg != null)
                         {
-                            isTaskAdded = true;
+                            <br />
+                            <img src="/@item.LmsTaskJpg.Path" class="img-responsive" />
                         }
-                    }
-                }
+                    </td>
+                    <td>
+                        @{
+                            bool isTaskAdded = false;
+                            foreach (var existedLmsTaskSetLmsTask in Model.LmsTaskSet.LmsTaskSetLmsTasks)
+                            {
+                                if (existedLmsTaskSetLmsTask.LmsTaskId == item.LmsTaskId)
+                                {
+                                    isTaskAdded = true;
+                                }
+                            }
+                        }
 
-                @if (!isTaskAdded)
-                {
-                    <form>
-                        <input type="hidden" asp-for="LmsTaskSetId" />
-                        <input type="hidden" asp-for="LmsTaskId" value="@item.LmsTaskId" />
-                        <input type="submit" value="Добавить" class="btn btn-primary" />
-                    </form>
-                }
-            </td>
-        </tr>
-}
+                        @if (!isTaskAdded)
+                        {
+                            <form>
+                                <input type="hidden" name="FilterLmsTaskId" value="@(ViewBag.LmsTasksFilterAndSortModel.FilterLmsTaskId ?? "")" />
+                                <input type="hidden" name="FilterAppUserId" value="@(ViewBag.LmsTasksFilterAndSortModel.FilterAppUserId ?? "")" />
+                                <input type="hidden" name="FilterDisciplineNameId" value="@(ViewBag.LmsTasksFilterAndSortModel.FilterDisciplineNameId ?? 0)" />
+                                <input type="hidden" name="FilterLmsTaskTypeId" value="@(ViewBag.LmsTasksFilterAndSortModel.FilterLmsTaskTypeId ?? 0)" />
+                                <input type="hidden" name="IsRequestDataImmediately" value="true" />
+
+                                <input type="hidden" name="mode" value="AddTaskToTaskSet" />
+                                <input type="hidden" asp-for="LmsTaskSetId" />
+                                <input type="hidden" asp-for="LmsTaskId" value="@item.LmsTaskId" />
+                                <input type="submit" value="Добавить в список" class="btn btn-primary" />
+                            </form>
+                        }
+                        else
+                        {
+                            <form>
+                                <input type="hidden" name="FilterLmsTaskId" value="@(ViewBag.LmsTasksFilterAndSortModel.FilterLmsTaskId ?? "")" />
+                                <input type="hidden" name="FilterAppUserId" value="@(ViewBag.LmsTasksFilterAndSortModel.FilterAppUserId ?? "")" />
+                                <input type="hidden" name="FilterDisciplineNameId" value="@(ViewBag.LmsTasksFilterAndSortModel.FilterDisciplineNameId ?? 0)" />
+                                <input type="hidden" name="FilterLmsTaskTypeId" value="@(ViewBag.LmsTasksFilterAndSortModel.FilterLmsTaskTypeId ?? 0)" />
+                                <input type="hidden" name="IsRequestDataImmediately" value="true" />
+                                                                
+                                <input type="hidden" name="mode" value="RemoveTaskFromTaskSet" />
+                                <input type="hidden" asp-for="LmsTaskSetId" />
+                                <input type="hidden" asp-for="LmsTaskId" value="@item.LmsTaskId" />
+                                <input type="submit" value="Удалить из списка" class="btn btn-danger" />
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+
+
     </tbody>
 </table>

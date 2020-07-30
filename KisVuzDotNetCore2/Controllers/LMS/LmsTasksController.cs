@@ -27,12 +27,28 @@ namespace KisVuzDotNetCore2.Controllers.LMS
             _selectListRepository = selectListRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(LmsTasksFilterAndSortModel lmsTasksFilterAndSortModel)
         {
-            var lmsTasks = _lmsTaskRepository.GetLmsTasks();
+            ViewBag.LmsTasksFilterAndSortModel = lmsTasksFilterAndSortModel;
+            
+            ViewBag.AppUsers = _selectListRepository.GetSelectListLmsTaskAppUsers(lmsTasksFilterAndSortModel.FilterAppUserId);
+            ViewBag.DisciplineNames = _selectListRepository.GetSelectListLmsTaskDisciplineNames(lmsTasksFilterAndSortModel.FilterDisciplineNameId);
+            ViewBag.LmsTaskTypes = _selectListRepository.GetSelectListLmsTaskTypes(lmsTasksFilterAndSortModel.FilterLmsTaskTypeId);
 
-            lmsTasks = lmsTasks.OrderByDescending(t => t.DateTimeOfCreation);
-            return View(await lmsTasks.ToListAsync());
+            if (lmsTasksFilterAndSortModel.IsRequestDataImmediately)
+            {
+                var lmsTasks = _lmsTaskRepository.GetLmsTasks(lmsTasksFilterAndSortModel);
+                lmsTasks = lmsTasks.OrderByDescending(t => t.DateTimeOfCreation);
+
+                return View(await lmsTasks.ToListAsync());
+            }
+            else
+                return View();
+        }
+
+        private void GetSelectListLmsTaskDisciplineNames(int filterDisciplineNameId)
+        {
+            throw new NotImplementedException();
         }
 
         #region Добавление задания

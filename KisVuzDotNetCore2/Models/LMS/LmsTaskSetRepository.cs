@@ -72,21 +72,7 @@ namespace KisVuzDotNetCore2.Models.LMS
             return lmsTaskSet;
         }
 
-        /// <summary>
-        /// Добавляет задание в набор
-        /// </summary>
-        /// <param name="lmsTaskSetLmsTask"></param>
-        /// <returns></returns>
-        public async Task AddLmsTaskSetLmsTaskAsync(LmsTaskSetLmsTask lmsTaskSetLmsTask)
-        {
-            var entries = _context.LmsTaskSetLmsTasks.Where(t => t.LmsTaskId == lmsTaskSetLmsTask.LmsTaskId && t.LmsTaskSetId == lmsTaskSetLmsTask.LmsTaskSetId);
-
-            if(entries == null || entries.Count() == 0)
-            {
-                _context.LmsTaskSetLmsTasks.Add(lmsTaskSetLmsTask);
-                await _context.SaveChangesAsync();
-            }
-        }
+        
 
         /// <summary>
         /// Возвращает задание
@@ -97,6 +83,76 @@ namespace KisVuzDotNetCore2.Models.LMS
         {
             var lmsTask = await _lmsTaskRepository.GetLmsTaskAsync(lmsTaskId);
             return lmsTask;
+        }
+
+        /// <summary>
+        /// Обновление сущности "Набор заданий"
+        /// </summary>
+        /// <param name="lmsTaskSet"></param>
+        /// <returns></returns>
+        public async Task UpdateLmsTaskSet(LmsTaskSet lmsTaskSet)
+        {
+            if (lmsTaskSet == null) return;
+
+            var entry = await GetLmsTaskSetAsync(lmsTaskSet.LmsTaskSetId);
+            if (entry == null) return;
+
+            if(entry.LmsTaskSetDescription != lmsTaskSet.LmsTaskSetDescription)
+            {
+                entry.LmsTaskSetDescription = lmsTaskSet.LmsTaskSetDescription;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаление сущности "Набор заданий" и привязок "Набор заданий" - "Задание"
+        /// </summary>
+        /// <param name="lmsTaskSet"></param>
+        /// <returns></returns>
+        public async Task RemoveLmsTaskSet(LmsTaskSet lmsTaskSet)
+        {
+            if (lmsTaskSet == null) return;
+
+            var entry = await GetLmsTaskSetAsync(lmsTaskSet.LmsTaskSetId);
+            if (entry == null) return;
+
+            _context.LmsTaskSets.Remove(entry);
+
+            await _context.SaveChangesAsync();
+        }
+
+
+        /// <summary>
+        /// Добавляет задание в набор
+        /// </summary>
+        /// <param name="lmsTaskSetLmsTask"></param>
+        /// <returns></returns>
+        public async Task AddLmsTaskSetLmsTaskAsync(LmsTaskSetLmsTask lmsTaskSetLmsTask)
+        {
+            var entries = _context.LmsTaskSetLmsTasks.Where(t => t.LmsTaskId == lmsTaskSetLmsTask.LmsTaskId && t.LmsTaskSetId == lmsTaskSetLmsTask.LmsTaskSetId);
+
+            if (entries == null || entries.Count() == 0)
+            {
+                _context.LmsTaskSetLmsTasks.Add(lmsTaskSetLmsTask);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        /// <summary>
+        /// Удаляет задание из набора
+        /// </summary>
+        /// <param name="lmsTaskSetLmsTask"></param>
+        /// <returns></returns>
+        public async Task RemoveLmsTaskSetLmsTaskAsync(LmsTaskSetLmsTask lmsTaskSetLmsTask)
+        {
+            var entries = _context.LmsTaskSetLmsTasks.Where(t => t.LmsTaskId == lmsTaskSetLmsTask.LmsTaskId && t.LmsTaskSetId == lmsTaskSetLmsTask.LmsTaskSetId);
+
+            if (entries != null || entries.Count() > 0)
+            {
+                _context.LmsTaskSetLmsTasks.RemoveRange(entries);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

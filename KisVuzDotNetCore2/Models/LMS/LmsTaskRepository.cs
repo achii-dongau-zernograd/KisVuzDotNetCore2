@@ -42,6 +42,50 @@ namespace KisVuzDotNetCore2.Models.LMS
         }
 
         /// <summary>
+        /// Возвращает запрос на выборку заданий СДО,
+        /// удовлетворяющих фильтру и соответственно отсортированных
+        /// </summary>
+        /// <param name="lmsTasksFilterAndSortModel"></param>
+        /// <returns></returns>
+        public IQueryable<LmsTask> GetLmsTasks(LmsTasksFilterAndSortModel lmsTasksFilterAndSortModel)
+        {
+            var query = GetLmsTasks();
+
+            if (!string.IsNullOrWhiteSpace(lmsTasksFilterAndSortModel.FilterLmsTaskId))
+            {
+                string filterLmsTaskId = lmsTasksFilterAndSortModel.FilterLmsTaskId.Trim();
+
+                //var items = filterLmsTaskId.Split(',', ';'); -- Не реализовано правило выборки
+
+                int lmsTaskId = 0;
+
+                try
+                {
+                    lmsTaskId = Convert.ToInt32(filterLmsTaskId);
+                }
+                catch(Exception exc)
+                {
+                    lmsTaskId = 0;
+                    lmsTasksFilterAndSortModel.FilterLmsTaskId = "";
+                }
+
+                if (lmsTaskId != 0)
+                    query = query.Where(t => t.LmsTaskId == lmsTaskId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(lmsTasksFilterAndSortModel.FilterAppUserId))
+                query = query.Where(t => t.AppUserId == lmsTasksFilterAndSortModel.FilterAppUserId);
+
+            if (lmsTasksFilterAndSortModel.FilterDisciplineNameId != 0)
+                query = query.Where(t => t.LmsTaskDisciplineNames.Any(td => td.DisciplineNameId == lmsTasksFilterAndSortModel.FilterDisciplineNameId));
+
+            if (lmsTasksFilterAndSortModel.FilterLmsTaskTypeId != 0)
+                query = query.Where(t => t.LmsTaskTypeId == lmsTasksFilterAndSortModel.FilterLmsTaskTypeId);
+
+            return query;
+        }
+
+        /// <summary>
         /// Добавляет новое задание в базу заданий СДО
         /// </summary>
         /// <param name="lmsTask"></param>
@@ -197,5 +241,6 @@ namespace KisVuzDotNetCore2.Models.LMS
             _context.LmsTasks.Remove(lmsTask);
             await _context.SaveChangesAsync();
         }
+        
     }
 }

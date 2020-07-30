@@ -16,7 +16,15 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// </summary>
         /// <returns></returns>
         IQueryable<LmsTask> GetLmsTasks();
-        
+
+        /// <summary>
+        /// Возвращает запрос на выборку заданий СДО,
+        /// удовлетворяющих фильтру и соответственно отсортированных 
+        /// </summary>
+        /// <param name="lmsTasksFilterAndSortModel"></param>
+        /// <returns></returns>
+        IQueryable<LmsTask> GetLmsTasks(LmsTasksFilterAndSortModel lmsTasksFilterAndSortModel);
+
         /// <summary>
         /// Добавляет новое задание в базу заданий СДО
         /// </summary>

@@ -37,6 +37,20 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListLmsTaskTypes(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список УИД дисциплин, по которым имеются задания СДО
+        /// </summary>
+        /// <param name="filterDisciplineNameId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListLmsTaskDisciplineNames(int filterDisciplineNameId = 0);
+
+        /// <summary>
+        /// Возвращает список пользователей, являющихся авторами заданий СДО
+        /// </summary>
+        /// <param name="selectedAppUserId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListLmsTaskAppUsers(string selectedAppUserId = "");
+
+        /// <summary>
         /// Возвращает список пользователей, являющихся авторами
         /// </summary>
         /// <param name="selectedId"></param>

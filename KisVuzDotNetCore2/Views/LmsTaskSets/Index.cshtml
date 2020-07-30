@@ -46,9 +46,8 @@
                 }
             </td>
             <td>
-                @Html.ActionLink("Редактировать", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Список заданий", "EditLmsTaskSetLmsTasks", new { id = item.LmsTaskSetId }) |
-                @Html.ActionLink("Удалить", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Редактировать", "EditLmsTaskSet",   new { id = item.LmsTaskSetId }) |                
+                @Html.ActionLink("Удалить",       "DeleteLmsTaskSet", new { id = item.LmsTaskSetId }, new { @class = "text-danger" })
             </td>
         </tr>
 }

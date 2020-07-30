@@ -1,0 +1,31 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.LmsTaskSet
+
+@{
+    ViewData["Title"] = "Удаление набора заданий";
+}
+
+<h2>Удаление набора заданий</h2>
+
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Описание
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LmsTaskSetDescription)
+        </dd>
+        <dt>
+            Количество заданий
+        </dt>
+        <dd>
+            @(Model.LmsTaskSetLmsTasks?.Count ?? 0)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteLmsTaskSet">
+        <input type="hidden" asp-for="LmsTaskSetId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

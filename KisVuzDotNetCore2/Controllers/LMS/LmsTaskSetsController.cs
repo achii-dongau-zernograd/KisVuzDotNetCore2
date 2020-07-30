@@ -36,6 +36,7 @@ namespace KisVuzDotNetCore2.Controllers.LMS
             return View(await lmsTaskSets.ToListAsync());
         }
 
+        #region Работа с наборами заданий
         public IActionResult CreateLmsTaskSet()
         {
             return View();
@@ -50,21 +51,92 @@ namespace KisVuzDotNetCore2.Controllers.LMS
             return RedirectToAction(nameof(Index));
         }
 
-        #region Работа со списком заданий
-        public async Task<IActionResult> EditLmsTaskSetLmsTasks(LmsTaskSetLmsTask lmsTaskSetLmsTask)
+        /// <summary>
+        /// Редактирование сущности "Набор заданий"
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> EditLmsTaskSet(int id)
         {
+            var lmsTaskSet = await _lmsTaskSetRepository.GetLmsTaskSetAsync(id);
+
+            if (lmsTaskSet == null)
+                return NotFound();
+
+            return View(lmsTaskSet);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditLmsTaskSet(LmsTaskSet lmsTaskSet)
+        {
+            await _lmsTaskSetRepository.UpdateLmsTaskSet(lmsTaskSet);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        /// <summary>
+        /// Удаление сущности "Набор заданий"
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> DeleteLmsTaskSet(int id)
+        {
+            var lmsTaskSet = await _lmsTaskSetRepository.GetLmsTaskSetAsync(id);
+
+            if (lmsTaskSet == null)
+                return NotFound();
+
+            return View(lmsTaskSet);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteLmsTaskSet(LmsTaskSet lmsTaskSet)
+        {
+            await _lmsTaskSetRepository.RemoveLmsTaskSet(lmsTaskSet);
+
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
+
+        #region Работа со списком заданий
+        public async Task<IActionResult> EditLmsTaskSetLmsTasks(LmsTaskSetLmsTask lmsTaskSetLmsTask,
+            LmsTasksFilterAndSortModel lmsTasksFilterAndSortModel,
+            string mode)
+        {
+            ViewBag.LmsTasksFilterAndSortModel = lmsTasksFilterAndSortModel;
+
             if (lmsTaskSetLmsTask.LmsTaskSetId == 0)
                 return NotFound();
 
             if(lmsTaskSetLmsTask.LmsTaskId != 0)
-            {                
-                await _lmsTaskSetRepository.AddLmsTaskSetLmsTaskAsync(lmsTaskSetLmsTask);                                
+            {
+                if(mode == "AddTaskToTaskSet")
+                    await _lmsTaskSetRepository.AddLmsTaskSetLmsTaskAsync(lmsTaskSetLmsTask);
+
+                if (mode == "RemoveTaskFromTaskSet")
+                    await _lmsTaskSetRepository.RemoveLmsTaskSetLmsTaskAsync(lmsTaskSetLmsTask);
+            }            
+
+            ViewBag.AppUsers = _selectListRepository.GetSelectListLmsTaskAppUsers(lmsTasksFilterAndSortModel.FilterAppUserId);
+            ViewBag.DisciplineNames = _selectListRepository.GetSelectListLmsTaskDisciplineNames(lmsTasksFilterAndSortModel.FilterDisciplineNameId);
+            ViewBag.LmsTaskTypes = _selectListRepository.GetSelectListLmsTaskTypes(lmsTasksFilterAndSortModel.FilterLmsTaskTypeId);
+
+            if (lmsTasksFilterAndSortModel.IsRequestDataImmediately)
+            {
+                lmsTaskSetLmsTask.LmsTaskSet = await _lmsTaskSetRepository.GetLmsTaskSetAsync(lmsTaskSetLmsTask.LmsTaskSetId);
+
+                ViewBag.LmsTasks = _lmsTaskRepository.GetLmsTasks(lmsTasksFilterAndSortModel);
+                return View(lmsTaskSetLmsTask);
             }
+            else
+            {
+                lmsTaskSetLmsTask.LmsTaskSet = await _lmsTaskSetRepository.GetLmsTaskSetAsync(lmsTaskSetLmsTask.LmsTaskSetId);
 
-            lmsTaskSetLmsTask.LmsTaskSet = await _lmsTaskSetRepository.GetLmsTaskSetAsync(lmsTaskSetLmsTask.LmsTaskSetId);
-
-            ViewBag.LmsTasks = _lmsTaskRepository.GetLmsTasks();
-            return View(lmsTaskSetLmsTask);
+                ViewBag.LmsTasks = (await _lmsTaskSetRepository.GetLmsTaskSetAsync(lmsTaskSetLmsTask.LmsTaskSetId)).LmsTaskSetLmsTasks.Select(t => t.LmsTask);
+                return View(lmsTaskSetLmsTask);                
+            }                
         }
         #endregion
     }

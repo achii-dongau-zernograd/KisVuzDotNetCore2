@@ -1000,5 +1000,37 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(data,
                  "SubmittingDocumentsTypeId", "SubmittingDocumentsTypeName", selectedId);
         }
+
+        /// <summary>
+        /// Возвращает список пользователей, являющихся авторами заданий СДО
+        /// </summary>
+        /// <param name="selectedAppUserId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListLmsTaskAppUsers(string selectedAppUserId = "")
+        {
+            var data = _context.LmsTasks
+                .Include(l=>l.AppUser)
+                .Select(l => new { l.AppUserId, l.AppUser})
+                .Distinct();
+
+            return new SelectList(data,
+                 "AppUserId", "AppUser.GetFullName", selectedAppUserId);
+        }
+
+        /// <summary>
+        /// Возвращает список УИД дисциплин, по которым имеются задания СДО
+        /// </summary>
+        /// <param name="filterDisciplineNameId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListLmsTaskDisciplineNames(int filterDisciplineNameId = 0)
+        {
+            var data = _context.LmsTaskDisciplineNames
+                .Include(l => l.DisciplineName)
+                .Select(l => new { l.DisciplineNameId, l.DisciplineName.DisciplineNameName })
+                .Distinct();
+
+            return new SelectList(data,
+                 "DisciplineNameId", "DisciplineNameName", filterDisciplineNameId);
+        }
     }
 }

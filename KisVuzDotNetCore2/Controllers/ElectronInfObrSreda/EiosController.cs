@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.UchPosobiya;
 using KisVuzDotNetCore2.Models.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -58,6 +59,7 @@ namespace KisVuzDotNetCore2.Controllers.Eios
         /// Портфолио студентов
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Преподаватели")]
         public async Task<IActionResult> Portfolio()
         {
             var eduLevels = await _context.EduLevels
