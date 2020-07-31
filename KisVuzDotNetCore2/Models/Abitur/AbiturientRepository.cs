@@ -1,5 +1,6 @@
 ﻿using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.Priem;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         private readonly IAbiturientIndividualAchievmentRepository _abiturientIndividualAchievmentRepository;
         private readonly IContractRepository _contractRepository;
         private readonly IPaymentRepository _paymentRepository;
+        private readonly IEntranceTestRegistrationFormRepository _entranceTestRegistrationFormRepository;
 
         public AbiturientRepository(AppIdentityDBContext context,
             IUserDocumentRepository userDocumentRepository,
@@ -37,7 +39,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
             IConsentToEnrollmentRepository consentToEnrollmentRepository,
             IAbiturientIndividualAchievmentRepository abiturientIndividualAchievmentRepository,
             IContractRepository contractRepository,
-            IPaymentRepository paymentRepository
+            IPaymentRepository paymentRepository,
+            IEntranceTestRegistrationFormRepository entranceTestRegistrationFormRepository
             )
         {
             _context = context;
@@ -51,6 +54,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
             _abiturientIndividualAchievmentRepository = abiturientIndividualAchievmentRepository;
             _contractRepository = contractRepository;
             _paymentRepository = paymentRepository;
+            _entranceTestRegistrationFormRepository = entranceTestRegistrationFormRepository;
         }
 
         /// <summary>
@@ -278,6 +282,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
                             .ThenInclude(p => p.FileModel.FileToFileTypes)
                 // Способ подачи документов
                 .Include(a => a.SubmittingDocumentsType)
+                // Бланки регистрации абитуриентов на вступительные испытания
+                .Include(a => a.EntranceTestRegistrationForms)
                 ;
             return abiturs;
         }
@@ -1091,6 +1097,43 @@ namespace KisVuzDotNetCore2.Models.Abitur
                 abiturient.IsEduDocumentOriginal = isEduDocumentOriginal;
                 await _context.SaveChangesAsync();
             }
+        }
+
+
+        /// <summary>
+        /// Проверка наличия бланка регистрации на мероприятие
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="lmsEventId"></param>
+        /// <returns></returns>
+        public async Task<bool> IsEntranceTestRegistrationFormExistsAsync(string userName, int lmsEventId)
+        {
+            var abiturient = await GetAbiturientAsync(userName);
+
+            if (abiturient.EntranceTestRegistrationForms == null ||
+                abiturient.EntranceTestRegistrationForms.Count == 0)
+                return false;
+
+            bool isExists = abiturient.EntranceTestRegistrationForms.Any(rf => rf.LmsEventId == lmsEventId);
+
+            return isExists;
+        }
+
+        /// <summary>
+        /// Добавляет бланк регистрации абитуриента на вступительное испытание
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="entranceTestRegistrationForm"></param>
+        /// <returns></returns>
+        public async Task CreateEntranceTestRegistrationFormAsync(string userName,
+            EntranceTestRegistrationForm entranceTestRegistrationForm)
+        {
+            var abiturient = await GetAbiturientAsync(userName);
+
+            if (abiturient.AbiturientId != entranceTestRegistrationForm.AbiturientId)
+                return;
+
+            await _entranceTestRegistrationFormRepository.CreateEntranceTestRegistrationFormAsync(entranceTestRegistrationForm);
         }
 
 

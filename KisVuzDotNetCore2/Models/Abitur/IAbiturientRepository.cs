@@ -48,6 +48,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <returns></returns>
         Task<Abiturient> GetAbiturientAsync(string userName);
 
+        /// <summary>
+        /// Проверка наличия бланка регистрации на мероприятие
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="lmsEventId"></param>
+        /// <returns></returns>
+        Task<bool> IsEntranceTestRegistrationFormExistsAsync(string userName, int lmsEventId);
+
 
         /// <summary>
         /// Проверяет наличие у абитуриента загруженных
@@ -104,6 +112,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <returns></returns>
         Task<UserDocument> GetUserDocumentAsync(string userName, int userDocumentId);
         
+        /// <summary>
+        /// Добавляет бланк регистрации абитуриента на вступительное испытание
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="entranceTestRegistrationForm"></param>
+        /// <returns></returns>
+        Task CreateEntranceTestRegistrationFormAsync(string userName, EntranceTestRegistrationForm entranceTestRegistrationForm);
+
         /// <summary>
         /// Устанавливает статус абитуриента
         /// </summary>

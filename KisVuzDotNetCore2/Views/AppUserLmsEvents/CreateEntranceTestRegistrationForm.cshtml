@@ -1,0 +1,91 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.EntranceTestRegistrationForm
+
+@{
+    ViewData["Title"] = "Бланк регистрации";
+}
+
+<h2>Бланк регистрации</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateEntranceTestRegistrationForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EntranceTestRegistrationFormId" />
+            <div class="form-group">
+                <label asp-for="Code" class="control-label">Шифр</label>
+                <input asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DisciplineName" class="control-label"></label>
+                <input asp-for="DisciplineName" class="form-control" />
+                <span asp-validation-for="DisciplineName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patronymic" class="control-label"></label>
+                <input asp-for="Patronymic" class="form-control" />
+                <span asp-validation-for="Patronymic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DocumentSeriya" class="control-label"></label>
+                <input asp-for="DocumentSeriya" class="form-control" />
+                <span asp-validation-for="DocumentSeriya" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DocumentNumber" class="control-label"></label>
+                <input asp-for="DocumentNumber" class="form-control" />
+                <span asp-validation-for="DocumentNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsConfirmed" /> @Html.DisplayNameFor(model => model.IsConfirmed)
+                    </label>
+                </div>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="EntranceTestResult" class="control-label"></label>
+                <input asp-for="EntranceTestResult" class="form-control" />
+                <span asp-validation-for="EntranceTestResult" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="AbiturientId" class="control-label"></label>
+                <select asp-for="AbiturientId" class="form-control" asp-items="ViewBag.AbiturientId"></select>
+                <span asp-validation-for="AbiturientId" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="LmsEventId" class="control-label"></label>
+                <select asp-for="LmsEventId" class="form-control" asp-items="ViewBag.LmsEventId"></select>
+                <span asp-validation-for="LmsEventId" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="FileName" class="control-label"></label>
+                <input asp-for="FileName" class="form-control" />
+                <span asp-validation-for="FileName" class="text-danger"></span>
+            </div>*@
+        <div class="form-group">
+            <input type="hidden" asp-for="AbiturientId" />
+            <input type="hidden" asp-for="LmsEventId" />
+            <input type="hidden" name="appUserLmsEventId" value="@ViewBag.AppUserLmsEventId" />
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-default">Отмена</a>
+        </div>
+        </form>
+    </div>
+</div>

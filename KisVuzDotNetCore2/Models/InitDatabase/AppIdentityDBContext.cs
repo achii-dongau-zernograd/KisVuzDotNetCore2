@@ -660,6 +660,11 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<SubmittingDocumentsType> SubmittingDocumentsTypes { get; set; }
 
+        /// <summary>
+        /// Бланки регистрации абитуриентов на вступительные испытания
+        /// </summary>
+        public DbSet<EntranceTestRegistrationForm> EntranceTestRegistrationForms { get; set; }
+
 
         /// <summary>
         /// Таблица 24. Информация о количестве мест для приёма на обучение
@@ -677,6 +682,8 @@ namespace KisVuzDotNetCore2.Models
         /// по различным условиям поступления (до 1 июня)
         /// </summary>
         public DbSet<priemKolTarget> priemKolTarget { get; set; }
+
+        
         #endregion
 
         #region Электронная информационно-образовательная среда

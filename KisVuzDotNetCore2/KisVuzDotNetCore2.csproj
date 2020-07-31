@@ -602,6 +602,8 @@
     <Compile Remove="Migrations\20200608121841_IntranceTestGroupId.Designer.cs" />
     <Compile Remove="Migrations\20200608122527_EntranceTestGroupId.cs" />
     <Compile Remove="Migrations\20200608122527_EntranceTestGroupId.Designer.cs" />
+    <Compile Remove="Migrations\20200731094728_t.cs" />
+    <Compile Remove="Migrations\20200731094728_t.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

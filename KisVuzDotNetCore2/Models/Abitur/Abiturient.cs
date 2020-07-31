@@ -70,6 +70,11 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public List<AppUserAbiturientConsultant> AppUserAbiturientConsultants { get; set; }
 
         /// <summary>
+        /// Бланки регистрации абитуриентов на вступительные испытания
+        /// </summary>
+        public List<EntranceTestRegistrationForm> EntranceTestRegistrationForms { get; set; }
+
+        /// <summary>
         /// Возвращает строку описания абитуриента, включающую
         /// ФИО, дату рождения и email
         /// </summary>

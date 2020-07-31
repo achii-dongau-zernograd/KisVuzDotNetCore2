@@ -9,6 +9,7 @@ using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.LMS;
 using KisVuzDotNetCore2.Models.Nir;
+using KisVuzDotNetCore2.Models.Priem;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Students;
 using KisVuzDotNetCore2.Models.UchPosobiya;
@@ -82,6 +83,8 @@ namespace KisVuzDotNetCore2
             services.AddTransient<ILmsTaskSetRepository, LmsTaskSetRepository>();
             services.AddTransient<ILmsEventLmsTasksetAppUserAnswerRepository, LmsEventLmsTasksetAppUserAnswerRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
+            services.AddTransient<IEntranceTestRegistrationFormRepository, EntranceTestRegistrationFormRepository>();
+            services.AddTransient<IPdfDocumentGenerator, PdfDocumentGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,9 +12,9 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.DatePosting)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.UserWorkType)
             </th>
@@ -36,9 +36,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.DatePosting)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.UserWorkType.UserWorkTypeName)
             </td>

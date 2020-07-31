@@ -1,0 +1,99 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.EntranceTestRegistrationForm
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>EntranceTestRegistrationForm</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DisciplineName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DisciplineName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Patronymic)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Patronymic)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DocumentSeriya)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DocumentSeriya)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DocumentNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DocumentNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsConfirmed)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsConfirmed)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EntranceTestResult)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EntranceTestResult)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Abiturient)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Abiturient.AbiturientId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LmsEvent)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LmsEvent.LmsEventId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EntranceTestRegistrationFormId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
