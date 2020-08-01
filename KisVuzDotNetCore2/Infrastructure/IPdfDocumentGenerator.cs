@@ -13,9 +13,10 @@ namespace KisVuzDotNetCore2.Infrastructure
     {
         /// <summary>
         /// Создаёт pdf-файл бланка регистрации абитуриента на вступительное испытание
+        /// и возвращает путь к созданному файлу
         /// </summary>
         /// <param name="entranceTestRegistrationForm"></param>
         /// <returns></returns>
-        Task GenerateEntranceTestRegistrationForm(EntranceTestRegistrationForm entranceTestRegistrationForm);
+        string GenerateEntranceTestRegistrationForm(EntranceTestRegistrationForm entranceTestRegistrationForm);
     }
 }

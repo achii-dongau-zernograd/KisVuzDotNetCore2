@@ -37,7 +37,7 @@ namespace KisVuzDotNetCore2.Controllers.Priem
         }
 
         // GET: EntranceTestRegistrationForms/Details/5
-        public async Task<IActionResult> Print(int id)
+        public async Task<IActionResult> Print(int id, bool needUpdatePdf)
         {
             if (id == 0)
             {
@@ -50,107 +50,21 @@ namespace KisVuzDotNetCore2.Controllers.Priem
                 return NotFound();
             }
 
-            //await GeneratePdf(entranceTestRegistrationForm);
+            if (string.IsNullOrWhiteSpace(entranceTestRegistrationForm.FileName) || needUpdatePdf)
+            {
+                if(!string.IsNullOrWhiteSpace(entranceTestRegistrationForm.FileName))
+                {
+                    await _entranceTestRegistrationFormRepository.RemovePdfFileAsync(entranceTestRegistrationForm.EntranceTestRegistrationFormId);
+                }
 
-            await _pdfDocumentGenerator.GenerateEntranceTestRegistrationForm(entranceTestRegistrationForm);
+                string createdFileName = _pdfDocumentGenerator.GenerateEntranceTestRegistrationForm(entranceTestRegistrationForm);
+                await _entranceTestRegistrationFormRepository.SetPathToPdfFile(entranceTestRegistrationForm.EntranceTestRegistrationFormId, createdFileName);
+            }
 
-            return View(entranceTestRegistrationForm);
+            return Redirect($"/{entranceTestRegistrationForm.FileName}");
         }
 
-        /// <summary>
-        /// Создаёт pdf-файл
-        /// </summary>
-        /// <returns></returns>
-        public async Task GeneratePdf(EntranceTestRegistrationForm entranceTestRegistrationForm)
-        {
-            #region Free Spire.PDF
-            //Create a pdf document.
-            PdfDocument doc = new PdfDocument();
-            // Create one page
-            PdfPageBase page = doc.Pages.Add();
-
-            //Draw the text
-            //page.Canvas.DrawString(@"TestString",
-            //                       new PdfFont(PdfFontFamily.TimesRoman, 14f),
-            //                       new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
-            //                       10, 10);
-
-            var font_TNR_9 = new System.Drawing.Font("Times New Roman", 9f);
-            PdfTrueTypeFont pdfTrueTypeFont_TNR_9 = new PdfTrueTypeFont(font_TNR_9, true);
-            PdfFontBase fontUtf_TNR_9 = pdfTrueTypeFont_TNR_9;
-
-            var font_TNR_14 = new System.Drawing.Font("Times New Roman", 14f);
-            PdfTrueTypeFont pdfTrueTypeFont_TNR_14 = new PdfTrueTypeFont(font_TNR_14, true);
-            PdfFontBase fontUtf_TNR_14 = pdfTrueTypeFont_TNR_14;
-
-            page.Canvas.DrawString("ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ БЮДЖЕТНОЕ ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ",
-                fontUtf_TNR_9,
-                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
-                270, 10,
-                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
-
-            page.Canvas.DrawString("\"ДОНСКОЙ ГОСУДАРСТВЕННЫЙ АГРАРНЫЙ УНИВЕРСИТЕТ\"",
-                fontUtf_TNR_9,
-                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
-                270, 25,
-                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
-
-            page.Canvas.DrawString("(ФГБОУ ВО Донской ГАУ)",
-                fontUtf_TNR_9,
-                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
-                270, 40,
-                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
-
-            page.Canvas.DrawString("АЗОВО-ЧЕРНОМОРСКИЙ ИНЖЕНЕРНЫЙ ИНСТИТУТ - ФИЛИАЛ ФЕДЕРАЛЬНОГО",
-                fontUtf_TNR_9,
-                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
-                270, 55,
-                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
-
-            page.Canvas.DrawString("ГОСУДАРСТВЕННОГО БЮДЖЕТНОГО ОБРАЗОВАТЕЛЬНОГО УЧРЕЖДЕНИЯ ВЫСШЕГО ОБРАЗОВАНИЯ",
-                fontUtf_TNR_9,
-                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
-                270, 70,
-                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
-
-            page.Canvas.DrawString("\"ДОНСКОЙ ГОСУДАРСТВЕННЫЙ АГРАРНЫЙ УНИВЕРСИТЕТ\" В Г. ЗЕРНОГРАДЕ",
-                fontUtf_TNR_9,
-                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
-                270, 85,
-                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
-
-            page.Canvas.DrawString("(Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ)",
-                fontUtf_TNR_9,
-                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
-                270, 100,
-                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
-
-
-
-
-            page.Canvas.DrawString("Бланк регистрации",
-                fontUtf_TNR_14,
-                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
-                30, 200,
-                new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
-
-
-            //Draw the image
-            //PdfImage image = PdfImage.FromFile(@"wordart.png");
-            //float width = image.Width * 0.75f;
-            //float height = image.Height * 0.75f;
-            //float x = (page.Canvas.ClientSize.Width - width) / 2;
-            //page.Canvas.DrawImage(image, x, 150, width, height);
-            
-            
-            //Save pdf file.
-            doc.SaveToFile("EntranceTestRegistrationForm.pdf");
-            doc.Close();
-
-            #endregion
-        }
-
-        // GET: EntranceTestRegistrationForms/Create
+        
         public IActionResult Create()
         {
             ViewData["AbiturientId"] = new SelectList(_context.Abiturients, "AbiturientId", "AbiturientId");

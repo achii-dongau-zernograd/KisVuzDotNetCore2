@@ -82,6 +82,7 @@ namespace KisVuzDotNetCore2.Controllers.LMS
             EntranceTestRegistrationForm entranceTestRegistrationForm,
             int appUserLmsEventId)
         {
+
             await _abiturientRepository.CreateEntranceTestRegistrationFormAsync(User.Identity.Name, entranceTestRegistrationForm);
 
             return RedirectToAction(nameof(AppUserLmsEventStartForm), new { appUserLmsEventId });

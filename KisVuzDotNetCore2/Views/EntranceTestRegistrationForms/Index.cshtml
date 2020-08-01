@@ -98,6 +98,7 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EntranceTestRegistrationFormId">Редактировать</a> |
+                <a asp-action="Print" asp-route-id="@item.EntranceTestRegistrationFormId" asp-route-needUpdatePdf="true">Обновить pdf</a> |
                 <a asp-action="Print" asp-route-id="@item.EntranceTestRegistrationFormId">Печать</a> |
                 <a asp-action="Delete" asp-route-id="@item.EntranceTestRegistrationFormId" class="text-danger">Удалить</a>
             </td>

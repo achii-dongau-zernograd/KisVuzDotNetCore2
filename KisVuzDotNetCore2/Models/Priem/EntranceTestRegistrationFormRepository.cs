@@ -1,7 +1,9 @@
 ﻿using KisVuzDotNetCore2.Models.Abitur;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,10 +15,13 @@ namespace KisVuzDotNetCore2.Models.Priem
     public class EntranceTestRegistrationFormRepository : IEntranceTestRegistrationFormRepository
     {
         private readonly AppIdentityDBContext _context;
+        private readonly IHostingEnvironment _appEnvironment;
 
-        public EntranceTestRegistrationFormRepository(AppIdentityDBContext context)
+        public EntranceTestRegistrationFormRepository(AppIdentityDBContext context,
+            IHostingEnvironment appEnvironment)
         {
             _context = context;
+            _appEnvironment = appEnvironment;
         }
 
         /// <summary>
@@ -60,6 +65,49 @@ namespace KisVuzDotNetCore2.Models.Priem
         public bool IsEntranceTestRegistrationFormExists(int id)
         {
             return _context.EntranceTestRegistrationForms.Any(e => e.EntranceTestRegistrationFormId == id);
+        }
+
+        /// <summary>
+        /// Удаляет pdf-файл (при наличии)
+        /// </summary>
+        /// <param name="entranceTestRegistrationFormId"></param>
+        public async Task RemovePdfFileAsync(int entranceTestRegistrationFormId)
+        {
+            var entry = await GetEntranceTestRegistrationFormAsync(entranceTestRegistrationFormId);
+
+            if (entry == null)
+                return;
+
+            if (string.IsNullOrWhiteSpace(entry.FileName))
+                return;
+
+            string[] paths = { _appEnvironment.WebRootPath, entry.FileName };
+
+            string pathToFile = Path.Combine(paths[0], paths[1]);
+            if (File.Exists(pathToFile))
+                File.Delete(pathToFile);
+
+            entry.FileName = "";
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Устанавливает путь к файлу pdf для бланка регистрации с указанным УИД
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="createdFileName"></param>
+        /// <returns></returns>
+        public async Task SetPathToPdfFile(int id, string createdFileName)
+        {
+            var entry = await GetEntranceTestRegistrationFormAsync(id);
+            if (entry == null)
+                return;
+
+            if (entry.FileName != createdFileName)
+            {
+                entry.FileName = createdFileName;
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

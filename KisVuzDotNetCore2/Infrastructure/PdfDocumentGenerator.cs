@@ -25,10 +25,11 @@ namespace KisVuzDotNetCore2.Infrastructure
 
         /// <summary>
         /// Создаёт pdf-файл бланка регистрации абитуриента на вступительное испытание
+        /// и возвращает путь к созданному файлу
         /// </summary>
         /// <param name="entranceTestRegistrationForm"></param>
         /// <returns></returns>
-        public async Task GenerateEntranceTestRegistrationForm(EntranceTestRegistrationForm entranceTestRegistrationForm)
+        public string GenerateEntranceTestRegistrationForm(EntranceTestRegistrationForm entranceTestRegistrationForm)
         {
             #region Free Spire.PDF
             //Create a pdf document.
@@ -153,7 +154,7 @@ namespace KisVuzDotNetCore2.Infrastructure
             doc.SaveToFile(path);
 
             doc.Close();
-
+            return Path.Combine(paths[1], paths[2]);
             #endregion
         }
     }
