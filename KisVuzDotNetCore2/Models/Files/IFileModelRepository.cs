@@ -51,6 +51,13 @@ namespace KisVuzDotNetCore2.Models.Files
         Task<FileModel> UploadConsentToEnrollmentFileAsync(IFormFile uploadedFile);
 
         /// <summary>
+        /// Загружает заявление об отзыве документов
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadRevocationStatementAsync(IFormFile uploadedFile);
+
+        /// <summary>
         /// Загружает файл, подтверждающий льготу абитуриента при приёме
         /// </summary>
         /// <param name="uploadedFile"></param>

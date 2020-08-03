@@ -28,6 +28,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         private readonly IContractRepository _contractRepository;
         private readonly IPaymentRepository _paymentRepository;
         private readonly IEntranceTestRegistrationFormRepository _entranceTestRegistrationFormRepository;
+        private readonly IRevocationStatementRepository _revocationStatementRepository;
 
         public AbiturientRepository(AppIdentityDBContext context,
             IUserDocumentRepository userDocumentRepository,
@@ -40,7 +41,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
             IAbiturientIndividualAchievmentRepository abiturientIndividualAchievmentRepository,
             IContractRepository contractRepository,
             IPaymentRepository paymentRepository,
-            IEntranceTestRegistrationFormRepository entranceTestRegistrationFormRepository
+            IEntranceTestRegistrationFormRepository entranceTestRegistrationFormRepository,
+            IRevocationStatementRepository revocationStatementRepository
             )
         {
             _context = context;
@@ -55,6 +57,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
             _contractRepository = contractRepository;
             _paymentRepository = paymentRepository;
             _entranceTestRegistrationFormRepository = entranceTestRegistrationFormRepository;
+            _revocationStatementRepository = revocationStatementRepository;
         }
 
         /// <summary>
@@ -284,6 +287,13 @@ namespace KisVuzDotNetCore2.Models.Abitur
                 .Include(a => a.SubmittingDocumentsType)
                 // Бланки регистрации абитуриентов на вступительные испытания
                 .Include(a => a.EntranceTestRegistrationForms)
+                // Заявления об отзыве документов
+                .Include(a => a.ApplicationForAdmissions)
+                    .ThenInclude(aa => aa.RevocationStatements)
+                        .ThenInclude(rs => rs.RowStatus)
+                .Include(a => a.ApplicationForAdmissions)
+                    .ThenInclude(aa => aa.RevocationStatements)
+                        .ThenInclude(rs => rs.FileModel)
                 ;
             return abiturs;
         }
@@ -1134,6 +1144,72 @@ namespace KisVuzDotNetCore2.Models.Abitur
                 return;
 
             await _entranceTestRegistrationFormRepository.CreateEntranceTestRegistrationFormAsync(entranceTestRegistrationForm);
+        }
+
+        /// <summary>
+        /// Добавляет заявление об отзыве документов
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="revocationStatement"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task CreateRevocationStatement(string userName,
+            RevocationStatement revocationStatement,
+            IFormFile uploadedFile)
+        {
+            var abiturient = await GetAbiturientAsync(userName);
+
+            if (! abiturient.ApplicationForAdmissions.Any(aa =>
+                aa.ApplicationForAdmissionId == revocationStatement.ApplicationForAdmissionId))
+                return;
+
+            await _revocationStatementRepository.CreateRevocationStatement(revocationStatement, uploadedFile);
+        }
+
+        /// <summary>
+        /// Возвращает заявление об отзыве документов абитуриента пе переданному УИД заявления
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="revocationStatementId"></param>
+        /// <returns></returns>
+        public async Task<RevocationStatement> GetRevocationStatementAsync(string userName, int revocationStatementId)
+        {
+            var abiturient = await GetAbiturientAsync(userName);
+            if (abiturient == null) return null;
+                        
+            foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions)
+            {
+                foreach (var revocationStatement in applicationForAdmission.RevocationStatements)
+                {
+                    if (revocationStatement.RevocationStatementId == revocationStatementId)
+                        return revocationStatement;
+                }
+            }
+
+            return null;            
+        }
+
+        /// <summary>
+        /// Удаляет заявление об отзыве документов абитуриента по переданному УИД заявления
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="revocationStatementId"></param>
+        /// <returns></returns>
+        public async Task RemoveRevocationStatementAsync(string userName, int revocationStatementId)
+        {
+            await _revocationStatementRepository.RemoveRevocationStatementAsync(userName, revocationStatementId);
+        }
+
+        /// <summary>
+        /// Обновляет заявление об отзыве документов абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="revocationStatement"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task UpdateRevocationStatement(string userName, RevocationStatement revocationStatement, IFormFile uploadedFile)
+        {
+            await _revocationStatementRepository.UpdateRevocationStatement(userName, revocationStatement, uploadedFile);
         }
 
 

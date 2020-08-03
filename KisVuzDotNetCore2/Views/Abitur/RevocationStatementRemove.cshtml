@@ -1,0 +1,48 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.RevocationStatement
+
+@{
+    ViewData["Title"] = "RevocationStatementRemove";
+}
+
+<h2>Удаление заявления об отзыве документов</h2>
+
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RejectionReason)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RejectionReason)
+        </dd>               
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationForAdmission)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationForAdmission.EduProfile.GetEduProfileFullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModel)
+        </dt>
+        <dd>
+            @if(Model.FileModel != null)
+            {
+                <a href="/@Model.FileModel.Path" target="_blank">Открыть</a>
+            }            
+        </dd>
+        
+    </dl>
+    
+    <form asp-action="RevocationStatementRemove">
+        <input type="hidden" asp-for="RevocationStatementId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Start" asp-route-selectedTab="revocationStatements" class="btn btn-default">Отмена</a>
+    </form>
+</div>

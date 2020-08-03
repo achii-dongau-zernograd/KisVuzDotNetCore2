@@ -132,5 +132,12 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// </summary>
         [Display(Name = "Договоры")]
         public List<Contract> Contracts { get; set; }
+
+
+        /// <summary>
+        /// Заявления об отзыве документов
+        /// </summary>
+        [Display(Name = "Заявления об отзыве документов")]
+        public List<RevocationStatement> RevocationStatements { get; set; }
     }
 }

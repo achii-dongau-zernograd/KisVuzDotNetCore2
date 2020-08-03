@@ -19,6 +19,7 @@
     string personalInformationClass = "";
     string contractsClass = "";
     string paymentsClass = "";
+    string revocationStatementsClass = "";
 
     switch (selectedTab)
     {
@@ -51,6 +52,9 @@
             break;
         case "payments":
             paymentsClass = "active";
+            break;
+        case "revocationStatements":
+            revocationStatementsClass = "active";
             break;
     }
 
@@ -170,6 +174,7 @@
     <li class="@contractsClass"><a href="#contracts" data-toggle="tab">Договоры</a></li>
     <li class="@paymentsClass"><a href="#payments" data-toggle="tab">Оплата</a></li>
     <li class="@entranceTestsClass"><a href="#entranceTests" data-toggle="tab">Вступительные испытания</a></li>
+    <li class="@revocationStatementsClass"><a href="#revocationStatements" data-toggle="tab">Заявления об отзыве документов</a></li>
 </ul>
 
 <div class="tab-content">
@@ -527,7 +532,7 @@
             </thead>
             <tbody>
                 @if (abiturient.ApplicationForAdmissions == null ||
-       abiturient.ApplicationForAdmissions.Count() == 0)
+      abiturient.ApplicationForAdmissions.Count() == 0)
                 {
                     <tr>
                         <td colspan="4" class="text-center">
@@ -697,7 +702,7 @@
             </thead>
             <tbody>
                 @if (abiturient.ApplicationForAdmissions == null ||
-        abiturient.ApplicationForAdmissions.Count() == 0)
+       abiturient.ApplicationForAdmissions.Count() == 0)
                 {
                     <tr>
                         <td colspan="5" class="text-center">
@@ -862,9 +867,10 @@
                                             {
                                                 <a class="btn btn-primary btn-block" asp-action="AbiturientContractEdit" asp-route-abiturientContractId="@contract.ContractId">Изменить</a>
                                                 <a class="btn btn-danger  btn-block" asp-action="AbiturientContractRemove" asp-route-abiturientContractId="@contract.ContractId">Удалить</a>
-                                            }                                            
+                                            }
                                         </td>
-                                    </tr>                                    
+                                    </tr>
+
                                 }
                             }
                         }
@@ -934,8 +940,8 @@
                                             @if (contract.FileModel != null)
                                             {
                                                 <a href="/@contract.FileModel.Path" target="_blank">@contract.ContractType.ContractTypeName</a>
-                                            }                                            
-                                        </td>                                                                        
+                                            }
+                                        </td>
 
                                         <td>
                                             <a asp-action="CreateAbiturientContractPayment"
@@ -1008,5 +1014,80 @@
                 </li>
             }
         </ol>
+    </div>
+
+    @*///////////////////////////////////////////////// Заявления об отзыве документов //////////////////////////////////////////////////*@
+    <div class="tab-pane @revocationStatementsClass" id="revocationStatements">
+        <br />        
+
+        <a asp-action="CreateRevocationStatement" class="btn btn-primary">Добавить заявление об отзыве документов</a>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Уровень образования</th>
+                    <th>Направление подготовки</th>
+                    <th>Направленность</th>
+                    <th>Форма обучения</th>
+                    <th>Тип квоты</th>
+                    <th>Приоритет</th>
+                    <th>Скан-копия заявления</th>
+                    <th>Причина отказа от зачисления</th>
+                    <th>Статус</th>
+                    <th>Замечания</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            @foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions)
+            {
+                foreach (var revocationStatement in applicationForAdmission.RevocationStatements)
+                {
+                    var rowStatus = revocationStatement.RowStatus;
+                    <tr>
+                        <td>@applicationForAdmission.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                        <td>@applicationForAdmission.EduProfile.EduNapravl.GetEduNapravlName</td>
+                        <td>@applicationForAdmission.EduProfile.EduProfileName</td>
+                        <td>@applicationForAdmission.EduForm.EduFormName</td>
+                        <td>@applicationForAdmission.QuotaType.QuotaTypeName</td>
+                        <td>@applicationForAdmission.PriorityId</td>
+                        <td>
+                            @if (revocationStatement.FileModel != null)
+                            {
+                                <a href="/@revocationStatement.FileModel.Path" target="_blank">Открыть</a>
+                            }
+                            else
+                            {
+                                @*<a asp-action="ApplicationForAdmissionFileLoad" asp-route-applicationForAdmissionId="@applicationForAdmission.ApplicationForAdmissionId" class="btn btn-primary">Загрузить</a>*@
+                            }
+                        </td>
+                        <td>
+                            @revocationStatement.RejectionReason
+                        </td>
+                        <td>
+                            @if (rowStatus.RowStatusId == (int)RowStatusEnum.Confirmed)
+                            {
+                                <p class="text-primary">Подтверждено</p>
+                            }
+                            else if (rowStatus.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                            {
+                                <p class="text-danger">Возвращено на доработку</p>
+                            }
+                            else
+                            {
+                                <p class="text-warning">На проверке</p>
+                            }
+                        </td>
+                        <td>@revocationStatement.Remark</td>
+                        <td>
+                            @if (rowStatus.RowStatusId != (int)RowStatusEnum.Confirmed)
+                            {
+                                <a class="btn btn-primary btn-block" asp-action="RevocationStatementEdit" asp-route-revocationStatementId="@revocationStatement.RevocationStatementId">Редактировать</a>
+                                <a class="btn btn-danger  btn-block" asp-action="RevocationStatementRemove" asp-route-revocationStatementId="@revocationStatement.RevocationStatementId">Удалить</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
     </div>
 </div>

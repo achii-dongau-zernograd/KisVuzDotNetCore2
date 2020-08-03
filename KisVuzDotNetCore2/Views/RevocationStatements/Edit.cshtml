@@ -1,0 +1,61 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.RevocationStatement
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>RevocationStatement</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RevocationStatementId" />
+            <div class="form-group">
+                <label asp-for="ApplicationForAdmissionId" class="control-label"></label>
+                <select asp-for="ApplicationForAdmissionId" class="form-control" asp-items="ViewBag.ApplicationForAdmissionId"></select>
+                <span asp-validation-for="ApplicationForAdmissionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RejectionReason" class="control-label"></label>
+                <input asp-for="RejectionReason" class="form-control" />
+                <span asp-validation-for="RejectionReason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                <select asp-for="FileModelId" class="form-control" asp-items="ViewBag.FileModelId"></select>
+                <span asp-validation-for="FileModelId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GeneratedPdfDocumentPath" class="control-label"></label>
+                <input asp-for="GeneratedPdfDocumentPath" class="form-control" />
+                <span asp-validation-for="GeneratedPdfDocumentPath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label"></label>
+                <input asp-for="Remark" class="form-control" />
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RowStatusId" class="control-label"></label>
+                <select asp-for="RowStatusId" class="form-control" asp-items="ViewBag.RowStatusId"></select>
+                <span asp-validation-for="RowStatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

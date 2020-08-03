@@ -706,6 +706,13 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeName = "Скан-копия документа, подтверждающего платёж",
                         FileDataTypeGroupId = (int)FileDataTypeGroupEnum.Payments
                     };
+                                        
+                    FileDataType fileDataType74 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.AbiturientFiles_RevocationStatement,
+                        FileDataTypeName = "Заявление об отзыве документов",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.AbiturientFiles
+                    };
 
                     await context.FileDataTypes.AddRangeAsync(
                                         fileDataType1,  fileDataType2,  fileDataType3,  fileDataType4, fileDataType5, fileDataType6, fileDataType7, fileDataType8, fileDataType9,
@@ -715,7 +722,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType40, fileDataType41, fileDataType42, fileDataType43, fileDataType44, fileDataType45, fileDataType46, fileDataType47, fileDataType48, fileDataType49,
                         fileDataType50, fileDataType51, fileDataType52, fileDataType53, fileDataType54,                 fileDataType56, fileDataType57, fileDataType58, fileDataType59,
                         fileDataType60, fileDataType61, fileDataType62, fileDataType63, fileDataType64, fileDataType65, fileDataType66, fileDataType67, fileDataType68, fileDataType69,
-                        fileDataType70, fileDataType71, fileDataType72, fileDataType73
+                        fileDataType70, fileDataType71, fileDataType72, fileDataType73, fileDataType74
                         );
                     await context.SaveChangesAsync();
                 }

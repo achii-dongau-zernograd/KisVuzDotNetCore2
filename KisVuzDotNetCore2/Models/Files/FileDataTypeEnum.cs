@@ -267,6 +267,10 @@
         /// <summary>
         /// Платежи - Подтверждающий документ
         /// </summary>
-        Payments_PaymentDocument = 73
+        Payments_PaymentDocument = 73,
+        /// <summary>
+        /// Файлы абитуриентов - Заявление об отзыве документов
+        /// </summary>
+        AbiturientFiles_RevocationStatement = 74
     }
 }

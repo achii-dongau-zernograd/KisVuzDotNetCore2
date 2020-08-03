@@ -607,6 +607,107 @@ namespace KisVuzDotNetCore2.Controllers
         }
         #endregion
 
+        #region Заявления об отзыве документов
+
+        public async Task<IActionResult> CreateRevocationStatement()
+        {
+            var documentSamples = _documentSamplesRepository.GetDocumentSamples(FileDataTypeEnum.AbiturientFiles_RevocationStatement);
+            ViewBag.DocumentSamples = await documentSamples.ToListAsync();
+
+
+            var abiturient = await _abiturRepository.GetAbiturientAsync(User.Identity.Name);
+            if (abiturient == null)
+                return NotFound();
+
+            ViewBag.ApplicationForAdmissions = _selectListRepository.GetSelectListApplicationForAdmissions(abiturient.AbiturientId, 0);
+
+            var revocationStatement = new RevocationStatement
+            {
+                 Date = DateTime.Now
+            };
+
+            return View(revocationStatement);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateRevocationStatement(RevocationStatement revocationStatement, 
+            IFormFile uploadedFile)
+        {            
+            if (uploadedFile == null /*|| string.IsNullOrWhiteSpace(revocationStatement.RejectionReason)*/)
+            {
+                var documentSamples = _documentSamplesRepository.GetDocumentSamples(FileDataTypeEnum.AbiturientFiles_RevocationStatement);
+                ViewBag.DocumentSamples = await documentSamples.ToListAsync();
+
+                var abiturient = await _abiturRepository.GetAbiturientAsync(User.Identity.Name);
+                if (abiturient == null)
+                    return NotFound();
+
+                ViewBag.ApplicationForAdmissions = _selectListRepository.GetSelectListApplicationForAdmissions(
+                    abiturient.AbiturientId,
+                    revocationStatement.ApplicationForAdmissionId);
+                
+                return View(revocationStatement);
+            }
+
+            revocationStatement.RowStatusId = (int)RowStatusEnum.NotConfirmed;
+
+            await _abiturRepository.CreateRevocationStatement(User.Identity.Name, revocationStatement, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "revocationStatements" });
+        }
+
+
+
+        public async Task<IActionResult> RevocationStatementEdit(int revocationStatementId)
+        {
+            var documentSamples = _documentSamplesRepository.GetDocumentSamples(FileDataTypeEnum.AbiturientFiles_RevocationStatement);
+            ViewBag.DocumentSamples = await documentSamples.ToListAsync();
+
+            var abiturient = await _abiturRepository.GetAbiturientAsync(User.Identity.Name);
+            if (abiturient == null)
+                return NotFound();
+                        
+
+            var entry = await _abiturRepository.GetRevocationStatementAsync(User.Identity.Name, revocationStatementId);
+            ViewBag.ApplicationForAdmissions = _selectListRepository.GetSelectListApplicationForAdmissions(abiturient.AbiturientId, entry.ApplicationForAdmissionId);
+
+            return View(entry);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RevocationStatementEdit(RevocationStatement revocationStatement,
+            IFormFile uploadedFile)
+        {
+            await _abiturRepository.UpdateRevocationStatement(User.Identity.Name, revocationStatement, uploadedFile);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "revocationStatements" });
+        }
+
+
+
+
+        public async Task<IActionResult> RevocationStatementRemove(int revocationStatementId)
+        {
+            var revocationStatement = await _abiturRepository.GetRevocationStatementAsync(User.Identity.Name, revocationStatementId);
+            if (revocationStatement == null)
+                return NotFound();
+
+            return View(revocationStatement);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RevocationStatementRemove(RevocationStatement revocationStatement)
+        {
+            await _abiturRepository.RemoveRevocationStatementAsync(User.Identity.Name, revocationStatement.RevocationStatementId);
+
+            return RedirectToAction(nameof(Start), new { selectedTab = "revocationStatements" });
+        }
+
+        #endregion
+
         #region Договоры
         public async Task<IActionResult> CreateAbiturientContract(int applicationForAdmissionId)
         {

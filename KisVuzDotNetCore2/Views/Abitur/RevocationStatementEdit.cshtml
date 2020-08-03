@@ -1,0 +1,86 @@
+﻿@model KisVuzDotNetCore2.Models.Abitur.RevocationStatement
+
+@{
+    ViewData["Title"] = "Редактирование заявления об отзыве документов";
+    var documentSamples = (List<DocumentSample>)ViewBag.DocumentSamples;
+}
+
+<h2>Редактирование заявления об отзыве документов</h2>
+
+<p>Дополнительные материалы:</p>
+<ol>
+    @foreach (var item in documentSamples.Where(d => d.IsBlank))
+    {
+        <li>
+            <a href="@item.GetHref" target="_blank">@item.DocumentSampleName</a>
+        </li>
+    }
+    @foreach (var item in documentSamples.Where(d => !d.IsBlank))
+    {
+        <li>
+            <a href="@item.GetHref" target="_blank">@item.DocumentSampleName</a>
+        </li>
+    }
+</ol>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RevocationStatementEdit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label"></label>
+                <label class="form-control text-danger">@Model.Remark</label>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationForAdmissionId" class="control-label">Заявление о приёме</label>
+                <select asp-for="ApplicationForAdmissionId" class="form-control" asp-items="ViewBag.ApplicationForAdmissions"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RejectionReason" class="control-label"></label>
+                <input asp-for="RejectionReason" class="form-control" />
+                <span asp-validation-for="RejectionReason" class="text-danger"></span>
+            </div>
+
+
+            @if (Model.FileModel == null)
+            {
+                <div class="form-group">
+                    <label asp-for="FileModelId" class="control-label">Скан-копия заявления об отзыве документов</label>
+                    <input type="file" name="uploadedFile" class="form-control" />
+                </div>
+            }
+            else
+            {
+                <div class="form-group">                    
+                    <label asp-for="FileModelId" class="control-label">Скан-копия заявления об отзыве документов</label>
+                    <br />
+                    <label asp-for="FileModelId" class="control-label">Загруженный документ: </label>
+                    <a href="/@Model.FileModel.Path" target="_blank">Открыть</a>
+                    <br />
+                    <label asp-for="FileModelId" class="control-label">Для замены выберите новый файл </label>
+                    <input type="file" name="uploadedFile" class="form-control" />
+                </div>
+            }
+
+
+            <div class="form-group">
+                <input type="hidden" asp-for="RevocationStatementId" />
+                <input type="hidden" asp-for="Remark" />
+                <input type="hidden" asp-for="RowStatusId" />
+                <input type="hidden" asp-for="FileModelId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Start" asp-route-selectedTab="revocationStatements" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

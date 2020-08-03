@@ -517,5 +517,40 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task CreateContractPaymentAsync(string userName, Payment payment, IFormFile uploadedFile);
+        
+        /// <summary>
+        /// Добавляет заявление об отзыве документов
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="revocationStatement"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task CreateRevocationStatement(string userName, RevocationStatement revocationStatement, IFormFile uploadedFile);
+
+
+        /// <summary>
+        /// Возвращает заявление об отзыве документов абитуриента по переданному УИД заявления
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="revocationStatementId"></param>
+        /// <returns></returns>
+        Task<RevocationStatement> GetRevocationStatementAsync(string userName, int revocationStatementId);
+
+        /// <summary>
+        /// Удаляет заявление об отзыве документов абитуриента по переданному УИД заявления
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="revocationStatementId"></param>
+        /// <returns></returns>
+        Task RemoveRevocationStatementAsync(string userName, int revocationStatementId);
+
+        /// <summary>
+        /// Обновляет заявление об отзыве документов абитуриента
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="revocationStatement"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task UpdateRevocationStatement(string userName, RevocationStatement revocationStatement, IFormFile uploadedFile);
     }
 }

@@ -665,6 +665,11 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         public DbSet<EntranceTestRegistrationForm> EntranceTestRegistrationForms { get; set; }
 
+        /// <summary>
+        /// Заявления об отзыве документов абитуриентами
+        /// </summary>
+        public DbSet<RevocationStatement> RevocationStatements { get; set; }
+
 
         /// <summary>
         /// Таблица 24. Информация о количестве мест для приёма на обучение

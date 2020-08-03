@@ -63,6 +63,8 @@ namespace KisVuzDotNetCore2.Models.Files
                     return query.Where(q => q.FileDataTypeId == (int)fileDataTypes[0] || q.FileDataTypeId == (int)fileDataTypes[1] || q.FileDataTypeId == (int)fileDataTypes[2] || q.FileDataTypeId == (int)fileDataTypes[3] || q.FileDataTypeId == (int)fileDataTypes[4]);
                 case 6:
                     return query.Where(q => q.FileDataTypeId == (int)fileDataTypes[0] || q.FileDataTypeId == (int)fileDataTypes[1] || q.FileDataTypeId == (int)fileDataTypes[2] || q.FileDataTypeId == (int)fileDataTypes[3] || q.FileDataTypeId == (int)fileDataTypes[4] || q.FileDataTypeId == (int)fileDataTypes[5]);
+                case 7:
+                    return query.Where(q => q.FileDataTypeId == (int)fileDataTypes[0] || q.FileDataTypeId == (int)fileDataTypes[1] || q.FileDataTypeId == (int)fileDataTypes[2] || q.FileDataTypeId == (int)fileDataTypes[3] || q.FileDataTypeId == (int)fileDataTypes[4] || q.FileDataTypeId == (int)fileDataTypes[5] || q.FileDataTypeId == (int)fileDataTypes[6]);
                 default:
                     throw new NotImplementedException();                    
             }            

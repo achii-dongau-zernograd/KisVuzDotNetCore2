@@ -503,6 +503,19 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает заявление об отзыве документов
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadRevocationStatementAsync(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                "Заявление об отзыве документов",
+                FileDataTypeEnum.AbiturientFiles_RevocationStatement);
+            return fileModel;
+        }
+
+        /// <summary>
         /// Возвращает тип файлов
         /// </summary>
         /// <param name="fileDataType"></param>

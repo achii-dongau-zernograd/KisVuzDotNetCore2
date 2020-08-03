@@ -1,0 +1,75 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Abitur.RevocationStatement>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Заявления об отзыве документов</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationForAdmission)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RejectionReason)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.GeneratedPdfDocumentPath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remark)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.FileModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RowStatus)
+            </th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationForAdmission.ApplicationForAdmissionId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RejectionReason)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.GeneratedPdfDocumentPath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remark)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FileModel.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RowStatus.RowStatusId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RevocationStatementId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RevocationStatementId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RevocationStatementId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

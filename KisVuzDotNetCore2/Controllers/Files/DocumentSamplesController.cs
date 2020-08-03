@@ -37,7 +37,8 @@ namespace KisVuzDotNetCore2.Controllers.Files
                 FileDataTypeEnum.ConsentToEnrollment,
                 FileDataTypeEnum.AbiturientCard,
                 FileDataTypeEnum.DogovorOCelevomObuchenii,
-                FileDataTypeEnum.DogovorObOkazaniiPlatnihObrazovatelnihUslug);
+                FileDataTypeEnum.DogovorObOkazaniiPlatnihObrazovatelnihUslug,
+                FileDataTypeEnum.AbiturientFiles_RevocationStatement);
             
             return View(await documentSamples.ToListAsync());
         }
