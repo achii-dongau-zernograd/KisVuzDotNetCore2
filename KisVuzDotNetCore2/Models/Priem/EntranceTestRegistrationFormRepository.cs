@@ -56,7 +56,7 @@ namespace KisVuzDotNetCore2.Models.Priem
         public IQueryable<EntranceTestRegistrationForm> GetEntranceTestRegistrationForms()
         {
             var query = _context.EntranceTestRegistrationForms
-                .Include(rf => rf.Abiturient)
+                .Include(rf => rf.Abiturient.AppUser)
                 .Include(rf => rf.LmsEvent);
 
             return query;
@@ -91,6 +91,32 @@ namespace KisVuzDotNetCore2.Models.Priem
             await _context.SaveChangesAsync();
         }
 
+
+        /// <summary>
+        /// Удаляет pdf-файл бланка ответов (при наличии)
+        /// </summary>
+        /// <param name="entranceTestRegistrationFormId"></param>
+        /// <returns></returns>
+        public async Task RemovePdfFileBlankOtvetovAsync(int entranceTestRegistrationFormId)
+        {
+            var entry = await GetEntranceTestRegistrationFormAsync(entranceTestRegistrationFormId);
+
+            if (entry == null)
+                return;
+
+            if (string.IsNullOrWhiteSpace(entry.FileNameBlankOtvetov))
+                return;
+
+            string[] paths = { _appEnvironment.WebRootPath, entry.FileNameBlankOtvetov };
+
+            string pathToFile = Path.Combine(paths[0], paths[1]);
+            if (File.Exists(pathToFile))
+                File.Delete(pathToFile);
+
+            entry.FileNameBlankOtvetov = "";
+            await _context.SaveChangesAsync();
+        }
+
         /// <summary>
         /// Устанавливает путь к файлу pdf для бланка регистрации с указанным УИД
         /// </summary>
@@ -106,6 +132,25 @@ namespace KisVuzDotNetCore2.Models.Priem
             if (entry.FileName != createdFileName)
             {
                 entry.FileName = createdFileName;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        /// <summary>
+        /// Устанавливает путь к pdf-файлу бланка ответов на экзаменационное задание
+        /// </summary>
+        /// <param name="entranceTestRegistrationFormId"></param>
+        /// <param name="createdFileNameBlankOtvetov"></param>
+        /// <returns></returns>
+        public async Task SetPathToPdfFileBlankOtvetov(int entranceTestRegistrationFormId, string createdFileNameBlankOtvetov)
+        {
+            var entry = await GetEntranceTestRegistrationFormAsync(entranceTestRegistrationFormId);
+            if (entry == null)
+                return;
+
+            if (entry.FileNameBlankOtvetov != createdFileNameBlankOtvetov)
+            {
+                entry.FileNameBlankOtvetov = createdFileNameBlankOtvetov;
                 await _context.SaveChangesAsync();
             }
         }

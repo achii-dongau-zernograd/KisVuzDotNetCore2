@@ -11,6 +11,7 @@ using KisVuzDotNetCore2.Models.Priem;
 using Spire.Pdf;
 using Spire.Pdf.Graphics;
 using KisVuzDotNetCore2.Infrastructure;
+using KisVuzDotNetCore2.Models.LMS;
 
 namespace KisVuzDotNetCore2.Controllers.Priem
 {
@@ -19,14 +20,17 @@ namespace KisVuzDotNetCore2.Controllers.Priem
         private readonly AppIdentityDBContext _context;
         private readonly IEntranceTestRegistrationFormRepository _entranceTestRegistrationFormRepository;
         private readonly IPdfDocumentGenerator _pdfDocumentGenerator;
+        private readonly ILmsEventLmsTasksetAppUserAnswerRepository _lmsEventLmsTasksetAppUserAnswerRepository;
 
         public EntranceTestRegistrationFormsController(AppIdentityDBContext context,
             IEntranceTestRegistrationFormRepository entranceTestRegistrationFormRepository,
-            IPdfDocumentGenerator pdfDocumentGenerator)
+            IPdfDocumentGenerator pdfDocumentGenerator,
+            ILmsEventLmsTasksetAppUserAnswerRepository lmsEventLmsTasksetAppUserAnswerRepository)
         {
             _context = context;
             _entranceTestRegistrationFormRepository = entranceTestRegistrationFormRepository;
             _pdfDocumentGenerator = pdfDocumentGenerator;
+            _lmsEventLmsTasksetAppUserAnswerRepository = lmsEventLmsTasksetAppUserAnswerRepository;
         }
 
         // GET: EntranceTestRegistrationForms
@@ -36,7 +40,12 @@ namespace KisVuzDotNetCore2.Controllers.Priem
             return View(await appIdentityDBContext.ToListAsync());
         }
 
-        // GET: EntranceTestRegistrationForms/Details/5
+        /// <summary>
+        /// Формирование pdf-файла бланка регистрации на вступительное испытание
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="needUpdatePdf">Необходимость переформировать файл</param>
+        /// <returns></returns>
         public async Task<IActionResult> Print(int id, bool needUpdatePdf)
         {
             if (id == 0)
@@ -64,7 +73,56 @@ namespace KisVuzDotNetCore2.Controllers.Priem
             return Redirect($"/{entranceTestRegistrationForm.FileName}");
         }
 
-        
+
+
+        /// <summary>
+        /// Формирование pdf-файла бланка ответов вступительного испытания
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="needUpdatePdf">Необходимость переформировать файл</param>
+        /// <returns></returns>
+        public async Task<IActionResult> PrintBlankOtvetov(int id, bool needUpdatePdf)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+
+            var entranceTestRegistrationForm = await _entranceTestRegistrationFormRepository.GetEntranceTestRegistrationFormAsync(id);
+            if (entranceTestRegistrationForm == null)
+            {
+                return NotFound();
+            }
+
+            
+
+            /////////
+            if (string.IsNullOrWhiteSpace(entranceTestRegistrationForm.FileNameBlankOtvetov) || needUpdatePdf)
+            {
+                var lmsEventTasks = await _lmsEventLmsTasksetAppUserAnswerRepository.GetLmsEventTasksAsync(entranceTestRegistrationForm.LmsEventId);
+                if (lmsEventTasks == null)
+                    return NotFound();
+
+                var userAnswers = await _lmsEventLmsTasksetAppUserAnswerRepository.GetLmsEventAppUserAnswers(entranceTestRegistrationForm.Abiturient.AppUser.UserName, entranceTestRegistrationForm.LmsEventId).ToListAsync();
+
+
+
+                if (!string.IsNullOrWhiteSpace(entranceTestRegistrationForm.FileNameBlankOtvetov))
+                {
+                    await _entranceTestRegistrationFormRepository.RemovePdfFileBlankOtvetovAsync(entranceTestRegistrationForm.EntranceTestRegistrationFormId);
+                }
+
+                string createdFileNameBlankOtvetov = _pdfDocumentGenerator.GenerateEntranceTestBlankOtvetov(entranceTestRegistrationForm, lmsEventTasks);
+                await _entranceTestRegistrationFormRepository.SetPathToPdfFileBlankOtvetov(entranceTestRegistrationForm.EntranceTestRegistrationFormId, createdFileNameBlankOtvetov);
+            }
+
+            return Redirect($"/{entranceTestRegistrationForm.FileNameBlankOtvetov}");
+        }
+
+
+
+
+
         public IActionResult Create()
         {
             ViewData["AbiturientId"] = new SelectList(_context.Abiturients, "AbiturientId", "AbiturientId");

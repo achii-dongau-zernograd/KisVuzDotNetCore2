@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Abitur;
+using KisVuzDotNetCore2.Models.LMS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="entranceTestRegistrationForm"></param>
         /// <returns></returns>
         string GenerateEntranceTestRegistrationForm(EntranceTestRegistrationForm entranceTestRegistrationForm);
+
+        /// <summary>
+        /// Создаёт pdf-файл бланка ответов на эк
+        /// и возвращает путь к созданному файлу
+        /// </summary>
+        /// <param name="entranceTestRegistrationForm"></param>
+        /// <returns></returns>
+        string GenerateEntranceTestBlankOtvetov(EntranceTestRegistrationForm entranceTestRegistrationForm, List<LmsTask> lmsEventTasks);
     }
 }

@@ -93,5 +93,11 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// </summary>
         [Display(Name = "Имя файла")]
         public string FileName { get; set; }
+
+        /// <summary>
+        /// Имя файла бланка ответов
+        /// </summary>
+        [Display(Name = "Имя файла бланка ответов")]
+        public string FileNameBlankOtvetov { get; set; }
     }
 }

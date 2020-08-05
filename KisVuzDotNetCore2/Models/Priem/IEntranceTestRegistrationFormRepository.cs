@@ -40,11 +40,29 @@ namespace KisVuzDotNetCore2.Models.Priem
         /// <param name="createdFileName"></param>
         /// <returns></returns>
         Task SetPathToPdfFile(int entranceTestRegistrationFormId, string createdFileName);
-        
+
+        /// <summary>
+        /// Устанавливает путь к pdf-файлу бланка ответов на экзаменационное задание
+        /// </summary>
+        /// <param name="entranceTestRegistrationFormId"></param>
+        /// <param name="createdFileNameBlankOtvetov"></param>
+        /// <returns></returns>
+        Task SetPathToPdfFileBlankOtvetov(int entranceTestRegistrationFormId, string createdFileNameBlankOtvetov);
+
         /// <summary>
         /// Удаляет pdf-файл (при наличии)
         /// </summary>
         /// <param name="entranceTestRegistrationFormId"></param>
         Task RemovePdfFileAsync(int entranceTestRegistrationFormId);
+
+        /// <summary>
+        /// Удаляет pdf-файл бланка ответов (при наличии)
+        /// </summary>
+        /// <param name="entranceTestRegistrationFormId"></param>
+        /// <returns></returns>
+        Task RemovePdfFileBlankOtvetovAsync(int entranceTestRegistrationFormId);
+        
+
+        
     }
 }

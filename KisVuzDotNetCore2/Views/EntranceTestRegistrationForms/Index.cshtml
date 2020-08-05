@@ -12,46 +12,51 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    Шифр
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DisciplineName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Patronymic)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DocumentSeriya)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DocumentNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsConfirmed)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EntranceTestResult)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FileName)
-                </th>
+            <th>
+                Шифр
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DisciplineName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patronymic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentSeriya)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsConfirmed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntranceTestResult)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileName)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Abiturient)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LmsEventId)
             </th>
-            <th></th>
+            <th>
+                Бланк ответов на экзаменационное задание
+            </th>
+            <th>
+                Действия
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -95,6 +100,20 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LmsEvent.LmsEventId)
+            </td>
+            <td>
+                <a asp-controller="LmsEventLmsTaskSetAppUserAnswersCheck"
+                   asp-action="Index"
+                   asp-route-lmsEventId="@item.LmsEvent.LmsEventId"
+                   asp-route-UserName="@item.Abiturient.AppUser.UserName"
+                   target="_blank">Проверка ответов</a>
+
+                <br />
+
+                <a asp-action="PrintBlankOtvetov" asp-route-id="@item.EntranceTestRegistrationFormId">Печать</a>
+                <br />
+                <a asp-action="PrintBlankOtvetov" asp-route-id="@item.EntranceTestRegistrationFormId" asp-route-needUpdatePdf="true">Обновить pdf</a>
+
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EntranceTestRegistrationFormId">Редактировать</a> |
