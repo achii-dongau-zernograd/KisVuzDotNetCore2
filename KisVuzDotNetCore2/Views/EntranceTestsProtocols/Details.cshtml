@@ -1,0 +1,36 @@
+﻿@model KisVuzDotNetCore2.Models.Priem.EntranceTestsProtocol
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EntranceTestsProtocol</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DataVidachi)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataVidachi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FileName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Abiturient)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Abiturient.AbiturientId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.EntranceTestsProtocolId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

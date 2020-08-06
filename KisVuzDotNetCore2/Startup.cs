@@ -86,6 +86,7 @@ namespace KisVuzDotNetCore2
             services.AddTransient<IEntranceTestRegistrationFormRepository, EntranceTestRegistrationFormRepository>();
             services.AddTransient<IPdfDocumentGenerator, PdfDocumentGenerator>();
             services.AddTransient<IRevocationStatementRepository, RevocationStatementRepository>();
+            services.AddTransient<IEntranceTestsProtocolsRepository, EntranceTestsProtocolsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

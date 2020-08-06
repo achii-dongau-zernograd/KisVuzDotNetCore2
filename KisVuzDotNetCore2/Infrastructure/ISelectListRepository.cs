@@ -102,6 +102,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListAbiturientsConfirmed(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список абитуриентов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAbiturients(int selectedId = 0);
+
+        /// <summary>
         /// Возвращает список типов событий СДО
         /// для указанной группы типов событий
         /// </summary>

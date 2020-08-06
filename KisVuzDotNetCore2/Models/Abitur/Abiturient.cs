@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KisVuzDotNetCore2.Models.Priem;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -73,6 +74,12 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// Бланки регистрации абитуриентов на вступительные испытания
         /// </summary>
         public List<EntranceTestRegistrationForm> EntranceTestRegistrationForms { get; set; }
+
+        /// <summary>
+        /// Протоколы вступительных испытаний
+        /// </summary>
+        public List<EntranceTestsProtocol> EntranceTestsProtocols { get; set; }        
+        
 
         /// <summary>
         /// Возвращает строку описания абитуриента, включающую

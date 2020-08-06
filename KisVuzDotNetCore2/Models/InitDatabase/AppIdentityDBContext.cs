@@ -666,6 +666,11 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<EntranceTestRegistrationForm> EntranceTestRegistrationForms { get; set; }
 
         /// <summary>
+        /// Протоколы вступительных испытаний
+        /// </summary>
+        public DbSet<EntranceTestsProtocol> EntranceTestsProtocols { get; set; }
+
+        /// <summary>
         /// Заявления об отзыве документов абитуриентами
         /// </summary>
         public DbSet<RevocationStatement> RevocationStatements { get; set; }
@@ -1294,6 +1299,7 @@ namespace KisVuzDotNetCore2.Models
 
             await InitDatabaseSubmittingDocumentsTypes.CreateSubmittingDocumentsTypes(serviceProvider, configuration);
         }        
-    
+        
+        
     }
 }

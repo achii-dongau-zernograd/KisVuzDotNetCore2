@@ -1,5 +1,7 @@
-﻿using KisVuzDotNetCore2.Models.Abitur;
+﻿using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.LMS;
+using KisVuzDotNetCore2.Models.Priem;
 using Microsoft.AspNetCore.Hosting;
 using Spire.Pdf;
 using Spire.Pdf.Graphics;
@@ -18,8 +20,16 @@ namespace KisVuzDotNetCore2.Infrastructure
     public class PdfDocumentGenerator : IPdfDocumentGenerator
     {
         private readonly IHostingEnvironment _appEnvironment;
+        private readonly AppIdentityDBContext _context;
 
-        
+        public PdfDocumentGenerator(IHostingEnvironment appEnvironment,
+            AppIdentityDBContext context)
+        {
+            _appEnvironment = appEnvironment;
+            _context = context;
+        }
+
+
         PdfFontBase FontUtf_TNR_9 
         {
             get {
@@ -54,10 +64,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
 
-        public PdfDocumentGenerator(IHostingEnvironment appEnvironment)
-        {
-            _appEnvironment = appEnvironment;
-        }
+        
 
         
 
@@ -310,6 +317,14 @@ namespace KisVuzDotNetCore2.Infrastructure
 
             PrintShapka(page);
 
+
+            page.Canvas.DrawString("Дата проведения: " + entranceTestRegistrationForm.Date.ToString("dd.MM.yyyy"),
+                FontUtf_TNR_16_b,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                20, 150,
+                new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
+
+
             page.Canvas.DrawString("ШИФР",
                 FontUtf_TNR_16_b,
                 new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
@@ -339,7 +354,7 @@ namespace KisVuzDotNetCore2.Infrastructure
                 new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
 
             int y = 250;
-            int dy = 30;
+            int dy = 25;
             page.Canvas.DrawString("Предмет: " + entranceTestRegistrationForm.DisciplineName,
                 FontUtf_TNR_16_b,
                 new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
@@ -430,7 +445,7 @@ namespace KisVuzDotNetCore2.Infrastructure
 
 
 
-
+            //////////////////////////////////////////////////////////////////////////////
             y += dy * 2;
             page.Canvas.DrawString("Подсчет баллов:",
                 FontUtf_TNR_16_b,
@@ -457,12 +472,64 @@ namespace KisVuzDotNetCore2.Infrastructure
                 new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
 
 
+            int x_Start = 100;
+            int y_Start = y;
+
+            int sum_points = 0;
+
+            for (int i = 0; i < lmsEventTasks.Count; i ++)
+            {
+                if (lmsEventTasks[i].LmsEventLmsTaskSetAppUserAnswers != null)
+                {
+                    foreach (var lmsEventLmsTaskSetAppUserAnswer in lmsEventTasks[i].LmsEventLmsTaskSetAppUserAnswers)
+                    {
+                        int row_indx = i/9 + 1;
+                        int col_indx = i - (row_indx - 1) * 9;
+
+                        int x_cur = x_Start + col_indx * 50;
+                        int y_cur = y_Start + (row_indx - 1) * 30;
+
+                        sum_points += lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints ?? 0;
+                        page.Canvas.DrawString( lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints == null ? "" : lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints.ToString(),
+                        FontUtf_TNR_14,
+                        new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                        x_cur, y_cur,
+                        new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+
+                        page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), x_cur - 15, y_cur + 10, x_cur + 15, y_cur + 10);
+
+                        page.Canvas.DrawString((i+1).ToString(),
+                            FontUtf_TNR_9,
+                            new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                            x_cur, y_cur + 15,
+                            new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+
+
+                        if(i < lmsEventTasks.Count - 1)
+                        {
+                            page.Canvas.DrawString("+",
+                            FontUtf_TNR_14,
+                            new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                            x_cur + 25, y_cur,
+                            new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+                        }
+                        else
+                        {
+                            page.Canvas.DrawString("=  " + sum_points,
+                            FontUtf_TNR_14,
+                            new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                            x_cur + 25, y_cur,
+                            new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
+                        }
+                    }
+                }
+            }
 
 
 
 
 
-
+            /////////////////////////////////////////////////////////////////////////////////////
 
             y += dy * 2;
             page.Canvas.DrawString("Члены экзаменационной комиссии",
@@ -473,8 +540,8 @@ namespace KisVuzDotNetCore2.Infrastructure
 
             page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 250, y + 10, 320, y + 10);
             page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 350, y + 10, 470, y + 10);
-            page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 250, y + 50, 320, y + 50);
-            page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 350, y + 50, 470, y + 50);
+            page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 250, y + 45, 320, y + 45);
+            page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 350, y + 45, 470, y + 45);
 
             page.Canvas.DrawString("Подпись",
                 FontUtf_TNR_9,
@@ -485,7 +552,7 @@ namespace KisVuzDotNetCore2.Infrastructure
             page.Canvas.DrawString("Подпись",
                 FontUtf_TNR_9,
                 new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
-                270, y + 55,
+                270, y + 50,
                 new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
 
 
@@ -498,7 +565,7 @@ namespace KisVuzDotNetCore2.Infrastructure
             page.Canvas.DrawString("ФИО",
                 FontUtf_TNR_9,
                 new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
-                410, y + 55,
+                410, y + 50,
                 new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
 
 
@@ -570,6 +637,236 @@ namespace KisVuzDotNetCore2.Infrastructure
                 new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
                 270, 100,
                 new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+        }
+
+
+        /// <summary>
+        /// Создаёт pdf-файл протокола вступительных испытаний
+        /// и возвращает путь к созданному файлу
+        /// </summary>
+        /// <param name="entranceTestsProtocol"></param>
+        /// <returns></returns>
+        public string GenerateEntranceTestsProtocol(EntranceTestsProtocol entranceTestsProtocol,
+            string userPhotoPath)
+        {            
+            #region Free Spire.PDF
+            //Create a pdf document.
+            PdfDocument doc = new PdfDocument();
+            // Create one page
+            PdfPageBase page = doc.Pages.Add();
+
+
+            PrintShapka(page);
+
+                      
+
+
+
+
+            page.Canvas.DrawString("ПРОТОКОЛ ВСТУПИТЕЛЬНЫХ ИСПЫТАНИЙ № ____",
+                FontUtf_TNR_16_b,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                280, 150,
+                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+
+            int y = 190;
+            int dy = 25;
+            page.Canvas.DrawString("Фамилия: " + entranceTestsProtocol.Abiturient.AppUser.LastName,
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                20, y,
+                new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
+
+
+            y += dy;
+            page.Canvas.DrawString("Имя: " + entranceTestsProtocol.Abiturient.AppUser.FirstName,
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                20, y,
+                new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
+
+            y += dy;
+            page.Canvas.DrawString("Отчество: " + entranceTestsProtocol.Abiturient.AppUser.Patronymic,
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                20, y,
+                new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
+
+            y += dy;
+            page.Canvas.DrawString("Дата выдачи: " + entranceTestsProtocol.DataVidachi.ToString("dd.MM.yyyy"),
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                20, y,
+                new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
+
+
+
+            //Draw the image
+            if (!string.IsNullOrWhiteSpace(userPhotoPath))
+            {
+                PdfImage image = PdfImage.FromFile(Path.Combine(_appEnvironment.WebRootPath, userPhotoPath));
+                float y_to_x_coeff = (float)image.Height / image.Width;                                
+                page.Canvas.DrawImage(image, 40, 290, 100, 100 * y_to_x_coeff);                
+            }
+
+
+            y += 50;
+            page.Canvas.DrawString("и.о. Ответственный секретарь приёмной комиссии",
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                160, y,
+                new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
+
+            y += 50;
+            page.Canvas.DrawString("______________________________ В.П. Скворцов",
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                160, y,
+                new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
+
+
+
+
+            y += 110;
+            page.Canvas.DrawString("РЕЗУЛЬТАТЫ ВСТУПИТЕЛЬНЫХ ИСПЫТАНИЙ",
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                280, y,
+                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+
+
+            y += 40;
+            page.Canvas.DrawString("Предмет",
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                60, y,
+                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+
+            
+
+
+            page.Canvas.DrawString("Результаты вступительных",
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                230, y-7,
+                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+
+            page.Canvas.DrawString("испытаний, баллов",
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                230, y+7,
+                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+
+
+
+
+            page.Canvas.DrawString("Дата проведения",
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                420, y-7,
+                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+
+            page.Canvas.DrawString("вступительных испытаний",
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                420, y+7,
+                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+
+
+            int y_top_line = y - 15;
+            page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 20, y_top_line, 510, y_top_line);
+            page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 20, y + 15, 510, y + 15);
+
+
+            
+            for (int i = 0; i < (entranceTestsProtocol.Abiturient.EntranceTestRegistrationForms?.Count ?? 0); i++)
+            {
+                y += dy;
+
+                page.Canvas.DrawString(entranceTestsProtocol.Abiturient.EntranceTestRegistrationForms[i].DisciplineName,
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                25, y,
+                new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
+
+                page.Canvas.DrawString(entranceTestsProtocol.Abiturient.EntranceTestRegistrationForms[i].EntranceTestResult ?? "",
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                230, y,
+                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+
+                page.Canvas.DrawString(entranceTestsProtocol.Abiturient.EntranceTestRegistrationForms[i].Date.ToString("dd.MM.yyyy"),
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                420, y,
+                new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+
+                page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 20, y + 15, 510, y + 15);
+
+                // Формируем вертикальные линии
+                if(i == entranceTestsProtocol.Abiturient.EntranceTestRegistrationForms.Count - 1)
+                {
+                    page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 20, y_top_line, 20, y + 15);
+                    page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 140, y_top_line, 140, y + 15);
+                    page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 330, y_top_line, 330, y + 15);
+                    page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 510, y_top_line, 510, y + 15);
+                }
+            }
+
+
+
+
+            /////////////////////////////////////////////////////////////////////////////////////
+
+            y += dy * 2;
+            page.Canvas.DrawString("Члены комиссии",
+                FontUtf_TNR_14,
+                new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                20, y,
+                new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
+
+            y += 10;
+            for (int i = 0; i < 7; i++)
+            {                
+                page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 220, y, 320, y);
+                page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), 350, y, 510, y);
+                y += 15;
+            }
+            
+            ///////////////////////////////////////////////////////////////////////////////////////           
+
+
+            string fileName = "EntranceTestsProtocol_" +
+                            Guid.NewGuid().ToString() +
+                            ".pdf";
+            // путь к папке files
+            string[] paths = { _appEnvironment.WebRootPath, "tmp", fileName };
+
+            string pathToDirectory = Path.Combine(paths[0], paths[1]);
+            if (!Directory.Exists(pathToDirectory))
+                Directory.CreateDirectory(pathToDirectory);
+
+            string path = Path.Combine(paths);
+            doc.SaveToFile(path);
+            doc.Close();
+
+
+            // Если файл существует, удаляем его
+            if (!string.IsNullOrWhiteSpace(entranceTestsProtocol.FileName))
+            {
+                string oldFilePath = Path.Combine(paths[0], entranceTestsProtocol.FileName);
+                if (File.Exists(oldFilePath))
+                {
+                    File.Delete(oldFilePath);
+                }
+            }
+
+            string newFileName = Path.Combine(paths[1], paths[2]);
+            entranceTestsProtocol.FileName = newFileName;
+            _context.SaveChanges();
+
+            return newFileName;
+            #endregion
         }
     }
 }

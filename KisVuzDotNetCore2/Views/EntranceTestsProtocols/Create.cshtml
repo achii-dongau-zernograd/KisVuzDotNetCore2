@@ -1,0 +1,34 @@
+﻿@model KisVuzDotNetCore2.Models.Priem.EntranceTestsProtocol
+
+@{
+    ViewData["Title"] = "Добавление";
+}
+
+<h2>Добавление протокола вступительного испытания</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AbiturientId" class="control-label">Абитуриент</label>
+                <select asp-for="AbiturientId" class ="form-control" asp-items="ViewBag.Abiturients"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataVidachi" class="control-label"></label>
+                <input asp-for="DataVidachi" class="form-control" />
+                <span asp-validation-for="DataVidachi" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="FileName" class="control-label"></label>
+                <input asp-for="FileName" class="form-control" />
+                <span asp-validation-for="FileName" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

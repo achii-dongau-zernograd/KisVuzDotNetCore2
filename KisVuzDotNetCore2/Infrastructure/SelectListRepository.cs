@@ -842,6 +842,21 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает список абитуриентов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAbiturients(int selectedId = 0)
+        {
+            var data = _context.Abiturients
+                .Include(a => a.AppUser)
+                .OrderBy(a => a.AppUser.GetFullName);
+
+            return new SelectList(data,
+                 "AbiturientId", "AbiturientFioBirthdayEmail", selectedId);
+        }
+
+        /// <summary>
         /// Возвращает список типов договоров
         /// </summary>
         /// <param name="selectedId"></param>

@@ -53,7 +53,7 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task<UserDocument> CreateAbiturientCard(string userName, IFormFile uploadedFile);
-
+        
         /// <summary>
         /// Загружает на сервер фотографию абитуриента и
         /// создаёт соответствующую запись в таблице UserDocuments
@@ -126,7 +126,7 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="userDocumentId"></param>
         /// <returns></returns>
         Task<UserDocument> GetUserDocumentAsync(int userDocumentId);
-
+                
         /// <summary>
         /// Проверяет наличие у пользователя сведений об образовании
         /// </summary>
