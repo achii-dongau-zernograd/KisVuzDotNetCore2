@@ -400,7 +400,7 @@ namespace KisVuzDotNetCore2.Infrastructure
                 }
 
                 // Ответы пользователя в виде текста
-                if (string.IsNullOrWhiteSpace(lmsEventTasks[i + 1].LmsTaskText))
+                if (!string.IsNullOrWhiteSpace(lmsEventTasks[i + 1].LmsTaskText))
                 {
                     appUserAnswerString += lmsEventTasks[i + 1].LmsTaskText;
                 }
@@ -440,7 +440,7 @@ namespace KisVuzDotNetCore2.Infrastructure
                     }
 
                     // Ответы пользователя в виде текста
-                    if(string.IsNullOrWhiteSpace(lmsEventTasks[i + 1].LmsTaskText))
+                    if(!string.IsNullOrWhiteSpace(lmsEventTasks[i + 1].LmsTaskText))
                     {
                         appUserAnswerString += lmsEventTasks[i + 1].LmsTaskText;
                     }
