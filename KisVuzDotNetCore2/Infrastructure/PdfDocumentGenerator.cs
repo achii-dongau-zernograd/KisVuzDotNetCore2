@@ -397,7 +397,14 @@ namespace KisVuzDotNetCore2.Infrastructure
                             appUserAnswerString += selectedNumber + " ";
                         }
                     }
-                }                               
+                }
+
+                // Ответы пользователя в виде текста
+                if (string.IsNullOrWhiteSpace(lmsEventTasks[i + 1].LmsTaskText))
+                {
+                    appUserAnswerString += lmsEventTasks[i + 1].LmsTaskText;
+                }
+
 
                 y += dy;
                 page.Canvas.DrawString($"Задание {i+1}: " + appUserAnswerString,
@@ -406,7 +413,7 @@ namespace KisVuzDotNetCore2.Infrastructure
                     20, y,
                     new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle));
 
-                
+                /////////// 2 столбец
                 if(i + 1 < lmsEventTasks.Count)
                 {
                     appUserAnswerString = "";
@@ -431,6 +438,13 @@ namespace KisVuzDotNetCore2.Infrastructure
                             }
                         }
                     }
+
+                    // Ответы пользователя в виде текста
+                    if(string.IsNullOrWhiteSpace(lmsEventTasks[i + 1].LmsTaskText))
+                    {
+                        appUserAnswerString += lmsEventTasks[i + 1].LmsTaskText;
+                    }
+                    
 
                     page.Canvas.DrawString($"Задание {i + 2}: " + appUserAnswerString,
                         FontUtf_TNR_14,
@@ -532,7 +546,7 @@ namespace KisVuzDotNetCore2.Infrastructure
 
             /////////////////////////////////////////////////////////////////////////////////////
 
-            y += dy * 2;
+            y += 40;
             page.Canvas.DrawString("Члены экзаменационной комиссии",
                 FontUtf_TNR_14,
                 new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
