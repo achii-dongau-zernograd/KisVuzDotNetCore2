@@ -396,14 +396,16 @@ namespace KisVuzDotNetCore2.Infrastructure
 
                             appUserAnswerString += selectedNumber + " ";
                         }
+
+                        // Ответы пользователя в виде текста
+                        if (!string.IsNullOrWhiteSpace(lmsEventLmsTaskSetAppUserAnswer.AnswerAsText))
+                        {
+                            appUserAnswerString += lmsEventLmsTaskSetAppUserAnswer.AnswerAsText;
+                        }
                     }
                 }
 
-                // Ответы пользователя в виде текста
-                if (!string.IsNullOrWhiteSpace(lmsEventTasks[i + 1].LmsTaskText))
-                {
-                    appUserAnswerString += lmsEventTasks[i + 1].LmsTaskText;
-                }
+                
 
 
                 y += dy;
@@ -436,14 +438,15 @@ namespace KisVuzDotNetCore2.Infrastructure
 
                                 appUserAnswerString += selectedNumber + " ";
                             }
+
+                            // Ответы пользователя в виде текста
+                            if (!string.IsNullOrWhiteSpace(lmsEventLmsTaskSetAppUserAnswer.AnswerAsText))
+                            {
+                                appUserAnswerString += lmsEventLmsTaskSetAppUserAnswer.AnswerAsText;
+                            }
                         }
                     }
-
-                    // Ответы пользователя в виде текста
-                    if(!string.IsNullOrWhiteSpace(lmsEventTasks[i + 1].LmsTaskText))
-                    {
-                        appUserAnswerString += lmsEventTasks[i + 1].LmsTaskText;
-                    }
+                                        
                     
 
                     page.Canvas.DrawString($"Задание {i + 2}: " + appUserAnswerString,
