@@ -59,7 +59,7 @@ namespace KisVuzDotNetCore2.Models.Priem
         public async Task<EntranceTestsProtocol> GeneratePdf(int entranceTestsProtocolId)
         {
             var entry = await GetEntranceTestsProtocol(entranceTestsProtocolId);
-            var userPhoto = await _userDocumentRepository.GetUserDocuments().Where(ud => ud.FileDataTypeId == (int)FileDataTypeEnum.UserDocuments_Photo).FirstOrDefaultAsync();
+            var userPhoto = await _userDocumentRepository.GetUserDocuments().Where(ud => ud.AppUserId == entry.Abiturient.AppUserId && ud.FileDataTypeId == (int)FileDataTypeEnum.UserDocuments_Photo).FirstOrDefaultAsync();
 
             string newFileName = _pdfDocumentGenerator.GenerateEntranceTestsProtocol(entry, userPhoto.FileModel.Path);
 
