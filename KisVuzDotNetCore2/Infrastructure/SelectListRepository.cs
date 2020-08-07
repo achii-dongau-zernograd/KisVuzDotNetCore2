@@ -1047,5 +1047,20 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(data,
                  "DisciplineNameId", "DisciplineNameName", filterDisciplineNameId);
         }
+
+        /// <summary>
+        /// Возвращает список вариантов ответов для указанного задания СДО
+        /// </summary>
+        /// <param name="lmsTaskId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListLmsTaskAnswers(int lmsTaskId, int selectedId = 0)
+        {
+            var data = _context.LmsTaskAnswers
+                .Where(ta => ta.LmsTaskId == lmsTaskId);
+
+            return new SelectList(data,
+                 "LmsTaskAnswerId", "LmsTaskAnswerText", data);
+        }
     }
 }

@@ -241,6 +241,72 @@ namespace KisVuzDotNetCore2.Models.LMS
             _context.LmsTasks.Remove(lmsTask);
             await _context.SaveChangesAsync();
         }
-        
+
+        /// <summary>
+        /// Возвращает вариант ответа по переданному УИД
+        /// </summary>
+        /// <param name="lmsTaskAnswerId"></param>
+        /// <returns></returns>
+        public async Task<LmsTaskAnswer> GetLmsTaskAnswer(int lmsTaskAnswerId)
+        {
+            var entry = await _context.LmsTaskAnswers
+                .Include(ta => ta.LmsTask)
+                .Include(ta => ta.FileModel.FileToFileTypes)
+                .FirstOrDefaultAsync(ta => ta.LmsTaskAnswerId == lmsTaskAnswerId);
+
+            return entry;
+        }
+
+        /// <summary>
+        /// Обновляет вариант ответа
+        /// </summary>
+        /// <param name="lmsTaskAnswer"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task UpdateLmsTaskAnswer(LmsTaskAnswer lmsTaskAnswer, IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+                if (lmsTaskAnswer.FileModelId != null)
+                {
+                    if (lmsTaskAnswer.FileModel == null)
+                    {
+                        lmsTaskAnswer.FileModel = await _fileModelRepository.GetFileModelAsync(lmsTaskAnswer.FileModelId);
+                    }
+
+                    await _fileModelRepository.ReloadFileAsync(lmsTaskAnswer.FileModel, uploadedFile);
+                }
+                else
+                {
+                    FileModel newFileModel = await _fileModelRepository.UploadLmsTaskAnswerJpg(uploadedFile);
+                    if (newFileModel == null) return;
+                    lmsTaskAnswer.FileModelId = newFileModel.Id;
+                }
+
+            }
+
+            _context.LmsTaskAnswers.Update(lmsTaskAnswer);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет вариант ответа
+        /// </summary>
+        /// <param name="lmsTaskAnswerId"></param>
+        /// <returns></returns>
+        public async Task RemoveLmsTaskAnswer(int lmsTaskAnswerId)
+        {
+            var entry = await GetLmsTaskAnswer(lmsTaskAnswerId);
+
+            if (entry == null) return;
+
+            if(entry.FileModel != null)
+            {
+                await _fileModelRepository.RemoveFileModelAsync(entry.FileModel);
+            }
+
+            _context.LmsTaskAnswers.Remove(entry);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -1,0 +1,58 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.LmsTaskAnswer
+
+@{
+    ViewData["Title"] = "Добавление";
+}
+
+<h2>Добавление варианта ответа</h2>
+
+<hr />
+
+<h4>Задание</h4>
+<p>@Model.LmsTask.LmsTaskText</p>
+@if (Model.LmsTask.LmsTaskJpg != null)
+{
+    <img src="/@Model.LmsTask.LmsTaskJpg.Path" class="img-responsive center-block" />
+}
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateLmsTaskAnswer" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="LmsTaskAnswerText" class="control-label"></label>
+                <input asp-for="LmsTaskAnswerText" class="form-control" />
+                <span asp-validation-for="LmsTaskAnswerText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileModelId" class="control-label"></label>
+                @if (Model.FileModel != null)
+                {
+                    <br />
+                    <a href="/@Model.FileModel.Path">Открыть</a>
+                    <br />
+                }
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsCorrect" /> @Html.DisplayNameFor(model => model.IsCorrect)
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" asp-for="LmsTaskAnswerId" />
+                <input type="hidden" asp-for="LmsTaskId" />
+                <input type="hidden" asp-for="FileModelId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="ListLmsTaskAnswers" asp-route-lmsTaskId="@Model.LmsTaskId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

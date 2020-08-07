@@ -148,6 +148,14 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListEduProfilesOfEduNapravl(int? eduNapravlId, int selectedId = 0);
+        
+        /// <summary>
+        /// Возвращает список вариантов ответов для указанного задания СДО
+        /// </summary>
+        /// <param name="lmsTaskId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListLmsTaskAnswers(int lmsTaskId, int selectedId = 0);
 
         /// <summary>
         /// Возвращает список полных наименований

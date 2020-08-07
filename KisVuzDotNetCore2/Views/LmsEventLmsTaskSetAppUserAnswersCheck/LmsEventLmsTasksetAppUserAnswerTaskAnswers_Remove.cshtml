@@ -1,0 +1,27 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.LmsEventLmsTasksetAppUserAnswerTaskAnswer
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление ответа пользователя, выбранного из списка</h2>
+
+<h3>Вы действительно хотите удалить ответ пользователя?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">        
+        <dt>
+            Удаляемый ответ
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LmsTaskAnswer.LmsTaskAnswerText)
+        </dd>
+    </dl>
+    
+    <form asp-action="LmsEventLmsTasksetAppUserAnswerTaskAnswers_Remove">
+        <input type="hidden" asp-for="LmsEventLmsTasksetAppUserAnswerTaskAnswerId" />
+        <input type="hidden" asp-for="LmsEventLmsTasksetAppUserAnswerId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="EditLmsEventLmsTasksetAppUserAnswer" asp-route-lmsEventLmsTasksetAppUserAnswerId="@Model.LmsEventLmsTasksetAppUserAnswerId" class="btn btn-default">Отмена</a>
+    </form>
+</div>

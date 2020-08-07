@@ -70,5 +70,27 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// <param name="lmsTask"></param>
         /// <returns></returns>
         Task RemoveLmsTaskAsync(LmsTask lmsTask);
+        
+        /// <summary>
+        /// Возвращает вариант ответа по переданному УИД
+        /// </summary>
+        /// <param name="lmsTaskAnswerId"></param>
+        /// <returns></returns>
+        Task<LmsTaskAnswer> GetLmsTaskAnswer(int lmsTaskAnswerId);
+        
+        /// <summary>
+        /// Обновляет вариант ответа
+        /// </summary>
+        /// <param name="lmsTaskAnswer"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task UpdateLmsTaskAnswer(LmsTaskAnswer lmsTaskAnswer, IFormFile uploadedFile);
+        
+        /// <summary>
+        /// Удаляет вариант ответа
+        /// </summary>
+        /// <param name="lmsTaskAnswerId"></param>
+        /// <returns></returns>
+        Task RemoveLmsTaskAnswer(int lmsTaskAnswerId);
     }
 }

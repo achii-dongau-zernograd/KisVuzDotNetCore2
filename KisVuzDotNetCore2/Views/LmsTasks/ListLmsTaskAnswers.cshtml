@@ -1,0 +1,60 @@
+﻿@model LmsTask
+
+@{
+    ViewData["Title"] = "Варианты ответов";
+}
+
+<br />
+<h4>Задание</h4>
+<p>@Model.LmsTaskText</p>
+@if (Model.LmsTaskJpg != null)
+{
+    <img src="/@Model.LmsTaskJpg.Path" class="img-responsive center-block" />
+}
+
+<hr />
+
+<h4>Варианты ответов</h4>
+
+<p>
+    <a asp-action="CreateLmsTaskAnswer" asp-route-lmsTaskId="@Model.LmsTaskId" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Текст ответа
+            </th>
+            <th>
+                Правильный ответ
+            </th>
+            <th>
+                Файл
+            </th>            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LmsTaskAnswers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LmsTaskAnswerText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsCorrect)
+                </td>
+                <td>
+                    @if(item.FileModel != null)
+                    {
+                        <img src="/@item.FileModel.Path" width="200" />
+                    }
+                </td>                
+                <td>
+                    <a asp-action="EditLmsTaskAnswer" asp-route-lmsTaskAnswerId="@item.LmsTaskAnswerId" class="btn btn-primary">Редактировать</a>
+                    <a asp-action="DeleteLmsTaskAnswer" asp-route-lmsTaskAnswerId="@item.LmsTaskAnswerId" class="btn btn-danger">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

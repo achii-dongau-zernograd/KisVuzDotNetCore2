@@ -1,0 +1,103 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.LmsEventLmsTasksetAppUserAnswer
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+<h2>Редактирование ответа пользователя</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditLmsEventLmsTasksetAppUserAnswer" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AppUserId" class="control-label"></label>
+                <label asp-for="AppUserId" class="form-control">@Model.AppUser.GetFullName</label>
+            </div>
+            <div class="form-group">
+                <label asp-for="LmsEventLmsTaskSetId" class="control-label"></label>
+                <label asp-for="LmsEventLmsTaskSetId" class="form-control">@Model.LmsEventLmsTaskSet.LmsEvent.Description</label>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnswerDateTime" class="control-label"></label>
+                <input asp-for="AnswerDateTime" class="form-control" />
+                <span asp-validation-for="AnswerDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LmsTaskId" class="control-label"></label>
+                <label asp-for="LmsTaskId" class="form-control">@Model.LmsTask.LmsTaskText</label>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LmsTask.LmsTaskAnswers" class="control-label">Варианты ответов</label>
+                <ol>
+                    @foreach (var lmsTaskAnswer in Model.LmsTask.LmsTaskAnswers)
+                    {
+                        <li>@lmsTaskAnswer.LmsTaskAnswerText @(lmsTaskAnswer.IsCorrect==true?" +":"")</li>
+                    }
+                </ol>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LmsTask.LmsTaskAnswers" class="control-label">Ответ пользователя</label>
+                @*Добавление ответа пользователя*@
+                <a asp-action="LmsEventLmsTasksetAppUserAnswerTaskAnswers_Add" asp-route-lmsEventLmsTasksetAppUserAnswerId="@Model.LmsEventLmsTasksetAppUserAnswerId">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                <ol>
+                    @foreach (var lmsEventLmsTaskSetAppUserAnswer in Model.LmsTask.LmsEventLmsTaskSetAppUserAnswers)
+                    {
+                        foreach (var lmsEventLmsTasksetAppUserAnswerTaskAnswer in lmsEventLmsTaskSetAppUserAnswer.LmsEventLmsTasksetAppUserAnswerTaskAnswers)
+                        {
+                            <li>
+                                @lmsEventLmsTasksetAppUserAnswerTaskAnswer.LmsTaskAnswer.LmsTaskAnswerText                                
+                                @*Удаление ответа пользователя*@
+                                <a asp-action="LmsEventLmsTasksetAppUserAnswerTaskAnswers_Remove"
+                                   asp-route-lmsEventLmsTasksetAppUserAnswerTaskAnswerId="@lmsEventLmsTasksetAppUserAnswerTaskAnswer.LmsEventLmsTasksetAppUserAnswerTaskAnswerId"
+                                   class="text-danger">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </li>
+                        }                        
+                    }
+                </ol>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="AnswerAsText" class="control-label"></label>
+                <input asp-for="AnswerAsText" class="form-control" />
+                <span asp-validation-for="AnswerAsText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnswerAsFileId" class="control-label"></label>
+                @if (Model.AnswerAsFile != null)
+                {
+                    <a href="/@Model.AnswerAsFile.Path" class="form-control">Открыть</a>
+                    <br />
+                    <label asp-for="AnswerAsFileId" class="control-label">Для замены выберите новый файл</label>
+                }
+                <input type="file" name="uploadedFile" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NumberOfPoints" class="control-label"></label>
+                <input asp-for="NumberOfPoints" class="form-control" />
+                <span asp-validation-for="NumberOfPoints" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" asp-for="LmsEventLmsTasksetAppUserAnswerId" />
+                <input type="hidden" asp-for="AppUserId" />
+                <input type="hidden" name="userName" value="@Model.AppUser.UserName" />
+                <input type="hidden" name="lmsEventId" value="@Model.LmsEventLmsTaskSet.LmsEventId" />                
+                <input type="hidden" asp-for="LmsEventLmsTaskSetId" />
+                <input type="hidden" asp-for="LmsTaskId" />
+                <input type="hidden" asp-for="AnswerAsFileId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" asp-route-lmsEventId="@Model.LmsEventLmsTaskSet.LmsEventId" asp-route-UserName="@Model.AppUser.UserName" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

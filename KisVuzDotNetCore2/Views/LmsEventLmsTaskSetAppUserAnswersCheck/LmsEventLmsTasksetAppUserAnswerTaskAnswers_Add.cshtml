@@ -1,0 +1,30 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.LmsEventLmsTasksetAppUserAnswerTaskAnswer
+
+@{
+    ViewData["Title"] = "LmsEventLmsTasksetAppUserAnswerTaskAnswers_Add";
+}
+
+<h2>Добавление ответа пользователя</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="LmsEventLmsTasksetAppUserAnswerTaskAnswers_Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LmsEventLmsTasksetAppUserAnswer.AppUserId" class="control-label"></label>
+                <label asp-for="LmsEventLmsTasksetAppUserAnswer.AppUserId" class="form-control">@Model.LmsEventLmsTasksetAppUserAnswer.AppUser.GetFullName</label>
+            </div>            
+            <div class="form-group">
+                <label asp-for="LmsTaskAnswerId" class="control-label"></label>
+                <select asp-for="LmsTaskAnswerId" class ="form-control" asp-items="ViewBag.LmsTaskAnswers"></select>
+            </div>
+                        
+            <div class="form-group">
+                <input type="hidden" asp-for="LmsEventLmsTasksetAppUserAnswerId" />
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+                <a asp-action="EditLmsEventLmsTasksetAppUserAnswer" asp-route-lmsEventLmsTasksetAppUserAnswerId="@Model.LmsEventLmsTasksetAppUserAnswerId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

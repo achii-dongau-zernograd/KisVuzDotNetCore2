@@ -80,5 +80,33 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// <param name="lmsEventLmsTasksetAppUserAnswerId"></param>
         /// <returns></returns>
         Task<LmsEventLmsTasksetAppUserAnswer> GetLmsEventAppUserAnswerAsync(int lmsEventLmsTasksetAppUserAnswerId);
+        
+        /// <summary>
+        /// Добавляет ответ пользователя, выбранный из набора вариантов ответов
+        /// </summary>
+        /// <param name="lmsEventLmsTasksetAppUserAnswerTaskAnswer"></param>
+        /// <returns></returns>
+        Task AddLmsEventLmsTasksetAppUserAnswerTaskAnswerAsync(LmsEventLmsTasksetAppUserAnswerTaskAnswer lmsEventLmsTasksetAppUserAnswerTaskAnswer);
+
+        /// <summary>
+        /// Возвращает ответ пользователя, выбранный из набора вариантов ответов
+        /// </summary>
+        /// <param name="lmsEventLmsTasksetAppUserAnswerTaskAnswerId"></param>
+        /// <returns></returns>
+        Task<LmsEventLmsTasksetAppUserAnswerTaskAnswer> GetLmsEventLmsTasksetAppUserAnswerTaskAnswerAsync(int lmsEventLmsTasksetAppUserAnswerTaskAnswerId);
+
+        /// <summary>
+        /// Удаление ответа пользователя, выбранного из списка
+        /// </summary>
+        /// <param name="lmsEventLmsTasksetAppUserAnswerTaskAnswerId"></param>
+        /// <returns></returns>
+        Task RemoveLmsEventLmsTasksetAppUserAnswerTaskAnswerAsync(int lmsEventLmsTasksetAppUserAnswerTaskAnswerId);
+        
+        /// <summary>
+        /// Обновление ответа пользователя на задание СДО
+        /// </summary>
+        /// <param name="lmsEventLmsTasksetAppUserAnswer"></param>
+        /// <returns></returns>
+        Task UpdateLmsEventLmsTasksetAppUserAnswerAsync(LmsEventLmsTasksetAppUserAnswer lmsEventLmsTasksetAppUserAnswer);
     }
 }

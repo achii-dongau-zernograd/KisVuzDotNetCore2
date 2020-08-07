@@ -508,11 +508,11 @@ namespace KisVuzDotNetCore2.Infrastructure
                         y = y_cur;
 
                         sum_points += lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints ?? 0;
-                        page.Canvas.DrawString( lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints == null ? "" : lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints.ToString(),
-                        FontUtf_TNR_14,
-                        new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
-                        x_cur, y_cur,
-                        new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
+                        //page.Canvas.DrawString( lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints == null ? "" : lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints.ToString(),
+                        //FontUtf_TNR_14,
+                        //new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
+                        //x_cur, y_cur,
+                        //new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle));
 
                         page.Canvas.DrawLine(new PdfPen(new PdfRGBColor(0, 0, 0)), x_cur - 15, y_cur + 10, x_cur + 15, y_cur + 10);
 
@@ -533,7 +533,7 @@ namespace KisVuzDotNetCore2.Infrastructure
                         }
                         else
                         {
-                            page.Canvas.DrawString("=  " + sum_points,
+                            page.Canvas.DrawString("=  " /*+ sum_points*/,
                             FontUtf_TNR_14,
                             new PdfSolidBrush(new PdfRGBColor(0, 0, 0)),
                             x_cur + 25, y_cur,

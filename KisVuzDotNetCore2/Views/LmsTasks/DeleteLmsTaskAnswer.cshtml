@@ -1,0 +1,41 @@
+﻿@model KisVuzDotNetCore2.Models.LMS.LmsTaskAnswer
+
+@{
+    ViewData["Title"] = "Удаление варианта ответа";
+}
+
+<h2>Удаление варианта ответа</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LmsTaskAnswerText)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LmsTaskAnswerText)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCorrect)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsCorrect)
+        </dd>
+        <dt>
+            Файл
+        </dt>
+        <dd>
+            @if (Model.FileModel != null)
+            {
+                <img src="/@Model.FileModel.Path" width="200" />
+            }
+        </dd>        
+    </dl>
+    
+    <form asp-action="DeleteLmsTaskAnswer">
+        <input type="hidden" asp-for="LmsTaskAnswerId" />
+        <input type="hidden" asp-for="LmsTaskId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="ListLmsTaskAnswers" asp-route-lmsTaskId="@Model.LmsTaskId" class="btn btn-default">Отмена</a>
+    </form>
+</div>

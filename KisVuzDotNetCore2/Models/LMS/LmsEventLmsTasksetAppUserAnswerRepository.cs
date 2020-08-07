@@ -34,6 +34,7 @@ namespace KisVuzDotNetCore2.Models.LMS
         {
             var query = _context.LmsEventLmsTasksetsAppUserAnswers
                 .Include(a => a.AppUser)
+                .Include(a => a.LmsEventLmsTaskSet.LmsEvent)
                 .Include(a => a.AnswerAsFile.FileToFileTypes)
                 .Include(a => a.LmsEventLmsTasksetAppUserAnswerTaskAnswers)
                     .ThenInclude(ta => ta.LmsTaskAnswer.FileModel.FileToFileTypes)
@@ -339,6 +340,58 @@ namespace KisVuzDotNetCore2.Models.LMS
         public async Task<LmsEvent> GetLmsEvent(int lmsEventId)
         {
             return await _lmsEventRepository.GetLmsEventAsync(lmsEventId);
+        }
+
+        /// <summary>
+        /// Добавляет ответ пользователя, выбранный из набора вариантов ответов
+        /// </summary>
+        /// <param name="lmsEventLmsTasksetAppUserAnswerTaskAnswer"></param>
+        /// <returns></returns>
+        public async Task AddLmsEventLmsTasksetAppUserAnswerTaskAnswerAsync(LmsEventLmsTasksetAppUserAnswerTaskAnswer lmsEventLmsTasksetAppUserAnswerTaskAnswer)
+        {
+            _context.LmsEventLmsTasksetAppUserAnswerTaskAnswers.Add(lmsEventLmsTasksetAppUserAnswerTaskAnswer);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Возвращает ответ пользователя, выбранный из набора вариантов ответов
+        /// </summary>
+        /// <param name="lmsEventLmsTasksetAppUserAnswerTaskAnswerId"></param>
+        /// <returns></returns>
+        public async Task<LmsEventLmsTasksetAppUserAnswerTaskAnswer> GetLmsEventLmsTasksetAppUserAnswerTaskAnswerAsync(int lmsEventLmsTasksetAppUserAnswerTaskAnswerId)
+        {
+            var entry = await _context.LmsEventLmsTasksetAppUserAnswerTaskAnswers
+                .Include(a => a.LmsTaskAnswer)
+                .Include(a => a.LmsEventLmsTasksetAppUserAnswer)
+                .FirstOrDefaultAsync(a => a.LmsEventLmsTasksetAppUserAnswerTaskAnswerId == lmsEventLmsTasksetAppUserAnswerTaskAnswerId);
+
+            return entry;
+        }
+
+        /// <summary>
+        /// Удаление ответа пользователя, выбранного из списка
+        /// </summary>
+        /// <param name="lmsEventLmsTasksetAppUserAnswerTaskAnswerId"></param>
+        /// <returns></returns>
+        public async Task RemoveLmsEventLmsTasksetAppUserAnswerTaskAnswerAsync(int lmsEventLmsTasksetAppUserAnswerTaskAnswerId)
+        {
+            _context.LmsEventLmsTasksetAppUserAnswerTaskAnswers.Remove(
+                new LmsEventLmsTasksetAppUserAnswerTaskAnswer
+                {
+                    LmsEventLmsTasksetAppUserAnswerTaskAnswerId = lmsEventLmsTasksetAppUserAnswerTaskAnswerId
+                });
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Обновление ответа пользователя на задание СДО
+        /// </summary>
+        /// <param name="lmsEventLmsTasksetAppUserAnswer"></param>
+        /// <returns></returns>
+        public async Task UpdateLmsEventLmsTasksetAppUserAnswerAsync(LmsEventLmsTasksetAppUserAnswer lmsEventLmsTasksetAppUserAnswer)
+        {
+            _context.LmsEventLmsTasksetsAppUserAnswers.Update(lmsEventLmsTasksetAppUserAnswer);
+            await _context.SaveChangesAsync();
         }
     }
 }

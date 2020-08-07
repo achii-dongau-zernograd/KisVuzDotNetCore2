@@ -14,7 +14,7 @@ namespace KisVuzDotNetCore2.Controllers.LMS
     /// <summary>
     /// Контроллер администрирования результатов работ пользователей в СДО
     /// </summary>
-    [Authorize(Roles ="Администраторы СДО")]
+    [Authorize(Roles = "Администраторы СДО")]
     public class LmsEventLmsTaskSetAppUserAnswersCheckController : Controller
     {
         private readonly ILmsEventLmsTasksetAppUserAnswerRepository _lmsEventLmsTasksetAppUserAnswerRepository;
@@ -45,7 +45,7 @@ namespace KisVuzDotNetCore2.Controllers.LMS
             ViewBag.LmsEvent = await _lmsEventLmsTasksetAppUserAnswerRepository.GetLmsEvent(lmsEventId);
 
             ViewBag.LmsEventId = lmsEventId;
-            ViewBag.UserName = userName;                       
+            ViewBag.UserName = userName;
 
             return View(lmsEventTasks);
         }
@@ -123,5 +123,81 @@ namespace KisVuzDotNetCore2.Controllers.LMS
         }
 
         #endregion
+
+        /// <summary>
+        /// Редактирование ответа
+        /// </summary>
+        /// <param name="lmsEventLmsTasksetAppUserAnswerId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> EditLmsEventLmsTasksetAppUserAnswer(int lmsEventLmsTasksetAppUserAnswerId)
+        {
+            var entry = await _lmsEventLmsTasksetAppUserAnswerRepository.GetLmsEventAppUserAnswerAsync(lmsEventLmsTasksetAppUserAnswerId);
+            
+            return View(entry);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditLmsEventLmsTasksetAppUserAnswer(LmsEventLmsTasksetAppUserAnswer lmsEventLmsTasksetAppUserAnswer,
+            int lmsEventId,
+            string userName)
+        {
+            await _lmsEventLmsTasksetAppUserAnswerRepository.UpdateLmsEventLmsTasksetAppUserAnswerAsync(lmsEventLmsTasksetAppUserAnswer);
+
+            return RedirectToAction(nameof(Index), new { lmsEventId, UserName = userName });
+        }
+
+
+        /// <summary>
+        /// Добавление ответа пользователя, выбранного из списка предложенных
+        /// </summary>
+        /// <param name="lmsEventLmsTasksetAppUserAnswerId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> LmsEventLmsTasksetAppUserAnswerTaskAnswers_Add(int lmsEventLmsTasksetAppUserAnswerId)
+        {
+            var entry = await _lmsEventLmsTasksetAppUserAnswerRepository.GetLmsEventAppUserAnswerAsync(lmsEventLmsTasksetAppUserAnswerId);
+
+            var newItem = new LmsEventLmsTasksetAppUserAnswerTaskAnswer
+            {
+                LmsEventLmsTasksetAppUserAnswer = entry,
+                LmsEventLmsTasksetAppUserAnswerId = entry.LmsEventLmsTasksetAppUserAnswerId
+            };
+
+            ViewBag.LmsTaskAnswers = _selectListRepository.GetSelectListLmsTaskAnswers(entry.LmsTaskId, 0);
+
+            return View(newItem);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LmsEventLmsTasksetAppUserAnswerTaskAnswers_Add(
+            LmsEventLmsTasksetAppUserAnswerTaskAnswer lmsEventLmsTasksetAppUserAnswerTaskAnswer,
+            int lmsEventLmsTasksetAppUserAnswerId)
+        {
+            await _lmsEventLmsTasksetAppUserAnswerRepository.AddLmsEventLmsTasksetAppUserAnswerTaskAnswerAsync(lmsEventLmsTasksetAppUserAnswerTaskAnswer);
+            
+            return RedirectToAction(nameof(EditLmsEventLmsTasksetAppUserAnswer), new { lmsEventLmsTasksetAppUserAnswerId });
+        }
+
+
+
+        /// <summary>
+        /// Удаление ответа пользователя, выбранного из списка
+        /// </summary>
+        /// <param name="lmsEventLmsTasksetAppUserAnswerTaskAnswerId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> LmsEventLmsTasksetAppUserAnswerTaskAnswers_Remove(int lmsEventLmsTasksetAppUserAnswerTaskAnswerId)
+        {
+            var entry = await _lmsEventLmsTasksetAppUserAnswerRepository.GetLmsEventLmsTasksetAppUserAnswerTaskAnswerAsync(lmsEventLmsTasksetAppUserAnswerTaskAnswerId);
+            return View(entry);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LmsEventLmsTasksetAppUserAnswerTaskAnswers_Remove(
+            LmsEventLmsTasksetAppUserAnswerTaskAnswer lmsEventLmsTasksetAppUserAnswerTaskAnswer)
+        {
+            await _lmsEventLmsTasksetAppUserAnswerRepository.RemoveLmsEventLmsTasksetAppUserAnswerTaskAnswerAsync(lmsEventLmsTasksetAppUserAnswerTaskAnswer.LmsEventLmsTasksetAppUserAnswerTaskAnswerId);
+
+            return RedirectToAction(nameof(EditLmsEventLmsTasksetAppUserAnswer), new { lmsEventLmsTasksetAppUserAnswerTaskAnswer.LmsEventLmsTasksetAppUserAnswerId });
+        }
+
     }
 }

@@ -139,6 +139,87 @@ namespace KisVuzDotNetCore2.Controllers.LMS
         }
         #endregion
 
+        #region Редактирование вариантов ответов
+        public async Task<IActionResult> ListLmsTaskAnswers(int lmsTaskId)
+        {
+            var lmsTask = await _lmsTaskRepository.GetLmsTaskAsync(lmsTaskId);                       
+
+            return View(lmsTask);
+        }
+
+
+
+        /// <summary>
+        /// Добавление варианта ответа
+        /// </summary>
+        /// <param name="lmsTaskAnswerId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> CreateLmsTaskAnswer(int lmsTaskId)
+        {
+            var lmsTask = await _lmsTaskRepository.GetLmsTaskAsync(lmsTaskId);
+
+            var lmsTaskAnswer = new LmsTaskAnswer
+            {
+                LmsTaskId = lmsTask.LmsTaskId,
+                LmsTask = lmsTask
+            };
+
+            return View(lmsTaskAnswer);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateLmsTaskAnswer(LmsTaskAnswer lmsTaskAnswer,
+            IFormFile uploadedFile)
+        {
+            await _lmsTaskRepository.AddLmsTaskAnswer(lmsTaskAnswer, uploadedFile);
+
+            return RedirectToAction(nameof(ListLmsTaskAnswers), new { lmsTaskId = lmsTaskAnswer.LmsTaskId });
+        }
+
+
+        /// <summary>
+        /// Редактирование варианта ответа
+        /// </summary>
+        /// <param name="lmsTaskAnswerId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> EditLmsTaskAnswer(int lmsTaskAnswerId)
+        {
+            var lmsTaskAnswer = await _lmsTaskRepository.GetLmsTaskAnswer(lmsTaskAnswerId);
+
+            return View(lmsTaskAnswer);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditLmsTaskAnswer(LmsTaskAnswer lmsTaskAnswer,
+            IFormFile uploadedFile)
+        { 
+            await _lmsTaskRepository.UpdateLmsTaskAnswer(lmsTaskAnswer, uploadedFile);
+
+            return RedirectToAction(nameof(ListLmsTaskAnswers), new { lmsTaskId = lmsTaskAnswer.LmsTaskId });
+        }
+
+
+        /// <summary>
+        /// Удаление варианта ответа
+        /// </summary>
+        /// <param name="lmsTaskAnswerId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> DeleteLmsTaskAnswer(int lmsTaskAnswerId)
+        {
+            var lmsTaskAnswer = await _lmsTaskRepository.GetLmsTaskAnswer(lmsTaskAnswerId);
+
+            return View(lmsTaskAnswer);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteLmsTaskAnswer(LmsTaskAnswer lmsTaskAnswer)
+        {
+            await _lmsTaskRepository.RemoveLmsTaskAnswer(lmsTaskAnswer.LmsTaskAnswerId);
+
+            return RedirectToAction(nameof(ListLmsTaskAnswers), new { lmsTaskId = lmsTaskAnswer.LmsTaskId });
+        }
+        #endregion
+
         #region Удаление задания
         public async Task<IActionResult> RemoveLmsTask(int id)
         {
