@@ -488,6 +488,7 @@ namespace KisVuzDotNetCore2.Infrastructure
 
                         int x_cur = x_Start + col_indx * 50;
                         int y_cur = y_Start + (row_indx - 1) * 30;
+                        y = y_cur;
 
                         sum_points += lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints ?? 0;
                         page.Canvas.DrawString( lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints == null ? "" : lmsEventLmsTaskSetAppUserAnswer.NumberOfPoints.ToString(),
