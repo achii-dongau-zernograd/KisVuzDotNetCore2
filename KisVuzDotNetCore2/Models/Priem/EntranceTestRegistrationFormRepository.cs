@@ -62,6 +62,30 @@ namespace KisVuzDotNetCore2.Models.Priem
             return query;
         }
 
+        /// <summary>
+        /// Возвращает запрос на выборку всех бланков регистрации на вступительные испытания
+        /// </summary>
+        /// <param name="filterAndSortModel"></param>
+        /// <returns></returns>
+        public IQueryable<EntranceTestRegistrationForm> GetEntranceTestRegistrationForms(EntranceTestRegistrationFormFilterAndSortModel filterAndSortModel)
+        {
+            var query = GetEntranceTestRegistrationForms();
+
+            if (filterAndSortModel.FilterLastNameFragment != null)
+                query = query.Where(e => e.LastName.Contains(filterAndSortModel.FilterLastNameFragment));
+
+            if (filterAndSortModel.FilterEntranceTestGroupId != null)
+                query = query.Where(e => e.Abiturient.EntranceTestGroupId == filterAndSortModel.FilterEntranceTestGroupId);
+
+            if (filterAndSortModel.FilterDisciplineNameFragment != null && filterAndSortModel.FilterDisciplineNameFragment != "Все дисциплины")
+                query = query.Where(e => e.DisciplineName == filterAndSortModel.FilterDisciplineNameFragment);
+
+            if (filterAndSortModel.FilterDate != null)
+                query = query.Where(e => e.Date == filterAndSortModel.FilterDate);
+
+            return query;
+        }
+
         public bool IsEntranceTestRegistrationFormExists(int id)
         {
             return _context.EntranceTestRegistrationForms.Any(e => e.EntranceTestRegistrationFormId == id);

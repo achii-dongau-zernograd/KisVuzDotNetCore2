@@ -25,6 +25,12 @@ namespace KisVuzDotNetCore2.Models.Priem
         IQueryable<EntranceTestRegistrationForm> GetEntranceTestRegistrationForms();
 
         /// <summary>
+        /// Возвращает запрос на выборку всех бланков регистрации на вступительные испытания
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<EntranceTestRegistrationForm> GetEntranceTestRegistrationForms(EntranceTestRegistrationFormFilterAndSortModel filterAndSortModel);
+
+        /// <summary>
         /// Возвращает бланк регистрации абитуриента на вступительное испытание
         /// </summary>
         /// <param name="id"></param>

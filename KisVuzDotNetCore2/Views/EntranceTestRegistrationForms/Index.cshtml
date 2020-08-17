@@ -9,6 +9,51 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Добавить</a>
 </p>
+
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">Фильтр</div>
+    <div class="panel-body">
+        <form asp-action="Index" class="form-inline">
+            <div class="form-group">
+                <label for="FilterLastNameFragment">Фамилия (фрагмент)</label>
+                <input type="text" name="FilterLastNameFragment" value="@ViewBag.EntranceTestRegistrationFormFilterAndSortModel.FilterLastNameFragment" class="form-control" id="FilterLastNameFragment" placeholder="Все абитуриенты">
+            </div>
+
+            <div class="form-group">
+                <label for="FilterEntranceTestGroupId">№ группы вст. исп.</label>
+                <select name="FilterEntranceTestGroupId" class="form-control" asp-items="ViewBag.EntranceTestGroups">
+                    <option>Все абитуриенты</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="FilterDisciplineName">Наименование дисциплины</label>
+                <select name="FilterDisciplineNameFragment" class="form-control" asp-items="ViewBag.DisciplineNames">
+                    <option>Все дисциплины</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="FilterDate">Дата проведения</label>
+                <select name="FilterDate" class="form-control" asp-items="ViewBag.Dates">
+                    <option>Все даты</option>
+                </select>
+            </div>
+
+            <input type="hidden" name="IsRequestDataImmediately" value="true" />
+            <button type="submit" class="btn btn-info">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                Применить фильтр
+            </button>
+                        
+        </form>
+    </div>
+</div>
+
+
+
 <table class="table">
     <thead>
         <tr>
@@ -48,9 +93,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.EntranceTestResult)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.FileName)
-            </th>
+            </th>*@
             <th>
                 Бланк ответов на экзаменационное задание
             </th>
@@ -98,11 +143,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EntranceTestResult)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.FileName)
                 <br />
                 @Html.DisplayFor(modelItem => item.FileNameBlankOtvetov)
-            </td>
+            </td>*@
             <td>
                 <a asp-controller="LmsEventLmsTaskSetAppUserAnswersCheck"
                    asp-action="Index"

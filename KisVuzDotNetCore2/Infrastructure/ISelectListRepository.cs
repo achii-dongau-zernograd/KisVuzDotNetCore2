@@ -2,6 +2,7 @@
 using KisVuzDotNetCore2.Models.LMS;
 using KisVuzDotNetCore2.Models.Struct;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -56,7 +57,21 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListAppUsersAuthors(string selectedId = "");
-        
+
+        /// <summary>
+        /// Возвращает список дат, в которые проходили вступительные испытания
+        /// </summary>
+        /// <param name="selectedDate"></param>
+        /// <returns></returns>
+        SelectList GetSelectListEntranceTestRegistrationFormDates(DateTime? selectedDate = null);
+
+        /// <summary>
+        /// Возвращает список наименований дисциплин, по которым проходили вступительные испытания
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListEntranceTestRegistrationFormDisciplineNames(string selectedId = "");
+
         /// <summary>
         /// Возвращает список номеров групп абитуриентов для прохождения вступительных испытаний
         /// </summary>

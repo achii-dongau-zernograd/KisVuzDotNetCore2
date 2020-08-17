@@ -1062,5 +1062,35 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(data,
                  "LmsTaskAnswerId", "LmsTaskAnswerText", data);
         }
+
+        /// <summary>
+        /// Возвращает список наименований дисциплин, по которым проходили вступительные испытания
+        /// </summary>
+        /// <param name="selectedDisciplineName"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEntranceTestRegistrationFormDisciplineNames(string selectedDisciplineName = "")
+        {
+            var data = _context.EntranceTestRegistrationForms
+                .Select(e => e.DisciplineName)
+                .Distinct()
+                .ToList();
+
+            return new SelectList(data, selectedDisciplineName);
+        }
+
+        /// <summary>
+        /// Возвращает список дат, в которые проходили вступительные испытания
+        /// </summary>
+        /// <param name="selectedDate"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEntranceTestRegistrationFormDates(DateTime? selectedDate = null)
+        {
+            var data = _context.EntranceTestRegistrationForms
+                .Select(e => e.Date.ToString("dd.MM.yyyy"))
+                .Distinct()
+                .ToList();
+
+            return new SelectList(data, selectedDate == null ? null : ((DateTime)selectedDate).ToString("dd.MM.yyyy"));
+        }
     }
 }

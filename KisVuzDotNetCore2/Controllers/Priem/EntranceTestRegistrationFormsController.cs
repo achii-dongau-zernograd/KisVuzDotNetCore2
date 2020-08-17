@@ -21,22 +21,30 @@ namespace KisVuzDotNetCore2.Controllers.Priem
         private readonly IEntranceTestRegistrationFormRepository _entranceTestRegistrationFormRepository;
         private readonly IPdfDocumentGenerator _pdfDocumentGenerator;
         private readonly ILmsEventLmsTasksetAppUserAnswerRepository _lmsEventLmsTasksetAppUserAnswerRepository;
+        private readonly ISelectListRepository _selectListRepository;
 
         public EntranceTestRegistrationFormsController(AppIdentityDBContext context,
             IEntranceTestRegistrationFormRepository entranceTestRegistrationFormRepository,
             IPdfDocumentGenerator pdfDocumentGenerator,
-            ILmsEventLmsTasksetAppUserAnswerRepository lmsEventLmsTasksetAppUserAnswerRepository)
+            ILmsEventLmsTasksetAppUserAnswerRepository lmsEventLmsTasksetAppUserAnswerRepository,
+            ISelectListRepository selectListRepository)
         {
             _context = context;
             _entranceTestRegistrationFormRepository = entranceTestRegistrationFormRepository;
             _pdfDocumentGenerator = pdfDocumentGenerator;
             _lmsEventLmsTasksetAppUserAnswerRepository = lmsEventLmsTasksetAppUserAnswerRepository;
+            _selectListRepository = selectListRepository;
         }
 
         // GET: EntranceTestRegistrationForms
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(EntranceTestRegistrationFormFilterAndSortModel filterAndSortModel)
         {
-            var appIdentityDBContext = _entranceTestRegistrationFormRepository.GetEntranceTestRegistrationForms();
+            ViewBag.EntranceTestRegistrationFormFilterAndSortModel = filterAndSortModel;            
+            ViewBag.EntranceTestGroups = _selectListRepository.GetSelectListEntranceTestGroups(filterAndSortModel.FilterEntranceTestGroupId ?? 0);
+            ViewBag.DisciplineNames = _selectListRepository.GetSelectListEntranceTestRegistrationFormDisciplineNames(filterAndSortModel.FilterDisciplineNameFragment);
+            ViewBag.Dates = _selectListRepository.GetSelectListEntranceTestRegistrationFormDates(filterAndSortModel.FilterDate);
+
+            var appIdentityDBContext = _entranceTestRegistrationFormRepository.GetEntranceTestRegistrationForms(filterAndSortModel);
             return View(await appIdentityDBContext.ToListAsync());
         }
 
