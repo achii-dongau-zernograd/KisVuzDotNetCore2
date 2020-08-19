@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="(@1 @2 @3 Member=_context)" Category="CodeSchema_Field" Bounds="-312.093317149774,-484.680377453123,212.913333333333,26" CodeSchemaProperty_IsPrivate="True" CommonLabel="_context" Icon="Microsoft.VisualStudio.Field.Private" Label="_context : AppIdentityDBContext" SourceLocation="(Assembly=file:///C:/!MyProjects/KisVuzDotNetCore2/KisVuzDotNetCore2/Controllers/Education/EduProgramsController.cs StartLineNumber=19 StartCharacterOffset=46 EndLineNumber=19 EndCharacterOffset=54)" UseManualLocation="True" />
+    <Node Id="@10" Category="CodeSchema_Method" Bounds="-675.49346075086,-680.338573104762,217.536666666667,26" CodeSchemaProperty_IsPublic="True" CommonLabel="Education" Icon="Microsoft.VisualStudio.Method.Public" Label="Education() : Task&lt;IActionResult&gt;" SourceLocation="(Assembly=file:///C:/!MyProjects/KisVuzDotNetCore2/KisVuzDotNetCore2/Controllers/Sveden/SvedenController.cs StartLineNumber=138 StartCharacterOffset=41 EndLineNumber=138 EndCharacterOffset=50)" UseManualLocation="True" />
+    <Node Id="@11" Category="CodeSchema_Method" Bounds="-676.795288085938,-593.377073470052,194,26" CodeSchemaProperty_IsPublic="True" CommonLabel="Index" Icon="Microsoft.VisualStudio.Method.Public" Label="Index() : Task&lt;IActionResult&gt;" SourceLocation="(Assembly=file:///C:/!MyProjects/KisVuzDotNetCore2/KisVuzDotNetCore2/Controllers/Education/EduProgramsController.cs StartLineNumber=30 StartCharacterOffset=41 EndLineNumber=30 EndCharacterOffset=46)" UseManualLocation="True" />
+    <Node Id="@4" Category="CodeSchema_Class" Bounds="-906.775617675781,-551.166931327311,164.41,26" CodeSchemaProperty_IsPublic="True" CommonLabel="EduProgramsController" Icon="Microsoft.VisualStudio.Class.Public" Label="EduProgramsController" SourceLocation="(Assembly=file:///C:/!MyProjects/KisVuzDotNetCore2/KisVuzDotNetCore2/Controllers/Education/EduProgramsController.cs StartLineNumber=17 StartCharacterOffset=17 EndLineNumber=17 EndCharacterOffset=38)" UseManualLocation="True" />
+    <Node Id="@5" Category="CodeSchema_Class" Bounds="-876.82557047526,-679.087131327311,132.023333333333,26" CodeSchemaProperty_IsPublic="True" CommonLabel="SvedenController" Icon="Microsoft.VisualStudio.Class.Public" Label="SvedenController" SourceLocation="(Assembly=file:///C:/!MyProjects/KisVuzDotNetCore2/KisVuzDotNetCore2/Controllers/Sveden/SvedenController.cs StartLineNumber=22 StartCharacterOffset=17 EndLineNumber=22 EndCharacterOffset=33)" UseManualLocation="True" />
+    <Node Id="@7" Category="CodeSchema_Method" Bounds="-691.1099404392,-421.795024462891,218.526666666667,26" CodeSchemaProperty_IsPublic="True" CommonLabel="Delete" Icon="Microsoft.VisualStudio.Method.Public" Label="Delete(int?) : Task&lt;IActionResult&gt;" SourceLocation="(Assembly=file:///C:/!MyProjects/KisVuzDotNetCore2/KisVuzDotNetCore2/Controllers/Education/EduProgramsController.cs StartLineNumber=268 StartCharacterOffset=41 EndLineNumber=268 EndCharacterOffset=47)" UseManualLocation="True" />
+    <Node Id="@8" Category="CodeSchema_Method" Bounds="-676.218407592773,-481.376873470052,204.42,26" CodeSchemaProperty_IsPublic="True" CommonLabel="Edit" Icon="Microsoft.VisualStudio.Method.Public" Label="Edit(int?) : Task&lt;IActionResult&gt;" SourceLocation="(Assembly=file:///C:/!MyProjects/KisVuzDotNetCore2/KisVuzDotNetCore2/Controllers/Education/EduProgramsController.cs StartLineNumber=154 StartCharacterOffset=41 EndLineNumber=154 EndCharacterOffset=45)" UseManualLocation="True" />
+    <Node Id="@9" Category="CodeSchema_Method" Bounds="-676.74588297526,-537.376973470052,160.973333333333,26" CodeSchemaProperty_IsPublic="True" CommonLabel="Create" Icon="Microsoft.VisualStudio.Method.Public" Label="Create() : IActionResult" SourceLocation="(Assembly=file:///C:/!MyProjects/KisVuzDotNetCore2/KisVuzDotNetCore2/Controllers/Education/EduProgramsController.cs StartLineNumber=85 StartCharacterOffset=29 EndLineNumber=85 EndCharacterOffset=35)" UseManualLocation="True" />
+    <Node Id="_eduprogramsRepository:IEduProgramsRepository" Category="CodeSchema_Field" Bounds="-413.628501882523,-585.408496635799,308.666666666667,25.96" Label="_eduprogramsRepository : IEduProgramsRepository" UseManualLocation="True" />
+    <Node Id="Контроллер&quot;ОбразовательныеПрограммы&quot;" Category="Comment" Bounds="-924.501473249537,-623.087031327311,193.18,41.9200000000001" Label="Контроллер &quot;Образовательные программы&quot;" UseManualLocation="True" />
+    <Node Id="Контроллер&quot;СведенияОбОбразовательнойОрганизации&quot;" Category="Comment" Bounds="-909.512865319447,-752.206132328433,195.763333333333,41.9200000000001" Label="Контроллер &quot;Сведения об образовательной организации&quot;" UseManualLocation="True" />
+  </Nodes>
+  <Links>
+    <Link Source="@10" Target="_eduprogramsRepository:IEduProgramsRepository" Bounds="-524.615927887285,-654.338562011719,214.676805204114,66.2752424026779" />
+    <Link Source="@11" Target="_eduprogramsRepository:IEduProgramsRepository" Bounds="-482.795288085938,-577.971411807602,60.1695514680188,1.49224312591161" />
+    <Link Source="@4" Target="@11" Category="Contains" Bounds="-749.184013652582,-565.847647340231,85.1330260025559,14.6807161878871" />
+    <Link Source="@4" Target="@7" Category="Contains" Bounds="-802.292907714844,-525.166931152344,174.931762695313,99.7515563964844" />
+    <Link Source="@4" Target="@8" Category="Contains" Bounds="-777.897655376373,-525.166931152344,148.546316871345,41.3751779229145" />
+    <Link Source="@4" Target="@9" Category="Contains" Bounds="-742.365617675781,-533.201767500925,56.6361065178544,3.42080819220632" />
+    <Link Source="@5" Target="@10" Bounds="-744.802237141927,-666.734759650398,60.3088946825123,0.309211802302684" />
+    <Link Source="@7" Target="_eduprogramsRepository:IEduProgramsRepository" Bounds="-538.980407714844,-555.0869140625,248.384185791016,133.291870117188" />
+    <Link Source="@8" Target="_eduprogramsRepository:IEduProgramsRepository" Bounds="-534.688758944422,-556.623265498494,227.589361278037,75.2463920284418" />
+    <Link Source="@9" Target="_eduprogramsRepository:IEduProgramsRepository" Bounds="-516.133172174542,-558.177909025478,156.905091236505,22.3748617197995" />
+    <Link Source="_eduprogramsRepository:IEduProgramsRepository" Target="(@1 @2 @3 Member=_context)" Bounds="-252.382010626375,-559.448466796875,35.5907854235466,66.8244982024813" />
+    <Link Source="Контроллер&quot;ОбразовательныеПрограммы&quot;" Target="@4" Bounds="-826.816677016255,-581.166983642578,1.09755410640332,21.0123051229218" />
+    <Link Source="Контроллер&quot;СведенияОбОбразовательнойОрганизации&quot;" Target="@5" Bounds="-811.368272440525,-710.286124267578,0.278441134763284,22.1997007781869" />
+  </Links>
+  <Categories>
+    <Category Id="CodeSchema_Class" Label="Класс" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Классы" />
+    <Category Id="CodeSchema_Field" Label="Поле" BasedOn="CodeSchema_Member" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Field" NavigationActionLabel="Поля" />
+    <Category Id="CodeSchema_Member" Label="Член" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Field" NavigationActionLabel="Члены" />
+    <Category Id="CodeSchema_Method" Label="Метод" BasedOn="CodeSchema_Member" CanBeDataDriven="True" DefaultAction="Link:Forward:CodeSchema_Calls" Icon="CodeSchema_Method" NavigationActionLabel="Методы" />
+    <Category Id="CodeSchema_Type" Label="Тип" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Типы" />
+    <Category Id="Comment" Label="Комментарий" Description="Представляет собой определенный пользователем комментарий к диаграмме" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="Комментарии" />
+    <Category Id="Contains" Label="Содержит" Description="Указывает, содержит ли источник связи целевой объект" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Содержится в" IsContainment="True" OutgoingActionLabel="Содержит" />
+  </Categories>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsPrivate" Label="Является Private" Description="Флаг, указывающий на область видимости Private" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsPublic" Label="Является Public" Description="Флаг, указывающий на область видимости Public" DataType="System.Boolean" />
+    <Property Id="CommonLabel" DataType="System.String" />
+    <Property Id="DefaultAction" Label="DefaultAction" Description="DefaultAction" DataType="System.String" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="Icon" Label="Значок" Description="Значок" DataType="System.String" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="IsProviderRoot" Label="IsProviderRoot" Description="IsProviderRoot" DataType="System.Boolean" />
+    <Property Id="Label" Label="Метка" Description="Отображаемая метка аннотируемого объекта" DataType="System.String" />
+    <Property Id="NavigationActionLabel" Label="NavigationActionLabel" Description="NavigationActionLabel" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="SourceLocation" Label="Номер начальной строки" DataType="Microsoft.VisualStudio.GraphModel.CodeSchema.SourceLocation" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+  </Properties>
+  <QualifiedNames>
+    <Name Id="Assembly" Label="Сборка" ValueType="Uri" />
+    <Name Id="GenericArguments" Label="Универсальные аргументы" ValueType="Microsoft.VisualStudio.GraphModel.GraphNodeIdCollection" />
+    <Name Id="GenericParameterCount" Label="Число универсальных параметров" ValueType="System.String" />
+    <Name Id="Member" Label="Член" ValueType="System.Object" />
+    <Name Id="Name" Label="Имя" ValueType="System.String" />
+    <Name Id="Namespace" Label="Пространство имен" ValueType="System.String" />
+    <Name Id="OverloadingParameters" Label="Параметр" ValueType="Microsoft.VisualStudio.GraphModel.GraphNodeIdCollection" Formatter="NameValueNoEscape" />
+    <Name Id="Type" Label="Тип" ValueType="System.Object" />
+  </QualifiedNames>
+  <IdentifierAliases>
+    <Alias n="1" Uri="Assembly=$(82bc833b-05fd-40b3-92e5-770a2a73d017.OutputPathUri)" />
+    <Alias n="2" Id="Namespace=KisVuzDotNetCore2.Controllers" />
+    <Alias n="3" Id="Type=EduProgramsController" />
+    <Alias n="4" Id="(@1 @2 @3)" />
+    <Alias n="5" Id="(@1 @2 Type=SvedenController)" />
+    <Alias n="6" Uri="Assembly=file:///C:/Users/3/.nuget/packages/microsoft.netcore.app/2.0.0/ref/netcoreapp2.0/System.Runtime.dll" />
+    <Alias n="7" Id="(@1 @2 @3 Member=(Name=Delete OverloadingParameters=[(@6 Namespace=System Type=(Name=Nullable GenericParameterCount=1 GenericArguments=[(@6 Namespace=System Type=Int32)]))]))" />
+    <Alias n="8" Id="(@1 @2 @3 Member=(Name=Edit OverloadingParameters=[(@6 Namespace=System Type=(Name=Nullable GenericParameterCount=1 GenericArguments=[(@6 Namespace=System Type=Int32)]))]))" />
+    <Alias n="9" Id="(@1 @2 @3 Member=Create)" />
+    <Alias n="10" Id="(@1 @2 Type=SvedenController Member=Education)" />
+    <Alias n="11" Id="(@1 @2 @3 Member=Index)" />
+  </IdentifierAliases>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Комментарий" ValueLabel="Имеет комментарий">
+      <Condition Expression="HasCategory('Comment')" />
+      <Setter Property="Background" Value="#FFFFFACD" />
+      <Setter Property="Stroke" Value="#FFE5C365" />
+      <Setter Property="StrokeThickness" Value="1" />
+      <Setter Property="NodeRadius" Value="2" />
+      <Setter Property="MaxWidth" Value="250" />
+    </Style>
+  </Styles>
+  <Paths>
+    <Path Id="82bc833b-05fd-40b3-92e5-770a2a73d017.OutputPathUri" Value="file:///C:/!MyProjects/KisVuzDotNetCore2/KisVuzDotNetCore2/bin/Debug/netcoreapp2.0/KisVuzDotNetCore2.dll" />
+  </Paths>
+</DirectedGraph>

@@ -1,0 +1,18 @@
+﻿@startuml
+
+interface IEduProgramsRepository
+interface ISelectListRepository
+
+SvedenController *-- IEduProgramsRepository
+EduProgramsController *-- IEduProgramsRepository
+IEduProgramsRepository <|-- EduProgramsRepository
+EduProgramsRepository *-- AppIdentityDbContext
+EduProgramsRepository *-- ISelectListRepository
+ISelectListRepository <|-- SelectListRepository
+SelectListRepository *-- AppIdentityDbContext
+
+EduProgramsRepository *-- IFileModelRepository
+IFileModelRepository <|-- FileModelRepository
+FileModelRepository *-- AppIdentityDbContext
+
+@enduml
