@@ -154,5 +154,27 @@ namespace KisVuzDotNetCore2.Models.LMS
                 await _context.SaveChangesAsync();
             }
         }
+
+        /// <summary>
+        /// Обновление последовательности заданий
+        /// </summary>
+        /// <param name="lmsTaskSetLmsTaskIds"></param>
+        /// <param name="lmsTaskSetLmsTaskOrders"></param>
+        /// <returns></returns>
+        public async Task UpdateLmsTaskSetLmsTasksOrderAsync(int[] lmsTaskSetLmsTaskIds, int?[] lmsTaskSetLmsTaskOrders)
+        {
+            for(int i = 0; i < lmsTaskSetLmsTaskIds.Count(); i++)
+            {
+                var entry = await _context.LmsTaskSetLmsTasks.FirstOrDefaultAsync(item => item.LmsTaskSetLmsTaskId == lmsTaskSetLmsTaskIds[i]);
+                if(entry != null)
+                {
+                    if(entry.LmsTaskSetLmsTaskOrder != lmsTaskSetLmsTaskOrders[i])
+                    {
+                        entry.LmsTaskSetLmsTaskOrder = lmsTaskSetLmsTaskOrders[i];
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+        }
     }
 }

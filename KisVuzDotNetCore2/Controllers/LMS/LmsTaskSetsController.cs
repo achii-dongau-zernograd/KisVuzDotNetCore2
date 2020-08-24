@@ -138,6 +138,31 @@ namespace KisVuzDotNetCore2.Controllers.LMS
                 return View(lmsTaskSetLmsTask);                
             }                
         }
+
+        /// <summary>
+        /// Настройка порядка отображения вопросов для указанного набора заданий
+        /// </summary>
+        /// <param name="lmsTaskSetId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> EditLmsTaskSetLmsTasksOrder(int lmsTaskSetId)
+        {
+            var lmsTaskSetLmsTasks = await _lmsTaskSetRepository.GetLmsTaskSetAsync(lmsTaskSetId);
+            ViewBag.LmsTaskSetId = lmsTaskSetId;
+            return View(lmsTaskSetLmsTasks.LmsTaskSetLmsTasks);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditLmsTaskSetLmsTasksOrder(int lmsTaskSetId,
+            List<LmsTaskSetLmsTask> lmsTaskSetLmsTasks,
+            int?[] lmsTaskSetLmsTaskOrder,
+            int[]  lmsTaskSetLmsTaskId)
+        {
+            await _lmsTaskSetRepository.UpdateLmsTaskSetLmsTasksOrderAsync(lmsTaskSetLmsTaskId, lmsTaskSetLmsTaskOrder);
+
+            return RedirectToAction(nameof(EditLmsTaskSetLmsTasksOrder), new { lmsTaskSetId });
+        }
         #endregion
     }
 }

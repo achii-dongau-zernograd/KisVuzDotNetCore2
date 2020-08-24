@@ -22,6 +22,9 @@
                 Набор заданий
             </th>
             <th>
+                Порядок заданий
+            </th>
+            <th>
                 Действия
             </th>
         </tr>
@@ -46,8 +49,18 @@
                 }
             </td>
             <td>
-                @Html.ActionLink("Редактировать", "EditLmsTaskSet",   new { id = item.LmsTaskSetId }) |                
-                @Html.ActionLink("Удалить",       "DeleteLmsTaskSet", new { id = item.LmsTaskSetId }, new { @class = "text-danger" })
+                @if (item.LmsTaskSetLmsTasks == null || item.LmsTaskSetLmsTasks.Count == 0)
+                {
+                    <p>Нет заданий</p>
+                }
+                else
+                {
+                    <a asp-action="EditLmsTaskSetLmsTasksOrder" asp-route-LmsTaskSetId="@item.LmsTaskSetId">Редактировать</a>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "EditLmsTaskSet", new { id = item.LmsTaskSetId }) |
+                @Html.ActionLink("Удалить", "DeleteLmsTaskSet", new { id = item.LmsTaskSetId }, new { @class = "text-danger" })
             </td>
         </tr>
 }

@@ -196,7 +196,7 @@ namespace KisVuzDotNetCore2.Models.LMS
             {
                 var lmsTaskSetEntry = await _lmsTaskSetRepository.GetLmsTaskSetAsync(lmsEventLmsTaskSet.LmsTaskSetId);
                 lmsTaskSetEntry.LmsTaskSetLmsTasks
-                    .OrderBy(l=>l.LmsTaskSetLmsTaskId)
+                    .OrderBy(l=>l.LmsTaskSetLmsTaskOrder)
                     .ToList()
                     .ForEach(tst => lmsTasks.Add(tst.LmsTask));
             }

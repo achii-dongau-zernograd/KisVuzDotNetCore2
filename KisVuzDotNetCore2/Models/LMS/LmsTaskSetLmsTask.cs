@@ -26,5 +26,11 @@ namespace KisVuzDotNetCore2.Models.LMS
         [Display(Name = "Задание СДО")]
         public int LmsTaskId { get; set; }
         public LmsTask LmsTask { get; set; }
+
+        /// <summary>
+        /// Порядковый номер задания СДО
+        /// </summary>
+        [Display(Name = "Порядковый номер задания СДО")]
+        public int? LmsTaskSetLmsTaskOrder { get; set; }        
     }
 }

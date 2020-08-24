@@ -1,0 +1,42 @@
+﻿@model IEnumerable<LmsTaskSetLmsTask>
+
+@{
+    ViewData["Title"] = "Порядок вопросов";
+}
+
+<h2>Редактирование порядка следования вопросов</h2>
+
+<form asp-action="EditLmsTaskSetLmsTasksOrder">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.LmsTaskSetLmsTaskOrder)
+                </th>
+                <th>
+                    Текст задания
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderBy(i => i.LmsTaskSetLmsTaskOrder))
+            {
+                <tr>
+                    <td>
+                        <input name="lmsTaskSetLmsTaskOrder" value="@item.LmsTaskSetLmsTaskOrder" />
+                        <input name="lmsTaskSetLmsTaskId"    value="@item.LmsTaskSetLmsTaskId" type="hidden" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LmsTask.LmsTaskText)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <input type="hidden" name="lmsTaskSetId" value="@ViewBag.LmsTaskSetId" />
+
+    <input type="submit" value="Сохранить" class="btn btn-primary" />
+    <a asp-action="Index" class="btn btn-default">Отмена</a>
+
+</form>

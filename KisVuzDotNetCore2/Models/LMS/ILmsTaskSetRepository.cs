@@ -65,5 +65,13 @@ namespace KisVuzDotNetCore2.Models.LMS
         /// <param name="lmsTaskSetLmsTask"></param>
         /// <returns></returns>
         Task RemoveLmsTaskSetLmsTaskAsync(LmsTaskSetLmsTask lmsTaskSetLmsTask);
+        
+        /// <summary>
+        /// Обновление последовательности заданий
+        /// </summary>
+        /// <param name="lmsTaskSetLmsTaskId"></param>
+        /// <param name="lmsTaskSetLmsTaskOrder"></param>
+        /// <returns></returns>
+        Task UpdateLmsTaskSetLmsTasksOrderAsync(int[] lmsTaskSetLmsTaskId, int?[] lmsTaskSetLmsTaskOrder);
     }
 }
