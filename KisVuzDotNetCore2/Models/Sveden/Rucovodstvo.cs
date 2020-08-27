@@ -23,5 +23,11 @@ namespace KisVuzDotNetCore2.Models.Sveden
         [Display(Name = "Аккаунт пользователя")]
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
+
+        /// <summary>
+        /// Порядковый номер при отображении в таблице
+        /// </summary>
+        [Display(Name = "Порядковый номер при отображении в таблице")]
+        public int? OrderNumber { get; set; }
     }
 }

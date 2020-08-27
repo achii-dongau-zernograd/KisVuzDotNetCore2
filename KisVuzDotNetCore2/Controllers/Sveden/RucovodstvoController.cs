@@ -24,7 +24,7 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: Rucovodstvo
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SvedenRucovodstvo.Include(r=>r.AppUser).ToListAsync());
+            return View(await _context.SvedenRucovodstvo.Include(r=>r.AppUser).OrderBy(r=>r.OrderNumber).ToListAsync());
         }
 
         // GET: Rucovodstvo/Create
@@ -71,7 +71,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RucovodstvoId,Fio,Post,Telephone,Email,AppUserId")] Rucovodstvo rucovodstvo)
+        public async Task<IActionResult> Edit(int id, [Bind("RucovodstvoId,Fio,Post,Telephone,Email,AppUserId,OrderNumber")] Rucovodstvo rucovodstvo)
         {
             if (id != rucovodstvo.RucovodstvoId)
             {

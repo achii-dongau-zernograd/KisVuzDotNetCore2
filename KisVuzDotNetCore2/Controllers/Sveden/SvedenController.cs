@@ -274,6 +274,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             var t14rucovodstvo = await _context.SvedenRucovodstvo
                 .Include(r=>r.AppUser)
+                .OrderBy(r=>r.OrderNumber)
                 .ToListAsync();
             ViewData["t14rucovodstvo"] = t14rucovodstvo;
 

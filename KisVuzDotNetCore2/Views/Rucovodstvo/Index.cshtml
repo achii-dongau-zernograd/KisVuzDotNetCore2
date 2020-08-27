@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                Порядковый номер
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Fio)
             </th>
             <th>
@@ -33,6 +36,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderNumber)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Fio)
             </td>

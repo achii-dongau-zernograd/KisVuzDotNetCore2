@@ -32,7 +32,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
         // GET: AppUserStructSubvisions/Create
         public IActionResult Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, nameof(AppUser.Id), nameof(AppUser.GetFullName));
+            ViewData["AppUserId"] = new SelectList(_context.Users.OrderBy(u => u.GetFullName), nameof(AppUser.Id), nameof(AppUser.GetFullName));
             ViewData["EmploymentFormId"] = new SelectList(_context.EmploymentForms, "EmploymentFormId", "EmploymentFormName");
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "PostName");
             ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionName");
@@ -52,7 +52,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", appUserStructSubvision.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users.OrderBy(u => u.GetFullName), "Id", "GetFullName", appUserStructSubvision.AppUserId);
             ViewData["EmploymentFormId"] = new SelectList(_context.EmploymentForms, "EmploymentFormId", "EmploymentFormName", appUserStructSubvision.EmploymentFormId);
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "PostName", appUserStructSubvision.PostId);
             ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionName", appUserStructSubvision.StructSubvisionId);
@@ -72,7 +72,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", appUserStructSubvision.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users.OrderBy(u => u.GetFullName), "Id", "GetFullName", appUserStructSubvision.AppUserId);
             ViewData["EmploymentFormId"] = new SelectList(_context.EmploymentForms, "EmploymentFormId", "EmploymentFormName", appUserStructSubvision.EmploymentFormId);
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "PostName", appUserStructSubvision.PostId);
             ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionName", appUserStructSubvision.StructSubvisionId);
@@ -111,7 +111,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "GetFullName", appUserStructSubvision.AppUserId);
+            ViewData["AppUserId"] = new SelectList(_context.Users.OrderBy(u => u.GetFullName), "Id", "GetFullName", appUserStructSubvision.AppUserId);
             ViewData["EmploymentFormId"] = new SelectList(_context.EmploymentForms, "EmploymentFormId", "EmploymentFormName", appUserStructSubvision.EmploymentFormId);
             ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "PostName", appUserStructSubvision.PostId);
             ViewData["StructSubvisionId"] = new SelectList(_context.StructSubvisions, "StructSubvisionId", "StructSubvisionName", appUserStructSubvision.StructSubvisionId);
