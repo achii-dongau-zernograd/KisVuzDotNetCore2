@@ -27,8 +27,16 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// </summary>
         VObrabotke = 4,
         /// <summary>
-        /// К экзаменам
+        /// Экзамен
         /// </summary>
-        KEkzamenam = 5
+        KEkzamenam = 5,
+        /// <summary>
+        /// Экзамен дистанционно
+        /// </summary>
+        KEkzamenamDist = 6,
+        /// <summary>
+        /// Зачисленные и добавленные в студенческую группу
+        /// </summary>
+        AddedToStudGroup = 7
     }
 }

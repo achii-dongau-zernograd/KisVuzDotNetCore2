@@ -1,0 +1,92 @@
+﻿@model IEnumerable<AppUser>
+
+@{
+    ViewData["Title"] = "Добавление зарегистрированных пользователей в учебную группу";
+    var studentGroup = ViewBag.StudentGroup as StudentGroup;
+}
+
+<h2>Добавление зарегистрированных пользователей в учебную группу @studentGroup.StudentGroupName</h2>
+
+
+<div>
+    <form>
+        <div class="form-group form-inline">
+            <input type="hidden" name="StudentGroupId" value="@ViewBag.StudentGroupId" />
+            <label class="form-inline">Фрагмент фамилии:</label>
+            <input type="text" name="appUserLastNameFragment" value="@ViewBag.appUserLastNameFragment" class="form-control" />
+            <input type="submit" value="Поиск" class="btn btn-primary" />
+        </div>        
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Фамилия
+            </th>
+            <th>
+                Имя
+            </th>
+            <th>
+                Отчество
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Пароль
+            </th>
+            <th>
+                Действия
+            </th>            
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patronymic)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>                    
+                    <td>
+                        @if (item.Students == null || item.Students.Count == 0)
+                        {
+                            <form asp-action="AddStudentFromListExistedUsersNotStudents">
+                                <input type="hidden" name="studentGroupId" value="@ViewBag.StudentGroupId" />
+                                <input type="hidden" name="userName" value="@item.UserName" />
+                                <input type="submit" value="Добавить в группу" class="btn btn-primary" />
+                            </form>
+                        }
+                        else
+                        {
+                            foreach (var student in item.Students)
+                            {
+                                <p>@student.StudentGroup.StudentGroupName</p>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7">Пользователи не найдены</td>
+            </tr>
+        }
+    </tbody>
+</table>

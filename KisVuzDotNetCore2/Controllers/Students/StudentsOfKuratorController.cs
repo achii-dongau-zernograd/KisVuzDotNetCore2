@@ -10,6 +10,8 @@ using KisVuzDotNetCore2.Models.Students;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using KisVuzDotNetCore2.Models.Files;
+using System.Collections.Generic;
+using KisVuzDotNetCore2.Models.Abitur;
 
 namespace KisVuzDotNetCore2.Controllers.Students
 {
@@ -21,16 +23,19 @@ namespace KisVuzDotNetCore2.Controllers.Students
         private readonly IFileModelRepository _fileModelRepository;
 
         private UserManager<AppUser> userManager;
+        private readonly IAbiturientRepository _abiturientRepository;
 
         public StudentsOfKuratorController(AppIdentityDBContext context,
             IStudentRepository studentRepository,
             IFileModelRepository fileModelRepository,
-            UserManager<AppUser> usrMgr)
+            UserManager<AppUser> usrMgr,
+            IAbiturientRepository abiturientRepository)
         {
             _context = context;
             _studentRepository = studentRepository;
             _fileModelRepository = fileModelRepository;
             userManager = usrMgr;
+            _abiturientRepository = abiturientRepository;
         }               
 
         /// <summary>
@@ -104,6 +109,68 @@ namespace KisVuzDotNetCore2.Controllers.Students
 
             ViewBag.StudentGroupId = student.StudentGroupId;            
             return View(student);
+        }
+        #endregion
+
+        #region Добавление в группу студента из списка зарегистрированных пользователей, не являющихся студентами
+        // GET: Students/Create
+        public async Task<IActionResult> AddStudentFromListExistedUsersNotStudents(int? StudentGroupId, string appUserLastNameFragment)
+        {
+            ViewBag.appUserLastNameFragment = appUserLastNameFragment;
+            ViewBag.StudentGroupId = StudentGroupId;
+
+            if (StudentGroupId == null) return NotFound();
+            var studentGroup = await _studentRepository.GetStudentGroupByIdAsync(StudentGroupId);
+            if (studentGroup == null) return NotFound();
+            ViewBag.StudentGroup = studentGroup;
+
+            var findedAppUsers = new List<AppUser>();
+            if(!string.IsNullOrWhiteSpace(appUserLastNameFragment))
+            {
+                findedAppUsers = await _context.Users
+                    .Include(u => u.Students)
+                        .ThenInclude(us => us.StudentGroup.EduKurs)
+                    .Where(u => u.LastName.Contains(appUserLastNameFragment))
+                    .ToListAsync();
+            }
+
+            return View(findedAppUsers);
+        }
+
+        // POST: Students/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddStudentFromListExistedUsersNotStudents(int studentGroupId, string userName)
+        {
+            AppUser studentAppUser = await _context.Users.FirstOrDefaultAsync(u => u.UserName == userName);
+
+            if (studentAppUser != null)
+            {
+                // Создаём объект Student
+                Student newStudent = new Student();
+                newStudent.StudentFio = $"{studentAppUser.LastName} {studentAppUser.FirstName} {studentAppUser.Patronymic}";                
+                newStudent.AppUserId = studentAppUser.Id;
+                newStudent.StudentGroupId = studentGroupId;
+                var addedStudent = await _studentRepository.AddStudentAsync(newStudent);
+
+                if(addedStudent.StudentId != 0)
+                {
+                    var abiturient = await _abiturientRepository.GetAbiturientAsync(userName);
+                    if(abiturient != null)
+                        await _abiturientRepository.SetAbiturientStatusAsync(abiturient, AbiturientStatusEnum.AddedToStudGroup);
+                }
+                
+
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ModelState.AddModelError("", "Пользователь не найден");
+            }
+
+            return RedirectToAction(nameof(AddStudentFromListExistedUsersNotStudents), new { StudentGroupId = studentGroupId });
         }
         #endregion
 
@@ -197,25 +264,30 @@ namespace KisVuzDotNetCore2.Controllers.Students
         {
             var student = await _studentRepository.GetStudentByIdAsync(id);            
 
+            if(student.RezultOsvoenObrazovatProgrId != null)
+            {
+                await _fileModelRepository.RemoveFileAsync(student.RezultOsvoenObrazovatProgrId);
+            }
+
             if(student != null)
             {
-                if (student.AppUserId != null)
-                {
-                    AppUser user = await userManager.FindByIdAsync(student.AppUserId);
+                //if (student.AppUserId != null)
+                //{
+                //    AppUser user = await userManager.FindByIdAsync(student.AppUserId);
 
-                    if (user != null)
-                    {
-                        IdentityResult result = await userManager.DeleteAsync(user);
-                        if (!result.Succeeded)                        
-                        {
-                            AddErrorsFromResult(result);
-                        }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Пользователь не найден");
-                    }
-                }
+                //    if (user != null)
+                //    {
+                //        IdentityResult result = await userManager.DeleteAsync(user);
+                //        if (!result.Succeeded)                        
+                //        {
+                //            AddErrorsFromResult(result);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        ModelState.AddModelError("", "Пользователь не найден");
+                //    }
+                //}
                 _context.Students.Remove(student);
                 await _context.SaveChangesAsync();
             }

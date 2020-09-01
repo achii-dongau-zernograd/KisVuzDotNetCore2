@@ -57,7 +57,19 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                     var row05 = new AbiturientStatus
                     {
                         AbiturientStatusId = (int)AbiturientStatusEnum.KEkzamenam,
-                        AbiturientStatusName = "К экзаменам"
+                        AbiturientStatusName = "Экзамен"
+                    };
+
+                    var row06 = new AbiturientStatus
+                    {
+                        AbiturientStatusId = (int)AbiturientStatusEnum.AddedToStudGroup,
+                        AbiturientStatusName = "Экзамен дистанционно"
+                    };
+
+                    var row07 = new AbiturientStatus
+                    {
+                        AbiturientStatusId = (int)AbiturientStatusEnum.AddedToStudGroup,
+                        AbiturientStatusName = "Зачислен и добавлен в студенческую группу"
                     };
 
                     await context.AbiturientStatuses.AddRangeAsync(
@@ -65,7 +77,9 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         row02,
                         row03,
                         row04,
-                        row05
+                        row05,
+                        row06,
+                        row07
                     );
                     await context.SaveChangesAsync();
                 }

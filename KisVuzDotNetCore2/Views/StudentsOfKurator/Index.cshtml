@@ -15,6 +15,7 @@
         <div class="well">
             <p>
                 <a asp-action="CreateStudentWithAccount" asp-route-StudentGroupId="@studentGroup.StudentGroupId" class="btn btn-primary">Создать аккаунт студента и добавить в группу</a>
+                <a asp-action="AddStudentFromListExistedUsersNotStudents" asp-route-StudentGroupId="@studentGroup.StudentGroupId" class="btn btn-primary">Добавить в группу зарегистрированного пользователя, не являющегося студентом</a>
             </p>
             <table class="table">
                 <thead>
