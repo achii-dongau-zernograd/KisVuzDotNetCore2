@@ -25,13 +25,22 @@
                         </th>
                         <th>
                             Номер зачетной книжки
-                        </th>                       
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Пароль
+                        </th>
+                        <th>
+                            Карточка абитуриента
+                        </th>
                         <th>Действия</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    @foreach (var student in studentGroup.Students.OrderBy(s=>s.StudentFio))
+                    @foreach (var student in studentGroup.Students.OrderBy(s => s.StudentFio))
                     {
                         <tr>
                             <td>
@@ -39,9 +48,25 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => student.ZachetnayaKnijkaNumber)
-                            </td>                            
+                            </td>
+                            <td>@student.AppUser?.Email</td>
+                            <td>@student.AppUser?.Password</td>
                             <td>
-                                <a asp-action="Edit" asp-route-id="@student.StudentId">Редактировать</a> |                                
+                                @{
+                                    var abiturientCards = student.AppUser?.UserDocuments?.Where(ud => ud.FileDataTypeId == (int)FileDataTypeEnum.AbiturientCard);
+                                    if (abiturientCards != null)
+                                    {
+                                        foreach (var abiturientCard in abiturientCards)
+                                        {
+                                            <p>
+                                                <a href="/@abiturientCard.FileModel.Path" target="_blank">Открыть</a>
+                                            </p>                                        
+                                        }
+                                    }
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@student.StudentId">Редактировать</a> |
                                 <a asp-action="Delete" asp-route-id="@student.StudentId">Удалить</a>
                             </td>
                         </tr>

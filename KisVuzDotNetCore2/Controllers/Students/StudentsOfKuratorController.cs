@@ -130,6 +130,8 @@ namespace KisVuzDotNetCore2.Controllers.Students
                 findedAppUsers = await _context.Users
                     .Include(u => u.Students)
                         .ThenInclude(us => us.StudentGroup.EduKurs)
+                    .Include(u => u.UserDocuments)
+                        .ThenInclude(ud => ud.FileModel)
                     .Where(u => u.LastName.Contains(appUserLastNameFragment))
                     .ToListAsync();
             }
