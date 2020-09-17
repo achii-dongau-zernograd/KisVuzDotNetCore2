@@ -74,12 +74,28 @@ namespace KisVuzDotNetCore2.Models.Education
         Task<RabProgram> UpdateRabProgramAsync(RabProgram rabProgram, IFormFile uploadedFile);
 
         /// <summary>
+        /// Обновление файла листа переутверждения рабочей программы
+        /// </summary>
+        /// <param name="rabProgram"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<RabProgram> UpdateRabProgramListPereutverjdeniyaAsync(RabProgram rabProgram, IFormFile uploadedFile);
+
+        /// <summary>
         /// Добавляет к фонду оценочных средств загруженный файл
         /// </summary>
         /// <param name="fondOcenochnihSredstv"></param>
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task<FondOcenochnihSredstv> UpdateFondOcenochnihSredstvAsync(FondOcenochnihSredstv fondOcenochnihSredstv, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Обновление листа переутверждения фонда оценочных средств
+        /// </summary>
+        /// <param name="fondOcenochnihSredstv"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FondOcenochnihSredstv> UpdateFondOcenochnihSredstvListPereutverjdeniyaAsync(FondOcenochnihSredstv fondOcenochnihSredstv, IFormFile uploadedFile);
 
         /// <summary>
         /// Удаляет аннотацию
@@ -96,11 +112,25 @@ namespace KisVuzDotNetCore2.Models.Education
         Task RemoveRabProgramAsync(RabProgram rabProgram);
 
         /// <summary>
+        /// Удаляет лист переутверждения рабочей программы
+        /// </summary>
+        /// <param name="rabProgram"></param>
+        /// <returns></returns>
+        Task RemoveRabProgramListPereutverjdeniyaAsync(RabProgram rabProgram);
+
+        /// <summary>
         /// Удаляет фонд оценочных средств
         /// </summary>
         /// <param name="fondOcenochnihSredstv"></param>
         /// <returns></returns>
         Task RemoveFondOcenochnihSredstvAsync(FondOcenochnihSredstv fondOcenochnihSredstv);
+
+        /// <summary>
+        /// Удаляет лист переутверждения фонда оценочных средств дисциплины
+        /// </summary>
+        /// <param name="fondOcenochnihSredstv"></param>
+        /// <returns></returns>
+        Task RemoveFondOcenochnihSredstvListPereutverjdeniyaAsync(FondOcenochnihSredstv fondOcenochnihSredstv);
 
         /// <summary>
         /// Возвращает привязку "Преподаватель - Дисциплина"
@@ -144,6 +174,6 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         /// <param name="disciplinePomeshenie"></param>
         /// <returns></returns>
-        Task RemoveDisciplinePomeshenieAsync(DisciplinePomeshenie disciplinePomeshenie);
+        Task RemoveDisciplinePomeshenieAsync(DisciplinePomeshenie disciplinePomeshenie);        
     }
 }

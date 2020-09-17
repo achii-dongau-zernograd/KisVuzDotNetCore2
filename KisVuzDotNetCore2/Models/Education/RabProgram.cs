@@ -32,6 +32,17 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Файл рабочей программы
         /// </summary>
         [Display(Name = "Файл рабочей программы")]
-        public int FileModelId { get; set; }
+        public int? FileModelId { get; set; }
+
+        /// <summary>
+        /// Файл листа переутверждения рабочей программы
+        /// </summary>
+        [Display(Name = "Файл листа переутверждения рабочей программы")]
+        public FileModel FileModelListPereutverjdeniya { get; set; }
+        /// <summary>
+        /// Файл листа переутверждения рабочей программы
+        /// </summary>
+        [Display(Name = "Файл листа переутверждения рабочей программы")]
+        public int? FileModelListPereutverjdeniyaId { get; set; }
     }
 }

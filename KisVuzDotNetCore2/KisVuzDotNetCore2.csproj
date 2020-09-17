@@ -608,6 +608,8 @@
     <Compile Remove="Migrations\20200806070344_EntranceTestsProtocol.Designer.cs" />
     <Compile Remove="Migrations\20200806072727_EntranceTestsProtocols.cs" />
     <Compile Remove="Migrations\20200806072727_EntranceTestsProtocols.Designer.cs" />
+    <Compile Remove="Migrations\20200916132621_FileModelListPereutverjdeniya.cs" />
+    <Compile Remove="Migrations\20200916132621_FileModelListPereutverjdeniya.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -645,10 +647,22 @@
     <Content Update="Views\Articles\CreateOrEditArticle.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\MetodKomissiyaMemberArm\FondOcenochnihSredstvListPereutverjdeniyaCreateOrEdit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\MetodKomissiyaMemberArm\FondOcenochnihSredstvCreateOrEdit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\MetodKomissiyaMemberArm\FondOcenochnihSredstvListPereutverjdeniyaRemove.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\MetodKomissiyaMemberArm\FondOcenochnihSredstvRemove.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\MetodKomissiyaMemberArm\RabProgramListPereutverjdeniyaCreateOrEdit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\MetodKomissiyaMemberArm\RabProgramListPereutverjdeniyaRemove.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\MetodKomissiyaMemberArm\RabProgramRemove.cshtml">

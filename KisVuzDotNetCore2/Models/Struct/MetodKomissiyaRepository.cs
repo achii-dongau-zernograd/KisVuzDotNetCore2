@@ -621,6 +621,19 @@ namespace KisVuzDotNetCore2.Models.Struct
         }
 
         /// <summary>
+        /// Обновление файла листа переутверждения рабочей программы
+        /// </summary>
+        /// <param name="rabProgram"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<RabProgram> UpdateRabProgramListPereutverjdeniyaAsync(RabProgram rabProgram, IFormFile uploadedFile)
+        {
+            if (rabProgram == null || uploadedFile == null) return null;
+            rabProgram = await _eduPlanRepository.UpdateRabProgramListPereutverjdeniyaAsync(rabProgram, uploadedFile);
+            return rabProgram;
+        }
+
+        /// <summary>
         /// Добавляет к фонду оценочных средств загруженный файл
         /// </summary>
         /// <param name="fondOcenochnihSredstv"></param>
@@ -630,6 +643,19 @@ namespace KisVuzDotNetCore2.Models.Struct
         {
             if (fondOcenochnihSredstv == null || uploadedFile == null) return null;
             fondOcenochnihSredstv = await _eduPlanRepository.UpdateFondOcenochnihSredstvAsync(fondOcenochnihSredstv, uploadedFile);
+            return fondOcenochnihSredstv;
+        }
+
+        /// <summary>
+        /// Обновление листа переутверждения фонда оценочных средств
+        /// </summary>
+        /// <param name="fondOcenochnihSredstv"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FondOcenochnihSredstv> UpdateFondOcenochnihSredstvListPereutverjdeniyaAsync(FondOcenochnihSredstv fondOcenochnihSredstv, IFormFile uploadedFile)
+        {
+            if (fondOcenochnihSredstv == null || uploadedFile == null) return null;
+            fondOcenochnihSredstv = await _eduPlanRepository.UpdateFondOcenochnihSredstvListPereutverjdeniyaAsync(fondOcenochnihSredstv, uploadedFile);
             return fondOcenochnihSredstv;
         }
 
@@ -666,6 +692,22 @@ namespace KisVuzDotNetCore2.Models.Struct
         }
 
         /// <summary>
+        /// Удаляет лист переутверждения рабочей программы, если она доступна пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="rabProgramId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveRabProgramListPereutverjdeniyaByUserNameAsync(int eduPlanId, int disciplineId, int rabProgramId, string userName)
+        {
+            RabProgram rabProgram = await GetRabProgramByUserNameAsync(eduPlanId, disciplineId, rabProgramId, userName);
+            if (rabProgram == null) return;
+
+            await _eduPlanRepository.RemoveRabProgramListPereutverjdeniyaAsync(rabProgram);
+        }
+
+        /// <summary>
         /// Удаляет фонд оценочных средств, если он доступен пользователю
         /// </summary>
         /// <param name="eduPlanId"></param>
@@ -679,6 +721,22 @@ namespace KisVuzDotNetCore2.Models.Struct
             if (fondOcenochnihSredstv == null) return;
 
             await _eduPlanRepository.RemoveFondOcenochnihSredstvAsync(fondOcenochnihSredstv);
+        }
+
+        /// <summary>
+        /// Удаляет лист переутверждения фонда оценочных средств дисциплины, если она доступна пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="fondOcenochnihSredstvId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveFondOcenochnihSredstvListPereutverjdeniyaByUserNameAsync(int eduPlanId, int disciplineId, int fondOcenochnihSredstvId, string userName)
+        {
+            FondOcenochnihSredstv fondOcenochnihSredstv = await GetFondOcenochnihSredstvByUserNameAsync(eduPlanId, disciplineId, fondOcenochnihSredstvId, userName);
+            if (fondOcenochnihSredstv == null) return;
+
+            await _eduPlanRepository.RemoveFondOcenochnihSredstvListPereutverjdeniyaAsync(fondOcenochnihSredstv);
         }
 
         /// <summary>
@@ -771,5 +829,7 @@ namespace KisVuzDotNetCore2.Models.Struct
 
             await _eduPlanRepository.RemoveDisciplinePomeshenieAsync(disciplinePomeshenie);
         }
+
+        
     }
 }

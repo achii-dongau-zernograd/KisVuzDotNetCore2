@@ -242,7 +242,7 @@ namespace KisVuzDotNetCore2.Controllers.Struct
         }
 
         /// <summary>
-        /// Удаление аннотации учебной дисциплины
+        /// Удаление рабочей прграммы учебной дисциплины
         /// </summary>
         /// <param name="EduPlanId"></param>
         /// <param name="DisciplineId"></param>
@@ -264,6 +264,66 @@ namespace KisVuzDotNetCore2.Controllers.Struct
         public async Task<IActionResult> RabProgramRemoveConfirmed(int EduPlanId, int DisciplineId, int RabProgramId)
         {
             await _metodKomissiyaRepository.RemoveRabProgramByUserNameAsync(EduPlanId, DisciplineId, RabProgramId, User.Identity.Name);
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+        #endregion
+
+        #region Листы переутверждения рабочих программ
+        /// <summary>
+        /// Добавление / редактирование листа переутверждения рабочей программы
+        /// </summary>
+        /// <param name="EduPlanId"></param>
+        /// <param name="DisciplineId"></param>
+        /// <param name="RabProgramId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> RabProgramListPereutverjdeniyaCreateOrEdit(int EduPlanId, int DisciplineId, int? RabProgramId)
+        {
+            RabProgram rabProgram = await _metodKomissiyaRepository.GetRabProgramByUserNameAsync(EduPlanId, DisciplineId, RabProgramId, User.Identity.Name);
+
+            if (rabProgram == null)
+            {
+                return NotFound();
+            }
+            ViewBag.EduPlanId = EduPlanId;
+            return View(rabProgram);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RabProgramListPereutverjdeniyaCreateOrEdit(int EduPlanId, int DisciplineId, int? RabProgramId, IFormFile uploadedFile)
+        {
+            RabProgram rabProgram = await _metodKomissiyaRepository.GetRabProgramByUserNameAsync(EduPlanId, DisciplineId, RabProgramId, User.Identity.Name);
+
+            if (rabProgram != null)
+            {
+                await _metodKomissiyaRepository.UpdateRabProgramListPereutverjdeniyaAsync(rabProgram, uploadedFile);
+            }
+
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+
+        /// <summary>
+        /// Удаление листа переутверждения рабочей программы учебной дисциплины
+        /// </summary>
+        /// <param name="EduPlanId"></param>
+        /// <param name="DisciplineId"></param>
+        /// <param name="RabProgramId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> RabProgramListPereutverjdeniyaRemove(int EduPlanId, int DisciplineId, int RabProgramId)
+        {
+            RabProgram rabProgram = await _metodKomissiyaRepository.GetRabProgramByUserNameAsync(EduPlanId, DisciplineId, RabProgramId, User.Identity.Name);
+
+            if (rabProgram == null)
+            {
+                return NotFound();
+            }
+
+            return View(rabProgram);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RabProgramListPereutverjdeniyaRemoveConfirmed(int EduPlanId, int DisciplineId, int RabProgramId)
+        {
+            await _metodKomissiyaRepository.RemoveRabProgramListPereutverjdeniyaByUserNameAsync(EduPlanId, DisciplineId, RabProgramId, User.Identity.Name);
             return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
         }
         #endregion
@@ -328,6 +388,70 @@ namespace KisVuzDotNetCore2.Controllers.Struct
         public async Task<IActionResult> FondOcenochnihSredstvRemoveConfirmed(int EduPlanId, int DisciplineId, int FondOcenochnihSredstvId)
         {
             await _metodKomissiyaRepository.RemoveFondOcenochnihSredstvByUserNameAsync(EduPlanId, DisciplineId, FondOcenochnihSredstvId, User.Identity.Name);
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+        #endregion
+
+        #region Листы переутверждения фондов оценочных средств
+        /// <summary>
+        /// Добавление / редактирование листа переутверждения фонда оценочных средств учебной дисциплины
+        /// </summary>
+        /// <param name="EduPlanId"></param>
+        /// <param name="DisciplineId"></param>
+        /// <param name="FondOcenochnihSredstvId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> FondOcenochnihSredstvListPereutverjdeniyaCreateOrEdit(int EduPlanId,
+            int DisciplineId, int? FondOcenochnihSredstvId)
+        {
+            FondOcenochnihSredstv fondOcenochnihSredstv = await _metodKomissiyaRepository.
+                GetFondOcenochnihSredstvByUserNameAsync(EduPlanId, DisciplineId, FondOcenochnihSredstvId, User.Identity.Name);
+
+            if (fondOcenochnihSredstv == null)
+            {
+                return NotFound();
+            }
+            ViewBag.EduPlanId = EduPlanId;
+            return View(fondOcenochnihSredstv);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FondOcenochnihSredstvListPereutverjdeniyaCreateOrEdit(int EduPlanId,
+            int DisciplineId, int? FondOcenochnihSredstvId, IFormFile uploadedFile)
+        {
+            FondOcenochnihSredstv fondOcenochnihSredstv = await _metodKomissiyaRepository
+                .GetFondOcenochnihSredstvByUserNameAsync(EduPlanId, DisciplineId, FondOcenochnihSredstvId, User.Identity.Name);
+
+            if (fondOcenochnihSredstv != null)
+            {
+                await _metodKomissiyaRepository.UpdateFondOcenochnihSredstvListPereutverjdeniyaAsync(fondOcenochnihSredstv, uploadedFile);
+            }
+
+            return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
+        }
+
+        /// <summary>
+        /// Удаление аннотации учебной дисциплины
+        /// </summary>
+        /// <param name="EduPlanId"></param>
+        /// <param name="DisciplineId"></param>
+        /// <param name="FondOcenochnihSredstvId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> FondOcenochnihSredstvListPereutverjdeniyaRemove(int EduPlanId, int DisciplineId, int FondOcenochnihSredstvId)
+        {
+            FondOcenochnihSredstv fondOcenochnihSredstv = await _metodKomissiyaRepository.GetFondOcenochnihSredstvByUserNameAsync(EduPlanId, DisciplineId, FondOcenochnihSredstvId, User.Identity.Name);
+
+            if (fondOcenochnihSredstv == null)
+            {
+                return NotFound();
+            }
+
+            return View(fondOcenochnihSredstv);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FondOcenochnihSredstvListPereutverjdeniyaRemoveConfirmed(int EduPlanId, int DisciplineId, int FondOcenochnihSredstvId)
+        {
+            await _metodKomissiyaRepository.RemoveFondOcenochnihSredstvListPereutverjdeniyaByUserNameAsync(EduPlanId, DisciplineId, FondOcenochnihSredstvId, User.Identity.Name);
             return RedirectToAction(nameof(EduPlanPreview), new { id = EduPlanId });
         }
         #endregion

@@ -271,6 +271,14 @@
         /// <summary>
         /// Файлы абитуриентов - Заявление об отзыве документов
         /// </summary>
-        AbiturientFiles_RevocationStatement = 74
+        AbiturientFiles_RevocationStatement = 74,
+        /// <summary>
+        /// Учебно-программная документация - Лист переутверждения рабочей программы
+        /// </summary>
+        RabProgrammaDiscipliniListPereutverjdeniya = 75,
+        /// <summary>
+        /// Учебно-программная документация - Лист переутверждения фонда оценочных средств
+        /// </summary>
+        FondOcenochnihSredstvListPereutverjdeniya = 76
     }
 }

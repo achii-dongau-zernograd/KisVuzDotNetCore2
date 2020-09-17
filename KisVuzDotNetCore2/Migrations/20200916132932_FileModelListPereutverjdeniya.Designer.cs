@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200916132932_FileModelListPereutverjdeniya")]
+    partial class FileModelListPereutverjdeniya
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -917,7 +918,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("DisciplineId");
 
-                    b.Property<int?>("FileModelId");
+                    b.Property<int>("FileModelId");
 
                     b.HasKey("EduAnnotationId");
 
@@ -1387,7 +1388,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("DisciplineId");
 
-                    b.Property<int?>("FileModelId");
+                    b.Property<int>("FileModelId");
 
                     b.Property<int?>("FileModelListPereutverjdeniyaId");
 
@@ -1439,7 +1440,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("DisciplineId");
 
-                    b.Property<int?>("FileModelId");
+                    b.Property<int>("FileModelId");
 
                     b.Property<int?>("FileModelListPereutverjdeniyaId");
 
@@ -4716,7 +4717,8 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
                         .WithMany()
-                        .HasForeignKey("FileModelId");
+                        .HasForeignKey("FileModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Education.EduChislen", b =>
@@ -4956,7 +4958,8 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
                         .WithMany()
-                        .HasForeignKey("FileModelId");
+                        .HasForeignKey("FileModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModelListPereutverjdeniya")
                         .WithMany()
@@ -4985,7 +4988,8 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModel")
                         .WithMany()
-                        .HasForeignKey("FileModelId");
+                        .HasForeignKey("FileModelId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.FileModel", "FileModelListPereutverjdeniya")
                         .WithMany()

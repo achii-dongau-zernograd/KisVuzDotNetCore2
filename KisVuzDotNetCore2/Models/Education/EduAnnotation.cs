@@ -32,6 +32,6 @@ namespace KisVuzDotNetCore2.Models.Education
         /// Файл аннотации
         /// </summary>
         [Display(Name = "Файл аннотации")]
-        public int FileModelId { get; set; }
+        public int? FileModelId { get; set; }
     }
 }

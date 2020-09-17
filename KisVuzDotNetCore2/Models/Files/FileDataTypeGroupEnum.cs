@@ -10,6 +10,10 @@
         /// </summary>
         EducationDocuments = 4,
         /// <summary>
+        /// Учебно-программная документация
+        /// </summary>
+        UchProgramDocumentation = 5,
+        /// <summary>
         /// Договоры
         /// </summary>
         Contracts = 10,

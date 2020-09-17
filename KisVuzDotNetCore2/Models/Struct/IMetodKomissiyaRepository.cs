@@ -197,12 +197,28 @@ namespace KisVuzDotNetCore2.Models.Struct
         Task<RabProgram> UpdateRabProgramAsync(RabProgram rabProgram, IFormFile uploadedFile);
 
         /// <summary>
+        /// Обновление файла листа переутверждения рабочей программы
+        /// </summary>
+        /// <param name="rabProgram"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<RabProgram> UpdateRabProgramListPereutverjdeniyaAsync(RabProgram rabProgram, IFormFile uploadedFile);
+
+        /// <summary>
         /// Обновление фонда оценочных средств
         /// </summary>
         /// <param name="fondOcenochnihSredstv"></param>
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task<FondOcenochnihSredstv> UpdateFondOcenochnihSredstvAsync(FondOcenochnihSredstv fondOcenochnihSredstv, IFormFile uploadedFile);
+
+        /// <summary>
+        /// Обновление листа переутверждения фонда оценочных средств
+        /// </summary>
+        /// <param name="fondOcenochnihSredstv"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FondOcenochnihSredstv> UpdateFondOcenochnihSredstvListPereutverjdeniyaAsync(FondOcenochnihSredstv fondOcenochnihSredstv, IFormFile uploadedFile);
 
         /// <summary>
         /// Удаляет аннотацию, если она доступна пользователю
@@ -225,6 +241,16 @@ namespace KisVuzDotNetCore2.Models.Struct
         Task RemoveRabProgramByUserNameAsync(int eduPlanId, int disciplineId, int rabProgramId, string userName);
 
         /// <summary>
+        /// Удаляет лист переутверждения рабочей программы, если она доступна пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="rabProgramId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task RemoveRabProgramListPereutverjdeniyaByUserNameAsync(int eduPlanId, int disciplineId, int rabProgramId, string userName);
+
+        /// <summary>
         /// Удаляет фонд оценочных средств дисциплины, если она доступна пользователю
         /// </summary>
         /// <param name="eduPlanId"></param>
@@ -233,6 +259,16 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <param name="userName"></param>
         /// <returns></returns>
         Task RemoveFondOcenochnihSredstvByUserNameAsync(int eduPlanId, int disciplineId, int fondOcenochnihSredstvId, string userName);
+
+        /// <summary>
+        /// Удаляет лист фонда оценочных средств дисциплины, если она доступна пользователю
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <param name="disciplineId"></param>
+        /// <param name="fondOcenochnihSredstvId"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task RemoveFondOcenochnihSredstvListPereutverjdeniyaByUserNameAsync(int eduPlanId, int disciplineId, int fondOcenochnihSredstvId, string userName);
 
         /// <summary>
         /// Возвращает связку "Преподаватель - Дисциплина",
@@ -281,7 +317,7 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <param name="disciplinePomeshenieChanging"></param>
         /// <returns></returns>
         Task UpdateDisciplinePomeshenieAsync(DisciplinePomeshenie disciplinePomeshenieChanging);
-
+        
         /// <summary>
         /// Удаляет привязку "Дисциплина - Помещение"
         /// </summary>
@@ -292,5 +328,6 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <param name="userName"></param>
         /// <returns></returns>
         Task RemoveDisciplinePomeshenieByUserNameAsync(int eduPlanId, int disciplineId, int eduYearId, int disciplinePomeshenieId, string userName);
+        
     }
 }

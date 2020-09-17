@@ -1,0 +1,28 @@
+﻿@model FondOcenochnihSredstv
+
+<h3>Вы действительно хотите удалить лист переутверждения фонда оценочных средств?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Discipline)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Discipline.DisciplineName.DisciplineNameName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FileModelListPereutverjdeniya)
+        </dt>
+        <dd>
+            <a href="/@Model.FileModelListPereutverjdeniya?.Path" target="_blank">Открыть</a>
+        </dd>
+    </dl>
+
+    <form asp-action="FondOcenochnihSredstvListPereutverjdeniyaRemoveConfirmed">
+        <input type="hidden" name="EduPlanId" value="@Model.Discipline.BlokDisciplChast.BlokDiscipl.EduPlanId" />
+        <input type="hidden" name="DisciplineId" value="@Model.DisciplineId" />
+        <input type="hidden" asp-for="FondOcenochnihSredstvId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="EduPlanPreview" asp-route-id="@Model.Discipline.BlokDisciplChast.BlokDiscipl.EduPlanId" class="btn btn-default">Отмена</a>
+    </form>
+</div>

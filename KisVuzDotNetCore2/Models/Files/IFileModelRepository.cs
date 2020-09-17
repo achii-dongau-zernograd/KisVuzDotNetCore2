@@ -44,6 +44,13 @@ namespace KisVuzDotNetCore2.Models.Files
         Task<FileModel> UploadRabProgramAsync(IFormFile uploadedFile);
 
         /// <summary>
+        /// Загружает файл листа переутверждения рабочей программы
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadRabProgramListPereutverjdeniyaAsync(IFormFile uploadedFile);
+
+        /// <summary>
         /// Загружает заявление о согласии на зачисление
         /// </summary>
         /// <param name="uploadedFile"></param>
@@ -84,6 +91,13 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task<FileModel> UploadFondOcenochnihSredstvAsync(IFormFile uploadedFile);
+
+        /// <summary>
+        /// Загружает файл листа переутверждения фонда оценочных средств на диск
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadFondOcenochnihSredstvListPereutverjdeniyaAsync(IFormFile uploadedFile);
 
         /// <summary>
         /// Загружает учебное пособие
@@ -238,5 +252,7 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="fileDataType"></param>
         /// <returns></returns>
         Task<FileModel> UploadFileAsync(IFormFile uploadedFile, FileDataTypeEnum fileDataType);
+
+        
     }
 }

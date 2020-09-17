@@ -317,8 +317,18 @@ namespace KisVuzDotNetCore2.Models.Education
                  .Include(e => e.BlokDiscipl)
                     .ThenInclude(b => b.BlokDisciplChast)
                         .ThenInclude(c => c.Disciplines)
+                            .ThenInclude(d => d.RabPrograms)
+                                .ThenInclude(a => a.FileModelListPereutverjdeniya)
+                 .Include(e => e.BlokDiscipl)
+                    .ThenInclude(b => b.BlokDisciplChast)
+                        .ThenInclude(c => c.Disciplines)
                             .ThenInclude(d => d.FondOcenochnihSredstvList)
                                 .ThenInclude(a => a.FileModel)
+                 .Include(e => e.BlokDiscipl)
+                    .ThenInclude(b => b.BlokDisciplChast)
+                        .ThenInclude(c => c.Disciplines)
+                            .ThenInclude(d => d.FondOcenochnihSredstvList)
+                                .ThenInclude(a => a.FileModelListPereutverjdeniya)
                  .Include(e => e.BlokDiscipl)
                     .ThenInclude(b => b.BlokDisciplChast)
                         .ThenInclude(c => c.Disciplines)
@@ -368,6 +378,19 @@ namespace KisVuzDotNetCore2.Models.Education
         {
             _context.RabPrograms.Remove(rabProgram);
             await _fileModelRepository.RemoveFileAsync(rabProgram.FileModelId);
+            await _fileModelRepository.RemoveFileAsync(rabProgram.FileModelListPereutverjdeniyaId);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет лист переутверждения рабочей программы
+        /// </summary>
+        /// <param name="rabProgram"></param>
+        /// <returns></returns>
+        public async Task RemoveRabProgramListPereutverjdeniyaAsync(RabProgram rabProgram)
+        {            
+            await _fileModelRepository.RemoveFileAsync(rabProgram.FileModelListPereutverjdeniyaId);
+            rabProgram.FileModelListPereutverjdeniyaId = null;
             await _context.SaveChangesAsync();
         }
 
@@ -380,6 +403,18 @@ namespace KisVuzDotNetCore2.Models.Education
         {
             _context.FondOcenochnihSredstvs.Remove(fondOcenochnihSredstv);
             await _fileModelRepository.RemoveFileAsync(fondOcenochnihSredstv.FileModelId);
+            await _fileModelRepository.RemoveFileAsync(fondOcenochnihSredstv.FileModelListPereutverjdeniyaId);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет лист переутверждения фонда оценочных средств дисциплины
+        /// </summary>
+        /// <param name="fondOcenochnihSredstv"></param>
+        /// <returns></returns>
+        public async Task RemoveFondOcenochnihSredstvListPereutverjdeniyaAsync(FondOcenochnihSredstv fondOcenochnihSredstv)
+        {            
+            await _fileModelRepository.RemoveFileAsync(fondOcenochnihSredstv.FileModelListPereutverjdeniyaId);
             await _context.SaveChangesAsync();
         }
 
@@ -455,6 +490,34 @@ namespace KisVuzDotNetCore2.Models.Education
         }
 
         /// <summary>
+        /// Обновление файла листа переутверждения рабочей программы
+        /// </summary>
+        /// <param name="rabProgram"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<RabProgram> UpdateRabProgramListPereutverjdeniyaAsync(RabProgram rabProgram, IFormFile uploadedFile)
+        {
+            if (rabProgram == null || uploadedFile == null) return null;
+            FileModel fileModel = await _fileModelRepository.UploadRabProgramListPereutverjdeniyaAsync(uploadedFile);
+
+            if (rabProgram.FileModelListPereutverjdeniyaId != null)
+            {
+                await _fileModelRepository.RemoveFileAsync(rabProgram.FileModelListPereutverjdeniyaId);
+            }
+
+            rabProgram.FileModelListPereutverjdeniya = fileModel;
+            rabProgram.FileModelListPereutverjdeniyaId = fileModel.Id;
+
+            if (rabProgram.RabProgramId == 0)
+            {
+                await _context.RabPrograms.AddAsync(rabProgram);
+            }
+
+            await _context.SaveChangesAsync();
+            return rabProgram;
+        }
+
+        /// <summary>
         /// Добавляет к фонду оценочных средств загруженный файл
         /// </summary>
         /// <param name="fondOcenochnihSredstv"></param>
@@ -472,6 +535,34 @@ namespace KisVuzDotNetCore2.Models.Education
 
             fondOcenochnihSredstv.FileModel = fileModel;
             fondOcenochnihSredstv.FileModelId = fileModel.Id;
+
+            if (fondOcenochnihSredstv.FondOcenochnihSredstvId == 0)
+            {
+                await _context.FondOcenochnihSredstvs.AddAsync(fondOcenochnihSredstv);
+            }
+
+            await _context.SaveChangesAsync();
+            return fondOcenochnihSredstv;
+        }
+
+        /// <summary>
+        /// Обновление листа переутверждения фонда оценочных средств
+        /// </summary>
+        /// <param name="fondOcenochnihSredstv"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FondOcenochnihSredstv> UpdateFondOcenochnihSredstvListPereutverjdeniyaAsync(FondOcenochnihSredstv fondOcenochnihSredstv, IFormFile uploadedFile)
+        {
+            if (fondOcenochnihSredstv == null || uploadedFile == null) return null;
+            FileModel fileModel = await _fileModelRepository.UploadFondOcenochnihSredstvListPereutverjdeniyaAsync(uploadedFile);
+
+            if (fondOcenochnihSredstv.FileModelListPereutverjdeniyaId != null)
+            {
+                await _fileModelRepository.RemoveFileAsync(fondOcenochnihSredstv.FileModelListPereutverjdeniyaId);
+            }
+
+            fondOcenochnihSredstv.FileModelListPereutverjdeniya = fileModel;
+            fondOcenochnihSredstv.FileModelListPereutverjdeniyaId = fileModel.Id;
 
             if (fondOcenochnihSredstv.FondOcenochnihSredstvId == 0)
             {
@@ -556,5 +647,7 @@ namespace KisVuzDotNetCore2.Models.Education
             _context.DisciplinePomeshenies.Remove(disciplinePomeshenie);
             await _context.SaveChangesAsync();
         }
+
+        
     }
 }

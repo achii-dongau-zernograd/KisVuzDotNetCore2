@@ -93,13 +93,33 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
-        /// Загружает файл фонда оценочнгых средств на диск
+        /// Загружает файл листа переутверждения рабочей программы
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadRabProgramListPereutverjdeniyaAsync(IFormFile uploadedFile)
+        {
+            return await UploadFileAsync(uploadedFile, "Лист переутверждения рабочей программы", FileDataTypeEnum.RabProgrammaDiscipliniListPereutverjdeniya);
+        }
+
+        /// <summary>
+        /// Загружает файл фонда оценочных средств на диск
         /// </summary>
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         public async Task<FileModel> UploadFondOcenochnihSredstvAsync(IFormFile uploadedFile)
         {
             return await UploadFileAsync(uploadedFile, "Фонд оценочных средств", FileDataTypeEnum.FondOcenochnihSredstv);
+        }
+
+        /// <summary>
+        /// Загружает файл листа переутверждения фонда оценочных средств на диск
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadFondOcenochnihSredstvListPereutverjdeniyaAsync(IFormFile uploadedFile)
+        {
+            return await UploadFileAsync(uploadedFile, "Лист переутверждения фонда оценочных средств", FileDataTypeEnum.FondOcenochnihSredstvListPereutverjdeniya);
         }
 
         /// <summary>
