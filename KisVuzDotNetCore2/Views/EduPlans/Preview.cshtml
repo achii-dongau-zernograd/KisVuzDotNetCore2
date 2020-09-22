@@ -179,13 +179,23 @@
                             <td>
                                 @foreach (var rabProgram in discipline.RabPrograms)
                                 {
-                                    <a href="/@rabProgram.FileModel.Path">Открыть</a>
+                                    <a href="/@rabProgram.FileModel.Path">Рабочая программа</a>
+                                    <br />
+                                    @if (rabProgram.FileModelListPereutverjdeniyaId != null)
+                                    {
+                                        <a href="/@rabProgram.FileModelListPereutverjdeniya.Path">Лист переутверждения</a>
+                                    }                                    
                                 }
                             </td>
                             <td>
                                 @foreach (var fondOcenochnihSredstv in discipline.FondOcenochnihSredstvList)
                                 {
-                                    <a href="/@fondOcenochnihSredstv.FileModel.Path">Открыть</a>
+                                    <a href="/@fondOcenochnihSredstv.FileModel.Path">Фонд оценочных средств</a>
+                                    <br />
+                                    @if (fondOcenochnihSredstv.FileModelListPereutverjdeniyaId != null)
+                                    {
+                                        <a href="/@fondOcenochnihSredstv.FileModelListPereutverjdeniya.Path">Лист переутверждения</a>
+                                    }
                                 }
                             </td>
                             @*<td>

@@ -960,7 +960,14 @@
                                             var paymentRowStatus = (RowStatusEnum)payment.RowStatusId;
                                             <tr>
                                                 <td>
-                                                    <a href="/@payment.FileModel.Path" target="_blank">@payment.PaymentDate.ToString("d") - @payment.Amount.ToString("F") руб.</a>
+                                                    @if (payment.FileModel == null)
+                                                    {
+                                                        <p>@payment.PaymentDate.ToString("d") - @payment.Amount.ToString("F") руб.</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="/@payment.FileModel.Path" target="_blank">@payment.PaymentDate.ToString("d") - @payment.Amount.ToString("F") руб.</a>
+                                                    }
                                                 </td>
                                                 <td>
 

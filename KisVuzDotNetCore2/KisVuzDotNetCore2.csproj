@@ -610,6 +610,8 @@
     <Compile Remove="Migrations\20200806072727_EntranceTestsProtocols.Designer.cs" />
     <Compile Remove="Migrations\20200916132621_FileModelListPereutverjdeniya.cs" />
     <Compile Remove="Migrations\20200916132621_FileModelListPereutverjdeniya.Designer.cs" />
+    <Compile Remove="Migrations\20200922051817_t.cs" />
+    <Compile Remove="Migrations\20200922051817_t.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

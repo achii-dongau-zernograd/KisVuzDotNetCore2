@@ -19,6 +19,9 @@
                     Дата и время отправки сообщения
                 </th>
                 <th>
+                    Отправитель сообщения
+                </th>
+                <th>
                     Текст сообщения
                 </th>
                 <th>
@@ -41,6 +44,9 @@
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.DateTime)
+                    </td>
+                    <td>
+                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
                     </td>
                     <td>
                         @if (string.IsNullOrWhiteSpace(item.Link))
@@ -84,6 +90,9 @@
                     Дата и время отправки сообщения
                 </th>
                 <th>
+                    Отправитель сообщения
+                </th>
+                <th>
                     Текст сообщения
                 </th>
                 <th>
@@ -103,6 +112,9 @@
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.DateTime)
+                    </td>
+                    <td>
+                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
                     </td>
                     <td>
                         @if (string.IsNullOrWhiteSpace(item.Link))

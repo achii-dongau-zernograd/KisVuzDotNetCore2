@@ -25,6 +25,12 @@ namespace KisVuzDotNetCore2.Models.Students
         public string AppUserId { get; set; }
 
         /// <summary>
+        /// УИД пользователя-отправителя сообщения
+        /// </summary>
+        [Display(Name = "Пользователь-отправитель сообщения")]
+        public AppUser AppUser { get; set; }
+
+        /// <summary>
         /// УИД группы-получателя сообщения
         /// </summary>
         [Display(Name = "УИД группы-получателя сообщения")]
