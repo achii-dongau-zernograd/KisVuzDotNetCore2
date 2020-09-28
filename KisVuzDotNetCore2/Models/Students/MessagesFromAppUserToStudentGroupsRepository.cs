@@ -24,6 +24,7 @@ namespace KisVuzDotNetCore2.Models.Students
                 .Include(m => m.DisciplineName)
                 .Include(m => m.StudentGroup.EduKurs)
                 .Include(m => m.UserMessageType)
+                .Include(m => m.AppUser)
                 .OrderByDescending(m => m.DateTime);
 
             return messages;
