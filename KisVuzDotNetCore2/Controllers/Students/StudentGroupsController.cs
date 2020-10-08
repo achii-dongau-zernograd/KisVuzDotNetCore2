@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Query;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Users;
+using KisVuzDotNetCore2.Models.Files;
 
 namespace KisVuzDotNetCore2.Controllers.Students
 {
@@ -18,6 +19,7 @@ namespace KisVuzDotNetCore2.Controllers.Students
     public class StudentGroupsController : Controller
     {
         private readonly AppIdentityDBContext _context;
+        private readonly IFileModelRepository _fileModelRepository;
 
         private IIncludableQueryable<StructFacultet, StructSubvision> _structFacultets => _context.StructFacultets.Include(f=>f.StructSubvision);
         
@@ -30,9 +32,11 @@ namespace KisVuzDotNetCore2.Controllers.Students
                 .Include(g => g.Students)
                     .ThenInclude(s => s.AppUser);        
 
-        public StudentGroupsController(AppIdentityDBContext context)
+        public StudentGroupsController(AppIdentityDBContext context,
+            IFileModelRepository fileModelRepository)
         {
             _context = context;
+            _fileModelRepository = fileModelRepository;
         }
 
         /// <summary>
@@ -327,8 +331,15 @@ namespace KisVuzDotNetCore2.Controllers.Students
             var studentGroup = await _context.StudentGroups
                 .Include(sg=>sg.Vedomosti)
                     .ThenInclude(v=>v.VedomostStudentMarks)
+                .Include(sg=>sg.Students)
+                    .ThenInclude(sgs=>sgs.RezultOsvoenObrazovatProgr)
                 .SingleOrDefaultAsync(sg => sg.StudentGroupId == id);
-                        
+
+            foreach (var student in studentGroup.Students)
+            {
+                await _fileModelRepository.RemoveFileModelAsync(student.RezultOsvoenObrazovatProgr);
+            }
+
             _context.StudentGroups.Remove(studentGroup);
             await _context.SaveChangesAsync();
 
