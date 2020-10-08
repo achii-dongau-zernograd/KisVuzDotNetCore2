@@ -123,7 +123,7 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 case CreateOrEditNirDataModeEnum.Canceling:
                     if (article.RowStatusId == null)
                     {
-                        _articlesRepository.RemoveArticle(articleEntry.ArticleId);
+                        await _articlesRepository.RemoveArticleAsync(articleEntry.ArticleId);
                     }
                     return RedirectToAction(nameof(Index));
                 case CreateOrEditNirDataModeEnum.AddingAuthor:
@@ -238,9 +238,9 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         // POST: Articles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _articlesRepository.RemoveArticle(id);
+            await _articlesRepository.RemoveArticleAsync(id);
             return RedirectToAction(nameof(Index));
         }
         

@@ -1,0 +1,9 @@
+﻿<h1>Удаление научных статей</h1>
+<h3>Вы действительно хотите удалить статьи (@ViewBag.ArticlesNum шт.) до @ViewBag.Year включительно?</h3>
+<div>
+    <form asp-action="RemoveArticlesConfirmed">
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <input type="hidden" name="year" value="@ViewBag.Year" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

@@ -21,7 +21,14 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// </summary>
         /// <returns></returns>
         List<Article> GetArticles();
-        
+
+        /// <summary>
+        /// Возвращает список научных статей, опубликованных до указанного года включительно
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        IQueryable<Article> GetArticles(int year);
+
         /// <summary>
         /// Возвращает статью
         /// </summary>
@@ -34,6 +41,7 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// </summary>
         /// <param name="article"></param>        
         void AddArticle(Article article);
+        
 
         /// <summary>
         /// Обновляет научную статью
@@ -46,11 +54,18 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// Удаляет научную статью
         /// </summary>
         /// <param name="articleId"></param>
-        void RemoveArticle(int articleId);
+        Task RemoveArticleAsync(int articleId);
 
         /// <summary>
         /// Статьи, ожидающие подтверждения
         /// </summary>
         IEnumerable<Article> GetArticlesNotConfirmed();
+
+        /// <summary>
+        /// Удаляет статьи
+        /// </summary>
+        /// <param name="articlesToDelete"></param>
+        /// <returns></returns>
+        Task RemoveArticlesAsync(List<Article> articlesToDelete);
     }
 }

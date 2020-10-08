@@ -69,10 +69,21 @@ namespace KisVuzDotNetCore2.Models.Nir
         }
 
         /// <summary>
+        /// Возвращает список научных статей, опубликованных до указанного года включительно
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        public IQueryable<Article> GetArticles(int year)
+        {
+            var data = GetArticlesAll().Where(a => a.YearId <= year);
+            return data;
+        }
+
+        /// <summary>
         /// Все статьи
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<Article> GetArticlesAll()
+        private IQueryable<Article> GetArticlesAll()
         {
             return _context.Articles
                 .Include(a => a.FileModel)
@@ -89,13 +100,13 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// Удаляет научную статью по её УИД
         /// </summary>
         /// <param name="articleId">УИД статьи</param>
-        public void RemoveArticle(int articleId)
+        public async Task RemoveArticleAsync(int articleId)
         {
             var article = GetArticle(articleId);
             _context.Articles.Remove(article);
             if (article.FileModel != null)
             {
-                _fileModelRepository.RemoveFileModelAsync(article.FileModel);
+                await _fileModelRepository.RemoveFileModelAsync(article.FileModel);
             }
             _context.SaveChanges();
         }
@@ -167,6 +178,19 @@ namespace KisVuzDotNetCore2.Models.Nir
         public IEnumerable<Article> GetArticlesNotConfirmed()
         {
             return GetArticlesAll().Where(a => a.RowStatusId == (int?)RowStatusEnum.NotConfirmed);
+        }
+
+        /// <summary>
+        /// Удаляет статьи
+        /// </summary>
+        /// <param name="articlesToDelete"></param>
+        /// <returns></returns>
+        public async Task RemoveArticlesAsync(List<Article> articlesToDelete)
+        {
+            foreach (var articleToDelete in articlesToDelete)
+            {
+                await RemoveArticleAsync(articleToDelete.ArticleId);
+            }
         }
     }
 }
