@@ -1092,5 +1092,35 @@ namespace KisVuzDotNetCore2.Infrastructure
 
             return new SelectList(data, selectedDate == null ? null : ((DateTime)selectedDate).ToString("dd.MM.yyyy"));
         }
+
+        /// <summary>
+        /// Возвращает список типов внешних ресурсов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListExternalResourceTypes(int selectedId = 0)
+        {
+            var data = _context.ExternalResourceTypes.OrderBy(s => s.ExternalResourceTypeName);
+            return new SelectList(data,
+                nameof(ExternalResourceType.ExternalResourceTypeId),
+                nameof(ExternalResourceType.ExternalResourceTypeName),
+                selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список внешних ресурсов
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListExternalResources(int selectedId = 0)
+        {
+            var data = _context.ExternalResources
+                .Include(s => s.ExternalResourceType)
+                .OrderBy(s => s.ExternalResourceType.ExternalResourceTypeName);
+            return new SelectList(data,
+                nameof(ExternalResource.ExternalResourceId),
+                nameof(ExternalResource.ExternalResourceNameFull),
+                selectedId);
+        }
     }
 }

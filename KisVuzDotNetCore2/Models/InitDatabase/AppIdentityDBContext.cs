@@ -885,6 +885,25 @@ namespace KisVuzDotNetCore2.Models
         public DbSet<FamilyMemberType> FamilyMemberTypes { get; set; }
         #endregion
 
+        #region Внешние ресурсы пользователей
+
+        /// <summary>
+        /// Внешние ресурсы пользователей
+        /// </summary>
+        public DbSet<UserAccountExternal> UserAccountExternals { get; set; }
+
+        /// <summary>
+        /// Справочник Внешние ресурсы
+        /// </summary>
+        public DbSet<ExternalResource> ExternalResources { get; set; }
+
+        /// <summary>
+        /// Справочник Типов внешних ресурсов
+        /// </summary>
+        public DbSet<ExternalResourceType> ExternalResourceTypes { get; set; }
+
+        #endregion
+
         #region Материально-техническое обеспечение
 
         /// <summary>
@@ -1298,6 +1317,9 @@ namespace KisVuzDotNetCore2.Models
             await InitDatabaseLmsTaskTypes.CreateLmsTaskTypes(serviceProvider, configuration);
 
             await InitDatabaseSubmittingDocumentsTypes.CreateSubmittingDocumentsTypes(serviceProvider, configuration);
+
+            await InitDatabaseExternalResources.CreateExternalResourceTypes(serviceProvider, configuration);
+            await InitDatabaseExternalResources.CreateExternalResources(serviceProvider, configuration);
         }        
         
         

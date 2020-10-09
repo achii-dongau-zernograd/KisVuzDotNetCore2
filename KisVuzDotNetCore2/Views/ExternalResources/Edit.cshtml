@@ -1,0 +1,30 @@
+﻿@model KisVuzDotNetCore2.Models.Users.ExternalResource
+
+@{
+    ViewData["Title"] = "Редактирование внешнего ресурса";
+}
+
+<h2>Редактирование внешнего ресурса</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+            <div class="form-group">
+                <label asp-for="ExternalResourceName" class="control-label"></label>
+                <input asp-for="ExternalResourceName" class="form-control" />
+                <span asp-validation-for="ExternalResourceName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExternalResourceType.ExternalResourceTypeName" class="control-label"></label>
+                <select asp-for="ExternalResourceTypeId" class="form-control" asp-items="ViewBag.ExternalResourceTypes"></select>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ExternalResourceId" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

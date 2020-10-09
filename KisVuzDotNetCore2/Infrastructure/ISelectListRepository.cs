@@ -29,7 +29,20 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListEduNapravlFullNamesOfEduLevel(int? eduLevelId, int selectedId = 0);
-        
+
+        /// <summary>
+        /// Возвращает список типов
+        /// внешних ресурсов
+        /// </summary>
+        /// <returns></returns>
+        SelectList GetSelectListExternalResourceTypes(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список внешних ресурсов
+        /// </summary>
+        /// <returns></returns>
+        SelectList GetSelectListExternalResources(int selectedId = 0);
+
         /// <summary>
         /// Возвращает список типов заданий СДО
         /// </summary>

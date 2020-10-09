@@ -781,6 +781,11 @@ namespace KisVuzDotNetCore2.Controllers
                 .Where(a => a.AppUserId == user.Id)
                 .ToListAsync();
 
+            user.UserAccountExternals = await context.UserAccountExternals
+                .Include(a => a.ExternalResource.ExternalResourceType)
+                .Where(a => a.AppUserId == user.Id)
+                .ToListAsync();
+
             ViewBag.CanEdit = canEdit;
             return View(user);
         }

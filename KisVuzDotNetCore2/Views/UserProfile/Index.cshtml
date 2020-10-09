@@ -125,6 +125,23 @@
                         }
                     }
                 }
+
+                @if (Model.UserAccountExternals != null && Model.UserAccountExternals.Count() > 0)
+                {
+                    <hr />
+                    @foreach (var group in Model.UserAccountExternals.GroupBy(r=>r.ExternalResource.ExternalResourceType.ExternalResourceTypeName))
+                    {
+                        <b>@group.Key</b>
+                        <ul>
+                            @foreach (var userAccountExternal in group)
+                            {
+                                <li>
+                                    <a href="@userAccountExternal.Link" target="_blank">@userAccountExternal.ExternalResource.ExternalResourceName</a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                }
             </div>
             <div class="tab-pane" id="qualification">
                 <br />

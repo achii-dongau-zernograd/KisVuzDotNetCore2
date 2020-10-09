@@ -253,5 +253,10 @@ namespace KisVuzDotNetCore2.Models
         /// Список договоров, заключенных между пользователем и образовательной организацией
         /// </summary>
         public List<Contract> Contracts { get; set; }
+        
+        /// <summary>
+        /// Список внешних ресурсов пользователя (аккаунты ВК, РИНЦ и пр.)
+        /// </summary>
+        public List<UserAccountExternal> UserAccountExternals { get; set; }
     }
 }

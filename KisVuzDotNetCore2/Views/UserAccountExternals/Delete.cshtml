@@ -1,0 +1,33 @@
+﻿@model UserAccountExternal
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h2>Удаление внешнего ресурса</h2>
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Link)
+        </dt>
+        <dd>
+            <a href="@Model.Link" target="_blank">@Model.Link</a>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExternalResourceId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ExternalResource.ExternalResourceNameFull)
+        </dd>        
+    </dl>        
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="UserAccountExternalId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

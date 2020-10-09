@@ -1,0 +1,32 @@
+﻿@model IEnumerable<UserAccountExternal>
+
+<h1>Внешние ресурсы</h1>
+
+<a asp-action="Create" class="btn btn-primary">Добавить</a>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Внешний ресурс</th>
+            <th>Тип внешнего ресурса</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var userAccountExternal in Model)
+        {
+            <tr>
+                <td>
+                    <a href="@userAccountExternal.Link" target="_blank">@userAccountExternal.Link</a>
+                </td>
+                <td>
+                    @userAccountExternal.ExternalResource.ExternalResourceName (@userAccountExternal.ExternalResource.ExternalResourceType.ExternalResourceTypeName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@userAccountExternal.UserAccountExternalId" class="btn btn-primary">Редактировать</a>
+                    <a asp-action="Delete" asp-route-id="@userAccountExternal.UserAccountExternalId" class="btn btn-danger">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

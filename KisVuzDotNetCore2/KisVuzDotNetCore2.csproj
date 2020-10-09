@@ -640,6 +640,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\ExternalResources\Create.cshtml" />
+    <None Include="Views\ExternalResources\Edit.cshtml" />
+    <None Include="Views\ExternalResources\Index.cshtml" />
     <None Include="Views\Monografs\CreateOrEdit.cshtml" />
     <None Include="Views\Monografs\Delete.cshtml" />
     <None Include="Views\Monografs\Index.cshtml" />
