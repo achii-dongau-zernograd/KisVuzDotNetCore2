@@ -1,0 +1,160 @@
+﻿@model IEnumerable<Patent>
+
+<h1>Удаление патентов и свидетельств, опубликованных до указанного года включительно</h1>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Фильтр</div>
+    <div class="panel-body">
+        <form asp-action="RemovePatents" class="form-inline">
+            <div class="form-group">
+                <label for="FilterLastNameFragment">Год</label>
+                <input type="text" name="Year" value="@ViewBag.Year" class="form-control" id="Year" placeholder="Год">
+            </div>            
+
+            <input type="hidden" name="IsRequestDataImmediately" value="true" />
+            <button type="submit" class="btn btn-info">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                Применить фильтр
+            </button>
+
+            <a asp-action="RemovePatentsConfirmation" asp-route-year="@ViewBag.Year" class="btn btn-danger">Удалить найденные патенты и свидетельства</a>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PatentVid.PatentVidName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatentNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatentName)
+            </th>
+            <th>
+                Авторы (авт. доля, о.е.)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Year.YearName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatentOwner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsACHII)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsZarubejn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatentNirSpecials)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatentNirTemas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RowStatus)
+            </th>            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PatentVid.PatentVidName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PatentNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PatentName)
+                </td>
+                <td>
+                    @foreach (var patentAuthor in item.PatentAuthors)
+                    {
+                        if (patentAuthor.Author?.AppUserId != null)
+                        {
+                            <p>
+                                <a asp-controller="Patents" asp-action="Index" asp-route-id="@patentAuthor.Author.AppUserId">@patentAuthor.Author.AuthorName (@patentAuthor.AuthorPart.ToString("N"))</a>
+                            </p>
+                        }
+                        else
+                        {
+                            <p>@patentAuthor.Author?.AuthorName (@patentAuthor.AuthorPart.ToString("N"))</p>
+                        }
+
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year.YearId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PatentOwner)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsACHII)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsZarubejn)
+                </td>
+
+                <td>
+                    @if (item.FileModel != null)
+                    {
+                        <a href="/@item.FileModel.Path">Открыть</a>
+                    }
+                    else
+                    {
+                        <p> - </p>
+                    }
+                </td>
+                <td>
+                    @if (item.PatentNirSpecials != null && item.PatentNirSpecials.Count > 0)
+                    {
+                        foreach (var articleNirSpecial in item.PatentNirSpecials)
+                        {
+                            <p>@articleNirSpecial.NirSpecial.NirSpecialCode - @articleNirSpecial.NirSpecial.NirSpecialName</p>
+                        }
+                    }
+                    else
+                    {
+                        <p> - </p>
+                    }
+                </td>
+                <td>
+                    @if (item.PatentNirTemas != null && item.PatentNirTemas.Count > 0)
+                    {
+                        foreach (var patentNirTema in item.PatentNirTemas)
+                        {
+                            <p>@patentNirTema.NirTema.NirTemaName</p>
+                        }
+                    }
+                    else
+                    {
+                        <p> - </p>
+                    }
+                </td>
+                <td>
+                    @if (@item.RowStatusId != (int)RowStatusEnum.Confirmed)
+                    {
+                        <form asp-action="ConfirmPatent">
+                            <input type="hidden" name="patentId" value="@item.PatentId" />
+                            <input type="submit" value="Подтвердить" class="btn btn-block btn-primary" />
+                        </form>
+                    }
+                    else
+                    {
+                        <text>@item.RowStatus.RowStatusName</text>
+                    }
+                </td>                
+            </tr>
+        }
+    </tbody>
+</table>

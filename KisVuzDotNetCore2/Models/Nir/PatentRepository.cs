@@ -3,6 +3,7 @@ using KisVuzDotNetCore2.Models.Files;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Models.Nir
 {
@@ -75,6 +76,16 @@ namespace KisVuzDotNetCore2.Models.Nir
         }
 
         /// <summary>
+        /// Возвращает запрос на выборку всех патентов и свидетельств, опубликованных до указанного года включительно
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        public IQueryable<Patent> GetPatents(int year)
+        {            
+            return GetPatents().Where(p => p.YearId <= year);
+        }
+
+        /// <summary>
         /// Патенты и свидетельства, ожидающие подтверждения
         /// </summary>
         /// <returns></returns>
@@ -112,7 +123,7 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// </summary>
         /// <param name="patentId"></param>        
         /// <returns></returns>
-        public Patent RemovePatent(int patentId)
+        public async Task<Patent> RemovePatentAsync(int patentId)
         {
             var patent = GetPatent(patentId);
             if (patent == null) return null;
@@ -120,11 +131,24 @@ namespace KisVuzDotNetCore2.Models.Nir
             _context.Patents.Remove(patent);
             if (patent.FileModelId != null)
             {
-                _fileModelRepository.RemoveFileModelAsync(patent.FileModel);
+                await _fileModelRepository.RemoveFileModelAsync(patent.FileModel);
             }
             _context.SaveChanges();
 
             return patent;
+        }
+
+        /// <summary>
+        /// Удаляет патенты (свидетельства)
+        /// </summary>
+        /// <param name="patentsToDelete"></param>
+        /// <returns></returns>
+        public async Task RemovePatentsAsync(List<Patent> patentsToDelete)
+        {
+            foreach (var patentToDelete in patentsToDelete)
+            {
+                await RemovePatentAsync(patentToDelete.PatentId);
+            }
         }
 
         /// <summary>
@@ -192,6 +216,8 @@ namespace KisVuzDotNetCore2.Models.Nir
             }
 
             _context.SaveChanges();
-        }        
+        }
+
+        
     }
 }

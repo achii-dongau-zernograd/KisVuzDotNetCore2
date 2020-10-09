@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Models.Nir
 {
@@ -13,6 +14,13 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// </summary>        
         /// <returns></returns>
         IQueryable<Patent> GetPatents();
+
+        /// <summary>
+        /// Возвращает запрос на выборку всех патентов и свидетельств, опубликованных до указанного года включительно
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        IQueryable<Patent> GetPatents(int year);
 
         /// <summary>
         /// Патенты и свидетельства, ожидающие подтверждения
@@ -44,12 +52,20 @@ namespace KisVuzDotNetCore2.Models.Nir
         /// Удаляет патент (свидетельство) пользователя userName
         /// </summary>
         /// <param name="patentId"></param>        
-        Patent RemovePatent(int patentId);
+        Task<Patent> RemovePatentAsync(int patentId);
+
+        /// <summary>
+        /// Удаляет патенты (свидетельства)
+        /// </summary>
+        /// <param name="patentsToDelete"></param>
+        /// <returns></returns>
+        Task RemovePatentsAsync(List<Patent> patentsToDelete);
 
         /// <summary>
         /// Подтверждение патента (свидетельства)
         /// </summary>
         /// <param name="patentId"></param>
-        void ConfirmPatent(int patentId);        
+        void ConfirmPatent(int patentId);       
+        
     }
 }

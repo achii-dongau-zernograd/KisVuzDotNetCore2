@@ -1,0 +1,9 @@
+﻿<h1>Удаление патентов и свидетельств</h1>
+<h3>Вы действительно хотите удалить патенты и свидетельства (@ViewBag.PatentsNum шт.) до @ViewBag.Year включительно?</h3>
+<div>
+    <form asp-action="RemovePatentsConfirmed">
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <input type="hidden" name="year" value="@ViewBag.Year" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

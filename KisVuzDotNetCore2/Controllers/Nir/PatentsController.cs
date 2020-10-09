@@ -125,7 +125,7 @@ namespace KisVuzDotNetCore2.Controllers.Nir
                 case CreateOrEditNirDataModeEnum.Canceling:
                     if (patent.RowStatusId == null)
                     {
-                        _patentRepository.RemovePatent(patentEntry.PatentId);
+                        _patentRepository.RemovePatentAsync(patentEntry.PatentId);
                     }
                     return RedirectToAction("Index");
 
@@ -243,7 +243,7 @@ namespace KisVuzDotNetCore2.Controllers.Nir
         public IActionResult DeleteConfirmed(Patent patent)
         {
             if (patent == null) return NotFound();
-            var patentEntry = _patentRepository.RemovePatent(patent.PatentId);
+            var patentEntry = _patentRepository.RemovePatentAsync(patent.PatentId);
 
             return RedirectToAction("Index");
         }
