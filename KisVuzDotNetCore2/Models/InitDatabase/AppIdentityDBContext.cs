@@ -890,7 +890,7 @@ namespace KisVuzDotNetCore2.Models
         /// <summary>
         /// Внешние ресурсы пользователей
         /// </summary>
-        public DbSet<UserAccountExternal> UserAccountExternals { get; set; }
+        public DbSet<UserAccountExternal> userAccountExternals { get; set; }
 
         /// <summary>
         /// Справочник Внешние ресурсы

@@ -25,7 +25,7 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <returns></returns>
         public async Task AddAsync(UserAccountExternal userAccountExternal)
         {
-            _context.UserAccountExternals.Add(userAccountExternal);
+            _context.userAccountExternals.Add(userAccountExternal);
             await _context.SaveChangesAsync();
         }
 
@@ -37,7 +37,7 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <returns></returns>
         public IQueryable<UserAccountExternal> GetUserAccountExternals()
         {
-            return _context.UserAccountExternals
+            return _context.userAccountExternals
                 .Include(uae => uae.AppUser)
                 .Include(uae => uae.ExternalResource.ExternalResourceType);
         }
@@ -69,7 +69,7 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <returns></returns>
         public async Task UpdateAsync(UserAccountExternal userAccountExternal)
         {
-            _context.UserAccountExternals.Update(userAccountExternal);
+            _context.userAccountExternals.Update(userAccountExternal);
             await _context.SaveChangesAsync();
         }
 
@@ -80,7 +80,7 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <returns></returns>
         public async Task RemoveAsync(int userAccountExternalId)
         {
-            _context.UserAccountExternals.Remove(new UserAccountExternal { UserAccountExternalId = userAccountExternalId });
+            _context.userAccountExternals.Remove(new UserAccountExternal { UserAccountExternalId = userAccountExternalId });
             await _context.SaveChangesAsync();
         }
     }

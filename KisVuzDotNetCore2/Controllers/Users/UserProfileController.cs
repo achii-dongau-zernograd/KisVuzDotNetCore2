@@ -781,7 +781,7 @@ namespace KisVuzDotNetCore2.Controllers
                 .Where(a => a.AppUserId == user.Id)
                 .ToListAsync();
 
-            user.UserAccountExternals = await context.UserAccountExternals
+            user.UserAccountExternals = await context.userAccountExternals
                 .Include(a => a.ExternalResource.ExternalResourceType)
                 .Where(a => a.AppUserId == user.Id)
                 .ToListAsync();
