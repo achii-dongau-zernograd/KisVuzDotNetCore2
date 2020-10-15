@@ -578,7 +578,20 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <returns></returns>
         public async Task RemoveUserDocumentsAsync(List<UserDocument> userDocuments)
         {
-            userDocuments.ForEach(async ud => await RemoveFileModelAsync(ud.FileModel));
+            //userDocuments.ForEach(async ud => await RemoveFileModelAsync(ud.FileModel));
+            var fileModelIds = new List<int>();
+
+            foreach (var userDocument in userDocuments)
+            {
+                fileModelIds.Add(userDocument.FileModelId);                
+            }
+
+            foreach (var fileModelId in fileModelIds)
+            {
+                await RemoveFileAsync(fileModelId);
+                await _context.SaveChangesAsync();
+            }
+
             _context.UserDocuments.RemoveRange(userDocuments);
 
             await _context.SaveChangesAsync();

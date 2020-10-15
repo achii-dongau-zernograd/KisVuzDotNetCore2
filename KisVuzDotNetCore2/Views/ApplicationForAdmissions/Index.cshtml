@@ -41,7 +41,7 @@
             <div class="form-group">
                 <label for="priorityId">Приоритет</label>
                 <select name="priorityId" asp-items="ViewBag.Priorities" class="form-control">
-                    <option>Все</option>                    
+                    <option>Все</option>
                 </select>
             </div>
             <div class="form-group">
@@ -55,103 +55,103 @@
             <button type="submit" class="btn btn-default">Применить фильтр</button>
         </form>
     </div>
-
-    <p>
-        <a asp-action="Create" class="btn btn-primary">Добавить</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreationDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RegNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AbiturientId)
-                </th>
-                <th>Документ об образовании</th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EduFormId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EduProfileId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.QuotaTypeId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PriorityId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FileModelId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RowStatusId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Remark)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreationDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RegNumber)
-                    </td>
-                    <td>
-                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.Abiturient.AppUserId" target="_blank">@item.Abiturient.AbiturientFioBirthdayEmail</a>
-                    </td>
-                    <td>
-                        @foreach (var userDocument in item.Abiturient.AppUser.UserDocuments.Where(ud => ud.FileDataTypeId == (int)FileDataTypeEnum.AttestatObOsnovnomObshemObrazovanii ||
-                                                                                                        ud.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii   ||
-                                                                                                        ud.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO                           ||
-                                                                                                        ud.FileDataTypeId == (int)FileDataTypeEnum.DiplomVO ))
-                        {
-                            <p>
-                                <a href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileDataType.FileDataTypeName</a>
-                            </p>
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EduForm.EduFormName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.QuotaType.QuotaTypeName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PriorityId)
-                    </td>
-                    <td>
-                        @if (item.FileModel != null)
-                        {
-                            <a href="/@item.FileModel.Path" target="_blank">Открыть</a>
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RowStatus.RowStatusName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Remark)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Редактировать", "Edit", new { id = item.ApplicationForAdmissionId }, new { @class = "btn btn-primary btn-block" })
-
-                        @Html.ActionLink("Удалить", "Delete", new { id = item.ApplicationForAdmissionId }, new { @class = "btn btn-danger btn-block" })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
 </div>
+
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AbiturientId)
+            </th>
+            <th>Документ об образовании</th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduFormId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduProfileId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuotaTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PriorityId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileModelId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RowStatusId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remark)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegNumber)
+                </td>
+                <td>
+                    <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.Abiturient.AppUserId" target="_blank">@item.Abiturient.AbiturientFioBirthdayEmail</a>
+                </td>
+                <td>
+                    @foreach (var userDocument in item.Abiturient.AppUser.UserDocuments.Where(ud => ud.FileDataTypeId == (int)FileDataTypeEnum.AttestatObOsnovnomObshemObrazovanii ||
+                                                                                                   ud.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
+                                                                                                   ud.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO ||
+                                                                                                   ud.FileDataTypeId == (int)FileDataTypeEnum.DiplomVO))
+                    {
+                        <p>
+                            <a href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileDataType.FileDataTypeName</a>
+                        </p>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EduForm.EduFormName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuotaType.QuotaTypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriorityId)
+                </td>
+                <td>
+                    @if (item.FileModel != null)
+                    {
+                        <a href="/@item.FileModel.Path" target="_blank">Открыть</a>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RowStatus.RowStatusName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remark)
+                </td>
+                <td>
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.ApplicationForAdmissionId }, new { @class = "btn btn-primary btn-block" })
+
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.ApplicationForAdmissionId }, new { @class = "btn btn-danger btn-block" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

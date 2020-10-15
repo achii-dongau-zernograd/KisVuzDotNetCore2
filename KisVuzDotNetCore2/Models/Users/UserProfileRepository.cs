@@ -44,7 +44,7 @@ namespace KisVuzDotNetCore2.Models.Users
             return appUser;
         }
 
-        private IQueryable<AppUser> GetUsers()
+        public IQueryable<AppUser> GetUsers()
         {
             return _context.Users
                 //////////// Фактический адрес ////////////
@@ -55,6 +55,7 @@ namespace KisVuzDotNetCore2.Models.Users
                     .ThenInclude(aufl=> aufl.ForeignLanguage)
                 /////////////// Абитуриенты ///////////////
                 .Include(u => u.Abiturient.ApplicationForAdmissions)
+                .Include(u => u.Abiturient.AbiturientStatus)
                 ////////////////// Авторы /////////////////
                 .Include(u => u.Author)
                     .ThenInclude(a => a.ArticleAuthors)
@@ -180,6 +181,8 @@ namespace KisVuzDotNetCore2.Models.Users
                     .ThenInclude(ud => ud.FileDataType)
                 ///////////// Работы пользователя //////////////////
                 .Include(u => u.UserWorks)
+                    .ThenInclude(uw => uw.UserWorkReviews)
+                        .ThenInclude(uwr => uwr.FileModel)
                 .Include(u => u.UserAchievments)
                 .Include(u => u.StructSubvisions)
                 .Include(u => u.AppUserStructSubvisions)
@@ -762,14 +765,28 @@ namespace KisVuzDotNetCore2.Models.Users
         /// </summary>
         /// <param name="appUserSearchModel"></param>
         /// <returns></returns>
-        public IEnumerable<AppUser> FindAppUsers(AppUserSearchModel appUserSearchModel)
+        public IQueryable<AppUser> FindAppUsers(AppUserSearchModel appUserSearchModel)
         {
-            var users = _context.Users
-                .Where(u => u.LastName.ToLower().Contains(appUserSearchModel.LastNameSearchFragment))
-                .Include(u => u.Students)
-                .Include(u => u.Teachers);
+            var query = GetUsers();
 
-            return users;
+            if (!string.IsNullOrWhiteSpace(appUserSearchModel.LastNameSearchFragment))
+            {
+                query = query.Where(u => u.LastName.Contains(appUserSearchModel.LastNameSearchFragment));
+            }
+
+            if (!string.IsNullOrWhiteSpace(appUserSearchModel.EmailSearchFragment))
+            {
+                query = query.Where(u => u.Email.Contains(appUserSearchModel.EmailSearchFragment));
+            }
+
+            if (appUserSearchModel.AppUserStatusId != null)
+            {
+                query = query.Where(u => u.AppUserStatusId == appUserSearchModel.AppUserStatusId);
+            }
+
+            query = query.OrderBy(u => u.LastName);
+
+            return query;
         }
 
         /// <summary>
@@ -839,6 +856,12 @@ namespace KisVuzDotNetCore2.Models.Users
             if (appUser == null)
                 throw new Exception($"Пользователь {userName} не найден!");
 
+            // Удаление данных абитуриента
+            if(appUser.Abiturient != null)
+            {
+                
+            }
+
             // Удаляем все пользовательские сообщения
             var userMessages = await _context.UserMessages
                 .Where(um => um.UserSenderId == appUser.Id || um.UserReceiverId == appUser.Id)
@@ -856,7 +879,71 @@ namespace KisVuzDotNetCore2.Models.Users
                 await _fileModelRepository.RemoveUserDocumentsAsync(appUser.UserDocuments);                
             }
 
+            // Удаление работ пользователя
+            if(appUser.UserWorks != null && appUser.UserWorks.Count > 0)
+            {
+                await RemoveUserWorksAsync(appUser.UserWorks);
+            }
+
             _context.Users.Remove(appUser);
+            await _context.SaveChangesAsync();
+
+            //var user = userProfileRepository.GetAppUser(userName);
+
+            //if (user!=null)
+            //{ 
+            //    IdentityResult result = await userManager.DeleteAsync(user);
+            //    if (result.Succeeded)
+            //        return RedirectToAction(nameof(Search));
+            //    else
+            //        AddErrorsFromResult(result);
+            //}
+            //else
+            //{
+            //    ModelState.AddModelError("", "Пользователь не найден");
+            //}
+        }
+
+        /// <summary>
+        /// Удаляет работы пользователя
+        /// </summary>
+        /// <param name="userWorks"></param>
+        /// <returns></returns>
+        private async Task RemoveUserWorksAsync(List<UserWork> userWorks)
+        {
+            if (userWorks == null) return;
+
+            var userWorkFileModelIds = new List<int>();
+            foreach (var userWork in userWorks)
+            {
+                if(userWork.UserWorkReviews != null && userWork.UserWorkReviews.Count > 0)
+                {
+                    var userWorkReviewFileModelIds = new List<int>();
+                    foreach (var userWorkReview in userWork.UserWorkReviews)
+                    {
+                        if(userWorkReview.FileModelId != null)
+                            userWorkReviewFileModelIds.Add((int)userWorkReview.FileModelId);
+                    }
+
+                    foreach (var userWorkReviewFileModelId in userWorkReviewFileModelIds)
+                    {
+                        await _fileModelRepository.RemoveFileAsync(userWorkReviewFileModelId);                        
+                        await _context.SaveChangesAsync();
+                    }
+                    _context.UserWorkReviews.RemoveRange(userWork.UserWorkReviews);
+                }
+
+                if(userWork.FileModelId != null)
+                    userWorkFileModelIds.Add((int)userWork.FileModelId);
+            }
+
+            foreach (var userWorkFileModelId in userWorkFileModelIds)
+            {
+                await _fileModelRepository.RemoveFileAsync(userWorkFileModelId);
+                await _context.SaveChangesAsync();
+            }
+
+            _context.UserWorks.RemoveRange(userWorks);
             await _context.SaveChangesAsync();
         }
 
@@ -967,6 +1054,8 @@ namespace KisVuzDotNetCore2.Models.Users
             _context.PassportDataSet.Update(passportData);
             await _context.SaveChangesAsync();
         }
+
+        
 
         #endregion
     }

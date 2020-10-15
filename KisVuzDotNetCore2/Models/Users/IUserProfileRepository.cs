@@ -84,7 +84,13 @@ namespace KisVuzDotNetCore2.Models.Users
         /// </summary>
         /// <param name="appUserSearchModel"></param>
         /// <returns></returns>
-        IEnumerable<AppUser> FindAppUsers(AppUserSearchModel appUserSearchModel);
+        IQueryable<AppUser> FindAppUsers(AppUserSearchModel appUserSearchModel);
+
+        /// <summary>
+        /// Возвращает запрос на выборку всех пользователей
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<AppUser> GetUsers();
 
         /// <summary>
         /// Возвращает количество непрочтённых сообщений
@@ -92,7 +98,7 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="userName"></param>
         /// <returns></returns>
         int? GetUnreadMessages(string userName);
-
+        
         /// <summary>
         /// Возвращает патенты (свидетельства) пользователя userName
         /// </summary>

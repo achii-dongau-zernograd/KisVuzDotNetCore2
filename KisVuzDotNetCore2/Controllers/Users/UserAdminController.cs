@@ -1,10 +1,13 @@
-﻿using KisVuzDotNetCore2.Models;
+﻿using KisVuzDotNetCore2.Infrastructure;
+using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,6 +26,7 @@ namespace KisVuzDotNetCore2.Controllers
         private IPasswordHasher<AppUser> passwordHasher;
         private AppIdentityDBContext context;
         private IUserProfileRepository userProfileRepository;
+        private readonly ISelectListRepository _selectListRepository;
         #endregion
 
         #region Конструктор
@@ -31,7 +35,8 @@ namespace KisVuzDotNetCore2.Controllers
             IPasswordValidator<AppUser> passValid,
             IPasswordHasher<AppUser> passwordHash,
             AppIdentityDBContext ctx,
-            IUserProfileRepository userProfileRepo
+            IUserProfileRepository userProfileRepo,
+            ISelectListRepository selectListRepository
             )
         {            
             userManager = usrMgr;
@@ -40,6 +45,7 @@ namespace KisVuzDotNetCore2.Controllers
             passwordHasher = passwordHash;
             context = ctx;
             userProfileRepository = userProfileRepo;
+            _selectListRepository = selectListRepository;
         }
         #endregion
 
@@ -52,27 +58,73 @@ namespace KisVuzDotNetCore2.Controllers
             return View(users);
         }
 
-        public ViewResult Search(string LastNameSearchFragment)
+        public async Task<IActionResult> Search(AppUserSearchModel appUserSearchModel)
         {
-            var model = new AppUserSearchModel
+            ViewBag.AppUserSearchModel = appUserSearchModel;
+
+            ViewBag.AppUserStatuses = _selectListRepository.GetSelectListAppUserStatuses(appUserSearchModel.AppUserStatusId ?? 0);
+
+            var query = userProfileRepository.FindAppUsers(appUserSearchModel);
+
+            if (appUserSearchModel.IsRequestDataImmediately)
             {
-                LastNameSearchFragment = LastNameSearchFragment
-            };
-            return View(model);
+                var appUsers = await query.ToListAsync();
+                var rolesDictionary = new Dictionary<string, List<string>>();                
+                foreach (var appUser in appUsers)
+                {
+                    var appUserRoles = await userManager.GetRolesAsync(appUser);
+                    if (appUserRoles.Count > 0)
+                        rolesDictionary.Add(appUser.Id, appUserRoles.ToList());
+                }
+                ViewBag.RolesDictionary = rolesDictionary;
+                return View(appUsers);
+            }
+            else
+                return View(new List<AppUser>());
         }
 
-        [HttpPost]        
-        public IActionResult Search([FromForm]AppUserSearchModel appUserSearchModel, [FromForm]string LastNameSearchFragment)
+        public async Task<IActionResult> SearchBadAccounts()
         {
-            if (LastNameSearchFragment == null)
-                return RedirectToAction(nameof(Search));
+            ViewBag.AppUserSearchModel = new AppUserSearchModel();
+            ViewBag.AppUserStatuses = _selectListRepository.GetSelectListAppUserStatuses();
 
-            appUserSearchModel.LastNameSearchFragment = this.ControllerContext.HttpContext.Request.Form["LastNameSearchFragment"];
-                                            
-            ViewBag.FindedAppUsers = userProfileRepository.FindAppUsers(appUserSearchModel);
+            var badAccounts = await userProfileRepository.GetUsers()
+                .Where(u => u.Students.Count == 0 && u.Teachers.Count == 0 && u.Abiturient == null)
+                .ToListAsync();
 
-            return View(appUserSearchModel);
+            var badAccountsWithoutRoles = new List<AppUser>();
+
+            foreach (var appUser in badAccounts)
+            {
+                var appUserRoles = await userManager.GetRolesAsync(appUser);
+                if (appUserRoles.Count > 0)
+                    badAccountsWithoutRoles.Add(appUser);
+            }            
+
+            return View(nameof(Search), badAccountsWithoutRoles);
         }
+
+        //public ViewResult Search(string LastNameSearchFragment)
+        //{
+        //    var model = new AppUserSearchModel
+        //    {
+        //        LastNameSearchFragment = LastNameSearchFragment
+        //    };
+        //    return View(model);
+        //}
+
+        //[HttpPost]        
+        //public IActionResult Search([FromForm]AppUserSearchModel appUserSearchModel, [FromForm]string LastNameSearchFragment)
+        //{
+        //    if (LastNameSearchFragment == null)
+        //        return RedirectToAction(nameof(Search));
+
+        //    appUserSearchModel.LastNameSearchFragment = this.ControllerContext.HttpContext.Request.Form["LastNameSearchFragment"];
+
+        //    ViewBag.FindedAppUsers = userProfileRepository.FindAppUsers(appUserSearchModel);
+
+        //    return View(appUserSearchModel);
+        //}
         #endregion
 
         #region Create
@@ -108,23 +160,16 @@ namespace KisVuzDotNetCore2.Controllers
         #endregion
 
         #region Delete
-        [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string userName)
         {
-            AppUser user = await userManager.FindByIdAsync(id);
+            var appUser = userProfileRepository.GetAppUser(userName);
+            return View(appUser);
+        }
 
-            if(user!=null)
-            {
-                IdentityResult result = await userManager.DeleteAsync(user);
-                if (result.Succeeded)
-                    return RedirectToAction(nameof(Search));
-                else
-                    AddErrorsFromResult(result);
-            }
-            else
-            {
-                ModelState.AddModelError("", "Пользователь не найден");
-            }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(string userName)
+        {
+            await userProfileRepository.RemoveAppUserAsync(userName);            
 
             return View(nameof(Search));
         }
