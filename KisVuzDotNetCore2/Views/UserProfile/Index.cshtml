@@ -135,9 +135,16 @@
                         <ul>
                             @foreach (var userAccountExternal in group)
                             {
-                                <li>
+                            <li>
+                                @if (userAccountExternal.ExternalResource.ExternalResourceTypeId == (int)ExternalResourceTypeEnum.Messengers)
+                                {
+                                    <text>@userAccountExternal.ExternalResource.ExternalResourceName: @userAccountExternal.Link</text>
+                                }
+                                else
+                                {
                                     <a href="@userAccountExternal.Link" target="_blank">@userAccountExternal.ExternalResource.ExternalResourceName</a>
-                                </li>
+                                }
+                            </li>
                             }
                         </ul>
                     }

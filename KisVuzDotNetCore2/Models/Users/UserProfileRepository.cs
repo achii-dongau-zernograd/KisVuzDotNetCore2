@@ -885,6 +885,18 @@ namespace KisVuzDotNetCore2.Models.Users
                 await RemoveUserWorksAsync(appUser.UserWorks);
             }
 
+            // Удаление повышений квалификации
+            if (appUser.RefresherCourses != null && appUser.RefresherCourses.Count > 0)
+            {
+                await RemoveRefresherCoursesAsync(appUser.RefresherCourses);
+            }
+
+            // Удаление профессиональной переподготовки
+            if (appUser.ProfessionalRetrainings != null && appUser.ProfessionalRetrainings.Count > 0)
+            {
+                await RemoveProfessionalRetrainingsAsync(appUser.ProfessionalRetrainings);
+            }
+
             _context.Users.Remove(appUser);
             await _context.SaveChangesAsync();
 
@@ -902,6 +914,57 @@ namespace KisVuzDotNetCore2.Models.Users
             //{
             //    ModelState.AddModelError("", "Пользователь не найден");
             //}
+        }
+
+        /// <summary>
+        /// Удаляет проф. переподготовку
+        /// </summary>
+        /// <param name="professionalRetrainings"></param>
+        /// <returns></returns>
+        private async Task RemoveProfessionalRetrainingsAsync(List<ProfessionalRetraining> professionalRetrainings)
+        {
+            if (professionalRetrainings == null) return;
+
+            var fileModelIds = new List<int>();
+
+            foreach (var professionalRetraining in professionalRetrainings)
+            {
+                if(professionalRetraining.ProfessionalRetrainingFileId != 0)
+                    fileModelIds.Add(professionalRetraining.ProfessionalRetrainingFileId);
+            }
+
+            foreach (var fileModelId in fileModelIds)
+            {
+                await _fileModelRepository.RemoveFileAsync(fileModelId);
+                await _context.SaveChangesAsync();
+            }
+            _context.ProfessionalRetrainings.RemoveRange(professionalRetrainings);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаляет повышения квалификации
+        /// </summary>
+        /// <param name="refresherCourses"></param>
+        /// <returns></returns>
+        private async Task RemoveRefresherCoursesAsync(List<RefresherCourse> refresherCourses)
+        {
+            if (refresherCourses == null) return;
+
+            var fileModelIds = new List<int>();
+
+            foreach (var refresherCourse in refresherCourses)
+            {
+                fileModelIds.Add(refresherCourse.RefresherCourseFileId);
+            }
+
+            foreach (var fileModelId in fileModelIds)
+            {
+                await _fileModelRepository.RemoveFileAsync(fileModelId);
+                await _context.SaveChangesAsync();
+            }
+            _context.RefresherCourses.RemoveRange(refresherCourses);
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
