@@ -97,7 +97,7 @@ namespace KisVuzDotNetCore2.Controllers
             foreach (var appUser in badAccounts)
             {
                 var appUserRoles = await userManager.GetRolesAsync(appUser);
-                if (appUserRoles.Count > 0)
+                if (appUserRoles.Count == 0)
                     badAccountsWithoutRoles.Add(appUser);
             }            
 
@@ -171,7 +171,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             await userProfileRepository.RemoveAppUserAsync(userName);            
 
-            return View(nameof(Search));
+            return RedirectToAction(nameof(Search));
         }
         #endregion
 
