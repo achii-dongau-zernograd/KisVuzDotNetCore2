@@ -145,11 +145,9 @@
                     }                    
                 </td>
                 <td>
-                    <form asp-action="Delete" asp-route-userName="@user.UserName" method="post">
-                        <a class="btn btn-sm btn-primary btn-block" asp-action="EditUserRoles" asp-route-id="@user.Id">Роли</a>
-                        <a class="btn btn-sm btn-primary btn-block" asp-action="Edit" asp-route-id="@user.Id">Редактировать учетные данные</a>
-                        <button type="submit" class="btn btn-sm btn-danger btn-block">Удалить</button>
-                    </form>
+                    <a class="btn btn-sm btn-primary btn-block" asp-action="EditUserRoles" asp-route-id="@user.Id">Роли</a>
+                    <a class="btn btn-sm btn-primary btn-block" asp-action="Edit" asp-route-id="@user.Id">Редактировать учетные данные</a>
+                    <a class="btn btn-sm btn-danger btn-block" asp-action="Delete" asp-route-userName="@user.UserName">Удалить</a>
                 </td>
             </tr>
         }

@@ -160,7 +160,7 @@ namespace KisVuzDotNetCore2.Controllers
         #endregion
 
         #region Delete
-        public async Task<IActionResult> Delete(string userName)
+        public IActionResult Delete(string userName)
         {
             var appUser = userProfileRepository.GetAppUser(userName);
             return View(appUser);
