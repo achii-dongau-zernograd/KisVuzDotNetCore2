@@ -3,14 +3,14 @@
 @{
     var vacantist = (IEnumerable<Vacant>)ViewData["t23vacant"];
 }
-<table itemprop="vacant" class="table">
+<table class="table">
     <thead>
         <tr>
             <th rowspan=2 align=center>Код</th>
-            <th rowspan=2 align=center>Наименование</th>
+            <th rowspan=2 align=center>Наименование профессии, специальности, направления подготовки</th>
             <th rowspan=2 align=center>Уровень образования</th>
             <th rowspan=2 align=center>Курс</th>
-            <th rowspan=2 align=center>Форма обучения (очная/заочная/очно-заочная)</th>
+            <th rowspan=2 align=center>Форма обучения</th>
             <th colspan=4 align=center>Количество вакантных мест для приема (перевода) на места, финансируемые за счет</th>
         </tr>
         <tr>
@@ -35,34 +35,11 @@
 
         @foreach (var item in vacantist)
         {
-            string levelVacant;
-            string metRec19 = "naprVacant";
-            switch (item.EduNapravl.EduUgs.EduLevel.EduLevelId)
-            {
-                case 3:
-                    levelVacant = "bachelorVacant";
-                    break;
-                case 4:
-                    levelVacant = "magistracyVacant";
-                    break;
-                case 5:
-                    levelVacant = "specialityVacant";
-                    metRec19 = "specVacant";
-                    break;
-                case 6:
-                    levelVacant = "postgraduateVacant";
-                    break;
-                default:
-                    levelVacant = "spoVacant";
-                    metRec19 = "specVacant";
-                    break;
-            }
-
-            <tr itemprop="nameProgVacant">
+            <tr itemprop="vacant">
                 <td align=center itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
-                <td align=center itemprop="specialVacant"><span itemprop="obrVacant">@item.EduNapravl.EduNapravlName</span></td>
-                <td align=center itemprop="@levelVacant"><span itemprop="@metRec19">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</span></td>
-                <td align=center itemprop="eduKurs">@item.EduKurs.EduKursNumber</td>
+                <td align=center itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
+                <td align=center itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                <td align=center itemprop="eduCourse">@item.EduKurs.EduKursNumber</td>
                 <td align=center itemprop="eduForm">@item.EduForm.EduFormName</td>
                 <td align=center itemprop="numberBFVacant">@item.NumberBFVacant</td>
                 <td align=center itemprop="numberBRVacant">@item.NumberBRVacant</td>
@@ -71,9 +48,9 @@
             </tr>
         }
 
-        <tr itemprop="profesVacant" class="hide">
+        @*<tr itemprop="profesVacant" class="hide">
             <td class="hide">Не реализуется</td>
-        </tr>
+        </tr>*@
 
     </tbody>
 </table> 
