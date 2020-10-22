@@ -24,10 +24,14 @@ namespace KisVuzDotNetCore2.Controllers
         // GET: EduChislens
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.EduChislens.Include(e => e.EduForm).Include(e => e.EduProfile)
-                .ThenInclude(n => n.EduNapravl)
-                .ThenInclude(u => u.EduUgs)
-                .ThenInclude(l => l.EduLevel);
+            var appIdentityDBContext = _context.EduChislens
+                .Include(e => e.EduForm)
+                .Include(e => e.EduProfile)
+                    .ThenInclude(n => n.EduNapravl)
+                    .ThenInclude(u => u.EduUgs)
+                        .ThenInclude(l => l.EduLevel)
+                .OrderBy(e=>e.EduProfile.EduNapravl.EduUgs.EduLevel)
+                .ThenBy(e=>e.EduProfile.EduNapravl.EduNapravlCode);
             return View(await appIdentityDBContext.ToListAsync());
         }
 
@@ -70,7 +74,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EduChislenId,NumberBFpriem,NumberBRpriem,NumberBMpriem,NumberPpriem,EduFormId,EduProfileId")] EduChislen eduChislen)
+        public async Task<IActionResult> Create([Bind("EduChislenId,NumberBFpriem,NumberBRpriem,NumberBMpriem,NumberPpriem,EduFormId,EduProfileId,NumberInostr")] EduChislen eduChislen)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +113,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EduChislenId,NumberBFpriem,NumberBRpriem,NumberBMpriem,NumberPpriem,EduFormId,EduProfileId")] EduChislen eduChislen)
+        public async Task<IActionResult> Edit(int id, [Bind("EduChislenId,NumberBFpriem,NumberBRpriem,NumberBMpriem,NumberPpriem,EduFormId,EduProfileId,NumberInostr")] EduChislen eduChislen)
         {
             if (id != eduChislen.EduChislenId)
             {

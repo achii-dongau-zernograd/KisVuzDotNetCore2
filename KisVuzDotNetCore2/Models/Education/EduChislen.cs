@@ -33,6 +33,7 @@ namespace KisVuzDotNetCore2.Models.Education
         [Display(Name = "средств физических и (или) юридических лиц")]
         public int NumberPpriem { get; set; }
 
-
+        [Display(Name = "Численность обучающихся, являющихся иностранными гражданами")]
+        public int? NumberInostr { get; set; }
     }
 }

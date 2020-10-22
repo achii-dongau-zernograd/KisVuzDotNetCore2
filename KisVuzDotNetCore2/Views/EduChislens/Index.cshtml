@@ -30,7 +30,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.NumberPpriem)
             </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.NumberInostr)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -54,6 +56,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NumberPpriem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberInostr)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EduChislenId">Редактировать</a> |

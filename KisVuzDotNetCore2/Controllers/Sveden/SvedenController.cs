@@ -161,6 +161,8 @@ namespace KisVuzDotNetCore2.Controllers
                     .ThenInclude(u => u.EduUgs)
                     .ThenInclude(l => l.EduLevel)
                 .Include (f =>f.EduForm)
+                .OrderBy(c => c.EduProfile.EduNapravl.EduUgs.EduLevelId)
+                .ThenBy(c => c.EduProfile.EduNapravl.EduNapravlCode)
                 .ToListAsync();
             ViewData["t7eduChislen"] = t7eduChislen;
             #endregion
