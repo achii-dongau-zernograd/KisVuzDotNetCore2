@@ -22,7 +22,8 @@ namespace KisVuzDotNetCore2.Models.Education
         IOrderedQueryable<EduNapravlEduFormEduSrok> GetEduNapravlEduFormEduSroks => _context.EduNapravlEduFormEduSroks
             .Include(e => e.EduForm)
             .Include(e => e.EduNapravl.EduUgs.EduLevel)
-            .Include(e => e.EduSrok)
+            .Include(e => e.EduNapravl.EduUgs.EduAccred)
+            .Include(e => e.EduSrok)            
             .OrderBy(e => e.EduNapravl.EduNapravlCode);
 
         

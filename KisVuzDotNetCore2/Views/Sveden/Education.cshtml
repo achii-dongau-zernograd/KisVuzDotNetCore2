@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Образование";
 
-    var t9eduAccred = (IEnumerable<EduNapravl>)ViewData["t9eduAccred"];
+    var t9eduAccred = (IEnumerable<EduNapravlEduFormEduSrok>)ViewData["t9eduAccred"];
     var t7eduChislen = (IEnumerable<EduChislen>)ViewData["t7eduChislen"];
     var t8eduPriem = (IEnumerable<EduPriem>)ViewData["t8eduPriem"];
     var t9eduPerevod = (IEnumerable<EduPerevod>)ViewData["t9eduPerevod"];
@@ -18,16 +18,13 @@
 <h1>Образование</h1>
 
 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
-    Информация о реализуемых уровнях образования,
-    о формах обучения, нормативных сроках обучения,<br />
-    сроке действия государственной аккредитации образовательной программы
-    (при наличии государственной аккредитации),<br />
+    Информация о сроке действия государственной аккредитации образовательной программы,<br />
     о языках, на которых осуществляется образование (обучение)
 </a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++;}
     <div class="well">
-        <div itemprop="eduAccred">
+        @*<div itemprop="eduAccred">
             <ul>
                 <li itemprop="learningTerm">
                     Среднее профессиональное образование:
@@ -41,21 +38,21 @@
                 <li itemprop="learningTerm">Высшее образование-специалитет: 5 лет (очная форма обучения), 6 лет (заочная форма обучения)</li>
                 <li itemprop="learningTerm">Высшее образование-подготовка кадров высшей квалификации: 3 года (очная форма обучения), 4 года (очная форма обучения, направление 06.06.01 - Биологические науки), 4 года (заочная форма обучения)</li>
             </ul>
-        </div>
+        </div>*@
 
         @{spoilerCounter++;}
         <div class="well">
 
-            <table itemprop="eduAccred" class="table table-hover">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Код</th>
                         <th>Наименование профессии, специальности, направления подготовки</th>
                         <th>Уровень образования</th>
+                        <th>Формы обучения</th>
+                        <th>Срок получения образования</th>
                         <th>Срок действия государственной аккредитации<br /> (дата окончания действия свидетельства о государственной аккредитации)</th>
                         <th>Языки, на которых осуществляется образование (обучение)</th>
-                        <th>Формы обучения</th>
-                        <th>Нормативный срок обучения</th>
                     </tr>
                     <tr>
                         <th align=center>1</th>
@@ -67,26 +64,22 @@
                         <th align=center>7</th>
                     </tr>
                 </thead>
-                @foreach (var item in t9eduAccred.OrderBy(item => item.EduNapravlCode))
+                @foreach (var item in t9eduAccred
+                    .OrderBy(item => item.EduNapravl.EduUgs.EduLevelId)
+                    .ThenBy(item=>item.EduNapravl.EduNapravlCode))
                 {
                     <tr itemprop="eduAccred">
-                        <td itemprop="eduCode">@item.EduNapravlCode</td>
-                        <td itemprop="eduName">@item.EduNapravlName</td>
-                        <td itemprop="eduLevel">@item.EduUgs.EduLevel.EduLevelName</td>
-                        <td itemprop="dateEnd">@item.EduUgs.EduAccred?.EduAccredDateExpiration.ToString("dd.MM.yyyy")</td>
-                        <td itemprop="language">Русский</td>
-                        <td itemprop="">
-                            @foreach (var eduNapravlEduFormEduSrok in item.EduNapravlEduFormEduSroks)
-                            {
-                                <p>@eduNapravlEduFormEduSrok.EduForm.EduFormName</p>
-                            }
+                        <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
+                        <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
+                        <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                        <td itemprop="eduForm">
+                            @item.EduForm.EduFormName
                         </td>
-                        <td itemprop="">
-                            @foreach (var eduNapravlEduFormEduSrok in item.EduNapravlEduFormEduSroks)
-                            {
-                                <p>@eduNapravlEduFormEduSrok.EduSrok.EduSrokName</p>
-                            }
+                        <td itemprop="learningTerm">
+                            @item.EduSrok.EduSrokName
                         </td>
+                        <td itemprop="dateEnd">@item.EduNapravl.EduUgs.EduAccred?.EduAccredDateExpiration.ToString("dd.MM.yyyy")</td>
+                        <td itemprop="language">Русский</td>                        
                     </tr>
                 }
             </table>

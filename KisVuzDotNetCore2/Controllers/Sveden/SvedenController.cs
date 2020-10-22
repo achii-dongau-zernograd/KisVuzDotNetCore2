@@ -22,17 +22,20 @@ namespace KisVuzDotNetCore2.Controllers
     /// </summary>
     public class SvedenController : Controller
     {
-        ISelectListRepository _selectListRepository;
+        ISelectListRepository _selectListRepository;        
         IHostingEnvironment _appEnvironment;
         private readonly AppIdentityDBContext _context;
+        private readonly IEduNapravlRepository _eduNapravlRepository;
 
         public SvedenController(IHostingEnvironment appEnvironment,
             AppIdentityDBContext context,
-            ISelectListRepository selectListRepository)
+            ISelectListRepository selectListRepository,
+            IEduNapravlRepository eduNapravlRepository)
         {
             _appEnvironment = appEnvironment;
             _context = context;
             _selectListRepository = selectListRepository;
+            _eduNapravlRepository = eduNapravlRepository;
         }
 
         /// <summary>
@@ -139,14 +142,15 @@ namespace KisVuzDotNetCore2.Controllers
         public async Task<IActionResult> Education()
         {
             #region Таблица 9. Информация о реализуемых уровнях образования, о формах обучения, нормативных сроках обучения, сроке действия государственной аккредитации образовательной программы (при наличии государственной аккредитации), о языках, на которых осуществляется образование(обучение)
-            var t9eduAccred = await _context.EduNapravls                
-                .Include(l => l.EduUgs.EduAccred.EduAccredFile)
-                .Include(l => l.EduUgs.EduLevel)
-                .Include(n => n.EduNapravlEduFormEduSroks)
-                    .ThenInclude(n=>n.EduForm)
-                .Include(n => n.EduNapravlEduFormEduSroks)
-                    .ThenInclude(n => n.EduSrok)
-                .ToListAsync();
+            //var t9eduAccred = await _context.EduNapravls                
+            //    .Include(l => l.EduUgs.EduAccred.EduAccredFile)
+            //    .Include(l => l.EduUgs.EduLevel)
+            //    .Include(n => n.EduNapravlEduFormEduSroks)
+            //        .ThenInclude(n=>n.EduForm)
+            //    .Include(n => n.EduNapravlEduFormEduSroks)
+            //        .ThenInclude(n => n.EduSrok)
+            //    .ToListAsync();
+            var t9eduAccred = await _eduNapravlRepository.GetEduNapravlEduFormEduSroksAsync();
             ViewData["t9eduAccred"] = t9eduAccred;
             #endregion
 
