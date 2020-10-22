@@ -1,14 +1,22 @@
 ﻿<h1>Основные сведения</h1>
 
+<p>
+    На данной странице представлена информация о дате создания образовательной организации,
+    об учредителе, учредителях образовательной организации,
+    о месте нахождения образовательной организации, ее представительств и филиалов (при наличии),
+    режиме, графике работы, контактных телефонах и об адресах электронной почты
+    образовательной организации, её представительств и филиалов.
+</p>
+
 @{
     var t3uchred = (IEnumerable<UchredLaw>)ViewData["t3uchred"];
     var t4filInfo = (IEnumerable<FilInfo>)ViewData["t4filInfo"];
 }
 
 
-<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о дате создания образовательной организации, о представительствах и филиалах образовательной организации,<br />
-    месте нахождения образовательной организации, ее представительств и филиалов (при наличии),<br />
-    режиме, графике работы, контактных телефонах и об адресах электронной почты</a>
+<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">
+    Основные сведения
+</a>
 <div class="collapse" id="spoiler-1">
     <div class="well">
         <table class="table" itemprop="osnovSveden">
@@ -21,14 +29,26 @@
                 <td itemprop="address">@ViewData["Address"]</td>
             </tr>
             <tr>
-                <th>Режим, график работы ОО и её филиалов</th>
+                <th>Филиалы образовательной организации</th>
+                <td>
+                    @((bool)ViewData["ExistenceOfFilials"] ? "Имеются" : "Отсутствуют")
+                </td>
+            </tr>
+            <tr>
+                <th>Представительства образовательной организации</th>
+                <td>
+                    Отсутствуют
+                </td>
+            </tr>
+            <tr>
+                <th>Режим, график работы</th>
                 <td itemprop="workTime">
                     <p>@ViewData["WorkingRegime"]</p>
                     <p>@ViewData["WorkingSchedule"]</p>
                 </td>
             </tr>
             <tr>
-                <th>Контактные телефоны ОО и её филиалов</th>
+                <th>Контактные телефоны</th>
                 <td itemprop="telephone">
                     @foreach (Telephone tel in (List<Telephone>)ViewData["Telephones"])
                     {
@@ -46,7 +66,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Адреса электронной почты ОО и её филиалов</th>
+                <th>Адреса электронной почты</th>
                 <td itemprop="email">
                     @foreach (Email email in (List<Email>)ViewData["Emailes"])
                     {
@@ -54,95 +74,25 @@
                     }
                 </td>
             </tr>
-            <tr>
-                <th>Филиалы образовательной организации</th>
-                <td>
-                    @((bool)ViewData["ExistenceOfFilials"] ? "Есть" : "Нет")
-                </td>
-            </tr>
-            @if (t4filInfo.Count() > 0)
-            {
-                foreach (var item in t4filInfo)
-                {
-                    <tr itemprop="filInfo">
-                        <th>Наименование филиала</th>
-                        <td itemprop="nameFil">@item.NameFil</td>
-                    </tr>
-                    <tr itemprop="filInfo">
-                        <th>Адрес местонахождения филиала образовательной организации</th>
-                        <td itemprop="addressFil">@item.AddressFil</td>
-                    </tr>
-                    <tr itemprop="filInfo">
-                        <th>Адрес официального сайта в сети "Интернет"</th>
-                        <td itemprop="websiteFil">@item.WebsiteFil</td>
-                    </tr>
-                }
-            }
-            else
-            {
-                <tr itemprop="filInfo">
-                    <th>Наименование филиала</th>
-                    <td itemprop="nameFil">Филиалов нет</td>
-                </tr>
-                <tr itemprop="filInfo">
-                    <th>Адрес местонахождения филиала образовательной организации</th>
-                    <td itemprop="addressFil">Филиалов нет</td>
-                </tr>
-                <tr itemprop="filInfo">
-                    <th>Адрес официального сайта в сети "Интернет"</th>
-                    <td itemprop="websiteFil">Филиалов нет</td>
-                </tr>
-            }
-            <tr>
-                <th>Представительства образовательной организации</th>
-                <td>
-                    Представительств нет
-                </td>
-            </tr>
         </table>
     </div>
 </div>
 
 
-<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об учредителе, учредителях образовательной организации</a>
-<div class="collapse" id="spoiler-2">
-    <div class="well" itemprop="osnovSveden">        
-            <table itemprop="uchredLaw" class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Наименование учредителя</th>
-                        <th>Фамилия, имя, отчество руководителя учредителя (ей) образовательной организации</th>
-                        <th>Адрес местонахождения учредителя(ей)</th>
-                        <th>Контактные телефоны</th>
-                        <th>Адрес электронной почты</th>
-                        <th>Адрес сайта учредителя(ей) в сети "Интернет"</th>
-                    </tr>
-                </thead>
-                @foreach (var item in t3uchred)
-                {
-                    <tr itemprop="uchredLaw">
-                        <td itemprop="nameUchred">@item.NameUchred</td>
-                        <td itemprop="fullnameUchred">@item.FullnameUchred</td>
-                        <td itemprop="addressUchred">@item.AddressUchred</td>
-                        <td itemprop="telUchred">@item.TelUchred</td>
-                        <td itemprop="mailUchred">@item.mailUchred</td>
-                        <td itemprop="websiteUchred"><a href="@item.WebsiteUchred">@item.WebsiteUchred</a></td>
-                    </tr>
-                }
-            </table>
-    </div>
-</div>
 
-
-@*<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о филиалах</a>
+<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о филиалах</a>
 <div class="collapse" id="spoiler-3">
     <div class="well">
         <table itemprop="filInfo" class="table table-bordered table-hover table-striped">
             <thead>
                 <tr itemprop="filInfo">
+                    <th>№ п/п</th>
                     <th>Наименование филиала</th>
-                    <th>Адрес местонахождения филиала образовательной организации</th>
-                    <th>Адрес официального сайта в сети "Интернет" (при наличии)</th>
+                    <th>Адрес места нахождения</th>
+                    <th>Режим и график работы</th>
+                    <th>Контактные телефоны</th>
+                    <th>Электронная почта</th>
+                    <th>Адрес официального сайта или страницы филиала в сети "Интернет" (при наличии)</th>
                 </tr>
             </thead>
             <tbody>
@@ -160,10 +110,225 @@
                 else
                 {
                     <tr itemprop="filInfo">
-                        <td itemprop="nameFil" colspan="3" align="center">Филиалов нет</td>                        
+                        <td itemprop="nameFil" colspan="7" align="center">Филиалов нет</td>
+
+                        <td itemprop="addressFil" class="hidden">Филиалов нет</td>
+                        <td itemprop="workTimeFil" class="hidden">Филиалов нет</td>
+                        <td itemprop="telephoneFil" class="hidden">Филиалов нет</td>
+                        <td itemprop="emailFil" class="hidden">Филиалов нет</td>
+                        <td itemprop="websiteFil" class="hidden">Филиалов нет</td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-</div>*@
+</div>
+
+
+
+<a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о представительствах</a>
+<div class="collapse" id="spoiler-4">
+    <div class="well">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>№ п/п</th>
+                    <th>Наименование представительства</th>
+                    <th>Адрес места нахождения</th>
+                    <th>Режим и график работы</th>
+                    <th>Контактные телефоны</th>
+                    <th>Электронная почта</th>
+                    <th>Адрес официального сайта или страницы представительства в сети "Интернет" (при наличии)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr itemprop="repInfo">
+                    <td itemprop="nameRep" colspan="7" align="center">Представительств нет</td>
+
+                    <td itemprop="addressRep" class="hidden">Представительств нет</td>
+                    <td itemprop="workTimeRep" class="hidden">Представительств нет</td>
+                    <td itemprop="telephoneRep" class="hidden">Представительств нет</td>
+                    <td itemprop="emailRep" class="hidden">Представительств нет</td>
+                    <td itemprop="websiteRep" class="hidden">Представительств нет</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<a href="#spoiler-5" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об учредителях</a>
+<div class="collapse" id="spoiler-5">
+    <div class="well" itemprop="osnovSveden">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Наименование учредителя</th>
+                    <th>Адрес местонахождения учредителя(ей)</th>
+                    <th>Контактные телефоны</th>
+                    <th>Адрес электронной почты</th>
+                    <th>Адрес сайта учредителя(ей) в сети "Интернет"</th>
+                </tr>
+            </thead>
+            @foreach (var item in t3uchred)
+            {
+                <tr itemprop="uchredLaw">
+                    <td itemprop="nameUchred">@item.NameUchred</td>
+                    @*<td itemprop="fullnameUchred">@item.FullnameUchred</td>*@
+                    <td itemprop="addressUchred">@item.AddressUchred</td>
+                    <td itemprop="telUchred">@item.TelUchred</td>
+                    <td itemprop="mailUchred">@item.mailUchred</td>
+                    <td itemprop="websiteUchred"><a href="@item.WebsiteUchred">@item.WebsiteUchred</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+
+
+<a href="#spoiler-6" data-toggle="collapse" class="btn btn-primary btn-block">
+    Места осуществления образовательной деятельности,<br>
+    в том числе не указываемые в приложении к лицензии на осужествление образовательной деятельности
+</a>
+<div class="collapse" id="spoiler-6">    
+    <div class="well">
+        <div>
+            <p>
+                Информация о местах осуществления образовательной деятельности,
+                включая места, не указываемые в соответствии с Федеральным законом "Об образовании в Российской Федерации"
+                в приложении к лицензии на осуществление образовательной деятельности, в том числе:
+            </p>
+            <ul>
+                <li>места осуществления образовательной деятельности по дополнительным профессиональным программам;</li>
+                <li>места осуществления образовательной деятельности по основным программам профессионального обучения;</li>
+                <li>места осуществления образовательной деятельности при использовании сетевой формы реализации образовательных программ;</li>
+                <li>места проведения практики;</li>
+                <li>места проведения практической подготовки обучающихся;</li>
+                <li>места проведения государственной итоговой аттестации.</li>
+            </ul>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>№ п/п</th>
+                        <th>Наименование объекта</th>
+                        <th>Адрес местонахождения</th>
+                        <th>Направления осуществления образовательной деятельности</th>
+                        <th>Назначение объекта</th>
+                        <th>Площадь (кв.м.)</th>
+                        <th>Документы</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Корпус №1</td>
+                        <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
+                        <td>
+                            <ul>
+                                <li>Места проведения государственной итоговой аттестации</li>
+                                <li>Места осуществления образовательной деятельности по дополнительным профессиональным программам</li>
+                            </ul>
+                        </td>
+                        <td>Учебный корпус</td>
+                        <td>8549,1</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Корпус №2</td>
+                        <td itemprop="addressPlace">
+                            347740, Ростовская область, г. Зерноград,
+                            ул. Советская 28/30
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Места проведения государственной итоговой аттестации</li>
+                                <li>Места осуществления образовательной деятельности по дополнительным профессиональным программам</li>
+                            </ul>
+                        </td>
+                        <td>Учебный корпус</td>
+                        <td>7673,1</td>
+                        <td>
+                            <a href="/manual/egrn_korp2.pdf" target="_blank">Выписка из ЕГРН</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Корпус №3</td>
+                        <td itemprop="addressPlace">
+                            347740, Ростовская область, г. Зерноград,
+                            ул. Советская 17/21
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Места осуществления образовательной деятельности по дополнительным профессиональным программам</li>
+                            </ul>
+                        </td>
+                        <td>Учебный корпус</td>
+                        <td>2851,7</td>
+                        <td>
+                            <a href="/manual/egrn_korp3.pdf" target="_blank">Выписка из ЕГРН</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Корпус №7</td>
+                        <td itemprop="addressPlace">
+                            347740, Ростовская область, г. Зерноград,
+                            ул. Советская, 17
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Места осуществления образовательной деятельности по дополнительным профессиональным программам</li>
+                            </ul>
+                        </td>
+                        <td>Учебный корпус</td>
+                        <td>1433,8</td>
+                        <td>
+                            <a href="/manual/egrn_korp7.pdf" target="_blank">Выписка из ЕГРН</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>
+                            Лаборатория сварки,
+                            Учебно-производственные мастерские и гаражи
+                        </td>
+                        <td itemprop="addressPlace">
+                            347740, Ростовская область, г. Зерноград,
+                            ул. Советская, 21а
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Места проведения практической подготовки обучающихся</li>
+                            </ul>
+                        </td>
+                        <td>Мастерские, лаборатория</td>
+                        <td>1506,1</td>
+                        <td>
+                            <a href="/manual/egrn_upm.pdf" target="_blank">Выписка из ЕГРН</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Здание учебных боксов</td>
+                        <td itemprop="addressPlace">347740, Ростовская область, Зерноградский район, п. Кленовый, ул. Сидоренко, дом №1, №3</td>
+                        <td>
+                            <ul>
+                                <li>Места проведения практической подготовки обучающихся</li>
+                            </ul>
+                        </td>
+                        <td>Закрытая площадка для учебного вождения</td>
+                        <td>237305,56</td>
+                        <td>
+                            <a href="/manual/egrn_box.pdf" target="_blank">Выписка из ЕГРН</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
