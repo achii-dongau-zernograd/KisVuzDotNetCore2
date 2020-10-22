@@ -249,54 +249,51 @@
                                         }
                                     }
                                 </td>
+
                                 <td itemprop="profDevelopment">
                                     @if (!string.IsNullOrEmpty(teacher.AppUserId))
                                     {
-                                        foreach (var qualification in @teacher.AppUser.Qualifications)
+                                        if (!string.IsNullOrEmpty(teacher.AppUserId))
                                         {
-                                            if (qualification.RowStatusId == 2)
+                                            @if (teacher.AppUser.ProfessionalRetrainings.Count > 0)
                                             {
-                                                if (!string.IsNullOrEmpty(teacher.AppUserId))
-                                                {
-                                                @if (teacher.AppUser.ProfessionalRetrainings.Count > 0)
-                                                {
-                                                    counter++;
-                                                    <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Профессиональная переподготовка</a>
-                                                    <div class="collapse" id="spoiler-@counter">
-                                                        <div class="well">
-                                                            <ol>
-                                                                @foreach (var pp in teacher.AppUser.ProfessionalRetrainings)
-                                                                {
-                                                                    <li><a asp-controller="ProfessionalRetrainings" asp-action="Details" asp-route-id="@pp.ProfessionalRetrainingId">@pp.GetProfessionalRetrainingString</a></li>
-                                                                }
-                                                            </ol>
-                                                        </div>
+                                                counter++;
+                                                <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Профессиональная переподготовка</a>
+                                                <div class="collapse" id="spoiler-@counter">
+                                                    <div class="well">
+                                                        <ol>
+                                                            @foreach (var pp in teacher.AppUser.ProfessionalRetrainings)
+                                                            {
+                                                                <li><a asp-controller="ProfessionalRetrainings" asp-action="Details" asp-route-id="@pp.ProfessionalRetrainingId">@pp.GetProfessionalRetrainingString</a></li>
+                                                            }
+                                                        </ol>
                                                     </div>
-                                                }
+                                                </div>
+                                            }
 
-                                                @if (teacher.AppUser.RefresherCourses.Count > 0)
-                                                {
-                                                    counter++;
-                                                    <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Повышение квалификации</a>
-                                                    <div class="collapse" id="spoiler-@counter">
-                                                        <div class="well">
-                                                            <ol>
-                                                                @foreach (var pk in teacher.AppUser.RefresherCourses)
-                                                                {
-                                                                    <li><a asp-controller="RefresherCourses" asp-action="Details" asp-route-id="@pk.RefresherCourseId">@pk.GetRefresherCourseString</a></li>
-                                                                }
-                                                            </ol>
-                                                        </div>
+                                            @if (teacher.AppUser.RefresherCourses.Count > 0)
+                                            {
+                                                counter++;
+                                                <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Повышение квалификации</a>
+                                                <div class="collapse" id="spoiler-@counter">
+                                                    <div class="well">
+                                                        <ol>
+                                                            @foreach (var pk in teacher.AppUser.RefresherCourses)
+                                                            {
+                                                                <li><a asp-controller="RefresherCourses" asp-action="Details" asp-route-id="@pk.RefresherCourseId">@pk.GetRefresherCourseString</a></li>
+                                                            }
+                                                        </ol>
                                                     </div>
-                                                }                                                
-                                                }
+                                                </div>
                                             }
                                         }
                                     }
                                 </td>
+
                                 <td itemprop="genExperience">
                                     <p>@teacher.WorkExperienceGeneral</p>
                                 </td>
+
                                 <td itemprop="specExperience">
                                     <p>@teacher.WorkExperienceSpecialty</p>
                                 </td>
