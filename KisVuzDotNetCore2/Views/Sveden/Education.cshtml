@@ -25,20 +25,20 @@
     @{spoilerCounter++;}
     <div class="well">
         @*<div itemprop="eduAccred">
-            <ul>
-                <li itemprop="learningTerm">
-                    Среднее профессиональное образование:
-                    2г. 10мес. (очная форма обучения, на базе 9 кл., направления 21.02.05, 38.02.01, 38.02.04),
-                    3г. 10мес. (очная форма обучения, на базе 9 кл., направления 08.02.09, 23.02.03, 35.02.08),
-                    1г. 10мес. (очная форма обучения, на базе 11 кл., направления 38.02.01),
-                    2г. 10мес. (очная форма обучения, на базе 11 кл., направления 23.02.03, 35.02.08)
-                </li>
-                <li itemprop="learningTerm">Высшее образование-бакалавриат: 4 года (очная форма обучения), 5 лет (заочная форма обучения)</li>
-                <li itemprop="learningTerm">Высшее образование-магистратура: 2 года (очная форма обучения), 2 года 6 месяцев (заочная форма обучения)</li>
-                <li itemprop="learningTerm">Высшее образование-специалитет: 5 лет (очная форма обучения), 6 лет (заочная форма обучения)</li>
-                <li itemprop="learningTerm">Высшее образование-подготовка кадров высшей квалификации: 3 года (очная форма обучения), 4 года (очная форма обучения, направление 06.06.01 - Биологические науки), 4 года (заочная форма обучения)</li>
-            </ul>
-        </div>*@
+                <ul>
+                    <li itemprop="learningTerm">
+                        Среднее профессиональное образование:
+                        2г. 10мес. (очная форма обучения, на базе 9 кл., направления 21.02.05, 38.02.01, 38.02.04),
+                        3г. 10мес. (очная форма обучения, на базе 9 кл., направления 08.02.09, 23.02.03, 35.02.08),
+                        1г. 10мес. (очная форма обучения, на базе 11 кл., направления 38.02.01),
+                        2г. 10мес. (очная форма обучения, на базе 11 кл., направления 23.02.03, 35.02.08)
+                    </li>
+                    <li itemprop="learningTerm">Высшее образование-бакалавриат: 4 года (очная форма обучения), 5 лет (заочная форма обучения)</li>
+                    <li itemprop="learningTerm">Высшее образование-магистратура: 2 года (очная форма обучения), 2 года 6 месяцев (заочная форма обучения)</li>
+                    <li itemprop="learningTerm">Высшее образование-специалитет: 5 лет (очная форма обучения), 6 лет (заочная форма обучения)</li>
+                    <li itemprop="learningTerm">Высшее образование-подготовка кадров высшей квалификации: 3 года (очная форма обучения), 4 года (очная форма обучения, направление 06.06.01 - Биологические науки), 4 года (заочная форма обучения)</li>
+                </ul>
+            </div>*@
 
         @{spoilerCounter++;}
         <div class="well">
@@ -65,8 +65,8 @@
                     </tr>
                 </thead>
                 @foreach (var item in t9eduAccred
-                    .OrderBy(item => item.EduNapravl.EduUgs.EduLevelId)
-                    .ThenBy(item=>item.EduNapravl.EduNapravlCode))
+                   .OrderBy(item => item.EduNapravl.EduUgs.EduLevelId)
+                   .ThenBy(item => item.EduNapravl.EduNapravlCode))
                 {
                     <tr itemprop="eduAccred">
                         <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
@@ -79,13 +79,45 @@
                             @item.EduSrok.EduSrokName
                         </td>
                         <td itemprop="dateEnd">@item.EduNapravl.EduUgs.EduAccred?.EduAccredDateExpiration.ToString("dd.MM.yyyy")</td>
-                        <td itemprop="language">Русский</td>                        
+                        <td itemprop="language">Русский</td>
                     </tr>
                 }
             </table>
         </div>
     </div>
 </div>
+
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о профессионально-общественной аккредитации образовательной программы</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
+    <div class="well">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Наименование профессии, специальности, направление подготовки</th>
+                    <th>Наименование аккредитующей организации</th>
+                    <th>Срок действия профессионально-общественной аккредитации (дата окончания действия свидетельства о профессионально-общественной аккредитации)</th>                    
+                </tr>
+                <tr>
+                    <td align=center><strong>1</strong></td>
+                    <td align=center><strong>2</strong></td>
+                    <td align=center><strong>3</strong></td>
+                    <td align=center><strong>4</strong></td>                    
+                </tr>
+            </thead>
+            <tr itemprop="eduPOAccred">
+                <td itemprop="eduCode" colspan="4" class="text-center">Нет</td>
+                <td itemprop="eduName" class="hidden">Нет</td>
+                <td itemprop="orgName" class="hidden">Нет</td>
+                <td itemprop="dateEnd" class="hidden">Нет</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
 
 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация об описании образовательной программы</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
@@ -324,9 +356,9 @@
                 </tr>
             </thead>
             @foreach (var item in t11eduObrProg
-               .OrderBy(pr => pr.EduProfile.EduNapravl.EduNapravlCode)
-               .ThenBy(pr => pr.EduYearBeginningTraining.EduYearBeginningTrainingName)
-               .Where(pr => !pr.IsOVZ))
+              .OrderBy(pr => pr.EduProfile.EduNapravl.EduNapravlCode)
+              .ThenBy(pr => pr.EduYearBeginningTraining.EduYearBeginningTrainingName)
+              .Where(pr => !pr.IsOVZ))
             {
                 <tr itemprop="eduPr">
                     <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
@@ -792,7 +824,7 @@
     @{spoilerCounter++;}
     <div class="well">
 
-        <a href="http://ачгаа.рф/nash-vuz/podrazdeleniya-akademii/odo">Информация о реализуемых программах дополнительного профессионального образования</a>                     
+        <a href="http://ачгаа.рф/nash-vuz/podrazdeleniya-akademii/odo">Информация о реализуемых программах дополнительного профессионального образования</a>
 
     </div>
 </div>
