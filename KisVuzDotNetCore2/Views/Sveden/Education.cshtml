@@ -65,8 +65,8 @@
                     </tr>
                 </thead>
                 @foreach (var item in t9eduAccred
-                  .OrderBy(item => item.EduNapravl.EduUgs.EduLevelId)
-                  .ThenBy(item => item.EduNapravl.EduNapravlCode))
+                 .OrderBy(item => item.EduNapravl.EduUgs.EduLevelId)
+                 .ThenBy(item => item.EduNapravl.EduNapravlCode))
                 {
                     <tr itemprop="eduAccred">
                         <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
@@ -170,6 +170,105 @@
         </table>
     </div>
 </div>
+
+
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о результатах приема</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
+    <div class="well">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th rowspan=2>Код</th>
+                    <th rowspan=2>Наименование специальности, направления подготовки</th>
+                    <th rowspan=2>Уровень образования</th>
+                    <th rowspan=2>Формы обучения</th>
+                    <th colspan=4>Результаты приема обучающихся за счет (количество человек):</th>
+                    <th rowspan=2>Средняя сумма набранных баллов по всем вступительным испытаниям</th>
+                </tr>
+                <tr>
+                    <th>бюджетных ассигнований федерального бюджета</th>
+                    <th>бюджетов субъектов Российской Федерации</th>
+                    <th>местных бюджетов</th>
+                    <th>средств физических и (или) юридических лиц</th>
+                </tr>
+                <tr>
+                    <th align=center>1</th>
+                    <th align=center>2</th>
+                    <th align=center>3</th>
+                    <th align=center>4</th>
+                    <th align=center>5</th>
+                    <th align=center>6</th>
+                    <th align=center>7</th>
+                    <th align=center>8</th>
+                    <th align=center>9</th>
+                </tr>
+            </thead>
+            @foreach (var item in t8eduPriem.OrderBy(item => item.EduNapravl.EduNapravlCode))
+            {
+                <tr itemprop="eduPriem">
+                    <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
+                    <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
+                    <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                    <td itemprop="eduForm">@item.EduForm.EduFormName</td>
+                    <td itemprop="numberBF">@item.FinBF</td>
+                    <td itemprop="numberBR">@item.FinBR</td>
+                    <td itemprop="numberBM">@item.FinBM</td>
+                    <td itemprop="numberP">@item.FinPV</td>
+                    <td itemprop="score">@item.SredSum</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о результатах перевода, восстановления и отчисления</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++;}
+    <div class="well">
+
+        <table itemprop="eduPerevod" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Наименование специальности, направление подготовки</th>
+                    <th>Уровень образования</th>
+                    <th>Формы обучения</th>
+                    <th>Численность обучающихся, переведенных в другие образовательные организации</th>
+                    <th>Численность обучающихся, переведенных из других образовательных организаций</th>
+                    <th>Численность восстановленных обучающихся</th>
+                    <th>Численность отчисленных обучающихся</th>
+                </tr>
+                <tr>
+                    <td align=center><strong>1</strong></td>
+                    <td align=center><strong>2</strong></td>
+                    <td align=center><strong>3</strong></td>
+                    <td align=center><strong>4</strong></td>
+                    <td align=center><strong>5</strong></td>
+                    <td align=center><strong>6</strong></td>
+                    <td align=center><strong>7</strong></td>
+                    <td align=center><strong>8</strong></td>
+                </tr>
+            </thead>
+            @foreach (var item in t9eduPerevod.OrderBy(item => item.EduNapravl.EduNapravlCode))
+            {
+                <tr itemprop="eduPerevod">
+                    <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
+                    <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
+                    <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                    <td itemprop="eduForm">@item.EduForm.EduFormName</td>
+                    <td itemprop="numberOutPerevod" align=center>@item.NumberOutPerevod</td>
+                    <td itemprop="numberToPerevod" align=center>@item.NumberToPerevod</td>
+                    <td itemprop="numberResPerevod" align=center>@item.NumberResPerevod</td>
+                    <td itemprop="numberExpPerevod" align=center>@item.NumberExpPerevod</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
 
 
 
@@ -410,9 +509,9 @@
                 </tr>
             </thead>
             @foreach (var item in t11eduObrProg
-             .OrderBy(pr => pr.EduProfile.EduNapravl.EduNapravlCode)
-             .ThenBy(pr => pr.EduYearBeginningTraining.EduYearBeginningTrainingName)
-             .Where(pr => !pr.IsOVZ))
+            .OrderBy(pr => pr.EduProfile.EduNapravl.EduNapravlCode)
+            .ThenBy(pr => pr.EduYearBeginningTraining.EduYearBeginningTrainingName)
+            .Where(pr => !pr.IsOVZ))
             {
                 <tr itemprop="eduPr">
                     <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
@@ -623,101 +722,6 @@
     </div>
 </div>
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о результатах приема по каждой профессии, специальности среднего профессионального образования (при наличии вступительных испытаний),</br> каждому направлению подготовки или специальности высшего образования с различными условиями приема</a>
-<div class="collapse" id="spoiler-@spoilerCounter">
-    @{spoilerCounter++;}
-    <div class="well">
-
-        <table itemprop="eduPriem" class="table table-hover">
-            <thead>
-                <tr>
-                    <th rowspan=2>Код</th>
-                    <th rowspan=2>Наименование специальности, направления подготовки</th>
-                    <th rowspan=2>Уровень образования</th>
-                    <th rowspan=2>Формы обучения</th>
-                    <th colspan=4>Результаты приема обучающихся за счет (количество человек):</th>
-                    <th rowspan=2>Средняя сумма набранных баллов по всем вступительным испытаниям</th>
-                </tr>
-                <tr>
-                    <th>бюджетных ассигнований федерального бюджета</th>
-                    <th>бюджетов субъектов Российской Федерации</th>
-                    <th>местных бюджетов</th>
-                    <th>средств физических и (или) юридических лиц</th>
-                </tr>
-                <tr>
-                    <th align=center>1</th>
-                    <th align=center>2</th>
-                    <th align=center>3</th>
-                    <th align=center>4</th>
-                    <th align=center>5</th>
-                    <th align=center>6</th>
-                    <th align=center>7</th>
-                    <th align=center>8</th>
-                    <th align=center>9</th>
-                </tr>
-            </thead>
-            @foreach (var item in t8eduPriem.OrderBy(item => item.EduNapravl.EduNapravlCode))
-            {
-                <tr itemprop="eduPriem">
-                    <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
-                    <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
-                    <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
-                    <td itemprop="eduForm">@item.EduForm.EduFormName</td>
-                    <td itemprop="numberBFpriem">@item.FinBF</td>
-                    <td itemprop="numberBRpriem">@item.FinBR</td>
-                    <td itemprop="numberBMpriem">@item.FinBM</td>
-                    <td itemprop="numberPpriem">@item.FinPV</td>
-                    <td itemprop="scorePriem">@item.SredSum</td>
-                </tr>
-            }
-        </table>
-    </div>
-</div>
-
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о результатах перевода, восстановления и отчисления</a>
-<div class="collapse" id="spoiler-@spoilerCounter">
-    @{spoilerCounter++;}
-    <div class="well">
-
-        <table itemprop="eduPerevod" class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Код</th>
-                    <th>Наименование специальности, направление подготовки</th>
-                    <th>Уровень образования</th>
-                    <th>Формы обучения</th>
-                    <th>Численность обучающихся, переведенных в другие образовательные организации</th>
-                    <th>Численность обучающихся, переведенных из других образовательных организаций</th>
-                    <th>Численность восстановленных обучающихся</th>
-                    <th>Численность отчисленных обучающихся</th>
-                </tr>
-                <tr>
-                    <td align=center><strong>1</strong></td>
-                    <td align=center><strong>2</strong></td>
-                    <td align=center><strong>3</strong></td>
-                    <td align=center><strong>4</strong></td>
-                    <td align=center><strong>5</strong></td>
-                    <td align=center><strong>6</strong></td>
-                    <td align=center><strong>7</strong></td>
-                    <td align=center><strong>8</strong></td>
-                </tr>
-            </thead>
-            @foreach (var item in t9eduPerevod.OrderBy(item => item.EduNapravl.EduNapravlCode))
-            {
-                <tr itemprop="eduPerevod">
-                    <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
-                    <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
-                    <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
-                    <td itemprop="eduForm">@item.EduForm.EduFormName</td>
-                    <td itemprop="numberOutPerevod" align=center>@item.NumberOutPerevod</td>
-                    <td itemprop="numberToPerevod" align=center>@item.NumberToPerevod</td>
-                    <td itemprop="numberResPerevod" align=center>@item.NumberResPerevod</td>
-                    <td itemprop="numberExpPerevod" align=center>@item.NumberExpPerevod</td>
-                </tr>
-            }
-        </table>
-    </div>
-</div>
 
 
 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (объём программы по годам)</a>
