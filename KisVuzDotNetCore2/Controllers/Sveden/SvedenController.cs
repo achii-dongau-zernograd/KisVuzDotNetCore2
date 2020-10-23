@@ -139,120 +139,134 @@ namespace KisVuzDotNetCore2.Controllers
         /// Подраздел "Образование"
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Education()
+        public async Task<IActionResult> Education(string openedSpoiler)
         {
+            ViewBag.OpenedSpoiler = openedSpoiler;
+
+
             #region Таблица 9. Информация о реализуемых уровнях образования, о формах обучения, нормативных сроках обучения, сроке действия государственной аккредитации образовательной программы (при наличии государственной аккредитации), о языках, на которых осуществляется образование(обучение)
-            //var t9eduAccred = await _context.EduNapravls                
-            //    .Include(l => l.EduUgs.EduAccred.EduAccredFile)
-            //    .Include(l => l.EduUgs.EduLevel)
-            //    .Include(n => n.EduNapravlEduFormEduSroks)
-            //        .ThenInclude(n=>n.EduForm)
-            //    .Include(n => n.EduNapravlEduFormEduSroks)
-            //        .ThenInclude(n => n.EduSrok)
-            //    .ToListAsync();
-            var t9eduAccred = await _eduNapravlRepository.GetEduNapravlEduFormEduSroksAsync();
-            ViewData["t9eduAccred"] = t9eduAccred;
+            if(string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduAccred")
+            {
+                var t9eduAccred = await _eduNapravlRepository.GetEduNapravlEduFormEduSroksAsync();
+                ViewData["t9eduAccred"] = t9eduAccred;
+            }
             #endregion
 
-            #region Таблица 7. Информация о численности обучающихся            
-            var t7eduChislen = await _context.EduChislens
+            #region Таблица 7. Информация о численности обучающихся
+            if (string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduChislen")
+            {
+                var t7eduChislen = await _context.EduChislens
                 .Include(c => c.EduProfile)
                     .ThenInclude(n => n.EduNapravl)
                     .ThenInclude(u => u.EduUgs)
                     .ThenInclude(l => l.EduLevel)
-                .Include (f =>f.EduForm)
+                .Include(f => f.EduForm)
                 .OrderBy(c => c.EduProfile.EduNapravl.EduUgs.EduLevelId)
                 .ThenBy(c => c.EduProfile.EduNapravl.EduNapravlCode)
                 .ToListAsync();
-            ViewData["t7eduChislen"] = t7eduChislen;
+                ViewData["t7eduChislen"] = t7eduChislen;
+            }
             #endregion
 
-            #region Таблица 8. Информация о результатах приема            
-            var t8eduPriem = await _context.EduPriem
+            #region Таблица 8. Информация о результатах приема
+            if (string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduPriem")
+            {
+                var t8eduPriem = await _context.EduPriem
                 .Include(e => e.EduNapravl)
                     .ThenInclude(n => n.EduUgs)
                     .ThenInclude(u => u.EduLevel)
                 .Include(e => e.EduForm)
                 .ToListAsync();
-            ViewData["t8eduPriem"] = t8eduPriem;
+                ViewData["t8eduPriem"] = t8eduPriem;
+            }
             #endregion
 
             #region Таблица 9. Информация о результатах перевода, восстановления и отчисления            
-            var t9eduPerevod = await _context.eduPerevod
-                .Include(c => c.EduNapravl)                    
+            if (string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduPerevod")
+            {
+                var t9eduPerevod = await _context.eduPerevod
+                .Include(c => c.EduNapravl)
                     .ThenInclude(u => u.EduUgs)
                         .ThenInclude(l => l.EduLevel)
                 .Include(f => f.EduForm)
                 .ToListAsync();
-            ViewData["t9eduPerevod"] = t9eduPerevod;
+                ViewData["t9eduPerevod"] = t9eduPerevod;
+            }
             #endregion
 
             #region Таблица 10. Информация по образовательным программам
-            var eduPrograms = await _context.EduPrograms
+            if (string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduPrograms")
+            {
+                var eduPrograms = await _context.EduPrograms
                 .Include(p => p.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(p => p.EduProfile.EduPlans)
                 .Include(p => p.EduProgramEduForms)
-                    .ThenInclude(pf=>pf.EduForm)
+                    .ThenInclude(pf => pf.EduForm)
                 .Include(p => p.EduProgramEduYearBeginningTrainings)
-                    .ThenInclude(py=>py.EduYearBeginningTraining)
+                    .ThenInclude(py => py.EduYearBeginningTraining)
                 .Include(p => p.EduProgramEduYears)
                     .ThenInclude(py => py.EduYear)
                 .Include(p => p.EduProgramPodg)
-                .Include(p => p.FileModel).ToListAsync();            
-            ViewData["t10eduPrograms"] = eduPrograms;
+                .Include(p => p.FileModel).ToListAsync();
+                ViewData["t10eduPrograms"] = eduPrograms;
 
-            var eduShedules = await _context.EduShedules
-                .Include(s => s.EduForm)
-                .Include(s => s.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Include(s => s.FileModel)
-                .Include(s => s.EduYear)
-                .ToListAsync();
-            ViewData["eduShedules"] = eduShedules;
+                var eduShedules = await _context.EduShedules
+                    .Include(s => s.EduForm)
+                    .Include(s => s.EduProfile.EduNapravl.EduUgs.EduLevel)
+                    .Include(s => s.FileModel)
+                    .Include(s => s.EduYear)
+                    .ToListAsync();
+                ViewData["eduShedules"] = eduShedules;
 
-            var eduPlans = await _context.EduPlans
-                .Include(p => p.EduForm)
-                .Include(p => p.EduPlanEduYears)
-                .Include(p => p.EduPlanEduYearBeginningTrainings)
-                    .ThenInclude(e=>e.EduYearBeginningTraining)
-                .Include(p => p.EduPlanPdf)
-                .Include(p => p.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Include(p => p.EduProgramPodg)
-                .Include(p => p.EduSrok)
-                .Include(e => e.BlokDiscipl)
-                    .ThenInclude(b => b.BlokDisciplChast)
-                        .ThenInclude(c => c.Disciplines)
-                            .ThenInclude(d => d.EduAnnotations)
-                                .ThenInclude(a => a.FileModel)
-                .Include(e => e.BlokDiscipl)
-                    .ThenInclude(b => b.BlokDisciplChast)
-                        .ThenInclude(c => c.Disciplines)
-                            .ThenInclude(d=>d.DisciplineName)
-                .ToListAsync();
-            ViewData["eduPlans"] = eduPlans;                        
+                var eduPlans = await _context.EduPlans
+                    .Include(p => p.EduForm)
+                    .Include(p => p.EduPlanEduYears)
+                    .Include(p => p.EduPlanEduYearBeginningTrainings)
+                        .ThenInclude(e => e.EduYearBeginningTraining)
+                    .Include(p => p.EduPlanPdf)
+                    .Include(p => p.EduProfile.EduNapravl.EduUgs.EduLevel)
+                    .Include(p => p.EduProgramPodg)
+                    .Include(p => p.EduSrok)
+                    .Include(e => e.BlokDiscipl)
+                        .ThenInclude(b => b.BlokDisciplChast)
+                            .ThenInclude(c => c.Disciplines)
+                                .ThenInclude(d => d.EduAnnotations)
+                                    .ThenInclude(a => a.FileModel)
+                    .Include(e => e.BlokDiscipl)
+                        .ThenInclude(b => b.BlokDisciplChast)
+                            .ThenInclude(c => c.Disciplines)
+                                .ThenInclude(d => d.DisciplineName)
+                    .ToListAsync();
+                ViewData["eduPlans"] = eduPlans;
+            }
             #endregion
 
-            #region Таблица 11. Образовательная программа (объём программы по годам)
-            var t11eduOPYears = await _context.EduOPYears
-                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)                   
-                .Include(e => e.EduYearBeginningTraining)
-                .Include(e=>e.EduOPEduYearName)
-                .ToListAsync();
-            ViewData["t11eduOPYears"] = t11eduOPYears;
-            #endregion
+            //#region Таблица 11. Образовательная программа (объём программы по годам)
 
-            #region Таблица 11. Информация о реализуемых образовательных программах, в том числе о реализуемых адаптированных образовательных программах, а также об использовании при реализации указанных образовательных программ электронного обучения и дистанционных образовательных технологиий
-                    var t11eduObrProg = await _context.EduPr
-                .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Include(e => e.EduYearBeginningTraining.EduPlanEduYearBeginningTrainings)   
-                    .ThenInclude(e=>e.EduPlan.EduPlanEduYears)
-                        .ThenInclude(e=>e.EduYear)
-                .ToListAsync();
-            ViewData["t11eduObrProg"] = t11eduObrProg;
-            #endregion
+            //var t11eduOPYears = await _context.EduOPYears
+            //    .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)                   
+            //    .Include(e => e.EduYearBeginningTraining)
+            //    .Include(e=>e.EduOPEduYearName)
+            //    .ToListAsync();
+            //ViewData["t11eduOPYears"] = t11eduOPYears;
+            //#endregion
+
+            //#region Таблица 11. Информация о реализуемых образовательных программах, в том числе о реализуемых адаптированных образовательных программах, а также об использовании при реализации указанных образовательных программ электронного обучения и дистанционных образовательных технологиий
+            //        var t11eduObrProg = await _context.EduPr
+            //    .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
+            //    .Include(e => e.EduYearBeginningTraining.EduPlanEduYearBeginningTrainings)   
+            //        .ThenInclude(e=>e.EduPlan.EduPlanEduYears)
+            //            .ThenInclude(e=>e.EduYear)
+            //    .ToListAsync();
+            //ViewData["t11eduObrProg"] = t11eduObrProg;
+            //#endregion
 
             #region Таблица 13. Образовательная программа (направления и результаты научной (научно-исследовательской) деятельности
-            var t13eduNir = _context.EduNir.Include(n=>n.EduNapravl.EduUgs.EduLevel);
-            ViewData["t13eduNir"] = t13eduNir;
+            if (string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduNir")
+            {
+                var t13eduNir = _context.EduNir.Include(n => n.EduNapravl.EduUgs.EduLevel);
+                ViewData["t13eduNir"] = t13eduNir;
+            }
             #endregion
 
             return View();
