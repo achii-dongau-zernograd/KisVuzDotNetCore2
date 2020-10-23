@@ -63,7 +63,7 @@
 <h1>Образование</h1>
 
 
-@if (openedSpoiler != "eduAccred")
+@if (openedSpoiler != "eduAccred" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduAccred" class="btn btn-primary btn-block">
         Информация о сроке действия государственной аккредитации образовательной программы,<br />
@@ -130,7 +130,7 @@ else
 
 
 
-@if (openedSpoiler != "eduPOAccred")
+@if (openedSpoiler != "eduPOAccred" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduPOAccred" class="btn btn-primary btn-block">
         Информация о профессионально-общественной аккредитации образовательной программы
@@ -171,7 +171,7 @@ else
 
 
 
-@if (openedSpoiler != "eduChislen")
+@if (openedSpoiler != "eduChislen" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduChislen" class="btn btn-primary btn-block">
         Информация о численности обучающихся
@@ -233,7 +233,7 @@ else
 
 
 
-@if (openedSpoiler != "eduPriem")
+@if (openedSpoiler != "eduPriem" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduPriem" class="btn btn-primary btn-block">
         Информация о результатах приема
@@ -295,7 +295,7 @@ else
 
 
 
-@if (openedSpoiler != "eduPerevod")
+@if (openedSpoiler != "eduPerevod" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduPerevod" class="btn btn-primary btn-block">
         Информация о результатах перевода, восстановления и отчисления
@@ -352,7 +352,7 @@ else
 
 
 
-@if (openedSpoiler != "eduPrograms")
+@if (openedSpoiler != "eduPrograms" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduPrograms" class="btn btn-primary btn-block">
         Образование (информация по образовательным программам)
@@ -600,7 +600,7 @@ else
 }
 
 
-@if (openedSpoiler != "eduAdOp")
+@if (openedSpoiler != "eduAdOp" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduAdOp" class="btn btn-primary btn-block">
         Образование (информация по адаптированным образовательным программам)
@@ -859,7 +859,7 @@ else
 
 
 
-@if (openedSpoiler != "eduNir")
+@if (openedSpoiler != "eduNir" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduNir" class="btn btn-primary btn-block">
         Информация о направлениях и результатах научной (научно-исследовательской) деятельности
@@ -1063,7 +1063,7 @@ else
     </div>*@
 
 
-@if (openedSpoiler != "eduDPO")
+@if (openedSpoiler != "eduDPO" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduDPO" class="btn btn-primary btn-block">
         Информация о реализуемых программах дополнительного профессионального образования
