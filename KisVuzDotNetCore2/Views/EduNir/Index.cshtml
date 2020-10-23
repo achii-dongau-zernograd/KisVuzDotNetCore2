@@ -42,6 +42,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.NumFinance)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseNir)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -77,6 +80,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NumFinance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BaseNir)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.EduNirId">Редактировать</a> |
