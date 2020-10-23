@@ -229,11 +229,11 @@
     @{spoilerCounter++;}
     <div class="well">
 
-        <table itemprop="eduPerevod" class="table table-hover">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>Код</th>
-                    <th>Наименование специальности, направление подготовки</th>
+                    <th>Наименование специальности, направления подготовки</th>
                     <th>Уровень образования</th>
                     <th>Формы обучения</th>
                     <th>Численность обучающихся, переведенных в другие образовательные организации</th>
@@ -259,10 +259,10 @@
                     <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
                     <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
                     <td itemprop="eduForm">@item.EduForm.EduFormName</td>
-                    <td itemprop="numberOutPerevod" align=center>@item.NumberOutPerevod</td>
-                    <td itemprop="numberToPerevod" align=center>@item.NumberToPerevod</td>
-                    <td itemprop="numberResPerevod" align=center>@item.NumberResPerevod</td>
-                    <td itemprop="numberExpPerevod" align=center>@item.NumberExpPerevod</td>
+                    <td itemprop="numberOut" align=center>@item.NumberOutPerevod</td>
+                    <td itemprop="numberTo" align=center>@item.NumberToPerevod</td>
+                    <td itemprop="numberRes" align=center>@item.NumberResPerevod</td>
+                    <td itemprop="numberExp" align=center>@item.NumberExpPerevod</td>
                 </tr>
             }
         </table>
