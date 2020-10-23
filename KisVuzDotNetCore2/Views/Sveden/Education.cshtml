@@ -560,9 +560,7 @@
 
 
 
-
-
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+@*<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
     Информация о реализуемых образовательных программах,
     в том числе о реализуемых адаптированных образовательных программах,<br />
     с указанием учебных предметов, курсов, дисциплин (модулей), практики,
@@ -750,11 +748,11 @@
         </table>
 
     </div>
-</div>
+</div>*@
 
 
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о направлениях и результатах научной (научно-исследовательской) деятельности и научно-исследовательской базе для её осуществления</a>
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о направлениях и результатах научной (научно-исследовательской) деятельности</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++;}
     <div itemprop="eduNir" class="well">
@@ -763,20 +761,15 @@
         <div class="collapse" id="spoiler-@spoilerCounter">
             @{spoilerCounter++;}
             <div class="well">
-                <table itemprop="eduProf" class="table table-hover">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Код</th>
                             <th>Наименование специальности, направления подготовки</th>
                             <th>Уровень образования</th>
                             <th>Перечень научных направлений, в рамках которых ведётся научная (научно-исследовательская) деятельность</th>
-                            <th>Количество НПР, принимающих участие в научной (научно-исследовательской) деятельности</th>
-                            <th>Количество студентов, принимающих участие в научной (научно-исследовательской) деятельности</th>
-                            <th>Количество изданных монографий научно-педагогических работников образовательной организации по всем научным направлениям за последний год</th>
-                            <th>Количество изданных и принятых к публикации статей в изданиях, рекомендованных ВАК / зарубежных для публикации научных работ за последний год</th>
-                            <th>Количество патентов, полученных на разработки за последний год: российских / зарубежных</th>
-                            <th>Количество свидетельств о регистрации объекта интеллектуальной собственности, выданных на разработки за последний год: российских / зарубежных</th>
-                            <th>Среднегодовой объём финансирования научных исследований на одного научно-педагогического работника организации (в приведённых к целочисленным значениям ставок)</th>
+                            <th>Результаты научной (научно-исследовательской) деятельность</th>
+                            <th>Сведения о научно-исследовательской базе для осуществления научной (научно-исследовательской) деятельность</th>                            
                         </tr>
                         <tr>
                             <td align=center><strong>1</strong></td>
@@ -784,28 +777,36 @@
                             <td align=center><strong>3</strong></td>
                             <td align=center><strong>4</strong></td>
                             <td align=center><strong>5</strong></td>
-                            <td align=center><strong>6</strong></td>
-                            <td align=center><strong>7</strong></td>
-                            <td align=center><strong>8</strong></td>
-                            <td align=center><strong>9</strong></td>
-                            <td align=center><strong>10</strong></td>
-                            <td align=center><strong>11</strong></td>
+                            <td align=center><strong>6</strong></td>                            
                         </tr>
                     </thead>
                     @foreach (var item in t13eduNir.OrderBy(item => item.EduNapravl.EduNapravlCode))
                     {
-                        <tr itemprop="eduProf">
+                        <tr itemprop="eduNir">
                             <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
                             <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
                             <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
                             <td itemprop="perechenNir">@item.NirNapravls</td>
-                            <td itemprop="nprNir">@item.NumNpr</td>
-                            <td itemprop="studNir" align=center>@item.NumStud</td>
+                            <td itemprop="resultNir">
+                                @item.NumNpr
+                                <p>Количество НПР, принимающих участие в научной (научно-исследовательской) деятельности</p>
+                                <p>Количество студентов, принимающих участие в научной (научно-исследовательской) деятельности</p>
+                                <p>Количество изданных монографий научно-педагогических работников образовательной организации по всем научным направлениям за последний год</p>
+                                <p>Количество изданных и принятых к публикации статей в изданиях, рекомендованных ВАК / зарубежных для публикации научных работ за последний год</p>
+                                <p>Количество патентов, полученных на разработки за последний год: российских / зарубежных</p>
+                                <p>Количество свидетельств о регистрации объекта интеллектуальной собственности, выданных на разработки за последний год: российских / зарубежных</p>
+                                <p>Среднегодовой объём финансирования научных исследований на одного научно-педагогического работника организации (в приведённых к целочисленным значениям ставок)</p>
+                            </td>
+                            <td itemprop="baseNir">
+
+                            </td>
+
+                            @*<td itemprop="studNir" align=center>@item.NumStud</td>
                             <td itemprop="monografNir" align=center>@item.NumMonograf</td>
                             <td itemprop="articleNir" align=center>@item.NumArticles / @item.NumArticlesZ</td>
                             <td align=center><span itemprop="patentRNir">@item.NumPatents</span> / <span itemprop="patentZNir">@item.NumPatentsZ</span></td>
                             <td align=center><span itemprop="svidRNir">@item.NumSvidetelstv</span> / <span itemprop="svidZNir">@item.NumSvidetelstvZ</span></td>
-                            <td itemprop="financeNir" align=center>@item.NumFinance</td>
+                            <td itemprop="financeNir" align=center>@item.NumFinance</td>*@
                         </tr>
                     }
                 </table>
@@ -827,7 +828,7 @@
 
 
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (объём программы по годам)</a>
+@*<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образовательная программа (объём программы по годам)</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++;}
     <div class="well">
@@ -931,7 +932,7 @@
         </table>
 
     </div>
-</div>
+</div>*@
 
 
 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о реализуемых программах дополнительного профессионального образования</a>
