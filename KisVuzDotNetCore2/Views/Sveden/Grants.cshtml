@@ -83,7 +83,7 @@
         @{spoilerCounter++;}
         <div class="well">
 
-            <table itemprop="graduateJob" class="table table-hover">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th rowspan="2">Код</th>
@@ -109,20 +109,21 @@
                             <td itemprop="eduName">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlName (@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduProfileName)</td>
                             @foreach (var graduateYear in GraduateYear.TakeLast(3).OrderByDescending(y => y.GraduateYearId))
                             {
+                                int yearCounter = 1;
                                 bool IsFounded = false;
                                 foreach (var graduate in graduateG.Where(g => g.GraduateYearId == graduateYear.GraduateYearId))
                                 {
                                     IsFounded = true;
-                                    <td>@graduate.GraduateNumber</td>
+                                    <td itemprop="@("v" + yearCounter)">@graduate.GraduateNumber</td>
 
                                     int? trud = GraduateTrudoustroustvo.Where(t => t.EduProfileId == graduateG.Key && t.GraduateYearId == graduateYear.GraduateYearId).FirstOrDefault()?.GraduateTrudoustroustvoNumber;
                                     if (trud > 0)
                                     {
-                                        <td itemprop="graduateJob">@trud</td>
+                                        <td itemprop="@("t" + yearCounter)">@trud</td>
                                     }
                                     else
                                     {
-                                        <td>-</td>
+                                        <td itemprop="@("t" + yearCounter)">-</td>
                                     }
 
                                     break;
@@ -130,8 +131,8 @@
 
                                 if (!IsFounded)
                                 {
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td itemprop="@("v" + yearCounter)">-</td>
+                                    <td itemprop="@("t" + yearCounter)">-</td>
                                 }
                             }
 
