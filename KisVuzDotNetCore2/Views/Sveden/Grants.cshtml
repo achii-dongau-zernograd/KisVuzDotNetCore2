@@ -134,6 +134,8 @@
                                     <td itemprop="@("v" + yearCounter)">-</td>
                                     <td itemprop="@("t" + yearCounter)">-</td>
                                 }
+
+                                yearCounter++;
                             }
 
 
@@ -185,7 +187,7 @@
                             else
                             {
                                 <td>@item.Value</td>
-                            }                            
+                            }
                         }
                         <td>-</td>
                         <td itemprop="interInfo" class="hidden">-</td>
@@ -200,6 +202,13 @@
         </div>
     </div>
 
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Приспособленность общежитий, интернатов для использования инвалидами и лицами с ограниченными возможностями здоровья</a>
+    <div class="collapse" id="spoiler-@spoilerCounter">
+        @{spoilerCounter++;}
+        <div class="well">
+            <a asp-action="Ovz" target="_blank">Информация представлена в специальном подразделе "Доступная среда"</a>
+        </div>
+    </div>
 
     <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о формировании платы за проживание в общежитии</a>
     <div class="collapse" id="spoiler-@spoilerCounter">
