@@ -104,12 +104,12 @@
                 <tbody>
                     @foreach (var graduateG in EduGraduate.OrderBy(g => g.EduProfileId).GroupBy(g => g.EduProfileId))
                     {
+                        int yearCounter = 1;
                         <tr itemprop="graduateJob">
                             <td itemprop="eduCode">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlCode</td>
                             <td itemprop="eduName">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlName (@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduProfileName)</td>
                             @foreach (var graduateYear in GraduateYear.TakeLast(3).OrderByDescending(y => y.GraduateYearId))
-                            {
-                                int yearCounter = 1;
+                            {                                
                                 bool IsFounded = false;
                                 foreach (var graduate in graduateG.Where(g => g.GraduateYearId == graduateYear.GraduateYearId))
                                 {
