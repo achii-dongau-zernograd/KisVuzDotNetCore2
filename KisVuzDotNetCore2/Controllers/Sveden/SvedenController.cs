@@ -683,7 +683,8 @@ namespace KisVuzDotNetCore2.Controllers
         public async Task<IActionResult> Ovz()
         {
             var PurposeLibrs = await _context.PurposeLibr
-                .Where(pl=>pl.itemprop.Contains("Ovz"))
+                //.Where(pl=>pl.itemprop.Contains("Ovz"))
+                .Where(pl => !pl.PrisposoblOvz.Contains("недоступно"))
                 .ToListAsync();
             ViewData["PurposeLibrs"] = PurposeLibrs;
 
