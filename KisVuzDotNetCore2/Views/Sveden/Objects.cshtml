@@ -3,7 +3,7 @@
 }
 
 @{
-    int currentEduYear = (int)ViewData["currentEduYear"];
+    //int currentEduYear = (int)ViewData["currentEduYear"];
     int NumEbs = (int)ViewData["NumEbs"];
     int NumEbsSobstv = (int)ViewData["NumEbsSobstv"];
     int NumEbsDogovor = (int)ViewData["NumEbsDogovor"];
@@ -25,51 +25,51 @@
 </a>
 <div class="collapse" id="spoiler-6">
     <div class="well">
-        <div>           
+        <div>
 
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>№ п/п</th>                        
-                        <th>Адрес места осуществления образовательной деятельности</th>                        
+                        <th>№ п/п</th>
+                        <th>Адрес места осуществления образовательной деятельности</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>                        
-                        <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>                        
+                        <td>1</td>
+                        <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
                     </tr>
                     <tr>
-                        <td>2</td>                        
+                        <td>2</td>
                         <td itemprop="addressPlace">
                             347740, Ростовская область, г. Зерноград,
                             ул. Советская 28/30
-                        </td>                        
+                        </td>
                     </tr>
                     <tr>
-                        <td>3</td>                        
+                        <td>3</td>
                         <td itemprop="addressPlace">
                             347740, Ростовская область, г. Зерноград,
                             ул. Советская 17/21
-                        </td>                        
+                        </td>
                     </tr>
                     <tr>
-                        <td>4</td>                        
+                        <td>4</td>
                         <td itemprop="addressPlace">
                             347740, Ростовская область, г. Зерноград,
                             ул. Советская, 17
-                        </td>                        
+                        </td>
                     </tr>
                     <tr>
-                        <td>5</td>                        
+                        <td>5</td>
                         <td itemprop="addressPlace">
                             347740, Ростовская область, г. Зерноград,
                             ул. Советская, 21а
-                        </td>                        
+                        </td>
                     </tr>
                     <tr>
-                        <td>6</td>                        
-                        <td itemprop="addressPlace">347740, Ростовская область, Зерноградский район, п. Кленовый, ул. Сидоренко, дом №1, №3</td>                        
+                        <td>6</td>
+                        <td itemprop="addressPlace">347740, Ростовская область, Зерноградский район, п. Кленовый, ул. Сидоренко, дом №1, №3</td>
                     </tr>
                 </tbody>
             </table>
@@ -78,136 +78,49 @@
 </div>
 
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии оборудованных учебных кабинетов, объектов для проведения практических занятий</a>
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о специально оборудованных учебных кабинетах </a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++; }
     <div class="well">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Адрес</th>
+                    <th>Наименование специально оборудованных учебных кабинетов</th>
+                    <th>Оснащенность специально оборудованных учебных кабинетов</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr itemprop="purposeCab">
+                    <td itemprop="addressCab" colspan="4" class="text-center">-</td>
+                    <td itemprop="nameCab" class="hidden">-</td>
+                    <td itemprop="osnCab" class="hidden">-</td>                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-        @foreach (var eduLevel in eduLevels)
-        {
-            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduLevel.EduLevelName</a>
-            <div class="collapse" id="spoiler-@spoilerCounter">
-                @{spoilerCounter++; }
-                <div class="well">
-
-                    @foreach (var eduUgs in eduLevel.EduUgses)
-                    {
-                        @foreach (var eduNapravl in eduUgs.EduNapravls)
-                        {
-                            <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduNapravl.EduNapravlCode - @eduNapravl.EduNapravlName</a>
-                            <div class="collapse" id="spoiler-@spoilerCounter">
-                                @{spoilerCounter++; }
-                                <div class="well">
-
-                                    @foreach (var eduProfile in eduNapravl.EduProfiles)
-                                    {
-                                        <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduProfile.EduProfileName</a>
-                                        <div class="collapse" id="spoiler-@spoilerCounter">
-                                            @{spoilerCounter++; }
-                                            <div class="well">
-
-                                                @foreach (var eduPlan in eduProfile.EduPlans)
-                                                {
-                                                    @*<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlan.EduForm.EduFormName - @eduPlan.EduProgramPodg.EduProgramPodgName  @eduPlan.EduYearBeginningTrainingsDescription</a>
-                                                        <div class="collapse" id="spoiler-@spoilerCounter">
-                                                            @{spoilerCounter++; }
-                                                            <div class="well">*@
-
-                                                    @foreach (var eduPlanEduYear in eduPlan.EduPlanEduYears)
-                                                    {
-                                                        if (eduPlanEduYear.DisciplinePomeshenies.Count == 0) { continue; }
-                                                        if (eduPlanEduYear.EduYearId != currentEduYear) { continue; }
-                                                        if (eduPlanEduYear.DisciplinePomeshenies == null || eduPlanEduYear.DisciplinePomeshenies.Count == 0) { continue; }
-                                                        @*<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@eduPlanEduYear.EduYear.EduYearName</a>
-                                                            <div class="collapse" id="spoiler-@spoilerCounter">
-                                                                @{spoilerCounter++; }
-                                                                <div class="well">*@
-
-                                                        <table itemprop="purposeCab" class="invisible">
-                                                            <tr>
-                                                                <td itemprop="purposeCabOvz">Информация размещена по адресу http://ачгаа.рф/nash-vuz/dostupnaya-sreda </td>
-                                                                <td itemprop="purposePracOvz">Информация размещена по адресу http://ачгаа.рф/nash-vuz/dostupnaya-sreda </td>
-                                                            </tr>
-                                                        </table>
-
-                                                        <table itemprop="purposeCab" class="table table-hover">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Код</th>
-                                                                    <th>Наименование специальности, направления подготовки</th>
-                                                                    <th>Наименование дисциплины (модуля), практик в соответствии с учебным планом</th>
-                                                                    <th>Наименование специальных помещений и помещений для самостоятельной работы</th>
-                                                                    <th>Оснащенность специальных помещений и помещений для самостоятельной работы</th>
-                                                                    <th>Приспособленность помещений для использования инвалидами и лицами с ограниченными возможностями здоровья</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-
-                                                                @foreach (var discPomeshenie in eduPlanEduYear.DisciplinePomeshenies.OrderBy(dp => dp.Discipline.DisciplineName.DisciplineNameName))
-                                                                {
-
-                                                                    string purposeCab = "purposeCabOvz";
-                                                                    string purposePrac = "purposePracOvz";
-                                                                    switch (discPomeshenie.Pomeshenie.PomeshenieOvz)
-                                                                    {
-                                                                        case null:
-                                                                        case "":
-                                                                        case "нет":
-                                                                        case "не приспособлено":
-                                                                            purposeCab = "purposeCab";
-                                                                            purposePrac = "purposePrac";
-                                                                            break;
-
-                                                                    }
-
-                                                                    <tr itemprop="@purposeCab">
-                                                                        <td itemprop="eduCode">@eduNapravl.EduNapravlCode</td>
-                                                                        <td itemprop="eduName">@eduNapravl.EduNapravlName (@eduProfile.EduProfileName)</td>
-                                                                        <td>@discPomeshenie.Discipline.DisciplineName.DisciplineNameName</td>
-                                                                        <td>@discPomeshenie.Pomeshenie.PomeshenieFullName</td>
-                                                                        <td itemprop="@purposePrac">
-                                                                            <ul>
-                                                                                @foreach (var oborudovanie in discPomeshenie.Pomeshenie.OborudovanieList)
-                                                                                {
-                                                                                    <li>
-                                                                                        @oborudovanie.OborudovanieName
-                                                                                        @if (oborudovanie.OborudovanieCount > 0)
-                                                                                        {
-                                                                                            <text> (@oborudovanie.OborudovanieCount шт.)</text>
-                                                                                        }
-                                                                                    </li>
-                                                                                }
-                                                                            </ul>
-                                                                        </td>
-                                                                        <td>@discPomeshenie.Pomeshenie.PomeshenieOvz</td>
-                                                                    </tr>
-
-                                                                }
-
-                                                            </tbody>
-                                                        </table>
-
-                                                        @*</div>
-                                                            </div>*@
-                                                    }
-
-                                                    @*</div>
-                                                        </div>*@
-                                                }
-
-                                            </div>
-                                        </div>
-                                    }
-
-                                </div>
-                            </div>
-                        }
-                    }
-
-                </div>
-            </div>
-        }
-
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о приспособленных объектах для проведения практических занятий</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Адрес</th>
+                    <th>Наименование приспособленных объектов для проведения практических занятий</th>
+                    <th>Оснащенность приспособленных объектов для проведения практических занятий</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr itemprop="purposePrac">
+                    <td itemprop="addressPrac" colspan="4" class="text-center">-</td>
+                    <td itemprop="namePrac" class="hidden">-</td>
+                    <td itemprop="osnPrac" class="hidden">-</td>                    
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -215,10 +128,7 @@
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++; }
     <div class="well">
-
-
         <div class="sp-body folded">
-
             <table class="table">
                 <thead>
                     <tr>
@@ -233,7 +143,7 @@
                         </th>
                         <th>
                             Количество мест
-                        </th>                        
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -251,7 +161,7 @@
                             </td>
                             <td itemprop="objCnt">
                                 @Html.DisplayFor(modelItem => item.NumberPlaces)
-                            </td>                            
+                            </td>
                         </tr>
                     }
                     @*        Заглушки      *@
