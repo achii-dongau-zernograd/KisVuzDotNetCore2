@@ -194,31 +194,30 @@
                         <th>
                             Количество мест
                         </th>
-                        <th>
+                        @*<th>
                             Приспособленность для использования инвалидами и лицами с ограниченными возможностями здоровья
-                        </th>
-                        <th></th>
+                        </th>*@                        
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in PurposeLibr)
                     {
                         <tr itemprop="@item.itemprop">
-                            <td>
+                            <td itemprop="objName">
                                 @Html.DisplayFor(modelItem => item.VidPom)
                             </td>
-                            <td>
+                            <td itemprop="objAdress">
                                 @Html.DisplayFor(modelItem => item.Adress)
                             </td>
-                            <td>
+                            <td itemprop="objSq">
                                 @Html.DisplayFor(modelItem => item.Square)
                             </td>
-                            <td>
+                            <td itemprop="objCnt">
                                 @Html.DisplayFor(modelItem => item.NumberPlaces)
                             </td>
-                            <td>
+                            @*<td itemprop="objOvz">
                                 @Html.DisplayFor(modelItem => item.PrisposoblOvz)
-                            </td>
+                            </td>*@
                         </tr>
                     }
                 </tbody>
