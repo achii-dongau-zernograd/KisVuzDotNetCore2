@@ -59,7 +59,9 @@
                 <div class="well">
                     @foreach (var ftft in StipendiiLocalGrant.FileToFileTypes)
                     {
-                        <p itemprop="@ftft.FileDataType.Itemprop"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+                        <p itemprop="@ftft.FileDataType.Itemprop">
+                            <a href="/@ftft.FileModel.Path" itemprop="localAct">@ftft.FileModel.Name</a>
+                        </p>
                     }
                 </div>
             </div>
@@ -72,7 +74,7 @@
     <div class="collapse" id="spoiler-@spoilerCounter">
         @{spoilerCounter++;}
         <div class="well" itemprop="support">
-            <a href="http://ачгаа.рф/files/achii/2020/grant_support.pdf" target="_blank">Информация о мерах социальной поддержки обучающихся</a>
+            <a href="http://ачгаа.рф/files/achii/2020/grant_support.pdf" itemprop="support" target="_blank">Информация о мерах социальной поддержки обучающихся</a>
         </div>
     </div>
 
@@ -153,7 +155,8 @@
                 <thead>
                     <tr>
                         <th>Наименование показателя</th>
-                        <th>Значение</th>
+                        <th>Общежития</th>
+                        <th>Интернаты</th>
                     </tr>
                 </thead>
                 @foreach (var item in t20hostelInfo)
@@ -181,9 +184,15 @@
                             else
                             {
                                 <td>@item.Value</td>
-                            }
-                            <td>@item.Link</td>
+                            }                            
                         }
+                        <td>-</td>
+                        <td itemprop="interInfo" class="hidden">-</td>
+                        <td itemprop="interTS" class="hidden">-</td>
+                        <td itemprop="interLS" class="hidden">-</td>
+                        <td itemprop="interNum" class="hidden">-</td>
+                        <td itemprop="interInv" class="hidden">-</td>
+                        <td itemprop="interFd" class="hidden">-</td>
                     </tr>
                 }
             </table>
