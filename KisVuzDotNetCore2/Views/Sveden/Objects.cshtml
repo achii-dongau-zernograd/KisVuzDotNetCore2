@@ -3,6 +3,8 @@
 }
 
 @{
+    var UchCabinets = (List<Pomeshenie>)ViewData["UchCabinets"];
+    var ObjectsForPractLessons = (List<Pomeshenie>) ViewData["ObjectsForPractLessons"];
     //int currentEduYear = (int)ViewData["currentEduYear"];
     int NumEbs = (int)ViewData["NumEbs"];
     int NumEbsSobstv = (int)ViewData["NumEbsSobstv"];
@@ -91,10 +93,27 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach (var uchCabinet in UchCabinets)
+                {
+                    <tr itemprop="purposePrac">
+                        <td itemprop="addressPrac">@uchCabinet.Korpus.KorpusAddress.GetAddress</td>
+                        <td itemprop="namePrac">@uchCabinet.PomeshenieFullName</td>
+                        <td itemprop="osnPrac">
+                            <ol>
+                                @foreach (var oborudovanie in uchCabinet.OborudovanieList)
+                                {
+                                    <li>
+                                        @oborudovanie.OborudovanieName
+                                    </li>
+                                }
+                            </ol>
+                        </td>
+                    </tr>
+                }
                 <tr itemprop="purposeCab">
                     <td itemprop="addressCab" colspan="4" class="text-center">-</td>
                     <td itemprop="nameCab" class="hidden">-</td>
-                    <td itemprop="osnCab" class="hidden">-</td>                    
+                    <td itemprop="osnCab" class="hidden">-</td>
                 </tr>
             </tbody>
         </table>
@@ -114,10 +133,27 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach (var objectForPractLessons in ObjectsForPractLessons)
+                {
+                    <tr itemprop="purposePrac">
+                        <td itemprop="addressPrac">@objectForPractLessons.Korpus.KorpusAddress.GetAddress</td>
+                        <td itemprop="namePrac">@objectForPractLessons.PomeshenieFullName</td>
+                        <td itemprop="osnPrac">
+                            <ol>
+                                @foreach (var oborudovanie in objectForPractLessons.OborudovanieList)
+                                {
+                                    <li>
+                                        @oborudovanie.OborudovanieName
+                                    </li>
+                                }
+                            </ol>                            
+                        </td>
+                    </tr>
+                }
                 <tr itemprop="purposePrac">
                     <td itemprop="addressPrac" colspan="4" class="text-center">-</td>
                     <td itemprop="namePrac" class="hidden">-</td>
-                    <td itemprop="osnPrac" class="hidden">-</td>                    
+                    <td itemprop="osnPrac" class="hidden">-</td>
                 </tr>
             </tbody>
         </table>

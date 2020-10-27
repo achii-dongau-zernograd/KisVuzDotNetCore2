@@ -8,6 +8,7 @@ using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.LMS;
+using KisVuzDotNetCore2.Models.MTO;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Priem;
 using KisVuzDotNetCore2.Models.Struct;
@@ -89,6 +90,7 @@ namespace KisVuzDotNetCore2
             services.AddTransient<IEntranceTestsProtocolsRepository, EntranceTestsProtocolsRepository>();
             services.AddTransient<IExternalResourcesRepository, ExternalResourcesRepository>();
             services.AddTransient<IUserAccountExternalsRepository, UserAccountExternalsRepository>();
+            services.AddTransient<IPomeshenieRepository, PomeshenieRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

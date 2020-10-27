@@ -3,6 +3,7 @@ using KisVuzDotNetCore2.Models;
 using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.MTO;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Hosting;
@@ -26,16 +27,19 @@ namespace KisVuzDotNetCore2.Controllers
         IHostingEnvironment _appEnvironment;
         private readonly AppIdentityDBContext _context;
         private readonly IEduNapravlRepository _eduNapravlRepository;
+        private readonly IPomeshenieRepository _pomeshenieRepository;
 
         public SvedenController(IHostingEnvironment appEnvironment,
             AppIdentityDBContext context,
             ISelectListRepository selectListRepository,
-            IEduNapravlRepository eduNapravlRepository)
+            IEduNapravlRepository eduNapravlRepository,
+            IPomeshenieRepository pomeshenieRepository)
         {
             _appEnvironment = appEnvironment;
             _context = context;
             _selectListRepository = selectListRepository;
             _eduNapravlRepository = eduNapravlRepository;
+            _pomeshenieRepository = pomeshenieRepository;
         }
 
         /// <summary>
@@ -482,6 +486,8 @@ namespace KisVuzDotNetCore2.Controllers
         public async Task<IActionResult> Objects()
         {
             #region Таблица 17. Сведения о наличии оборудованных учебных кабинетов
+            ViewData["UchCabinets"] = await _pomeshenieRepository.GetUchCabinets().ToListAsync();
+            ViewData["ObjectsForPractLessons"] = await _pomeshenieRepository.GetObjectsForPractLessons().ToListAsync();
 
             //int currentEduYear = (await _context.AppSettings.SingleOrDefaultAsync(s => s.AppSettingId == (int)AppSettingTypesEnum.CurrentEduYear)).AppSettingValue;
             //ViewData["currentEduYear"] = currentEduYear;
