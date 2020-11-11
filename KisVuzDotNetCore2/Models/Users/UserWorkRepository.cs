@@ -49,7 +49,7 @@ namespace KisVuzDotNetCore2.Models.Users
                 .Include(uw => uw.FileModel)
                 .Where(uw => uw.FileModelId != null)
                 .Where(uw => uw.FileModel.UploadDate <= date)
-                .Take(100)
+                .Take(1000)
                 .ToListAsync();
 
             foreach (var userWork in userWorksToDelete)
