@@ -95,7 +95,10 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// Количество неподтверждённых заявок на добавление научных журналов
         /// </summary>
         public int ScienceJournalAddingClaimsNotConfirmedNum { get; set; }
-
-
+        
+        /// <summary>
+        /// Количество работ пользователей
+        /// </summary>
+        public int UserWorksNum { get; internal set; }
     }
 }

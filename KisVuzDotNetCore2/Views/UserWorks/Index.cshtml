@@ -22,11 +22,11 @@
                 @Html.DisplayNameFor(model => model.UserWorkName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserWorkDescription)
+                Ссылка
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.FileModel)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.UserWorkReviews)
             </th>
@@ -48,7 +48,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.UserWorkDescription)
             </td>
-            <td>
+            @*<td>
                 @if (item.FileModel!=null)
                 {
                     <a href="/@item.FileModel?.Path">Открыть</a>
@@ -57,7 +57,7 @@
                 {
                     <p>-</p>
                 }
-            </td>
+            </td>*@
             <td>
                 <a asp-controller="UserWorkReviews" asp-action="Index" asp-route-UserWorkId="@item.UserWorkId">@item.UserWorkReviews.Count  рецензии(ий)</a>
             </td>

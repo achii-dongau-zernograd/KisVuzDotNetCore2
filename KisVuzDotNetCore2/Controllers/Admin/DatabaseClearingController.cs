@@ -131,6 +131,7 @@ namespace KisVuzDotNetCore2.Controllers.Admin
             // Количество записей в таблице files базы данных
             int NumFilesInDatabase = await _fileModelRepository.GetNumFilesInDatabase();
 
+                       
             
             ViewBag.NumFilesInFileSystem = NumFilesInFileSystem;
             ViewBag.NumFilesInDatabase = NumFilesInDatabase;

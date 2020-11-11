@@ -52,6 +52,8 @@ namespace KisVuzDotNetCore2.Infrastructure
             numRowsInDataTables.ScienceJournalAddingClaimsNum = _context.ScienceJournalAddingClaims.Count();
             numRowsInDataTables.ScienceJournalAddingClaimsNotConfirmedNum = _context.ScienceJournalAddingClaims.Where(s => s.RowStatusId == (int)RowStatusEnum.NotConfirmed).Count();
 
+            numRowsInDataTables.UserWorksNum = _context.UserWorks.Count();
+
             return numRowsInDataTables;
         }
     }
