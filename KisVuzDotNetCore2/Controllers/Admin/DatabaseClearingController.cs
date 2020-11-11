@@ -1,5 +1,6 @@
 ﻿using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Nir;
+using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,17 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         private readonly IArticlesRepository _articlesRepository;
         private readonly IPatentRepository _patentRepository;
         private readonly IFileModelRepository _fileModelRepository;
+        private readonly IUserWorkRepository _userWorkRepository;
 
         public DatabaseClearingController(IArticlesRepository articlesRepository,
             IPatentRepository patentRepository,
-            IFileModelRepository fileModelRepository)
+            IFileModelRepository fileModelRepository,
+            IUserWorkRepository userWorkRepository)
         {
             _articlesRepository = articlesRepository;
             _patentRepository = patentRepository;
             _fileModelRepository = fileModelRepository;
+            _userWorkRepository = userWorkRepository;
         }
 
         public IActionResult Index()
@@ -131,10 +135,15 @@ namespace KisVuzDotNetCore2.Controllers.Admin
             // Количество записей в таблице files базы данных
             int NumFilesInDatabase = await _fileModelRepository.GetNumFilesInDatabase();
 
-                       
-            
+            DateTime date = new DateTime(2020, 08, 30);
+            int NumUserWorksUploadedToDate = await _userWorkRepository.GetNumUserWorksUploadedToDate(date);
+
+
+
             ViewBag.NumFilesInFileSystem = NumFilesInFileSystem;
             ViewBag.NumFilesInDatabase = NumFilesInDatabase;
+            ViewBag.NumUserWorksUploadedToDate = NumUserWorksUploadedToDate;
+            ViewBag.Date = date;
 
             return View();
         }

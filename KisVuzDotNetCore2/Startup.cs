@@ -91,6 +91,7 @@ namespace KisVuzDotNetCore2
             services.AddTransient<IExternalResourcesRepository, ExternalResourcesRepository>();
             services.AddTransient<IUserAccountExternalsRepository, UserAccountExternalsRepository>();
             services.AddTransient<IPomeshenieRepository, PomeshenieRepository>();
+            services.AddTransient<IUserWorkRepository, UserWorkRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
