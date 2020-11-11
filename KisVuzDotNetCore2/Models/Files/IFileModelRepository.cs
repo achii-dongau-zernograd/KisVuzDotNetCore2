@@ -114,6 +114,18 @@ namespace KisVuzDotNetCore2.Models.Files
         Task<FileModel> UploadElectronBiblSystemDogovorAsync(IFormFile uploadedFile);
 
         /// <summary>
+        /// Возвращает количество файлов в папке files
+        /// </summary>
+        /// <returns></returns>
+        Task<int> GetNumFilesInFileSystemAsync();
+
+        /// <summary>
+        /// Количество записей в таблице files базы данных
+        /// </summary>
+        /// <returns></returns>
+        Task<int> GetNumFilesInDatabase();
+
+        /// <summary>
         /// Загружает файл научной статьи
         /// </summary>
         /// <param name="article">Научная статья</param>

@@ -1,4 +1,5 @@
-﻿using KisVuzDotNetCore2.Models.Nir;
+﻿using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.Nir;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,15 @@ namespace KisVuzDotNetCore2.Controllers.Admin
     {
         private readonly IArticlesRepository _articlesRepository;
         private readonly IPatentRepository _patentRepository;
+        private readonly IFileModelRepository _fileModelRepository;
 
         public DatabaseClearingController(IArticlesRepository articlesRepository,
-            IPatentRepository patentRepository)
+            IPatentRepository patentRepository,
+            IFileModelRepository fileModelRepository)
         {
             _articlesRepository = articlesRepository;
             _patentRepository = patentRepository;
+            _fileModelRepository = fileModelRepository;
         }
 
         public IActionResult Index()
@@ -116,6 +120,22 @@ namespace KisVuzDotNetCore2.Controllers.Admin
             }
 
             return RedirectToAction(nameof(RemovePatents), new { year });
+        }
+        #endregion
+
+        #region Поиск и удаление файлов из папки files, не имеющих записей в таблице files
+        public async Task<IActionResult> FindLostFiles(int numFilesToShow)
+        {
+            // Количество файлов в папке files
+            int NumFilesInFileSystem = await _fileModelRepository.GetNumFilesInFileSystemAsync();
+            // Количество записей в таблице files базы данных
+            int NumFilesInDatabase = await _fileModelRepository.GetNumFilesInDatabase();
+
+            
+            ViewBag.NumFilesInFileSystem = NumFilesInFileSystem;
+            ViewBag.NumFilesInDatabase = NumFilesInDatabase;
+
+            return View();
         }
         #endregion
     }

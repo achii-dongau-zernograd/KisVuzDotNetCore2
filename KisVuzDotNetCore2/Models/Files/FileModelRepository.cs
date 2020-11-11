@@ -654,6 +654,27 @@ namespace KisVuzDotNetCore2.Models.Files
             return fileModel;
         }
 
-        
+        /// <summary>
+        /// Возвращает количество файлов в папке files
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> GetNumFilesInFileSystemAsync()
+        {
+            string[] paths = { _appEnvironment.WebRootPath, "files" };
+
+            string pathToDirectory = Path.Combine(paths[0], paths[1]);
+            var num = new DirectoryInfo(pathToDirectory).GetFiles().Length;
+            return num;
+        }
+
+        /// <summary>
+        /// Количество записей в таблице files базы данных
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> GetNumFilesInDatabase()
+        {
+            var num = await _context.Files.CountAsync();
+            return num;
+        }
     }
 }

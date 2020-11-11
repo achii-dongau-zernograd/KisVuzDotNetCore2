@@ -7,7 +7,7 @@
 
 <h2>Группы, закреплённые за куратором</h2>
 
-@foreach (var studentGroup in Model)
+@foreach (var studentGroup in Model.OrderBy(g => g.EduProfileId).ThenBy(g => g.EduKursId))
 {
     spoilerCounter++;
     <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@studentGroup.StudentGroupName</a>
