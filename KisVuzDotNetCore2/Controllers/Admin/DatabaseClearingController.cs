@@ -148,5 +148,18 @@ namespace KisVuzDotNetCore2.Controllers.Admin
             return View();
         }
         #endregion
+
+        /// <summary>
+        /// Удаляет файлы работ пользователей, загруженные до указанной даты
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> RemoveUserWorksUploadedFilesToDate(string date)
+        {
+            DateTime _date = DateTime.Parse(date);
+            await _userWorkRepository.RemoveUserWorksToDateAsync(_date);
+
+            return RedirectToAction(nameof(FindLostFiles));
+        }
     }
 }

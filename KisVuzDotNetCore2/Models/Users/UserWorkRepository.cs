@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KisVuzDotNetCore2.Models.Files;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,13 @@ namespace KisVuzDotNetCore2.Models.Users
     public class UserWorkRepository : IUserWorkRepository
     {
         private readonly AppIdentityDBContext _context;
+        private readonly IFileModelRepository _fileModelRepository;
 
-        public UserWorkRepository(AppIdentityDBContext context)
+        public UserWorkRepository(AppIdentityDBContext context,
+            IFileModelRepository fileModelRepository)
         {
             _context = context;
+            _fileModelRepository = fileModelRepository;
         }
 
         /// <summary>
@@ -32,6 +36,24 @@ namespace KisVuzDotNetCore2.Models.Users
                 .Count();
 
             return num;
+        }
+
+        /// <summary>
+        /// Удаляет файлы работ пользователей, загруженные до указанной даты
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public async Task RemoveUserWorksToDateAsync(DateTime date)
+        {
+            var userWorksToDelete = _context.UserWorks
+                .Include(uw => uw.FileModel)
+                .Where(uw => uw.FileModelId != null)
+                .Where(uw => uw.FileModel.UploadDate <= date);
+
+            foreach (var userWork in userWorksToDelete.Take(100))
+            {
+                await _fileModelRepository.RemoveFileModelAsync(userWork.FileModel);
+            }
         }
     }
 }
