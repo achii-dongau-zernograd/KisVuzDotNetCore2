@@ -45,12 +45,14 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <returns></returns>
         public async Task RemoveUserWorksToDateAsync(DateTime date)
         {
-            var userWorksToDelete = _context.UserWorks
+            var userWorksToDelete = await _context.UserWorks
                 .Include(uw => uw.FileModel)
                 .Where(uw => uw.FileModelId != null)
-                .Where(uw => uw.FileModel.UploadDate <= date);
+                .Where(uw => uw.FileModel.UploadDate <= date)
+                .Take(100)
+                .ToListAsync();
 
-            foreach (var userWork in userWorksToDelete.Take(100))
+            foreach (var userWork in userWorksToDelete)
             {
                 await _fileModelRepository.RemoveFileModelAsync(userWork.FileModel);
             }
