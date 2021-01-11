@@ -147,9 +147,17 @@ namespace KisVuzDotNetCore2.Controllers
         {
             ViewBag.OpenedSpoiler = openedSpoiler;
 
+            #region Копия лицензии с приложениями
+            var license = await _context.FileDataTypes.Where(fdt => fdt.FileDataTypeName == "Лицензия на осуществление образовательной деятельности")
+                .Include(fdt => fdt.FileDataTypeGroup)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .ToListAsync();
+            ViewData["license"] = license;
+            #endregion
 
             #region Таблица 9. Информация о реализуемых уровнях образования, о формах обучения, нормативных сроках обучения, сроке действия государственной аккредитации образовательной программы (при наличии государственной аккредитации), о языках, на которых осуществляется образование(обучение)
-            if(string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduAccred")
+            if (string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduAccred")
             {
                 var t9eduAccred = await _eduNapravlRepository.GetEduNapravlEduFormEduSroksAsync();
                 ViewData["t9eduAccred"] = t9eduAccred;

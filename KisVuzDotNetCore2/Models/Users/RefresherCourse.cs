@@ -85,10 +85,10 @@ namespace KisVuzDotNetCore2.Models.Users
         {
             get
             {
-                return $"Удостоверение о повышении квалификации {RefresherCourseRegNumber} " +
-                    $"от {RefresherCourseDateIssue.ToString("dd.MM.yyyy")} " +
-                    $"по программе {RefresherCourseName} ({RefresherCourseHours} ч), " +
-                    $"{RefresherCourseInstitition}, {RefresherCourseCity}, {RefresherCourseDateIssue.Year} г.";
+                return $"Удостоверение о повышении квалификации №{RefresherCourseRegNumber} " +
+                    $"от {RefresherCourseDateIssue.ToString("dd.MM.yyyy")} г., " +
+                    $"«{RefresherCourseName}», {RefresherCourseHours} ч., " +
+                    $"{RefresherCourseInstitition}.";
             }
         }
 

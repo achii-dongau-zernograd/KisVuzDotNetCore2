@@ -91,10 +91,10 @@ namespace KisVuzDotNetCore2.Models.Users
         {
             get
             {
-                return $"Диплом о профессиональной переподготовке {ProfessionalRetrainingDiplomNumber} " +
-                    $"от {ProfessionalRetrainingDateIssue.ToString("dd.MM.yyyy")} " +
-                    $"по программе {ProfessionalRetrainingProgramName} ({ProfessionalRetrainingHours} ч), " +
-                    $"{ProfessionalRetrainingInstitition}, {ProfessionalRetrainingCity}, {ProfessionalRetrainingDateIssue.Year} г.";
+                return $"Диплом о профессиональной переподготовке №{ProfessionalRetrainingDiplomNumber} " +
+                    $"от {ProfessionalRetrainingDateIssue.ToString("dd.MM.yyyy")} г., " +
+                    $"«{ProfessionalRetrainingProgramName}», {ProfessionalRetrainingHours} ч., " +
+                    $"{ProfessionalRetrainingInstitition}.";
             }
         }
 

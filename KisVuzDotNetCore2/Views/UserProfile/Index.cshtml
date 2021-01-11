@@ -181,7 +181,7 @@
                 {
                     <label>Профессиональная переподготовка:</label>
                     <ol>
-                        @foreach (var pr in Model.ProfessionalRetrainings)
+                        @foreach (var pr in Model.ProfessionalRetrainings.OrderByDescending(pr => pr.ProfessionalRetrainingDateIssue))
                         {
                             <li>
                                 <a href="/@pr.ProfessionalRetrainingFile.Path">@pr.GetProfessionalRetrainingString</a>
@@ -194,7 +194,7 @@
                 {
                     <label>Повышение квалификации:</label>
                     <ol>
-                        @foreach (var c in Model.RefresherCourses)
+                        @foreach (var c in Model.RefresherCourses.OrderByDescending(rc => rc.RefresherCourseDateIssue))
                         {
                             <li>
                                 <a href="/@c.RefresherCourseFile.Path">@c.GetRefresherCourseString</a>

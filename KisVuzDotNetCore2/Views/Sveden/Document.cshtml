@@ -5,7 +5,7 @@
 }
 
 <h1>Документы</h1>
-<span itemprop="copyDoc">
+<div itemprop="copyDoc">
     @foreach (var fileDataType in Model.FileDataTypes)
     {
         <a href="#spoiler-@fileDataType.FileDataTypeId" data-toggle="collapse" class="btn btn-primary btn-block">@fileDataType.FileDataTypeName</a>
@@ -42,7 +42,7 @@
             </p>
         </div>
     </div>
-</span>
+</div>
 
 <h3>Положения</h3>
 @foreach (var fileDataType in polojeniya.FileDataTypes)
