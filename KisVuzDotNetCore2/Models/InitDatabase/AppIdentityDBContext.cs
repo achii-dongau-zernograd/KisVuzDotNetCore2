@@ -20,6 +20,7 @@ using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.LMS;
+using KisVuzDotNetCore2.Models.Gradebook;
 
 namespace KisVuzDotNetCore2.Models
 {
@@ -35,6 +36,43 @@ namespace KisVuzDotNetCore2.Models
         }
         #endregion
         #region Таблицы
+
+        #region Электронные журнылы
+        /// <summary>
+        /// Электронные журнылы
+        /// </summary>
+        public DbSet<ElGradebook> ElGradebooks { get; set; }
+
+        /// <summary>
+        /// Электронные журнылы. Преподаватели, заполняющие электронные журнылы
+        /// </summary>
+        public DbSet<ElGradebookTeacher> ElGradebookTeachers { get; set; }
+
+        /// <summary>
+        /// Электронные журнылы. Студенты группы
+        /// </summary>
+        public DbSet<ElGradebookGroupStudent> ElGradebookGroupStudents { get; set; }
+
+        /// <summary>
+        /// Электронные журнылы. Учебные занятия
+        /// </summary>
+        public DbSet<ElGradebookLesson> ElGradebookLessons { get; set; }
+
+        /// <summary>
+        /// Электронные журнылы. Типы учебных занятий
+        /// </summary>
+        public DbSet<ElGradebookLessonType> ElGradebookLessonTypes { get; set; }
+
+        /// <summary>
+        /// Электронные журнылы. Оценки за учебные занятия
+        /// </summary>
+        public DbSet<ElGradebookLessonMark> ElGradebookLessonMarks { get; set; }
+
+        /// <summary>
+        /// Электронные журнылы. Типы посещаемости учебных занятий
+        /// </summary>
+        public DbSet<ElGradebookLessonAttendanceType> ElGradebookLessonAttendanceTypes { get; set; }
+        #endregion
 
         #region Общие (Common)
         public DbSet<AppSetting> AppSettings { get; set; }
@@ -1320,6 +1358,9 @@ namespace KisVuzDotNetCore2.Models
 
             await InitDatabaseExternalResources.CreateExternalResourceTypes(serviceProvider, configuration);
             await InitDatabaseExternalResources.CreateExternalResources(serviceProvider, configuration);
+
+            await InitDatabaseElGradebooks.CreateElGradebookLessonTypes(serviceProvider, configuration);
+            await InitDatabaseElGradebooks.CreateElGradebookLessonAttendanceTypes(serviceProvider, configuration);
         }        
         
         

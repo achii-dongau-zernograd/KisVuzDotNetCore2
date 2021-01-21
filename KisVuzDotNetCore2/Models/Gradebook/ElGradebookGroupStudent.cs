@@ -1,24 +1,24 @@
 ﻿namespace KisVuzDotNetCore2.Models.Gradebook
 {
     /// <summary>
-    /// Преподаватель
+    /// Электронные журналы. Студент группы
     /// </summary>
-    public class ElGradebookTeacher
+    public class ElGradebookGroupStudent
     {
         /// <summary>
-        /// УИД преподавателя
+        /// УИД студента группы
         /// </summary>
-        public int ElGradebookTeacherId { get; set; }
+        public int ElGradebookGroupStudentId { get; set; }
 
         /// <summary>
-        /// ФИО преподавателя
+        /// ФИО студента группы
         /// </summary>
-        public string TeacherFio { get; set; }
+        public string ElGradebookGroupStudentFio { get; set; }
 
         /// <summary>
-        /// УИД аккаунта преподавателя
+        /// УИД аккаунта студента группы
         /// </summary>
-        public string UserId { get; set; }
+        public string AppUserId { get; set; }
 
         /// <summary>
         /// УИД журнала

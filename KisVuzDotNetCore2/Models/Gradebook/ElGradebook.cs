@@ -59,5 +59,15 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         /// Преподаватели
         /// </summary>
         public List<ElGradebookTeacher> ElGradebookTeachers { get; set; }
+
+        /// <summary>
+        /// Студенты
+        /// </summary>
+        public List<ElGradebookGroupStudent> ElGradebookGroupStudents { get; set; }
+
+        /// <summary>
+        /// Занятия
+        /// </summary>
+        public List<ElGradebookLesson> ElGradebookLessons { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.Gradebook;
 using KisVuzDotNetCore2.Models.LMS;
 using KisVuzDotNetCore2.Models.MTO;
 using KisVuzDotNetCore2.Models.Nir;
@@ -92,6 +93,7 @@ namespace KisVuzDotNetCore2
             services.AddTransient<IUserAccountExternalsRepository, UserAccountExternalsRepository>();
             services.AddTransient<IPomeshenieRepository, PomeshenieRepository>();
             services.AddTransient<IUserWorkRepository, UserWorkRepository>();
+            services.AddTransient<IElGradebookRepository, ElGradebookRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

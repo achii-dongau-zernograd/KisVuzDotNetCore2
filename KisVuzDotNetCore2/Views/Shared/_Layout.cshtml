@@ -63,11 +63,11 @@
                     </li>
 
                     <!-- Выпадающий список: Абитуриенту -->
-                    
-                    <li class="dropdown">
+                    <li><a href="http://ачгаа.рф/abitur">Абитуриенту</a></li>
+                    <!--<li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Абитуриенту<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a asp-controller="Abitur" asp-action="Start">Стартовая страница абитуриента</a></li>
+                            <li><a asp-controller="Abitur" asp-action="Start">Стартовая страница абитуриента</a></li>-->
                             @*<li><a asp-controller="Abitur" asp-action="Register">Регистрация абитуриента и электронная подача документов</a></li>
                             <li><a asp-controller="Abitur" asp-action="GenerateApplicationForAdmission">Заявление о приёме</a></li>*@
                             @*<li class="divider"></li>
@@ -78,8 +78,8 @@
                             <li><a asp-controller="Abitur" asp-action="Magistr">Магистратура</a></li>
                             <li class="divider"></li>
                             <li><a asp-controller="Abitur" asp-action="Postgraduate">Аспирантура</a></li>*@
-                        </ul>
-                    </li>
+                        <!--</ul>
+                    </li>-->
                     
                     <!-- Выпадающий список: Сведения об образовательной организации -->
                     <li class="dropdown">
@@ -134,6 +134,7 @@
                     @await Html.PartialAsync("_DocumentationPartial")
                     @await Html.PartialAsync("_NichPartial")
                     @await Component.InvokeAsync("StructSubvisionChief")
+                    @await Html.PartialAsync("_TeacherPartial")
                 </div>
             </div>
         </nav>
@@ -147,7 +148,7 @@
             @RenderBody()
             <hr />
             <footer>
-                <p class="text-center">&copy; 2020 <a href="http://www.ачгаа.рф/">Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ</a>. Все права защищены.</p>
+                <p class="text-center">&copy; 2021 <a href="http://www.ачгаа.рф/">Азово-Черноморский инженерный институт ФГБОУ ВО Донской ГАУ</a>. Все права защищены.</p>
                 <p class="text-center">Разработка сайта - Кафедра "Математика и биоинформатика".</p>
             </footer>
         </div>
