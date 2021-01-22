@@ -69,11 +69,34 @@ namespace KisVuzDotNetCore2.Models.Students
         /// <summary>
         /// Возвращает StudentGroup с заполненным списком студентов
         /// </summary>
+        /// <param name="groupName"></param>
+        /// <returns></returns>
+        public async Task<StudentGroup> GetStudentGroupByGroupNameAsync(string groupName)
+        {
+            var query = _context.StudentGroups
+                .Include(g => g.EduKurs)
+                /*.Include(g => g.Students)*/;
+
+            var studentGroups = await query.ToListAsync();
+
+            var studentGroup = studentGroups.First(g => g.StudentGroupName.Contains(groupName));
+
+            if (studentGroup == null)
+                throw new Exception($"Группа {groupName} не найдена!");
+
+            studentGroup = await GetStudentGroupByIdAsync(studentGroup.StudentGroupId);
+
+            return studentGroup;
+        }
+
+        /// <summary>
+        /// Возвращает StudentGroup с заполненным списком студентов
+        /// </summary>
         /// <param name="studentGroupId"></param>
         public async Task<StudentGroup> GetStudentGroupByIdAsync(int? studentGroupId)
         {
-            var studentGroup=await StudentGroups
-                .SingleOrDefaultAsync(g=>g.StudentGroupId == studentGroupId);
+            var studentGroup = await StudentGroups
+                .SingleOrDefaultAsync(g => g.StudentGroupId == studentGroupId);
             return studentGroup;
         }
 

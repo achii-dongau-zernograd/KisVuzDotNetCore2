@@ -52,7 +52,7 @@ namespace KisVuzDotNetCore2
             //services.AddMemoryCache();
             services.AddSession();
 
-            services.AddTransient<IStudentRepository,StudentRepository>();
+            services.AddTransient<IStudentRepository, StudentRepository>();
             services.AddTransient<IFileModelRepository, FileModelRepository>();
             services.AddTransient<IEduProgramRepository, EduProgramRepository>();
             services.AddTransient<IEduPlanRepository, EduPlanRepository>();

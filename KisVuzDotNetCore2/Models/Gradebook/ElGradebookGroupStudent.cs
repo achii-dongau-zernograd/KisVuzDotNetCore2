@@ -1,4 +1,6 @@
-﻿namespace KisVuzDotNetCore2.Models.Gradebook
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KisVuzDotNetCore2.Models.Gradebook
 {
     /// <summary>
     /// Электронные журналы. Студент группы
@@ -13,11 +15,13 @@
         /// <summary>
         /// ФИО студента группы
         /// </summary>
+        [Display(Name = "ФИО студента группы")]
         public string ElGradebookGroupStudentFio { get; set; }
 
         /// <summary>
         /// УИД аккаунта студента группы
         /// </summary>
+        [Display(Name = "УИД аккаунта студента группы")]
         public string AppUserId { get; set; }
 
         /// <summary>

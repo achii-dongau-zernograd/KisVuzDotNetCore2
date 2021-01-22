@@ -1,0 +1,25 @@
+﻿@model ElGradebook
+
+<h2>Добавление студентов в электронный журнал</h2>
+
+@if (Model.ElGradebookGroupStudents != null)
+{
+    <ol>
+        @foreach (var student in Model.ElGradebookGroupStudents)
+        {
+            <li>@student.ElGradebookGroupStudentFio</li>
+        }
+    </ol>
+
+    <form asp-action="ElGradebookGroupStudentsAddGroupConfirmed">
+        <input type="hidden" asp-for="ElGradebookId" />
+        <input type="submit" value="Добавить" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+}
+else
+{
+    <p>Группа @Model.GroupName не найдена!</p>
+    <a asp-action="Index" class="btn btn-primary">Назад</a>
+}
+

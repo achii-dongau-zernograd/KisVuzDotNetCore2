@@ -1,4 +1,5 @@
 ﻿using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.Gradebook;
 using KisVuzDotNetCore2.Models.LMS;
 using KisVuzDotNetCore2.Models.Struct;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -193,7 +194,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId">УИД выбранного объекта</param>
         /// <returns></returns>
         SelectList GetSelectListEduProfileFullNamesOfMethodicalCommission(IEnumerable<MetodKomissiya> metodKomissii, int selectedId = 0);
-
+        
         /// <summary>
         /// Возвращает список типов файлов
         /// </summary>

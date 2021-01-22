@@ -29,7 +29,16 @@ namespace KisVuzDotNetCore2.Models.Students
         /// </summary>
         /// <param name="studentGroupId">УИД студ. группы</param>
         Task<StudentGroup> GetStudentGroupByIdAsync(int? studentGroupId);
+
+        /// <summary>
+        /// Возвращает StudentGroup с заполненным списком студентов
+        /// </summary>
+        /// <param name="groupName"></param>
+        /// <returns></returns>
+        Task<StudentGroup> GetStudentGroupByGroupNameAsync(string groupName);
+
         Task<Student> AddStudentAsync(Student student);
+
         Task<Student> GetStudentByIdAsync(int? studentId);
 
         /// <summary>
@@ -37,6 +46,6 @@ namespace KisVuzDotNetCore2.Models.Students
         /// </summary>
         /// <param name="userName">Имя пользователя</param>
         /// <returns></returns>
-        Task<List<StudentGroup>> GetStudentGroupsOfKuratorByUserNameAsync(string userName);
+        Task<List<StudentGroup>> GetStudentGroupsOfKuratorByUserNameAsync(string userName);        
     }
 }

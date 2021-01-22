@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,13 +20,33 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         }
 
         /// <summary>
+        /// Возвращает запрос на список всех электронных журналов
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<ElGradebook> GetElGradebooks()
+        {
+            IQueryable<ElGradebook> query = _context.ElGradebooks
+                .Include(g => g.ElGradebookTeachers);
+
+            return query;
+        }
+
+        public IQueryable<ElGradebook> GetElGradebooksWithStudents()
+        {
+            IQueryable<ElGradebook> query = GetElGradebooks()
+                .Include(g => g.ElGradebookGroupStudents);
+
+            return query;
+        }
+
+        /// <summary>
         /// Возвращает запрос на список журналов согласно параметрам фильтра
         /// </summary>
         /// <param name="filterAndSortModel"></param>
         /// <returns></returns>
         public IQueryable<ElGradebook> GetElGradebooks(ElGradebooksFilterAndSortModel filterAndSortModel)
         {
-            IQueryable<ElGradebook> query = _context.ElGradebooks;
+            IQueryable<ElGradebook> query = GetElGradebooks();
 
             if (filterAndSortModel != null)
             {
@@ -95,5 +116,198 @@ namespace KisVuzDotNetCore2.Models.Gradebook
 
             return query;
         }
+
+        /// <summary>
+        /// Возвращает электронный журнал по его идентификатору
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        public async Task<ElGradebook> GetElGradebookAsync(int elGradebookId)
+        {
+            var elGradebook = await GetElGradebooks().FirstOrDefaultAsync(g => g.ElGradebookId == elGradebookId);
+
+            return elGradebook;
+        }
+
+        /// <summary>
+        /// Возвращает электронный журнал со списком студентов
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        public async Task<ElGradebook> GetElGradebookWithStudentsAsync(int elGradebookId)
+        {
+            var elGradebook = await GetElGradebooksWithStudents()
+                .FirstOrDefaultAsync(g => g.ElGradebookId == elGradebookId);
+
+            return elGradebook;
+        }
+
+        /// <summary>
+        /// Возвращает true, если userName входит в число преподавателей, закреплённых за электронным журналом
+        /// </summary>
+        /// <param name="elGradebook"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<bool> IsGradebookTeacherAsync(ElGradebook elGradebook, string userName)
+        {
+            bool isGradebookTeacher = false;
+
+            var appUserId = (await GetAppUserAsync(userName)).Id;
+
+            if (string.IsNullOrEmpty(appUserId))
+                return false;
+
+            foreach (var elGradebookTeacher in elGradebook.ElGradebookTeachers)
+            {
+                if (elGradebookTeacher.UserId == appUserId)
+                {
+                    isGradebookTeacher = true;
+                    break;
+                }
+            }
+
+            return isGradebookTeacher;
+        }
+
+        
+
+        /// <summary>
+        /// Создаёт электронный журнал
+        /// </summary>
+        /// <param name="elGradebook"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task CreateElGradebook(ElGradebook elGradebook, string userName)
+        {
+            var appUser = await GetAppUserAsync(userName);
+            if (appUser == null)
+                throw new Exception($"Аккаунт пользователя {userName} не найден!");
+
+            var elGradebookTeacher = new ElGradebookTeacher { UserId = appUser.Id, TeacherFio = appUser.GetFullName };
+            elGradebook.ElGradebookTeachers = new List<ElGradebookTeacher>();
+            elGradebook.ElGradebookTeachers.Add(elGradebookTeacher);
+
+            _context.Add(elGradebook);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Обновляет электронный журнал
+        /// </summary>
+        /// <param name="elGradebook"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task UpdateElGradebook(ElGradebook elGradebook, string userName)
+        {
+            var appUser = await GetAppUserAsync(userName);
+            if (appUser == null)
+                throw new Exception($"Аккаунт пользователя {userName} не найден!");
+
+            var entry = await GetElGradebookAsync(elGradebook.ElGradebookId);
+
+            if(entry.Course != elGradebook.Course)
+            {
+                entry.Course = elGradebook.Course;
+            }
+
+            if (entry.Department != elGradebook.Department)
+            {
+                entry.Department = elGradebook.Department;
+            }
+
+            if (entry.DisciplineName != elGradebook.DisciplineName)
+            {
+                entry.DisciplineName = elGradebook.DisciplineName;
+            }
+
+            if (entry.EduYear != elGradebook.EduYear)
+            {
+                entry.EduYear = elGradebook.EduYear;
+            }
+
+            if (entry.Faculty != elGradebook.Faculty)
+            {
+                entry.Faculty = elGradebook.Faculty;
+            }
+
+            if (entry.GroupName != elGradebook.GroupName)
+            {
+                entry.GroupName = elGradebook.GroupName;
+            }
+
+            if (entry.SemesterNumber != elGradebook.SemesterNumber)
+            {
+                entry.SemesterNumber = elGradebook.SemesterNumber;
+            }
+
+            _context.Update(entry);
+            await _context.SaveChangesAsync();
+        }
+
+
+        #region Работа с аккаунтами пользователей
+        /// <summary>
+        /// Возвращает объект пользователя по его userName
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        private async Task<AppUser> GetAppUserAsync(string userName)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.UserName == userName);
+        }
+
+        /// <summary>
+        /// Добавление студентов в электронный журнал
+        /// </summary>
+        /// <param name="addingStudents"></param>
+        /// <returns></returns>
+        public async Task AddStudents(int elGradebookId, List<ElGradebookGroupStudent> addingStudents)
+        {
+            var elGradebook = await GetElGradebookWithStudentsAsync(elGradebookId);
+            if (elGradebook == null)
+                throw new Exception("Электронный журнал не найден!");
+
+            elGradebook.ElGradebookGroupStudents.AddRange(addingStudents);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Возвращает объект студента из журнала
+        /// </summary>
+        /// <param name="elGradebookGroupStudentId"></param>
+        /// <returns></returns>
+        public async Task<ElGradebookGroupStudent> GetElGradebookGroupStudentAsync(int elGradebookGroupStudentId)
+        {
+            var entry = await _context.ElGradebookGroupStudents
+                .Include(s => s.ElGradebook)
+                .FirstOrDefaultAsync(s=>s.ElGradebookGroupStudentId == elGradebookGroupStudentId);
+
+            return entry;
+        }
+
+        /// <summary>
+        /// Редактирование студента в списке группы электронного журнала
+        /// </summary>
+        /// <param name="elGradebookGroupStudent"></param>
+        /// <returns></returns>
+        public async Task UpdateElGradebookGroupStudent(ElGradebookGroupStudent elGradebookGroupStudent)
+        {
+            var entry = await GetElGradebookGroupStudentAsync(elGradebookGroupStudent.ElGradebookGroupStudentId);
+
+            if (entry == null)
+                throw new Exception("Студент не найден!");
+
+            if (entry.ElGradebookGroupStudentFio != elGradebookGroupStudent.ElGradebookGroupStudentFio)
+                entry.ElGradebookGroupStudentFio = elGradebookGroupStudent.ElGradebookGroupStudentFio;
+
+            if (entry.AppUserId != elGradebookGroupStudent.AppUserId)
+                entry.AppUserId = elGradebookGroupStudent.AppUserId;
+
+            _context.Update(entry);
+            await _context.SaveChangesAsync();
+        }
+
+
+        #endregion
     }
 }
