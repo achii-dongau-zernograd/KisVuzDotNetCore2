@@ -39,6 +39,15 @@ namespace KisVuzDotNetCore2.Models.Gradebook
             return query;
         }
 
+        public IQueryable<ElGradebook> GetElGradebooksWithLessons()
+        {
+            IQueryable<ElGradebook> query = GetElGradebooks()
+                .Include(g => g.ElGradebookLessons)
+                    .ThenInclude(gl => gl.ElGradebookLessonType);
+
+            return query;
+        }
+
         /// <summary>
         /// Возвращает запрос на список журналов согласно параметрам фильтра
         /// </summary>
@@ -137,6 +146,19 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         public async Task<ElGradebook> GetElGradebookWithStudentsAsync(int elGradebookId)
         {
             var elGradebook = await GetElGradebooksWithStudents()
+                .FirstOrDefaultAsync(g => g.ElGradebookId == elGradebookId);
+
+            return elGradebook;
+        }
+
+        /// <summary>
+        /// Возвращает электронный журнал с заполненным списком занятий 
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        public async Task<ElGradebook> GetElGradebookWithLessonsAsync(int elGradebookId)
+        {
+            var elGradebook = await GetElGradebooksWithLessons()
                 .FirstOrDefaultAsync(g => g.ElGradebookId == elGradebookId);
 
             return elGradebook;
@@ -286,6 +308,17 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         }
 
         /// <summary>
+        /// Добавление студента в журнал
+        /// </summary>
+        /// <param name="elGradebookGroupStudent"></param>
+        /// <returns></returns>
+        public async Task AddElGradebookGroupStudent(ElGradebookGroupStudent elGradebookGroupStudent)
+        {
+            _context.Add(elGradebookGroupStudent);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
         /// Редактирование студента в списке группы электронного журнала
         /// </summary>
         /// <param name="elGradebookGroupStudent"></param>
@@ -304,6 +337,68 @@ namespace KisVuzDotNetCore2.Models.Gradebook
                 entry.AppUserId = elGradebookGroupStudent.AppUserId;
 
             _context.Update(entry);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Возвращает УИД электронного журнала по переданному УИД студента из этого журнала
+        /// </summary>
+        /// <param name="elGradebookGroupStudentId"></param>
+        /// <returns></returns>
+        public async Task<int> GetElGradebookIdByElGradebookGroupStudentIdAsync(int elGradebookGroupStudentId)
+        {
+            var elGradebookGroupStudent = await _context.ElGradebookGroupStudents.FirstOrDefaultAsync(s => s.ElGradebookGroupStudentId == elGradebookGroupStudentId);
+            var elGradebookId = elGradebookGroupStudent.ElGradebookId;
+            return elGradebookId;
+        }
+
+        /// <summary>
+        /// Удаление студента из списка группы электронного журнала
+        /// </summary>
+        /// <param name="elGradebookGroupStudentId"></param>
+        /// <returns></returns>
+        public async Task RemoveElGradebookGroupStudentAsync(int elGradebookGroupStudentId)
+        {
+            var entry = await GetElGradebookGroupStudentAsync(elGradebookGroupStudentId);
+
+            _context.Remove(entry);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Обновляет УИД аккаунта пользователя для указанного студента из эл. журнала
+        /// </summary>
+        /// <param name="elGradebookGroupStudentId"></param>
+        /// <param name="appUserId"></param>
+        /// <returns></returns>
+        public async Task ElGradebookGroupStudentSetAppUserId(int elGradebookGroupStudentId, string appUserId)
+        {
+            var entry = await GetElGradebookGroupStudentAsync(elGradebookGroupStudentId);
+
+            if (entry == null)
+                throw new Exception("Запись о студенте в электронном журнале не найдена!");
+
+            if(entry.AppUserId != appUserId)
+            {
+                entry.AppUserId = appUserId;
+                _context.Update(entry);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        /// <summary>
+        /// Добавление учебного занятия в журнал
+        /// </summary>
+        /// <param name="elGradebook"></param>
+        /// <returns></returns>
+        public async Task AddElGradebookLessonAsync(ElGradebookLesson elGradebook)
+        {
+            if (elGradebook == null)
+                throw new ArgumentNullException();
+            if (elGradebook.ElGradebookId == 0)
+                throw new Exception("Не указан УИД электронного журнала!");
+
+            _context.Add(elGradebook);
             await _context.SaveChangesAsync();
         }
 

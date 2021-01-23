@@ -35,7 +35,7 @@
                         <td>
                             @if(string.IsNullOrEmpty(student.AppUserId))
                             {
-                                <a asp-action="ElGradebookGroupStudentsBindAccount" class="btn btn-primary">Привязать аккаунт студента</a>
+                                <a asp-action="ElGradebookGroupStudentsBindAccount" asp-route-elGradebookGroupStudentId="@student.ElGradebookGroupStudentId" class="btn btn-primary">Привязать аккаунт студента</a>
                             }
                             else
                             {

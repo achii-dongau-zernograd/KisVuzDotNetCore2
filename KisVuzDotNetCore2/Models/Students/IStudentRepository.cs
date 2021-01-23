@@ -46,6 +46,6 @@ namespace KisVuzDotNetCore2.Models.Students
         /// </summary>
         /// <param name="userName">Имя пользователя</param>
         /// <returns></returns>
-        Task<List<StudentGroup>> GetStudentGroupsOfKuratorByUserNameAsync(string userName);        
+        Task<List<StudentGroup>> GetStudentGroupsOfKuratorByUserNameAsync(string userName);                
     }
 }

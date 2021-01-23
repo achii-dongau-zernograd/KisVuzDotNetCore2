@@ -33,6 +33,13 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         Task<ElGradebook> GetElGradebookAsync(int elGradebookId);
 
         /// <summary>
+        /// Возвращает электронный журнал с заполненным списком занятий
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        Task<ElGradebook> GetElGradebookWithLessonsAsync(int elGradebookId);
+
+        /// <summary>
         /// Возвращает true, если userName входит в число преподавателей, закреплённых за электронным журналом
         /// </summary>
         /// <param name="elGradebook"></param>
@@ -83,5 +90,41 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         /// <param name="elGradebookGroupStudent"></param>
         /// <returns></returns>
         Task UpdateElGradebookGroupStudent(ElGradebookGroupStudent elGradebookGroupStudent);
+        
+        /// <summary>
+        /// Возвращает УИД электронного журнала по переданному УИД студента из этого журнала
+        /// </summary>
+        /// <param name="elGradebookGroupStudentId"></param>
+        /// <returns></returns>
+        Task<int> GetElGradebookIdByElGradebookGroupStudentIdAsync(int elGradebookGroupStudentId);
+
+        /// <summary>
+        /// Удаление студента из списка группы электронного журнала
+        /// </summary>
+        /// <param name="elGradebookGroupStudentId"></param>
+        /// <returns></returns>
+        Task RemoveElGradebookGroupStudentAsync(int elGradebookGroupStudentId);
+
+        /// <summary>
+        /// Добавление студента в журнал
+        /// </summary>
+        /// <param name="elGradebookGroupStudent"></param>
+        /// <returns></returns>
+        Task AddElGradebookGroupStudent(ElGradebookGroupStudent elGradebookGroupStudent);
+
+        /// <summary>
+        /// Обновляет УИД аккаунта пользователя для указанного студента из эл. журнала
+        /// </summary>
+        /// <param name="elGradebookGroupStudentId"></param>
+        /// <param name="appUserId"></param>
+        /// <returns></returns>
+        Task ElGradebookGroupStudentSetAppUserId(int elGradebookGroupStudentId, string appUserId);
+
+        /// <summary>
+        /// Добавление учебного занятия в журнал
+        /// </summary>
+        /// <param name="elGradebook"></param>
+        /// <returns></returns>
+        Task AddElGradebookLessonAsync(ElGradebookLesson elGradebook);
     }
 }

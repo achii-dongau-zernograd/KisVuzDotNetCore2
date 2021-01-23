@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models.Gradebook
 {
@@ -16,6 +17,7 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         /// <summary>
         /// Дата занятия
         /// </summary>
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         /// <summary>
@@ -31,6 +33,12 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         /// Тема занятия
         /// </summary>
         public string LessonTheme { get; set; }
+
+        /// <summary>
+        /// УИД электронного журнала, которому принадлежит занятие
+        /// </summary>
+        public int ElGradebookId { get; set; }
+        public ElGradebook ElGradebook { get; set; }
 
         /// <summary>
         /// Оценки за занятие

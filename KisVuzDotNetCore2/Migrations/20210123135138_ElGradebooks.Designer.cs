@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20210121122548_ElGradebooks")]
+    [Migration("20210123135138_ElGradebooks")]
     partial class ElGradebooks
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1762,7 +1762,7 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int?>("ElGradebookId");
+                    b.Property<int>("ElGradebookId");
 
                     b.Property<int>("ElGradebookLessonTypeId");
 
@@ -5297,9 +5297,10 @@ namespace KisVuzDotNetCore2.Migrations
 
             modelBuilder.Entity("KisVuzDotNetCore2.Models.Gradebook.ElGradebookLesson", b =>
                 {
-                    b.HasOne("KisVuzDotNetCore2.Models.Gradebook.ElGradebook")
+                    b.HasOne("KisVuzDotNetCore2.Models.Gradebook.ElGradebook", "ElGradebook")
                         .WithMany("ElGradebookLessons")
-                        .HasForeignKey("ElGradebookId");
+                        .HasForeignKey("ElGradebookId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KisVuzDotNetCore2.Models.Gradebook.ElGradebookLessonType", "ElGradebookLessonType")
                         .WithMany()

@@ -1,0 +1,48 @@
+﻿@model ElGradebookGroupStudent
+
+@{
+    ViewData["Title"] = "Удалить срок обучения";
+}
+
+<h2>Удаление студента из списка группы в журнале</h2>
+
+<hr />
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ElGradebook.EduYear)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ElGradebook.EduYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ElGradebook.GroupName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ElGradebook.GroupName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ElGradebook.DisciplineName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ElGradebook.DisciplineName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ElGradebookGroupStudentFio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ElGradebookGroupStudentFio)
+        </dd>
+    </dl>
+
+    <form asp-action="ElGradebookGroupStudentsRemoveStudent">
+        <input type="hidden" asp-for="ElGradebookGroupStudentId" />
+        <input type="hidden" asp-for="ElGradebookId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="ElGradebookGroupStudents" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-default">Отмена</a>
+    </form>
+</div>

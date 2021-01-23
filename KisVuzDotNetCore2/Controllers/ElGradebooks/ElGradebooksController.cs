@@ -79,6 +79,24 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
                 "Энергетический факультет"},
                 elGradebook.Faculty);
 
+            ViewBag.Departments = new SelectList(new List<string> {
+                "Математика и биоинформатика",
+                "Теплоэнергетика и техносферная безопасность",
+                "Физическое воспитание и спорт",
+                "Эксплуатация энергетического оборудования и электрических машин",
+                "Электроэнергетика и электротехника",
+                "Бухгалтерский учет, анализ и аудит",
+                "Гуманитарные дисциплины и иностранные языки",
+                "Землеустройство и кадастры",
+                "Экономика и управление",
+                "Агрономия и селекция сельскохозяйственных культур",
+                "Техническая механика и физика",
+                "Технический сервис в агропромышленном комплексе",
+                "Технологии и средства механизации агропромышленного комплекса",
+                "Тракторы, автомобили и эксплуатация автотранспортных средств"
+            },
+                elGradebook.Faculty);
+
             return View(elGradebook);
         }
 
@@ -108,6 +126,11 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
         #endregion
 
         #region Список студентов
+        /// <summary>
+        /// Список студентов электронного журнала
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
         public async Task<IActionResult> ElGradebookGroupStudents(int elGradebookId)
         {
             if (elGradebookId == 0)
@@ -118,6 +141,41 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
                 return NotFound();
 
             return View(elGradebook);
+        }
+
+        /// <summary>
+        /// Привязка аккаунта студента
+        /// </summary>
+        /// <param name="elGradebookGroupStudentId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> ElGradebookGroupStudentsBindAccount(int elGradebookGroupStudentId, string appUserLastNameFragment)
+        {
+            var entry = await _elGradebookRepository.GetElGradebookGroupStudentAsync(elGradebookGroupStudentId);
+            if (entry == null)
+                return NotFound();
+
+
+            if(!string.IsNullOrWhiteSpace(appUserLastNameFragment))
+            {
+                ViewBag.FindedAppUsers = _selectListRepository.GetSelectListAppUsersByFirstName(appUserLastNameFragment);
+            }
+            else
+            {
+                appUserLastNameFragment = entry.ElGradebookGroupStudentFio;
+                ViewBag.FindedAppUsers = _selectListRepository.GetSelectListAppUsersByFirstName(entry.ElGradebookGroupStudentFio);
+            }
+
+            ViewBag.AppUserLastNameFragment = appUserLastNameFragment;
+
+            return View(entry);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ElGradebookGroupStudentsBindAccountConfirmed(ElGradebookGroupStudent elGradebookGroupStudent)
+        {
+            await _elGradebookRepository.ElGradebookGroupStudentSetAppUserId(elGradebookGroupStudent.ElGradebookGroupStudentId, elGradebookGroupStudent.AppUserId);
+
+            return RedirectToAction(nameof(ElGradebookGroupStudents), new { elGradebookGroupStudent.ElGradebookId });
         }
 
         /// <summary>
@@ -182,6 +240,30 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
                 });
         }
 
+        /// <summary>
+        /// Добавление студента в журнал
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        public IActionResult ElGradebookGroupStudentsAdd(int elGradebookId)
+        {
+            ElGradebookGroupStudent newStudent = new ElGradebookGroupStudent { ElGradebookId = elGradebookId };
+            return View(newStudent);
+        }
+
+        /// <summary>
+        /// Добавление студента в журнал
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> ElGradebookGroupStudentsAdd(ElGradebookGroupStudent elGradebookGroupStudent)
+        {
+            await _elGradebookRepository.AddElGradebookGroupStudent(elGradebookGroupStudent);
+
+            return RedirectToAction(nameof(ElGradebookGroupStudents), new { elGradebookGroupStudent.ElGradebookId });
+        }
+
 
         /// <summary>
         /// Редактирование студента в списке группы электронного журнала
@@ -211,6 +293,77 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
             return RedirectToAction(nameof(ElGradebookGroupStudents), new { elGradebookGroupStudent.ElGradebookId });
         }
 
+        /// <summary>
+        /// Удаление студента из списка группы электронного журнала
+        /// </summary>
+        /// <param name="elGradebookGroupStudentId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> ElGradebookGroupStudentsRemoveStudent(int elGradebookGroupStudentId)
+        {
+            var entry = await _elGradebookRepository.GetElGradebookGroupStudentAsync(elGradebookGroupStudentId);
+            if (entry == null)
+                return NotFound();
+
+            return View(entry);
+        }
+
+        /// <summary>
+        /// Удаление студента из списка группы электронного журнала
+        /// </summary>
+        /// <param name="elGradebookGroupStudentId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> ElGradebookGroupStudentsRemoveStudent(ElGradebookGroupStudent elGradebookGroupStudent)
+        {            
+            await _elGradebookRepository.RemoveElGradebookGroupStudentAsync(elGradebookGroupStudent.ElGradebookGroupStudentId);
+
+            return RedirectToAction(nameof(ElGradebookGroupStudents), new { elGradebookGroupStudent.ElGradebookId });
+        }
+        #endregion
+
+        #region Занятия
+        /// <summary>
+        /// Список занятий указанного электронного журнала
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> ElGradebookLessons(int elGradebookId)
+        {
+            ElGradebook elGradebook = await _elGradebookRepository.GetElGradebookWithLessonsAsync(elGradebookId);
+            if (elGradebook == null)
+                return NotFound();
+
+            return View(elGradebook);
+        }
+
+        /// <summary>
+        /// Добавление учебного занятия в журнал
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> ElGradebookLessonAdd(int elGradebookId)
+        {
+            ElGradebook elGradebook = await _elGradebookRepository.GetElGradebookWithLessonsAsync(elGradebookId);
+            if (elGradebook == null)
+                return NotFound();
+
+            return View(elGradebook);
+        }
+
+        /// <summary>
+        /// Добавление учебного занятия в журнал
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> ElGradebookLessonAdd(ElGradebookLesson elGradebook)
+        {
+            await _elGradebookRepository.AddElGradebookLessonAsync(elGradebook);
+            if (elGradebook == null)
+                return NotFound();
+
+            return RedirectToAction(nameof(ElGradebookLessons), new { elGradebook.ElGradebookId });
+        }
 
         #endregion
     }

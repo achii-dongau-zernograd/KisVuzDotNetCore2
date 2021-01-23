@@ -1,0 +1,59 @@
+﻿@model ElGradebook
+
+@{ 
+    int lessonCounter = 0;
+}
+
+<h2>Учебные занятия</h2>
+
+<hr />
+<h4>Учебный год: <b>@Model.EduYear</b></h4>
+<h4>Группа: <b>@Model.GroupName (@Model.Course курс, @Model.SemesterNumber семестр)</b></h4>
+<h4>Дисциплина: <b>@Model.DisciplineName</b></h4>
+<hr />
+
+<div>
+    <a asp-action="ElGradebookLessonAdd" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-primary">Добавить занятие</a>
+</div>
+
+<hr />
+
+@if(Model.ElGradebookLessons != null)
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>№ пп</th>
+                <th>Дата</th>
+                <th>Тип занятия</th>
+                <th>Тема занятия</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ElGradebookLessons.Count == 0)
+            {
+                <tr>
+                    <td colspan="5" class="text-center">
+                        Учебные занятия не добавлены
+                        <a asp-action="ElGradebookLessonAdd" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-primary">Добавить занятие</a>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var lesson in Model.ElGradebookLessons)
+                {
+                    lessonCounter++;
+                    <tr>
+                        <td>@lessonCounter</td>
+                        <td>@lesson.Date</td>
+                        <td>@lesson.ElGradebookLessonType.ElGradebookLessonTypeName</td>
+                        <td>@lesson.LessonTheme</td>
+                        <td></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}

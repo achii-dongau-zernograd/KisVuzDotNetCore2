@@ -13,12 +13,7 @@
     <div class="col-md-4">
         <form asp-action="ElGradebookCreateOrUpdate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ElGradebookId" />
-            @*<div class="form-group">
-            <label asp-for="EduYear" class="control-label"></label>
-            <select asp-for="EduProfileId" class="form-control" asp-items="ViewBag.EduProfileId"></select>
-            <span asp-validation-for="EduProfileId" class="text-danger"></span>
-        </div>*@
+            <input type="hidden" asp-for="ElGradebookId" />            
 
             <div class="form-group">
                 <label asp-for="EduYear" class="control-label"></label>
@@ -51,15 +46,15 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Faculty" class="control-label"></label>
-                @*<input asp-for="Faculty" class="form-control" />*@
+                <label asp-for="Faculty" class="control-label"></label>                
                 <select asp-for="Faculty" asp-items="ViewBag.Faculties" class="form-control" ></select>
                 <span asp-validation-for="Faculty" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Department" class="control-label"></label>
-                <input asp-for="Department" class="form-control" />
+                @*<input asp-for="Department" class="form-control" />*@
+                <select asp-for="Department" asp-items="ViewBag.Departments" class="form-control"></select>
                 <span asp-validation-for="Department" class="text-danger"></span>
             </div>
 

@@ -1,0 +1,45 @@
+﻿@model ElGradebookGroupStudent
+
+<h2>Привязка аккаунта студента</h2>
+<h4>@Model.ElGradebook.EduYear</h4>
+<h4>@Model.ElGradebook.DisciplineName</h4>
+<h4>@Model.ElGradebookGroupStudentFio</h4>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="ElGradebookGroupStudentsBindAccountConfirmed">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ElGradebookId" />
+            <input type="hidden" asp-for="ElGradebookGroupStudentId" />
+            <div class="form-group form-inline">
+                @if (ViewBag.FindedAppUsers == null || ((SelectList)ViewBag.FindedAppUsers).Count() == 0)
+                {
+                    <label asp-for="AppUserId" class="control-label text-danger">Аккаунты не найдены!</label>
+                }
+                else
+                {
+                    <label asp-for="AppUserId" class="control-label"></label>
+                    <select asp-for="AppUserId" asp-items="ViewBag.FindedAppUsers" class="form-control">
+                        <option>Выберите аккаунт пользователя</option>
+                    </select>
+                    <input type="submit" value="Привязать аккаунт" class="btn btn-primary" />
+                }
+            </div>
+
+        </form>
+
+        <form asp-action="ElGradebookGroupStudentsBindAccount">
+            <div class="form-group form-inline">
+                <label for="appUserLastNameFragment" class="control-label">Для поиска введите фрагмент фамилии студента: </label>
+                <input name="appUserLastNameFragment" class="form-control" value="@ViewBag.AppUserLastNameFragment" />
+                <input type="hidden" asp-for="ElGradebookGroupStudentId" />
+                <input type="submit" value="Поиск аккаунта" class="btn btn-primary" />                
+            </div>
+        </form>
+
+        <a asp-action="ElGradebookGroupStudents"
+           asp-route-elGradebookId="@Model.ElGradebookId"
+           class="btn btn-default">Отмена</a>
+    </div>    
+</div>

@@ -50,7 +50,7 @@ namespace KisVuzDotNetCore2.Models.Students
             await _context.SaveChangesAsync();
             return student;
         }
-
+                
         /// <summary>
         /// Возвращает объект Student по переданному идентификатору студента
         /// </summary>

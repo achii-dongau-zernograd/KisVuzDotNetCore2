@@ -83,7 +83,7 @@ namespace KisVuzDotNetCore2.Migrations
                     ElGradebookLessonId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(nullable: false),
-                    ElGradebookId = table.Column<int>(nullable: true),
+                    ElGradebookId = table.Column<int>(nullable: false),
                     ElGradebookLessonTypeId = table.Column<int>(nullable: false),
                     LessonTheme = table.Column<string>(nullable: true)
                 },
@@ -95,7 +95,7 @@ namespace KisVuzDotNetCore2.Migrations
                         column: x => x.ElGradebookId,
                         principalTable: "ElGradebooks",
                         principalColumn: "ElGradebookId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ElGradebookLessons_ElGradebookLessonTypes_ElGradebookLessonTypeId",
                         column: x => x.ElGradebookLessonTypeId,
