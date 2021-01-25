@@ -1765,6 +1765,8 @@ namespace KisVuzDotNetCore2.Migrations
 
                     b.Property<int>("ElGradebookLessonTypeId");
 
+                    b.Property<double>("HoursNumber");
+
                     b.Property<string>("LessonTheme");
 
                     b.HasKey("ElGradebookLessonId");

@@ -11,7 +11,7 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    [Migration("20210123135138_ElGradebooks")]
+    [Migration("20210125124740_ElGradebooks")]
     partial class ElGradebooks
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1765,6 +1765,8 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("ElGradebookId");
 
                     b.Property<int>("ElGradebookLessonTypeId");
+
+                    b.Property<double>("HoursNumber");
 
                     b.Property<string>("LessonTheme");
 

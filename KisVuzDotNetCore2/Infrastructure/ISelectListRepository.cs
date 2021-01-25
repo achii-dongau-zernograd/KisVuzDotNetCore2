@@ -400,7 +400,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListQuotaTypes(int selectedId = 0);
-
+        
         /// <summary>
         /// Возвращает список типов квот набора для указанного направления подготовки
         /// </summary>
@@ -555,5 +555,12 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListApplicationForAdmissions(int selectedId = 0);
+
+        /// <summary>
+        /// Возвращает список типов занятий (для эл. журналов)
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListElGradebookLessonTypes(int selectedId = 0);
     }
 }

@@ -201,8 +201,12 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
                 {
                     elGradebook.ElGradebookGroupStudents.Add(new ElGradebookGroupStudent {
                     ElGradebookGroupStudentFio = student.StudentFio,
-                    AppUserId = student.AppUserId });                
+                    AppUserId = student.AppUserId });
                 }
+            }
+            else
+            {
+                ViewBag.StudentGroupNoyFoundMessage = $"Группа {elGradebook.GroupName} не найдена!";
             }
             
             return View(elGradebook);
@@ -341,28 +345,58 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
         /// </summary>
         /// <param name="elGradebookId"></param>
         /// <returns></returns>
-        public async Task<IActionResult> ElGradebookLessonAdd(int elGradebookId)
+        public async Task<IActionResult> ElGradebookLessonCreate(int elGradebookId)
         {
             ElGradebook elGradebook = await _elGradebookRepository.GetElGradebookWithLessonsAsync(elGradebookId);
             if (elGradebook == null)
                 return NotFound();
 
-            return View(elGradebook);
+            ElGradebookLesson elGradebookLesson = new ElGradebookLesson { Date = DateTime.Today };
+            elGradebookLesson.ElGradebookId = elGradebook.ElGradebookId;
+            elGradebookLesson.ElGradebook = elGradebook;
+
+            ViewBag.ElGradebookLessonTypes = _selectListRepository.GetSelectListElGradebookLessonTypes();
+
+            return View("ElGradebookLessonCreateOrUpdate", elGradebookLesson);
         }
 
         /// <summary>
-        /// Добавление учебного занятия в журнал
+        /// Редактирование учебного занятия в журнал
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> ElGradebookLessonUpdate(int elGradebookLessonId)
+        {
+            ElGradebookLesson elGradebookLesson = await _elGradebookRepository.GetElGradebookLessonAsync(elGradebookLessonId);
+            if (elGradebookLesson == null)
+                return NotFound();
+
+            ViewBag.ElGradebookLessonTypes = _selectListRepository.GetSelectListElGradebookLessonTypes(elGradebookLesson.ElGradebookLessonTypeId);
+
+            return View("ElGradebookLessonCreateOrUpdate", elGradebookLesson);
+        }
+
+        /// <summary>
+        /// Добавление/редактирование учебного занятия в журнал
         /// </summary>
         /// <param name="elGradebookId"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ElGradebookLessonAdd(ElGradebookLesson elGradebook)
+        public async Task<IActionResult> ElGradebookLessonCreateOrUpdate(ElGradebookLesson ElGradebookLesson)
         {
-            await _elGradebookRepository.AddElGradebookLessonAsync(elGradebook);
-            if (elGradebook == null)
+            if (ElGradebookLesson == null)
                 return NotFound();
 
-            return RedirectToAction(nameof(ElGradebookLessons), new { elGradebook.ElGradebookId });
+            if (ElGradebookLesson.ElGradebookLessonId == 0)
+            {
+                await _elGradebookRepository.AddElGradebookLessonAsync(ElGradebookLesson);
+            }
+            else
+            {
+                await _elGradebookRepository.UpdateElGradebookLessonAsync(ElGradebookLesson);
+            }
+                        
+            return RedirectToAction(nameof(ElGradebookLessons), new { ElGradebookLesson.ElGradebookId });
         }
 
         #endregion

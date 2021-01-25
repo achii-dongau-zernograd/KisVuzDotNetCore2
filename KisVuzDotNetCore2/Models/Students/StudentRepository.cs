@@ -79,10 +79,10 @@ namespace KisVuzDotNetCore2.Models.Students
 
             var studentGroups = await query.ToListAsync();
 
-            var studentGroup = studentGroups.First(g => g.StudentGroupName.Contains(groupName));
+            var studentGroup = studentGroups.FirstOrDefault(g => g.StudentGroupName.Contains(groupName));
 
             if (studentGroup == null)
-                throw new Exception($"Группа {groupName} не найдена!");
+                return null;
 
             studentGroup = await GetStudentGroupByIdAsync(studentGroup.StudentGroupId);
 

@@ -85,6 +85,7 @@ namespace KisVuzDotNetCore2.Migrations
                     Date = table.Column<DateTime>(nullable: false),
                     ElGradebookId = table.Column<int>(nullable: false),
                     ElGradebookLessonTypeId = table.Column<int>(nullable: false),
+                    HoursNumber = table.Column<double>(nullable: false),
                     LessonTheme = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

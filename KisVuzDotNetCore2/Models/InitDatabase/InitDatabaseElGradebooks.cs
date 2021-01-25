@@ -43,11 +43,32 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         ElGradebookLessonTypeName = "Практическое занятие",
                     };
 
+                    var item4 = new ElGradebookLessonType
+                    {
+                        ElGradebookLessonTypeId = 4,
+                        ElGradebookLessonTypeName = "Консультация",
+                    };
+
+                    var item5 = new ElGradebookLessonType
+                    {
+                        ElGradebookLessonTypeId = 5,
+                        ElGradebookLessonTypeName = "Зачет",
+                    };
+
+                    var item6 = new ElGradebookLessonType
+                    {
+                        ElGradebookLessonTypeId = 6,
+                        ElGradebookLessonTypeName = "Экзамен",
+                    };
+
 
                     await context.AddRangeAsync(
                         item1,
                         item2,
-                        item3
+                        item3,
+                        item4,
+                        item5,
+                        item6
                     );
 
                     await context.SaveChangesAsync();

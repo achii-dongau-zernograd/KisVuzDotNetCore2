@@ -1,0 +1,48 @@
+﻿@model ElGradebookLesson
+
+<h2>@(Model.ElGradebookLessonId == 0 ? "Добавление" : "Редактирование") учебного занятия</h2>
+
+<hr />
+<h4>Учебный год: <b>@Model.ElGradebook.EduYear</b></h4>
+<h4>Группа: <b>@Model.ElGradebook.GroupName (@Model.ElGradebook.Course курс, @Model.ElGradebook.SemesterNumber семестр)</b></h4>
+<h4>Дисциплина: <b>@Model.ElGradebook.DisciplineName</b></h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ElGradebookLessonCreateOrUpdate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ElGradebookLessonId" />
+            <input type="hidden" asp-for="ElGradebookId" />
+
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ElGradebookLessonTypeId" class="control-label"></label>
+                <select asp-for="ElGradebookLessonTypeId" asp-items="ViewBag.ElGradebookLessonTypes" class="form-control"></select>
+                <span asp-validation-for="ElGradebookLessonTypeId" class="text-danger"></span>
+            </div>            
+
+            <div class="form-group">
+                <label asp-for="LessonTheme" class="control-label"></label>
+                <input asp-for="LessonTheme" class="form-control" />
+                <span asp-validation-for="LessonTheme" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="HoursNumber" class="control-label"></label>
+                <input asp-for="HoursNumber" class="form-control" />
+                <span asp-validation-for="HoursNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="ElGradebookLessons" asp-route-elGradebookId = "@Model.ElGradebookId" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

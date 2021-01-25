@@ -616,6 +616,8 @@
     <Compile Remove="Migrations\20201022131420_NumberInostr.Designer.cs" />
     <Compile Remove="Migrations\20210121122548_ElGradebooks.cs" />
     <Compile Remove="Migrations\20210121122548_ElGradebooks.Designer.cs" />
+    <Compile Remove="Migrations\20210123135138_ElGradebooks.cs" />
+    <Compile Remove="Migrations\20210123135138_ElGradebooks.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

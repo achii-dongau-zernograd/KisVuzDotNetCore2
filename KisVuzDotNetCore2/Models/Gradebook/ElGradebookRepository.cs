@@ -402,6 +402,47 @@ namespace KisVuzDotNetCore2.Models.Gradebook
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Возвращает учебное занятие по его УИД
+        /// </summary>
+        /// <param name="elGradebookLessonId"></param>
+        /// <returns></returns>
+        public async Task<ElGradebookLesson> GetElGradebookLessonAsync(int elGradebookLessonId)
+        {
+            var entry = await _context.ElGradebookLessons
+                .Include(l => l.ElGradebook)
+                .FirstOrDefaultAsync(l => l.ElGradebookLessonId == elGradebookLessonId);
+
+            return entry;
+        }
+
+        /// <summary>
+        /// Обновляет учебное занятие
+        /// </summary>
+        /// <param name="elGradebookLesson"></param>
+        /// <returns></returns>
+        public async Task UpdateElGradebookLessonAsync(ElGradebookLesson elGradebookLesson)
+        {
+            if(elGradebookLesson == null)
+                throw new Exception("elGradebookLesson = null");
+
+            var entry = await GetElGradebookLessonAsync(elGradebookLesson.ElGradebookLessonId);
+            if (entry == null)
+                throw new KeyNotFoundException($"Объект типа ElGradebookLesson с ElGradebookLessonId = {elGradebookLesson.ElGradebookLessonId} не найден!");
+
+            if (entry.Date != elGradebookLesson.Date)
+                entry.Date = elGradebookLesson.Date;
+
+            if (entry.ElGradebookLessonTypeId != elGradebookLesson.ElGradebookLessonTypeId)
+                entry.ElGradebookLessonTypeId = elGradebookLesson.ElGradebookLessonTypeId;
+
+            if (entry.HoursNumber != elGradebookLesson.HoursNumber)
+                entry.HoursNumber = elGradebookLesson.HoursNumber;
+
+            if (entry.LessonTheme != elGradebookLesson.LessonTheme)
+                entry.LessonTheme = elGradebookLesson.LessonTheme;
+        }
+
 
         #endregion
     }

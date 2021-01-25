@@ -2,7 +2,7 @@
 
 <h2>Добавление студентов в электронный журнал</h2>
 
-@if (Model.ElGradebookGroupStudents != null)
+@if (Model.ElGradebookGroupStudents != null && Model.ElGradebookGroupStudents.Count > 0)
 {
     <ol>
         @foreach (var student in Model.ElGradebookGroupStudents)

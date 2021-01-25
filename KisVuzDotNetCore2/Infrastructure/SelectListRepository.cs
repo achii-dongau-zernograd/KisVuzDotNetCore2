@@ -7,6 +7,7 @@ using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.Common;
 using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
+using KisVuzDotNetCore2.Models.Gradebook;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Identity;
@@ -1120,6 +1121,20 @@ namespace KisVuzDotNetCore2.Infrastructure
             return new SelectList(data,
                 nameof(ExternalResource.ExternalResourceId),
                 nameof(ExternalResource.ExternalResourceNameFull),
+                selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список типов занятий (для эл. журналов)
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListElGradebookLessonTypes(int selectedId = 0)
+        {
+            var data = _context.ElGradebookLessonTypes;
+            return new SelectList(data,
+                nameof(ElGradebookLessonType.ElGradebookLessonTypeId),
+                nameof(ElGradebookLessonType.ElGradebookLessonTypeName),
                 selectedId);
         }
     }

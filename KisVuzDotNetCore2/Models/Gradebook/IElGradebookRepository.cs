@@ -126,5 +126,19 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         /// <param name="elGradebook"></param>
         /// <returns></returns>
         Task AddElGradebookLessonAsync(ElGradebookLesson elGradebook);
+        
+        /// <summary>
+        /// Возвращает учебное занятие по его УИД
+        /// </summary>
+        /// <param name="elGradebookLessonId"></param>
+        /// <returns></returns>
+        Task<ElGradebookLesson> GetElGradebookLessonAsync(int elGradebookLessonId);
+        
+        /// <summary>
+        /// Обновляет учебное занятие
+        /// </summary>
+        /// <param name="elGradebookLesson"></param>
+        /// <returns></returns>
+        Task UpdateElGradebookLessonAsync(ElGradebookLesson elGradebookLesson);
     }
 }

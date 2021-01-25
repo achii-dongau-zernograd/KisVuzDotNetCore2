@@ -13,7 +13,7 @@
 <hr />
 
 <div>
-    <a asp-action="ElGradebookLessonAdd" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-primary">Добавить занятие</a>
+    <a asp-action="ElGradebookLessonCreate" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-primary">Добавить занятие</a>
 </div>
 
 <hr />
@@ -27,6 +27,7 @@
                 <th>Дата</th>
                 <th>Тип занятия</th>
                 <th>Тема занятия</th>
+                <th>Кол-во часов</th>
                 <th>Действия</th>
             </tr>
         </thead>
@@ -34,15 +35,14 @@
             @if (Model.ElGradebookLessons.Count == 0)
             {
                 <tr>
-                    <td colspan="5" class="text-center">
-                        Учебные занятия не добавлены
-                        <a asp-action="ElGradebookLessonAdd" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-primary">Добавить занятие</a>
+                    <td colspan="5" class="text-center">                        
+                        <a asp-action="ElGradebookLessonCreate" asp-route-elGradebookId="@Model.ElGradebookId" class="text-info">Учебные занятия не добавлены</a>
                     </td>
                 </tr>
             }
             else
             {
-                @foreach (var lesson in Model.ElGradebookLessons)
+                @foreach (var lesson in Model.ElGradebookLessons.OrderBy(l => l.Date))
                 {
                     lessonCounter++;
                     <tr>
@@ -50,6 +50,7 @@
                         <td>@lesson.Date</td>
                         <td>@lesson.ElGradebookLessonType.ElGradebookLessonTypeName</td>
                         <td>@lesson.LessonTheme</td>
+                        <td>@lesson.HoursNumber</td>
                         <td></td>
                     </tr>
                 }
