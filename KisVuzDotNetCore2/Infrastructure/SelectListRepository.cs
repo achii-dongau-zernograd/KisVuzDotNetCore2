@@ -1137,5 +1137,19 @@ namespace KisVuzDotNetCore2.Infrastructure
                 nameof(ElGradebookLessonType.ElGradebookLessonTypeName),
                 selectedId);
         }
+
+        /// <summary>
+        /// Возвращает список типов посещаемости учебных занятий (П, Н, Б, У)
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAttendanceTypes(int selectedId = 0)
+        {
+            var data = _context.ElGradebookLessonAttendanceTypes;
+            return new SelectList(data,
+                nameof(ElGradebookLessonAttendanceType.ElGradebookLessonAttendanceTypeId),
+                nameof(ElGradebookLessonAttendanceType.ElGradebookLessonAttendanceTypeName),
+                selectedId);
+        }
     }
 }

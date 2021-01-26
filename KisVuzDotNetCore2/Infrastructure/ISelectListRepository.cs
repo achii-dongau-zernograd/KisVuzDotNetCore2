@@ -491,7 +491,14 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListAuthors(int selectedId = 0);
-        
+
+        /// <summary>
+        /// Возвращает список типов посещаемости учебных занятий (П, Н, Б, У)
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAttendanceTypes(int selectedId = 0);
+
         /// <summary>
         /// Возвращает список авторов
         /// </summary>

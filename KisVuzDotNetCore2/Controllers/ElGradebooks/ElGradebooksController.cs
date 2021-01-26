@@ -399,6 +399,83 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
             return RedirectToAction(nameof(ElGradebookLessons), new { ElGradebookLesson.ElGradebookId });
         }
 
+        //////////////////// Удаление занятия
+
+        /// <summary>
+        /// Удаление учебного занятия из журнала GET
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> ElGradebookLessonRemove(int elGradebookLessonId)
+        {
+            ElGradebookLesson elGradebookLesson = await _elGradebookRepository.GetElGradebookLessonAsync(elGradebookLessonId);
+            if (elGradebookLesson == null)
+                return NotFound();
+                        
+            return View(elGradebookLesson);
+        }
+
+        /// <summary>
+        /// Удаление учебного занятия из журнала POST
+        /// </summary>
+        /// <param name="ElGradebookLesson"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> ElGradebookLessonRemove(ElGradebookLesson ElGradebookLesson)
+        {
+            if (ElGradebookLesson == null)
+                return NotFound();
+
+            await _elGradebookRepository.RemoveElGradebookLessonAsync(ElGradebookLesson);
+
+            return RedirectToAction(nameof(ElGradebookLessons), new { ElGradebookLesson.ElGradebookId });
+        }
+
+
+        ///////////////// Редактирование успеваемости  студентов на учебном занятии
+        public async Task<IActionResult> ElGradebookLessonMarksEdit(int elGradebookLessonId)
+        {
+            var elGradebookLesson = await _elGradebookRepository.GetElGradebookLessonWithLessonMarksAsync(elGradebookLessonId);
+            if (elGradebookLesson == null)
+                return NotFound();
+
+            // Если список оценок пуст, заполняем его на основе имеющегося списка студентов
+            if(elGradebookLesson.ElGradebookLessonMarks.Count == 0)
+            {
+                var elGradebookWithStudents = await _elGradebookRepository.GetElGradebookWithStudentsAsync(elGradebookLesson.ElGradebookId);
+
+                await _elGradebookRepository.AddElGradebookLessonMarksAsync(elGradebookLesson, elGradebookWithStudents.ElGradebookGroupStudents);
+            }                        
+
+            ViewBag.AttendanceTypes = await _elGradebookRepository.GetElGradebookLessonAttendanceTypes();
+            
+            return View(elGradebookLesson);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ElGradebookLessonMarksEdit(int elGradebookLessonId,
+            int[] elGradebookLessonMarkIds,
+            int[] elGradebookLessonMarkAttendanceTypes,
+            int[] elGradebookLessonMarkPointNumbers)
+        {
+            ElGradebookLesson elGradebookLesson = await _elGradebookRepository.UpdateElGradebookLessonMarksAsync(elGradebookLessonId,
+                elGradebookLessonMarkIds, elGradebookLessonMarkAttendanceTypes, elGradebookLessonMarkPointNumbers);
+            if (elGradebookLesson == null)
+                return NotFound();
+
+            return RedirectToAction(nameof(ElGradebookLessonMarksEdit), new { elGradebookLessonId });
+        }
         #endregion
+
+        /// <summary>
+        /// Просмотр всего журнала
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> ElGradebookView(int elGradebookId)
+        {
+            var elGradebook = await _elGradebookRepository.GetElGradebookFullAsync(elGradebookId);
+            return View(elGradebook);
+        }
     }
 }

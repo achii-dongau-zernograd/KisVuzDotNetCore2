@@ -48,6 +48,17 @@ namespace KisVuzDotNetCore2.Models.Gradebook
             return query;
         }
 
+        public IQueryable<ElGradebook> GetElGradebooksFull()
+        {
+            IQueryable<ElGradebook> query = GetElGradebooksWithLessons()
+                .Include(g => g.ElGradebookGroupStudents)
+                .Include(g => g.ElGradebookLessons)
+                    .ThenInclude(gl => gl.ElGradebookLessonMarks)
+                        .ThenInclude(glm => glm.ElGradebookLessonAttendanceType);
+
+            return query;
+        }
+
         /// <summary>
         /// Возвращает запрос на список журналов согласно параметрам фильтра
         /// </summary>
@@ -159,6 +170,19 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         public async Task<ElGradebook> GetElGradebookWithLessonsAsync(int elGradebookId)
         {
             var elGradebook = await GetElGradebooksWithLessons()
+                .FirstOrDefaultAsync(g => g.ElGradebookId == elGradebookId);
+
+            return elGradebook;
+        }
+
+        /// <summary>
+        /// Возвращает электронный журнал со всеми связанными данными
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        public async Task<ElGradebook> GetElGradebookFullAsync(int elGradebookId)
+        {
+            var elGradebook = await GetElGradebooksFull()
                 .FirstOrDefaultAsync(g => g.ElGradebookId == elGradebookId);
 
             return elGradebook;
@@ -403,14 +427,54 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         }
 
         /// <summary>
+        /// Возвращает запрос на выборку всех занятий
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<ElGradebookLesson> GetElGradebookLessons()
+        {
+            var query = _context.ElGradebookLessons
+                .Include(l => l.ElGradebook)
+                .Include(l => l.ElGradebookLessonType);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Возвращает запрос на выборку всех занятий
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<ElGradebookLesson> GetElGradebookLessonsWithLessonMarks()
+        {
+            var query = GetElGradebookLessons()
+                .Include(l => l.ElGradebookLessonMarks)
+                    .ThenInclude(lm => lm.ElGradebookLessonAttendanceType)
+                .Include(l => l.ElGradebookLessonMarks)
+                    .ThenInclude(lm => lm.ElGradebookGroupStudent);
+
+            return query;
+        }
+
+        /// <summary>
         /// Возвращает учебное занятие по его УИД
         /// </summary>
         /// <param name="elGradebookLessonId"></param>
         /// <returns></returns>
         public async Task<ElGradebookLesson> GetElGradebookLessonAsync(int elGradebookLessonId)
         {
-            var entry = await _context.ElGradebookLessons
-                .Include(l => l.ElGradebook)
+            var entry = await GetElGradebookLessons()
+                .FirstOrDefaultAsync(l => l.ElGradebookLessonId == elGradebookLessonId);
+
+            return entry;
+        }
+
+        /// <summary>
+        /// Возвращает учебное занятие по его УИД с заполненными отметками студентов
+        /// </summary>
+        /// <param name="elGradebookLessonId"></param>
+        /// <returns></returns>
+        public async Task<ElGradebookLesson> GetElGradebookLessonWithLessonMarksAsync(int elGradebookLessonId)
+        {
+            var entry = await GetElGradebookLessonsWithLessonMarks()
                 .FirstOrDefaultAsync(l => l.ElGradebookLessonId == elGradebookLessonId);
 
             return entry;
@@ -441,8 +505,85 @@ namespace KisVuzDotNetCore2.Models.Gradebook
 
             if (entry.LessonTheme != elGradebookLesson.LessonTheme)
                 entry.LessonTheme = elGradebookLesson.LessonTheme;
+
+            await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Удаление учебного занятия из журнала
+        /// </summary>
+        /// <param name="elGradebookLesson"></param>
+        /// <returns></returns>
+        public async Task RemoveElGradebookLessonAsync(ElGradebookLesson elGradebookLesson)
+        {
+            _context.Remove(elGradebookLesson);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Добавление в занятие электронного журнала списка студентов
+        /// </summary>
+        /// <param name="elGradebookLesson"></param>
+        /// <param name="elGradebookGroupStudents"></param>
+        /// <returns></returns>
+        public async Task AddElGradebookLessonMarksAsync(ElGradebookLesson elGradebookLesson, List<ElGradebookGroupStudent> elGradebookGroupStudents)
+        {
+            foreach (var student in elGradebookGroupStudents)
+            {
+                elGradebookLesson.ElGradebookLessonMarks.Add(
+                    new ElGradebookLessonMark
+                    {
+                        ElGradebookGroupStudentId = student.ElGradebookGroupStudentId,
+                        ElGradebookLessonAttendanceTypeId = 1
+                    }
+                );
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Возвращает список типов посещаемости учебных занятий
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<ElGradebookLessonAttendanceType>> GetElGradebookLessonAttendanceTypes()
+        {
+            return await _context.ElGradebookLessonAttendanceTypes.ToListAsync();
+        }
+
+        /// <summary>
+        /// Обновляет успеваемость и оценки группы студентов для указанного занятия
+        /// </summary>
+        /// <param name="elGradebookLessonId"></param>
+        /// <param name="elGradebookLessonMarkIds"></param>
+        /// <param name="elGradebookLessonMarkAttendanceTypes"></param>
+        /// <param name="elGradebookLessonMarkPointNumbers"></param>
+        /// <returns></returns>
+        public async Task<ElGradebookLesson> UpdateElGradebookLessonMarksAsync(int elGradebookLessonId, int[] elGradebookLessonMarkIds,
+            int[] elGradebookLessonMarkAttendanceTypes, int[] elGradebookLessonMarkPointNumbers)
+        {
+            var elGradebookLesson = await GetElGradebookLessonWithLessonMarksAsync(elGradebookLessonId);
+
+            foreach (var elGradebookLessonMark in elGradebookLesson.ElGradebookLessonMarks)
+            {
+                for (int i = 0; i < elGradebookLessonMarkIds.Length; i++)
+                {
+                    if (elGradebookLessonMark.ElGradebookLessonMarkId == elGradebookLessonMarkIds[i])
+                    {
+                        if (elGradebookLessonMark.ElGradebookLessonAttendanceTypeId != elGradebookLessonMarkAttendanceTypes[i])
+                            elGradebookLessonMark.ElGradebookLessonAttendanceTypeId = elGradebookLessonMarkAttendanceTypes[i];
+
+                        if (elGradebookLessonMark.PointsNumber != elGradebookLessonMarkPointNumbers[i])
+                            elGradebookLessonMark.PointsNumber = elGradebookLessonMarkPointNumbers[i];
+                    }
+                }                
+            }
+
+            await _context.SaveChangesAsync();
+
+            return elGradebookLesson;
+        }
+                
 
         #endregion
     }

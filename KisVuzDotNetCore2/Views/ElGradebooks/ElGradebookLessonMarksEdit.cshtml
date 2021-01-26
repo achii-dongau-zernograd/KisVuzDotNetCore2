@@ -1,0 +1,83 @@
+﻿@model ElGradebookLesson
+
+@{ 
+    int lessonMarkCounter = 0;
+    var attendanceTypes = (IEnumerable<ElGradebookLessonAttendanceType>)ViewBag.AttendanceTypes;
+}
+
+<h2>Успеваемость студентов на учебном занятии</h2>
+
+<hr />
+<h4>Учебный год: <b>@Model.ElGradebook.EduYear</b></h4>
+<h4>Группа: <b>@Model.ElGradebook.GroupName (@Model.ElGradebook.Course курс, @Model.ElGradebook.SemesterNumber семестр)</b></h4>
+<h4>Дисциплина: <b>@Model.ElGradebook.DisciplineName</b></h4>
+<h4>Дата занятия: <b>@Model.Date.ToShortDateString()</b></h4>
+<h4>Тип занятия: <b>@Model.ElGradebookLessonType.ElGradebookLessonTypeName</b></h4>
+<hr />
+
+<form asp-action="ElGradebookLessonMarksEdit" class="form-inline">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>№ пп</th>
+                <th>ФИО студента</th>
+                <th>Посещаемость</th>
+                <th>Баллы</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lessonMark in Model.ElGradebookLessonMarks)
+            {
+                lessonMarkCounter++;
+                <tr>
+                    <td>@lessonMarkCounter</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(lessonMark.ElGradebookGroupStudent.AppUserId))
+                        {
+                            <a asp-controller="UserProfile"
+                               asp-action="Index"
+                               asp-route-id="@lessonMark.ElGradebookGroupStudent.AppUserId"
+                               target="_blank">
+                                @lessonMark.ElGradebookGroupStudent.ElGradebookGroupStudentFio
+                            </a>
+                        }
+                        else
+                        {
+                            @lessonMark.ElGradebookGroupStudent.ElGradebookGroupStudentFio
+                        }
+                    </td>                    
+                    <td>
+                        <input type="hidden" name="elGradebookLessonMarkIds" value="@lessonMark.ElGradebookLessonMarkId" />
+
+                        @lessonMark.ElGradebookLessonAttendanceType.ElGradebookLessonAttendanceTypeName
+                        <select name="elGradebookLessonMarkAttendanceTypes" class="form-control">
+                            @foreach (var attendanceType in attendanceTypes)
+                            {
+                                if (attendanceType.ElGradebookLessonAttendanceTypeId == lessonMark.ElGradebookLessonAttendanceTypeId)
+                                {
+                                    <option value="@attendanceType.ElGradebookLessonAttendanceTypeId" selected>@attendanceType.ElGradebookLessonAttendanceTypeName</option>
+                                }
+                                else
+                                {
+                                    <option value="@attendanceType.ElGradebookLessonAttendanceTypeId">@attendanceType.ElGradebookLessonAttendanceTypeName</option>
+                                }
+                            }
+                        </select>
+
+                    </td>
+                    <td>
+                        @lessonMark.PointsNumber
+                        <input type="number" name="elGradebookLessonMarkPointNumbers" value="@lessonMark.PointsNumber" class="form-control" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <input type="hidden" name="elGradebookLessonId" value="@Model.ElGradebookLessonId" />
+        <input type="submit" value="Сохранить" class="btn btn-primary" />
+        <a asp-action="ElGradebookLessons" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-default">Отмена</a>
+    </div>
+
+</form>

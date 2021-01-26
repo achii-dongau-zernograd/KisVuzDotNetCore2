@@ -40,6 +40,13 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         Task<ElGradebook> GetElGradebookWithLessonsAsync(int elGradebookId);
 
         /// <summary>
+        /// Возвращает электронный журнал со всеми связанными данными
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        Task<ElGradebook> GetElGradebookFullAsync(int elGradebookId);
+
+        /// <summary>
         /// Возвращает true, если userName входит в число преподавателей, закреплённых за электронным журналом
         /// </summary>
         /// <param name="elGradebook"></param>
@@ -133,12 +140,54 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         /// <param name="elGradebookLessonId"></param>
         /// <returns></returns>
         Task<ElGradebookLesson> GetElGradebookLessonAsync(int elGradebookLessonId);
-        
+
+        /// <summary>
+        /// Возвращает учебное занятие по его УИД с заполненными отметками студентов
+        /// </summary>
+        /// <param name="elGradebookLessonId"></param>
+        /// <returns></returns>
+        Task<ElGradebookLesson> GetElGradebookLessonWithLessonMarksAsync(int elGradebookLessonId);
+
         /// <summary>
         /// Обновляет учебное занятие
         /// </summary>
         /// <param name="elGradebookLesson"></param>
         /// <returns></returns>
         Task UpdateElGradebookLessonAsync(ElGradebookLesson elGradebookLesson);
+
+        /// <summary>
+        /// Удаление учебного занятия из журнала
+        /// </summary>
+        /// <param name="elGradebookLesson"></param>
+        /// <returns></returns>
+        Task RemoveElGradebookLessonAsync(ElGradebookLesson elGradebookLesson);
+        
+        /// <summary>
+        /// Добавление в занятие электронного журнала списка студентов
+        /// </summary>
+        /// <param name="elGradebookLesson"></param>
+        /// <param name="elGradebookGroupStudents"></param>
+        /// <returns></returns>
+        Task AddElGradebookLessonMarksAsync(ElGradebookLesson elGradebookLesson, List<ElGradebookGroupStudent> elGradebookGroupStudents);
+        
+        /// <summary>
+        /// Возвращает список типов посещаемости учебных занятий
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<ElGradebookLessonAttendanceType>> GetElGradebookLessonAttendanceTypes();
+        
+        /// <summary>
+        /// Обновляет успеваемость и оценки группы студентов для указанного занятия
+        /// </summary>
+        /// <param name="elGradebookLessonId"></param>
+        /// <param name="elGradebookLessonMarkIds"></param>
+        /// <param name="elGradebookLessonMarkAttendanceTypes"></param>
+        /// <param name="elGradebookLessonMarkPointNumbers"></param>
+        /// <returns></returns>
+        Task<ElGradebookLesson> UpdateElGradebookLessonMarksAsync(int elGradebookLessonId,
+            int[] elGradebookLessonMarkIds,
+            int[] elGradebookLessonMarkAttendanceTypes,
+            int[] elGradebookLessonMarkPointNumbers);
+        
     }
 }

@@ -28,6 +28,7 @@
                 <th>Тип занятия</th>
                 <th>Тема занятия</th>
                 <th>Кол-во часов</th>
+                <th>Успеваемость</th>
                 <th>Действия</th>
             </tr>
         </thead>
@@ -47,14 +48,32 @@
                     lessonCounter++;
                     <tr>
                         <td>@lessonCounter</td>
-                        <td>@lesson.Date</td>
+                        <td>@lesson.Date.ToShortDateString()</td>
                         <td>@lesson.ElGradebookLessonType.ElGradebookLessonTypeName</td>
                         <td>@lesson.LessonTheme</td>
                         <td>@lesson.HoursNumber</td>
-                        <td></td>
+                        <td>
+                            <a asp-action="ElGradebookLessonMarksEdit" asp-route-elGradebookLessonId="@lesson.ElGradebookLessonId" class="btn btn-primary">Редактировать</a>
+                        </td>
+                        <td>
+                            <a asp-action="ElGradebookLessonUpdate"
+                               asp-route-elGradebookLessonId="@lesson.ElGradebookLessonId" class="btn btn-primary">Редактировать</a>
+                            <a asp-action="ElGradebookLessonRemove"
+                               asp-route-elGradebookLessonId="@lesson.ElGradebookLessonId" class="btn btn-danger">Удалить</a>
+                        </td>
                     </tr>
                 }
             }
         </tbody>
     </table>
+}
+
+<hr />
+
+<h4>ИТОГО: <b>@Model.ElGradebookLessons.Sum(l => l.HoursNumber) ч.</b></h4>
+<h4>в том числе:</h4>
+@foreach (var item in Model.ElGradebookLessons.GroupBy(l=>l.ElGradebookLessonType.ElGradebookLessonTypeName))
+{
+    <h4>@item.Key: <b>@(item.Sum(l => l.HoursNumber)) ч.</b></h4>
+    
 }

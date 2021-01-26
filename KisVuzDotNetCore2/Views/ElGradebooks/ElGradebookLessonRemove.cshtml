@@ -1,0 +1,49 @@
+﻿@model ElGradebookLesson
+
+@{
+    ViewData["Title"] = "Удаление занятия";
+}
+
+<h2>Удаление учебного занятия из журнала</h2>
+
+<hr />
+<h4>Учебный год: <b>@Model.ElGradebook.EduYear</b></h4>
+<h4>Группа: <b>@Model.ElGradebook.GroupName (@Model.ElGradebook.Course курс, @Model.ElGradebook.SemesterNumber семестр)</b></h4>
+<h4>Дисциплина: <b>@Model.ElGradebook.DisciplineName</b></h4>
+<hr />
+
+<h4>Вы действительно хотите удалить учебное занятие из журнала?</h4>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ElGradebookLessonType.ElGradebookLessonTypeName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ElGradebookLessonType.ElGradebookLessonTypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoursNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HoursNumber)
+        </dd>
+
+    </dl>
+
+    <form asp-action="ElGradebookLessonRemove">
+        <input type="hidden" asp-for="ElGradebookLessonId" />
+        <input type="hidden" asp-for="ElGradebookId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="ElGradebookLessons" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-default">Отмена</a>
+    </form>
+</div>

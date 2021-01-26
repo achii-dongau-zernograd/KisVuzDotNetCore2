@@ -1,4 +1,6 @@
-﻿namespace KisVuzDotNetCore2.Models.Gradebook
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KisVuzDotNetCore2.Models.Gradebook
 {
     /// <summary>
     /// Электронные журналы. Тип занятия
@@ -13,6 +15,7 @@
         /// <summary>
         /// Наименование типа занятия
         /// </summary>
+        [Display(Name = "Тип занятия")]
         public string ElGradebookLessonTypeName { get; set; }
     }
 }

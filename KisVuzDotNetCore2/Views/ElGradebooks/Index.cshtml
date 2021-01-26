@@ -2,6 +2,9 @@
 
 <h2>Электронные журналы</h2>
 
+<p>
+    <a class="btn btn-primary" asp-controller="ElGradebooks" asp-action="ElGradebookCreateOrUpdate">Добавить журнал</a>
+</p>
 
 <div class="panel panel-default">
     <div class="panel-heading">Фильтр</div>
@@ -61,37 +64,31 @@
 
 
 
-<p>
-    <a class="btn btn-primary" asp-controller="ElGradebooks" asp-action="ElGradebookCreateOrUpdate">Добавить журнал</a>
-</p>
-
-@if (Model == null)
-{
-    <h3>Model = null</h3>
-}
-else if (Model.Count() == 0)
-{
-    <h3>Model.Count() = 0</h3>
-}
-else
-{
-    <table class="table">
-        <thead>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Учебный год</th>
+            <th>Факультет</th>
+            <th>Кафедра</th>
+            <th>Преподаватели</th>
+            <th>Дисциплина</th>
+            <th>Группа</th>
+            <th>Курс</th>
+            <th>Семестр</th>
+            <th>Занятия</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || Model.Count() == 0)
+        {
             <tr>
-                <th>Учебный год</th>
-                <th>Факультет</th>
-                <th>Кафедра</th>
-                <th>Преподаватели</th>
-                <th>Дисциплина</th>
-                <th>Группа</th>
-                <th>Курс</th>
-                <th>Семестр</th>
-                <th>Занятия</th>
-                <th>Действия</th>
+                <td colspan="10" class="text-center text-info">Задайте параметры поиска и нажмите на кнопку "Применить фильтр"</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var elGradebook in Model)
+        }
+        else
+        {
+            foreach (var elGradebook in Model)
             {
                 <tr>
                     <td>
@@ -108,17 +105,17 @@ else
                         {
                             foreach (var elGradebookTeacher in elGradebook.ElGradebookTeachers)
                             {
-                                if(!string.IsNullOrEmpty(elGradebookTeacher.UserId))
+                                if (!string.IsNullOrEmpty(elGradebookTeacher.UserId))
                                 {
                                     <p>
-                                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id = "@elGradebookTeacher.UserId" target="_blank">@elGradebookTeacher.TeacherFio</a>
+                                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@elGradebookTeacher.UserId" target="_blank">@elGradebookTeacher.TeacherFio</a>
                                     </p>
                                 }
                                 else
                                 {
                                     <p>@elGradebookTeacher.TeacherFio</p>
                                 }
-                                
+
                             }
                         }
                     </td>
@@ -126,7 +123,7 @@ else
                         @elGradebook.DisciplineName
                     </td>
                     <td>
-                        <a asp-action="ElGradebookGroupStudents" asp-route-elGradebookId ="@elGradebook.ElGradebookId" class="btn btn-primary">@elGradebook.GroupName. Список студентов</a>
+                        <a asp-action="ElGradebookGroupStudents" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-primary">@elGradebook.GroupName. Список студентов</a>
                     </td>
                     <td>
                         @elGradebook.Course
@@ -138,11 +135,13 @@ else
                         <a asp-action="ElGradebookLessons" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-primary">Открыть</a>
                     </td>
                     <td>
+                        <a asp-action="ElGradebookView" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-info">Просмотр</a>
                         <a asp-action="ElGradebookCreateOrUpdate" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-primary">Редактировать</a>
                         <a asp-action="ElGradebookRemove" class="btn btn-danger">Удалить</a>
                     </td>
                 </tr>
             }
-        </tbody>
-    </table>
-}
+        }
+
+    </tbody>
+</table>
