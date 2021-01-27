@@ -573,8 +573,19 @@ namespace KisVuzDotNetCore2.Models.Gradebook
                         if (elGradebookLessonMark.ElGradebookLessonAttendanceTypeId != elGradebookLessonMarkAttendanceTypes[i])
                             elGradebookLessonMark.ElGradebookLessonAttendanceTypeId = elGradebookLessonMarkAttendanceTypes[i];
 
-                        if (elGradebookLessonMark.PointsNumber != elGradebookLessonMarkPointNumbers[i])
-                            elGradebookLessonMark.PointsNumber = elGradebookLessonMarkPointNumbers[i];
+                        // Сохраняем баллы только для случаев присутствия или отработки, иначе ставим 0
+                        if (elGradebookLessonMark.ElGradebookLessonAttendanceTypeId == 1 || elGradebookLessonMark.ElGradebookLessonAttendanceTypeId == 5)
+                        {
+                            if (elGradebookLessonMark.PointsNumber != elGradebookLessonMarkPointNumbers[i])
+                                elGradebookLessonMark.PointsNumber = elGradebookLessonMarkPointNumbers[i];
+                        }
+                        else
+                        {
+                            if (elGradebookLessonMark.PointsNumber != 0)
+                                elGradebookLessonMark.PointsNumber = 0;
+                        }
+
+                        
                     }
                 }                
             }
@@ -583,8 +594,49 @@ namespace KisVuzDotNetCore2.Models.Gradebook
 
             return elGradebookLesson;
         }
-                
-
         #endregion
+
+        /// <summary>
+        /// Список журналов с результатами успеваемости пользователя с заданным userName
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<List<ElGradebookGroupStudent>> GetStudentAttendance(string userName)
+        {
+            var appUser = await GetAppUserAsync(userName);
+
+            var elGradebookGroupStudents = await _context.ElGradebookGroupStudents
+                .Include(s => s.ElGradebookLessonMarks)
+                    .ThenInclude(sm => sm.ElGradebookLessonAttendanceType)
+                .Include(s => s.ElGradebook.ElGradebookLessons)
+                    .ThenInclude(sgl => sgl.ElGradebookLessonType)
+                .Include(s => s.ElGradebook.ElGradebookTeachers)                
+                //.Include(s => s.ElGradebook.ElGradebookLessons)
+                //    .ThenInclude(sgl => sgl.ElGradebookLessonMarks)
+                //        .ThenInclude(sglm => sglm.ElGradebookLessonAttendanceType)
+                //.Include(s => s.ElGradebook.ElGradebookLessons)
+                //    .ThenInclude(sgl => sgl.ElGradebookLessonMarks)
+                //        .ThenInclude(sglm => sglm.ElGradebookGroupStudent)
+                .Where(s => s.AppUserId == appUser.Id)
+                .ToListAsync();
+
+            foreach (var elGradebookGroupStudent in elGradebookGroupStudents)
+            {
+                var elGradebook = elGradebookGroupStudent.ElGradebook;
+
+                foreach (var elGradebookLesson in elGradebook.ElGradebookLessons)
+                {
+                    elGradebookLesson.ElGradebookLessonMarks = new List<ElGradebookLessonMark>();
+                    var lessonMark = elGradebookGroupStudent.ElGradebookLessonMarks.FirstOrDefault(m=>m.ElGradebookLessonId == elGradebookLesson.ElGradebookLessonId);
+                    if(lessonMark != null)
+                        elGradebookLesson.ElGradebookLessonMarks.Add(lessonMark);
+                }
+
+            }
+
+
+
+            return elGradebookGroupStudents;
+        }
     }
 }

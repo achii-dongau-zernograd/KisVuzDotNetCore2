@@ -235,12 +235,10 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
 
             await _elGradebookRepository.AddStudents(elGradebookId, addingStudents);
 
-            return RedirectToAction(nameof(Index),
+            return RedirectToAction(nameof(ElGradebookGroupStudents),
                 new
                 {
-                    FilterEduYear = elGradebook.EduYear,
-                    FilterGroupName = elGradebook.GroupName,
-                    IsRequestDataImmediately = true
+                    elGradebookId
                 });
         }
 
@@ -476,6 +474,18 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
         {
             var elGradebook = await _elGradebookRepository.GetElGradebookFullAsync(elGradebookId);
             return View(elGradebook);
+        }
+
+        /// <summary>
+        /// Просмотр успеваемости студента
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        public async Task<IActionResult> StudentAttendanceView()
+        {
+            var elGradebooks = await _elGradebookRepository.GetStudentAttendance(User.Identity.Name);
+
+            return View(elGradebooks);
         }
     }
 }

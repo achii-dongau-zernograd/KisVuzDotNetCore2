@@ -3,10 +3,16 @@
 
 <h2>Список студентов группы @Model.GroupName</h2>
 
+<hr />
+<h4>Учебный год: <b>@Model.EduYear</b></h4>
+<h4>Группа: <b>@Model.GroupName (@Model.Course курс, @Model.SemesterNumber семестр)</b></h4>
+<h4>Дисциплина: <b>@Model.DisciplineName</b></h4>
+<hr />
+
 <a asp-action="ElGradebookGroupStudentsAdd" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-primary">Добавить студента</a>
 <a asp-action="ElGradebookGroupStudentsAddGroup" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-primary">Добавить группу студентов</a>
 
-@if(Model.ElGradebookGroupStudents != null && Model.ElGradebookGroupStudents.Count > 0)
+@if (Model.ElGradebookGroupStudents != null && Model.ElGradebookGroupStudents.Count > 0)
 {
     <table class="table table-hover">
         <thead>
@@ -33,7 +39,7 @@
                             @student.ElGradebookGroupStudentFio
                         </td>
                         <td>
-                            @if(string.IsNullOrEmpty(student.AppUserId))
+                            @if (string.IsNullOrEmpty(student.AppUserId))
                             {
                                 <a asp-action="ElGradebookGroupStudentsBindAccount" asp-route-elGradebookGroupStudentId="@student.ElGradebookGroupStudentId" class="btn btn-primary">Привязать аккаунт студента</a>
                             }
@@ -43,7 +49,7 @@
                             }
                         </td>
                         <td>
-                            <a asp-action="ElGradebookGroupStudentsEditStudent"   asp-route-elGradebookGroupStudentId="@student.ElGradebookGroupStudentId" class="btn btn-primary">Редактировать</a>
+                            <a asp-action="ElGradebookGroupStudentsEditStudent" asp-route-elGradebookGroupStudentId="@student.ElGradebookGroupStudentId" class="btn btn-primary">Редактировать</a>
                             <a asp-action="ElGradebookGroupStudentsRemoveStudent" asp-route-elGradebookGroupStudentId="@student.ElGradebookGroupStudentId" class="btn btn-danger">Удалить</a>
                         </td>
                     </tr>

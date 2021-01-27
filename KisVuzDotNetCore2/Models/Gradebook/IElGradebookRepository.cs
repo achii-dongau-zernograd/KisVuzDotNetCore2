@@ -188,6 +188,12 @@ namespace KisVuzDotNetCore2.Models.Gradebook
             int[] elGradebookLessonMarkIds,
             int[] elGradebookLessonMarkAttendanceTypes,
             int[] elGradebookLessonMarkPointNumbers);
-        
+
+        /// <summary>
+        /// Список журналов с результатами успеваемости пользователя с заданным userName
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<List<ElGradebookGroupStudent>> GetStudentAttendance(string userName);
     }
 }

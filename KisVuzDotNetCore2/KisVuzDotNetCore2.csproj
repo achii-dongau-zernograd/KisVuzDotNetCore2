@@ -618,6 +618,8 @@
     <Compile Remove="Migrations\20210121122548_ElGradebooks.Designer.cs" />
     <Compile Remove="Migrations\20210123135138_ElGradebooks.cs" />
     <Compile Remove="Migrations\20210123135138_ElGradebooks.Designer.cs" />
+    <Compile Remove="Migrations\20210127123232_t.cs" />
+    <Compile Remove="Migrations\20210127123232_t.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

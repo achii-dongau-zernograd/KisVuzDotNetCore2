@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace KisVuzDotNetCore2.Models.Gradebook
 {
@@ -32,5 +33,10 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         /// Журнал
         /// </summary>
         public ElGradebook ElGradebook { get; set; }
+
+        /// <summary>
+        /// Посещаемость и оценки за учебные занятия
+        /// </summary>
+        public List<ElGradebookLessonMark> ElGradebookLessonMarks { get; set; }
     }
 }

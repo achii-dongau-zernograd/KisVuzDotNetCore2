@@ -114,11 +114,18 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         ElGradebookLessonAttendanceTypeName = "Б",
                     };
 
+                    var item5 = new ElGradebookLessonAttendanceType
+                    {
+                        ElGradebookLessonAttendanceTypeId = 5,
+                        ElGradebookLessonAttendanceTypeName = "О",
+                    };
+
                     await context.AddRangeAsync(
                         item1,
                         item2,
                         item3,
-                        item4
+                        item4,
+                        item5
                     );
 
                     await context.SaveChangesAsync();

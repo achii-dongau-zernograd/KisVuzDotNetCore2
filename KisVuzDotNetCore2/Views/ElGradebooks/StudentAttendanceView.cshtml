@@ -1,0 +1,104 @@
+﻿@model List<ElGradebookGroupStudent>
+
+<h2>Успеваемость</h2>
+
+
+@foreach (var elGradebookGroupStudent in Model.OrderByDescending(s => s.ElGradebook.Course).ThenByDescending(s => s.ElGradebook.SemesterNumber))
+{
+    int studentCounter = 0;
+    var Lessons = elGradebookGroupStudent.ElGradebook.ElGradebookLessons.OrderBy(l => l.Date);
+
+    <hr />
+    <h4>Учебный год: <b>@elGradebookGroupStudent.ElGradebook.EduYear</b></h4>
+    <h4>Группа: <b>@elGradebookGroupStudent.ElGradebook.GroupName (@elGradebookGroupStudent.ElGradebook.Course курс, @elGradebookGroupStudent.ElGradebook.SemesterNumber семестр)</b></h4>
+    <h4>Дисциплина: <b>@elGradebookGroupStudent.ElGradebook.DisciplineName</b></h4>
+    <h4>
+        Преподаватели:<br />
+            <b>
+                @foreach (var teacher in elGradebookGroupStudent.ElGradebook.ElGradebookTeachers)
+                {
+                    if(teacher.UserId!=null)
+                    {
+                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@teacher.UserId" target="_blank">@teacher.TeacherFio</a>
+                    }
+                    else
+                    {
+                        <text>@teacher.TeacherFio</text>
+                    }
+                    <br />
+                }
+            </b>
+    </h4>
+    <hr />
+
+    <table class="table table-hover table-condensed table-bordered text-center">
+        <tr>
+            <th>№ п.п.</th>
+            <th>ФИО студента</th>
+            @foreach (var lesson in Lessons)
+            {
+                <th class="text-center">
+                    @lesson.Date.ToShortDateString()
+                    <br />
+                    @(lesson.ElGradebookLessonTypeId == 1?"Лек.":"")
+                    @(lesson.ElGradebookLessonTypeId == 2?"Лаб.":"")
+                    @(lesson.ElGradebookLessonTypeId == 3?"Пр.":"")
+                    @(lesson.ElGradebookLessonTypeId == 4?"Конс.":"")
+                    @(lesson.ElGradebookLessonTypeId == 5?"Зач.":"")
+                    @(lesson.ElGradebookLessonTypeId == 6?"Экз.":"")
+                </th>
+            }
+            <th>Сумма</th>
+        </tr>
+
+        @foreach (var student in elGradebookGroupStudent.ElGradebook.ElGradebookGroupStudents.OrderBy(s => s.ElGradebookGroupStudentFio))
+        {
+            studentCounter++;
+            <tr>
+                <td>@studentCounter</td>
+                <td class="text-left">
+                    @if (!string.IsNullOrEmpty(student.AppUserId))
+                    {
+                        <a asp-controller="UserProfile"
+                           asp-action="Index"
+                           asp-route-id="@student.AppUserId"
+                           target="_blank">@student.ElGradebookGroupStudentFio</a>
+                    }
+                    else
+                    {
+                        @student.ElGradebookGroupStudentFio
+                    }
+                </td>
+
+                @{
+                    int studentMarksSum = 0;
+                    foreach (var lesson in Lessons)
+                    {
+                        <td>
+                            @{
+                                var lessonMark = lesson.ElGradebookLessonMarks.FirstOrDefault(m => m.ElGradebookGroupStudentId == student.ElGradebookGroupStudentId);
+                                if (lessonMark != null)
+                                {
+                                    if (lessonMark.ElGradebookLessonAttendanceTypeId == 1 || lessonMark.ElGradebookLessonAttendanceTypeId == 5)
+                                    {
+                                        studentMarksSum += lessonMark.PointsNumber;
+                                        <text>@lessonMark.PointsNumber</text>
+
+                                    }
+                                    else
+                                    {
+                                        <text>@lessonMark.ElGradebookLessonAttendanceType.ElGradebookLessonAttendanceTypeName</text>
+                                    }
+                                }
+                            }
+                        </td>
+                    }
+                }
+
+                <td>
+                    @studentMarksSum
+                </td>
+            </tr>
+        }
+    </table>
+}
