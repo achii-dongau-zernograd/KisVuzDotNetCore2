@@ -520,6 +520,13 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListAppUsers(string selectedId = null);
 
         /// <summary>
+        /// Возвращает список ФИО преподавателей, УИД - AppUserId
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListAppUsersTeachers(string selectedId = "");
+
+        /// <summary>
         /// Возвращает список дисциплин
         /// </summary>
         SelectList GetSelectListDisciplines(int selectedId = 0);

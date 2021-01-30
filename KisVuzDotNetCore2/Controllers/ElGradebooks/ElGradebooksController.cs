@@ -39,11 +39,10 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
             
             if (filterAndSortModel.IsRequestDataImmediately)
             {
-                var data = _elGradebookRepository
+                var data = await _elGradebookRepository
                                 .GetElGradebooks(filterAndSortModel, User.Identity.Name);
-
-                data = data.OrderByDescending(g => g.GroupName);
-                return View(await data.ToListAsync());
+                                
+                return View(data);
             }
             else
             {
@@ -462,6 +461,57 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
                 return NotFound();
 
             return RedirectToAction(nameof(ElGradebookLessonMarksEdit), new { elGradebookLessonId });
+        }
+        #endregion
+
+        #region Преподаватели
+        public async Task<IActionResult> ElGradebookTeachers(int elGradebookId)
+        {
+            var elGradebook = await _elGradebookRepository.GetElGradebookAsync(elGradebookId);
+            if (elGradebook == null)
+                return NotFound();
+
+            return View(elGradebook);
+        }
+
+        public async Task<IActionResult> ElGradebookTeacherAdd(int elGradebookId)
+        {
+            var elGradebook = await _elGradebookRepository.GetElGradebookAsync(elGradebookId);
+            if (elGradebook == null)
+                return NotFound();
+
+            var elGradebookTeacher = new ElGradebookTeacher {
+                ElGradebookId = elGradebookId,
+                ElGradebook = elGradebook
+            };
+
+            ViewBag.Teachers = _selectListRepository.GetSelectListAppUsersTeachers();
+
+            return View(elGradebookTeacher);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ElGradebookTeacherAdd(ElGradebookTeacher elGradebookTeacher)
+        {
+            await _elGradebookRepository.AddElGradebookTeacher(elGradebookTeacher);
+
+            return RedirectToAction(nameof(ElGradebookTeachers), new { elGradebookTeacher.ElGradebookId });
+        }
+
+
+        public async Task<IActionResult> ElGradebookTeacherRemove(int elGradebookTeacherId)
+        {
+            var elGradebookTeacher = await _elGradebookRepository.GetElGradebookTeacherAsync(elGradebookTeacherId);
+
+            return View(elGradebookTeacher);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ElGradebookTeacherRemove(ElGradebookTeacher elGradebookTeacher)
+        {
+            await _elGradebookRepository.RemoveElGradebookTeacher(elGradebookTeacher);
+
+            return RedirectToAction(nameof(ElGradebookTeachers), new { elGradebookTeacher.ElGradebookId });
         }
         #endregion
 

@@ -346,6 +346,16 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает список ФИО преподавателей, УИД - AppUserId
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListAppUsersTeachers(string selectedId = "")
+        {
+            return new SelectList(_context.Teachers.OrderBy(t => t.TeacherFio), "AppUserId", "TeacherFio", selectedId);
+        }
+
+        /// <summary>
         /// Возвращает список форм издания
         /// </summary>
         /// <param name="selectedId"></param>

@@ -18,12 +18,12 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         IQueryable<ElGradebook> GetElGradebooks(ElGradebooksFilterAndSortModel filterAndSortModel);
 
         /// <summary>
-        /// Возвращает запрос на список журналов пользователя согласно параметрам фильтра
+        /// Возвращает список журналов пользователя согласно параметрам фильтра
         /// </summary>
         /// <param name="filterAndSortModel"></param>
         /// <param name="userName"></param>
         /// <returns></returns>
-        IQueryable<ElGradebook> GetElGradebooks(ElGradebooksFilterAndSortModel filterAndSortModel, string userName);
+        Task<List<ElGradebook>> GetElGradebooks(ElGradebooksFilterAndSortModel filterAndSortModel, string userName);
         
         /// <summary>
         /// Возвращает электронный журнал по его идентификатору
@@ -195,5 +195,26 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         /// <param name="userName"></param>
         /// <returns></returns>
         Task<List<ElGradebookGroupStudent>> GetStudentAttendance(string userName);
+        
+        /// <summary>
+        /// Возвращает преподавателя из уч. журнала по УИД
+        /// </summary>
+        /// <param name="elGradebookTeacherId"></param>
+        /// <returns></returns>
+        Task<ElGradebookTeacher> GetElGradebookTeacherAsync(int elGradebookTeacherId);
+        
+        /// <summary>
+        /// Добавляет преподавателя к журналу
+        /// </summary>
+        /// <param name="elGradebookTeacher"></param>
+        /// <returns></returns>
+        Task AddElGradebookTeacher(ElGradebookTeacher elGradebookTeacher);
+        
+        /// <summary>
+        /// Удаление преподавателя из журнала
+        /// </summary>
+        /// <param name="elGradebookTeacher"></param>
+        /// <returns></returns>
+        Task RemoveElGradebookTeacher(ElGradebookTeacher elGradebookTeacher);
     }
 }

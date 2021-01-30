@@ -75,7 +75,7 @@
             <th>Группа</th>
             <th>Курс</th>
             <th>Семестр</th>
-            <th>Занятия</th>
+            @*<th>Занятия</th>*@
             <th>Действия</th>
         </tr>
     </thead>
@@ -123,7 +123,8 @@
                         @elGradebook.DisciplineName
                     </td>
                     <td>
-                        <a asp-action="ElGradebookGroupStudents" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-primary">@elGradebook.GroupName. Список студентов</a>
+                        @*<a asp-action="ElGradebookGroupStudents" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-primary">@elGradebook.GroupName. Список студентов</a>*@
+                        @elGradebook.GroupName
                     </td>
                     <td>
                         @elGradebook.Course
@@ -131,9 +132,9 @@
                     <td>
                         @elGradebook.SemesterNumber
                     </td>
-                    <td>
+                    @*<td>
                         <a asp-action="ElGradebookLessons" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-primary">Открыть</a>
-                    </td>
+                    </td>*@
                     <td>
                         <a asp-action="ElGradebookView" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-info">Просмотр</a>
                         <a asp-action="ElGradebookCreateOrUpdate" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-primary">Редактировать</a>

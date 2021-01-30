@@ -1,0 +1,46 @@
+﻿@model ElGradebookTeacher
+
+<h2>Электронный журнал. Добавление преподавателя</h2>
+
+<hr />
+<h4>Учебный год: <b>@Model.ElGradebook.EduYear</b></h4>
+<h4>Группа: <b>@Model.ElGradebook.GroupName (@Model.ElGradebook.Course курс, @Model.ElGradebook.SemesterNumber семестр)</b></h4>
+<h4>Дисциплина: <b>@Model.ElGradebook.DisciplineName</b></h4>
+<h4>
+    Преподаватели:
+    @if (Model.ElGradebook.ElGradebookTeachers != null)
+    {
+        foreach (var elGradebookTeacher in Model.ElGradebook.ElGradebookTeachers)
+        {
+            if (!string.IsNullOrEmpty(elGradebookTeacher.UserId))
+            {
+                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@elGradebookTeacher.UserId" target="_blank">@elGradebookTeacher.TeacherFio</a>
+                <br />
+            }
+            else
+            {
+                <p>@elGradebookTeacher.TeacherFio</p>
+            }
+
+        }
+    }
+</h4>
+<hr />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="ElGradebookTeacherAdd">
+                <input type="hidden" asp-for="ElGradebookId" />
+                <select asp-for="UserId" asp-items="ViewBag.Teachers" class="form-control">
+                    <option>Выберите преподавателя</option>
+                </select>
+                <br />
+                <input type="submit" class="btn btn-primary" value="Добавить" />
+                <a asp-action="ElGradebookTeachers" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-default">Отмена</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+

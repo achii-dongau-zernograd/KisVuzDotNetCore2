@@ -127,14 +127,27 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         /// <param name="filterAndSortModel"></param>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public IQueryable<ElGradebook> GetElGradebooks(ElGradebooksFilterAndSortModel filterAndSortModel, string userName)
+        public async Task<List<ElGradebook>> GetElGradebooks(ElGradebooksFilterAndSortModel filterAndSortModel, string userName)
         {
             if (userName == null)
                 return null;
 
+            var appUser = await GetAppUserAsync(userName);
+            if (appUser== null)
+                return null;
+
             var query = GetElGradebooks(filterAndSortModel);
 
-            return query;
+            var cmp = new ElGradebookTeacherComparer();
+            var st = new ElGradebookTeacher();
+            st.UserId = appUser.Id;            
+
+            query = query.Where(g => g.ElGradebookTeachers.Contains(st, cmp));
+            query = query.OrderByDescending(g => g.GroupName);
+
+            var result = query.ToList();
+
+            return result;
         }
 
         /// <summary>
@@ -637,6 +650,63 @@ namespace KisVuzDotNetCore2.Models.Gradebook
 
 
             return elGradebookGroupStudents;
+        }
+
+        /// <summary>
+        /// Возвращает преподавателя из уч. журнала по УИД
+        /// </summary>
+        /// <param name="elGradebookTeacherId"></param>
+        /// <returns></returns>
+        public async Task<ElGradebookTeacher> GetElGradebookTeacherAsync(int elGradebookTeacherId)
+        {
+            var entry = await _context.ElGradebookTeachers
+                .Include(t => t.ElGradebook.ElGradebookTeachers)
+                .FirstOrDefaultAsync(t => t.ElGradebookTeacherId == elGradebookTeacherId);
+
+            return entry;
+        }
+
+        /// <summary>
+        /// Добавляет преподавателя к журналу
+        /// </summary>
+        /// <param name="elGradebookTeacher"></param>
+        /// <returns></returns>
+        public async Task AddElGradebookTeacher(ElGradebookTeacher elGradebookTeacher)
+        {
+            if (elGradebookTeacher == null)
+                throw new NullReferenceException();
+
+            if (string.IsNullOrEmpty(elGradebookTeacher.TeacherFio))
+            {
+                var appUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == elGradebookTeacher.UserId);
+                if(appUser == null)
+                    throw new NullReferenceException($"Пользователь {elGradebookTeacher.UserId} не найден!");
+                elGradebookTeacher.TeacherFio = appUser.GetFullName;
+            }
+
+            var elGradebook = await GetElGradebookAsync(elGradebookTeacher.ElGradebookId);
+            var cmp = new ElGradebookTeacherComparer();
+            if (elGradebook.ElGradebookTeachers.Contains(elGradebookTeacher, cmp))
+                return;
+
+            _context.Add(elGradebookTeacher);
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаление преподавателя из журнала
+        /// </summary>
+        /// <param name="elGradebookTeacher"></param>
+        /// <returns></returns>
+        public async Task RemoveElGradebookTeacher(ElGradebookTeacher elGradebookTeacher)
+        {
+            var entry = await GetElGradebookTeacherAsync(elGradebookTeacher.ElGradebookTeacherId);
+            if(entry == null || entry.ElGradebook.ElGradebookTeachers.Count == 1)//Последнего преподавателя не удаляем!
+            {
+                return;
+            }
+            _context.Remove(entry);
+            await _context.SaveChangesAsync();
         }
     }
 }

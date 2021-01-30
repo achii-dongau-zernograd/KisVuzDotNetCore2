@@ -1,0 +1,58 @@
+﻿@model ElGradebook
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Электронный журнал. Преподаватели</h2>
+
+            <hr />
+            <h4>Учебный год: <b>@Model.EduYear</b></h4>
+            <h4>Группа: <b>@Model.GroupName (@Model.Course курс, @Model.SemesterNumber семестр)</b></h4>
+            <h4>Дисциплина: <b>@Model.DisciplineName</b></h4>
+            <hr />
+
+            <a asp-action="ElGradebookTeacherAdd" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-primary">Добавить преподавателя</a>
+            <br /><br />
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ФИО преподавателя</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ElGradebookTeachers == null || Model.ElGradebookTeachers.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="2" class="text-center">Преподаватели не добавлены</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var teacher in Model.ElGradebookTeachers)
+                        {
+                            <tr>
+                                <td>
+                                    <a asp-controller="UserProfile"
+                                       asp-action="Index"
+                                       asp-route-id="@teacher.UserId">@teacher.TeacherFio</a>
+                                </td>
+                                <td>
+                                    <a asp-action="ElGradebookTeacherRemove"
+                                       asp-route-elGradebookTeacherId="@teacher.ElGradebookTeacherId"
+                                       class="btn btn-danger">Удалить</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+            <a asp-action="ElGradebookView" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-primary">Назад к журналу</a>
+        </div>
+    </div>
+
+</div>

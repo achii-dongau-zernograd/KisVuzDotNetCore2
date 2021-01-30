@@ -1,0 +1,26 @@
+﻿@model ElGradebookTeacher
+
+<h2>Электронный журнал. Удаление преподавателя</h2>
+
+<hr />
+<h4>Учебный год: <b>@Model.ElGradebook.EduYear</b></h4>
+<h4>Группа: <b>@Model.ElGradebook.GroupName (@Model.ElGradebook.Course курс, @Model.ElGradebook.SemesterNumber семестр)</b></h4>
+<h4>Дисциплина: <b>@Model.ElGradebook.DisciplineName</b></h4>
+<hr />
+<h4>Удаляемый преподаватель: <b>@Model.TeacherFio</b></h4>
+<hr />
+
+@if (Model.ElGradebook.ElGradebookTeachers.Count == 1)
+{
+    <h4 class="text-danger">Удаление единственного преподавателя запрещено.</h4>
+    <a asp-action="ElGradebookTeachers" asp-route-elGradebookId="@Model.ElGradebookId"  class="btn btn-primary">Назад</a>
+}
+else
+{
+    <form asp-action="ElGradebookTeacherRemove">
+        <input type="hidden" asp-for="ElGradebookId" />
+        <input type="hidden" asp-for="ElGradebookTeacherId" />
+        <input type="submit" class="btn btn-danger" value="Удалить" />
+        <a asp-action="ElGradebookTeachers" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-default">Отмена</a>
+    </form>
+}
