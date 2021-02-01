@@ -1,0 +1,16 @@
+﻿@model ElGradebook
+
+<h2>Удаление электронного журнала</h2>
+<h4>Вы действительно хотите удалить электронный журнал?</h4>
+
+<hr />
+<h4>Учебный год: <b>@Model.EduYear</b></h4>
+<h4>Группа: <b>@Model.GroupName (@Model.Course курс, @Model.SemesterNumber семестр)</b></h4>
+<h4>Дисциплина: <b>@Model.DisciplineName</b></h4>
+<hr />
+
+<form asp-action="ElGradebookRemove">
+    <input type="hidden" asp-for="ElGradebookId" />
+    <input type="submit" value="Удалить" class="btn btn-danger" />
+    <a asp-action="ElGradebookView" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-default">Отмена</a>
+</form>

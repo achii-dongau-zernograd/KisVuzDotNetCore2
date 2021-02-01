@@ -175,6 +175,36 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
                     FilterGroupName = elGradebook.GroupName,
                     IsRequestDataImmediately = true });
         }
+
+        /// <summary>
+        /// Удаление электронного журнала
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> ElGradebookRemove(int elGradebookId)
+        {
+            var elGradebook = await _elGradebookRepository.GetElGradebookAsync(elGradebookId);
+            if (elGradebook == null)
+                return NotFound();
+
+            return View(elGradebook);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ElGradebookRemove(ElGradebook elGradebook)
+        {
+            await _elGradebookRepository.RemoveElGradebookAsync(elGradebook.ElGradebookId);
+            if (elGradebook == null)
+                return NotFound();
+
+            return RedirectToAction(nameof(Index),
+                new
+                {
+                    FilterEduYear = elGradebook.EduYear,
+                    FilterGroupName = elGradebook.GroupName,
+                    IsRequestDataImmediately = true
+                });
+        }
         #endregion
 
         #region Список студентов

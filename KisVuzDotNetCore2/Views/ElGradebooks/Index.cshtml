@@ -138,7 +138,7 @@
                     <td>
                         <a asp-action="ElGradebookView" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-info">Просмотр</a>
                         <a asp-action="ElGradebookCreateOrUpdate" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-primary">Редактировать</a>
-                        <a asp-action="ElGradebookRemove" class="btn btn-danger">Удалить</a>
+                        <a asp-action="ElGradebookRemove" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-danger">Удалить</a>
                     </td>
                 </tr>
             }

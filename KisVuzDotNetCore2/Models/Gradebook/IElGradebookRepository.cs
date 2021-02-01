@@ -197,6 +197,13 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         Task<List<ElGradebookGroupStudent>> GetStudentAttendance(string userName);
         
         /// <summary>
+        /// Удаляет электронный журнал со всеми данными
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        Task RemoveElGradebookAsync(int elGradebookId);
+
+        /// <summary>
         /// Возвращает преподавателя из уч. журнала по УИД
         /// </summary>
         /// <param name="elGradebookTeacherId"></param>

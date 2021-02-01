@@ -724,5 +724,17 @@ namespace KisVuzDotNetCore2.Models.Gradebook
             AppUser appUser = await GetAppUserAsync(userName);
             return appUser.Id;
         }
+
+        /// <summary>
+        /// Удаляет электронный журнал со всеми данными
+        /// </summary>
+        /// <param name="elGradebookId"></param>
+        /// <returns></returns>
+        public async Task RemoveElGradebookAsync(int elGradebookId)
+        {
+            var entry = await GetElGradebookFullAsync(elGradebookId);
+            _context.Remove(entry);
+            await _context.SaveChangesAsync();
+        }
     }
 }
