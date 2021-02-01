@@ -294,6 +294,11 @@ namespace KisVuzDotNetCore2.Models.Gradebook
                 entry.GroupName = elGradebook.GroupName;
             }
 
+            if (entry.GroupId != elGradebook.GroupId)
+            {
+                entry.GroupId = elGradebook.GroupId;
+            }
+
             if (entry.SemesterNumber != elGradebook.SemesterNumber)
             {
                 entry.SemesterNumber = elGradebook.SemesterNumber;
@@ -707,6 +712,17 @@ namespace KisVuzDotNetCore2.Models.Gradebook
             }
             _context.Remove(entry);
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Возвращает Id пользователя по UserName
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<string> GetAppUserId(string userName)
+        {
+            AppUser appUser = await GetAppUserAsync(userName);
+            return appUser.Id;
         }
     }
 }

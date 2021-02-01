@@ -50,6 +50,57 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
             }
         }
 
+        /// <summary>
+        /// Просмотр перечня учебных журналов
+        /// </summary>
+        /// <param name="filterAndSortModel"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> View(ElGradebooksFilterAndSortModel filterAndSortModel)
+        {
+            ViewBag.ElGradebooksFilterAndSortModel = filterAndSortModel;
+            ViewBag.EduYears = new SelectList(new List<string> { "2020-2021" }, filterAndSortModel.FilterEduYear);
+
+            ViewBag.Faculties = new SelectList(new List<string> { "Факультет среднего профессионального образования",
+                "Факультет \"Экономика и управление территориями\"",
+                "Инженерно-технологический факультет",
+                "Энергетический факультет"},
+                filterAndSortModel.FilterFaculty);
+
+            var departments = new List<string> {
+                "Математика и биоинформатика",
+                "Теплоэнергетика и техносферная безопасность",
+                "Физическое воспитание и спорт",
+                "Эксплуатация энергетического оборудования и электрических машин",
+                "Электроэнергетика и электротехника",
+                "Бухгалтерский учет, анализ и аудит",
+                "Гуманитарные дисциплины и иностранные языки",
+                "Землеустройство и кадастры",
+                "Экономика и управление",
+                "Агрономия и селекция сельскохозяйственных культур",
+                "Техническая механика и физика",
+                "Технический сервис в агропромышленном комплексе",
+                "Технологии и средства механизации агропромышленного комплекса",
+                "Тракторы, автомобили и эксплуатация автотранспортных средств"
+            };
+            departments.Sort();
+
+            ViewBag.Departments = new SelectList(departments,
+                filterAndSortModel.FilterDepartment);
+
+            if (filterAndSortModel.IsRequestDataImmediately)
+            {
+                var data = await _elGradebookRepository
+                                .GetElGradebooks(filterAndSortModel)
+                                .ToListAsync();
+
+                return View(data);
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         #region Добавление или редактирование электронного журнала
         public async Task<IActionResult> ElGradebookCreateOrUpdate(int elGradebookId)
         {
@@ -57,7 +108,7 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
                 DisciplineName = "Информатика",
                 Course = 1,
                 SemesterNumber = 1,
-                GroupName = "АЭ11",
+                GroupName = "АЭ-11",
                 Faculty = "Энергетический факультет",
                 Department = "Математика и биоинформатика"
             };
@@ -95,6 +146,8 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
                 "Тракторы, автомобили и эксплуатация автотранспортных средств"
             },
                 elGradebook.Faculty);
+
+            ViewBag.StudentGroups = _selectListRepository.GetSelectListStudentGroups(elGradebook.GroupId);
 
             return View(elGradebook);
         }
@@ -191,7 +244,16 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
             if (elGradebook == null)
                 return NotFound();
 
-            var studentGroup = await _studentRepository.GetStudentGroupByGroupNameAsync(elGradebook.GroupName);
+            StudentGroup studentGroup;
+            if (elGradebook.GroupId != 0)
+            {
+                studentGroup = await _studentRepository.GetStudentGroupByIdAsync(elGradebook.GroupId);
+            }
+            else
+            {
+                studentGroup = await _studentRepository.GetStudentGroupByGroupNameAsync(elGradebook.GroupName);
+            }
+            
 
             elGradebook.ElGradebookGroupStudents = new List<ElGradebookGroupStudent>();
             if (studentGroup != null)
@@ -221,7 +283,16 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
             if (elGradebook == null)
                 return NotFound();
 
-            var studentGroup = await _studentRepository.GetStudentGroupByGroupNameAsync(elGradebook.GroupName);
+            StudentGroup studentGroup;
+            if (elGradebook.GroupId != 0)
+            {
+                studentGroup = await _studentRepository.GetStudentGroupByIdAsync(elGradebook.GroupId);
+            }
+            else
+            {
+                studentGroup = await _studentRepository.GetStudentGroupByGroupNameAsync(elGradebook.GroupName);
+            }
+
             var addingStudents = new List<ElGradebookGroupStudent>();
             foreach (var student in studentGroup.Students)
             {
@@ -523,6 +594,8 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
         public async Task<IActionResult> ElGradebookView(int elGradebookId)
         {
             var elGradebook = await _elGradebookRepository.GetElGradebookFullAsync(elGradebookId);
+            var userId = await _elGradebookRepository.GetAppUserId(User.Identity.Name);
+            ViewBag.UserId = userId;
             return View(elGradebook);
         }
 

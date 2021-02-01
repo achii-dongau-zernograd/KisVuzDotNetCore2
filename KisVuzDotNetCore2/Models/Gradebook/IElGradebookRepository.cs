@@ -216,5 +216,12 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         /// <param name="elGradebookTeacher"></param>
         /// <returns></returns>
         Task RemoveElGradebookTeacher(ElGradebookTeacher elGradebookTeacher);
+        
+        /// <summary>
+        /// Возвращает Id пользователя по UserName
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<string> GetAppUserId(string userName);
     }
 }

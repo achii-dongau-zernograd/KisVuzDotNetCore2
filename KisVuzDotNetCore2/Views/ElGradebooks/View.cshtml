@@ -1,0 +1,150 @@
+﻿@model IEnumerable<ElGradebook>
+
+<h2>Электронные журналы</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Фильтр</div>
+    <div class="panel-body">
+        <form asp-action="View" class="form-inline">
+
+            <div class="form-group">
+                <label for="FilterEduYear">Учебный год</label>
+                <select name="FilterEduYear" class="form-control" asp-items="ViewBag.EduYears">
+                    <option value="">Все учебные годы</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="FilterFaculty">Факультет</label>
+                @*<input type="text" name="FilterFaculty" value="@ViewBag.ElGradebooksFilterAndSortModel.FilterFaculty" class="form-control" id="FilterFaculty" placeholder="Все факультеты">*@
+                <select name="FilterFaculty" asp-items="ViewBag.Faculties" class="form-control">
+                    <option value="">Все факультеты</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="FilterDepartment">Кафедра</label>
+                @*<input type="text" name="FilterDepartment" value="@ViewBag.ElGradebooksFilterAndSortModel.FilterDepartment" class="form-control" id="FilterDepartment" placeholder="Все кафедры">*@
+                <select name="FilterDepartment" asp-items="ViewBag.Departments" class="form-control">
+                    <option value="">Все кафедры</option>
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label for="FilterDisciplineName">Дисциплина</label>
+                <input type="text" name="FilterDisciplineName" value="@ViewBag.ElGradebooksFilterAndSortModel.FilterDisciplineName" class="form-control" id="FilterDisciplineName" placeholder="Все дисциплины">
+            </div>
+
+            <div class="form-group">
+                <label for="FilterGroupName">Группа</label>
+                <input type="text" name="FilterGroupName" value="@ViewBag.ElGradebooksFilterAndSortModel.FilterGroupName" class="form-control" id="FilterGroupName" placeholder="Все группы">
+            </div>
+
+            <div class="form-group">
+                <label for="FilterCourse">Курс</label>
+                <input type="text" name="FilterCourse"
+                       value="@(ViewBag.ElGradebooksFilterAndSortModel.FilterCourse == 0 ? "" : ViewBag.ElGradebooksFilterAndSortModel.FilterCourse)"
+                       class="form-control" id="FilterCourse" placeholder="Все курсы">
+            </div>
+
+            <div class="form-group">
+                <label for="FilterSemesterNumber">Семестр</label>
+                <input type="text" name="FilterSemesterNumber"
+                       value="@(ViewBag.ElGradebooksFilterAndSortModel.FilterSemesterNumber == 0 ? "" : ViewBag.ElGradebooksFilterAndSortModel.FilterSemesterNumber)"
+                       class="form-control" id="FilterSemesterNumber" placeholder="Все семестры">
+            </div>
+
+            <input type="hidden" name="IsRequestDataImmediately" value="true" />
+            <button type="submit" class="btn btn-info">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                Применить фильтр
+            </button>
+        </form>
+    </div>
+</div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Учебный год</th>
+            <th>Факультет</th>
+            <th>Кафедра</th>
+            <th>Преподаватели</th>
+            <th>Дисциплина</th>
+            <th>Группа</th>
+            <th>Курс</th>
+            <th>Семестр</th>
+            @*<th>Занятия</th>*@
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="10" class="text-center text-info">Задайте параметры поиска и нажмите на кнопку "Применить фильтр"</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var elGradebook in Model)
+            {
+                <tr>
+                    <td>
+                        @elGradebook.EduYear
+                    </td>
+                    <td>
+                        @elGradebook.Faculty
+                    </td>
+                    <td>
+                        @elGradebook.Department
+                    </td>
+                    <td>
+                        @if (elGradebook.ElGradebookTeachers != null)
+                        {
+                            foreach (var elGradebookTeacher in elGradebook.ElGradebookTeachers)
+                            {
+                                if (!string.IsNullOrEmpty(elGradebookTeacher.UserId))
+                                {
+                                    <p>
+                                        <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@elGradebookTeacher.UserId" target="_blank">@elGradebookTeacher.TeacherFio</a>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p>@elGradebookTeacher.TeacherFio</p>
+                                }
+
+                            }
+                        }
+                    </td>
+                    <td>
+                        @elGradebook.DisciplineName
+                    </td>
+                    <td>
+                        @*<a asp-action="ElGradebookGroupStudents" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-primary">@elGradebook.GroupName. Список студентов</a>*@
+                        @elGradebook.GroupName
+                    </td>
+                    <td>
+                        @elGradebook.Course
+                    </td>
+                    <td>
+                        @elGradebook.SemesterNumber
+                    </td>
+                    @*<td>
+                        <a asp-action="ElGradebookLessons" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-primary">Открыть</a>
+                    </td>*@
+                    <td>
+                        <a asp-action="ElGradebookView" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-info">Просмотр</a>
+                        @*<a asp-action="ElGradebookCreateOrUpdate" asp-route-elGradebookId="@elGradebook.ElGradebookId" class="btn btn-primary">Редактировать</a>
+                        <a asp-action="ElGradebookRemove" class="btn btn-danger">Удалить</a>*@
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

@@ -13,7 +13,7 @@
     <div class="col-md-4">
         <form asp-action="ElGradebookCreateOrUpdate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ElGradebookId" />            
+            <input type="hidden" asp-for="ElGradebookId" />
 
             <div class="form-group">
                 <label asp-for="EduYear" class="control-label"></label>
@@ -34,6 +34,14 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="GroupId" class="control-label">Выберите группу из списка</label>                
+                <select asp-for="GroupId" asp-items="ViewBag.StudentGroups" class="form-control">
+                    <option value="0">Выберите группу</option>
+                </select>
+                <span asp-validation-for="GroupId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="Course" class="control-label"></label>
                 <input asp-for="Course" class="form-control" />
                 <span asp-validation-for="Course" class="text-danger"></span>
@@ -46,8 +54,8 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Faculty" class="control-label"></label>                
-                <select asp-for="Faculty" asp-items="ViewBag.Faculties" class="form-control" ></select>
+                <label asp-for="Faculty" class="control-label"></label>
+                <select asp-for="Faculty" asp-items="ViewBag.Faculties" class="form-control"></select>
                 <span asp-validation-for="Faculty" class="text-danger"></span>
             </div>
 
