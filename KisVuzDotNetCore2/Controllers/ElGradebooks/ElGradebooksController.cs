@@ -109,7 +109,7 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
                 DisciplineName = "Информатика",
                 Course = 1,
                 SemesterNumber = 1,
-                GroupName = "АЭ-11",
+                GroupName = "АЭ-11(1)",
                 Faculty = "Энергетический факультет",
                 Department = "Математика и биоинформатика"
             };
