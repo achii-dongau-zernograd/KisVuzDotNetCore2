@@ -14,7 +14,7 @@
     <form asp-action="ElGradebookGroupStudentsAddGroupConfirmed">
         <input type="hidden" asp-for="ElGradebookId" />
         <input type="submit" value="Добавить" class="btn btn-primary" />
-        <a asp-action="Index" class="btn btn-default">Отмена</a>
+        <a asp-action="ElGradebookGroupStudents" asp-route-elGradebookId="@Model.ElGradebookId" class="btn btn-default">Отмена</a>
     </form>
 }
 else

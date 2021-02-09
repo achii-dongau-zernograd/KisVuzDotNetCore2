@@ -35,8 +35,9 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
         {
             ViewBag.ElGradebooksFilterAndSortModel = filterAndSortModel;
             ViewBag.EduYears = new SelectList(new List<string> { "2020-2021" }, filterAndSortModel.FilterEduYear);
-                        
-            
+            filterAndSortModel.IsRequestDataImmediately = true;
+
+
             if (filterAndSortModel.IsRequestDataImmediately)
             {
                 var data = await _elGradebookRepository
