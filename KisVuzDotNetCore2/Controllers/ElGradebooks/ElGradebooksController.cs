@@ -171,10 +171,7 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
                 await _elGradebookRepository.UpdateElGradebook(elGradebook, User.Identity.Name);
             }
             
-            return RedirectToAction(nameof(Index),
-                new { FilterEduYear = elGradebook.EduYear,
-                    FilterGroupName = elGradebook.GroupName,
-                    IsRequestDataImmediately = true });
+            return RedirectToAction(nameof(Index));
         }
 
         /// <summary>

@@ -356,6 +356,19 @@ namespace KisVuzDotNetCore2.Models.Gradebook
         /// <returns></returns>
         public async Task AddElGradebookGroupStudent(ElGradebookGroupStudent elGradebookGroupStudent)
         {
+            
+            // Добавляем записи с оценками в случае наличия занятий           
+            var lessons = await GetElGradebookWithLessonsAsync(elGradebookGroupStudent.ElGradebookId);
+            if(lessons != null)
+            {
+                elGradebookGroupStudent.ElGradebookLessonMarks = new List<ElGradebookLessonMark>();
+                foreach (var lesson in lessons.ElGradebookLessons)
+                {
+                    elGradebookGroupStudent.ElGradebookLessonMarks
+                        .Add(new ElGradebookLessonMark { ElGradebookLessonId = lesson.ElGradebookLessonId, ElGradebookLessonAttendanceTypeId = 1 });
+                }
+            }
+
             _context.Add(elGradebookGroupStudent);
             await _context.SaveChangesAsync();
         }
