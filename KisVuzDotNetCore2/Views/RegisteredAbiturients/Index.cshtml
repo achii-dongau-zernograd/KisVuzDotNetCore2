@@ -78,6 +78,11 @@
             foreach (var item in Model)
             {
                 <tr>
+                    @if(item.AppUser == null)
+                    {
+                        <td colspan="14" class="text-danger">Аккаунт абитуриента @item.AbiturientId удалён!</td>
+                        continue;
+                    }
                     <td>@item.AbiturientId</td>
                     <td>@item.AppUser.RegisterDateTime</td>
                     <td>
@@ -509,16 +514,16 @@
                     </td>
 
                     @*Подача документов*@
-                <td>
-                    @(item.SubmittingDocumentsType?.SubmittingDocumentsTypeName ?? "-")
+                    <td>
+                        @(item.SubmittingDocumentsType?.SubmittingDocumentsTypeName ?? "-")
 
-                    <a asp-action="Details"
-                       asp-route-userName="@item.AppUser.UserName"
-                       asp-route-mode="ChangeSubmittingDocumentsType"
-                       target="_blank">
-                        <span class="glyphicon glyphicon-edit"></span>
-                    </a>
-                </td>
+                        <a asp-action="Details"
+                           asp-route-userName="@item.AppUser.UserName"
+                           asp-route-mode="ChangeSubmittingDocumentsType"
+                           target="_blank">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </td>
 
                     @*Действия*@
                     <td>
