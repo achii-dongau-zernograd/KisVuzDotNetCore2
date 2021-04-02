@@ -25,7 +25,9 @@
                         </strong>
                     </td>
                 </tr>
-                @foreach (var structSubvision in structSubvisions.Where(a => a.StructSubvisionTypeId == structSubvisionType.StructSubvisionTypeId))
+                @foreach (var structSubvision in structSubvisions
+                    .Where(a => a.StructSubvisionTypeId == structSubvisionType.StructSubvisionTypeId)
+                    .OrderBy(a=>a.StructSubvisionName).ThenBy(a=>a.StructSubvisionPostChief.PostName))
                  {
                      <tr itemprop="name">
                         <td itemprop="name">
