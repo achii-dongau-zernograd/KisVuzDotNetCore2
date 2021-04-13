@@ -51,5 +51,10 @@ namespace KisVuzDotNetCore2.Models
         /// Назначение файлу набора типов данных
         /// </summary>
         public List<FileToFileType> FileToFileTypes { get; set; }
+
+        /// <summary>
+        /// Список ЭЦП
+        /// </summary>
+        public List<Sign.Sign> SignList { get; set; }
     }
 }
