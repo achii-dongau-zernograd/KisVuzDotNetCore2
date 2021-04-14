@@ -27,7 +27,7 @@
                                     
                                 </div>
                                 <div class="modal-body">                                    
-                                    <h4>Дата и время подписания: @(ftft.FileModel?.SignList?.FirstOrDefault().SignDateTime.ToString()??"-")</h4>
+                                    <h4>Дата и время подписания: @if (ftft.FileModel == null || ftft.FileModel?.SignList == null || ftft.FileModel?.SignList.Count == 0) { } else { @ftft.FileModel?.SignList?.FirstOrDefault().SignDateTime.ToString() }</h4>
                                     <h4>
                                         Фамилия, имя, отчество лица, подписавшего документ:
                                         @(ftft.FileModel?.SignList?.FirstOrDefault().LastName??"-")
