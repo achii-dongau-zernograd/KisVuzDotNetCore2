@@ -97,7 +97,49 @@
             {
                 <p itemprop="@ftft.FileDataType.Itemprop">
                     <a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a>
+
+                    @if (ftft.FileModel != null && ftft.FileModel?.SignList != null && ftft.FileModel?.SignList.Count != 0)
+                    {
+                        <img src="~/images/sign.png" height="40" data-toggle="modal" data-target="#modal-@fileDataType.FileDataTypeId" />
+                    }
                 </p>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal-@fileDataType.FileDataTypeId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLabel">Электронная цифровая подпись <img src="~/images/sign.png" height="100" /></h3>
+
+                            </div>
+                            <div class="modal-body">
+                                @if (ftft.FileModel == null || ftft.FileModel?.SignList == null || ftft.FileModel?.SignList.Count == 0)
+                                {
+                                    <h4>Ошибка обнаружения ЭЦП. Обратитесь к администратору</h4>
+                                }
+                                else
+                                {
+                                    <h4>Дата и время подписания: @ftft.FileModel?.SignList?.FirstOrDefault().SignDateTime.ToString()</h4>
+                                    <h4>
+                                        Фамилия, имя, отчество лица, подписавшего документ:
+                                        @(ftft.FileModel?.SignList?.FirstOrDefault().LastName??"-")
+                                        @(ftft.FileModel?.SignList?.FirstOrDefault().FirstName??"-")
+                                        @(ftft.FileModel?.SignList?.FirstOrDefault().Patronymic??"-")
+                                    </h4>
+                                    <h4>
+                                        Должность лица, подписавшего документ:
+                                        @(ftft.FileModel?.SignList?.FirstOrDefault().Post??"-")
+                                    </h4>
+                                    <h4>Ключ: @(ftft.FileModel?.SignList?.FirstOrDefault().Key??"-")</h4>
+                                }
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
         </div>
     </div>
