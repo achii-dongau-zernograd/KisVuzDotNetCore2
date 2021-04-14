@@ -134,6 +134,7 @@ namespace KisVuzDotNetCore2.Controllers
                 .Include(g => g.FileDataTypes)
                     .ThenInclude(fdt => fdt.FileToFileTypes)
                         .ThenInclude(ftft => ftft.FileModel)
+                            .ThenInclude(fm => fm.SignList)
                 .SingleOrDefaultAsync(g => g.FileDataTypeGroupName == "Положения");
             ViewData["polojeniya"] = polojeniya;
 
