@@ -24,12 +24,21 @@ namespace KisVuzDotNetCore2.Models.Sign
         /// <returns></returns>
         public async Task<int> CreateSignForUnsignedDocuments()
         {
-            var unsignedDocs = await _context.Files
-                .Include(f => f.FileToFileTypes)
-                    .ThenInclude(ftft=>ftft.FileDataType)
-                .Include(f => f.SignList)
-                .Where(f => f.SignList == null || f.SignList.Count == 0)
+            //var unsignedDocs = await _context.Files
+            //    .Include(f => f.FileToFileTypes)
+            //        .ThenInclude(ftft=>ftft.FileDataType)
+            //    .Include(f => f.SignList)
+            //    .Where(f => f.SignList == null || f.SignList.Count == 0)
+            //    .Take(1000)
+            //    .ToListAsync();
+            var unsignedDocs = await _context.FileToFileTypes
+                .Include(ftft=>ftft.FileDataType)
+                .Include(ftft => ftft.FileModel.SignList)
+                .Where(ftft => ftft.FileDataType.FileDataTypeGroupId == 1
+                                || ftft.FileDataType.FileDataTypeGroupId == 2
+                                || ftft.FileDataType.FileDataTypeGroupId == 3)
                 .Take(1000)
+                .Select(ftft=>ftft.FileModel)
                 .ToListAsync();
 
             int counter = 0;
