@@ -36,8 +36,7 @@ namespace KisVuzDotNetCore2.Models.Sign
                 .Include(ftft => ftft.FileModel.SignList)
                 .Where(ftft => ftft.FileDataType.FileDataTypeGroupId == 1
                                 || ftft.FileDataType.FileDataTypeGroupId == 2
-                                || ftft.FileDataType.FileDataTypeGroupId == 3)
-                .Take(1000)
+                                || ftft.FileDataType.FileDataTypeGroupId == 3)                
                 .Select(ftft=>ftft.FileModel)
                 .ToListAsync();
 
