@@ -178,6 +178,34 @@ namespace KisVuzDotNetCore2.Models.Files
         }
 
         /// <summary>
+        /// Загружает на сервер скан-копию СНИЛС и
+        /// создаёт соответствующую запись в таблице UserDocuments
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<UserDocument> CreateSNILS(string userName, IFormFile uploadedFile)
+        {
+            var userId = _userProfileRepository.GetAppUserId(userName);
+            var fileModel = await _fileModelRepository.UploadSNILSAsync(uploadedFile);
+            if (fileModel == null)
+                return null;
+
+            var userDocument = new UserDocument
+            {
+                AppUserId = userId,
+                FileModelId = fileModel.Id,
+                FileDataTypeId = (int)FileDataTypeEnum.UserDocuments_SNILS,
+                RowStatusId = (int)RowStatusEnum.NotConfirmed
+            };
+
+            await _context.AddAsync(userDocument);
+            await _context.SaveChangesAsync();
+
+            return userDocument;
+        }
+
+        /// <summary>
         /// Проверяет наличие у пользователя наличия документов указанного типа
         /// </summary>
         /// <param name="userName"></param>
@@ -488,8 +516,6 @@ namespace KisVuzDotNetCore2.Models.Files
             _context.UserDocuments.Update(entry);
 
             await _context.SaveChangesAsync();
-        }
-
-        
+        }        
     }
 }

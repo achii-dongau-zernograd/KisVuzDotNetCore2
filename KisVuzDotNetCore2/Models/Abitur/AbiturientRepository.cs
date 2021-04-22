@@ -482,6 +482,18 @@ namespace KisVuzDotNetCore2.Models.Abitur
         }
 
         /// <summary>
+        /// Проверяем наличие у абитуриента загруженной скан-копии СНИЛС
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        public bool IsLoadedFileSNILS(Abiturient abiturient)
+        {
+            bool isLoadedFile = _userDocumentRepository.IsLoadedUserDocument(abiturient.AppUser, FileDataTypeEnum.UserDocuments_SNILS);
+
+            return isLoadedFile;
+        }
+
+        /// <summary>
         /// Проверяет наличие наспортных данных
         /// </summary>
         /// <param name="userName"></param>
@@ -1211,8 +1223,6 @@ namespace KisVuzDotNetCore2.Models.Abitur
         {
             await _revocationStatementRepository.UpdateRevocationStatement(userName, revocationStatement, uploadedFile);
         }
-
-
         #endregion
     }
 }

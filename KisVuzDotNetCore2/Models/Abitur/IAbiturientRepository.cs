@@ -127,7 +127,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="abiturientStatusId"></param>
         /// <returns></returns>
         Task SetAbiturientStatusAsync(Abiturient abiturient, AbiturientStatusEnum abiturientStatusId);
-
+                
         /// <summary>
         /// Устанавливает способ подачи документов
         /// </summary>
@@ -200,7 +200,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="userName"></param>
         /// <returns></returns>
         bool IsLoadedFilePassport(string userName);
-        
+                
         /// <summary>
         /// Назначает абитуриенту консультанта
         /// </summary>
@@ -222,6 +222,13 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="abiturient"></param>
         /// <returns></returns>
         bool IsLoadedFilePhoto(Abiturient abiturient);
+
+        /// <summary>
+        /// Проверяем наличие у абитуриента загруженной скан-копии СНИЛС
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <returns></returns>
+        bool IsLoadedFileSNILS(Abiturient abiturient);
 
         /// <summary>
         /// Обновляет данные абитуриента

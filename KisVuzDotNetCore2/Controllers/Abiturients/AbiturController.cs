@@ -93,6 +93,9 @@ namespace KisVuzDotNetCore2.Controllers
             if (!_abiturRepository.IsLoadedFilePhoto(abiturient))
                 return RedirectToAction(nameof(LoadFilePhoto));
 
+            // Проверяем наличие у абитуриента загруженной скан-копии СНИЛС
+            if (!_abiturRepository.IsLoadedFileSNILS(abiturient))
+                return RedirectToAction(nameof(LoadFileSNILS));
 
             // Проверяем наличие у абитуриента загруженного документа об образовании
             if (!_abiturRepository.IsLoadedFileEducationDocuments(abiturient))
@@ -104,7 +107,7 @@ namespace KisVuzDotNetCore2.Controllers
 
             // Проверяем наличие у абитуриента загруженной скан-копии паспорта
             if (!_abiturRepository.IsLoadedFilePassport(abiturient))
-                return RedirectToAction(nameof(LoadFilePassport));
+                return RedirectToAction(nameof(LoadFilePassport));                        
 
             // Проверяем наличие паспортных данных
             //if (!_abiturRepository.IsPassportDataExists(abiturient))
@@ -1082,7 +1085,26 @@ namespace KisVuzDotNetCore2.Controllers
             return RedirectToAction(nameof(Start));
         }
         #endregion
-                
+
+        #region Загрузка СНИЛС абитуриента
+        public IActionResult LoadFileSNILS()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoadFileSNILS(IFormFile uploadedFile)
+        {
+            if (uploadedFile == null)
+                RedirectToAction(nameof(Start));
+
+            UserDocument newUserDocument = await _userDocumentRepository
+                .CreateSNILS(User.Identity.Name, uploadedFile);
+
+            return RedirectToAction(nameof(Start));
+        }
+        #endregion
+
         #region Регистрация абитуриентов и прием документов
         public IActionResult Register()
         {

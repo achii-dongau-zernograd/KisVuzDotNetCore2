@@ -279,6 +279,10 @@
         /// <summary>
         /// Учебно-программная документация - Лист переутверждения фонда оценочных средств
         /// </summary>
-        FondOcenochnihSredstvListPereutverjdeniya = 76
+        FondOcenochnihSredstvListPereutverjdeniya = 76,
+        /// <summary>
+        /// Документы пользователя - СНИЛС
+        /// </summary>
+        UserDocuments_SNILS = 77
     }
 }

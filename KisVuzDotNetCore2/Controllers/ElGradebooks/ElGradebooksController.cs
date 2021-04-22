@@ -631,9 +631,12 @@ namespace KisVuzDotNetCore2.Controllers.ElGradebooks
         /// Просмотр успеваемости студента
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> StudentAttendanceView()
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login","Account");
+
             var elGradebooks = await _elGradebookRepository.GetStudentAttendance(User.Identity.Name);
 
             return View(elGradebooks);

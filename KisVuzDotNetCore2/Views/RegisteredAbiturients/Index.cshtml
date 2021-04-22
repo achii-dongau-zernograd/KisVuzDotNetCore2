@@ -108,136 +108,161 @@
                         </a>
                     </td>
                     @*Основные документы*@
-                    <td>
-                        @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.SoglasieNaObrabotkuPersonalnihDannih))
-                        {
-                            string userDocumentClass = "";
-                            if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
-                            { userDocumentClass = "text-success"; }
-                            else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
-                            { userDocumentClass = "text-danger"; }
-                            else
-                            { userDocumentClass = "text-warning"; }
+                <td>
+                    @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.SoglasieNaObrabotkuPersonalnihDannih))
+                    {
+                        string userDocumentClass = "";
+                        if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
+                        { userDocumentClass = "text-success"; }
+                        else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                        { userDocumentClass = "text-danger"; }
+                        else
+                        { userDocumentClass = "text-warning"; }
 
-                            <p>
-                                <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
-                                @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
-                                {
-                                    <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
-                                       asp-action="Edit"
-                                       asp-route-id="@userDocument.UserDocumentId"
-                                       target="_blank">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                    </a>
-                                }
-                            </p>
-                        }
+                        <p>
+                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                            @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
+                            {
+                                <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
+                                   asp-action="Edit"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            }
+                        </p>
+                    }
 
-                        @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.Passport))
-                        {
-                            string userDocumentClass = "";
-                            if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
-                            { userDocumentClass = "text-success"; }
-                            else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
-                            { userDocumentClass = "text-danger"; }
-                            else
-                            { userDocumentClass = "text-warning"; }
+                    @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.Passport))
+                    {
+                        string userDocumentClass = "";
+                        if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
+                        { userDocumentClass = "text-success"; }
+                        else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                        { userDocumentClass = "text-danger"; }
+                        else
+                        { userDocumentClass = "text-warning"; }
 
-                            <p>
-                                    <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
-                                    @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
-                                    {
-                                        <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
-                                           asp-action="Edit"
-                                           asp-route-id="@userDocument.UserDocumentId"
-                                           target="_blank">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                        </a>
-                                    }
-                            </p>
-                        }
+                        <p>
+                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                            @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
+                            {
+                                <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
+                                   asp-action="Edit"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            }
+                        </p>
+                    }
 
-                        @foreach (var userDocument in item.AppUser.UserDocuments
-                         .Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.AttestatObOsnovnomObshemObrazovanii ||
-                                     d.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
-                                     d.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO ||
-                                     d.FileDataTypeId == (int)FileDataTypeEnum.DiplomVO))
-                        {
-                            string userDocumentClass = "";
-                            if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
-                            { userDocumentClass = "text-success"; }
-                            else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
-                            { userDocumentClass = "text-danger"; }
-                            else
-                            { userDocumentClass = "text-warning"; }
+                    @foreach (var userDocument in item.AppUser.UserDocuments
+                    .Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.AttestatObOsnovnomObshemObrazovanii ||
+                                d.FileDataTypeId == (int)FileDataTypeEnum.AttestatOSrednemObshemObrazovanii ||
+                                d.FileDataTypeId == (int)FileDataTypeEnum.DiplomSPO ||
+                                d.FileDataTypeId == (int)FileDataTypeEnum.DiplomVO))
+                    {
+                        string userDocumentClass = "";
+                        if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
+                        { userDocumentClass = "text-success"; }
+                        else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                        { userDocumentClass = "text-danger"; }
+                        else
+                        { userDocumentClass = "text-warning"; }
 
-                            
-                            <p>
-                                <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileDataType.FileDataTypeName</a>
-                                @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
-                                {
-                                    <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
-                                           asp-action="Edit"
-                                           asp-route-id="@userDocument.UserDocumentId"
-                                           target="_blank">
-                                            <span class="glyphicon glyphicon-edit"></span>
-                                    </a>
-                                }
-                            </p>
-                            
-                        }
 
-                        @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.AbiturientCard))
-                        {
-                            string userDocumentClass = "";
-                            if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
-                            { userDocumentClass = "text-success"; }
-                            else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
-                            { userDocumentClass = "text-danger"; }
-                            else
-                            { userDocumentClass = "text-warning"; }
+                        <p>
+                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileDataType.FileDataTypeName</a>
+                            @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
+                            {
+                                <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
+                                   asp-action="Edit"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            }
+                        </p>
 
-                            
-                            <p>
-                                <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
-                                @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
-                                {
-                                    <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
-                                       asp-action="Edit"
-                                       asp-route-id="@userDocument.UserDocumentId"
-                                       target="_blank">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                    </a>
-                                }
-                            </p>
-                            
-                        }
+                    }
 
-                        @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.UserDocuments_Photo))
-                        {
-                            string userDocumentClass = "";
-                            if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
-                            { userDocumentClass = "text-success"; }
-                            else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
-                            { userDocumentClass = "text-danger"; }
-                            else
-                            { userDocumentClass = "text-warning"; }
-                                                        
-                            <p>
-                                <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
-                                @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
-                                {
-                                    <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
-                                       asp-action="Edit"
-                                       asp-route-id="@userDocument.UserDocumentId"
-                                       target="_blank">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                    </a>
-                                }
-                            </p>
-                            
-                        }
-                    </td>
+                    @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.AbiturientCard))
+                    {
+                        string userDocumentClass = "";
+                        if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
+                        { userDocumentClass = "text-success"; }
+                        else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                        { userDocumentClass = "text-danger"; }
+                        else
+                        { userDocumentClass = "text-warning"; }
+
+
+                        <p>
+                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                            @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
+                            {
+                                <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
+                                   asp-action="Edit"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            }
+                        </p>
+
+                    }
+
+                    @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.UserDocuments_Photo))
+                    {
+                        string userDocumentClass = "";
+                        if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
+                        { userDocumentClass = "text-success"; }
+                        else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                        { userDocumentClass = "text-danger"; }
+                        else
+                        { userDocumentClass = "text-warning"; }
+
+                        <p>
+                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                            @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
+                            {
+                                <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
+                                   asp-action="Edit"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            }
+                        </p>
+
+                    }
+
+                    @foreach (var userDocument in item.AppUser.UserDocuments.Where(d => d.FileDataTypeId == (int)FileDataTypeEnum.UserDocuments_SNILS))
+                    {
+                        string userDocumentClass = "";
+                        if (userDocument.RowStatusId == (int)RowStatusEnum.Confirmed)
+                        { userDocumentClass = "text-success"; }
+                        else if (userDocument.RowStatusId == (int)RowStatusEnum.ReturnedForCorrection)
+                        { userDocumentClass = "text-danger"; }
+                        else
+                        { userDocumentClass = "text-warning"; }
+
+                        <p>
+                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                            @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
+                            {
+                                <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
+                                   asp-action="Edit"
+                                   asp-route-id="@userDocument.UserDocumentId"
+                                   target="_blank">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                            }
+                        </p>
+
+                    }
+                </td>
 
                     @*Заявления о приёме*@
                     <td>

@@ -442,6 +442,20 @@ namespace KisVuzDotNetCore2.Models.Files
             return fileModel;
         }
 
+
+        /// <summary>
+        /// Загружает на сервер скан-копию СНИЛС
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        public async Task<FileModel> UploadSNILSAsync(IFormFile uploadedFile)
+        {
+            var fileModel = await UploadFileAsync(uploadedFile,
+                "СНИЛС",
+                FileDataTypeEnum.UserDocuments_SNILS);
+            return fileModel;
+        }
+
         /// <summary>
         /// Загружайт скан-копию файла, подтверждающего индивидуальное достижение абитуриента
         /// </summary>
@@ -676,5 +690,6 @@ namespace KisVuzDotNetCore2.Models.Files
             var num = await _context.Files.CountAsync();
             return num;
         }
+
     }
 }

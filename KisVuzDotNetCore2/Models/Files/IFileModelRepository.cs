@@ -185,7 +185,14 @@ namespace KisVuzDotNetCore2.Models.Files
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
         Task<FileModel> UploadPassportAsync(IFormFile uploadedFile);
-        
+
+        /// <summary>
+        /// Загружает на сервер скан-копию СНИЛС
+        /// </summary>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        Task<FileModel> UploadSNILSAsync(IFormFile uploadedFile);
+
         /// <summary>
         /// Загружает файл карточки абитуриента
         /// </summary>
