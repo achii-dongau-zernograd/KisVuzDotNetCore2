@@ -32,6 +32,16 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListEduNapravlFullNamesOfEduLevel(int? eduLevelId, int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список полных наименований
+        /// реализуемых направлений подготовки
+        /// указанного уровня образования
+        /// за исключением 23.02.03 и 23.03.01
+        /// </summary>
+        /// <param name="eduLevelId"></param>
+        /// <returns></returns>
+        SelectList GetSelectListEduNapravlFullNamesOfEduLevelWithout230203and230301(int? eduLevelId, int selectedId = 0);
+
+        /// <summary>
         /// Возвращает список типов
         /// внешних ресурсов
         /// </summary>
@@ -255,7 +265,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListCitationBases(int selectedId = 0);
-
+                
         /// <summary>
         /// Возвращает список ФИО преподавателей
         /// </summary>

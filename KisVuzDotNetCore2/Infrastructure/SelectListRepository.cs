@@ -221,6 +221,25 @@ namespace KisVuzDotNetCore2.Infrastructure
 
         /// <summary>
         /// Возвращает список полных наименований
+        /// реализуемых направлений подготовки
+        /// указанного уровня образования
+        /// за исключением 23.02.03 и 23.03.01
+        /// </summary>
+        /// <param name="eduLevelId"></param>
+        /// <param name="selectedId"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEduNapravlFullNamesOfEduLevelWithout230203and230301(int? eduLevelId, int selectedId = 0)
+        {
+            var data = _context.EduNapravls
+                .Include(n => n.EduUgs.EduLevel)
+                .Where(n => n.EduUgs.EduLevelId == eduLevelId
+                && n.EduNapravlCode != "23.02.03" && n.EduNapravlCode != "23.03.01");
+
+            return new SelectList(data, "EduNapravlId", "GetEduNapravlName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список полных наименований
         /// реализуемых профилей подготовки
         /// </summary>
         /// <param name="selectedId"></param>

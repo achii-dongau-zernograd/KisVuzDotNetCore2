@@ -225,7 +225,8 @@ namespace KisVuzDotNetCore2.Controllers
             if (eduNapravlId == null)
             {
                 ViewBag.EduLevelId = eduLevelId;
-                ViewBag.EduNapravls = _selectListRepository.GetSelectListEduNapravlFullNamesOfEduLevel(eduLevelId);
+                //ViewBag.EduNapravls = _selectListRepository.GetSelectListEduNapravlFullNamesOfEduLevel(eduLevelId);
+                ViewBag.EduNapravls = _selectListRepository.GetSelectListEduNapravlFullNamesOfEduLevelWithout230203and230301(eduLevelId);
                 return View();
             }
 
