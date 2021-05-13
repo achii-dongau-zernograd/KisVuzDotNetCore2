@@ -180,6 +180,7 @@ namespace KisVuzDotNetCore2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Preview()
         {
             var appIdentityDBContext = _context.ElectronBiblSystem.Include(e => e.CopyDogovor);
