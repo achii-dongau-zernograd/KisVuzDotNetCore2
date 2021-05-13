@@ -4,6 +4,12 @@
     ViewData["Title"] = "Абитуриенты";
 
     bool isUserConsultant = (bool) ViewBag.IsUserConsultant;
+
+    string date = null;
+    if(ViewBag.AbiturientsFilterAndSortModel.FilterRegisteredFromDate != null)
+    {
+        date = (((DateTime)ViewBag.AbiturientsFilterAndSortModel.FilterRegisteredFromDate).ToString("yyyy-MM-dd"));
+    }
 }
 
 <h2>Абитуриенты</h2>
@@ -12,6 +18,10 @@
     <div class="panel-heading">Фильтр</div>
     <div class="panel-body">
         <form asp-action="Index" class="form-inline">
+            <div class="form-group">
+                <label for="FilterRegisteredFromDate">Дата регистрации >= </label>
+                <input type="date" name="FilterRegisteredFromDate" value="@date" class="form-control" id="FilterRegisteredFromDate">
+            </div>
             <div class="form-group">
                 <label for="FilterLastNameFragment">Фамилия (фрагмент)</label>
                 <input type="text" name="FilterLastNameFragment" value="@ViewBag.AbiturientsFilterAndSortModel.FilterLastNameFragment" class="form-control" id="FilterLastNameFragment" placeholder="Все абитуриенты">
@@ -37,7 +47,7 @@
             </div>
 
             <div class="form-group">
-                <label for="FilterIsEduDocumentOriginal">Предоставлен оригинал документа об образовании</label>                 
+                <label for="FilterIsEduDocumentOriginal">Предоставлен оригинал документа об образовании</label>
                 @Html.CheckBox("FilterIsEduDocumentOriginal", (bool?)ViewBag.AbiturientsFilterAndSortModel.FilterIsEduDocumentOriginal)
             </div>
 

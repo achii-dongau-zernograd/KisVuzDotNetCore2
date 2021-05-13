@@ -59,6 +59,9 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
             if (filterAndSortModel.FilterIsEduDocumentOriginal == true)
                 abiturs = abiturs.Where(a => a.IsEduDocumentOriginal == true);
 
+            if (filterAndSortModel.FilterRegisteredFromDate != null)
+                abiturs = abiturs.Where(a => a.AppUser.RegisterDateTime > filterAndSortModel.FilterRegisteredFromDate);
+
             abiturs = abiturs.OrderByDescending(a => a.AppUser.RegisterDateTime);
 
             if (filterAndSortModel.IsRequestDataImmediately)

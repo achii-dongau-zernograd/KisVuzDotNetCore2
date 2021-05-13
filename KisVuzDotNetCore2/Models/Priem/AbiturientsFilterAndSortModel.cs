@@ -36,6 +36,11 @@ namespace KisVuzDotNetCore2.Models.Priem
         public bool? FilterIsEduDocumentOriginal { get; set; }
 
         /// <summary>
+        /// Дата регистрации (отображаем, только если абитуриент зарегистрировался позднее этой даты)
+        /// </summary>
+        public DateTime? FilterRegisteredFromDate { get; set; } = new DateTime(2021, 02, 01);
+
+        /// <summary>
         /// Флаг, указывающий на необходимость немедленной загрузки данных
         /// (из запроса GET)
         /// </summary>
