@@ -588,10 +588,44 @@ namespace KisVuzDotNetCore2.Models.Abitur
             {
                 await _userProfileRepository.SetAppUserStatusAsync(abiturient.AppUser, AppUserStatusEnum.ToDelete);
             }
+
             
             if(abiturient.AbiturientIndividualAchievments != null && abiturient.AbiturientIndividualAchievments.Count() > 0)
             {
                 await RemoveAbiturientIndividualAchievmentsAsync(abiturient.AbiturientIndividualAchievments);
+            }
+
+            
+            if (abiturient.ApplicationForAdmissions != null && abiturient.ApplicationForAdmissions.Count > 0)
+            {
+                foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions)
+                {
+                    // Удалений заявлений о согласии на зачисление
+                    if (applicationForAdmission.ConsentToEnrollments != null && applicationForAdmission.ConsentToEnrollments.Count > 0)
+                    {
+                        foreach (var consentToEnrollment in applicationForAdmission.ConsentToEnrollments)
+                        {
+                            await _consentToEnrollmentRepository.RemoveConsentToEnrollmentAsync(consentToEnrollment.ConsentToEnrollmentId);
+                        }                        
+                    }
+
+                    // Удаление договоров
+                    //if (applicationForAdmission.Contracts != null)
+                    //{
+                    //    foreach (var contract in applicationForAdmission.Contracts)
+                    //    {
+                    //        await _contractRepository.RemoveContractAsync(contract);
+                    //    }
+                    //}
+
+                    if (applicationForAdmission.RevocationStatements != null)
+                    {
+                        foreach (var revocationStatement in applicationForAdmission.RevocationStatements)
+                        {
+                            await _revocationStatementRepository.RemoveRevocationStatementAsync(revocationStatement);
+                        }
+                    }
+                }
             }
 
             await _applicationForAdmissionRepository.RemoveApplicationForAdmissionsAsync(abiturient.ApplicationForAdmissions);

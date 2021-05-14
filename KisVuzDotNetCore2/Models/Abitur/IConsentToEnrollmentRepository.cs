@@ -49,11 +49,18 @@ namespace KisVuzDotNetCore2.Models.Abitur
         Task RemoveConsentToEnrollmentAsync(ConsentToEnrollment consentToEnrollment);
 
         /// <summary>
+        /// Удаляет заявление о согласии на зачисление по УИД
+        /// </summary>
+        /// <param name="consentToEnrollmentId"></param>
+        /// <returns></returns>
+        Task RemoveConsentToEnrollmentAsync(int consentToEnrollmentId);
+
+        /// <summary>
         /// Обновляет заявление о согласии на зачисление
         /// </summary>
         /// <param name="consentToEnrollment"></param>
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
-        Task UpdateConsentToEnrollmentAsync(ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile);
+        Task UpdateConsentToEnrollmentAsync(ConsentToEnrollment consentToEnrollment, IFormFile uploadedFile);        
     }
 }

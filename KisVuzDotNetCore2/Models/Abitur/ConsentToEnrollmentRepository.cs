@@ -161,6 +161,17 @@ namespace KisVuzDotNetCore2.Models.Abitur
         }
 
         /// <summary>
+        /// Удаляет заявление о согласии на зачисление по УИД
+        /// </summary>
+        /// <param name="consentToEnrollmentId"></param>
+        /// <returns></returns>
+        public async Task RemoveConsentToEnrollmentAsync(int consentToEnrollmentId)
+        {
+            var entry = await GetConsentToEnrollmentAsync(consentToEnrollmentId);
+            await RemoveConsentToEnrollmentAsync(entry);
+        }
+
+        /// <summary>
         /// Обновляет заявление о согласии на зачисление
         /// </summary>
         /// <param name="consentToEnrollment"></param>
