@@ -14,7 +14,13 @@ namespace KisVuzDotNetCore2.Models.Abitur
     {
         public int AbiturientId { get; set; }
 
-        [Display(Name ="Пользователь")]
+        /// <summary>
+        /// Дата и время создания личного кабинета абитуриента
+        /// </summary>
+        [Display(Name = "Дата и время создания личного кабинета абитуриента")]
+        public DateTime? RegisterDateTime { get; set; } = DateTime.Now;
+
+        [Display(Name = "Пользователь")]
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
         

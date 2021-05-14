@@ -94,7 +94,11 @@
                         continue;
                     }
                     <td>@item.AbiturientId</td>
-                    <td>@item.AppUser.RegisterDateTime</td>
+                    <td>
+                        @item.RegisterDateTime
+                        <br />
+                        (аккаунт создан @item.AppUser.RegisterDateTime)
+                    </td>
                     <td>
                         <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUser.Id">@item.AppUser.GetFullName</a>
                         <hr />

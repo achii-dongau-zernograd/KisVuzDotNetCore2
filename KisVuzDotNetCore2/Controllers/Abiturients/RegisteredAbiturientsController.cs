@@ -60,9 +60,10 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
                 abiturs = abiturs.Where(a => a.IsEduDocumentOriginal == true);
 
             if (filterAndSortModel.FilterRegisteredFromDate != null)
-                abiturs = abiturs.Where(a => a.AppUser.RegisterDateTime > filterAndSortModel.FilterRegisteredFromDate);
+                abiturs = abiturs.Where(a => a.RegisterDateTime > filterAndSortModel.FilterRegisteredFromDate);
 
-            abiturs = abiturs.OrderByDescending(a => a.AppUser.RegisterDateTime);
+            abiturs = abiturs.OrderByDescending(a => a.RegisterDateTime)
+                .ThenBy(a => a.AppUser.RegisterDateTime);
 
             if (filterAndSortModel.IsRequestDataImmediately)
                 return View(abiturs.ToList());
@@ -141,6 +142,21 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
 
             switch (mode)
             {
+                // Режим изменения даты и времени регистрации абитуриента
+                case "ChangeAbiturRegisterDateTime":
+                    ViewBag.Mode = mode;                    
+                    break;
+                // Режим сохранения изменения даты и времени регистрации абитуриента
+                case "ChangeAbiturRegisterDateTimeSave":
+                    string abiturRegisterDateTimeString = HttpContext.Request.Query["RegisterDateTime"];
+                    DateTime abiturRegisterDateTime;
+                    if (DateTime.TryParse(abiturRegisterDateTimeString, out abiturRegisterDateTime))
+                    {
+                        await _abiturRepository.SetAbiturientRegisterDateTimeAsync(abiturient, abiturRegisterDateTime);
+                        return RedirectToAction(nameof(Details), new { userName });
+                    }
+                    break;
+
                 // Режим изменения статуса абитуриента
                 case "ChangeAbiturStatus":
                     ViewBag.Mode = mode;                    

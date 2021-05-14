@@ -11,9 +11,35 @@
 <h3>@Model.AppUser.GetFullName</h3>
 <hr />
 <div class="row">
-    <div class="col-md-2">Дата/время регистрации: </div>
+    <div class="col-md-2">Дата/время регистрации аккаунта: </div>
     <div class="col-md-2">@Model.AppUser.RegisterDateTime</div>
 </div>
+
+<div class="row">
+    <div class="col-md-2">Дата/время регистрации личного кабинета абитуриента: </div>
+    @if (mode == "ChangeAbiturRegisterDateTime")
+    {
+        <form>
+            <div class="col-md-2">
+                <input type="datetime" name="RegisterDateTime" value="@Model.RegisterDateTime" />
+            </div>
+            <div class="col-md-2">
+                <input type="hidden" name="userName" value="@Model.AppUser.UserName" />
+                <input type="hidden" name="mode" value="ChangeAbiturRegisterDateTimeSave" />
+                <input type="submit" class="btn btn-primary" value="Сохранить" />
+                <a asp-route-userName="@Model.AppUser.UserName">Отмена</a>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="col-md-2">@Model.RegisterDateTime</div>
+        <div class="col-md-1">
+            <a asp-route-userName="@Model.AppUser.UserName" asp-route-mode="ChangeAbiturRegisterDateTime">Изменить</a>
+        </div>
+    }
+</div>
+
 <div class="row">
     <div class="col-md-2">Статус абитуриента: </div>
     @if (mode == "ChangeAbiturStatus")

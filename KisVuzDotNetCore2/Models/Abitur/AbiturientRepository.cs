@@ -633,6 +633,18 @@ namespace KisVuzDotNetCore2.Models.Abitur
         }
 
         /// <summary>
+        /// Устанавливает дату и время регистрации абитуриента
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <param name="abiturRegisterDateTime"></param>
+        /// <returns></returns>
+        public async Task SetAbiturientRegisterDateTimeAsync(Abiturient abiturient, DateTime abiturRegisterDateTime)
+        {
+            abiturient.RegisterDateTime = abiturRegisterDateTime;
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
         /// Устанавливает статус абитуриента
         /// </summary>
         /// <param name="abiturient"></param>
@@ -1222,7 +1234,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public async Task UpdateRevocationStatement(string userName, RevocationStatement revocationStatement, IFormFile uploadedFile)
         {
             await _revocationStatementRepository.UpdateRevocationStatement(userName, revocationStatement, uploadedFile);
-        }
+        }        
         #endregion
     }
 }

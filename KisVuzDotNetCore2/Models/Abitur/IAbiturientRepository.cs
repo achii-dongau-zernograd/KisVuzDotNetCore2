@@ -2,6 +2,7 @@
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -179,6 +180,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="userName"></param>
         /// <returns></returns>
         IQueryable<Qualification> GetAbiturientQualifications(string userName);
+
+        /// <summary>
+        /// Устанавливает дату и время регистрации абитуриента
+        /// </summary>
+        /// <param name="abiturient"></param>
+        /// <param name="abiturRegisterDateTime"></param>
+        /// <returns></returns>
+        Task SetAbiturientRegisterDateTimeAsync(Abiturient abiturient, DateTime abiturRegisterDateTime);
 
         /// <summary>
         /// Проверяет наличие наспортных данных
