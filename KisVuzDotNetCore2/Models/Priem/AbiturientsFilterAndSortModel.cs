@@ -43,7 +43,7 @@ namespace KisVuzDotNetCore2.Models.Priem
         /// <summary>
         /// Дата регистрации (отображаем, только если абитуриент зарегистрировался ранее этой даты)
         /// </summary>
-        public DateTime? FilterRegisteredToDate { get; set; } = new DateTime(2021, 02, 01);
+        public DateTime? FilterRegisteredToDate { get; set; } = new DateTime(2021, 12, 01);
 
         /// <summary>
         /// Флаг, указывающий на необходимость немедленной загрузки данных

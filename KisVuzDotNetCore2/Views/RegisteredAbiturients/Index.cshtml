@@ -143,7 +143,16 @@
                         { userDocumentClass = "text-warning"; }
 
                         <p>
-                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">
+                                @if (userDocumentClass == "text-warning")
+                                {
+                                    <strong>@userDocument.FileModel.Name</strong>
+                                }
+                                else
+                                {
+                                    <text>@userDocument.FileModel.Name</text>
+                                }
+                            </a>
                             @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
                             {
                                 <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
@@ -167,7 +176,16 @@
                         { userDocumentClass = "text-warning"; }
 
                         <p>
-                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">
+                                @if (userDocumentClass == "text-warning")
+                                {
+                                    <strong>@userDocument.FileModel.Name</strong>
+                                }
+                                else
+                                {
+                                    <text>@userDocument.FileModel.Name</text>
+                                }
+                            </a>
                             @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
                             {
                                 <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
@@ -196,7 +214,17 @@
 
 
                         <p>
-                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileDataType.FileDataTypeName</a>
+                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">
+                                @if (userDocumentClass == "text-warning")
+                                {
+                                    <strong>@userDocument.FileDataType.FileDataTypeName</strong>
+                                }
+                                else
+                                {
+                                    <text>@userDocument.FileDataType.FileDataTypeName</text>
+                                }
+                            </a>
+                            
                             @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
                             {
                                 <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
@@ -222,7 +250,16 @@
 
 
                         <p>
-                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">
+                                @if (userDocumentClass == "text-warning")
+                                {
+                                    <strong>@userDocument.FileModel.Name</strong>
+                                }
+                                else
+                                {
+                                    <text>@userDocument.FileModel.Name</text>
+                                }
+                            </a>
                             @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
                             {
                                 <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
@@ -247,7 +284,16 @@
                         { userDocumentClass = "text-warning"; }
 
                         <p>
-                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">
+                                @if (userDocumentClass == "text-warning")
+                                {
+                                    <strong>@userDocument.FileModel.Name</strong>
+                                }
+                                else
+                                {
+                                    <text>@userDocument.FileModel.Name</text>
+                                }
+                            </a>
                             @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
                             {
                                 <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
@@ -272,7 +318,16 @@
                         { userDocumentClass = "text-warning"; }
 
                         <p>
-                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">@userDocument.FileModel.Name</a>
+                            <a class="@userDocumentClass" href="/@userDocument.FileModel.Path" target="_blank">
+                                @if (userDocumentClass == "text-warning")
+                                {
+                                    <strong>@userDocument.FileModel.Name</strong>
+                                }
+                                else
+                                {
+                                    <text>@userDocument.FileModel.Name</text>
+                                }
+                            </a>
                             @if (!isUserConsultant || !(userDocument.RowStatusId == (int)RowStatusEnum.Confirmed))
                             {
                                 <a asp-controller="RegisteredAbiturientsUserDocumentsCheck"
