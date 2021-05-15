@@ -21,11 +21,12 @@
 <h1>Материально-техническое обеспечение и оснащенность образовательного процесса</h1>
 
 
-<a href="#spoiler-6" data-toggle="collapse" class="btn btn-primary btn-block">
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
     Места осуществления образовательной деятельности,<br>
     в том числе не указываемые в приложении к лицензии на осужествление образовательной деятельности
 </a>
-<div class="collapse" id="spoiler-6">
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
     <div class="well">
         <div>
 
@@ -97,7 +98,17 @@
                 {
                     <tr itemprop="purposePrac">
                         <td itemprop="addressPrac">@uchCabinet.Korpus.KorpusAddress.GetAddress</td>
-                        <td itemprop="namePrac">@uchCabinet.PomeshenieFullName</td>
+                        <td itemprop="namePrac">
+                            @uchCabinet.PomeshenieFullName
+                            <br />
+                            @if (uchCabinet.PomeshenieTypes != null)
+                            {
+                                foreach (var pomeshenieType in uchCabinet.PomeshenieTypes)
+                                {
+                                    <text>@pomeshenieType.PomeshenieType.PomeshenieTypeName</text><br />
+                                }
+                            }
+                        </td>
                         <td itemprop="osnPrac">
                             <ol>
                                 @foreach (var oborudovanie in uchCabinet.OborudovanieList)
@@ -137,7 +148,17 @@
                 {
                     <tr itemprop="purposePrac">
                         <td itemprop="addressPrac">@objectForPractLessons.Korpus.KorpusAddress.GetAddress</td>
-                        <td itemprop="namePrac">@objectForPractLessons.PomeshenieFullName</td>
+                        <td itemprop="namePrac">
+                            @objectForPractLessons.PomeshenieFullName                            
+                            <br />
+                            @if (objectForPractLessons.PomeshenieTypes != null)
+                            {
+                                foreach (var pomeshenieType in objectForPractLessons.PomeshenieTypes)
+                                {
+                                    <text>@pomeshenieType.PomeshenieType.PomeshenieTypeName</text><br />
+                                }
+                            }
+                        </td>
                         <td itemprop="osnPrac">
                             <ol>
                                 @foreach (var oborudovanie in objectForPractLessons.OborudovanieList)
@@ -268,7 +289,7 @@
     @{spoilerCounter++; }
     <div class="well">
         <div itemprop="purposeFacil">
-            Раздел в разработке
+            Сведения представлены в подразделе "Сведения о приспособленных объектах для проведения практических занятий" 
         </div>
     </div>
 </div>
