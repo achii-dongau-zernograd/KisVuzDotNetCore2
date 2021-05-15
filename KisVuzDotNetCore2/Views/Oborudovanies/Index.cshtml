@@ -17,7 +17,7 @@
         <div class="collapse" id="spoiler-@i">
             @{i = i + 1;}
             <div class="well">
-                @foreach (var pomeshenie in korpus.Pomesheniya)
+                @foreach (var pomeshenie in korpus.Pomesheniya.OrderBy(p=>p.PomeshenieName))
                 {
                     <a href="#spoiler-@i" data-toggle="collapse" class="btn btn-primary btn-block">@pomeshenie.PomeshenieName</a>
                     <div class="collapse" id="spoiler-@i">

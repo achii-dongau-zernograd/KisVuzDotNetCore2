@@ -94,7 +94,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var uchCabinet in UchCabinets)
+                @foreach (var uchCabinet in UchCabinets.OrderBy(p=>p.PomeshenieName))
                 {
                     <tr itemprop="purposePrac">
                         <td itemprop="addressPrac">@uchCabinet.Korpus.KorpusAddress.GetAddress</td>
@@ -144,7 +144,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var objectForPractLessons in ObjectsForPractLessons)
+                @foreach (var objectForPractLessons in ObjectsForPractLessons.OrderBy(p => p.PomeshenieName))
                 {
                     <tr itemprop="purposePrac">
                         <td itemprop="addressPrac">@objectForPractLessons.Korpus.KorpusAddress.GetAddress</td>
