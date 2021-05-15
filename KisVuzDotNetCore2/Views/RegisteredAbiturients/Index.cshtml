@@ -5,10 +5,15 @@
 
     bool isUserConsultant = (bool) ViewBag.IsUserConsultant;
 
-    string date = null;
-    if(ViewBag.AbiturientsFilterAndSortModel.FilterRegisteredFromDate != null)
+    string dateFrom = null;
+    string dateTo = null;
+    if (ViewBag.AbiturientsFilterAndSortModel.FilterRegisteredFromDate != null)
     {
-        date = (((DateTime)ViewBag.AbiturientsFilterAndSortModel.FilterRegisteredFromDate).ToString("yyyy-MM-dd"));
+        dateFrom = (((DateTime)ViewBag.AbiturientsFilterAndSortModel.FilterRegisteredFromDate).ToString("yyyy-MM-dd"));
+    }
+    if (ViewBag.AbiturientsFilterAndSortModel.FilterRegisteredToDate != null)
+    {
+        dateTo = (((DateTime)ViewBag.AbiturientsFilterAndSortModel.FilterRegisteredToDate).ToString("yyyy-MM-dd"));
     }
 }
 
@@ -19,8 +24,12 @@
     <div class="panel-body">
         <form asp-action="Index" class="form-inline">
             <div class="form-group">
-                <label for="FilterRegisteredFromDate">Дата регистрации >= </label>
-                <input type="date" name="FilterRegisteredFromDate" value="@date" class="form-control" id="FilterRegisteredFromDate">
+                <label for="FilterRegisteredFromDate">Дата регистрации: c </label>
+                <input type="date" name="FilterRegisteredFromDate" value="@dateFrom" class="form-control" id="FilterRegisteredFromDate">
+            </div>
+            <div class="form-group">
+                <label for="FilterRegisteredToDate"> по </label>
+                <input type="date" name="FilterRegisteredToDate" value="@dateTo" class="form-control" id="FilterRegisteredToDate">
             </div>
             <div class="form-group">
                 <label for="FilterLastNameFragment">Фамилия (фрагмент)</label>

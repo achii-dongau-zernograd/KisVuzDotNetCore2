@@ -60,7 +60,10 @@ namespace KisVuzDotNetCore2.Controllers.Abiturients
                 abiturs = abiturs.Where(a => a.IsEduDocumentOriginal == true);
 
             if (filterAndSortModel.FilterRegisteredFromDate != null)
-                abiturs = abiturs.Where(a => a.RegisterDateTime > filterAndSortModel.FilterRegisteredFromDate);
+                abiturs = abiturs.Where(a => a.RegisterDateTime >= filterAndSortModel.FilterRegisteredFromDate);
+
+            if (filterAndSortModel.FilterRegisteredToDate != null)
+                abiturs = abiturs.Where(a => a.RegisterDateTime <= filterAndSortModel.FilterRegisteredToDate.Value.AddDays(1));
 
             abiturs = abiturs.OrderByDescending(a => a.RegisterDateTime)
                 .ThenBy(a => a.AppUser.RegisterDateTime);

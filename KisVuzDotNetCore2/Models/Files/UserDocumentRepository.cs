@@ -469,10 +469,14 @@ namespace KisVuzDotNetCore2.Models.Files
                 return;
 
             if (appUser.UserDocuments == null)
+                return;
+
+            var uDocsIds = appUser.UserDocuments.Select(d=>d.UserDocumentId).ToList();
+
+            foreach (var uDocId in uDocsIds)
             {
-                
+                await RemoveUserDocumentAsync(uDocId);
             }
-            throw new NotImplementedException();
         }
 
         /// <summary>

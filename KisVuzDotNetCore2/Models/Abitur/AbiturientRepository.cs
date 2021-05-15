@@ -624,11 +624,14 @@ namespace KisVuzDotNetCore2.Models.Abitur
                         {
                             await _revocationStatementRepository.RemoveRevocationStatementAsync(revocationStatement);
                         }
-                    }
+                    }                                        
                 }
             }
 
             await _applicationForAdmissionRepository.RemoveApplicationForAdmissionsAsync(abiturient.ApplicationForAdmissions);
+
+            // Удаление документов пользователя            
+            await _userDocumentRepository.RemoveUserDocumentsAsync(abiturient.AppUser);
 
             _context.Abiturients.Remove(abiturient);
 

@@ -34,11 +34,16 @@ namespace KisVuzDotNetCore2.Models.Priem
         /// Флаг, указывающий предоставил ли абитуриент оригинал документа об образовании
         /// </summary>
         public bool? FilterIsEduDocumentOriginal { get; set; }
-
+                
         /// <summary>
         /// Дата регистрации (отображаем, только если абитуриент зарегистрировался позднее этой даты)
         /// </summary>
         public DateTime? FilterRegisteredFromDate { get; set; } = new DateTime(2021, 02, 01);
+
+        /// <summary>
+        /// Дата регистрации (отображаем, только если абитуриент зарегистрировался ранее этой даты)
+        /// </summary>
+        public DateTime? FilterRegisteredToDate { get; set; } = new DateTime(2021, 02, 01);
 
         /// <summary>
         /// Флаг, указывающий на необходимость немедленной загрузки данных
