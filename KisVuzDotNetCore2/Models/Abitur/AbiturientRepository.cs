@@ -552,7 +552,8 @@ namespace KisVuzDotNetCore2.Models.Abitur
                 {
                     AbiturientStatusId = (int)AbiturientStatusEnum.NewAbiturient,
                     ApplicationForAdmissions = new List<ApplicationForAdmission>(),
-                    IsHostelRequired = false
+                    IsHostelRequired = false,
+                    SubmittingDocumentsTypeId = 2 // Подача документов: Дистанционно
                 };
                 await _context.SaveChangesAsync();
             }            

@@ -1019,7 +1019,7 @@ namespace KisVuzDotNetCore2.Controllers
 
         #region Загрузка паспорта абитуриента
         /// <summary>
-        /// Загрузка документа об образовании
+        /// Загрузка паспорта абитуриента
         /// </summary>
         /// <returns></returns>
         public IActionResult LoadFilePassport()

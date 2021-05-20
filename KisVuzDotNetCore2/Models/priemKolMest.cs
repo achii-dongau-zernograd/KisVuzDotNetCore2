@@ -93,7 +93,7 @@ namespace KisVuzDotNetCore2.Models
         /// </summary>
         [Display(Name = "Всего ")]
         public int PriemKolMestAll { get {
-                return (PriemKolMestCommon_och + PriemKolMestCommon_zaoch + PriemKolMestCommon_och_zaoch + PriemKolMestCommon_och+ PriemKolMestCommon_zaoch+ PriemKolMestCommon_och_zaoch+ PriemKolMestPaid_och+ PriemKolMestPaid_zaoch+ PriemKolMestPaid_och_zaoch);
+                return (priemKolMestQuota_och + priemKolMestQuota_zaoch + priemKolMestQuota_och_zaoch + PriemKolMestCommon_och+ PriemKolMestCommon_zaoch+ PriemKolMestCommon_och_zaoch+ PriemKolMestPaid_och+ PriemKolMestPaid_zaoch+ PriemKolMestPaid_och_zaoch);
             } }
         
         
