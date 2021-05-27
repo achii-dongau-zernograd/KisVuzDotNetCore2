@@ -20,12 +20,15 @@ namespace KisVuzDotNetCore2.Controllers
     {
         private readonly AppIdentityDBContext _context;
         private readonly IHostingEnvironment _appEnvironment;
+        private readonly IFileModelRepository _fileModelRepository;
 
         public DocumentsController(AppIdentityDBContext context,
-            IHostingEnvironment appEnvironment)
+            IHostingEnvironment appEnvironment,
+            IFileModelRepository fileModelRepository)
         {
             _context = context;
             _appEnvironment = appEnvironment;
+            _fileModelRepository = fileModelRepository;
         }
 
         public async Task<IActionResult>  Index(FileDataTypeEnum? doctype)
@@ -114,7 +117,9 @@ namespace KisVuzDotNetCore2.Controllers
         {
             if(id!=null)
             {
-                KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, id);
+                var fileModel = await _fileModelRepository.GetFileModelAsync(id);
+                await _fileModelRepository.RemoveFileModelAsync(fileModel);
+                //KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, id);
                 await _context.SaveChangesAsync();
             }
 

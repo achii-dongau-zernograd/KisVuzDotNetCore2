@@ -660,6 +660,7 @@ namespace KisVuzDotNetCore2.Models.Files
                 return null;
 
             var fileModel = await _context.Files
+                .Include(f => f.SignList)
                 .Include(f => f.FileToFileTypes)
                     .ThenInclude(ftft => ftft.FileDataType)
                         .ThenInclude(fdt => fdt.FileDataTypeGroup)

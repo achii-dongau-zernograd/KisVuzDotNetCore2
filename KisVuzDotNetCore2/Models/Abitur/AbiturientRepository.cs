@@ -593,7 +593,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
             
             if(abiturient.AbiturientIndividualAchievments != null && abiturient.AbiturientIndividualAchievments.Count() > 0)
             {
-                await RemoveAbiturientIndividualAchievmentsAsync(abiturient.AbiturientIndividualAchievments);
+                await RemoveAbiturientIndividualAchievmentsAsync(abiturient.AbiturientIndividualAchievments);                                
             }
 
             
