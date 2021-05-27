@@ -4,7 +4,7 @@
 
 @{
     var UchCabinets = (List<Pomeshenie>)ViewData["UchCabinets"];
-    var ObjectsForPractLessons = (List<Pomeshenie>) ViewData["ObjectsForPractLessons"];
+    var ObjectsForPractLessons = (List<Pomeshenie>)ViewData["ObjectsForPractLessons"];
     //int currentEduYear = (int)ViewData["currentEduYear"];
     int NumEbs = (int)ViewData["NumEbs"];
     int NumEbsSobstv = (int)ViewData["NumEbsSobstv"];
@@ -90,11 +90,11 @@
                 <tr>
                     <th>Адрес</th>
                     <th>Наименование специально оборудованных учебных кабинетов</th>
-                    <th>Оснащенность специально оборудованных учебных кабинетов</th>                    
+                    <th>Оснащенность специально оборудованных учебных кабинетов</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var uchCabinet in UchCabinets.OrderBy(p=>p.PomeshenieName))
+                @foreach (var uchCabinet in UchCabinets.OrderBy(p => p.PomeshenieName))
                 {
                     <tr itemprop="purposePrac">
                         <td itemprop="addressPrac">@uchCabinet.Korpus.KorpusAddress.GetAddress</td>
@@ -140,7 +140,7 @@
                 <tr>
                     <th>Адрес</th>
                     <th>Наименование приспособленных объектов для проведения практических занятий</th>
-                    <th>Оснащенность приспособленных объектов для проведения практических занятий</th>                    
+                    <th>Оснащенность приспособленных объектов для проведения практических занятий</th>
                 </tr>
             </thead>
             <tbody>
@@ -149,7 +149,7 @@
                     <tr itemprop="purposePrac">
                         <td itemprop="addressPrac">@objectForPractLessons.Korpus.KorpusAddress.GetAddress</td>
                         <td itemprop="namePrac">
-                            @objectForPractLessons.PomeshenieFullName                            
+                            @objectForPractLessons.PomeshenieFullName
                             <br />
                             @if (objectForPractLessons.PomeshenieTypes != null)
                             {
@@ -167,7 +167,7 @@
                                         @oborudovanie.OborudovanieName
                                     </li>
                                 }
-                            </ol>                            
+                            </ol>
                         </td>
                     </tr>
                 }
@@ -289,7 +289,7 @@
     @{spoilerCounter++; }
     <div class="well">
         <div itemprop="purposeFacil">
-            Сведения представлены в подразделе "Сведения о приспособленных объектах для проведения практических занятий" 
+            Сведения представлены в подразделе "Сведения о приспособленных объектах для проведения практических занятий"
         </div>
     </div>
 </div>
@@ -314,6 +314,35 @@
         <div itemprop="mealsDocLink">
             <a href="http://ачгаа.рф/sveden/objects/meals">Открыть</a>
         </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии электронных образовательных и информационных ресурсах</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{spoilerCounter++; }
+    <div class="well">
+
+        <div itemprop="comNet" class="sp-body folded">
+
+            <table itemprop="purposeEios" class="table table-hover">
+                <tr>
+                    <th>Наименование</th>
+                    <th>Количество</th>
+                <tr>                
+                <tr>
+                    <td>Наличие собственных электронных образовательных и информационных ресурсов</td>
+                    <td itemprop="eoisOwn"><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="true">@NumEoisOwn</a></td>
+                <tr>
+                <tr>
+                    <td>Наличие сторонних электронных образовательных и информационных ресурсов</td>
+                    <td itemprop="eoisSide"><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="false">@NumEoisSide</a></td>
+                <tr>
+                <tr>
+                    <td>Наличие базы данных электронного каталога</td>
+                    <td itemprop="bdec"><a asp-controller="ElectronCatalogs" asp-action="Preview">@NumEc</a></td>
+                <tr>
+            </table>
+        </div>                
     </div>
 </div>
 
