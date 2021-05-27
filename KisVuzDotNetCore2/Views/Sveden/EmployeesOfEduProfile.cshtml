@@ -3,6 +3,10 @@
     ViewData["Title"] = "EmployeesOfEduProfile";
     int counter = 1;
     var eduLevels = (IEnumerable<EduLevel>)ViewData["eduLevels"];
+
+    int eduProfileId = (int)ViewBag.EduProfileId;
+    int eduYearBeginningTrainingId = (int)ViewBag.EduYearBeginningTrainingId;
+    int eduYearId = (int)ViewBag.EduYearId;
 }
 
 <h2>Перечень штатных педагогических (научно-педагогических) работников, задействованных в реализации образовательных программ</h2>
@@ -39,10 +43,26 @@
             {
                 foreach (var eduProfile in eduNapravl.EduProfiles)
                 {
+                    if (eduProfile.EduProfileId != eduProfileId) { continue; }
+
                     foreach (var eduPlan in eduProfile.EduPlans)
                     {
                         foreach (var eduPlanEduYear in eduPlan.EduPlanEduYears)
                         {
+                            bool isEduYearBeginningTrainingId = false;
+                            foreach (var eduPlanEduYearBeginningTraining in eduPlanEduYear.EduPlan.EduPlanEduYearBeginningTrainings)
+                            {
+                                if(eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId == eduYearBeginningTrainingId)
+                                {
+                                    isEduYearBeginningTrainingId = true;
+                                }
+                            }
+                            if (!isEduYearBeginningTrainingId)
+                            {
+                                continue;
+                            }
+
+                            if (eduPlanEduYear.EduYear.EduYearId != eduYearId) { continue; }
                             if (eduPlanEduYear.TeacherDisciplines.Count == 0) { continue; }
 
                             <h4>@eduPlanEduYear.EduYear.EduYearName</h4>

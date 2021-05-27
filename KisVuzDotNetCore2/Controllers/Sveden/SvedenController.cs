@@ -490,7 +490,11 @@ namespace KisVuzDotNetCore2.Controllers
             ViewBag.EduProfiles = _selectListRepository.GetSelectListEduProfileFullNames(EduProfileId);
             ViewBag.EduYearBeginningTrainings = _selectListRepository.GetSelectListEduYearBeginningTrainings(EduYearBeginningTrainingId);
             ViewBag.EduYears = _selectListRepository.GetSelectListEduYears(EduYearId);
-            
+
+            ViewBag.EduProfileId = EduProfileId;
+            ViewBag.EduYearBeginningTrainingId = EduYearBeginningTrainingId;
+            ViewBag.EduYearId = EduYearId;
+
             return View();
         }
 
