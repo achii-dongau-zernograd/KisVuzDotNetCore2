@@ -1,0 +1,27 @@
+﻿@model List<Abiturient>
+
+@{
+}
+<h1>Личные кабинеты указанных абитуриентов будут удалены!</h1>
+
+<ol>
+    @foreach (var abiturient in Model.OrderBy(a => a.AppUser.GetFullName))
+    {
+        <li>@abiturient.AppUser.GetFullName, ЛК абитуриента создан: 
+            @if(abiturient.RegisterDateTime==null)
+            {
+                <text>NULL</text>
+            }
+            else
+            {
+                @abiturient.RegisterDateTime
+            }
+        </li>
+    }
+</ol>
+
+<div>
+    <form asp-action="RemoveAbiturientsWithNullRegDateConfirmed">
+        <input type="submit" value="Подтвердить удаление" class="btn btn-danger" />
+    </form>
+</div>

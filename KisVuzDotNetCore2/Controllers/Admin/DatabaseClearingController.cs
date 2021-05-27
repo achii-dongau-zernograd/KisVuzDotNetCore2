@@ -1,4 +1,5 @@
-﻿using KisVuzDotNetCore2.Models.Files;
+﻿using KisVuzDotNetCore2.Models.Abitur;
+using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Mvc;
@@ -18,22 +19,50 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         private readonly IPatentRepository _patentRepository;
         private readonly IFileModelRepository _fileModelRepository;
         private readonly IUserWorkRepository _userWorkRepository;
+        private readonly IAbiturientRepository _abiturientRepository;
 
         public DatabaseClearingController(IArticlesRepository articlesRepository,
             IPatentRepository patentRepository,
             IFileModelRepository fileModelRepository,
-            IUserWorkRepository userWorkRepository)
+            IUserWorkRepository userWorkRepository,
+            IAbiturientRepository abiturientRepository)
         {
             _articlesRepository = articlesRepository;
             _patentRepository = patentRepository;
             _fileModelRepository = fileModelRepository;
             _userWorkRepository = userWorkRepository;
+            _abiturientRepository = abiturientRepository;
         }
 
         public IActionResult Index()
         {
             return View();
         }
+
+        #region Удаление абитуриентов, у которых отсутствует дата регистрации
+        public IActionResult RemoveAbiturientsWithNullRegDate()
+        {
+            var dataToRemove = _abiturientRepository.GetAbiturients()
+                .Where(a=>a.RegisterDateTime == null)
+                .ToList();
+            return View(dataToRemove);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveAbiturientsWithNullRegDateConfirmed()
+        {
+            var dataToRemove = _abiturientRepository.GetAbiturients()
+                .Where(a => a.RegisterDateTime == null)
+                .ToList();
+
+            foreach (var abiturient in dataToRemove)
+            {
+                await _abiturientRepository.RemoveAbiturientAsync(abiturient.AppUser.UserName);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
 
         #region Удаление научных статей
         /// <summary>
