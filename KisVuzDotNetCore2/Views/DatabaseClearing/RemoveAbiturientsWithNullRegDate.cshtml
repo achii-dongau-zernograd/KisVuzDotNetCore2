@@ -7,7 +7,18 @@
 <ol>
     @foreach (var abiturient in Model.OrderBy(a => a.AppUser.GetFullName))
     {
-        <li>@abiturient.AppUser.GetFullName, ЛК абитуриента создан: 
+        <li>
+            @if(abiturient.AppUser==null)
+            {
+                <text>AppUser is NULL!</text>
+            }
+            else
+            {
+                @abiturient.AppUser.GetFullName
+            }
+            
+            
+            ЛК абитуриента создан: 
             @if(abiturient.RegisterDateTime==null)
             {
                 <text>NULL</text>
