@@ -5,7 +5,7 @@
 <h1>Личные кабинеты указанных абитуриентов будут удалены!</h1>
 
 <ol>
-    @foreach (var abiturient in Model.OrderBy(a => a.AppUser.GetFullName))
+    @foreach (var abiturient in Model)
     {
         <li>
             @if(abiturient.AppUser==null)
