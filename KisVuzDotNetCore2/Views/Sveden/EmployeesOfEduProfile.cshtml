@@ -52,7 +52,7 @@
                             bool isEduYearBeginningTrainingId = false;
                             foreach (var eduPlanEduYearBeginningTraining in eduPlanEduYear.EduPlan.EduPlanEduYearBeginningTrainings)
                             {
-                                if(eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId == eduYearBeginningTrainingId)
+                                if (eduPlanEduYearBeginningTraining.EduYearBeginningTrainingId == eduYearBeginningTrainingId)
                                 {
                                     isEduYearBeginningTrainingId = true;
                                 }
@@ -66,6 +66,7 @@
                             if (eduPlanEduYear.TeacherDisciplines.Count == 0) { continue; }
 
                             <h4>@eduPlanEduYear.EduYear.EduYearName</h4>
+                            <h4>Форма обучения: @eduPlanEduYear.EduPlan.EduForm.EduFormName</h4>
 
                             <table itemprop="teachingStaff" class="table table-hover">
                                 <thead>

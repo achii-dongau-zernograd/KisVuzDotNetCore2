@@ -496,11 +496,51 @@ namespace KisVuzDotNetCore2.Infrastructure
         }
 
         /// <summary>
+        /// Возвращает список учебных годов, которые есть в списке
+        /// </summary>
+        /// <param name="selectedId"></param>
+        /// <param name="eduYearsList"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEduYearsFromStringList(int selectedId, List<string> eduYearsList)
+        {
+            var eduYears = _context.EduYears.OrderBy(ey => ey.EduYearName).ToList();
+
+            var data = new List<EduYear>();
+            foreach (var eduYearStringFragment in eduYearsList)
+            {
+                foreach (var eduYear in eduYears)
+                {
+                    if (eduYear.EduYearName.Contains(eduYearStringFragment))
+                    {
+                        data.Add(eduYear);
+                    }
+                }
+            }
+            
+            return new SelectList(data,
+                 "EduYearId", "EduYearName", selectedId);
+        }
+
+        /// <summary>
         /// Возвращает список годов начала подготовки
         /// </summary>        
         public SelectList GetSelectListEduYearBeginningTrainings(int selectedId = 0)
         {
             return new SelectList(_context.EduYearBeginningTrainings.OrderBy(ey => ey.EduYearBeginningTrainingName),
+                 "EduYearBeginningTrainingId", "EduYearBeginningTrainingName", selectedId);
+        }
+
+        /// <summary>
+        /// Возвращает список годов начала подготовки, начиная с указанного
+        /// </summary>
+        /// <param name="eduYearBeginningTrainingId"></param>
+        /// <param name="eduYearBeginningTrainingStart"></param>
+        /// <returns></returns>
+        public SelectList GetSelectListEduYearBeginningTrainingsFrom(int selectedId, int eduYearBeginningTrainingStart)
+        {
+            return new SelectList(_context.EduYearBeginningTrainings
+                .Where(ey => ey.EduYearBeginningTrainingId >= eduYearBeginningTrainingStart)
+                .OrderBy(ey => ey.EduYearBeginningTrainingName),
                  "EduYearBeginningTrainingId", "EduYearBeginningTrainingName", selectedId);
         }
 
@@ -1180,5 +1220,7 @@ namespace KisVuzDotNetCore2.Infrastructure
                 nameof(ElGradebookLessonAttendanceType.ElGradebookLessonAttendanceTypeName),
                 selectedId);
         }
+
+        
     }
 }

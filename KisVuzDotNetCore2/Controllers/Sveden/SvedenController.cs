@@ -488,8 +488,12 @@ namespace KisVuzDotNetCore2.Controllers
             #endregion
 
             ViewBag.EduProfiles = _selectListRepository.GetSelectListEduProfileFullNames(EduProfileId);
-            ViewBag.EduYearBeginningTrainings = _selectListRepository.GetSelectListEduYearBeginningTrainings(EduYearBeginningTrainingId);
-            ViewBag.EduYears = _selectListRepository.GetSelectListEduYears(EduYearId);
+            //ViewBag.EduYearBeginningTrainings = _selectListRepository.GetSelectListEduYearBeginningTrainings(EduYearBeginningTrainingId);
+            ViewBag.EduYearBeginningTrainings = _selectListRepository.GetSelectListEduYearBeginningTrainingsFrom(EduYearBeginningTrainingId, 3);
+            //ViewBag.EduYears = _selectListRepository.GetSelectListEduYears(EduYearId);
+
+            var eduYearsList = new List<string> { "2015-", "2016-", "2017-", "2018-", "2019-", "2020-", };
+            ViewBag.EduYears = _selectListRepository.GetSelectListEduYearsFromStringList(EduYearId, eduYearsList);
 
             ViewBag.EduProfileId = EduProfileId;
             ViewBag.EduYearBeginningTrainingId = EduYearBeginningTrainingId;

@@ -552,10 +552,20 @@ namespace KisVuzDotNetCore2.Infrastructure
         SelectList GetSelectListEduYears(int selectedId = 0);
 
         /// <summary>
+        /// Возвращает список учебных годов, которые есть в списке
+        /// </summary>
+        /// <param name="eduYearId"></param>
+        /// <param name="eduYearsList"></param>
+        /// <returns></returns>
+        SelectList GetSelectListEduYearsFromStringList(int selectedId, List<string> eduYearsList);
+
+        /// <summary>
         /// Возвращает список годов начала подготовки
         /// </summary>        
         SelectList GetSelectListEduYearBeginningTrainings(int selectedId = 0);
 
+        // Возвращает список годов начала подготовки, начиная с указанного
+        SelectList GetSelectListEduYearBeginningTrainingsFrom(int selectedId, int eduYearBeginningTrainingStart);
 
         dynamic GetSelectListScienceJournals(object scienceJournalId);
         
@@ -586,5 +596,6 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <param name="selectedId"></param>
         /// <returns></returns>
         SelectList GetSelectListElGradebookLessonTypes(int selectedId = 0);
+        
     }
 }
