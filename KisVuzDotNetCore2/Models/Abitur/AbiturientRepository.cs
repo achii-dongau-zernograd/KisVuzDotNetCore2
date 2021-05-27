@@ -604,9 +604,13 @@ namespace KisVuzDotNetCore2.Models.Abitur
                     // Удалений заявлений о согласии на зачисление
                     if (applicationForAdmission.ConsentToEnrollments != null && applicationForAdmission.ConsentToEnrollments.Count > 0)
                     {
-                        foreach (var consentToEnrollment in applicationForAdmission.ConsentToEnrollments)
+                        var consentToEnrollmentIds = applicationForAdmission.ConsentToEnrollments
+                            .Select(cte=>cte.ConsentToEnrollmentId)
+                            .ToList();
+
+                        foreach (var consentToEnrollmentId in consentToEnrollmentIds)
                         {
-                            await _consentToEnrollmentRepository.RemoveConsentToEnrollmentAsync(consentToEnrollment.ConsentToEnrollmentId);
+                            await _consentToEnrollmentRepository.RemoveConsentToEnrollmentAsync(consentToEnrollmentId);
                         }                        
                     }
 
