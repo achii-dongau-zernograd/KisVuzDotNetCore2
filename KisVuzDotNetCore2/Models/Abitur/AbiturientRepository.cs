@@ -625,9 +625,13 @@ namespace KisVuzDotNetCore2.Models.Abitur
 
                     if (applicationForAdmission.RevocationStatements != null)
                     {
-                        foreach (var revocationStatement in applicationForAdmission.RevocationStatements)
+                        var revocationStatementIds = applicationForAdmission.RevocationStatements
+                            .Select(cte => cte.RevocationStatementId)
+                            .ToList();
+
+                        foreach (var revocationStatementId in revocationStatementIds)
                         {
-                            await _revocationStatementRepository.RemoveRevocationStatementAsync(revocationStatement);
+                            await _revocationStatementRepository.RemoveRevocationStatementAsync(revocationStatementId);
                         }
                     }                                        
                 }
