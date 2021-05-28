@@ -47,30 +47,30 @@
             <thead>
                 <tr>
                     <th>Год</th>
-                    <th>Поступившие финансовые и материальные средства</th>
-                    <th>Расходованные финансовые и материальные средства</th>
+                    <th>Поступившие финансовые и материальные средства, тыс. руб.</th>
+                    <th>Расходованные финансовые и материальные средства, тыс. руб.</th>
                 </tr>                
             </thead>
             <tbody>
                 <tr>
-                    <td>2018</td>
-                    <td></td>
-                    <td></td>
+                    <td itemprop="finYear">2018</td>
+                    <td itemprop="finPost">277 723,40</td>
+                    <td itemprop="finRas">280 516,60</td>
                 </tr>
                 <tr>
-                    <td>2019</td>
-                    <td></td>
-                    <td></td>
+                    <td itemprop="finYear">2019</td>
+                    <td itemprop="finPost">269 753,70</td>
+                    <td itemprop="finRas">266 059,80</td>
                 </tr>
                 <tr>
-                    <td>2020</td>
-                    <td></td>
-                    <td></td>
+                    <td itemprop="finYear">2020</td>
+                    <td itemprop="finPost">273 039,00</td>
+                    <td itemprop="finRas">273 218,60</td>
                 </tr>
             </tbody>
         </table>
 
-        @foreach (var ftft in InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv.FileToFileTypes)
+        @foreach (var ftft in InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv.FileToFileTypes.OrderBy(ftft => ftft.FileModel.Name))
         {
             <div itemprop="finYear">
                 <div itemprop="finPost">
@@ -86,7 +86,7 @@
 <a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">План финансово-хозяйственной деятельности</a>
 <div class="collapse" id="spoiler-3">
     <div class="well" itemprop="volume">
-        @foreach (var ftft in planFinansovoHozyaystvennoyDeyatelnosti.FileToFileTypes)
+        @foreach (var ftft in planFinansovoHozyaystvennoyDeyatelnosti.FileToFileTypes.OrderBy(ftft => ftft.FileModel.Name))
         {
             <p itemprop="planFinRec"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
         }
