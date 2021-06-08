@@ -57,7 +57,15 @@ namespace KisVuzDotNetCore2.Controllers.Admin
 
             foreach (var abiturient in dataToRemove)
             {
-                await _abiturientRepository.RemoveAbiturientAsync(abiturient.AppUser.UserName);
+                try
+                {
+                    await _abiturientRepository.RemoveAbiturientAsync(abiturient.AppUser.UserName);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("RemoveAbiturientAsync Exception");
+                }
+                
             }
 
             return RedirectToAction(nameof(Index));
