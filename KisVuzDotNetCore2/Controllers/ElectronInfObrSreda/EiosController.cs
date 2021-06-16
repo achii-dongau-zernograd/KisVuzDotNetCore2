@@ -59,7 +59,7 @@ namespace KisVuzDotNetCore2.Controllers.Eios
         /// Портфолио студентов
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = "Преподаватели")]
+        //[Authorize(Roles = "Преподаватели")]
         public async Task<IActionResult> Portfolio()
         {
             var eduLevels = await _context.EduLevels
