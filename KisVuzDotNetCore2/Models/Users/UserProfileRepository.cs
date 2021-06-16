@@ -796,6 +796,9 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <returns></returns>
         public async Task<bool> IsTeacherAsync(string userName)
         {
+            if (string.IsNullOrWhiteSpace(userName))
+                return false;
+
             var appUser = await _context.Users
                 .Include(u => u.Teachers)
                 .SingleOrDefaultAsync(u => u.UserName == userName);
