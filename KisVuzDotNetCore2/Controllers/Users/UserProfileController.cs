@@ -630,7 +630,7 @@ namespace KisVuzDotNetCore2.Controllers
 
 
         #endregion
-
+        [AllowAnonymous]
         public async Task<IActionResult> Index(string id)
         {
             AppUser user;
