@@ -20,12 +20,15 @@ namespace KisVuzDotNetCore2.Controllers.Education
     {
         private readonly AppIdentityDBContext _context;
         private readonly IHostingEnvironment _appEnvironment;
+        private readonly IEduPlanRepository _eduPlanRepository;
 
         public EduPlansController(AppIdentityDBContext context,
-        IHostingEnvironment appEnvironment)
+        IHostingEnvironment appEnvironment,
+        IEduPlanRepository eduPlanRepository)
         {
             _context = context;
             _appEnvironment = appEnvironment;
+            _eduPlanRepository = eduPlanRepository;
         }
 
         // GET: EduPlans
@@ -400,12 +403,13 @@ namespace KisVuzDotNetCore2.Controllers.Education
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var eduPlan = await _context.EduPlans.SingleOrDefaultAsync(m => m.EduPlanId == id);
-            _context.EduPlans.Remove(eduPlan);
+            await _eduPlanRepository.RemoveEduPlanAsync(id);
+            //var eduPlan = await _context.EduPlans.SingleOrDefaultAsync(m => m.EduPlanId == id);
+            //_context.EduPlans.Remove(eduPlan);
 
-            KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, eduPlan?.EduPlanPdfId);
+            //KisVuzDotNetCore2.Models.Files.Files.RemoveFile(_context, _appEnvironment, eduPlan?.EduPlanPdfId);
 
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }

@@ -260,6 +260,7 @@ namespace KisVuzDotNetCore2.Models.Education
             var eduPlan = await _context.EduPlans
                 .Include(e => e.EduForm)
                 .Include(e => e.EduPlanPdf)
+                    .ThenInclude(ef => ef.SignList)
                 .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduProgramPodg)
                 .Include(e => e.EduSrok)
@@ -309,26 +310,31 @@ namespace KisVuzDotNetCore2.Models.Education
                         .ThenInclude(c => c.Disciplines)
                             .ThenInclude(d => d.EduAnnotations)
                                 .ThenInclude(a => a.FileModel)
+                                    .ThenInclude(ef => ef.SignList)
                  .Include(e => e.BlokDiscipl)
                     .ThenInclude(b => b.BlokDisciplChast)
                         .ThenInclude(c => c.Disciplines)
                             .ThenInclude(d => d.RabPrograms)
                                 .ThenInclude(a => a.FileModel)
+                                    .ThenInclude(ef => ef.SignList)
                  .Include(e => e.BlokDiscipl)
                     .ThenInclude(b => b.BlokDisciplChast)
                         .ThenInclude(c => c.Disciplines)
                             .ThenInclude(d => d.RabPrograms)
                                 .ThenInclude(a => a.FileModelListPereutverjdeniya)
+                                    .ThenInclude(ef => ef.SignList)
                  .Include(e => e.BlokDiscipl)
                     .ThenInclude(b => b.BlokDisciplChast)
                         .ThenInclude(c => c.Disciplines)
                             .ThenInclude(d => d.FondOcenochnihSredstvList)
                                 .ThenInclude(a => a.FileModel)
+                                    .ThenInclude(ef => ef.SignList)
                  .Include(e => e.BlokDiscipl)
                     .ThenInclude(b => b.BlokDisciplChast)
                         .ThenInclude(c => c.Disciplines)
                             .ThenInclude(d => d.FondOcenochnihSredstvList)
                                 .ThenInclude(a => a.FileModelListPereutverjdeniya)
+                                    .ThenInclude(ef => ef.SignList)
                  .Include(e => e.BlokDiscipl)
                     .ThenInclude(b => b.BlokDisciplChast)
                         .ThenInclude(c => c.Disciplines)
@@ -416,6 +422,17 @@ namespace KisVuzDotNetCore2.Models.Education
         {            
             await _fileModelRepository.RemoveFileAsync(fondOcenochnihSredstv.FileModelListPereutverjdeniyaId);
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Удаление учебного плана
+        /// </summary>
+        /// <param name="eduPlanId"></param>
+        /// <returns></returns>
+        public async Task RemoveEduPlanAsync(int eduPlanId)
+        {
+            var eduPlan = await GetEduPlanAsync(eduPlanId);
+            await RemoveEduPlanAsync(eduPlan);
         }
 
         /// <summary>

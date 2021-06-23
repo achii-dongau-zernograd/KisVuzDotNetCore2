@@ -53,6 +53,13 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <summary>
         /// Удаление учебного плана
         /// </summary>
+        /// <param name="eduPlanId">УИД учебного плана</param>
+        /// <returns></returns>
+        Task RemoveEduPlanAsync(int eduPlanId);
+
+        /// <summary>
+        /// Удаление учебного плана
+        /// </summary>
         /// <param name="eduPlan"></param>
         /// <returns></returns>
         Task RemoveEduPlanAsync(EduPlan eduPlan);
@@ -174,6 +181,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// </summary>
         /// <param name="disciplinePomeshenie"></param>
         /// <returns></returns>
-        Task RemoveDisciplinePomeshenieAsync(DisciplinePomeshenie disciplinePomeshenie);        
+        Task RemoveDisciplinePomeshenieAsync(DisciplinePomeshenie disciplinePomeshenie);
+        
     }
 }
