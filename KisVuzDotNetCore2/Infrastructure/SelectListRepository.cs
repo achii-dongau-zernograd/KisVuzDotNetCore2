@@ -172,7 +172,7 @@ namespace KisVuzDotNetCore2.Infrastructure
         /// <returns></returns>
         public SelectList GetSelectListEduFormsForAbiturient(int selectedId = 0)
         {
-            var data = _context.EduForms.Where(f => f.EduFormId == 1 || f.EduFormId == 3);
+            var data = _context.EduForms.Where(f => f.EduFormId == 1 || f.EduFormId == 3 || f.EduFormId == 5);            
             return new SelectList(data, "EduFormId", "EduFormName", selectedId);
         }
 
