@@ -1,4 +1,5 @@
-﻿using KisVuzDotNetCore2.Models.Abitur;
+﻿using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Students;
@@ -16,6 +17,7 @@ namespace KisVuzDotNetCore2.Controllers.Admin
     /// </summary>
     public class DatabaseClearingController : Controller
     {
+        private readonly AppIdentityDBContext _context;
         private readonly IArticlesRepository _articlesRepository;
         private readonly IPatentRepository _patentRepository;
         private readonly IFileModelRepository _fileModelRepository;
@@ -23,13 +25,15 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         private readonly IAbiturientRepository _abiturientRepository;
         private readonly IMessagesFromAppUserToStudentGroupsRepository _messagesFromAppUserToStudentGroupsRepository;
 
-        public DatabaseClearingController(IArticlesRepository articlesRepository,
+        public DatabaseClearingController(AppIdentityDBContext context,
+            IArticlesRepository articlesRepository,
             IPatentRepository patentRepository,
             IFileModelRepository fileModelRepository,
             IUserWorkRepository userWorkRepository,
             IAbiturientRepository abiturientRepository,
             IMessagesFromAppUserToStudentGroupsRepository messagesFromAppUserToStudentGroupsRepository)
         {
+            _context = context;
             _articlesRepository = articlesRepository;
             _patentRepository = patentRepository;
             _fileModelRepository = fileModelRepository;
@@ -210,6 +214,11 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         public async Task<IActionResult> RemoveOldMessages()
         {
             await _messagesFromAppUserToStudentGroupsRepository.RemoveMessagesToDate(new DateTime(2021, 08, 31));
+
+            var query = _context.UserMessages.Where(m => m.UserMessageDate <= new DateTime(2021, 08, 31));
+            _context.UserMessages.RemoveRange(query);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }
