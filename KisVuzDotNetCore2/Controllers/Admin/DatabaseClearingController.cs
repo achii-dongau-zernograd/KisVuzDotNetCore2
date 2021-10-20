@@ -1,6 +1,7 @@
 ﻿using KisVuzDotNetCore2.Models.Abitur;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.Nir;
+using KisVuzDotNetCore2.Models.Students;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,19 +21,22 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         private readonly IFileModelRepository _fileModelRepository;
         private readonly IUserWorkRepository _userWorkRepository;
         private readonly IAbiturientRepository _abiturientRepository;
+        private readonly IMessagesFromAppUserToStudentGroupsRepository _messagesFromAppUserToStudentGroupsRepository;
 
         public DatabaseClearingController(IArticlesRepository articlesRepository,
             IPatentRepository patentRepository,
             IFileModelRepository fileModelRepository,
             IUserWorkRepository userWorkRepository,
-            IAbiturientRepository abiturientRepository)
+            IAbiturientRepository abiturientRepository,
+            IMessagesFromAppUserToStudentGroupsRepository messagesFromAppUserToStudentGroupsRepository)
         {
             _articlesRepository = articlesRepository;
             _patentRepository = patentRepository;
             _fileModelRepository = fileModelRepository;
             _userWorkRepository = userWorkRepository;
             _abiturientRepository = abiturientRepository;
-        }
+            _messagesFromAppUserToStudentGroupsRepository = messagesFromAppUserToStudentGroupsRepository;
+    }
 
         public IActionResult Index()
         {
@@ -197,6 +201,16 @@ namespace KisVuzDotNetCore2.Controllers.Admin
             await _userWorkRepository.RemoveUserWorksToDateAsync(_date);
 
             return RedirectToAction(nameof(FindLostFiles));
+        }
+
+        /// <summary>
+        /// Удаляет все сообщения пользователей и сообщения учебным группам до 31.08.2021
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> RemoveOldMessages()
+        {
+            await _messagesFromAppUserToStudentGroupsRepository.RemoveMessagesToDate(new DateTime(2021, 08, 31));
+            return RedirectToAction(nameof(Index));
         }
     }
 }

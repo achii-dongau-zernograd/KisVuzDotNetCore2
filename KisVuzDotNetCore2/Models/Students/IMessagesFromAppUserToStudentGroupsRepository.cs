@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace KisVuzDotNetCore2.Models.Students
@@ -17,5 +18,12 @@ namespace KisVuzDotNetCore2.Models.Students
         /// Возвращает сообщение студенческой группе по указанному УИД 
         /// </summary>        
         Task<MessageFromAppUserToStudentGroup> GetMessageFromAppUserToStudentGroupAsync(int? id);
+
+        /// <summary>
+        /// Удаляет все сообщения учебным группам до указанной даты
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        Task RemoveMessagesToDate(DateTime dateTime);
     }
 }

@@ -38,5 +38,17 @@ namespace KisVuzDotNetCore2.Models.Students
             var entry = await GetMessagesFromAppUserToStudentGroups().FirstOrDefaultAsync(m => m.Id == id);
             return entry;
         }
+
+        /// <summary>
+        /// Удаляет все сообщения учебным группам до указанной даты
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public async Task RemoveMessagesToDate(DateTime dateTime)
+        {
+            var query = _context.MessagesFromAppUsersToStudentGroups.Where(m => m.DateTime <= dateTime);
+            _context.MessagesFromAppUsersToStudentGroups.RemoveRange(query);
+            await _context.SaveChangesAsync();
+        }
     }
 }
