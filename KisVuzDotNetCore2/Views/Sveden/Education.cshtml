@@ -563,7 +563,7 @@ else
                                         }
                                     }
 
-                                    <a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId" target="_blank">Рабочие программы (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a>
+                                    <a itemprop="educationRpd" asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId" target="_blank">Рабочие программы (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a>
                                 }
                             </td>
 
