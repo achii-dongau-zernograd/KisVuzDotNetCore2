@@ -399,9 +399,10 @@ else
                         <th>Наименование специальности, направления подготовки</th>
                         <th>Уровень образования</th>
                         <th>Реализуемые формы обучения</th>
-                        <th>Ссылка на описание образовательной программы с приложением ее копии (в том числе РПД)</th>
+                        <th>Ссылка на описание образовательной программы с приложением ее копии</th>
                         <th>Ссылка на учебный план</th>
                         <th>Ссылка на аннотации к рабочим программам дисциплин (по каждой дисциплине в составе образовательной программы)</th>
+                        <th>Ссылки на рабочие программы (по каждой дисциплине в составе образовательной программы)</th>
                         <th>Ссылка на календарный учебный график</th>
                         <th>Ссылка на методические и иные документы, разработанные образовательной организацией для обеспечения образовательного процесса</th>
                         <th>Ссылка на рабочие программы практик, предусмотренных соответствующей образовательной программой</th>
@@ -419,6 +420,7 @@ else
                         <th>9</th>
                         <th>10</th>
                         <th>11</th>
+                        <th>12</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -477,21 +479,7 @@ else
                             </td>
 
                             <td itemprop="@opMain">
-                                <a href="/@eduProgram.FileModel.Path" target="_blank">Описание ОП</a>
-                                <br />
-                                @foreach (var eduPlan in eduProgramEduPlanList)
-                                {
-                                    string eduYearsBegTrainings = "";
-                                    if (eduPlan.EduPlanEduYearBeginningTrainings != null)
-                                    {
-                                        foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
-                                        {
-                                            eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
-                                        }
-                                    }
-
-                                    <a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId" target="_blank">Рабочие программы (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a>
-                                }
+                                <a href="/@eduProgram.FileModel.Path" target="_blank">Описание ОП</a>                                
                             </td>
 
                             <td itemprop="@educationPlan">
@@ -557,6 +545,24 @@ else
                                 }
 
                             </td>
+
+
+                            <td itemprop="educationRpd">                                
+                                @foreach (var eduPlan in eduProgramEduPlanList)
+                                {
+                                    string eduYearsBegTrainings = "";
+                                    if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                    {
+                                        foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                        {
+                                            eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                        }
+                                    }
+
+                                    <a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId" target="_blank">Рабочие программы (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a>
+                                }
+                            </td>
+
 
                             <td itemprop="@educationShedule">
                                 @foreach (var eduShedule in eduShedules.Where(s => s.EduProfileId == eduProgram.EduProfileId))
@@ -647,9 +653,10 @@ else
                         <th>Наименование специальности, направления подготовки</th>
                         <th>Уровень образования</th>
                         <th>Реализуемые формы обучения</th>
-                        <th>Ссылка на описание образовательной программы с приложением ее копии (в том числе РПД)</th>
+                        <th>Ссылка на описание образовательной программы с приложением ее копии</th>
                         <th>Ссылка на учебный план</th>
                         <th>Ссылка на аннотации к рабочим программам дисциплин (по каждой дисциплине в составе образовательной программы)</th>
+                        <th>Ссылки на рабочие программы (по каждой дисциплине в составе образовательной программы)</th>
                         <th>Ссылка на календарный учебный график</th>
                         <th>Ссылка на методические и иные документы, разработанные образовательной организацией для обеспечения образовательного процесса</th>
                         <th>Ссылка на рабочие программы практик, предусмотренных соответствующей образовательной программой</th>
@@ -667,6 +674,7 @@ else
                         <th>9</th>
                         <th>10</th>
                         <th>11</th>
+                        <th>12</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -678,6 +686,7 @@ else
                         <td itemprop="opMain" class="hidden">Не реализуются</td>
                         <td itemprop="educationPlan" class="hidden">Не реализуются</td>
                         <td itemprop="educationAnnotation" class="hidden">Не реализуются</td>
+                        <td itemprop="educationRpd" class="hidden">Не реализуются</td>
                         <td itemprop="educationShedule" class="hidden">Не реализуются</td>
                         <td itemprop="methodology" class="hidden">Не реализуются</td>
                         <td itemprop="eduPr" class="hidden">Не реализуются</td>
