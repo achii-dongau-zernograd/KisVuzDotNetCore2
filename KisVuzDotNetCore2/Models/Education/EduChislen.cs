@@ -35,5 +35,15 @@ namespace KisVuzDotNetCore2.Models.Education
 
         [Display(Name = "Численность обучающихся, являющихся иностранными гражданами")]
         public int? NumberInostr { get; set; }
+
+        /// <summary>
+        /// Общая численность обучающихся
+        /// </summary>
+        public int NumberAll {
+            get
+            {
+                return NumberBFpriem + NumberBMpriem + NumberPpriem + NumberInostr??0;
+            }
+        }
     }
 }

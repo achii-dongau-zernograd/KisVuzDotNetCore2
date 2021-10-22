@@ -210,8 +210,8 @@ else
                         <th rowspan=2>Наименование специальности, направления подготовки</th>
                         <th rowspan=2>Уровень образования</th>
                         <th rowspan=2>Формы обучения</th>
-                        <th colspan=4>Численность обучающихся за счет (количество человек):</th>
-                        <th rowspan=2>Численность обучающихся, являющихся иностранными гражданами</th>
+                        <th colspan=4>Численность обучающихся / из них иностранных граждан за счет (количество человек):</th>
+                        <th rowspan=2>Общая численность обучающихся</th>
                     </tr>
                     <tr>
                         <th>бюджетных ассигнований федерального бюджета</th>
@@ -238,11 +238,19 @@ else
                         <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName (@item.EduProfile.EduProfileName)</td>
                         <td itemprop="eduLevel">@item.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
                         <td itemprop="eduForm">@item.EduForm.EduFormName</td>
-                        <td itemprop="NumberBF" align=center>@item.NumberBFpriem</td>
-                        <td itemprop="NumberBR" align=center>@item.NumberBRpriem</td>
-                        <td itemprop="NumberBM" align=center>@item.NumberBMpriem</td>
-                        <td itemprop="NumberP" align=center>@item.NumberPpriem</td>
-                        <td itemprop="NumberF" align=center>@item.NumberInostr</td>
+                        <td align=center>
+                            <span itemprop="numberBF">@item.NumberBFpriem</span> / <span itemprop="numberBFF">0</span>
+                        </td>
+                        <td align=center>
+                            <span itemprop="numberBR">@item.NumberBRpriem</span> / <span itemprop="numberBRF">0</span>                            
+                        </td>
+                        <td align=center>
+                            <span itemprop="numberBM">@item.NumberBMpriem</span> / <span itemprop="numberBMF">0</span>                            
+                        </td>
+                        <td align=center>                            
+                            <span itemprop="numberP">@item.NumberPpriem</span> / <span itemprop="numberPF">@item.NumberInostr</span>
+                        </td>
+                        <td itemprop="numberAll" align=center>@item.NumberAll</td>
                     </tr>
                 }
             </table>
