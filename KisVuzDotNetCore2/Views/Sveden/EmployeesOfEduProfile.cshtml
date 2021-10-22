@@ -9,7 +9,31 @@
     int eduYearId = (int)ViewBag.EduYearId;
 }
 
-<h2>Перечень штатных педагогических (научно-педагогических) работников, задействованных в реализации образовательных программ</h2>
+<h2>Информация о персональном составе педагогических работников образовательной программы</h2>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Код</th>
+            <th>Наименование профессии, специальности, направления подготовки</th>
+            <th>
+                Ссылка на страницу о персональном составе педагогических работников образовательной программы
+            </th>
+        </tr>
+        <tr>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr itemprop="teachingOp">
+            <td itemprop="eduCode"></td>
+            <td itemprop="eduName"></td>
+            <td itemprop="optRef"></td>
+        </tr>
+    </tbody>
+</table>
 
 <form asp-action="EmployeesOfEduProfile">
     <div class="form-group">
