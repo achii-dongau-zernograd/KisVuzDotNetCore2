@@ -23,6 +23,7 @@
     string eduPerevodClass = "collapse";
     string eduProgramsClass = "collapse";
     string eduAdOpClass = "collapse";
+    string eduOAccredClass = "collapse";
     string eduNirClass = "collapse";
     string eduDPOClass = "collapse";
 
@@ -48,6 +49,9 @@
             break;
         case "eduAdOp":
             eduAdOpClass = "collapse.in";
+            break;
+        case "eduOAccred":
+            eduOAccredClass = "collapse.in";
             break;
         case "eduNir":
             eduNirClass = "collapse.in";
@@ -78,7 +82,7 @@
                 }
             </div>
         </div>
-    }        
+    }
 </div>
 
 
@@ -242,12 +246,12 @@ else
                             <span itemprop="numberBF">@item.NumberBFpriem</span> / <span itemprop="numberBFF">0</span>
                         </td>
                         <td align=center>
-                            <span itemprop="numberBR">@item.NumberBRpriem</span> / <span itemprop="numberBRF">0</span>                            
+                            <span itemprop="numberBR">@item.NumberBRpriem</span> / <span itemprop="numberBRF">0</span>
                         </td>
                         <td align=center>
-                            <span itemprop="numberBM">@item.NumberBMpriem</span> / <span itemprop="numberBMF">0</span>                            
+                            <span itemprop="numberBM">@item.NumberBMpriem</span> / <span itemprop="numberBMF">0</span>
                         </td>
-                        <td align=center>                            
+                        <td align=center>
                             <span itemprop="numberP">@item.NumberPpriem</span> / <span itemprop="numberPF">@item.NumberInostr</span>
                         </td>
                         <td itemprop="numberAll" align=center>@item.NumberAll</td>
@@ -479,7 +483,7 @@ else
                             </td>
 
                             <td itemprop="@opMain">
-                                <a href="/@eduProgram.FileModel.Path" target="_blank">Описание ОП</a>                                
+                                <a href="/@eduProgram.FileModel.Path" target="_blank">Описание ОП</a>
                             </td>
 
                             <td itemprop="@educationPlan">
@@ -547,7 +551,7 @@ else
                             </td>
 
 
-                            <td itemprop="educationRpd">                                
+                            <td itemprop="educationRpd">
                                 @foreach (var eduPlan in eduProgramEduPlanList)
                                 {
                                     string eduYearsBegTrainings = "";
@@ -892,7 +896,41 @@ else
         </div>
     </div>*@
 
+@if (openedSpoiler != "eduOAccred" && !string.IsNullOrWhiteSpace(openedSpoiler))
+{
+    <a asp-route-openedSpoiler="eduOAccred" class="btn btn-primary btn-block">
+        Информация об общественной аккредитации образовательной организации
+    </a>
+}
+else
+{
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация об общественной аккредитации образовательной организации</a>
+    <div class="@eduOAccredClass" id="spoiler-@spoilerCounter">
+        @{spoilerCounter++;}
+        <div class="well">
 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Наименование аккредитующей организации</th>
+                        <th class="text-center">Срок действия общественной аккредитации</th>                        
+                    </tr>
+                    <tr>
+                        <td align=center><strong>1</strong></td>
+                        <td align=center><strong>2</strong></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr itemprop="eduOAccred">
+                        <td itemprop="orgName" colspan="2" class="text-center">Отсутствует</td>
+                        <td itemprop="dateEnd" class="hidden">Отсутствует</td>
+                    </tr>                    
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}
 
 
 @if (openedSpoiler != "eduNir" && !string.IsNullOrWhiteSpace(openedSpoiler))
