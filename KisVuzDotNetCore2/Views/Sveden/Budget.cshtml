@@ -23,7 +23,7 @@
                     <th>за счет бюджетных ассигнований федерального бюджета (тыс. руб.)</th>
                     <th>за счет  бюджетов субъектов Российской Федерации (тыс. руб.)</th>
                     <th>за счет местных бюджетов (тыс. руб.)</th>
-                    <th>по договорам об образовании за счет средств физических и (или) юридических лиц (тыс. руб.)</th>
+                    <th>по договорам об оказании платных образовательных услуг (тыс. руб.)</th>
                 </tr>
             </thead>
             @foreach (var item in t22volume)
@@ -88,7 +88,7 @@
     <div class="well" itemprop="volume">
         @foreach (var ftft in planFinansovoHozyaystvennoyDeyatelnosti.FileToFileTypes.OrderBy(ftft => ftft.FileModel.Name))
         {
-            <p itemprop="planFinRec"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+            <p itemprop="finPlanDocLink"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
         }
     </div>
 </div>
