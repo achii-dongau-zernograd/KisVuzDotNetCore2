@@ -570,7 +570,7 @@ else
 
                             <td itemprop="@educationShedule">
                                 @foreach (var eduShedule in eduShedules.Where(s => s.EduProfileId == eduProgram.EduProfileId))
-                                {
+                                {                                    
                                     foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
                                     {
                                         if (eduShedule.EduFormId == eduProgramEduForm.EduFormId)
