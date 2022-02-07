@@ -120,6 +120,7 @@ namespace KisVuzDotNetCore2.Controllers
         /// Возвращает файл, имеющий указанный идентификатор
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         public IActionResult GetFile(int id)
         {
             FileModel file = _context.Files.SingleOrDefault(f => f.Id == id);
