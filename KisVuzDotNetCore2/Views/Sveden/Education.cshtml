@@ -497,7 +497,7 @@ else
                                             eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
                                         }
                                     }
-                                    <a href="/@eduPlan.EduPlanPdf?.Path" target="_blank">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a><br />
+                                    <a href="/@eduPlan.EduPlanPdf?.Path" target="_blank">Учебный план (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a><br />
                                 }
                             </td>
 
@@ -514,7 +514,7 @@ else
                                         }
                                     }
 
-                                    <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a>
+                                    <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Аннотации к рабочим программам дисциплин (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a>
                                     <div class="collapse" id="spoiler-@spoilerCounter">
                                         @{spoilerCounter++;}
                                         <div class="well">
