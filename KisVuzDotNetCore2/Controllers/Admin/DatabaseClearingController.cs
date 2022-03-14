@@ -87,31 +87,31 @@ namespace KisVuzDotNetCore2.Controllers.Admin
             var dataToRemove = _abiturientRepository.GetAbiturients()
                 .Where(a => a.RegisterDateTime.Value.Year==year && a.AbiturientStatusId==(int)AbiturientStatusEnum.NewAbiturient)
                 .ToList();
-            return View("RemoveAbiturientsWithNullRegDate", dataToRemove);
+            return View(dataToRemove);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> RemoveAbiturientsWithNullRegDateConfirmed()
-        //{
-        //    var dataToRemove = _abiturientRepository.GetAbiturients()
-        //        .Where(a => a.RegisterDateTime == null)
-        //        .ToList();
+        [HttpPost]
+        public async Task<IActionResult> RemoveAbiturientsConfirmed()
+        {
+            var dataToRemove = _abiturientRepository.GetAbiturients()
+                .Where(a => a.RegisterDateTime.Value.Year == 2021 && a.AbiturientStatusId == (int)AbiturientStatusEnum.NewAbiturient)
+                .ToList();
 
-        //    foreach (var abiturient in dataToRemove)
-        //    {
-        //        try
-        //        {
-        //            await _abiturientRepository.RemoveAbiturientAsync(abiturient.AppUser.UserName);
-        //        }
-        //        catch (Exception)
-        //        {
-        //            Console.WriteLine("RemoveAbiturientAsync Exception");
-        //        }
+            foreach (var abiturient in dataToRemove)
+            {
+                try
+                {
+                    await _abiturientRepository.RemoveAbiturientAsync(abiturient.AppUser.UserName);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("RemoveAbiturientAsync Exception");
+                }
 
-        //    }
+            }
 
-        //    return RedirectToAction(nameof(Index));
-        //}
+            return RedirectToAction(nameof(Index));
+        }
         #endregion
 
 
