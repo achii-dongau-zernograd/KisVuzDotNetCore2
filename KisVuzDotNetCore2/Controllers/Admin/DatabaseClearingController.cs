@@ -80,6 +80,41 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         }
         #endregion
 
+
+        #region Удаление абитуриентов, у которых отсутствует дата регистрации
+        public IActionResult RemoveAbiturients(int year=2021)
+        {
+            var dataToRemove = _abiturientRepository.GetAbiturients()
+                .Where(a => a.RegisterDateTime.Value.Year==year && a.AbiturientStatusId==(int)AbiturientStatusEnum.NewAbiturient)
+                .ToList();
+            return View("RemoveAbiturientsWithNullRegDate", dataToRemove);
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> RemoveAbiturientsWithNullRegDateConfirmed()
+        //{
+        //    var dataToRemove = _abiturientRepository.GetAbiturients()
+        //        .Where(a => a.RegisterDateTime == null)
+        //        .ToList();
+
+        //    foreach (var abiturient in dataToRemove)
+        //    {
+        //        try
+        //        {
+        //            await _abiturientRepository.RemoveAbiturientAsync(abiturient.AppUser.UserName);
+        //        }
+        //        catch (Exception)
+        //        {
+        //            Console.WriteLine("RemoveAbiturientAsync Exception");
+        //        }
+
+        //    }
+
+        //    return RedirectToAction(nameof(Index));
+        //}
+        #endregion
+
+
         #region Удаление научных статей
         /// <summary>
         /// Удаление научных статей из базы данных, опубликованных до указанного года включительно
