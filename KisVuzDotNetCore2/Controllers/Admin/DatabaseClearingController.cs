@@ -80,6 +80,38 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         }
         #endregion
 
+        #region Удаление абитуриентов, у которых нет ссылки на аккаунт
+        public IActionResult RemoveAbiturientsWithNullAppUser()
+        {
+            var dataToRemove = _abiturientRepository.GetAbiturients()
+                .Where(a => a.AppUser == null)
+                .ToList();
+            return View(dataToRemove);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveAbiturientsWithNullAppUserConfirmed()
+        {
+            var dataToRemove = _abiturientRepository.GetAbiturients()
+                .Where(a => a.AppUser == null)
+                .ToList();
+
+            foreach (var abiturient in dataToRemove)
+            {
+                try
+                {
+                    await _abiturientRepository.RemoveAbiturientAsync(abiturient.AbiturientId);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("RemoveAbiturientAsync Exception");
+                }
+
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
 
         #region Удаление абитуриентов, у которых отсутствует дата регистрации
         public IActionResult RemoveAbiturients(int year=2021)

@@ -50,6 +50,13 @@ namespace KisVuzDotNetCore2.Models.Abitur
         Task<Abiturient> GetAbiturientAsync(string userName);
 
         /// <summary>
+        /// Возвращает объект "абитуриент"
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task<Abiturient> GetAbiturientAsync(int abiturientId);
+
+        /// <summary>
         /// Проверка наличия бланка регистрации на мероприятие
         /// </summary>
         /// <param name="userName"></param>
@@ -88,6 +95,12 @@ namespace KisVuzDotNetCore2.Models.Abitur
         /// <param name="userName"></param>
         /// <returns></returns>
         Task RemoveAbiturientAsync(string userName, bool MarkAppUserAccountToDelete = false);
+
+        /// <summary>
+        /// Удаляет личный кабинет абитуриента и все связанные данные
+        /// с возможностью пометки аккаунта к удалению
+        /// </summary>
+        Task RemoveAbiturientAsync(int abiturientId, bool MarkAppUserAccountToDelete = false);
 
         /// <summary>
         /// Устанавливает статус документа

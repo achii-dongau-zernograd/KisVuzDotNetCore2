@@ -140,6 +140,18 @@ namespace KisVuzDotNetCore2.Models.Abitur
         }
 
         /// <summary>
+        /// Возвращает объект "абитуриент"
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task<Abiturient> GetAbiturientAsync(int abiturientId)
+        {
+            var abiturient = await GetAbiturients()
+                .FirstOrDefaultAsync(a => a.AbiturientId == abiturientId);
+            return abiturient;
+        }
+
+        /// <summary>
         /// Возвращает индивидуальное достижение абитуриента
         /// </summary>
         /// <param name="abiturientIndividualAchievmentId"></param>
@@ -585,18 +597,39 @@ namespace KisVuzDotNetCore2.Models.Abitur
         public async Task RemoveAbiturientAsync(string userName, bool markAppUserAccountToDelete = false)
         {
             var abiturient = await GetAbiturientAsync(userName);
-            if(markAppUserAccountToDelete)
+            await RemoveAbiturientAsync(abiturient, markAppUserAccountToDelete);
+        }
+
+        /// <summary>
+        /// Удаляет аккаунт абитуриента и все связанные данные
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveAbiturientAsync(int abiturientId, bool markAppUserAccountToDelete = false)
+        {
+            var abiturient = await GetAbiturientAsync(abiturientId);
+            await RemoveAbiturientAsync(abiturient, markAppUserAccountToDelete);
+        }              
+
+        /// <summary>
+        /// Удаляет аккаунт абитуриента и все связанные данные
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveAbiturientAsync(Abiturient abiturient, bool markAppUserAccountToDelete = false)
+        {            
+            if (markAppUserAccountToDelete)
             {
                 await _userProfileRepository.SetAppUserStatusAsync(abiturient.AppUser, AppUserStatusEnum.ToDelete);
             }
 
-            
-            if(abiturient.AbiturientIndividualAchievments != null && abiturient.AbiturientIndividualAchievments.Count() > 0)
+
+            if (abiturient.AbiturientIndividualAchievments != null && abiturient.AbiturientIndividualAchievments.Count() > 0)
             {
-                await RemoveAbiturientIndividualAchievmentsAsync(abiturient.AbiturientIndividualAchievments);                                
+                await RemoveAbiturientIndividualAchievmentsAsync(abiturient.AbiturientIndividualAchievments);
             }
 
-            
+
             if (abiturient.ApplicationForAdmissions != null && abiturient.ApplicationForAdmissions.Count > 0)
             {
                 foreach (var applicationForAdmission in abiturient.ApplicationForAdmissions)
@@ -605,13 +638,13 @@ namespace KisVuzDotNetCore2.Models.Abitur
                     if (applicationForAdmission.ConsentToEnrollments != null && applicationForAdmission.ConsentToEnrollments.Count > 0)
                     {
                         var consentToEnrollmentIds = applicationForAdmission.ConsentToEnrollments
-                            .Select(cte=>cte.ConsentToEnrollmentId)
+                            .Select(cte => cte.ConsentToEnrollmentId)
                             .ToList();
 
                         foreach (var consentToEnrollmentId in consentToEnrollmentIds)
                         {
                             await _consentToEnrollmentRepository.RemoveConsentToEnrollmentAsync(consentToEnrollmentId);
-                        }                        
+                        }
                     }
 
                     // Удаление договоров
@@ -633,7 +666,7 @@ namespace KisVuzDotNetCore2.Models.Abitur
                         {
                             await _revocationStatementRepository.RemoveRevocationStatementAsync(revocationStatementId);
                         }
-                    }                                        
+                    }
                 }
             }
 
