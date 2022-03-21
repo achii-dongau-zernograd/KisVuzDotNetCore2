@@ -86,6 +86,7 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         {
             var dataToRemove = _abiturientRepository.GetAbiturients()
                 .Where(a => a.RegisterDateTime.Value.Year==year && a.AbiturientStatusId != (int)AbiturientStatusEnum.AddedToStudGroup)
+                .Take(50)
                 .ToList();
             return View(dataToRemove);
         }
@@ -95,6 +96,7 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         {
             var dataToRemove = _abiturientRepository.GetAbiturients()
                 .Where(a => a.RegisterDateTime.Value.Year == year && a.AbiturientStatusId != (int)AbiturientStatusEnum.AddedToStudGroup)
+                .Take(50)
                 .ToList();
 
             foreach (var abiturient in dataToRemove)
