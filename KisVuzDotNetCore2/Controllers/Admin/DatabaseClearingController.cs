@@ -85,16 +85,16 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         public IActionResult RemoveAbiturients(int year=2021)
         {
             var dataToRemove = _abiturientRepository.GetAbiturients()
-                .Where(a => a.RegisterDateTime.Value.Year==year && a.AbiturientStatusId==(int)AbiturientStatusEnum.NewAbiturient)
+                .Where(a => a.RegisterDateTime.Value.Year==year && a.AbiturientStatusId != (int)AbiturientStatusEnum.AddedToStudGroup)
                 .ToList();
             return View(dataToRemove);
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveAbiturientsConfirmed()
+        public async Task<IActionResult> RemoveAbiturientsConfirmed(int year = 2021)
         {
             var dataToRemove = _abiturientRepository.GetAbiturients()
-                .Where(a => a.RegisterDateTime.Value.Year == 2021 && a.AbiturientStatusId == (int)AbiturientStatusEnum.NewAbiturient)
+                .Where(a => a.RegisterDateTime.Value.Year == year && a.AbiturientStatusId != (int)AbiturientStatusEnum.AddedToStudGroup)
                 .ToList();
 
             foreach (var abiturient in dataToRemove)
