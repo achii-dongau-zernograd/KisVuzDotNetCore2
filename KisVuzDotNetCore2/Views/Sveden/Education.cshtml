@@ -71,8 +71,9 @@
 <div itemprop="copyDoc">
     @foreach (var fileDataType in license)
     {
-        <a href="#spoiler-@fileDataType.FileDataTypeId" data-toggle="collapse" class="btn btn-primary btn-block">@fileDataType.FileDataTypeName</a>
-        <div class="collapse" id="spoiler-@fileDataType.FileDataTypeId" itemprop="docLink">
+        <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@fileDataType.FileDataTypeName</a>
+        <div class="collapse" id="spoiler-@spoilerCounter" itemprop="docLink">
+            @{spoilerCounter++;}
             <div class="well">
                 @foreach (var ftft in fileDataType.FileToFileTypes)
                 {
