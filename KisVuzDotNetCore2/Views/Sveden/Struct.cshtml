@@ -50,7 +50,11 @@
                             @structSubvision.StructSubvisionAdress?.GetAddress
                         </td>
                         <td itemprop="site">
-                            @if(structSubvision.StructSubvisionSite!= null && structSubvision.StructSubvisionSite.Contains("http"))
+                            @if(string.IsNullOrWhiteSpace(structSubvision.StructSubvisionSite))
+                            {
+                                <text>нет</text>
+                            }
+                            else if(structSubvision.StructSubvisionSite.Contains("http"))
                             {
                                 <a href="@structSubvision.StructSubvisionSite" target="_blank">@structSubvision.StructSubvisionSite</a>
                             }
