@@ -50,7 +50,15 @@
                             @structSubvision.StructSubvisionAdress?.GetAddress
                         </td>
                         <td itemprop="site">
-                            @structSubvision.StructSubvisionSite
+                            @if(structSubvision.StructSubvisionSite.StartsWith("http"))
+                            {
+                                <a href="@structSubvision.StructSubvisionSite" target="_blank">@structSubvision.StructSubvisionSite</a>
+                            }
+                            else
+                            {
+                                @structSubvision.StructSubvisionSite
+                            }                      
+                            
                         </td>
                         <td itemprop="email">
                             @structSubvision.StructSubvisionEmail?.EmailValue
