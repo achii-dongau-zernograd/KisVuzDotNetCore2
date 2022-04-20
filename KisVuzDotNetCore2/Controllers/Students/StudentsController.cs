@@ -251,23 +251,23 @@ namespace KisVuzDotNetCore2.Controllers.Students
 
             if(student != null)
             {
-                if (student.AppUserId != null)
-                {
-                    AppUser user = await userManager.FindByIdAsync(student.AppUserId);
+                //if (student.AppUserId != null)
+                //{
+                //    AppUser user = await userManager.FindByIdAsync(student.AppUserId);
 
-                    if (user != null)
-                    {
-                        IdentityResult result = await userManager.DeleteAsync(user);
-                        if (!result.Succeeded)                        
-                        {
-                            AddErrorsFromResult(result);
-                        }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Пользователь не найден");
-                    }
-                }
+                //    if (user != null)
+                //    {
+                //        IdentityResult result = await userManager.DeleteAsync(user);
+                //        if (!result.Succeeded)                        
+                //        {
+                //            AddErrorsFromResult(result);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        ModelState.AddModelError("", "Пользователь не найден");
+                //    }
+                //}
                 _context.Students.Remove(student);
                 await _context.SaveChangesAsync();
             }
