@@ -142,7 +142,10 @@ else
                             <td itemprop="learningTerm">
                                 @item.EduSrok.EduSrokName
                             </td>
-                            <td itemprop="dateEnd">@item.EduNapravl.EduUgs.EduAccred?.EduAccredDateExpiration.ToString("dd.MM.yyyy")</td>
+                            <td itemprop="dateEnd">
+                                Бессрочный
+                                @*@item.EduNapravl.EduUgs.EduAccred?.EduAccredDateExpiration.ToString("dd.MM.yyyy")*@
+                            </td>
                             <td itemprop="language">Русский</td>
                         </tr>
                     }
