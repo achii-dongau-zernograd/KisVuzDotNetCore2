@@ -1,0 +1,41 @@
+https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-centos-7
+
+xn--80aqa2d.xn--p1ai
+
+
+
+
+
+
+
+[root@xn--80aqa2d conf.d]# iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+[root@xn--80aqa2d conf.d]# certbot --nginx -d xn--80aqa2d.xn--p1ai
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Plugins selected: Authenticator nginx, Installer nginx
+Starting new HTTPS connection (1): acme-v02.api.letsencrypt.org
+Requesting a certificate for xn--80aqa2d.xn--p1ai
+Performing the following challenges:
+http-01 challenge for xn--80aqa2d.xn--p1ai
+Waiting for verification...
+Cleaning up challenges
+Deploying Certificate to VirtualHost /etc/nginx/conf.d/dotnetHttps.conf
+Redirecting all traffic on port 80 to ssl in /etc/nginx/conf.d/dotnet.conf
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Congratulations! You have successfully enabled https://xn--80aqa2d.xn--p1ai
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Subscribe to the EFF mailing list (email: litvinovvn@rambler.ru).
+Starting new HTTPS connection (1): supporters.eff.org
+An unexpected error occurred:
+TypeError: __str__ returned non-string (type Error)
+Please see the logfiles in /var/log/letsencrypt for more details.
+
+IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/xn--80aqa2d.xn--p1ai/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/xn--80aqa2d.xn--p1ai/privkey.pem
+   Your certificate will expire on 2022-10-02. To obtain a new or
+   tweaked version of this certificate in the future, simply run
+   certbot again with the "certonly" option. To non-interactively
+   renew *all* of your certificates, run "certbot renew"
