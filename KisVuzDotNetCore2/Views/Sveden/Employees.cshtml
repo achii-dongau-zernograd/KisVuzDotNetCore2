@@ -15,7 +15,7 @@
 <a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Информация о руководителе образовательной организации / заместителях руководителя образовательной организации</a>
 <div class="collapse" id="spoiler-1">
     <div class="well">
-        <table itemprop="rucovodstvo" class="table table-hover">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>Ф.И.О.</th>
@@ -27,7 +27,7 @@
             @foreach (var item in t14rucovodstvo)
             {
                 string itempropRucovodstvo = "rucovodstvo";
-                if (item.Post.Contains("зам"))
+                if (item.Post.Contains("Зам"))
                 {
                     itempropRucovodstvo = "rucovodstvoZam";
                 }
