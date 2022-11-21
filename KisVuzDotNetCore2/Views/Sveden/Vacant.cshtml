@@ -32,7 +32,7 @@
             <td align=center><strong>10</strong></td>
         </tr>
 
-        @foreach (var item in vacantist.OrderBy(v=>v.EduProfile.EduNapravl.EduNapravlCode).ThenBy(v=>v.EduKurs.EduKursNumber))
+        @foreach (var item in vacantist.OrderBy(v=>v.EduProfile?.EduNapravl?.EduNapravlCode).ThenBy(v=>v.EduKurs.EduKursNumber))
         {
             <tr itemprop="vacant">
                 <td align=center itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
