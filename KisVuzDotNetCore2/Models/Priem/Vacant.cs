@@ -27,7 +27,7 @@ namespace KisVuzDotNetCore2.Models.Priem
         [Display(Name = "Направленность подготовки ")]
         public EduProfile EduProfile { get; set; }
         [Display(Name = "Направленность подготовки ")]
-        public int EduProfileId { get; set; }
+        public int? EduProfileId { get; set; }
 
 
         /// <summary>

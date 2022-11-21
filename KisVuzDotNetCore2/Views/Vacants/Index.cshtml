@@ -19,6 +19,9 @@
                 @Html.DisplayNameFor(model => model.EduNapravl)
             </th>
             <th rowspan="2">
+                @Html.DisplayNameFor(model => model.EduProfile)
+            </th>
+            <th rowspan="2">
                 Уровень образования
             </th>
             <th rowspan="2">
@@ -55,6 +58,7 @@
             <tr>
                 <td>@item.EduNapravl.EduNapravlCode</td>
                 <td>@item.EduNapravl.EduNapravlName</td>
+                <td>@(item.EduProfile?.EduProfileName ?? "-")</td>
                 <td>@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EduKurs.EduKursNumber)

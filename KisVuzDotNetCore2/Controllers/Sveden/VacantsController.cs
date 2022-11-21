@@ -26,6 +26,7 @@ namespace KisVuzDotNetCore2.Controllers
         public async Task<IActionResult> Index()
         {
             var appIdentityDBContext = _context.Vacants
+                .Include(v => v.EduProfile)
                 .Include(v => v.EduNapravl)
                     .ThenInclude(n => n.EduUgs)
                         .ThenInclude(ugs => ugs.EduLevel)
@@ -92,14 +93,18 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
-            var vacant = await _context.Vacants.SingleOrDefaultAsync(m => m.VacantId == id);
+            var vacant = await _context.Vacants
+                .Include(v=>v.EduNapravl.EduUgs)
+                .Include(v => v.EduProfile.EduNapravl.EduUgs)
+                .SingleOrDefaultAsync(m => m.VacantId == id);
             if (vacant == null)
             {
                 return NotFound();
             }
             ViewData["EduFormId"] = new SelectList(_context.EduForms, "EduFormId", "EduFormName", vacant.EduFormId);
             ViewData["EduKursId"] = new SelectList(_context.EduKurses, "EduKursId", "EduKursId", vacant.EduKursId);
-            ViewData["GetEduNapravlFullName"] = new SelectList(_context.EduNapravls.Include(v => v.EduUgs.EduLevel), "EduNapravlId", "GetEduNapravlFullName", vacant.EduNapravlId);
+            //ViewData["GetEduNapravlFullName"] = new SelectList(_context.EduNapravls.Include(v => v.EduUgs.EduLevel), "EduNapravlId", "GetEduNapravlFullName", vacant.EduNapravlId);
+            ViewData["GetEduProfileFullName"] = new SelectList(_context.EduProfiles.Include(v => v.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName", vacant.EduProfileId);
             return View(vacant);
         }
 
@@ -108,7 +113,7 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VacantId,NumberBFVacant,NumberBRVacant,NumberBMVacant,NumberPVacant,EduFormId,EduKursId,EduNapravlId")] Vacant vacant)
+        public async Task<IActionResult> Edit(int id, [Bind("VacantId,NumberBFVacant,NumberBRVacant,NumberBMVacant,NumberPVacant,EduFormId,EduKursId,EduProfileId")] Vacant vacant)
         {
             if (id != vacant.VacantId)
             {
@@ -119,6 +124,8 @@ namespace KisVuzDotNetCore2.Controllers
             {
                 try
                 {
+                    var profile = await _context.EduProfiles.FirstOrDefaultAsync(p => p.EduProfileId == vacant.EduProfileId);
+                    vacant.EduNapravlId = profile.EduNapravlId;
                     _context.Update(vacant);
                     await _context.SaveChangesAsync();
                 }

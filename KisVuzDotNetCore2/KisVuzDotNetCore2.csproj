@@ -620,6 +620,8 @@
     <Compile Remove="Migrations\20210123135138_ElGradebooks.Designer.cs" />
     <Compile Remove="Migrations\20210127123232_t.cs" />
     <Compile Remove="Migrations\20210127123232_t.Designer.cs" />
+    <Compile Remove="Migrations\20221121053228_Vacant_EduProfileId.cs" />
+    <Compile Remove="Migrations\20221121053228_Vacant_EduProfileId.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
