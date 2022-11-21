@@ -27,6 +27,9 @@ namespace KisVuzDotNetCore2.Controllers
         {
             var appIdentityDBContext = _context.Vacants
                 .Include(v => v.EduProfile)
+                    .ThenInclude(v => v.EduNapravl)
+                        .ThenInclude(n => n.EduUgs)
+                            .ThenInclude(ugs => ugs.EduLevel)
                 .Include(v => v.EduNapravl)
                     .ThenInclude(n => n.EduUgs)
                         .ThenInclude(ugs => ugs.EduLevel)
