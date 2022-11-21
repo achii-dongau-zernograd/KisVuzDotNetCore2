@@ -86,19 +86,20 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th rowspan="2">Код</th>
-                        <th rowspan="2">Наименование профессии, специальности, направления подготовки</th>
+                        <th rowspan="2">Код, шифр</th>
+                        <th rowspan="2">Наименование профессии, специальности, направления подготовки, наименование группы научных специальностей</th>
+                        <th rowspan="2">Образовательная программа, направленность, профиль, шифр и наименование научной специальности</th>
                         <th colspan="2">@GraduateYear[GraduateYear.Count - 1].GraduateYearName</th>
                         <th colspan="2">@GraduateYear[GraduateYear.Count - 2].GraduateYearName</th>
                         <th colspan="2">@GraduateYear[GraduateYear.Count - 3].GraduateYearName</th>
                     </tr>
                     <tr>
-                        <th>Кол-во выпускников</th>
-                        <th>Кол-во трудоустроенных выпускников</th>
-                        <th>Кол-во выпускников</th>
-                        <th>Кол-во трудоустроенных выпускников</th>
-                        <th>Кол-во выпускников</th>
-                        <th>Кол-во трудоустроенных выпускников</th>
+                        <th>Количество выпускников</th>
+                        <th>Количество трудоустроенных выпускников</th>
+                        <th>Количество выпускников</th>
+                        <th>Количество трудоустроенных выпускников</th>
+                        <th>Количество выпускников</th>
+                        <th>Количество трудоустроенных выпускников</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,7 +108,8 @@
                         int yearCounter = 1;
                         <tr itemprop="graduateJob">
                             <td itemprop="eduCode">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlCode</td>
-                            <td itemprop="eduName">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlName (@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduProfileName)</td>
+                            <td itemprop="eduName">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlName</td>
+                            <td itemprop="eduProf">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduProfileName</td>
                             @foreach (var graduateYear in GraduateYear.TakeLast(3).OrderByDescending(y => y.GraduateYearId))
                             {                                
                                 bool IsFounded = false;
