@@ -698,6 +698,7 @@ namespace KisVuzDotNetCore2.Controllers
             var t23vacant = await _context.Vacants
                 .Include(l => l.EduNapravl.EduUgs.EduLevel)
                 .Include(l => l.EduNapravl)
+                .Include(n => n.EduProfile)
                 .Include(l => l.EduKurs)
                 .Include(l => l.EduForm)
                 .ToListAsync();

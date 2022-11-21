@@ -14,12 +14,22 @@ namespace KisVuzDotNetCore2.Models.Priem
     {
         public int VacantId { get; set; }
         /// <summary>
-        /// Наименование
+        /// Направление подготовки
         /// </summary>
-        [Display(Name = "Наименование ")]
+        [Display(Name = "Направление подготовки ")]
         public EduNapravl EduNapravl { get; set; }
-        [Display(Name = "Наименование ")]
+        [Display(Name = "Направление подготовки ")]
         public int EduNapravlId { get; set; }
+
+        /// <summary>
+        /// Направленность подготовки
+        /// </summary>
+        [Display(Name = "Направленность подготовки ")]
+        public EduProfile EduProfile { get; set; }
+        [Display(Name = "Направленность подготовки ")]
+        public int EduProfileId { get; set; }
+
+
         /// <summary>
         /// Курс
         /// </summary>
