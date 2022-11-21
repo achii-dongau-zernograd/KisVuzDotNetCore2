@@ -6,19 +6,16 @@
 <table class="table">
     <thead>
         <tr>
-            <th rowspan=2 align=center>Код, шифр группы научных специальностей</th>
-            <th rowspan=2 align=center>Наименование профессии, специальности, направления подготовки, наименование группы научных специальностей</th>
-            <th rowspan=2 align=center>Уровень образования</th>
-            <th rowspan=2 align=center>Образовательная программа, направленность, профиль, шифр и наименование научной специальности</th>
-            <th rowspan=2 align=center>Курс</th>
-            <th rowspan=2 align=center>Форма обучения</th>
-            <th colspan=4 align=center>Количество вакантных мест для приема (перевода) на места, финансируемые за счет</th>
-        </tr>
-        <tr>
-            <th align=center>бюджетных ассигнований федерального бюджета</th>
-            <th align=center>бюджетов субъектов Российской Федерации</th>
-            <th align=center>местных бюджетов</th>
-            <th align=center>по договорам об образовании и за счет средств физических и (или) юридических лиц</th>
+            <th align=center>Код, шифр группы научных специальностей</th>
+            <th align=center>Наименование профессии, специальности, направления подготовки, наименование группы научных специальностей</th>
+            <th align=center>Уровень образования</th>
+            <th align=center>Образовательная программа, направленность, профиль, шифр и наименование научной специальности</th>
+            <th align=center>Курс</th>
+            <th align=center>Форма обучения</th>
+            <th align=center>Количество вакантных мест для приема (перевода) на места, финансируемые за счет бюджетных ассигнований федерального бюджета</th>
+            <th align=center>Количество вакантных мест для приема (перевода) на места, финансируемые за счет бюджетов субъектов Российской Федерации</th>
+            <th align=center>Количество вакантных мест для приема (перевода) на места, финансируемые за счет местных бюджетов</th>
+            <th align=center>Количество вакантных мест для приема (перевода) на места, финансируемые за счет средств физических и (или) юридических лиц</th>
         </tr>
     </thead>
     <tbody>
@@ -35,13 +32,13 @@
             <td align=center><strong>10</strong></td>
         </tr>
 
-        @foreach (var item in vacantist)
+        @foreach (var item in vacantist.OrderBy(v=>v.EduNapravl.EduNapravlCode))
         {
             <tr itemprop="vacant">
                 <td align=center itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
                 <td align=center itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
                 <td align=center itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
-                <td align=center itemprop="eduCourse">@(item.EduProfile?.EduProfileName ?? "-")</td>
+                <td align=center itemprop="eduProf">@(item.EduProfile?.EduProfileName ?? "-")</td>
                 <td align=center itemprop="eduCourse">@item.EduKurs.EduKursNumber</td>
                 <td align=center itemprop="eduForm">@item.EduForm.EduFormName</td>
                 <td align=center itemprop="numberBFVacant">@item.NumberBFVacant</td>

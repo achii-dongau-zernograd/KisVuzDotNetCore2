@@ -62,7 +62,9 @@ namespace KisVuzDotNetCore2.Controllers
         {
             ViewData["EduForms"] = new SelectList(_context.EduForms, "EduFormId", "EduFormName");
             ViewData["EduKursId"] = new SelectList(_context.EduKurses, "EduKursId", "EduKursId");
-            ViewData["GetEduNapravlFullName"] = new SelectList(_context.EduNapravls.Include(v => v.EduUgs.EduLevel), "EduNapravlId", "GetEduNapravlFullName");
+            //ViewData["GetEduNapravlFullName"] = new SelectList(_context.EduNapravls.Include(v => v.EduUgs.EduLevel), "EduNapravlId", "GetEduNapravlFullName");
+            ViewData["GetEduProfileFullName"] = new SelectList(_context.EduProfiles.Include(v => v.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
+
             return View();
         }
 
@@ -71,10 +73,12 @@ namespace KisVuzDotNetCore2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VacantId,NumberBFVacant,NumberBRVacant,NumberBMVacant,NumberPVacant,EduFormId,EduKursId,EduNapravlId")] Vacant vacant)
+        public async Task<IActionResult> Create([Bind("VacantId,NumberBFVacant,NumberBRVacant,NumberBMVacant,NumberPVacant,EduFormId,EduKursId,EduProfileId")] Vacant vacant)
         {
             if (ModelState.IsValid)
             {
+                var profile = await _context.EduProfiles.FirstOrDefaultAsync(p => p.EduProfileId == vacant.EduProfileId);
+                vacant.EduNapravlId = profile.EduNapravlId;
                 _context.Add(vacant);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
