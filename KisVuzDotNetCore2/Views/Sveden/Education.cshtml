@@ -175,6 +175,23 @@ else
         @{spoilerCounter++;}
         <div class="well">
 
+            <a href="http://xn--80aaak3h.xn--p1ai/wp-content/uploads/2022/11/poa_2022_35.03.04.pdf" target="_blank">
+                Свидетельство о профессионально-общественной аккредитации образовательной программы 35.03.04 "Агрономия"
+            </a>
+            <br/>
+            <a href="http://xn--80aaak3h.xn--p1ai/wp-content/uploads/2022/11/poa_2022_35.03.06.pdf" target="_blank">
+                Свидетельство о профессионально-общественной аккредитации образовательной программы 35.03.06 "Агроинженерия"
+            </a>
+            <br/>
+            <a href="http://xn--80aaak3h.xn--p1ai/wp-content/uploads/2022/11/poa_2022_35.04.04.pdf" target="_blank">
+                Свидетельство о профессионально-общественной аккредитации образовательной программы 35.04.04 "Агрономия"
+            </a>
+            <br/>
+            <a href="http://xn--80aaak3h.xn--p1ai/wp-content/uploads/2022/11/poa_2022_35.04.06.pdf" target="_blank">
+                Свидетельство о профессионально-общественной аккредитации образовательной программы 35.04.06 "Агроинженерия"
+            </a>
+            <br/>
+
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -269,6 +286,7 @@ else
                     <tr itemprop="eduChislen">
                         <td itemprop="eduCode">@item.EduProfile.EduNapravl.EduNapravlCode</td>
                         <td itemprop="eduName">@item.EduProfile.EduNapravl.EduNapravlName (@item.EduProfile.EduProfileName)</td>
+                        <td itemprop="eduProf" style="display:none;"></td>
                         <td itemprop="eduLevel">@item.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
                         <td itemprop="eduForm">@item.EduForm.EduFormName</td>
                         <td align=center>
@@ -342,6 +360,7 @@ else
                     <tr itemprop="eduPriem">
                         <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
                         <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
+                        <td itemprop="eduProf" style="display:none;"></td>
                         <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
                         <td itemprop="eduForm">@item.EduForm.EduFormName</td>
                         <td itemprop="numberBF">@item.FinBF</td>
@@ -402,6 +421,7 @@ else
                     <tr itemprop="eduPerevod">
                         <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
                         <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
+                        <td itemprop="eduProf" style="display:none;"></td>
                         <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
                         <td itemprop="eduForm">@item.EduForm.EduFormName</td>
                         <td itemprop="numberOut" align=center>@item.NumberOutPerevod</td>
@@ -507,6 +527,8 @@ else
                             <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
 
                             <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName, @eduYearsBegTrainingsOfCurrentEduProgram)</td>
+                            
+                            <td itemprop="eduProf" style="display:none;"></td>
 
                             <td itemprop="eduLevel">@eduProgram.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName<br />(@eduProgram.EduProgramPodg.EduProgramPodgName.ToLower())</td>
 
@@ -722,6 +744,7 @@ else
                         <td itemprop="eduCode" colspan="11" class="text-center">Не реализуются</td>
                         <td itemprop="eduName" class="hidden">Не реализуются</td>
                         <td itemprop="eduLevel" class="hidden">Не реализуются</td>
+                        <td itemprop="eduProf" style="display:none;"></td>
                         <td itemprop="eduForm" class="hidden">Не реализуются</td>
                         <td itemprop="opMain" class="hidden">Не реализуются</td>
                         <td itemprop="educationPlan" class="hidden">Не реализуются</td>
@@ -1006,8 +1029,10 @@ else
                     <tr itemprop="eduNir">
                         <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
                         <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
+                        <td itemprop="eduProf" style="display:none;"></td>
                         <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
                         <td itemprop="perechenNir">@item.NirNapravls</td>
+                        <td itemprop="napravNir" style="display:none;"></td>
                         <td itemprop="resultNir">
                             @if (!string.IsNullOrWhiteSpace(item.NumNpr))
                             {
