@@ -451,18 +451,18 @@ else
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Код</th>
-                        <th>Наименование специальности, направления подготовки</th>
+                        <th>Код, шифр</th>
+                        <th>Наименование профессии, специальности, направления подготовки, наименование группы научных специальностей</th>
                         <th>Уровень образования</th>
+                        <th>Образовательная программа, направленность, профиль, шифр и наименование научной специальности</th>
                         <th>Реализуемые формы обучения</th>
                         <th>Ссылка на описание образовательной программы с приложением ее копии</th>
                         <th>Ссылка на учебный план</th>
                         <th>Ссылка на аннотации к рабочим программам дисциплин (по каждой дисциплине в составе образовательной программы)</th>
                         <th>Ссылки на рабочие программы (по каждой дисциплине в составе образовательной программы)</th>
-                        <th>Ссылка на календарный учебный график</th>
-                        <th>Ссылка на методические и иные документы, разработанные образовательной организацией для обеспечения образовательного процесса</th>
+                        <th>Ссылка на календарный учебный график</th>                        
                         <th>Ссылка на рабочие программы практик, предусмотренных соответствующей образовательной программой</th>
-                        <th>Использование при реализации образовательных программ электронного обучения и дистанционных образовательных технологий</th>
+                        <th>Ссылка на методические и иные документы, разработанные образовательной организацией для обеспечения образовательного процесса, а также рабочие программы воспитания и календарные планы воспитательной работы, включаемые в ООП</th>
                     </tr>
                     <tr>
                         <th>1</th>
@@ -523,11 +523,11 @@ else
                         <tr itemprop="eduOP">
                             <td itemprop="eduCode">@eduProgram.EduProfile.EduNapravl.EduNapravlCode</td>
 
-                            <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName<br />(@eduProgram.EduProfile.EduProfileName, @eduYearsBegTrainingsOfCurrentEduProgram)</td>
-                            
-                            <td itemprop="eduProf" style="display:none;"></td>
+                            <td itemprop="eduName">@eduProgram.EduProfile.EduNapravl.EduNapravlName</td>                            
 
                             <td itemprop="eduLevel">@eduProgram.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName<br />(@eduProgram.EduProgramPodg.EduProgramPodgName.ToLower())</td>
+
+                            <td itemprop="eduProf">@eduProgram.EduProfile.EduProfileName, @eduYearsBegTrainingsOfCurrentEduProgram</td>
 
                             <td itemprop="eduForm">
                                 @foreach (var eduProgramEduForm in eduProgram.EduProgramEduForms)
@@ -636,6 +636,22 @@ else
                                 }
                             </td>
 
+                            <td itemprop="eduPr">
+                                @foreach (var eduPlan in eduProgramEduPlanList)
+                                {
+                                    string eduYearsBegTrainings = "";
+                                    if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                    {
+                                        foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                        {
+                                            eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                        }
+                                    }
+
+                                    <a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId" target="_blank">Рабочие программы (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a>
+                                }
+                            </td>
+
                             <td itemprop="@methodology">
                                 <ul>
                                     <li>
@@ -661,28 +677,54 @@ else
                                     <li>
                                         <a asp-controller="UchPosobies" asp-action="Preview" asp-route-id="@eduProgram.EduProfile.EduNapravlId" target="_blank">Учебные пособия</a>
                                     </li>
+                                    <li>
+                                        <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Рабочие программы воспитания</a>
+                                        <div class="collapse" id="spoiler-@spoilerCounter">
+                                            @{spoilerCounter++;}
+                                            <div class="well">
+                                                @foreach (var eduPlan in eduProgramEduPlanList)
+                                                {
+                                                    string eduYearsBegTrainings = "";
+                                                    if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                                    {
+                                                        foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                                        {
+                                                            eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                                        }
+                                                    }
+                                                    <p><a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId" target="_blank">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a></p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="#spoiler-@spoilerCounter" data-toggle="collapse">Календарные планы воспитательной работы</a>
+                                        <div class="collapse" id="spoiler-@spoilerCounter">
+                                            @{
+                                                spoilerCounter++;
+                                            }
+                                            <div class="well">
+                                                @foreach (var eduPlan in eduProgramEduPlanList)
+                                                {
+                                                    string eduYearsBegTrainings = "";
+                                                    if (eduPlan.EduPlanEduYearBeginningTrainings != null)
+                                                    {
+                                                        foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
+                                                        {
+                                                            eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
+                                                        }
+                                                    }
+                                                    <p><a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId" target="_blank">Открыть (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a></p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
-                            </td>
+                            </td>                            
 
-                            <td itemprop="eduPr">
-                                @foreach (var eduPlan in eduProgramEduPlanList)
-                                {
-                                    string eduYearsBegTrainings = "";
-                                    if (eduPlan.EduPlanEduYearBeginningTrainings != null)
-                                    {
-                                        foreach (var item in eduPlan.EduPlanEduYearBeginningTrainings)
-                                        {
-                                            eduYearsBegTrainings += " " + item.EduYearBeginningTraining.EduYearBeginningTrainingName;
-                                        }
-                                    }
-
-                                    <a asp-controller="EduPlans" asp-action="Preview" asp-route-id="@eduPlan.EduPlanId" target="_blank">Рабочие программы (@eduPlan.EduForm.EduFormName.ToLower(), @eduYearsBegTrainings)</a>
-                                }
-                            </td>
-
-                            <td itemprop="@eduEl">
+                            @*<td itemprop="@eduEl">
                                 @eduProgram.UsingElAndDistEduTech
-                            </td>
+                            </td>*@
                         </tr>
                     }
                 </tbody>
