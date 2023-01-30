@@ -162,6 +162,7 @@ namespace KisVuzDotNetCore2.Controllers
             if (string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduAccred")
             {
                 var t9eduAccred = await _eduNapravlRepository.GetEduNapravlEduFormEduSroksAsync();
+                var eduProfiles = await _context.EduProfiles.ToListAsync();
                 ViewData["t9eduAccred"] = t9eduAccred;
             }
             #endregion
