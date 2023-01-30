@@ -38,6 +38,9 @@ namespace KisVuzDotNetCore2.Controllers.Eios
                 var eduNapravlsQuery = _context.EduNapravls.Where(n => n.EduNapravlId== eduNapravlId);
                 eduNapravlsQuery = eduNapravlsQuery.Include(n => n.EduProfiles)
                            .ThenInclude(p => p.EduPlans)
+                                .ThenInclude(p => p.EduForm);
+                eduNapravlsQuery = eduNapravlsQuery.Include(n => n.EduProfiles)
+                           .ThenInclude(p => p.EduPlans)
                                .ThenInclude(plan => plan.EduPlanEduYearBeginningTrainings)
                                    .ThenInclude(year => year.EduYearBeginningTraining);
                 eduNapravlsQuery = eduNapravlsQuery.Include(n => n.EduUgs.EduLevel);
