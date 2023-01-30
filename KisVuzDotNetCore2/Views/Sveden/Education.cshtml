@@ -111,13 +111,17 @@ else
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Код</th>
-                            <th>Наименование профессии, специальности, направления подготовки</th>
+                            <th>Код, шифр</th>
+                            <th>Наименование профессии, специальности, направления подготовки, научной специальности</th>
+                            <th>Образовательная программа, направленность, профиль, шифр и наименование научной специальности</th>
                             <th>Уровень образования</th>
                             <th>Формы обучения</th>
-                            <th>Срок получения образования</th>
+                            <th>Нормативный срок обучения</th>
                             <th>Срок действия государственной аккредитации<br /> (дата окончания действия свидетельства о государственной аккредитации)</th>
                             <th>Языки, на которых осуществляется образование (обучение)</th>
+                            <th>Учебные предметы, курсы, дисциплины (модули), предусмотренные соответствующей образовательной программой</th>
+                            <th>Практики, предусмотренные соответствующей образовательной программой</th>
+                            <th>Информация об использовании при реализации образовательных программ электронного обучения и дистанционных образовательных техноогий</th>
                         </tr>
                         <tr>
                             <th align=center>1</th>
@@ -127,6 +131,10 @@ else
                             <th align=center>5</th>
                             <th align=center>6</th>
                             <th align=center>7</th>
+                            <th align=center>8</th>
+                            <th align=center>9</th>
+                            <th align=center>10</th>
+                            <th align=center>11</th>
                         </tr>
                     </thead>
                     @foreach (var item in t9eduAccred
@@ -136,7 +144,21 @@ else
                         <tr itemprop="eduAccred">
                             <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
                             <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
-                            <td itemprop="eduProf" class="visibility: hidden"> - </td>
+                            <td itemprop="eduProf">
+                                @if (item.EduNapravl.EduProfiles!=null)
+                                {
+                                    foreach (var eduProfile in item.EduNapravl.EduProfiles)
+                                    {
+                                        @eduProfile.GetEduProfileFullName
+                                        <br />
+                                    }
+                                }
+                                else
+                                {
+                                    <text>-</text>
+                                }
+
+                            </td>
                             <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
                             <td itemprop="eduForm">
                                 @item.EduForm.EduFormName
@@ -149,9 +171,23 @@ else
                                 @*@item.EduNapravl.EduUgs.EduAccred?.EduAccredDateExpiration.ToString("dd.MM.yyyy")*@
                             </td>
                             <td itemprop="language">Русский</td>
-                            <td itemprop="eduPred" class="visibility: hidden"> - </td>
-                            <td itemprop="eduPrac" class="visibility: hidden"> - </td>
-                            <td itemprop="eduEl" class="visibility: hidden"> - </td>
+                            <td itemprop="eduPred">
+                                <a asp-controller="Eios" asp-action="UchPlansRabProgs"
+                                    asp-route-eduNapravlId="@item.EduNapravlId"
+                                    asp-route-eduFormId="@item.EduFormId"
+                                    target="_blank" class="btn btn-primary">
+                                    Открыть
+                                </a>
+                            </td>
+                            <td itemprop="eduPrac">
+                                <a asp-controller="Eios" asp-action="UchPlansRabProgs"
+                                    asp-route-eduNapravlId="@item.EduNapravlId"
+                                    asp-route-eduFormId="@item.EduFormId"
+                                    target="_blank" class="btn btn-primary">
+                                    Открыть
+                                </a>
+                            </td>
+                            <td itemprop="eduEl"> Не используется </td>
                         </tr>
                     }
                 </table>

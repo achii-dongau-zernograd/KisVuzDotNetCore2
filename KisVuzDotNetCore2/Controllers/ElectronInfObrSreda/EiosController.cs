@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Models;
+using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.UchPosobiya;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -29,9 +30,39 @@ namespace KisVuzDotNetCore2.Controllers.Eios
             _userProfileRepository = userProfileRepository;
         }
 
-        public async Task<IActionResult> UchPlansRabProgs()
-        {
-            var eduLevels = await _context.EduLevels
+        public async Task<IActionResult> UchPlansRabProgs(int eduNapravlId, int eduFormId)
+        {            
+            
+            if(eduNapravlId != 0 && eduFormId !=0 )
+            {
+                var eduNapravlsQuery = _context.EduNapravls.Where(n => n.EduNapravlId== eduNapravlId);
+                eduNapravlsQuery = eduNapravlsQuery.Include(n => n.EduProfiles)
+                           .ThenInclude(p => p.EduPlans)
+                               .ThenInclude(plan => plan.EduPlanEduYearBeginningTrainings)
+                                   .ThenInclude(year => year.EduYearBeginningTraining);
+                eduNapravlsQuery = eduNapravlsQuery.Include(n => n.EduUgs.EduLevel);
+                //.Include(l => l.EduUgses)
+                //   .ThenInclude(u => u.EduNapravls)
+                //       .ThenInclude(n => n.EduProfiles)
+                //           .ThenInclude(p => p.EduPlans)
+                //               .ThenInclude(plan => plan.EduPlanEduYearBeginningTrainings)
+                //                   .ThenInclude(year => year.EduYearBeginningTraining)
+                //.Include(l => l.EduUgses)
+                //   .ThenInclude(u => u.EduNapravls)
+                //       .ThenInclude(n => n.EduProfiles)
+                //           .ThenInclude(p => p.EduPlans)
+                //               .ThenInclude(plan => plan.EduPlanPdf)
+                //.Include(l => l.EduUgses)
+                //   .ThenInclude(u => u.EduNapravls)
+                //       .ThenInclude(n => n.EduProfiles)
+                //           .ThenInclude(p => p.EduPlans)
+                //               .ThenInclude(plan => plan.EduForm);
+                var eduNapravls = await eduNapravlsQuery.ToListAsync();
+                ViewData["eduNapravls"] = eduNapravls;
+            }
+            else
+            {
+                var eduLevels = await _context.EduLevels
                      .Include(l => l.EduUgses)
                         .ThenInclude(u => u.EduNapravls)
                             .ThenInclude(n => n.EduProfiles)
@@ -49,8 +80,12 @@ namespace KisVuzDotNetCore2.Controllers.Eios
                                 .ThenInclude(p => p.EduPlans)
                                     .ThenInclude(plan => plan.EduForm)
                      .ToListAsync();
+                ViewData["eduLevels"] = eduLevels;
+            }
 
-            ViewData["eduLevels"] = eduLevels;
+
+
+            //ViewData["eduLevels"] = eduLevels;
 
             return View();
         }
