@@ -65,9 +65,10 @@
 }
 
 @if (eduNapravls != null)
-{
+{    
     foreach (var eduNapravl in eduNapravls)
     {
+        <h3>@eduNapravl.GetEduNapravlFullName</h3>
         foreach (var eduProfile in eduNapravl.EduProfiles)
         {
             <strong>@eduProfile.EduProfileName</strong>
