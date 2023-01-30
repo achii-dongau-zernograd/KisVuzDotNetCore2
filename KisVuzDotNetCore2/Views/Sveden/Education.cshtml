@@ -292,18 +292,19 @@ else
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th rowspan=2>Код</th>
-                        <th rowspan=2>Наименование специальности, направления подготовки</th>
-                        <th rowspan=2>Уровень образования</th>
-                        <th rowspan=2>Формы обучения</th>
-                        <th colspan=4>Численность обучающихся / из них иностранных граждан за счет (количество человек):</th>
-                        <th rowspan=2>Общая численность обучающихся</th>
-                    </tr>
-                    <tr>
-                        <th>бюджетных ассигнований федерального бюджета</th>
-                        <th>бюджетов субъектов Российской Федерации</th>
-                        <th>местных бюджетов</th>
-                        <th>средств физических и (или) юридических лиц</th>
+                        <th>Код, шифр</th>
+                        <th>Наименование профессии, специальности, направления подготовки, наименование группы научных специальностей</th>
+                        <th>Уровень образования</th>
+                        <th>Формы обучения</th>
+                        <th>Сведения о численности обучающихся за счет бюджетных ассигнований федерального бюджета</th>                                            
+                        <th>Из них численность обучающихся, являющихся иностранными гражданами</th>
+                        <th>Сведения о численности обучающихся за счет бюджетов субъектов Российской Федерации</th>    
+                        <th>Из них численность обучающихся, являющихся иностранными гражданами</th>
+                        <th>Сведения о численности обучающихся за счет местных бюджетов</th>
+                        <th>Из них численность обучающихся, являющихся иностранными гражданами</th>
+                        <th>Сведения о численности обучающихся за счет средств физических и (или) юридических лиц</th>
+                        <th>Из них численность обучающихся, являющихся иностранными гражданами</th>                        
+                        <th>Общая численность обучающихся</th>
                     </tr>
                     <tr>
                         <td align=center><strong>1</strong></td>
@@ -315,6 +316,10 @@ else
                         <td align=center><strong>7</strong></td>
                         <td align=center><strong>8</strong></td>
                         <td align=center><strong>9</strong></td>
+                        <td align=center><strong>10</strong></td>
+                        <td align=center><strong>11</strong></td>
+                        <td align=center><strong>12</strong></td>
+                        <td align=center><strong>13</strong></td>
                     </tr>
                 </thead>
                 @foreach (var item in t7eduChislen)
@@ -326,16 +331,28 @@ else
                         <td itemprop="eduLevel">@item.EduProfile.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
                         <td itemprop="eduForm">@item.EduForm.EduFormName</td>
                         <td align=center>
-                            <span itemprop="numberBF">@item.NumberBFpriem</span> / <span itemprop="numberBFF">0</span>
+                            <span itemprop="numberBF">@item.NumberBFpriem</span>
                         </td>
                         <td align=center>
-                            <span itemprop="numberBR">@item.NumberBRpriem</span> / <span itemprop="numberBRF">0</span>
+                            <span itemprop="numberBFF">0</span>
                         </td>
                         <td align=center>
-                            <span itemprop="numberBM">@item.NumberBMpriem</span> / <span itemprop="numberBMF">0</span>
+                            <span itemprop="numberBR">@item.NumberBRpriem</span>
                         </td>
                         <td align=center>
-                            <span itemprop="numberP">@item.NumberPpriem</span> / <span itemprop="numberPF">@item.NumberInostr</span>
+                            <span itemprop="numberBRF">0</span>
+                        </td>
+                        <td align=center>
+                            <span itemprop="numberBM">@item.NumberBMpriem</span>
+                        </td>
+                        <td align=center>
+                            <span itemprop="numberBMF">0</span>
+                        </td>
+                        <td align=center>
+                            <span itemprop="numberP">@item.NumberPpriem</span>
+                        </td>
+                        <td align=center>
+                            <span itemprop="numberPF">@(item.NumberInostr??0)</span>
                         </td>
                         <td itemprop="numberAll" align=center>@item.NumberAll</td>
                     </tr>
