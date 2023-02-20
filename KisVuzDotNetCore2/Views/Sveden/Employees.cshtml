@@ -136,17 +136,18 @@
                 <table itemprop="teachingStaff" class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Ф.И.О. преподавателя, реализующего программу</th>
+                            <th>Ф.И.О.</th>
                             <th>Должность преподавателя</th>
                             <th>Перечень преподаваемых дисциплин</th>
-                            <th>Уровень образования</th>
+                            <th>Уровень (уровни) профессионального образования</th>
                             <th>Квалификация</th>
-                            <th>Учёная степень педагогического работника (при наличии)</th>
-                            <th>Учёное звание педагогического работника (при наличии)</th>
-                            <th>Наименование направления подготовки и (или) специальности педагогического работника</th>
-                            <th>Сведения о повышении квалификации и (или) профессиональной переподготовке педагогического работника (при наличии)</th>
+                            <th>Наименование направления подготовки и (или) специальности, в том числе научной</th>
+                            <th>Учёная степень (при наличии)</th>
+                            <th>Учёное звание (при наличии)</th>                            
+                            <th>Сведения о повышении квалификации (за последние 3 года) и сведения о профессиональной переподготовке (при наличии)</th>
                             <th>Общий стаж работы</th>
-                            <th>Стаж работы педагогического работника по специальности</th>
+                            <th>Стаж работы по специальности (сведения о продолжительности опыта (лет) работы в профессиональной сфере)</th>
+                            @*<th>Наименование образовательных программ, в реализации которых участвует педагогический работник</th>*@
                         </tr>
                         <tr>
                             <th>1</th>
@@ -160,6 +161,7 @@
                             <th>9</th>
                             <th>10</th>
                             <th>11</th>
+                            @*<th>12</th>*@
                         </tr>
                     </thead>
                     <tbody>
@@ -224,8 +226,19 @@
                                     }
                                 </td>
 
-                                <td itemprop="teachingOp" style="display:none;">Агроинженерия</td>
-
+                                <td itemprop="employeeQualification">
+                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
+                                    {
+                                        foreach (var qualification in @teacher.AppUser?.Qualifications)
+                                        {
+                                            if (qualification.RowStatusId == 2)
+                                            {
+                                                <p>@qualification.NapravlName</p>
+                                            }
+                                        }
+                                    }
+                                </td>
+                                                                
                                 <td itemprop="degree">
                                     @if (!string.IsNullOrEmpty(teacher.AppUserId))
                                     {
@@ -253,20 +266,7 @@
                                         }
                                     }
                                 </td>
-
-                                <td itemprop="employeeQualification">
-                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
-                                    {
-                                        foreach (var qualification in @teacher.AppUser?.Qualifications)
-                                        {
-                                            if (qualification.RowStatusId == 2)
-                                            {
-                                                <p>@qualification.NapravlName</p>
-                                            }
-                                        }
-                                    }
-                                </td>
-
+                                                                
                                 <td itemprop="profDevelopment">
                                     @if (!string.IsNullOrEmpty(teacher.AppUserId))
                                     {
@@ -314,6 +314,8 @@
                                 <td itemprop="specExperience">
                                     <p>@teacher.WorkExperienceSpecialty</p>
                                 </td>
+
+                                <td itemprop="teachingOp" style="display:none;">Агроинженерия</td>
                             </tr>
                         }
 
