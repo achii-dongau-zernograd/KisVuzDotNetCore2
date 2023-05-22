@@ -141,6 +141,7 @@ namespace KisVuzDotNetCore2.Infrastructure
             if (String.IsNullOrWhiteSpace(disciplineNameSearchString)) return null;
             var disciplineNames = _context.DisciplineNames
                 .Where(n => n.DisciplineNameName.ToLower().Contains(disciplineNameSearchString.ToLower()))
+                .OrderBy(n => n.DisciplineNameName)
                 .ToList();
             if (disciplineNames.Count == 0) return null;
 
