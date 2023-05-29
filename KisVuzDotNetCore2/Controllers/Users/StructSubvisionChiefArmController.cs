@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KisVuzDotNetCore2.Infrastructure;
+using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.MTO;
 using KisVuzDotNetCore2.Models.Sveden;
 using KisVuzDotNetCore2.Models.Users;
@@ -14,6 +15,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
     {
         IStructSubvisionChiefRepository _structSubvisionChiefRepository;
         ISelectListRepository _selectListRepository;
+        
         public StructSubvisionChiefArmController(IStructSubvisionChiefRepository structSubvisionChiefRepository,
             ISelectListRepository selectListRepository)
         {
@@ -28,11 +30,14 @@ namespace KisVuzDotNetCore2.Controllers.Users
             return View(oborudovanie);
         }
 
+
+
+        #region Перечень дисциплин преподавателей
         public IActionResult TeacherDisciplineNames()
         {
             ViewBag.Kafedra = _structSubvisionChiefRepository.GetKafedra(User.Identity.Name);
             var viewModel = _structSubvisionChiefRepository.GetTeachersOfKafedra(User.Identity.Name);
-            
+
             return View(viewModel);
         }
 
@@ -56,6 +61,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
 
             ViewBag.Teacher = teacher;
             ViewBag.DisciplineNames = _selectListRepository.GetSelectListDisciplines();
+            ViewBag.EduProfiles = _selectListRepository.GetSelectListEduProfileFullNames(teacherDisciplineNameEntry.EduProfileId ?? 0);
             return View(teacherDisciplineNameEntry);
         }
 
@@ -75,6 +81,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             var teacherDisciplineNameEntry = new TeacherEduProfileDisciplineName();
             teacherDisciplineNameEntry.TeacherId = teacher.TeacherId;
             teacherDisciplineNameEntry.DisciplineNameId = teacherEduProfileDisciplineName.DisciplineNameId;
+            teacherDisciplineNameEntry.EduProfileId = teacherEduProfileDisciplineName.EduProfileId;
             _structSubvisionChiefRepository.AddTeacherDisciplineName(teacherDisciplineNameEntry);
 
             return RedirectToAction(nameof(TeacherDisciplineNamesEdit), new { teacherId = teacher.TeacherId });
@@ -95,6 +102,8 @@ namespace KisVuzDotNetCore2.Controllers.Users
                 .Single(td => td.TeacherEduProfileDisciplineNameId == teacherDisciplineNameId);
 
             ViewBag.DisciplineNames = _selectListRepository.GetSelectListDisciplines(teacherDisciplineNameEntry.DisciplineNameId);
+
+            ViewBag.EduProfiles = _selectListRepository.GetSelectListEduProfileFullNames(teacherDisciplineNameEntry.EduProfileId??0);
 
             return View(teacherDisciplineNameEntry);
         }
@@ -119,6 +128,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
             if (teacherDisciplineNameEntry != null)
             {
                 teacherDisciplineNameEntry.DisciplineNameId = teacherEduProfileDisciplineName.DisciplineNameId;
+                teacherDisciplineNameEntry.EduProfileId = teacherEduProfileDisciplineName.EduProfileId;
                 _structSubvisionChiefRepository.UpdateTeacherDisciplineName(teacherDisciplineNameEntry);
 
                 return RedirectToAction(nameof(TeacherDisciplineNamesEdit), new { teacherId = teacher.TeacherId });
@@ -139,8 +149,8 @@ namespace KisVuzDotNetCore2.Controllers.Users
             ViewBag.Teacher = teacher;
 
             var teacherDisciplineNameEntry = teacher.TeacherEduProfileDisciplineNames
-                .Single(td => td.TeacherEduProfileDisciplineNameId == teacherDisciplineNameId);                       
-
+                .Single(td => td.TeacherEduProfileDisciplineNameId == teacherDisciplineNameId);
+            
             return View(teacherDisciplineNameEntry);
         }
 
@@ -164,5 +174,7 @@ namespace KisVuzDotNetCore2.Controllers.Users
 
             return RedirectToAction(nameof(TeacherDisciplineNamesEdit), new { teacherId = teacher.TeacherId });
         }
+        #endregion
+                
     }
 }

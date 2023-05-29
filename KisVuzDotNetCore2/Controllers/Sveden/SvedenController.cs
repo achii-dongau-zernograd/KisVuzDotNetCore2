@@ -339,13 +339,12 @@ namespace KisVuzDotNetCore2.Controllers
                     .ThenInclude(r => r.RefresherCourses)
                 .Include(e => e.TeacherEduProfileDisciplineNames)
                     .ThenInclude(ed => ed.DisciplineName)
-                //.Include(e => e.TeacherEduProfileDisciplineNames)
-                //    .ThenInclude(ep => ep.EduProfile)
-                //        .ThenInclude(p => p.EduPlans)
-                //            .ThenInclude(f => f.EduForm)
                 .Include(e => e.TeacherEduProfileDisciplineNames)
                     .ThenInclude(ep => ep.EduProfile)
-                        .ThenInclude(p => p.EduNapravl)
+                        .ThenInclude(p => p.EduPlans)
+                            .ThenInclude(f => f.EduForm)
+                .Include(e => e.TeacherEduProfileDisciplineNames)
+                    .ThenInclude(ep => ep.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Where(t => t.IsIdle != true)
                 .ToListAsync();
             ViewData["teacher1"] = teacher1;

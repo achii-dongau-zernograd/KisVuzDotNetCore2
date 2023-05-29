@@ -25,6 +25,9 @@ else
             <th>
                 Наименование дисциплины
             </th>
+            <th>
+                Направленность подготовки
+            </th>
             <th>Действия</th>
         </tr>
     </thead>
@@ -44,6 +47,9 @@ else
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.DisciplineName.DisciplineNameName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EduProfile.GetEduProfileFullName)
                     </td>
                     <td>
                         <a asp-action="TeacherDisciplineNameEdit"   asp-route-teacherId="@item.TeacherId" asp-route-teacherDisciplineNameId="@item.TeacherEduProfileDisciplineNameId">Редактировать</a> |

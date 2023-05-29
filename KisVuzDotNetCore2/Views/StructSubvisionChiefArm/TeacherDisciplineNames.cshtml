@@ -37,10 +37,33 @@
                     }
                 </td>
                 <td>
-                    @foreach (var teacherEduProfileDisciplineName in teacher.TeacherEduProfileDisciplineNames.OrderBy(d=>d.DisciplineName.DisciplineNameName))
+                    @*@foreach (var teacherEduProfileDisciplineName in teacher.TeacherEduProfileDisciplineNames
+                        .OrderBy(d=>d.DisciplineName.DisciplineNameName)
+                        .ThenBy(d=>d.EduProfile?.EduNapravl?.EduNapravlCode))
                     {
-                        <p>@teacherEduProfileDisciplineName.DisciplineName.DisciplineNameName</p>
-                    }
+                        <p>
+                            @teacherEduProfileDisciplineName.DisciplineName.DisciplineNameName
+                            (@teacherEduProfileDisciplineName.EduProfile?.EduNapravl.EduNapravlCode @(teacherEduProfileDisciplineName.EduProfile?.EduProfileName ?? "-") )
+                        </p>
+                    }*@
+
+                    <ol>
+                        @foreach (var eduDisciplineGroup in teacher.TeacherEduProfileDisciplineNames
+                       .OrderBy(td => td.DisciplineName.DisciplineNameName)
+                       .GroupBy(td => td.DisciplineName.DisciplineNameName)
+                       )
+                        {
+                            <li>
+                                @eduDisciplineGroup.Key
+                                <ul>
+                                    @foreach (var discipline in eduDisciplineGroup)
+                                    {
+                                        <li>@discipline.EduProfile?.GetEduProfileFullName</li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ol>
                 </td>
                 <td>
                         <a asp-action="TeacherDisciplineNamesEdit" asp-route-teacherId="@teacher.TeacherId" class="btn btn-primary btn-block">Редактировать</a>

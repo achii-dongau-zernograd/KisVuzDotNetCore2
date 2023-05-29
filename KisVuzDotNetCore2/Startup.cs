@@ -96,6 +96,7 @@ namespace KisVuzDotNetCore2
             services.AddTransient<IUserWorkRepository, UserWorkRepository>();
             services.AddTransient<IElGradebookRepository, ElGradebookRepository>();
             services.AddTransient<ISignRepository, SignRepository>();
+            services.AddTransient<IEduProfileRepository, EduProfileRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

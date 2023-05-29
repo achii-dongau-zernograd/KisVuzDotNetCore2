@@ -147,7 +147,7 @@
                             <th>Сведения о повышении квалификации (за последние 3 года) и сведения о профессиональной переподготовке (при наличии)</th>
                             <th>Общий стаж работы</th>
                             <th>Стаж работы по специальности (сведения о продолжительности опыта (лет) работы в профессиональной сфере)</th>
-                            @*<th>Наименование образовательных программ, в реализации которых участвует педагогический работник</th>*@
+                            <th>Наименование образовательных программ, в реализации которых участвует педагогический работник</th>
                         </tr>
                         <tr>
                             <th>1</th>
@@ -161,7 +161,7 @@
                             <th>9</th>
                             <th>10</th>
                             <th>11</th>
-                            @*<th>12</th>*@
+                            <th>12</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -197,9 +197,25 @@
                                             <div class="collapse" id="spoiler-@counter">
                                                 <div class="well">
                                                     <ol>
-                                                        @foreach (var discipline in teacher.TeacherEduProfileDisciplineNames.OrderBy(td => td.DisciplineName.DisciplineNameName))
+                                                        @*@foreach (var discipline in teacher.TeacherEduProfileDisciplineNames.OrderBy(td => td.DisciplineName.DisciplineNameName))
                                                         {
                                                             <li>@discipline.DisciplineName.DisciplineNameName</li>
+                                                        }*@
+
+                                                        @foreach (var eduDisciplineGroup in teacher.TeacherEduProfileDisciplineNames
+                                                       .OrderBy(td => td.DisciplineName.DisciplineNameName)
+                                                       .GroupBy(td => td.DisciplineName.DisciplineNameName)
+                                                       )
+                                                        {
+                                                            <li>
+                                                                @eduDisciplineGroup.Key
+                                                                <ul>
+                                                                @foreach (var discipline in eduDisciplineGroup)
+                                                                {
+                                                                    <li>@discipline.EduProfile.GetEduProfileFullName</li>
+                                                                }
+                                                                </ul>
+                                                            </li>
                                                         }
                                                     </ol>
                                                 </div>
@@ -315,7 +331,38 @@
                                     <p>@teacher.WorkExperienceSpecialty</p>
                                 </td>
 
-                                <td itemprop="teachingOp" style="display:none;">Агроинженерия</td>
+                                <td itemprop="teachingOp">
+                                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
+                                    {
+                                        @if (teacher.TeacherEduProfileDisciplineNames.Count > 0)
+                                        {
+                                            counter++;
+                                            <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Открыть</a>
+                                            <div class="collapse" id="spoiler-@counter">
+                                                <div class="well">
+                                                    <ol>
+                                                        @foreach (var eduProfileGroup in teacher.TeacherEduProfileDisciplineNames
+                                                            .OrderBy(td => td.EduProfile.GetEduProfileFullName)
+                                                            .GroupBy(td => td.EduProfile.GetEduProfileFullName)                                                            
+                                                        )
+                                                        {
+                                                            <li>
+                                                                @eduProfileGroup.Key
+                                                                <ul>
+                                                                @foreach (var eduProfile in eduProfileGroup)
+                                                                {
+                                                                    <li>@eduProfile.DisciplineName.DisciplineNameName</li>
+                                                                }
+                                                                </ul>
+                                                            </li>
+
+                                                        }
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </td>
                             </tr>
                         }
 
@@ -331,7 +378,7 @@
 
         @{counter++;}
 
-        <a asp-action="EmployeesOfEduProfile" class="btn btn-primary btn-block">Информация о персональном составе педагогических работников образовательной программы</a>
+        @*<a asp-action="EmployeesOfEduProfile" class="btn btn-primary btn-block">Информация о персональном составе педагогических работников образовательной программы</a>*@
 
         <a href="https://disk.yandex.ru/d/kKf4jQD65eHHPA" class="btn btn-primary btn-block" target="_blank">Перечень педагогических (научно-педагогических) работников, задействованных в реализации образовательных программ</a>
 

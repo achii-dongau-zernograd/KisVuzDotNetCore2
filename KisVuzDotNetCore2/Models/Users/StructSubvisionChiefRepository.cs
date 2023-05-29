@@ -80,6 +80,12 @@ namespace KisVuzDotNetCore2.Models.Users
                 .Include(k => k.TeacherStructKafPostStavka)
                     .ThenInclude(tskps => tskps.Teacher.TeacherEduProfileDisciplineNames)
                         .ThenInclude(t => t.DisciplineName)
+                .Include(k => k.TeacherStructKafPostStavka)
+                    .ThenInclude(tskps => tskps.Teacher.TeacherEduProfileDisciplineNames)
+                        .ThenInclude(t => t.EduProfile)
+                            .ThenInclude(t => t.EduNapravl)
+                                .ThenInclude(t => t.EduUgs)
+                                    .ThenInclude(t => t.EduLevel)
                 .FirstOrDefault(k => k.StructSubvision.StructSubvisionAccountChiefId == userNameId);
 
             return kaf;
