@@ -212,7 +212,7 @@
                                                                 <ul>
                                                                 @foreach (var discipline in eduDisciplineGroup)
                                                                 {
-                                                                    <li>@discipline.EduProfile.GetEduProfileFullName</li>
+                                                                    <li>@discipline.EduProfile?.GetEduProfileFullName</li>
                                                                 }
                                                                 </ul>
                                                             </li>
