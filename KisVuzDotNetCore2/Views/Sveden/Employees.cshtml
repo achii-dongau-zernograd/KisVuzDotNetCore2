@@ -342,8 +342,8 @@
                                                 <div class="well">
                                                     <ol>
                                                         @foreach (var eduProfileGroup in teacher.TeacherEduProfileDisciplineNames
-                                                            .OrderBy(td => td.EduProfile.GetEduProfileFullName)
-                                                            .GroupBy(td => td.EduProfile.GetEduProfileFullName)                                                            
+                                                            .OrderBy(td => td.EduProfile?.GetEduProfileFullName)
+                                                            .GroupBy(td => td.EduProfile?.GetEduProfileFullName)                                                            
                                                         )
                                                         {
                                                             <li>
