@@ -110,8 +110,8 @@
                 <th>Аннотация</th>
                 <th>Рабочая программа (РП)</th>
                 <th>Фонд оценочных средств (ФОС)</th>
-                <th>Преподаватели</th>
-                <th>Учебные кабинеты</th>
+                @*<th>Преподаватели</th>
+                <th>Учебные кабинеты</th>*@
                 <th>Действия</th>
             </tr>
         </thead>
@@ -299,7 +299,7 @@
                                     }
                                 }
                             </td>
-                            <td>
+                            @*<td>
                                 @foreach (var eduPlanEduYears in Model.EduPlanEduYears.OrderBy(e => e.EduYear.EduYearName))
                                 {
                                     <p><strong>@eduPlanEduYears.EduYear.EduYearName уч.год</strong></p>
@@ -343,7 +343,7 @@
                                         }
                                     </ul>
                                 }
-                            </td>
+                            </td>*@
 
                             <td>
                                 <div>
