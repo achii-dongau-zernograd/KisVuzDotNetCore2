@@ -46,6 +46,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <returns></returns>
         Task<EduPlan> CreateEduPlan(EduPlan eduPlan,
             IFormFile uploadedFile,
+            IFormFile uploadedFileRabProgramVospitaniePdf,
             int[] eduVidDeyatIds,
             int[] eduYearBeginningTrainingIds,
             int[] eduPlanEduYearIds);

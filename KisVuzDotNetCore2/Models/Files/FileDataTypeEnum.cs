@@ -283,6 +283,10 @@
         /// <summary>
         /// Документы пользователя - СНИЛС
         /// </summary>
-        UserDocuments_SNILS = 77
+        UserDocuments_SNILS = 77,
+        /// <summary>
+        /// Рабочая программа воспитательной работы
+        /// </summary>
+        RabProgramVospitanie = 78
     }
 }

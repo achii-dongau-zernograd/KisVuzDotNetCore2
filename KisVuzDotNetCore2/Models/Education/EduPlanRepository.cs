@@ -36,6 +36,7 @@ namespace KisVuzDotNetCore2.Models.Education
         /// <returns></returns>
         public async Task<EduPlan> CreateEduPlan(EduPlan eduPlan,
             IFormFile uploadedFile,
+            IFormFile uploadedFileRabProgramVospitaniePdf,
             int[] eduVidDeyatIds,
             int[] eduYearBeginningTrainingIds,
             int[] eduPlanEduYearIds)
@@ -65,6 +66,16 @@ namespace KisVuzDotNetCore2.Models.Education
                 await _context.SaveChangesAsync();
                 int? fileToRemoveId = eduPlan.EduPlanPdfId;
                 eduPlan.EduPlanPdfId = fileModel.Id;
+                await _context.SaveChangesAsync();
+                Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
+            }
+
+            if (uploadedFileRabProgramVospitaniePdf != null)
+            {
+                FileModel fileModel = await Files.Files.LoadFile(_context, _appEnvironment, uploadedFileRabProgramVospitaniePdf, "Рабочая программа воспитательной работы", FileDataTypeEnum.RabProgramVospitanie);
+                await _context.SaveChangesAsync();
+                int? fileToRemoveId = eduPlan.RabProgramVospitaniePdfId;
+                eduPlan.RabProgramVospitaniePdfId = fileModel.Id;
                 await _context.SaveChangesAsync();
                 Files.Files.RemoveFile(_context, _appEnvironment, fileToRemoveId);
             }
@@ -261,6 +272,7 @@ namespace KisVuzDotNetCore2.Models.Education
                 .Include(e => e.EduForm)
                 .Include(e => e.EduPlanPdf)
                     .ThenInclude(ef => ef.SignList)
+                .Include(e => e.RabProgramVospitaniePdf)
                 .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduProgramPodg)
                 .Include(e => e.EduSrok)

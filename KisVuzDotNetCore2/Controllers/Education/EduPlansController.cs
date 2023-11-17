@@ -426,6 +426,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
             var eduPlan = await _context.EduPlans
                 .Include(e => e.EduForm)
                 .Include(e => e.EduPlanPdf)
+                .Include(e => e.RabProgramVospitaniePdf)
                 .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduProgramPodg)
                 .Include(e => e.EduSrok)

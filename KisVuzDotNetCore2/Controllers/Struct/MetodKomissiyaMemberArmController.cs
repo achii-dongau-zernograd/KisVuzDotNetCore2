@@ -90,6 +90,7 @@ namespace KisVuzDotNetCore2.Controllers.Struct
         public async Task<IActionResult> EduPlanCreateOrEdit(EduPlan eduPlan,
             int EduProgramId,
             IFormFile uploadedFile,
+            IFormFile uploadedFileRabProgramVospitaniePdf,
             int[] EduVidDeyatIds,
             int[] EduYearBeginningTrainingIds,
             int[] EduPlanEduYearIds)
@@ -98,7 +99,7 @@ namespace KisVuzDotNetCore2.Controllers.Struct
             {
                 EduPlan eduPlanRepositoryEntry = await _metodKomissiyaRepository
                     .CreateEduPlanByUserNameAsync(EduProgramId,
-                        eduPlan, uploadedFile, EduVidDeyatIds,
+                        eduPlan, uploadedFile, uploadedFileRabProgramVospitaniePdf, EduVidDeyatIds,
                         EduYearBeginningTrainingIds, EduPlanEduYearIds,
                         User.Identity.Name);
                 return RedirectToAction(nameof(EduPrograms));

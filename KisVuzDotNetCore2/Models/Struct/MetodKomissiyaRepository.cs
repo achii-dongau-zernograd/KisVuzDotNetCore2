@@ -444,6 +444,7 @@ namespace KisVuzDotNetCore2.Models.Struct
         public async Task<EduPlan> CreateEduPlanByUserNameAsync(int eduProgramId,
             EduPlan eduPlan,
             IFormFile uploadedFile,
+            IFormFile uploadedFileRabProgramVospitaniePdf,
             int[] eduVidDeyatIds,
             int[] eduYearBeginningTrainingIds,
             int[] eduPlanEduYearIds,
@@ -454,6 +455,7 @@ namespace KisVuzDotNetCore2.Models.Struct
 
             EduPlan eduPlanDbEntry = await _eduPlanRepository.CreateEduPlan(eduPlan,
                 uploadedFile,
+                uploadedFileRabProgramVospitaniePdf,
                 eduVidDeyatIds,
                 eduYearBeginningTrainingIds,
                 eduPlanEduYearIds);

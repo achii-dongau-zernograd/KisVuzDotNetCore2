@@ -108,6 +108,14 @@ namespace KisVuzDotNetCore2.Models.Education
         public int? EduPlanPdfId { get; set; }
 
         /// <summary>
+        /// Файл рабочей программы по воспитательной работе (.pdf)
+        /// </summary>
+        [Display(Name = "Файл рабочей программы по воспитательной работе")]
+        public FileModel RabProgramVospitaniePdf { get; set; }
+        public int? RabProgramVospitaniePdfId { get; set; }
+
+
+        /// <summary>
         /// Блоки дисциплин
         /// </summary>
         [Display(Name = "Блоки дисциплин")]
