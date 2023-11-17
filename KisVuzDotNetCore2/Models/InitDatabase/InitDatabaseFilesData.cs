@@ -737,8 +737,15 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
 
                     FileDataType fileDataType78 = new FileDataType
                     {
-                        FileDataTypeId = (int)FileDataTypeEnum.FondOcenochnihSredstvListPereutverjdeniya,
+                        FileDataTypeId = (int)FileDataTypeEnum.RabProgramVospitanie,
                         FileDataTypeName = "Рабочая программа воспитательной работы",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.UchProgramDocumentation
+                    };
+
+                    FileDataType fileDataType79 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.KalPlanVospitanie,
+                        FileDataTypeName = "Календарный план воспитательной работы",
                         FileDataTypeGroupId = (int)FileDataTypeGroupEnum.UchProgramDocumentation
                     };
 
@@ -750,7 +757,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType40, fileDataType41, fileDataType42, fileDataType43, fileDataType44, fileDataType45, fileDataType46, fileDataType47, fileDataType48, fileDataType49,
                         fileDataType50, fileDataType51, fileDataType52, fileDataType53, fileDataType54,                 fileDataType56, fileDataType57, fileDataType58, fileDataType59,
                         fileDataType60, fileDataType61, fileDataType62, fileDataType63, fileDataType64, fileDataType65, fileDataType66, fileDataType67, fileDataType68, fileDataType69,
-                        fileDataType70, fileDataType71, fileDataType72, fileDataType73, fileDataType74, fileDataType75, fileDataType76, fileDataType77, fileDataType78
+                        fileDataType70, fileDataType71, fileDataType72, fileDataType73, fileDataType74, fileDataType75, fileDataType76, fileDataType77, fileDataType78, fileDataType79
                         );
                     await context.SaveChangesAsync();
                 }

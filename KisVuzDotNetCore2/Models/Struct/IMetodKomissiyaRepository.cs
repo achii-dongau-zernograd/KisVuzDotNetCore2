@@ -112,7 +112,8 @@ namespace KisVuzDotNetCore2.Models.Struct
         /// <param name="userName"></param>
         /// <returns></returns>
         Task<EduPlan> CreateEduPlanByUserNameAsync(int eduProgramId, EduPlan eduPlan,
-            IFormFile uploadedFile, IFormFile uploadedFileRabProgramVospitaniePdf, int[] eduVidDeyatIds,
+            IFormFile uploadedFile, IFormFile uploadedFileRabProgramVospitaniePdf,
+            IFormFile uploadedFileKalPlanVospitaniePdf, int[] eduVidDeyatIds,
             int[] eduYearBeginningTrainingIds, int[] eduPlanEduYearIds,
             string userName);
 

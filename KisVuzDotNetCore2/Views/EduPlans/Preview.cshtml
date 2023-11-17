@@ -101,6 +101,20 @@
                 }
             </td>
         </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.KalPlanVospitaniePdf)</td>
+            <td>
+                @if (Model.KalPlanVospitaniePdf?.Id != null)
+                {
+                    <a href="/@Model.KalPlanVospitaniePdf?.Path">Календарный план воспитательной работы</a>
+                }
+                else
+                {
+                    <p>-</p>
+                }
+            </td>
+        </tr>
     </table>
 
     <br />

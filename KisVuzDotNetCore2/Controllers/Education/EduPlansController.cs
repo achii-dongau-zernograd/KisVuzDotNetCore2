@@ -427,6 +427,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
                 .Include(e => e.EduForm)
                 .Include(e => e.EduPlanPdf)
                 .Include(e => e.RabProgramVospitaniePdf)
+                .Include(e => e.KalPlanVospitaniePdf)
                 .Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel)
                 .Include(e => e.EduProgramPodg)
                 .Include(e => e.EduSrok)

@@ -287,6 +287,10 @@
         /// <summary>
         /// Рабочая программа воспитательной работы
         /// </summary>
-        RabProgramVospitanie = 78
+        RabProgramVospitanie = 78,
+        /// <summary>
+        /// Календарный план воспитательной работы
+        /// </summary>
+        KalPlanVospitanie = 79
     }
 }

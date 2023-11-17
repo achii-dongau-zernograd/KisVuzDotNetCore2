@@ -104,15 +104,20 @@
                     <br /><input type="checkbox" @CheckedYear name="EduPlanEduYearIds" value="@eduYear.EduYearId" /> @eduYear.EduYearName
                 }
             </div>
+
+            <hr />
+
             <div class="form-group">
                 <label asp-for="EduPlanPdf" class="control-label"></label>
                 <input asp-for="EduPlanPdfId" class="hidden">
                 <a href="/@Model.EduPlanPdf?.Path" class="control-label">@Model.EduPlanPdf?.FileName</a>
             </div>
             <div class="form-group">
-                <label class="control-label">Для добавления / замены выберите файл: </label>
+                <label class="control-label">Для добавления / замены учебного плана выберите файл: </label>
                 <input type="file" name="uploadedFile" class="form-control" />
             </div>
+
+            <hr />
 
             <div class="form-group">
                 <label asp-for="RabProgramVospitaniePdf" class="control-label"></label>
@@ -120,8 +125,20 @@
                 <a href="/@Model.RabProgramVospitaniePdf?.Path" class="control-label">@Model.RabProgramVospitaniePdf?.FileName</a>
             </div>
             <div class="form-group">
-                <label class="control-label">Для добавления / замены выберите файл: </label>
+                <label class="control-label">Для добавления / замены рабочей программы по воспитательной работе выберите файл: </label>
                 <input type="file" name="uploadedFileRabProgramVospitaniePdf" class="form-control" />
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                <label asp-for="KalPlanVospitaniePdf" class="control-label"></label>
+                <input asp-for="KalPlanVospitaniePdfId" class="hidden">
+                <a href="/@Model.KalPlanVospitaniePdf?.Path" class="control-label">@Model.KalPlanVospitaniePdf?.FileName</a>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Для добавления / замены календарного плана воспитательной работы выберите файл: </label>
+                <input type="file" name="uploadedFileKalPlanVospitaniePdf" class="form-control" />
             </div>
 
             <div class="form-group">

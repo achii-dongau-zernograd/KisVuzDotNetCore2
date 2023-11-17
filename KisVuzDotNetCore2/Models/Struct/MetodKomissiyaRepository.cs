@@ -445,6 +445,7 @@ namespace KisVuzDotNetCore2.Models.Struct
             EduPlan eduPlan,
             IFormFile uploadedFile,
             IFormFile uploadedFileRabProgramVospitaniePdf,
+            IFormFile uploadedFileKalPlanVospitaniePdf,
             int[] eduVidDeyatIds,
             int[] eduYearBeginningTrainingIds,
             int[] eduPlanEduYearIds,
@@ -456,6 +457,7 @@ namespace KisVuzDotNetCore2.Models.Struct
             EduPlan eduPlanDbEntry = await _eduPlanRepository.CreateEduPlan(eduPlan,
                 uploadedFile,
                 uploadedFileRabProgramVospitaniePdf,
+                uploadedFileKalPlanVospitaniePdf,
                 eduVidDeyatIds,
                 eduYearBeginningTrainingIds,
                 eduPlanEduYearIds);

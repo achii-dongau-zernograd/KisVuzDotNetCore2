@@ -114,6 +114,12 @@ namespace KisVuzDotNetCore2.Models.Education
         public FileModel RabProgramVospitaniePdf { get; set; }
         public int? RabProgramVospitaniePdfId { get; set; }
 
+        /// <summary>
+        /// Файл календарного плана воспитательной работы (.pdf)
+        /// </summary>
+        [Display(Name = "Файл календарного плана воспитательной работы")]
+        public FileModel KalPlanVospitaniePdf { get; set; }
+        public int? KalPlanVospitaniePdfId { get; set; }
 
         /// <summary>
         /// Блоки дисциплин
