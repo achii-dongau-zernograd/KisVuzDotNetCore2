@@ -23,6 +23,7 @@
     string eduPerevodClass = "collapse";
     string eduProgramsClass = "collapse";
     string eduAdOpClass = "collapse";
+    string edueduObscheobrOpClass = "collapse";
     string eduOAccredClass = "collapse";
     string eduNirClass = "collapse";
     string eduDPOClass = "collapse";
@@ -49,6 +50,9 @@
             break;
         case "eduAdOp":
             eduAdOpClass = "collapse.in";
+            break;
+        case "eduObscheobrOp":
+            edueduObscheobrOpClass = "collapse.in";
             break;
         case "eduOAccred":
             eduOAccredClass = "collapse.in";
@@ -914,7 +918,73 @@ else
 }
 
 
+@if (openedSpoiler != "eduObscheobrOp" && !string.IsNullOrWhiteSpace(openedSpoiler))
+{
+    <a asp-route-openedSpoiler="eduObscheobrOp" class="btn btn-primary btn-block">
+        Образование (информация по общеобразовательным программам)
+    </a>
+}
+else
+{
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образование (информация по общеобразовательным программам)</a>
+    <div class="@edueduObscheobrOpClass" id="spoiler-@spoilerCounter">
+        @{
+            spoilerCounter++;
+        }
+        <div class="well">
 
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Код, шифр</th>
+                        <th>Наименование общеобразовательной программы</th>
+                        <th>Уровень образования</th>
+                        <th>Образовательная программа, направленность, профиль, шифр и наименование научной специальности</th>
+                        <th>Реализуемые формы обучения</th>
+                        <th>Ссылка на описание образовательной программы с приложением ее копии</th>
+                        <th>Ссылка на учебный план</th>
+                        <th>Ссылка на аннотации к рабочим программам дисциплин (по каждой дисциплине в составе образовательной программы)</th>
+                        <th>Ссылки на рабочие программы (по каждой дисциплине в составе образовательной программы)</th>
+                        <th>Ссылка на календарный учебный график</th>
+                        <th>Ссылка на рабочие программы практик, предусмотренных соответствующей образовательной программой</th>
+                        <th>Ссылка на методические и иные документы, разработанные образовательной организацией для обеспечения образовательного процесса, а также рабочие программы воспитания и календарные планы воспитательной работы, включаемые в ООП</th>
+                    </tr>
+                    <tr>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                        <th>8</th>
+                        <th>9</th>
+                        <th>10</th>
+                        <th>11</th>
+                        <th>12</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr itemprop="eduAdOp">
+                        <td itemprop="eduCode" colspan="11" class="text-center">Не реализуются</td>
+                        <td itemprop="eduName" class="hidden">Не реализуются</td>
+                        <td itemprop="eduLevel" class="hidden">Не реализуются</td>
+                        <td itemprop="eduProf" style="display:none;"></td>
+                        <td itemprop="eduForm" class="hidden">Не реализуются</td>
+                        <td itemprop="opMain" class="hidden">Не реализуются</td>
+                        <td itemprop="educationPlan" class="hidden">Не реализуются</td>
+                        <td itemprop="educationAnnotation" class="hidden">Не реализуются</td>
+                        <td itemprop="educationRpd" class="hidden"><a itemprop="educationRpd">Не реализуются</a></td>
+                        <td itemprop="educationShedule" class="hidden">Не реализуются</td>
+                        <td itemprop="methodology" class="hidden">Не реализуются</td>
+                        <td itemprop="eduPr" class="hidden">Не реализуются</td>
+                        <td itemprop="eduEl" class="hidden">Не реализуются</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
 
 
 @*<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
