@@ -1,0 +1,29 @@
+﻿@model  RoleEditModel
+<div class="bg-primary panel-body"><h4>Информация о пользователях и ролях</h4></div>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<h4>@(Model?.Role.Name??"-")</h4>
+<h4>@(Model?.Role.Id??"-")</h4>
+            
+<table class="table table-bordered table-condensed">
+    @if (Model==null || Model.Members.Count() == 0)
+    {
+        <tr>
+            <td colspan="4">Никому из пользователей не назначена данная роль</td>
+        </tr>
+    }
+    else
+    {
+        @foreach (AppUser user in Model.Members)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>
+                    @user.GetFullName
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+    

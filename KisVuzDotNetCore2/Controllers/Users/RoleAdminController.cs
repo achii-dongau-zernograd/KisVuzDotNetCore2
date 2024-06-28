@@ -25,6 +25,20 @@ namespace KisVuzDotNetCore2.Controllers
 
         public ViewResult Index() => View(roleManager.Roles.OrderBy(r=>r.Name));
 
+        public async Task<IActionResult> RoleUsersInfo(string id)
+        {
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+            List<AppUser> members = new List<AppUser>();
+            
+            foreach (AppUser user in userManager.Users)
+            {
+                var isInRole = await userManager.IsInRoleAsync(user, role.Name) ? true : false;
+                if(isInRole)
+                    members.Add(user);
+            }
+            return View(new RoleEditModel { Role = role, Members = members, NonMembers = null });
+        }
+
         public IActionResult Create() => View();
 
         [HttpPost]
