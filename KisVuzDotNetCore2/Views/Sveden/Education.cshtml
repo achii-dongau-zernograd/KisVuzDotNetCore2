@@ -121,11 +121,11 @@ else
                             <th>Уровень образования</th>
                             <th>Формы обучения</th>
                             <th>Нормативный срок обучения</th>
-                            <th>Срок действия государственной аккредитации<br /> (дата окончания действия свидетельства о государственной аккредитации)</th>
-                            <th>Языки, на которых осуществляется образование (обучение)</th>
+                            <th>Срок действия государственной аккредитации<br /> (дата окончания действия свидетельства о государственной аккредитации)</th>                            
                             <th>Учебные предметы, курсы, дисциплины (модули), предусмотренные соответствующей образовательной программой</th>
                             <th>Практики, предусмотренные соответствующей образовательной программой</th>
                             <th>Информация об использовании при реализации образовательных программ электронного обучения и дистанционных образовательных техноогий</th>
+                            <th>Языки, на которых осуществляется образование (обучение)</th>
                         </tr>
                         <tr>
                             <th align=center>1</th>
@@ -173,8 +173,7 @@ else
                             <td itemprop="dateEnd">
                                 Бессрочный
                                 @*@item.EduNapravl.EduUgs.EduAccred?.EduAccredDateExpiration.ToString("dd.MM.yyyy")*@
-                            </td>
-                            <td itemprop="language">Русский</td>
+                            </td>                            
                             <td itemprop="eduPred">
                                 <a asp-controller="Eios" asp-action="UchPlansRabProgs"
                                     asp-route-eduNapravlId="@item.EduNapravlId"
@@ -192,6 +191,7 @@ else
                                 </a>
                             </td>
                             <td itemprop="eduEl"> Не используется </td>
+                            <td itemprop="language">Русский</td>
                         </tr>
                     }
                 </table>
@@ -278,6 +278,8 @@ else
                     <tr>
                         <th>Код, шифр</th>
                         <th>Наименование профессии, специальности, направления подготовки, научной специальности</th>
+                        <th>Уровень образования</th>
+                        <th>Образовательная программа, направленность, профиль, шифр и наименование научной специальности</th>
                         <th>Наименование аккредитующей организации</th>
                         <th>Срок действия профессионально-общественной аккредитации (дата окончания действия свидетельства о профессионально-общественной аккредитации)</th>
                     </tr>
@@ -286,89 +288,145 @@ else
                         <td align=center><strong>2</strong></td>
                         <td align=center><strong>3</strong></td>
                         <td align=center><strong>4</strong></td>
+                        <td align=center><strong>5</strong></td>
+                        <td align=center><strong>6</strong></td>
                     </tr>
                 </thead>
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">13.03.01</td>
                     <td itemprop="eduName" class="text-center">Теплоэнергетика и теплотехника</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — бакалавриат</td>
+                    <td itemprop="eduProf" class="text-center">Энергообеспечение предприятий</td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">23.05.2029</td>
                 </tr>
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">13.03.02</td>
                     <td itemprop="eduName" class="text-center">Электроэнергетика и электротехника</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — бакалавриат</td>
+                    <td itemprop="eduProf" class="text-center">Электроснабжение</td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">27.06.2028</td>
                 </tr>
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">19.03.02</td>
                     <td itemprop="eduName" class="text-center">Продукты питания из растительного сырья</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — бакалавриат</td>
+                    <td itemprop="eduProf" class="text-center">
+                        Технология хранения и переработки зерна
+                        <br />
+                        Технология продуктов общественного питания
+                    </td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">27.06.2028</td>
                 </tr>
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">21.03.02</td>
                     <td itemprop="eduName" class="text-center">Землеустройство и кадастры</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — бакалавриат</td>
+                    <td itemprop="eduProf" class="text-center">Землеустройство</td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">27.06.2028</td>
-                </tr>
-                <tr itemprop="eduPOAccred">
-                    <td itemprop="eduCode" class="text-center">23.04.03</td>
-                    <td itemprop="eduName" class="text-center">Эксплуатация транспортно-технологических машин и комплексов</td>
-                    <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
-                    <td itemprop="dateEnd" class="text-center">23.05.2029</td>
-                </tr>
+                </tr>                
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">35.03.04</td>
                     <td itemprop="eduName" class="text-center">Агрономия</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — бакалавриат</td>
+                    <td itemprop="eduProf" class="text-center">Селекция и генетика сельскохозяйственных культур</td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">24.06.2027</td>
                 </tr>
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">35.03.06</td>
                     <td itemprop="eduName" class="text-center">Агроинженерия</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — бакалавриат</td>
+                    <td itemprop="eduProf" class="text-center">
+                        Электрооборудование и электротехнологии<br />
+                        Техническая эксплуатация транспортных средств<br />
+                        Экономика и управление производством<br />
+                        Технические системы в агробизнесе<br />
+                        Технический сервис в АПК<br />
+                        Технологическое оборудование для хранения и переработки сельскохозяйственной продукции<br />
+                        Электроснабжение сельских территорий и промышленных предприятий<br />
+                    </td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">24.06.2027</td>
                 </tr>
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">44.03.04</td>
                     <td itemprop="eduName" class="text-center">Профессиональное обучение (по отраслям)</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — бакалавриат</td>
+                    <td itemprop="eduProf" class="text-center">Экономика и управление</td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">23.05.2029</td>
                 </tr>
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">13.04.01</td>
                     <td itemprop="eduName" class="text-center">Теплоэнергетика и теплотехника</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — магистратура</td>
+                    <td itemprop="eduProf" class="text-center">Энергообеспечение предприятий</td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">23.05.2029</td>
                 </tr>
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">13.04.02</td>
                     <td itemprop="eduName" class="text-center">Электроэнергетика и электротехника</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — магистратура</td>
+                    <td itemprop="eduProf" class="text-center">Электроснабжение</td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">27.06.2028</td>
                 </tr>
                 <tr itemprop="eduPOAccred">
+                    <td itemprop="eduCode" class="text-center">23.04.03</td>
+                    <td itemprop="eduName" class="text-center">Эксплуатация транспортно-технологических машин и комплексов</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — магистратура</td>
+                    <td itemprop="eduProf" class="text-center">
+                        Эксплуатация автотранспортных средств<br />
+                        Автомобильный сервис
+                    </td>
+                    <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
+                    <td itemprop="dateEnd" class="text-center">23.05.2029</td>
+                </tr>
+                <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">35.04.04</td>
                     <td itemprop="eduName" class="text-center">Агрономия</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — магистратура</td>
+                    <td itemprop="eduProf" class="text-center">Селекция и генетика сельскохозяйственных культур</td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">24.06.2027</td>
                 </tr>
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">35.04.06</td>
                     <td itemprop="eduName" class="text-center">Агроинженерия</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — магистратура</td>
+                    <td itemprop="eduProf" class="text-center">
+                        Технологии и технические средства производства сельскохозяйственной продукции <br />
+                        Надежность технических средств в агропромышленном комплексе <br />
+                        Электрооборудование и электротехнологии
+                    </td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">24.06.2027</td>
                 </tr>
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">23.05.01</td>
                     <td itemprop="eduName" class="text-center">Наземные транспортно-технологические средства</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — специалитет</td>
+                    <td itemprop="eduProf" class="text-center">
+                        Автомобили и тракторы <br />
+                        Технические средства агропромышленного комплекса <br />
+                        Автомобильная техника в транспортных технологиях
+                    </td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">27.06.2028</td>
                 </tr>
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">38.05.01</td>
                     <td itemprop="eduName" class="text-center">Экономическая безопасность</td>
+                    <td itemprop="eduLevel" class="text-center">Высшее образование — специалитет</td>
+                    <td itemprop="eduProf" class="text-center">
+                        Экономико-правовое обеспечение экономической безопасности<br />
+                        Экономическая безопасность и экспертиза деятельности хозяйствующих субъектов
+                    </td>
                     <td itemprop="orgName" class="text-center">Союз "Торгово-промышленная палата г.Новочеркасска"</td>
                     <td itemprop="dateEnd" class="text-center">27.06.2028</td>
                 </tr>
