@@ -4,17 +4,19 @@
     На данной странице представлена информация о полном и сокращенном (при наличии) наименовании образовательной организации,
     о дате создания образовательной организации,
     об учредителе, учредителях образовательной организации,
-    о месте нахождения образовательной организации, ее представительств и филиалов (при наличии),
-    режиме, графике работы, контактных телефонах и об адресах электронной почты образовательной организации, её представительств и филиалов,
-    об адресах официальных сайтов представительств и филиалов образовательной организации (при наличии представительств и филиалов)
-    или страницах в информационно-телекоммуникационной сети "Интернет",
+    о месте нахождения образовательной организации,
+    режиме, графике работы, контактных телефонах и об адресах электронной почты образовательной организации,    
     о местах осуществления образовательной деятельности образовательной организации,
-    в том числе не указанных в приложении к лицензии (реестре лицензий) на осуществление образовательной деятельности.
+    в том числе сведения об адресах мест осуществления образовательной деятельности,
+    которые в соответствии с частью 4 статьи 91 Федерального закона от 29 декабря 2012 г. N 273-ФЗ "Об образовании в Российской Федерации"
+    не включаются в соответствующую запись в реестре лицензий на осуществление образовательной деятельности.
 </p>
 
 @{
     var t3uchred = (IEnumerable<UchredLaw>)ViewData["t3uchred"];
     var t4filInfo = (IEnumerable<FilInfo>)ViewData["t4filInfo"];
+    var licenses = (IEnumerable<FileDataType>)ViewData["licenses"];
+    var accreds = (IEnumerable<FileDataType>)ViewData["accreds"];
 }
 
 
@@ -93,9 +95,125 @@
 </div>
 
 
-
-<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о филиалах</a>
+<a href="#spoiler-3" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о лицензии на осуществление образовательной деятельности</a>
 <div class="collapse" id="spoiler-3">
+    <div class="well">        
+        @foreach (var fileDataType in licenses)
+        {
+            @foreach (var ftft in fileDataType.FileToFileTypes)
+            {
+                <p itemprop="@ftft.FileDataType.Itemprop">
+                    <a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a>
+
+                    @if (ftft.FileModel != null && ftft.FileModel?.SignList != null && ftft.FileModel?.SignList.Count != 0)
+                    {
+                        <img src="~/images/sign.png" height="40" data-toggle="modal" data-target="#modal-@fileDataType.FileDataTypeId" />
+                    }
+                </p>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal-@fileDataType.FileDataTypeId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLabel">Электронная цифровая подпись <img src="~/images/sign.png" height="100" /></h3>
+
+                            </div>
+                            <div class="modal-body">
+                                @if (ftft.FileModel == null || ftft.FileModel?.SignList == null || ftft.FileModel?.SignList.Count == 0)
+                                {
+                                    <h4>Ошибка обнаружения ЭЦП. Обратитесь к администратору</h4>
+                                }
+                                else
+                                {
+                                    <h4>Дата и время подписания: @ftft.FileModel?.SignList?.FirstOrDefault().SignDateTime.ToString()</h4>
+                                    <h4>
+                                        Фамилия, имя, отчество лица, подписавшего документ:
+                                        @(ftft.FileModel?.SignList?.FirstOrDefault().LastName ?? "-")
+                                        @(ftft.FileModel?.SignList?.FirstOrDefault().FirstName ?? "-")
+                                        @(ftft.FileModel?.SignList?.FirstOrDefault().Patronymic ?? "-")
+                                    </h4>
+                                    <h4>
+                                        Должность лица, подписавшего документ:
+                                        @(ftft.FileModel?.SignList?.FirstOrDefault().Post ?? "-")
+                                    </h4>
+                                    <h4>Ключ: @(ftft.FileModel?.SignList?.FirstOrDefault().Key ?? "-")</h4>
+                                }
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+         }
+    </div>
+</div>
+
+
+<a href="#spoiler-3-1" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения о наличии государственной аккредитации образовательной деятельности по реализуемым образовательным программам
+</a>
+<div class="collapse" id="spoiler-3-1">
+    <div class="well">
+        @foreach (var fileDataType in accreds)
+        {
+            @foreach (var ftft in fileDataType.FileToFileTypes)
+            {
+                <p itemprop="@ftft.FileDataType.Itemprop">
+                    <a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a>
+
+                    @if (ftft.FileModel != null && ftft.FileModel?.SignList != null && ftft.FileModel?.SignList.Count != 0)
+                    {
+                        <img src="~/images/sign.png" height="40" data-toggle="modal" data-target="#modal-@fileDataType.FileDataTypeId" />
+                    }
+                </p>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal-@fileDataType.FileDataTypeId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLabel">Электронная цифровая подпись <img src="~/images/sign.png" height="100" /></h3>
+
+                            </div>
+                            <div class="modal-body">
+                                @if (ftft.FileModel == null || ftft.FileModel?.SignList == null || ftft.FileModel?.SignList.Count == 0)
+                                {
+                                    <h4>Ошибка обнаружения ЭЦП. Обратитесь к администратору</h4>
+                                }
+                                else
+                                {
+                                    <h4>Дата и время подписания: @ftft.FileModel?.SignList?.FirstOrDefault().SignDateTime.ToString()</h4>
+                                    <h4>
+                                        Фамилия, имя, отчество лица, подписавшего документ:
+                                        @(ftft.FileModel?.SignList?.FirstOrDefault().LastName ?? "-")
+                                        @(ftft.FileModel?.SignList?.FirstOrDefault().FirstName ?? "-")
+                                        @(ftft.FileModel?.SignList?.FirstOrDefault().Patronymic ?? "-")
+                                    </h4>
+                                    <h4>
+                                        Должность лица, подписавшего документ:
+                                        @(ftft.FileModel?.SignList?.FirstOrDefault().Post ?? "-")
+                                    </h4>
+                                    <h4>Ключ: @(ftft.FileModel?.SignList?.FirstOrDefault().Key ?? "-")</h4>
+                                }
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о филиалах</a>
+<div class="collapse" id="spoiler-4">
     <div class="well">
         <table itemprop="filInfo" class="table table-bordered table-hover table-striped">
             <thead>
@@ -140,8 +258,8 @@
 
 
 
-<a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о представительствах</a>
-<div class="collapse" id="spoiler-4">
+<a href="#spoiler-5" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о представительствах</a>
+<div class="collapse" id="spoiler-5">
     <div class="well">
         <table class="table table-bordered table-hover table-striped">
             <thead>
@@ -172,8 +290,8 @@
 
 
 
-<a href="#spoiler-5" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об учредителях</a>
-<div class="collapse" id="spoiler-5">
+<a href="#spoiler-6" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об учредителях</a>
+<div class="collapse" id="spoiler-6">
     <div class="well" itemprop="osnovSveden">
         <table class="table table-hover">
             <thead>
@@ -202,11 +320,11 @@
 
 
 
-<a href="#spoiler-6" data-toggle="collapse" class="btn btn-primary btn-block">
+<a href="#spoiler-7" data-toggle="collapse" class="btn btn-primary btn-block">
     Места осуществления образовательной деятельности,<br>
     в том числе не указываемые в приложении к лицензии (реестре лицензий) на осуществление образовательной деятельности
 </a>
-<div class="collapse" id="spoiler-6">    
+<div class="collapse" id="spoiler-7">    
     <div class="well">
         <div>
             <p>
@@ -216,10 +334,10 @@
                 в приложении к лицензии (реестре лицензий) на осуществление образовательной деятельности.
             </p>            
                         
-            <a href="#spoiler-7" data-toggle="collapse" class="btn btn-primary btn-block">
+            <a href="#spoiler-8" data-toggle="collapse" class="btn btn-primary btn-block">
                 Места осуществления образовательной деятельности при использовании сетевой формы реализации образовательных программ
             </a>
-            <div class="collapse" id="spoiler-7">
+            <div class="collapse" id="spoiler-8">
                 <div class="well">
                     <div>
                         
@@ -232,7 +350,7 @@
                             </thead>
                             <tbody>
                                 <tr itemprop="addressPlaceSet">                                    
-                                    <td colspan="2" itemprop="addressPlace">Сетевая форма реализации образовательных программ не реализуется</td>
+                                    <td colspan="2">Сетевая форма реализации образовательных программ не реализуется</td>
                                 </tr>                                
                             </tbody>
                         </table>
@@ -240,81 +358,8 @@
                 </div>
             </div>
 
-            <a href="#spoiler-8" data-toggle="collapse" class="btn btn-primary btn-block">
-                Места проведения практики
-            </a>
-            <div class="collapse" id="spoiler-8">
-                <div class="well">
-                    <div>
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>№ п/п</th>
-                                    <th>Адрес места осуществления образовательной деятельности</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr itemprop="addressPlaceSet">
-                                    <td>1</td>
-                                    <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
-                                </tr>
-                                <tr itemprop="addressPlacePrac">
-                                    <td>2</td>
-                                    <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19а</td>
-                                </tr>
-
-                                <tr>
-                                    <td>3</td>
-                                    <td itemprop="addressPlace">
-                                        347740, Ростовская область, г. Зерноград,
-                                        ул. Советская 15/4
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>4</td>
-                                    <td itemprop="addressPlacePodg">
-                                        347740, Ростовская область, г. Зерноград,
-                                        ул. Советская, 17
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>5</td>
-                                    <td itemprop="addressPlaceGia">
-                                        347740, Ростовская область, г. Зерноград,
-                                        ул. Советская 17/21
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>6</td>
-                                    <td itemprop="addressPlaceDop">
-                                        347740, Ростовская область, г. Зерноград,
-                                        ул. Советская, 21а
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>7</td>
-                                    <td itemprop="addressPlaceOppo">
-                                        347740, Ростовская область, г. Зерноград,
-                                        ул. Советская 28/30
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>8</td>
-                                    <td itemprop="addressPlace">347740, Ростовская область, Зерноградский район, п. Кленовый, ул. Сидоренко, дом №1, №3</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
             <a href="#spoiler-9" data-toggle="collapse" class="btn btn-primary btn-block">
-                Места проведения практической подготовки обучающихся
+                Места проведения практики
             </a>
             <div class="collapse" id="spoiler-9">
                 <div class="well">
@@ -327,58 +372,58 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr itemprop="addressPlaceSet">
+                                <tr itemprop="addressPlacePrac">
                                     <td>1</td>
-                                    <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
+                                    <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
                                 </tr>
                                 <tr itemprop="addressPlacePrac">
                                     <td>2</td>
-                                    <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19а</td>
+                                    <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19а</td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlacePrac">
                                     <td>3</td>
-                                    <td itemprop="addressPlace">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская 15/4
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlacePrac">
                                     <td>4</td>
-                                    <td itemprop="addressPlacePodg">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская, 17
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlacePrac">
                                     <td>5</td>
-                                    <td itemprop="addressPlaceGia">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская 17/21
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlacePrac">
                                     <td>6</td>
-                                    <td itemprop="addressPlaceDop">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская, 21а
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlacePrac">
                                     <td>7</td>
-                                    <td itemprop="addressPlaceOppo">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская 28/30
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlacePrac">
                                     <td>8</td>
-                                    <td itemprop="addressPlace">347740, Ростовская область, Зерноградский район, п. Кленовый, ул. Сидоренко, дом №1, №3</td>
+                                    <td>347740, Ростовская область, Зерноградский район, п. Кленовый, ул. Сидоренко, дом №1, №3</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -387,7 +432,7 @@
             </div>
 
             <a href="#spoiler-10" data-toggle="collapse" class="btn btn-primary btn-block">
-                Места проведения государственной итоговой аттестации
+                Места проведения практической подготовки обучающихся
             </a>
             <div class="collapse" id="spoiler-10">
                 <div class="well">
@@ -400,55 +445,59 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr itemprop="addressPlaceSet">
+                                <tr itemprop="addressPlacePodg">
                                     <td>1</td>
-                                    <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
+                                    <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
                                 </tr>
-                                <tr itemprop="addressPlacePrac">
+                                <tr itemprop="addressPlacePodg">
                                     <td>2</td>
-                                    <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19а</td>
+                                    <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19а</td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlacePodg">
                                     <td>3</td>
-                                    <td itemprop="addressPlace">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская 15/4
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlacePodg">
                                     <td>4</td>
-                                    <td itemprop="addressPlacePodg">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская, 17
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlacePodg">
                                     <td>5</td>
-                                    <td itemprop="addressPlaceGia">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская 17/21
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlacePodg">
                                     <td>6</td>
-                                    <td itemprop="addressPlaceDop">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская, 21а
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlacePodg">
                                     <td>7</td>
-                                    <td itemprop="addressPlaceOppo">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская 28/30
                                     </td>
                                 </tr>
-                                
+
+                                <tr itemprop="addressPlacePodg">
+                                    <td>8</td>
+                                    <td>347740, Ростовская область, Зерноградский район, п. Кленовый, ул. Сидоренко, дом №1, №3</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -456,7 +505,7 @@
             </div>
 
             <a href="#spoiler-11" data-toggle="collapse" class="btn btn-primary btn-block">
-                Места осуществления образовательной деятельности по дополнительным образовательным программам
+                Места проведения государственной итоговой аттестации
             </a>
             <div class="collapse" id="spoiler-11">
                 <div class="well">
@@ -469,59 +518,55 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr itemprop="addressPlaceSet">
+                                <tr itemprop="addressPlaceGia">
                                     <td>1</td>
-                                    <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
+                                    <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
                                 </tr>
-                                <tr itemprop="addressPlacePrac">
+                                <tr itemprop="addressPlaceGia">
                                     <td>2</td>
-                                    <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19а</td>
+                                    <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19а</td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlaceGia">
                                     <td>3</td>
-                                    <td itemprop="addressPlace">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская 15/4
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlaceGia">
                                     <td>4</td>
-                                    <td itemprop="addressPlacePodg">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская, 17
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlaceGia">
                                     <td>5</td>
-                                    <td itemprop="addressPlaceGia">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская 17/21
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlaceGia">
                                     <td>6</td>
-                                    <td itemprop="addressPlaceDop">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская, 21а
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlaceGia">
                                     <td>7</td>
-                                    <td itemprop="addressPlaceOppo">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская 28/30
                                     </td>
                                 </tr>
-
-                                <tr>
-                                    <td>8</td>
-                                    <td itemprop="addressPlace">347740, Ростовская область, Зерноградский район, п. Кленовый, ул. Сидоренко, дом №1, №3</td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -529,9 +574,82 @@
             </div>
 
             <a href="#spoiler-12" data-toggle="collapse" class="btn btn-primary btn-block">
-                Места осуществления образовательной деятельности по основным программам профессионального обучения
+                Места осуществления образовательной деятельности по дополнительным образовательным программам
             </a>
             <div class="collapse" id="spoiler-12">
+                <div class="well">
+                    <div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>№ п/п</th>
+                                    <th>Адрес места осуществления образовательной деятельности</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr itemprop="addressPlaceDop">
+                                    <td>1</td>
+                                    <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
+                                </tr>
+                                <tr itemprop="addressPlaceDop">
+                                    <td>2</td>
+                                    <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19а</td>
+                                </tr>
+
+                                <tr itemprop="addressPlaceDop">
+                                    <td>3</td>
+                                    <td>
+                                        347740, Ростовская область, г. Зерноград,
+                                        ул. Советская 15/4
+                                    </td>
+                                </tr>
+
+                                <tr itemprop="addressPlaceDop">
+                                    <td>4</td>
+                                    <td>
+                                        347740, Ростовская область, г. Зерноград,
+                                        ул. Советская, 17
+                                    </td>
+                                </tr>
+
+                                <tr itemprop="addressPlaceDop">
+                                    <td>5</td>
+                                    <td>
+                                        347740, Ростовская область, г. Зерноград,
+                                        ул. Советская 17/21
+                                    </td>
+                                </tr>
+
+                                <tr itemprop="addressPlaceDop">
+                                    <td>6</td>
+                                    <td>
+                                        347740, Ростовская область, г. Зерноград,
+                                        ул. Советская, 21а
+                                    </td>
+                                </tr>
+
+                                <tr itemprop="addressPlaceDop">
+                                    <td>7</td>
+                                    <td>
+                                        347740, Ростовская область, г. Зерноград,
+                                        ул. Советская 28/30
+                                    </td>
+                                </tr>
+
+                                <tr itemprop="addressPlaceDop">
+                                    <td>8</td>
+                                    <td>347740, Ростовская область, Зерноградский район, п. Кленовый, ул. Сидоренко, дом №1, №3</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#spoiler-13" data-toggle="collapse" class="btn btn-primary btn-block">
+                Места осуществления образовательной деятельности по основным программам профессионального обучения
+            </a>
+            <div class="collapse" id="spoiler-13">
                 <div class="well">
                     <div>
                         <table class="table table-hover">
@@ -547,10 +665,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr itemprop="addressPlaceSet">
+                                <tr itemprop="addressPlaceOppo">
                                     <td>1</td>
                                     @*<td>Корпус №1</td>*@
-                                    <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
+                                    <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
                                     @*<td>
                                     <ul>
                                     <li>Места проведения государственной итоговой аттестации</li>
@@ -561,10 +679,10 @@
                                     <td>8549,1</td>
                                     <td></td>*@
                                 </tr>
-                                <tr itemprop="addressPlacePrac">
+                                <tr itemprop="addressPlaceOppo">
                                     <td>2</td>
                                     @*<td>Спортзал</td>*@
-                                    <td itemprop="addressPlace">347740, Ростовская область, г. Зерноград, ул. Ленина, 19а</td>
+                                    <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19а</td>
                                     @*<td>
                                     <ul>
                                     <li>Места проведения государственной итоговой аттестации</li>
@@ -576,10 +694,10 @@
                                     <td></td>*@
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlaceOppo">
                                     <td>3</td>
                                     @*<td>Корпус №5</td>*@
-                                    <td itemprop="addressPlace">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская 15/4
                                     </td>
@@ -595,10 +713,10 @@
                                     </td>*@
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlaceOppo">
                                     <td>4</td>
                                     @*<td>Корпус №7</td>*@
-                                    <td itemprop="addressPlacePodg">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская, 17
                                     </td>
@@ -614,10 +732,10 @@
                                     </td>*@
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlaceOppo">
                                     <td>5</td>
                                     @*<td>Корпус №3</td>*@
-                                    <td itemprop="addressPlaceGia">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская 17/21
                                     </td>
@@ -652,13 +770,13 @@
                                 </td>
                                 </tr>*@
 
-                                <tr>
+                                <tr itemprop="addressPlaceOppo">
                                     <td>6</td>
                                     @*<td>
                                     Лаборатория сварки,
                                     Учебно-производственные мастерские и гаражи
                                     </td>*@
-                                    <td itemprop="addressPlaceDop">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская, 21а
                                     </td>
@@ -674,10 +792,10 @@
                                     </td>*@
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlaceOppo">
                                     <td>7</td>
                                     @*<td>Корпус №2</td>*@
-                                    <td itemprop="addressPlaceOppo">
+                                    <td>
                                         347740, Ростовская область, г. Зерноград,
                                         ул. Советская 28/30
                                     </td>
@@ -694,10 +812,10 @@
                                     </td>*@
                                 </tr>
 
-                                <tr>
+                                <tr itemprop="addressPlaceOppo">
                                     <td>8</td>
                                     @*<td>Здание учебных боксов</td>*@
-                                    <td itemprop="addressPlace">347740, Ростовская область, Зерноградский район, п. Кленовый, ул. Сидоренко, дом №1, №3</td>
+                                    <td>347740, Ростовская область, Зерноградский район, п. Кленовый, ул. Сидоренко, дом №1, №3</td>
                                     @*<td>
                                     <ul>
                                     <li>Места проведения практической подготовки обучающихся</li>

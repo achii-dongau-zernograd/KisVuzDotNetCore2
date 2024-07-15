@@ -71,6 +71,26 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["Emailes"] = institute.Emailes;
             #endregion
 
+            #region Сведения о лицензии на осуществление образовательной деятельности (выписке из реестра лицензий на осуществление образовательной деятельности)                        
+            var licenses = await _context.FileDataTypes                
+                    .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                            .ThenInclude(fm => fm.SignList)
+                .Where(g => g.Itemprop == "licenseDocLink")                
+                .ToListAsync();
+            ViewData["licenses"] = licenses;
+            #endregion
+
+            #region Сведения о наличии государственной аккредитации образовательной деятельности
+            var accreds = await _context.FileDataTypes
+                    .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                            .ThenInclude(fm => fm.SignList)
+                .Where(g => g.Itemprop == "accreditationDocLink")
+                .ToListAsync();
+            ViewData["accreds"] = accreds;
+            #endregion
+
             #region Таблица 3 "Сведения об учредителях"  
 
             var t3uchred = await _context.UchredLaw
