@@ -2,83 +2,167 @@
 @{ 
     List<StructSubvision> structSubvisions = (List<StructSubvision>)ViewData["StructSubvisions"];
     List<StructSubvisionType> structSubvisionTypes = (List<StructSubvisionType>)ViewData["StructSubvisionTypes"];
+    var filInfo = (IEnumerable<FilInfo>)ViewData["filInfo"];
 }
-<table itemprop="structOrgUprav" class="table">
-    <thead>
-        <tr>
-            <th>Наименование органа управления / структурного подразделения</th>
-            <th>ФИО руководителя структурного подразделения</th>
-            <th>Должность руководителя структурного подразделения</th>
-            <th>Адрес местонахождения структурного подразделения</th>
-            <th>Адрес официального сайта структурного подразделения</th>
-            <th>Адреса электронной почты структурного подразделения</th>
-            <th>Положение об органе управления / о структурном подразделении</th>
-        </tr>        
-    </thead>
-        <tbody>
-            @foreach (var structSubvisionType in structSubvisionTypes)
-             {
+
+<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Структура и органы управления образовательной организацией</a>
+<div class="collapse" id="spoiler-1">
+    <div class="well">
+        <table itemprop="structOrgUprav" class="table">
+            <thead>
                 <tr>
-                    <td colspan="7" class="text-center well">
-                        <strong>
-                            @structSubvisionType.StructSubvisionTypeName
-                        </strong>
-                    </td>
+                    <th>Наименование органа управления / структурного подразделения</th>
+                    <th>ФИО руководителя структурного подразделения</th>
+                    <th>Должность руководителя структурного подразделения</th>
+                    <th>Адрес местонахождения структурного подразделения</th>
+                    <th>Адрес официального сайта структурного подразделения</th>
+                    <th>Адреса электронной почты структурного подразделения</th>
+                    <th>Положение об органе управления / о структурном подразделении</th>
                 </tr>
-                @foreach (var structSubvision in structSubvisions
-                    .Where(a => a.StructSubvisionTypeId == structSubvisionType.StructSubvisionTypeId)
-                    .OrderBy(a=>a.StructSubvisionName).ThenBy(a=>a.StructSubvisionPostChief.PostName))
-                 {
-                     <tr itemprop="name">
-                        <td itemprop="name">
-                            @structSubvision.StructSubvisionName
+            </thead>
+            <tbody>
+                @foreach (var structSubvisionType in structSubvisionTypes)
+                {
+                    <tr>
+                        <td colspan="7" class="text-center well">
+                            <strong>
+                                @structSubvisionType.StructSubvisionTypeName
+                            </strong>
                         </td>
-                        <td itemprop="fio">                            
-                            @if (structSubvision.StructSubvisionAccountChiefId == null)
-                            {
-                                @Html.DisplayFor(modelItem => structSubvision.StructSubvisionFioChief)
-                            }
-                            else
-                            {
-                                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@structSubvision.StructSubvisionAccountChiefId">@structSubvision.StructSubvisionFioChief</a>
-                            }
-                        </td>
-                        <td itemprop="post">
-                            @structSubvision.StructSubvisionPostChief.PostName
-                        </td>
-                        <td itemprop="addressStr">
-                            @structSubvision.StructSubvisionAdress?.GetAddress
-                        </td>
-                        <td itemprop="site">
-                            @if(string.IsNullOrWhiteSpace(structSubvision.StructSubvisionSite))
-                            {
-                                <text>нет</text>
-                            }
-                            else if(structSubvision.StructSubvisionSite.Contains("http"))
-                            {
-                                <a href="@structSubvision.StructSubvisionSite" target="_blank">@structSubvision.StructSubvisionSite</a>
-                            }
-                            else
-                            {
-                                @structSubvision.StructSubvisionSite
-                            }                      
-                            
-                        </td>
-                        <td itemprop="email">
-                            @structSubvision.StructSubvisionEmail?.EmailValue
-                        </td>
-                        <td itemprop="divisionClauseDocLink">
-                            @if(structSubvision.StructStandingOrderId!=null)
-                            { 
-                                <a asp-controller="Files" asp-action="GetFile" asp-route-id="@structSubvision.StructStandingOrderId">Положение</a>                                
-                            }
-                            else
-                            {
-                                <text>Нет</text>
-                            }
-                        </td>
-                     </tr>
+                    </tr>
+                    @foreach (var structSubvision in structSubvisions
+                   .Where(a => a.StructSubvisionTypeId == structSubvisionType.StructSubvisionTypeId)
+                   .OrderBy(a => a.StructSubvisionName).ThenBy(a => a.StructSubvisionPostChief.PostName))
+                    {
+                        <tr itemprop="name">
+                            <td itemprop="name">
+                                @structSubvision.StructSubvisionName
+                            </td>
+                            <td itemprop="fio">
+                                @if (structSubvision.StructSubvisionAccountChiefId == null)
+                                {
+                                    @Html.DisplayFor(modelItem => structSubvision.StructSubvisionFioChief)
+                                }
+                                else
+                                {
+                                    <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@structSubvision.StructSubvisionAccountChiefId">@structSubvision.StructSubvisionFioChief</a>
+                                }
+                            </td>
+                            <td itemprop="post">
+                                @structSubvision.StructSubvisionPostChief.PostName
+                            </td>
+                            <td itemprop="addressStr">
+                                @structSubvision.StructSubvisionAdress?.GetAddress
+                            </td>
+                            <td itemprop="site">
+                                @if (string.IsNullOrWhiteSpace(structSubvision.StructSubvisionSite))
+                                {
+                                    <text>нет</text>
+                                }
+                                else if (structSubvision.StructSubvisionSite.Contains("http"))
+                                {
+                                    <a href="@structSubvision.StructSubvisionSite" target="_blank">@structSubvision.StructSubvisionSite</a>
+                                }
+                                else
+                                {
+                                    @structSubvision.StructSubvisionSite
+                                }
+
+                            </td>
+                            <td itemprop="email">
+                                @structSubvision.StructSubvisionEmail?.EmailValue
+                            </td>
+                            <td itemprop="divisionClauseDocLink">
+                                @if (structSubvision.StructStandingOrderId != null)
+                                {
+                                    <a asp-controller="Files" asp-action="GetFile" asp-route-id="@structSubvision.StructStandingOrderId">Положение</a>
+                                }
+                                else
+                                {
+                                    <text>Нет</text>
+                                }
+                            </td>
+                        </tr>
+                    }
                 }
-             }
-        </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<a href="#spoiler-4" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о филиалах</a>
+<div class="collapse" id="spoiler-4">
+    <div class="well">
+        <table itemprop="filInfo" class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr itemprop="filInfo">
+                    <th>№ п/п</th>
+                    <th>Наименование филиала</th>
+                    <th>Адрес места нахождения</th>
+                    <th>Режим и график работы</th>
+                    <th>Контактные телефоны</th>
+                    <th>Электронная почта</th>
+                    <th>Адрес официального сайта или страницы филиала в сети "Интернет" (при наличии)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (filInfo.Count() > 0)
+                {
+                    foreach (var item in filInfo)
+                    {
+                        <tr itemprop="filInfo">
+                            <td itemprop="nameFil">@item.NameFil</td>
+                            <td itemprop="addressFil">@item.AddressFil</td>
+                            <td itemprop="websiteFil">@item.WebsiteFil</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr itemprop="filInfo">
+                        <td itemprop="nameFil" colspan="7" align="center">Филиалов нет</td>
+
+                        <td itemprop="addressFil" class="hidden">Филиалов нет</td>
+                        <td itemprop="workTimeFil" class="hidden">Филиалов нет</td>
+                        <td itemprop="telephoneFil" class="hidden">Филиалов нет</td>
+                        <td itemprop="emailFil" class="hidden">Филиалов нет</td>
+                        <td itemprop="websiteFil" class="hidden">Филиалов нет</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<a href="#spoiler-5" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о представительствах</a>
+<div class="collapse" id="spoiler-5">
+    <div class="well">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>№ п/п</th>
+                    <th>Наименование представительства</th>
+                    <th>Адрес места нахождения</th>
+                    <th>Режим и график работы</th>
+                    <th>Контактные телефоны</th>
+                    <th>Электронная почта</th>
+                    <th>Адрес официального сайта или страницы представительства в сети "Интернет" (при наличии)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr itemprop="repInfo">
+                    <td itemprop="nameRep" colspan="7" align="center">Представительств нет</td>
+
+                    <td itemprop="addressRep" class="hidden">Представительств нет</td>
+                    <td itemprop="workTimeRep" class="hidden">Представительств нет</td>
+                    <td itemprop="telephoneRep" class="hidden">Представительств нет</td>
+                    <td itemprop="emailRep" class="hidden">Представительств нет</td>
+                    <td itemprop="websiteRep" class="hidden">Представительств нет</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

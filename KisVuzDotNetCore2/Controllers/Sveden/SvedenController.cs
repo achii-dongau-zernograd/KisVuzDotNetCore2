@@ -132,6 +132,14 @@ namespace KisVuzDotNetCore2.Controllers
                 .ToListAsync();
             ViewData["StructSubvisions"] = structSubvisions;
             ViewData["StructSubvisionTypes"] = structSubvisionTypes;
+
+            #region Таблица 4 "Сведения о филиалах"  
+
+            var filInfo = await _context.FilInfo
+                .ToListAsync();
+            ViewData["filInfo"] = filInfo;            
+            #endregion
+
             return View();
         }
 
