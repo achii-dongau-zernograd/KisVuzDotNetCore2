@@ -51,14 +51,14 @@
     </div>
 </div>
 
-<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Информация о руководителях филиалов, представительств образовательной организации</a>
+<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Информация о руководителях филиалов образовательной организации</a>
 <div class="collapse" id="spoiler-2">
     <div class="well">
 
-        <table itemprop="rucovodstvoFil" class="table table-hover">
+        <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Наименование филиала, представительства</th>
+                    <th>Наименование филиала</th>
                     <th>Ф.И.О.</th>
                     <th>Должность</th>
                     <th>Контактные телефоны</th>
@@ -70,22 +70,13 @@
             {
                 <tr itemprop="rucovodstvoFil">
                     <td itemprop="nameFil" colspan="5" class="text-center">
-                        Филиалов, представительств нет
+                        Филиалов нет
                     </td>
-                    <td itemprop="fio" class="hidden">Филиалов, представительств нет</td>
-                    <td itemprop="post" class="hidden">Филиалов, представительств нет</td>
+                    <td itemprop="fio" class="hidden">Филиалов нет</td>
+                    <td itemprop="post" class="hidden">Филиалов нет</td>
                     <td itemprop="telephone" class="hidden">Филиалов нет</td>
                     <td itemprop="email" class="hidden">Филиалов нет</td>
-                </tr>
-                <tr itemprop="rucovodstvoRep">
-                    <td itemprop="nameRep" class="hidden">
-                        Филиалов, представительств нет
-                    </td>
-                    <td itemprop="fio" class="hidden">Филиалов, представительств нет</td>
-                    <td itemprop="post" class="hidden">Филиалов, представительств нет</td>
-                    <td itemprop="telephone" class="hidden">Филиалов нет</td>
-                    <td itemprop="email" class="hidden">Филиалов нет</td>
-                </tr>
+                </tr>                
             }
             else
             { @foreach (var item in t15rucovodstvoFil)
@@ -99,6 +90,34 @@
                     </tr>
                 }
         }
+        </table>
+    </div>
+</div>
+
+<a href="#spoiler-22" data-toggle="collapse" class="btn btn-primary btn-block">Информация о руководителях представительств образовательной организации</a>
+<div class="collapse" id="spoiler-22">
+    <div class="well">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Наименование представительства</th>
+                    <th>Ф.И.О.</th>
+                    <th>Должность</th>
+                    <th>Контактные телефоны</th>
+                    <th>Адреса электронной почты</th>
+                </tr>
+            </thead>
+                        
+            <tr itemprop="rucovodstvoRep">
+                <td itemprop="nameRep" class="hidden">
+                    Представительств нет
+                </td>
+                <td itemprop="fio" class="hidden">Филиалов, представительств нет</td>
+                <td itemprop="post" class="hidden">Филиалов, представительств нет</td>
+                <td itemprop="telephone" class="hidden">Филиалов нет</td>
+                <td itemprop="email" class="hidden">Филиалов нет</td>
+            </tr>
         </table>
     </div>
 </div>
