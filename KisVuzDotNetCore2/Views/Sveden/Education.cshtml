@@ -1369,10 +1369,9 @@ else
                         <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
                         <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
                         <td itemprop="perechenNir">@item.NirNapravls</td>
-                        <td itemprop="eduProf">@item .EduProfile</td>
+                        <td itemprop="eduProf">@item.EduProfile.EduProfileName</td>
                         <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
-                        
-                        <td itemprop="napravNir">@item .NapravNir</td>
+                        <td itemprop="napravNir">@item.NirNapravlSchool</td>
                         <td itemprop="resultNir">
                             @if (!string.IsNullOrWhiteSpace(item.NumNpr))
                             {

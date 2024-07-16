@@ -16,10 +16,24 @@ namespace KisVuzDotNetCore2.Models.Sveden
         public int EduNapravlId { get; set; }
 
         /// <summary>
+        /// Образовательная программа, направленность, профиль, шифр и наименование научной специальности
+        /// </summary>
+        [Display(Name = "Образовательная программа, направленность")]
+        public EduProfile EduProfile { get; set; }
+        [Display(Name = "Образовательная программа, направленность")]
+        public int? EduProfileId { get; set; }
+
+        /// <summary>
         /// Перечень научных направлений, в рамках которых ведётся научная (научно-исследовательская) деятельность
         /// </summary>
         [Display(Name = "Перечень научных направлений, в рамках которых ведётся научная (научно-исследовательская) деятельность")]
         public string NirNapravls { get; set; }
+
+        /// <summary>
+        /// Название научного направления/научной школы 
+        /// </summary>
+        [Display(Name = "Название научного направления/научной школы ")]
+        public string NirNapravlSchool { get; set; }
 
         /// <summary>
         /// Количество НПР, принимающих участие в научной (научно-исследовательской) деятельности

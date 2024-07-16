@@ -11,9 +11,10 @@ using System;
 namespace KisVuzDotNetCore2.Migrations
 {
     [DbContext(typeof(AppIdentityDBContext))]
-    partial class AppIdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240716150344_EduNurEduProfileId")]
+    partial class EduNurEduProfileId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3370,8 +3371,6 @@ namespace KisVuzDotNetCore2.Migrations
                     b.Property<int>("EduNapravlId");
 
                     b.Property<int?>("EduProfileId");
-
-                    b.Property<string>("NirNapravlSchool");
 
                     b.Property<string>("NirNapravls");
 

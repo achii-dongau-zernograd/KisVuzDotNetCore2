@@ -24,7 +24,7 @@ namespace KisVuzDotNetCore2.Controllers.Sveden
         // GET: EduNir
         public async Task<IActionResult> Index()
         {
-            var appIdentityDBContext = _context.EduNir.Include(e => e.EduNapravl.EduUgs.EduLevel);
+            var appIdentityDBContext = _context.EduNir.Include(e => e.EduProfile.EduNapravl.EduUgs.EduLevel);
             return View(await appIdentityDBContext.ToListAsync());
         }
                
@@ -33,6 +33,7 @@ namespace KisVuzDotNetCore2.Controllers.Sveden
         public IActionResult Create()
         {
             ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls.Include(n=>n.EduUgs.EduLevel), "EduNapravlId", "GetEduNapravlFullName");
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(n => n.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
             return View();
         }
 
@@ -50,6 +51,7 @@ namespace KisVuzDotNetCore2.Controllers.Sveden
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls.Include(n => n.EduUgs.EduLevel), "EduNapravlId", "GetEduNapravlFullName");
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(n => n.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
             return View(eduNir);
         }
 
@@ -67,6 +69,7 @@ namespace KisVuzDotNetCore2.Controllers.Sveden
                 return NotFound();
             }
             ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls.Include(n => n.EduUgs.EduLevel), "EduNapravlId", "GetEduNapravlFullName", eduNir.EduNapravlId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(n => n.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
             return View(eduNir);
         }
 
@@ -103,6 +106,7 @@ namespace KisVuzDotNetCore2.Controllers.Sveden
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EduNapravlId"] = new SelectList(_context.EduNapravls.Include(n => n.EduUgs.EduLevel), "EduNapravlId", "GetEduNapravlFullName", eduNir.EduNapravlId);
+            ViewData["EduProfileId"] = new SelectList(_context.EduProfiles.Include(n => n.EduNapravl.EduUgs.EduLevel), "EduProfileId", "GetEduProfileFullName");
             return View(eduNir);
         }
 

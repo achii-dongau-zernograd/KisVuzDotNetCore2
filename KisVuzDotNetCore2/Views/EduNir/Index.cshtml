@@ -19,7 +19,13 @@
                 @Html.DisplayNameFor(model => model.EduNapravl)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.EduProfile)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.NirNapravls)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NirNapravlSchool)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NumNpr)
@@ -58,7 +64,13 @@
                 @Html.DisplayFor(modelItem => item.EduNapravl.EduNapravlName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.EduProfile.EduProfileName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.NirNapravls)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NirNapravlSchool)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NumNpr)
