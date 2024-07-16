@@ -436,6 +436,54 @@ else
 }
 
 
+@if (openedSpoiler != "eduOAccred" && !string.IsNullOrWhiteSpace(openedSpoiler))
+{
+    <a asp-route-openedSpoiler="eduOAccred" class="btn btn-primary btn-block">
+        Информация об общественной аккредитации образовательной организации
+    </a>
+}
+else
+{
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация об общественной аккредитации образовательной программы</a>
+    <div class="@eduOAccredClass" id="spoiler-@spoilerCounter">
+        @{
+            spoilerCounter++;
+        }
+        <div class="well">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Код, шифр</th>
+                        <th>Наименование профессии, специальности, направления подготовки, научной специальности</th>
+                        <th>Уровень образования</th>
+                        <th>Образовательная программа, направленность, профиль, шифр и наименование научной специальности</th>
+                        <th>Наименование аккредитующей организации</th>
+                        <th>Срок действия общественной аккредитации (дата окончания действия свидетельства о профессионально-общественной аккредитации)</th>
+                    </tr>
+                    <tr>
+                        <td align=center><strong>1</strong></td>
+                        <td align=center><strong>2</strong></td>
+                        <td align=center><strong>3</strong></td>
+                        <td align=center><strong>4</strong></td>
+                        <td align=center><strong>5</strong></td>
+                        <td align=center><strong>6</strong></td>
+                    </tr>
+                </thead>
+                <tr itemprop="eduOAccred">
+                    <td itemprop="eduCode" class="text-center" colspan="6">Отсутствует</td>
+                    <td itemprop="eduName" class="hidden">Отсутствует</td>
+                    <td itemprop="eduLevel" class="hidden">Отсутствует</td>
+                    <td itemprop="eduProf" class="hidden">Отсутствует</td>
+                    <td itemprop="orgName" class="hidden">Отсутствует</td>
+                    <td itemprop="dateEnd" class="hidden">Отсутствует</td>
+                </tr>                
+            </table>
+
+        </div>
+    </div>
+}
+
 
 @if (openedSpoiler != "eduChislen" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
@@ -612,7 +660,7 @@ else
                         <th>Код, шифр</th>
                         <th>Наименование профессии, специальности, направления подготовки, наименование группы научных специальностей</th>
                         <th>Уровень образования</th>
-                        <th>Формы обучения</th>
+                        <th>Форма обучения</th>
                         <th>Численность обучающихся, переведенных в другие образовательные организации</th>
                         <th>Численность обучающихся, переведенных из других образовательных организаций</th>
                         <th>Численность восстановленных обучающихся</th>
@@ -1276,41 +1324,7 @@ else
         </div>
     </div>*@
 
-@if (openedSpoiler != "eduOAccred" && !string.IsNullOrWhiteSpace(openedSpoiler))
-{
-    <a asp-route-openedSpoiler="eduOAccred" class="btn btn-primary btn-block">
-        Информация об общественной аккредитации образовательной организации
-    </a>
-}
-else
-{
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация об общественной аккредитации образовательной организации</a>
-    <div class="@eduOAccredClass" id="spoiler-@spoilerCounter">
-        @{spoilerCounter++;}
-        <div class="well">
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="text-center">Наименование аккредитующей организации</th>
-                        <th class="text-center">Срок действия общественной аккредитации</th>                        
-                    </tr>
-                    <tr>
-                        <td align=center><strong>1</strong></td>
-                        <td align=center><strong>2</strong></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr itemprop="eduOAccred">
-                        <td itemprop="orgName" colspan="2" class="text-center">Отсутствует</td>
-                        <td itemprop="dateEnd" class="hidden">Отсутствует</td>
-                    </tr>                    
-                </tbody>
-            </table>
-
-        </div>
-    </div>
-}
 
 
 @if (openedSpoiler != "eduNir" && !string.IsNullOrWhiteSpace(openedSpoiler))
@@ -1331,8 +1345,10 @@ else
                     <tr>
                         <th>Код, шифр</th>
                         <th>Наименование специальности, направления подготовки, наименование группы научных специальностей</th>
+                        <th>Перечень научных направлений, в рамках которых ведётся научная (научно-исследовательская) деятельность</th>                        
+                        <th>Образовательная программа, направленность, профиль, шифр и наименование научной специальности</th>
                         <th>Уровень образования</th>
-                        <th>Перечень научных направлений, в рамках которых ведётся научная (научно-исследовательская) деятельность</th>
+                        <th>Название научного направления/научной школы</th>
                         <th>Результаты научной (научно-исследовательской) деятельности</th>
                         <th>Сведения о научно-исследовательской базе для осуществления научной (научно-исследовательской) деятельности</th>
                     </tr>
@@ -1343,6 +1359,8 @@ else
                         <td align=center><strong>4</strong></td>
                         <td align=center><strong>5</strong></td>
                         <td align=center><strong>6</strong></td>
+                        <td align=center><strong>7</strong></td>
+                        <td align=center><strong>8</strong></td>
                     </tr>
                 </thead>
                 @foreach (var item in t13eduNir.OrderBy(item => item.EduNapravl.EduNapravlCode))
@@ -1350,10 +1368,11 @@ else
                     <tr itemprop="eduNir">
                         <td itemprop="eduCode">@item.EduNapravl.EduNapravlCode</td>
                         <td itemprop="eduName">@item.EduNapravl.EduNapravlName</td>
-                        <td itemprop="eduProf" style="display:none;"></td>
-                        <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
                         <td itemprop="perechenNir">@item.NirNapravls</td>
-                        <td itemprop="napravNir" style="display:none;"></td>
+                        <td itemprop="eduProf">@item .EduProfile</td>
+                        <td itemprop="eduLevel">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                        
+                        <td itemprop="napravNir">@item .NapravNir</td>
                         <td itemprop="resultNir">
                             @if (!string.IsNullOrWhiteSpace(item.NumNpr))
                             {
