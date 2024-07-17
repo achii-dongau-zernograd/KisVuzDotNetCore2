@@ -195,6 +195,36 @@ namespace KisVuzDotNetCore2.Controllers
             }
             #endregion
 
+
+            var EduLanguages = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.EduLanguages)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["EduLanguages"] = EduLanguages;
+
+            var EduChislen = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.EduChislen)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["EduChislen"] = EduChislen;
+
+            var EduPriem = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.EduPriem)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["EduPriem"] = EduPriem;
+
+            var EduPerevod = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.EduPerevod)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["EduPerevod"] = EduPerevod;
+
+
             #region Таблица 7. Информация о численности обучающихся
             if (string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduChislen")
             {

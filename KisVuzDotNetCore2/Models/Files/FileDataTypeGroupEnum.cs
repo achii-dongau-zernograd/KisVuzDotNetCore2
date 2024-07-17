@@ -32,6 +32,10 @@
         /// <summary>
         /// Платежи
         /// </summary>
-        Payments = 16
+        Payments = 16,
+        /// <summary>
+        /// Сведения об обр. орг. - Образование
+        /// </summary>
+        SvedenEducation = 17
     }
 }
