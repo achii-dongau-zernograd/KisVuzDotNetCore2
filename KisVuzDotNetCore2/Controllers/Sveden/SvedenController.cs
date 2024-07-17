@@ -312,6 +312,24 @@ namespace KisVuzDotNetCore2.Controllers
             }
             #endregion
 
+            #region Информация о трудоустройстве выпускников
+            if (string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "graduateJob")
+            {
+                // Годы выпуска
+                var GraduateYear = await _context.GraduateYear.ToListAsync();
+                ViewData["GraduateYear"] = GraduateYear;
+
+                // Количество выпускников
+                var EduGraduate = await _context.EduGraduate.Include(g => g.EduProfile.EduNapravl.EduUgs.EduLevel).ToListAsync();
+                ViewData["EduGraduate"] = EduGraduate;
+
+                // Количество трудоустроенных выпускников
+                var GraduateTrudoustroustvo = await _context.GraduateTrudoustroustvo.Include(g => g.EduProfile.EduNapravl.EduUgs.EduLevel).ToListAsync();
+                ViewData["GraduateTrudoustroustvo"] = GraduateTrudoustroustvo;
+            }
+            
+            #endregion
+
             return View();
         }
 
@@ -373,7 +391,7 @@ namespace KisVuzDotNetCore2.Controllers
                             .ThenInclude(f => f.EduForm)
                 .Include(e => e.TeacherEduProfileDisciplineNames)
                     .ThenInclude(ep => ep.EduProfile.EduNapravl.EduUgs.EduLevel)
-                .Where(t => t.IsIdle != true)
+                .Where(t => t.IsIdle != true)                
                 .ToListAsync();
             ViewData["teacher1"] = teacher1;
             #endregion

@@ -12,6 +12,9 @@
     var t11eduOPYears = (IEnumerable<EduOPYear>)ViewData["t11eduOPYears"];
     var t11eduObrProg = (IEnumerable<EduPr>)ViewData["t11eduObrProg"];
     var t13eduNir = (IEnumerable<EduNir>)ViewData["t13eduNir"];
+    var GraduateYear = (List<GraduateYear>)ViewData["GraduateYear"];
+    var EduGraduate = (List<EduGraduate>)ViewData["EduGraduate"];
+    var GraduateTrudoustroustvo = (List<GraduateTrudoustroustvo>)ViewData["GraduateTrudoustroustvo"];
 
     int spoilerCounter = 1;
 
@@ -27,6 +30,7 @@
     string eduOAccredClass = "collapse";
     string eduNirClass = "collapse";
     string eduDPOClass = "collapse";
+    string graduateJobClass = "collapse";
 
     switch (openedSpoiler)
     {
@@ -62,6 +66,9 @@
             break;
         case "eduDPO":
             eduDPOClass = "collapse.in";
+            break;
+        case "graduateJob":
+            graduateJobClass = "collapse.in";
             break;
         default:
             break;
@@ -1556,3 +1563,142 @@ else
     </div>
 }
 
+
+
+@if (openedSpoiler != "graduateJob" && !string.IsNullOrWhiteSpace(openedSpoiler))
+{
+    <a asp-route-openedSpoiler="graduateJob" class="btn btn-primary btn-block">
+        Информация о трудоустройстве выпускников за 2023/24 учебный год
+    </a>
+}
+else
+{
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о трудоустройстве выпускников за 2022/23 учебный год</a>
+    <div class="@graduateJobClass" id="spoiler-@spoilerCounter">
+        @{
+            spoilerCounter++;
+        }
+        <div class="well">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Код, шифр</th>
+                        <th>Наименование профессии, специальности, направления подготовки, наименование группы научных специальностей</th>
+                        <th>Образовательная программа, направленность, профиль, шифр и наименование научной специальности</th>
+                        <th>Количество выпускников</th>
+                        <th>Количество трудоустроенных выпускников</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var graduateG in EduGraduate.OrderBy(g => g.EduProfileId).GroupBy(g => g.EduProfileId))
+                    {
+                        int yearCounter = 1;
+                        <tr itemprop="graduateJob">
+                            <td itemprop="eduCode">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlCode</td>
+                            <td itemprop="eduName">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlName</td>
+                            <td itemprop="eduProf">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduProfileName</td>
+                            @foreach (var graduateYear in GraduateYear.TakeLast(1).OrderByDescending(y => y.GraduateYearId))
+                            {
+                                bool IsFounded = false;
+                                foreach (var graduate in graduateG.Where(g => g.GraduateYearId == graduateYear.GraduateYearId))
+                                {
+                                    IsFounded = true;
+                                    <td itemprop="@("v" + yearCounter)">@graduate.GraduateNumber</td>
+
+                                    int? trud = GraduateTrudoustroustvo.Where(t => t.EduProfileId == graduateG.Key && t.GraduateYearId == graduateYear.GraduateYearId).FirstOrDefault()?.GraduateTrudoustroustvoNumber;
+                                    if (trud > 0)
+                                    {
+                                        <td itemprop="@("t" + yearCounter)">@trud</td>
+                                    }
+                                    else
+                                    {
+                                        <td itemprop="@("t" + yearCounter)">-</td>
+                                    }
+
+                                    break;
+                                }
+
+                                if (!IsFounded)
+                                {
+                                    <td itemprop="@("v" + yearCounter)">-</td>
+                                    <td itemprop="@("t" + yearCounter)">-</td>
+                                }
+
+                                yearCounter++;
+                            }
+
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+            @*<table class="table table-hover">
+        <thead>
+        <tr>
+        <th rowspan="2">Код, шифр</th>
+        <th rowspan="2">Наименование профессии, специальности, направления подготовки, наименование группы научных специальностей</th>
+        <th rowspan="2">Образовательная программа, направленность, профиль, шифр и наименование научной специальности</th>
+        <th colspan="2">@GraduateYear[GraduateYear.Count - 1].GraduateYearName</th>
+        <th colspan="2">@GraduateYear[GraduateYear.Count - 2].GraduateYearName</th>
+        <th colspan="2">@GraduateYear[GraduateYear.Count - 3].GraduateYearName</th>
+        </tr>
+        <tr>
+        <th>Количество выпускников</th>
+        <th>Количество трудоустроенных выпускников</th>
+        <th>Количество выпускников</th>
+        <th>Количество трудоустроенных выпускников</th>
+        <th>Количество выпускников</th>
+        <th>Количество трудоустроенных выпускников</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var graduateG in EduGraduate.OrderBy(g => g.EduProfileId).GroupBy(g => g.EduProfileId))
+        {
+        int yearCounter = 1;
+        <tr itemprop="graduateJob">
+        <td itemprop="eduCode">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlCode</td>
+        <td itemprop="eduName">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduNapravl.EduNapravlName</td>
+        <td itemprop="eduProf">@EduGraduate.FirstOrDefault(g => g.EduProfileId == graduateG.Key).EduProfile.EduProfileName</td>
+        @foreach (var graduateYear in GraduateYear.TakeLast(3).OrderByDescending(y => y.GraduateYearId))
+        {
+        bool IsFounded = false;
+        foreach (var graduate in graduateG.Where(g => g.GraduateYearId == graduateYear.GraduateYearId))
+        {
+        IsFounded = true;
+        <td itemprop="@("v" + yearCounter)">@graduate.GraduateNumber</td>
+
+        int? trud = GraduateTrudoustroustvo.Where(t => t.EduProfileId == graduateG.Key && t.GraduateYearId == graduateYear.GraduateYearId).FirstOrDefault()?.GraduateTrudoustroustvoNumber;
+        if (trud > 0)
+        {
+        <td itemprop="@("t" + yearCounter)">@trud</td>
+        }
+        else
+        {
+        <td itemprop="@("t" + yearCounter)">-</td>
+        }
+
+        break;
+        }
+
+        if (!IsFounded)
+        {
+        <td itemprop="@("v" + yearCounter)">-</td>
+        <td itemprop="@("t" + yearCounter)">-</td>
+        }
+
+        yearCounter++;
+        }
+
+
+        </tr>
+        }
+
+        </tbody>
+        </table>*@
+
+        </div>
+    </div>
+}
