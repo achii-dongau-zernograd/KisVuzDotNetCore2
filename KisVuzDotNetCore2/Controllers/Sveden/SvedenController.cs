@@ -347,6 +347,25 @@ namespace KisVuzDotNetCore2.Controllers
         }
 
         /// <summary>
+        /// Подраздел "Руководство"
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Managers()
+        {
+            var t14rucovodstvo = await _context.SvedenRucovodstvo
+                .Include(r => r.AppUser)
+                .OrderBy(r => r.OrderNumber)
+                .ToListAsync();
+            ViewData["t14rucovodstvo"] = t14rucovodstvo;
+
+            var t15rucovodstvoFil = await _context.RucovodstvoFil
+                .ToListAsync();
+            ViewData["t15rucovodstvoFil"] = t15rucovodstvoFil;                      
+
+            return View();
+        }
+
+        /// <summary>
         /// Подраздел "Руководство. Педагогический
         /// (научно-педагогический) состав"
         /// </summary>
@@ -629,6 +648,10 @@ namespace KisVuzDotNetCore2.Controllers
 
             var PurposeLibrs = await _context.PurposeLibr.ToListAsync();
             ViewData["PurposeLibrs"] = PurposeLibrs;
+
+            var hostelInfo = await _context.HostelInfo.ToListAsync();
+            ViewData["hostelInfo"] = hostelInfo;
+
             return View();
         }
 
@@ -775,6 +798,21 @@ namespace KisVuzDotNetCore2.Controllers
         /// <returns></returns>
         public IActionResult Inter()
         {
+
+            return View();
+        }
+
+
+        /// <summary>
+        /// Подраздел "Организация питания в образовательной организации"
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Catering()
+        {
+            var MealsAndHealth = await _context.PurposeLibr
+                .Where(p => p.itemprop == "meals" || p.itemprop == "mealsOvz" || p.itemprop == "health" || p.itemprop == "healthOvz")
+                .ToListAsync();
+            ViewData["MealsAndHealth"] = MealsAndHealth;
 
             return View();
         }

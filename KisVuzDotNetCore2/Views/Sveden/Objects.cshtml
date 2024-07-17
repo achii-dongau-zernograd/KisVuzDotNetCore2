@@ -1,10 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Материально-техническое обеспечение и оснащенность образовательного процесса";
-}
 
-@{
     var UchCabinets = (List<Pomeshenie>)ViewData["UchCabinets"];
-    var ObjectsForPractLessons = (List<Pomeshenie>)ViewData["ObjectsForPractLessons"];
+    //var ObjectsForPractLessons = (List<Pomeshenie>)ViewData["ObjectsForPractLessons"];
+    var ObjectsForPractLessons = UchCabinets;
     //int currentEduYear = (int)ViewData["currentEduYear"];
     int NumEbs = (int)ViewData["NumEbs"];
     int NumEbsSobstv = (int)ViewData["NumEbsSobstv"];
@@ -15,6 +14,9 @@
     List<PurposeLibr> PurposeLibr = (List<PurposeLibr>)ViewData["PurposeLibrs"];
     //List<DisciplinePomeshenie> disciplinePomeshenie = (List<DisciplinePomeshenie>)ViewData["disciplinePomeshenie"];
     List<EduLevel> eduLevels = (List<EduLevel>)ViewData["eduLevelsToPomeshenie"];
+
+    var hostelInfo = (IEnumerable<HostelInfo>)ViewData["hostelInfo"];
+
     int spoilerCounter = 1;
 }
 
@@ -82,7 +84,7 @@
 
 <a href="https://disk.yandex.ru/d/rmDDPRDw9isQLQ" class="btn btn-primary btn-block" target="_blank">Сведения о специально оборудованных учебных кабинетах, о приспособленных объектах для проведения практических занятий, задействованных в реализации образовательных программ</a>
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии оборудованных учебных кабинетов для проведения практических занятий</a>
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии оборудованных учебных кабинетов</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++; }
     <div class="well">
@@ -90,16 +92,23 @@
             <thead>
                 <tr>
                     <th>Адрес</th>
-                    <th>Наименование оборудованных учебных кабинетов для проведения практических занятий</th>
-                    <th>Оснащенность оборудованных учебных кабинетов для проведения практических занятий</th>
+                    <th>Наименование оборудованных учебных кабинетов</th>
+                    <th>Оснащенность оборудованных учебных кабинетов</th>
+                    <th>Приспособленность для использования инвалидами и лицами с ограниченными возможностями здоровья</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var uchCabinet in UchCabinets.OrderBy(p => p.PomeshenieName))
                 {
-                    <tr itemprop="purposePrac">
-                        <td itemprop="addressPrac">@uchCabinet.Korpus.KorpusAddress.GetAddress</td>
-                        <td itemprop="namePrac">
+                    <tr itemprop="purposeCab">
+                        <td itemprop="addressCab">@uchCabinet.Korpus.KorpusAddress.GetAddress</td>
+                        <td itemprop="nameCab">
                             @uchCabinet.PomeshenieFullName
                             <br />
                             @if (uchCabinet.PomeshenieTypes != null)
@@ -110,7 +119,7 @@
                                 }
                             }
                         </td>
-                        <td itemprop="osnPrac">
+                        <td itemprop="osnCab">
                             <ol>
                                 @foreach (var oborudovanie in uchCabinet.OborudovanieList)
                                 {
@@ -120,19 +129,24 @@
                                 }
                             </ol>
                         </td>
+                        <td itemprop="ovzCab">
+                            @if (String.IsNullOrEmpty(uchCabinet.PomeshenieOvz))
+                            {
+                                <p>Не приспособлено</p>
+                            }
+                            else
+                            {
+                                <p>@uchCabinet.PomeshenieOvz</p>
+                            }
+                        </td>
                     </tr>
-                }
-                <tr itemprop="purposeCab">
-                    <td itemprop="addressCab" colspan="4" class="text-center">-</td>
-                    <td itemprop="nameCab" class="hidden">-</td>
-                    <td itemprop="osnCab" class="hidden">-</td>
-                </tr>
+                }                
             </tbody>
         </table>
     </div>
 </div>
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии оборудованных объектов для проведения практических занятий</a>
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии объектов для проведения практических занятий</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++; }
     <div class="well">
@@ -140,8 +154,15 @@
             <thead>
                 <tr>
                     <th>Адрес</th>
-                    <th>Наименование оборудованных объектов для проведения практических занятий</th>
-                    <th>Оснащенность оборудованных объектов для проведения практических занятий</th>
+                    <th>Наименование объектов для проведения практических занятий</th>
+                    <th>Оснащенность объектов для проведения практических занятий</th>
+                    <th>Приспособленность для использования инвалидами и лицами с ограниченными возможностями здоровья</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
                 </tr>
             </thead>
             <tbody>
@@ -170,13 +191,18 @@
                                 }
                             </ol>
                         </td>
+                        <td itemprop="ovzPrac">
+                            @if (String.IsNullOrEmpty(objectForPractLessons.PomeshenieOvz))
+                            {
+                                <p>Не приспособлено</p>
+                            }
+                            else
+                            {
+                                <p>@objectForPractLessons.PomeshenieOvz</p>
+                            }
+                        </td>
                     </tr>
-                }
-                <tr itemprop="purposePrac">
-                    <td itemprop="addressPrac" colspan="4" class="text-center">-</td>
-                    <td itemprop="namePrac" class="hidden">-</td>
-                    <td itemprop="osnPrac" class="hidden">-</td>
-                </tr>
+                }                
             </tbody>
         </table>
     </div>
@@ -202,6 +228,14 @@
                         <th>
                             Количество мест
                         </th>
+                        <th>Приспособленность для использования инвалидами и лицами с ограниченными возможностями здоровья</th>
+                    </tr>
+                    <tr>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -220,6 +254,17 @@
                             <td itemprop="objCnt">
                                 @Html.DisplayFor(modelItem => item.NumberPlaces)
                             </td>
+                            <td itemprop="objOvz">
+
+                                @if (String.IsNullOrEmpty(item.PrisposoblOvz))
+                                {
+                                    <p>Не приспособлено</p>
+                                }
+                                else
+                                {
+                                    <p>@Html.DisplayFor(modelItem => item.PrisposoblOvz)</p>
+                                }
+                            </td>
                         </tr>
                     }
                     @*        Заглушки      *@
@@ -236,6 +281,9 @@
                         <td itemprop="objCnt">
                             -
                         </td>
+                        <td itemprop="objOvz">
+                            -
+                        </td>
                     </tr>
                     <tr itemprop="purposeSport" class="hidden">
                         <td itemprop="objName">
@@ -248,6 +296,9 @@
                             -
                         </td>
                         <td itemprop="objCnt">
+                            -
+                        </td>
+                        <td itemprop="objOvz">
                             -
                         </td>
                     </tr>
@@ -264,6 +315,9 @@
                         <td itemprop="objCnt">
                             -
                         </td>
+                        <td itemprop="objOvz">
+                            -
+                        </td>
                     </tr>
                     <tr itemprop="health" class="hidden">
                         <td itemprop="objName">
@@ -278,6 +332,9 @@
                         <td itemprop="objCnt">
                             -
                         </td>
+                        <td itemprop="objOvz">
+                            -
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -289,8 +346,28 @@
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++; }
     <div class="well">
+        <div itemprop="purposeFacilOvz">            
+            <p>Cредства обучения и воспитания, приспособленные для использования инвалидами и лицами с ограниченными возможностями здоровья, отсутствуют.</p>
+        </div>
         <div itemprop="purposeFacil">
-            Сведения представлены в подразделе "Сведения о приспособленных объектах для проведения практических занятий"
+            <br />
+            <p>Cредства обучения и воспитания:</p>
+            @foreach (var uchCabinet in UchCabinets.OrderBy(p => p.PomeshenieName))
+            {
+                if (uchCabinet.OborudovanieList.Count>0)
+                {
+                    <p>
+                        <span>@uchCabinet.PomeshenieName: </span>
+
+                        @foreach (var oborudovanie in uchCabinet.OborudovanieList)
+                        {
+                            <span>
+                                @oborudovanie.OborudovanieName;
+                            </span>
+                        }
+                    </p>
+                }
+            }            
         </div>
     </div>
 </div>
@@ -331,15 +408,15 @@
                     <th>Количество</th>
                 <tr>                
                 <tr>
-                    <td>Наличие собственных электронных образовательных и информационных ресурсов</td>
+                    <td>Количество собственных электронных образовательных и информационных ресурсов</td>
                     <td itemprop="eoisOwn"><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="true">@NumEoisOwn</a></td>
                 <tr>
                 <tr>
-                    <td>Наличие сторонних электронных образовательных и информационных ресурсов</td>
+                    <td>Количество сторонних электронных образовательных и информационных ресурсов</td>
                     <td itemprop="eoisSide"><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="false">@NumEoisSide</a></td>
                 <tr>
                 <tr>
-                    <td>Наличие базы данных электронного каталога</td>
+                    <td>Количество баз данных электронного каталога</td>
                     <td itemprop="bdec"><a asp-controller="ElectronCatalogs" asp-action="Preview">@NumEc</a></td>
                 <tr>
             </table>
@@ -432,5 +509,70 @@
     @{spoilerCounter++;}
     <div class="well">
         <a asp-action="Ovz" target="_blank">Информация представлена в специальном подразделе "Доступная среда"</a>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о наличии общежития, интерната, количестве жилых помещений в общежитии, интернате для иногородних обучающихся</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{
+        spoilerCounter++;
+    }
+    <div class="well">
+
+        <table itemprop="hostelInfo" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Наименование показателя</th>
+                    <th>Общежития</th>
+                    <th>Интернаты</th>
+                </tr>
+            </thead>
+            @foreach (var item in hostelInfo)
+            {
+                <tr itemprop="hostelInfo">
+                    <td>@item.NameIndicator</td>
+                    @if (item.Link != String.Empty)
+                    {
+
+                        @if (item.Itemprop != String.Empty)
+                        {
+                            <td itemprop="@item.Itemprop"><a href="@item.Link">@item.Value</a></td>
+                        }
+                        else
+                        {
+                            <td><a href="@item.Link">@item.Value</a></td>
+                        }
+                    }
+                    else
+                    {
+                        @if (item.Itemprop != String.Empty)
+                        {
+                            <td itemprop="@item.Itemprop">@item.Value</td>
+                        }
+                        else
+                        {
+                            <td>@item.Value</td>
+                        }
+                    }
+                    <td>-</td>
+                    <td itemprop="interInfo" class="hidden">-</td>
+                    <td itemprop="interTS" class="hidden">-</td>
+                    <td itemprop="interLS" class="hidden">-</td>
+                    <td itemprop="interNum" class="hidden">-</td>
+                    <td itemprop="interInv" class="hidden">-</td>
+                    <td itemprop="interFd" class="hidden">-</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о формировании платы за проживание в общежитии</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{
+        spoilerCounter++;
+    }
+    <div class="well">
+        <a itemprop="localActObSt" href="http://ачгаа.рф/wp-content/uploads/2022/04/193o.pdf" target="_blank">Приказ № 193-O от «04» августа 2021 г. «Об установлении размера оплаты за пользование жилым помещением и коммунальными услугами в общежитиях Азово-Черноморского инженерного института ФГБОУ ВО Донской ГАУ с 01.09.2021 года»</a>
     </div>
 </div>

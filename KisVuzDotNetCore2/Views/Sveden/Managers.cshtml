@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "Руководство";
+}
+
+<h1>Руководство</h1>
+
+@{
+    var t14rucovodstvo = (IEnumerable<Rucovodstvo>)ViewData["t14rucovodstvo"];
+    var t15rucovodstvoFil = (IEnumerable<RucovodstvoFil>)ViewData["t15rucovodstvoFil"];
+}
+
+<a href="#spoiler-1" data-toggle="collapse" class="btn btn-primary btn-block">Информация о руководителе образовательной организации / заместителях руководителя образовательной организации</a>
+<div class="collapse" id="spoiler-1">
+    <div class="well">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Ф.И.О.</th>
+                    <th>Должность</th>
+                    <th>Контактные телефоны</th>
+                    <th>Адреса электронной почты</th>
+                </tr>
+            </thead>
+            @foreach (var item in t14rucovodstvo)
+            {
+                string itempropRucovodstvo = "rucovodstvo";
+                if (item.Post.Contains("Зам"))
+                {
+                    itempropRucovodstvo = "rucovodstvoZam";
+                }
+                
+
+                <tr itemprop="@itempropRucovodstvo">
+                    @if (item.AppUserId == null)
+                    {
+                        <td itemprop="fio">@item.Fio</td>
+                    }
+                    else
+                    {
+                        <td itemprop="fio"><a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.Fio</a></td>
+                    }
+                    <td itemprop="post">@item.Post</td>
+                    <td itemprop="telephone">@item.Telephone</td>
+                    <td itemprop="email">@item.Email</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<a href="#spoiler-2" data-toggle="collapse" class="btn btn-primary btn-block">Информация о руководителях филиалов образовательной организации</a>
+<div class="collapse" id="spoiler-2">
+    <div class="well">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Наименование филиала</th>
+                    <th>Ф.И.О.</th>
+                    <th>Должность</th>
+                    <th>Контактные телефоны</th>
+                    <th>Адреса электронной почты</th>
+                </tr>
+            </thead>
+
+            @if (t15rucovodstvoFil.Count() == 0)
+            {
+                <tr itemprop="rucovodstvoFil">
+                    <td itemprop="nameFil" colspan="5" class="text-center">
+                        Филиалов нет
+                    </td>
+                    <td itemprop="fio" class="hidden">Филиалов нет</td>
+                    <td itemprop="post" class="hidden">Филиалов нет</td>
+                    <td itemprop="telephone" class="hidden">Филиалов нет</td>
+                    <td itemprop="email" class="hidden">Филиалов нет</td>
+                </tr>                
+            }
+            else
+            { @foreach (var item in t15rucovodstvoFil)
+                {
+                    <tr itemprop="rucovodstvoFil">
+                        <td itemprop="nameFil">@item.NameFil</td>
+                        <td itemprop="fio">@item.Fio</td>
+                        <td itemprop="post">@item.Post</td>
+                        <td itemprop="telephone">@item.Telephone</td>
+                        <td itemprop="email">@item.Email</td>
+                    </tr>
+                }
+        }
+        </table>
+    </div>
+</div>
+
+<a href="#spoiler-22" data-toggle="collapse" class="btn btn-primary btn-block">Информация о руководителях представительств образовательной организации</a>
+<div class="collapse" id="spoiler-22">
+    <div class="well">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Наименование представительства</th>
+                    <th>Ф.И.О.</th>
+                    <th>Должность</th>
+                    <th>Контактные телефоны</th>
+                    <th>Адреса электронной почты</th>
+                </tr>
+            </thead>
+                        
+            <tr itemprop="rucovodstvoRep">
+                <td itemprop="nameRep" colspan="5" class="text-center">Представительств нет</td>
+                <td itemprop="fio" class="hidden">Представительств нет</td>
+                <td itemprop="post" class="hidden">Представительств нет</td>
+                <td itemprop="telephone" class="hidden">Представительств нет</td>
+                <td itemprop="email" class="hidden">Представительств нет</td>
+            </tr>
+        </table>
+    </div>
+</div>

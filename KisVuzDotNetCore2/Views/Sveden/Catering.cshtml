@@ -1,0 +1,145 @@
+﻿@{
+    ViewData["Title"] = "Организация питания в образовательной организации";
+
+    var PurposeLibr = (List<PurposeLibr>)ViewData["MealsAndHealth"];
+
+    int spoilerCounter = 1;
+}
+
+<h2>Организация питания в образовательной организации</h2>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях питания и охраны здоровья обучающихся</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{
+        spoilerCounter++;
+    }
+    <div class="well">
+        <div class="sp-body folded">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Наименование объекта
+                        </th>
+                        <th>
+                            Адрес места нахождения
+                        </th>
+                        <th>
+                            Площадь, м.кв.
+                        </th>
+                        <th>
+                            Количество мест
+                        </th>
+                        <th>Приспособленность для использования инвалидами и лицами с ограниченными возможностями здоровья</th>
+                    </tr>
+                    <tr>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in PurposeLibr)
+                    {
+                        <tr itemprop="@item.itemprop">
+                            <td itemprop="objName">
+                                @Html.DisplayFor(modelItem => item.VidPom)
+                            </td>
+                            <td itemprop="objAdress">
+                                @Html.DisplayFor(modelItem => item.Adress)
+                            </td>
+                            <td itemprop="objSq">
+                                @Html.DisplayFor(modelItem => item.Square)
+                            </td>
+                            <td itemprop="objCnt">
+                                @Html.DisplayFor(modelItem => item.NumberPlaces)
+                            </td>
+                            <td itemprop="objOvz">
+
+                                @if (String.IsNullOrEmpty(item.PrisposoblOvz))
+                                {
+                                    <p>Не приспособлено</p>
+                                }
+                                else
+                                {
+                                    <p>@Html.DisplayFor(modelItem => item.PrisposoblOvz)</p>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    @*        Заглушки      *@
+                    <tr itemprop="purposeLibr" class="hidden">
+                        <td itemprop="objName">
+                            -
+                        </td>
+                        <td itemprop="objAddress">
+                            -
+                        </td>
+                        <td itemprop="objSq">
+                            -
+                        </td>
+                        <td itemprop="objCnt">
+                            -
+                        </td>
+                        <td itemprop="objOvz">
+                            -
+                        </td>
+                    </tr>
+                    <tr itemprop="purposeSport" class="hidden">
+                        <td itemprop="objName">
+                            -
+                        </td>
+                        <td itemprop="objAddress">
+                            -
+                        </td>
+                        <td itemprop="objSq">
+                            -
+                        </td>
+                        <td itemprop="objCnt">
+                            -
+                        </td>
+                        <td itemprop="objOvz">
+                            -
+                        </td>
+                    </tr>
+                    <tr itemprop="meals" class="hidden">
+                        <td itemprop="objName">
+                            -
+                        </td>
+                        <td itemprop="objAddress">
+                            -
+                        </td>
+                        <td itemprop="objSq">
+                            -
+                        </td>
+                        <td itemprop="objCnt">
+                            -
+                        </td>
+                        <td itemprop="objOvz">
+                            -
+                        </td>
+                    </tr>
+                    <tr itemprop="health" class="hidden">
+                        <td itemprop="objName">
+                            -
+                        </td>
+                        <td itemprop="objAddress">
+                            -
+                        </td>
+                        <td itemprop="objSq">
+                            -
+                        </td>
+                        <td itemprop="objCnt">
+                            -
+                        </td>
+                        <td itemprop="objOvz">
+                            -
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
