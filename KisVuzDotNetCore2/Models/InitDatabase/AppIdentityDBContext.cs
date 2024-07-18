@@ -539,6 +539,11 @@ namespace KisVuzDotNetCore2.Models
 
         #region Сведения об образовательной организации
         /// <summary>
+        /// Места осуществления образовательной деятельности
+        /// </summary>
+        public DbSet<AddressPlace> AddressPlaces { get; set; }
+
+        /// <summary>
         /// Таблица 3. Сведения об учредителях
         /// </summary>
         /// <param name="serviceProvider"></param>

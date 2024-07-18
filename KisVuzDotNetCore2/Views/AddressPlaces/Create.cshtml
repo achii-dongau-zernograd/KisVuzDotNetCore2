@@ -1,0 +1,55 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.AddressPlace
+
+@{
+    ViewData["Title"] = "Создание";
+}
+
+<h2>Добавление информации о месте осуществления образовательной деятельности</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+            <div class="form-group">
+                <label asp-for="AddressPlaceName" class="control-label"></label>
+                <input asp-for="AddressPlaceName" class="form-control" />
+                <span asp-validation-for="AddressPlaceName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsPlaceSet" class="control-label"></label>
+                <input asp-for="IsPlaceSet" class="form-control" />
+                <span asp-validation-for="IsPlaceSet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsPlacePrac" class="control-label"></label>
+                <input asp-for="IsPlacePrac" class="form-control" />
+                <span asp-validation-for="IsPlacePrac" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsPlacePodg" class="control-label"></label>
+                <input asp-for="IsPlacePodg" class="form-control" />
+                <span asp-validation-for="IsPlacePodg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsPlaceGia" class="control-label"></label>
+                <input asp-for="IsPlaceGia" class="form-control" />
+                <span asp-validation-for="IsPlaceGia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsPlaceDop" class="control-label"></label>
+                <input asp-for="IsPlaceDop" class="form-control" />
+                <span asp-validation-for="IsPlaceDop" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsPlaceOppo" class="control-label"></label>
+                <input asp-for="IsPlaceOppo" class="form-control" />
+                <span asp-validation-for="IsPlaceOppo" class="text-danger"></span>
+            </div>
+            <div class="form-group">                
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -15,6 +15,7 @@ using KisVuzDotNetCore2.Models.Priem;
 using KisVuzDotNetCore2.Models.Sign;
 using KisVuzDotNetCore2.Models.Struct;
 using KisVuzDotNetCore2.Models.Students;
+using KisVuzDotNetCore2.Models.Sveden;
 using KisVuzDotNetCore2.Models.UchPosobiya;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Builder;
@@ -97,6 +98,7 @@ namespace KisVuzDotNetCore2
             services.AddTransient<IElGradebookRepository, ElGradebookRepository>();
             services.AddTransient<ISignRepository, SignRepository>();
             services.AddTransient<IEduProfileRepository, EduProfileRepository>();
+            services.AddTransient<IAddressPlacesRepository, AddressPlacesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

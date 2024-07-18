@@ -1,0 +1,63 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.AddressPlace
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<h2>Удаление информации о месте осуществления образовательной деятельности</h2>
+
+<h3>Вы действительно хотите удалить информацию?</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+                
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressPlaceName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddressPlaceName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPlaceSet)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsPlaceSet)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPlacePrac)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsPlacePrac)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPlacePodg)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsPlacePodg)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPlaceGia)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsPlaceGia)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPlaceDop)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsPlaceDop)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPlaceOppo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsPlaceOppo)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="AddressPlaceId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>

@@ -17,6 +17,9 @@
     var t4filInfo = (IEnumerable<FilInfo>)ViewData["t4filInfo"];
     var licenses = (IEnumerable<FileDataType>)ViewData["licenses"];
     var accreds = (IEnumerable<FileDataType>)ViewData["accreds"];
+    var addressPlaces = (IEnumerable<AddressPlace>)ViewData["addressPlaces"];
+
+    int counter = 1;
 }
 
 
@@ -349,6 +352,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{
+                                    counter = 1;
+                                }
+
+                                @foreach (var addressPlace in addressPlaces.Where(p => p.IsPlaceSet))
+                                {
+                                    <tr itemprop="addressPlacePrac">
+                                        <td>@(counter++)</td>
+                                        <td>@addressPlace.AddressPlaceName</td>
+                                    </tr>
+                                }
                                 <tr itemprop="addressPlaceSet">                                    
                                     <td colspan="2">Сетевая форма реализации образовательных программ не реализуется</td>
                                 </tr>                                
@@ -372,6 +386,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{
+                                    counter = 1;
+                                }
+
+                                @foreach (var addressPlace in addressPlaces.Where(p => p.IsPlacePrac))
+                                {
+                                    <tr itemprop="addressPlacePrac">
+                                        <td>@(counter++)</td>
+                                        <td>@addressPlace.AddressPlaceName</td>
+                                    </tr>
+                                }
                                 <tr itemprop="addressPlacePrac">
                                     <td>1</td>
                                     <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
@@ -445,6 +470,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{
+                                    counter = 1;
+                                }
+
+                                @foreach (var addressPlace in addressPlaces.Where(p => p.IsPlacePodg))
+                                {
+                                    <tr itemprop="addressPlacePodg">
+                                        <td>@(counter++)</td>
+                                        <td>@addressPlace.AddressPlaceName</td>
+                                    </tr>
+                                }
                                 <tr itemprop="addressPlacePodg">
                                     <td>1</td>
                                     <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
@@ -518,6 +554,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{
+                                    counter = 1;
+                                }
+
+                                @foreach (var addressPlace in addressPlaces.Where(p => p.IsPlaceGia))
+                                {
+                                    <tr itemprop="addressPlaceGia">
+                                        <td>@(counter++)</td>
+                                        <td>@addressPlace.AddressPlaceName</td>
+                                    </tr>
+                                }
                                 <tr itemprop="addressPlaceGia">
                                     <td>1</td>
                                     <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
@@ -587,6 +634,18 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{
+                                    counter = 1;
+                                }
+
+                                @foreach (var addressPlace in addressPlaces.Where(p => p.IsPlaceDop))
+                                {
+                                    <tr itemprop="addressPlaceDop">
+                                        <td>@(counter++)</td>
+                                        <td>@addressPlace.AddressPlaceName</td>
+                                    </tr>
+                                }
+
                                 <tr itemprop="addressPlaceDop">
                                     <td>1</td>
                                     <td>347740, Ростовская область, г. Зерноград, ул. Ленина, 19</td>
@@ -665,6 +724,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                @{
+                                    counter = 1;
+                                }
+
+                                @foreach(var addressPlace in addressPlaces.Where(p => p.IsPlaceOppo))
+                                {
+                                    <tr itemprop="addressPlaceOppo">
+                                        <td>@(counter++)</td>
+                                        <td>@addressPlace.AddressPlaceName</td>
+                                    </tr>
+                                }
+
                                 <tr itemprop="addressPlaceOppo">
                                     <td>1</td>
                                     @*<td>Корпус №1</td>*@

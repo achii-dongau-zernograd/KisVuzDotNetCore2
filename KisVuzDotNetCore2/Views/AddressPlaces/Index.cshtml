@@ -1,0 +1,78 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.AddressPlace>
+
+@{
+    ViewData["Title"] = "Места осуществления образовательной деятельности";
+    int counter = 1;
+}
+
+<h2>Места осуществления образовательной деятельности</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                № п.п.
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressPlaceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPlaceSet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPlacePrac)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPlacePodg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPlaceGia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPlaceDop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPlaceOppo)
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@(counter++)</td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.AddressPlaceName)
+            </td>            
+            <td>
+                    @Html.DisplayFor(modelItem => item.IsPlaceSet)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.IsPlacePrac)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.IsPlacePodg)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.IsPlaceGia)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.IsPlaceDop)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.IsPlaceOppo)
+            </td>
+            <td>
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.AddressPlaceId }, new { @class = "btn btn-primary btn-block" })
+                
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.AddressPlaceId }, new { @class = "btn btn-danger btn-block" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -5,6 +5,7 @@ using KisVuzDotNetCore2.Models.Education;
 using KisVuzDotNetCore2.Models.Files;
 using KisVuzDotNetCore2.Models.MTO;
 using KisVuzDotNetCore2.Models.Struct;
+using KisVuzDotNetCore2.Models.Sveden;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -28,18 +29,21 @@ namespace KisVuzDotNetCore2.Controllers
         private readonly AppIdentityDBContext _context;
         private readonly IEduNapravlRepository _eduNapravlRepository;
         private readonly IPomeshenieRepository _pomeshenieRepository;
+        private readonly IAddressPlacesRepository _addressPlacesRepository;
 
         public SvedenController(IHostingEnvironment appEnvironment,
             AppIdentityDBContext context,
             ISelectListRepository selectListRepository,
             IEduNapravlRepository eduNapravlRepository,
-            IPomeshenieRepository pomeshenieRepository)
+            IPomeshenieRepository pomeshenieRepository,
+            IAddressPlacesRepository addressPlacesRepository)
         {
             _appEnvironment = appEnvironment;
             _context = context;
             _selectListRepository = selectListRepository;
             _eduNapravlRepository = eduNapravlRepository;
             _pomeshenieRepository = pomeshenieRepository;
+            _addressPlacesRepository = addressPlacesRepository;
         }
 
         /// <summary>
@@ -105,9 +109,17 @@ namespace KisVuzDotNetCore2.Controllers
             var t4filInfo = await _context.FilInfo
                 .ToListAsync();
             ViewData["t4filInfo"] = t4filInfo;
-            return View();
             #endregion
 
+            #region Места осуществления образовательной деятельности 
+
+            var addressPlaces = await _addressPlacesRepository.GetAddressPlaces()
+                .ToListAsync();
+            ViewData["addressPlaces"] = addressPlaces;
+
+            #endregion
+
+            return View();
         }
 
 
