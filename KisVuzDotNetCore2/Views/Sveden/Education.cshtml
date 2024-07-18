@@ -107,30 +107,20 @@
 @if (openedSpoiler != "eduAccred" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduAccred" class="btn btn-primary btn-block">
-        Информация о сроке действия государственной аккредитации образовательной программы,<br />
-        о языках, на которых осуществляется образование (обучение)
+        Информация о сроке действия государственной аккредитации образовательной программы
     </a>
 }
 else
 {
     <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
-        Информация о сроке действия государственной аккредитации образовательной программы,<br />
-        о языках, на которых осуществляется образование (обучение)
+        Информация о сроке действия государственной аккредитации образовательной программы
     </a>
     <div class="@eduAccredClass" id="spoiler-@spoilerCounter">
         @{spoilerCounter++;}
         <div class="well">
 
             @{spoilerCounter++;}
-            <div class="well">
-                <a itemprop="languageEl" href="http://ачгаа.рф/files/achii/2023/edu_accred.pdf">Электронный документ, подписанный электронной подписью, содержащий информацию о языках, на которых осуществляется образование (обучение)</a>
-
-                @foreach (var ftft in EduLanguages.FileToFileTypes)
-                {
-                    <p itemprop="@ftft.FileDataType.Itemprop">
-                        <a href="/@ftft.FileModel.Path" itemprop="localAct">@ftft.FileModel.Name</a>
-                    </p>
-                }
+            <div class="well">                               
 
                 <table class="table table-hover">
                     <thead>
@@ -145,7 +135,7 @@ else
                             <th>Учебные предметы, курсы, дисциплины (модули), предусмотренные соответствующей образовательной программой</th>
                             <th>Практики, предусмотренные соответствующей образовательной программой</th>
                             <th>Информация об использовании при реализации образовательных программ электронного обучения и дистанционных образовательных техноогий</th>
-                            <th>Языки, на которых осуществляется образование (обучение)</th>
+                            @* <th>Языки, на которых осуществляется образование (обучение)</th> *@
                         </tr>
                         <tr>
                             <th align=center>1</th>
@@ -158,7 +148,7 @@ else
                             <th align=center>8</th>
                             <th align=center>9</th>
                             <th align=center>10</th>
-                            <th align=center>11</th>
+                            @* <th align=center>11</th> *@
                         </tr>
                     </thead>
                     @foreach (var item in t9eduAccred
@@ -211,7 +201,7 @@ else
                                 </a>
                             </td>
                             <td itemprop="eduEl"> Не используется </td>
-                            <td itemprop="language">Русский</td>
+                            @* <td itemprop="language">Русский</td> *@
                         </tr>
                     }
                 </table>
@@ -220,7 +210,30 @@ else
     </div>
 }
 
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Информация о языках, на которых осуществляется образование (обучение)
+</a>
+<div class="@eduAccredClass" id="spoiler-@spoilerCounter">
+    @{
+        spoilerCounter++;
+    }
+    <div class="well">
 
+        @{
+            spoilerCounter++;
+        }
+        <div class="well">
+            
+            @foreach (var ftft in EduLanguages.FileToFileTypes)
+            {
+                <p itemprop="@ftft.FileDataType.Itemprop">
+                    <a href="/@ftft.FileModel.Path" itemprop="localAct">@ftft.FileModel.Name</a>
+                </p>
+            }
+                        
+        </div>
+    </div>
+</div>
 
 @if (openedSpoiler != "eduPOAccred" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
@@ -516,9 +529,7 @@ else
     <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о численности обучающихся</a>
     <div class="@eduChislenClass" id="spoiler-@spoilerCounter">
         @{spoilerCounter++;}
-        <div class="well">
-
-            <a itemprop="eduChislenEl" href="http://ачгаа.рф/files/achii/2023/edu_chislen.pdf" target="_blank">Электронный документ, подписанный электронной подписью, содержащий информацию о численности обучающихся по реализуемым образовательным программам за счет бюджетных ассигнований федерального бюджета, бюджетов субъектов Российской Федерации, местных бюджетов и по договорам об образовании за счет средств физических и (или) юридических лиц</a>
+        <div class="well">                       
 
             @foreach (var ftft in EduChislen.FileToFileTypes)
             {
@@ -614,9 +625,7 @@ else
     <div class="@eduPriemClass" id="spoiler-@spoilerCounter">
         @{spoilerCounter++;}
         <div class="well">
-
-            <a itemprop="eduPriemEl" href="http://ачгаа.рф/files/achii/2023/eduPriem.pdf">Электронный документ, подписанный электронной подписью, содержащий информацию о результатах приема по каждой профессии, специальности среднего профессионального образования (при наличии вступительных испытаний), каждому направлению подготовки или специальности высшего образования, каждой научной специальности с различными условиями приема с указанием средней суммы набранных баллов по всем вступительным испытаниям</a>
-
+                        
             @foreach (var ftft in EduPriem.FileToFileTypes)
             {
                 <p itemprop="@ftft.FileDataType.Itemprop">
@@ -683,9 +692,7 @@ else
     <div class="@eduPerevodClass" id="spoiler-@spoilerCounter">
         @{spoilerCounter++;}
         <div class="well">
-
-            <a itemprop="eduPerevodEl" href="http://ачгаа.рф/files/achii/2023/edu_perevod.pdf" target="_blank">Электронный документ, подписанный электронной подписью, содержащий информацию о результатах перевода, восстановления и отчисления</a>
-
+                        
             @foreach (var ftft in EduPerevod.FileToFileTypes)
             {
                 <p itemprop="@ftft.FileDataType.Itemprop">
