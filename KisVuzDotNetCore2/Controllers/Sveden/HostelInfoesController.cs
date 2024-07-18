@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace KisVuzDotNetCore2.Controllers
 {
-    [Authorize(Roles = "Администраторы, ЗамДиректораПоВоспРаботе")]
+    [Authorize(Roles = "Администраторы, ЗамДиректораПоВоспРаботе, ЗамДиректораПоМолПолВоспИСоцРаботе, ЗамДиректораПоУРиЦТ")]
     public class HostelInfoesController : Controller
     {
         private readonly AppIdentityDBContext _context;

@@ -1,0 +1,23 @@
+﻿<ul class="nav navbar-nav navbar-left">
+    @if (User.IsInRole("ЗамДиректораПоУРиЦТ"))
+    {
+    <!-- Выпадающий список -->
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Зам. директора по УР и ЦТ <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Сведения об обр. орг-ции <b class="caret"></b></a>
+                <ul class="dropdown-menu">                                  
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">МТО и оснащенность обр. процесса <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="PurposeLibrs" asp-action="Index">Сведения о наличии библиотек, объектов спорта, условиях питания и охраны здоровья обучающихся</a></li>
+                            <li><a asp-controller="HostelInfoes" asp-action="Index" title="Наличие общежития, интерната, количество жилых помещений">Наличие общежития, интерната...</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    }
+</ul>

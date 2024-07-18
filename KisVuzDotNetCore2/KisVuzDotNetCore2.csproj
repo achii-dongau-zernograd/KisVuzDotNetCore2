@@ -719,6 +719,12 @@
     <Content Update="Views\Shared\_CPORMPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Shared\_ZamDirectoraPoMolPolVospISocRabotePartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_ZamDirectoraPoUchRabICifrTransform.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_ZamDirectoraPoVospRabotePartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
