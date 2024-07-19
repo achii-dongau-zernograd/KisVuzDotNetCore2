@@ -1,0 +1,36 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.VolumeFinYearPostRas
+
+@{
+    ViewData["Title"] = "Удалить";
+}
+
+<h3>Удалить сведения?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FinYear)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinYear)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinPost)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinPost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FinRas)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FinRas)
+        </dd>        
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="VolumeFinYearPostRasId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отменить</a>
+    </form>
+</div>

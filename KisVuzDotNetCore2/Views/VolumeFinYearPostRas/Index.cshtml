@@ -1,0 +1,51 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Sveden.VolumeFinYearPostRas>
+
+@{
+    ViewData["Title"] = "Сведения о поступлении финансовых и материальных средств и об их расходовании";
+}
+
+<h2>Сведения о поступлении финансовых и материальных средств и об их расходовании</h2>
+
+@{
+    var t22volume = (IEnumerable<Volume>)ViewData["volumeFinYearPostRas"];
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FinYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FinPost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FinRas)
+            </th>            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinPost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinRas)
+                </td>                
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.VolumeFinYearPostRasId">Редактировать</a>
+                    <a asp-action="Delete" asp-route-id="@item.VolumeFinYearPostRasId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

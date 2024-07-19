@@ -778,6 +778,11 @@ namespace KisVuzDotNetCore2.Controllers
                 .ToListAsync();
             ViewData["t22volume"] = t22volume;
 
+            var volumeFinYearPostRas = await _context.VolumeFinYearPostRas
+                .OrderBy(v => v.FinYear)
+                .ToListAsync();
+            ViewData["volumeFinYearPostRas"] = volumeFinYearPostRas;
+
             var InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv = await _context.FileDataTypes
                 .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv)
                 .Include(fdt => fdt.FileToFileTypes)

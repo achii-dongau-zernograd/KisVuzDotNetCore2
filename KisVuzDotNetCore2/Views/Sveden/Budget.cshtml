@@ -5,6 +5,7 @@
 <h1>Финансово-хозяйственная деятельность</h1>
 @{
     var t22volume = (IEnumerable<Volume>)ViewData["t22volume"];
+    var volumeFinYearPostRas = (IEnumerable<VolumeFinYearPostRas>)ViewData["volumeFinYearPostRas"];
     var InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv = (FileDataType)ViewData["InfOPostupleniiIRashodovaniiFinIMaterialnihSredstv"];
     var planFinansovoHozyaystvennoyDeyatelnosti = (FileDataType)ViewData["planFinansovoHozyaystvennoyDeyatelnosti"];
     var busGovRuLink = (InstituteLink)ViewData["busGovRuLink"];
@@ -52,6 +53,14 @@
                 </tr>                
             </thead>
             <tbody>
+                @foreach (var item in volumeFinYearPostRas)
+                {
+                    <tr>
+                        <td itemprop="finYear">@item.FinYear</td>
+                        <td itemprop="finPost">@item.FinPost</td>
+                        <td itemprop="finRas">@item.FinRas</td>
+                    </tr>
+                }
                 <tr>
                     <td itemprop="finYear">2019</td>
                     <td itemprop="finPost">269 753,70</td>

@@ -1,0 +1,41 @@
+﻿@model KisVuzDotNetCore2.Models.Sveden.VolumeFinYearPostRas
+
+@{
+    ViewData["Title"] = "Редактировать";
+}
+
+<h2>Редактировать сведения о поступлении финансовых и материальных средств и об их расходовании</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="VolumeFinYearPostRasId" />
+            <div class="form-group">
+                <label asp-for="FinYear" class="control-label"></label>
+                <input asp-for="FinYear" class="form-control" />
+                <span asp-validation-for="FinYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinPost" class="control-label"></label>
+                <input asp-for="FinPost" class="form-control" />
+                <span asp-validation-for="FinPost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FinRas" class="control-label"></label>
+                <input asp-for="FinRas" class="form-control" />
+                <span asp-validation-for="FinRas" class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отменить</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

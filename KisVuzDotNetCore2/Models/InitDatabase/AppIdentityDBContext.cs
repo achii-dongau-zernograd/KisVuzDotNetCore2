@@ -632,6 +632,11 @@ namespace KisVuzDotNetCore2.Models
         /// Таблица 22. Объем образовательной деятельности
         /// </summary>
         public DbSet<Volume> Volume { get; set; }
+
+        /// <summary>
+        /// Таблица "Сведения о поступлении финансовых и материальных средств и об их расходовании"
+        /// </summary>
+        public DbSet<VolumeFinYearPostRas> VolumeFinYearPostRas { get; set; }
         #endregion
 
         #region Абитуриенту
