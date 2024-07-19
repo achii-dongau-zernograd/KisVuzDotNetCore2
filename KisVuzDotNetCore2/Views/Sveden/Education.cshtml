@@ -4,6 +4,8 @@
     var license = (IEnumerable<FileDataType>)ViewData["license"];
     var t9eduAccred = (IEnumerable<EduNapravlEduFormEduSrok>)ViewData["t9eduAccred"];
 
+    var eduPOAccred = (IEnumerable<EduPOAccred>)ViewData["eduPOAccred"];
+
     var EduLanguages = (FileDataType)ViewData["EduLanguages"];
     var EduChislen = (FileDataType)ViewData["EduChislen"];
     var EduPriem = (FileDataType)ViewData["EduPriem"];
@@ -303,6 +305,13 @@ else
             <a href="http://ачгаа.рф/wp-content/uploads/2023/06/38.05.01.pdf" target="_blank">
                 Свидетельство о профессионально-общественной аккредитации образовательной программы 38.05.01 "Экономическая безопасность"
             </a>
+
+            @foreach (var item in eduPOAccred)
+            {
+                <br />
+                <a href="/@item.EduPOAccredPdf.Path" target="_blank">Свидетельство о профессионально-общественной аккредитации образовательной программы @item.EduNapravl.EduNapravlCode "@item.EduNapravl.EduNapravlName"</a>
+            }
+
             <br />
             
 
@@ -325,6 +334,27 @@ else
                         <td align=center><strong>6</strong></td>
                     </tr>
                 </thead>
+                <tbody>
+                    @foreach(var item in eduPOAccred)
+                    {
+                        <tr itemprop="eduPOAccred">
+                            <td itemprop="eduCode" class="text-center">@item.EduNapravl.EduNapravlCode</td>
+                            <td itemprop="eduName" class="text-center">@item.EduNapravl.EduNapravlName</td>
+                            <td itemprop="eduLevel" class="text-center">@item.EduNapravl.EduUgs.EduLevel.EduLevelName</td>
+                            <td itemprop="eduProf" class="text-center">
+                                @foreach(var profile in item.EduNapravl.EduProfiles)
+                                {
+                                    <p>@profile.EduProfileName</p>
+                                }
+                            </td>
+                            <td itemprop="orgName" class="text-center">@item.AccredOrgName</td>
+                            <td itemprop="dateEnd" class="text-center">
+                                <a href="/@item.EduPOAccredPdf.Path" target="_blank">@item.AccredDateEnd.ToString("dd.MM.yyyy")</a>                                
+                            </td>
+                        </tr>
+                    }
+                    
+                </tbody>
                 <tr itemprop="eduPOAccred">
                     <td itemprop="eduCode" class="text-center">13.03.01</td>
                     <td itemprop="eduName" class="text-center">Теплоэнергетика и теплотехника</td>

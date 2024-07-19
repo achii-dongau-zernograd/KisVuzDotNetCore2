@@ -307,6 +307,10 @@
         /// <summary>
         /// Документ, содержащий информацию о результатах перевода, восстановления и отчисления
         /// </summary>
-        EduPerevod = 83
+        EduPerevod = 83,
+        /// <summary>
+        /// Свидетельство о профессионально-общественной аккредитации
+        /// </summary>
+        SvidetelstvoOProfObschAccreditatsii = 84
     }
 }

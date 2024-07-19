@@ -30,13 +30,15 @@ namespace KisVuzDotNetCore2.Controllers
         private readonly IEduNapravlRepository _eduNapravlRepository;
         private readonly IPomeshenieRepository _pomeshenieRepository;
         private readonly IAddressPlacesRepository _addressPlacesRepository;
+        private readonly IEduPOAccredRepository _eduPOAccredRepository;
 
         public SvedenController(IHostingEnvironment appEnvironment,
             AppIdentityDBContext context,
             ISelectListRepository selectListRepository,
             IEduNapravlRepository eduNapravlRepository,
             IPomeshenieRepository pomeshenieRepository,
-            IAddressPlacesRepository addressPlacesRepository)
+            IAddressPlacesRepository addressPlacesRepository,
+            IEduPOAccredRepository eduPOAccredRepository)
         {
             _appEnvironment = appEnvironment;
             _context = context;
@@ -44,6 +46,7 @@ namespace KisVuzDotNetCore2.Controllers
             _eduNapravlRepository = eduNapravlRepository;
             _pomeshenieRepository = pomeshenieRepository;
             _addressPlacesRepository = addressPlacesRepository;
+            _eduPOAccredRepository = eduPOAccredRepository;
         }
 
         /// <summary>
@@ -207,6 +210,13 @@ namespace KisVuzDotNetCore2.Controllers
             }
             #endregion
 
+            #region Информация о профессионально-общественной аккредитации образовательной программы
+            if (string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduPOAccred")
+            {
+                var eduPOAccred = await _eduPOAccredRepository.GetEduPOAccreds().ToListAsync();                
+                ViewData["eduPOAccred"] = eduPOAccred;
+            }
+            #endregion
 
             var EduLanguages = await _context.FileDataTypes
                 .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.EduLanguages)

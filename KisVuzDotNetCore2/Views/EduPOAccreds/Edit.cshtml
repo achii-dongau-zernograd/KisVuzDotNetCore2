@@ -1,0 +1,47 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduPOAccred
+
+@{
+    ViewData["Title"] = "Редактирование свидетельства о проф.-общ. аккредитации";
+}
+
+<h2>Редактирование свидетельства о государственной аккредитации</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EduNapravl" class="control-label"></label>
+                <select asp-for="EduNapravlId" class="form-control" asp-items="ViewBag.SelectListEduNapravlFullNames">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AccredOrgName" class="control-label"></label>
+                <input asp-for="AccredOrgName" class="form-control" />
+                <span asp-validation-for="AccredOrgName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AccredDateEnd" class="control-label"></label>
+                <input asp-for="AccredDateEnd" class="form-control" />
+                <span asp-validation-for="AccredDateEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @if (Model.EduPOAccredPdfId != null)
+                {
+                    <label class="control-label">Загружено: </label>
+                    <a href="@Model.EduPOAccredPdf.Path">@Model.EduPOAccredPdf.FileName</a>
+                }
+                <input type="file" name="uploadedFile" class="form-control" />
+            </div>
+            <div class="form-group">                
+                <input type="submit" asp-route-EduPOAccredId="@Model.EduPOAccredId" value="Сохранить" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-default">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

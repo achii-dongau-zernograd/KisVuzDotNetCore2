@@ -539,6 +539,11 @@ namespace KisVuzDotNetCore2.Models
 
         #region Сведения об образовательной организации
         /// <summary>
+        /// Информация о профессионально-общественной и/или общественной аккредитации образовательной программы
+        /// </summary>
+        public DbSet<EduPOAccred> EduPOAccreds { get; set; }
+
+        /// <summary>
         /// Места осуществления образовательной деятельности
         /// </summary>
         public DbSet<AddressPlace> AddressPlaces { get; set; }

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Education.EduPOAccred>
+
+@{
+    ViewData["Title"] = "Информация о профессионально-общественной и/или общественной аккредитации образовательной программы";
+}
+
+<h2>Информация о профессионально-общественной и/или общественной аккредитации образовательной программы</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EduNapravl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccredOrgName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccredDateEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduPOAccredPdf)
+            </th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduNapravl.GetEduNapravlFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccredOrgName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccredDateEnd)
+            </td>
+            <td>
+                @if (item.EduPOAccredPdf != null)
+                {
+                    <a href="/@item.EduPOAccredPdf.Path" target="_blank">Открыть</a>
+                }
+                else
+                {
+                    <text>-</text>
+                }
+
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EduPOAccredId">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.EduPOAccredId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

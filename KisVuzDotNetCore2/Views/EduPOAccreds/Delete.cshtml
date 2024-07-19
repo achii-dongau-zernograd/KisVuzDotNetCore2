@@ -1,0 +1,44 @@
+﻿@model KisVuzDotNetCore2.Models.Education.EduPOAccred
+
+@{
+    ViewData["Title"] = "Удаление свидетельства";
+}
+
+<h2>Удаление свидетельства о профессионально-общественной и/или общественной аккредитации образовательной программы</h2>
+
+<h3>Вы действительно хотите удалить свидетельство?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EduNapravl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EduNapravl.EduNapravlName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AccredOrgName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AccredOrgName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AccredDateEnd)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AccredDateEnd)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduPOAccredPdf)
+        </dt>
+        <dd>
+            <a href="/@Model.EduPOAccredPdf.Path" target="_blank">@Model.EduPOAccredPdf.FileName</a>
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EduPOAccredId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-default">Отмена</a>
+    </form>
+</div>
