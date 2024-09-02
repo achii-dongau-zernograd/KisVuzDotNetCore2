@@ -68,6 +68,8 @@ namespace KisVuzDotNetCore2.Controllers
                 return NotFound();
             }
 
+            ViewData["StructInstituteName"] = institute.StructInstituteName;
+            ViewData["StructInstituteFullName"] = institute.StructInstituteFullName;
             ViewData["DateOfCreation"] = String.Format("{0:dd.MM.yyyy}", institute.DateOfCreation);
             ViewData["Address"] = institute.Address.GetAddress;
             ViewData["ExistenceOfFilials"] = institute.ExistenceOfFilials;

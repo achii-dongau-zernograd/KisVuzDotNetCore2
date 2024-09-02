@@ -13,6 +13,9 @@
     <thead>
         <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.StructInstituteFullName)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.StructInstituteName)
                 </th>
                 <th>
@@ -39,6 +42,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StructInstituteFullName)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StructInstituteName)
             </td>

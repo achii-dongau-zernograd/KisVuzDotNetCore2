@@ -12,6 +12,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="StructInstituteId" />
             <div class="form-group">
+                <label asp-for="StructInstituteFullName" class="control-label"></label>
+                <input asp-for="StructInstituteFullName" class="form-control" />
+                <span asp-validation-for="StructInstituteFullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="StructInstituteName" class="control-label"></label>
                 <input asp-for="StructInstituteName" class="form-control" />
                 <span asp-validation-for="StructInstituteName" class="text-danger"></span>

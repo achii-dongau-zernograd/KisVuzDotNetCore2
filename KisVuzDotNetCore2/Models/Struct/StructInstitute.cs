@@ -15,10 +15,16 @@ namespace KisVuzDotNetCore2.Models.Struct
         public int StructInstituteId { get; set; }
 
         /// <summary>
-        /// Наименование института
+        /// Сокращенное наименование образовательной организации
         /// </summary>
-        [Display(Name = "Наименование института")]
+        [Display(Name = "Сокращенное наименование образовательной организации")]
         public string StructInstituteName { get; set; }
+
+        /// <summary>
+        /// Полное наименование образовательной организации
+        /// </summary>
+        [Display(Name = "Полное наименование образовательной организации")]
+        public string StructInstituteFullName { get; set; }
 
         /// <summary>
         /// Дата создания образовательной организации
