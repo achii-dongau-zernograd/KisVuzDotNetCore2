@@ -15,7 +15,7 @@ namespace KisVuzDotNetCore2.Controllers.Education
     /// <summary>
     /// Контроллер "Информация о профессионально-общественной и/или общественной аккредитации образовательной программы"
     /// </summary>
-    [Authorize(Roles = "Администраторы, Учабная часть")]
+    [Authorize(Roles = "Администраторы, Учебная часть")]
     public class EduPOAccredsController : Controller
     {
         private readonly IEduPOAccredRepository _eduPOAccredRepository;
