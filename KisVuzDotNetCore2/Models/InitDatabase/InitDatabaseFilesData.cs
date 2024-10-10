@@ -791,6 +791,13 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         FileDataTypeGroupId = (int)FileDataTypeGroupEnum.SvedenEducation
                     };
 
+                    FileDataType fileDataType85 = new FileDataType
+                    {
+                        FileDataTypeId = (int)FileDataTypeEnum.InfOFormirovaniiPlatiZaProjivanieVObsch,
+                        FileDataTypeName = "Информация о формировании платы за проживание в общежитии",
+                        FileDataTypeGroupId = (int)FileDataTypeGroupEnum.SvedenDocuments
+                    };
+
                     await context.FileDataTypes.AddRangeAsync(
                                         fileDataType1,  fileDataType2,  fileDataType3,  fileDataType4, fileDataType5, fileDataType6, fileDataType7, fileDataType8, fileDataType9,
                         fileDataType10, fileDataType11, fileDataType12, fileDataType13, fileDataType14, fileDataType15, fileDataType16, fileDataType17, fileDataType18, fileDataType19,
@@ -800,7 +807,7 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                         fileDataType50, fileDataType51, fileDataType52, fileDataType53, fileDataType54,                 fileDataType56, fileDataType57, fileDataType58, fileDataType59,
                         fileDataType60, fileDataType61, fileDataType62, fileDataType63, fileDataType64, fileDataType65, fileDataType66, fileDataType67, fileDataType68, fileDataType69,
                         fileDataType70, fileDataType71, fileDataType72, fileDataType73, fileDataType74, fileDataType75, fileDataType76, fileDataType77, fileDataType78, fileDataType79,
-                        fileDataType80, fileDataType81, fileDataType82, fileDataType83, fileDataType84
+                        fileDataType80, fileDataType81, fileDataType82, fileDataType83, fileDataType84, fileDataType85
                         );
                     await context.SaveChangesAsync();
                 }

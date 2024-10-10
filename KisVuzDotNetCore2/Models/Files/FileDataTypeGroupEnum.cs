@@ -6,6 +6,10 @@
     public enum FileDataTypeGroupEnum
     {
         /// <summary>
+        /// Св.об обр. орг. - Документы
+        /// </summary>
+        SvedenDocuments = 3,
+        /// <summary>
         /// Документы об образовании
         /// </summary>
         EducationDocuments = 4,

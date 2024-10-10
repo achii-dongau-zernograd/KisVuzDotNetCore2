@@ -747,6 +747,13 @@ namespace KisVuzDotNetCore2.Controllers
                 .ToListAsync();
             ViewData["t20hostelInfo"] = t20hostelInfo;
 
+            var InfOFormirovaniiPlatiZaProjivanieVObsch = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.InfOFormirovaniiPlatiZaProjivanieVObsch)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["InfOFormirovaniiPlatiZaProjivanieVObsch"] = InfOFormirovaniiPlatiZaProjivanieVObsch;
+
             return View();
         }
 

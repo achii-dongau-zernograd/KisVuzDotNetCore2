@@ -311,6 +311,10 @@
         /// <summary>
         /// Свидетельство о профессионально-общественной аккредитации
         /// </summary>
-        SvidetelstvoOProfObschAccreditatsii = 84
+        SvidetelstvoOProfObschAccreditatsii = 84,
+        /// <summary>
+        /// Информация о формировании платы за проживание в общежитии
+        /// </summary>
+        InfOFormirovaniiPlatiZaProjivanieVObsch = 85
     }
 }
