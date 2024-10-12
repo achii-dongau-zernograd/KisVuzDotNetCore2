@@ -149,7 +149,7 @@
     </div>
 </div>
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии библиотек, объектов спорта, об условиях питания и охраны здоровья обучающихся</a>
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии библиотек и объектов спорта</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++; }
     <div class="well">
@@ -290,6 +290,7 @@
         <div itemprop="purposeFacilOvz">            
             <p>Cредства обучения и воспитания, приспособленные для использования инвалидами и лицами с ограниченными возможностями здоровья, отсутствуют.</p>
         </div>
+        <hr />
         <div itemprop="purposeFacil">
             <br />
             <p>Cредства обучения и воспитания:</p>
@@ -313,59 +314,36 @@
     </div>
 </div>
 
-
-
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся</a>
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения о доступе к информационным системам и информационно-телекоммуникационным сетям
+</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
-    @{spoilerCounter++; }
+    @{
+        spoilerCounter++;
+    }
     <div class="well">
-        <div itemprop="health">
-            <p><a href="http://ачгаа.рф/sveden/objects/ohrana-zdorov-obuch">Сведения об охране здоровья обучающихся</a></p>
+        <div itemprop="comNet">
+            Доступ к информационным системам и информационно-телекоммуникационным для всех обучающихся предоставляется по логину и паролю, предоставляемым куратором учебной группы.
         </div>
     </div>
 </div>
 
-
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Ссылка на копию документа, содержащего сведения об условиях питания и охраны здоровья обучающихся, в том числе инвалидов и лиц с ограниченными возможностями здоровья</a>
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения о доступе к информационным системам и информационно-телекоммуникационным сетям,<br />
+    приспособленным для использования инвалидами и лицами с ограниченными возможностями здоровья
+</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
-    @{spoilerCounter++; }
+    @{
+        spoilerCounter++;
+    }
     <div class="well">
-        <div itemprop="mealsDocLink">
-            <a href="http://ачгаа.рф/sveden/objects/meals">Открыть</a>
+        <div itemprop="comNetOvz">
+            Доступ к информационным системам и информационно-телекоммуникационным сетям для использования инвалидами и лицами с ограниченными возможностями здоровья организовывается реализацией версии для слабовидящих.
         </div>
     </div>
 </div>
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии электронных образовательных и информационных ресурсов</a>
-<div class="collapse" id="spoiler-@spoilerCounter">
-    @{spoilerCounter++; }
-    <div class="well">
-
-        <div itemprop="comNet" class="sp-body folded">
-
-            <table itemprop="purposeEios" class="table table-hover">
-                <tr>
-                    <th>Наименование</th>
-                    <th>Количество</th>
-                <tr>                
-                <tr>
-                    <td>Количество собственных электронных образовательных и информационных ресурсов</td>
-                    <td itemprop="eoisOwn"><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="true">@NumEoisOwn</a></td>
-                <tr>
-                <tr>
-                    <td>Количество сторонних электронных образовательных и информационных ресурсов</td>
-                    <td itemprop="eoisSide"><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="false">@NumEoisSide</a></td>
-                <tr>
-                <tr>
-                    <td>Количество баз данных электронного каталога</td>
-                    <td itemprop="bdec"><a asp-controller="ElectronCatalogs" asp-action="Preview">@NumEc</a></td>
-                <tr>
-            </table>
-        </div>                
-    </div>
-</div>
-
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о доступе к электронной информационно-образовательной среде, информационным системам и информационно-телекоммуникационным сетям </br> и электронным ресурсам, к которым обеспечивается доступ обучающихся</a>
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии в образовательной организации электронной информационно-образовательной среды</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{spoilerCounter++; }
     <div class="well">
@@ -388,32 +366,59 @@
                 <tr>
                     <td>Общее количество ЭБС, к которым имеют доступ обучающиеся (собственных или на договорной основе)</td>
                     <td itemprop="purposeEbs"><a asp-controller="ElectronBiblSystems" asp-action="Preview">@NumEbs</a>, в том числе</br> @NumEbsSobstv - собственных,</br> @NumEbsDogovor - на договорной основе</td>
+                <tr>                
+            </table>
+        </div>
+                
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения о наличии электронных образовательных и информационных ресурсов</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{
+        spoilerCounter++;
+    }
+    <div class="well">
+
+        <div itemprop="comNet" class="sp-body folded">
+
+            <table itemprop="purposeEios" class="table table-hover">
+                <tr>
+                    <th>Наименование</th>
+                    <th>Количество</th>
                 <tr>
                 <tr>
-                    <td>Наличие собственных электронных образовательных и информационных ресурсов</td>
+                    <td>Количество собственных электронных образовательных и информационных ресурсов</td>
                     <td itemprop="eoisOwn"><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="true">@NumEoisOwn</a></td>
                 <tr>
                 <tr>
-                    <td>Наличие сторонних электронных образовательных и информационных ресурсов</td>
+                    <td>Количество сторонних электронных образовательных и информационных ресурсов</td>
                     <td itemprop="eoisSide"><a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="false">@NumEoisSide</a></td>
                 <tr>
                 <tr>
-                    <td>Наличие базы данных электронного каталога</td>
+                    <td>Количество баз данных электронного каталога</td>
                     <td itemprop="bdec"><a asp-controller="ElectronCatalogs" asp-action="Preview">@NumEc</a></td>
                 <tr>
             </table>
         </div>
+    </div>
+</div>
 
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Ссылки на перечень собственных и сторонних электронных ресурсов, к которым обеспечивается доступ обучающихся</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{
+        spoilerCounter++;
+    }
+    <div class="well">
+                
         <div>
-            <h4>Дополнительные сведения</h4>
-            <ul>
-                <li itemprop="comNetOvz">
-                    Сведения о доступе к информационным системам и информационно-телекоммуникационным сетям, приспособленным для использования инвалидами и лицами с ограниченными возможностями здоровья: специальные средства доступа отсутствуют.
+            <h4>Перечень электронных образовательных ресурсов</h4>
+            <ul>                
+                <li itemprop="erList">
+                    <a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="true">Перечень собственных электронных образовательных ресурсов</a>                 
                 </li>
                 <li itemprop="erList">
-                    Перечень электронных образовательных ресурсов:
-                    <a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="true">собственные</a>,
-                    <a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="false">сторонние</a>
+                    <a asp-controller="ElectronObrazovatInformRes" asp-action="Preview" asp-route-IsSobstv="false">Перечень сторонних электронных образовательных ресурсов</a>
                 </li>
                 <li itemprop="erListOvz">Перечень электронных образовательных ресурсов, приспособленных для использования инвалидами и лицами с ограниченными возможностями здоровья: электронные образовательные ресурсы, приспособленные для использования инвалидами и лицами с ограниченными возможностями здоровья отсутствуют.</li>
             </ul>
@@ -450,6 +455,42 @@
     @{spoilerCounter++;}
     <div class="well">
         <a asp-action="Ovz" target="_blank">Информация представлена в специальном подразделе "Доступная среда"</a>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения об обеспечении беспрепятственного доступа в здания образовательной организации<br />
+    инвалидов и лиц с ограниченными возможностями здоровья
+</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{
+        spoilerCounter++;
+    }
+    <div class="well">
+        <div itemprop="ovz">
+            <div itemprop="dopSsylka1">
+                <a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/ovz">Сведения об обеспечении доступа в здания образовательной организации инвалидов и лиц с ограниченными возможностями здоровья</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Сведения о наличии специальных технических средств обучения<br />
+    коллективного и индивидуального пользования<br />
+    для инвалидов и лиц с ограниченными возможностями здоровья
+</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{
+        spoilerCounter++;
+    }
+    <div class="well">
+        <div itemprop="techOvz">
+            <p>При необходимости предоставляются РУМЦ ЮФУ в соответствии с соглашением о сотрудничестве</p>
+            <a href="http://ачгаа.рф/wp-content/uploads/2019/04/SoglOSotrUFU.pdf" target="_blank">Соглашение о сотрудничестве от 10.05.2018 г.</a>
+            <br />
+            <a href="http://ачгаа.рф/files/achii/2019/SoglOSotrUFU_dop1_2019.pdf" target="_blank">Дополнительное соглашение № 1 к соглашению о сотрудничестве от 10.05.2018 г. (23.12.2019 г.)</a>
+        </div>
     </div>
 </div>
 
@@ -518,5 +559,35 @@
         {
             <p itemprop="localActObSt"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
         }
+    </div>
+</div>
+
+
+
+
+
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{
+        spoilerCounter++;
+    }
+    <div class="well">
+        <div itemprop="health">
+            <p><a href="http://ачгаа.рф/sveden/objects/ohrana-zdorov-obuch">Сведения об охране здоровья обучающихся</a></p>
+        </div>
+    </div>
+</div>
+
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Ссылка на копию документа, содержащего сведения об условиях питания и охраны здоровья обучающихся, в том числе инвалидов и лиц с ограниченными возможностями здоровья</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{
+        spoilerCounter++;
+    }
+    <div class="well">
+        <div itemprop="mealsDocLink">
+            <a href="http://ачгаа.рф/sveden/objects/meals">Открыть</a>
+        </div>
     </div>
 </div>
