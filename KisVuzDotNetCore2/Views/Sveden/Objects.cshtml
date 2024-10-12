@@ -450,16 +450,8 @@
     </div>
 </div>
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Приспособленность помещений, электронных ресурсов для использования инвалидами и лицами с ограниченными возможностями здоровья</a>
-<div class="collapse" id="spoiler-@spoilerCounter">
-    @{spoilerCounter++;}
-    <div class="well">
-        <a asp-action="Ovz" target="_blank">Информация представлена в специальном подразделе "Доступная среда"</a>
-    </div>
-</div>
-
 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
-    Сведения об обеспечении беспрепятственного доступа в здания образовательной организации<br />
+    Сведения об обеспечении доступа в здания образовательной организации<br />
     инвалидов и лиц с ограниченными возможностями здоровья
 </a>
 <div class="collapse" id="spoiler-@spoilerCounter">
@@ -476,8 +468,7 @@
 </div>
 
 <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
-    Сведения о наличии специальных технических средств обучения<br />
-    коллективного и индивидуального пользования<br />
+    Сведения о наличии специальных технических средств обучения коллективного и индивидуального пользования<br />
     для инвалидов и лиц с ограниченными возможностями здоровья
 </a>
 <div class="collapse" id="spoiler-@spoilerCounter">
@@ -494,7 +485,7 @@
     </div>
 </div>
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о наличии общежития, интерната, количестве жилых помещений в общежитии, интернате для иногородних обучающихся</a>
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о наличии общежития, интерната, количестве жилых помещений в них для иногородних обучающихся</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{
         spoilerCounter++;
@@ -537,15 +528,34 @@
                         }
                     }
                     <td>-</td>
-                    <td itemprop="interInfo" class="hidden">-</td>
-                    <td itemprop="interTS" class="hidden">-</td>
-                    <td itemprop="interLS" class="hidden">-</td>
-                    <td itemprop="interNum" class="hidden">-</td>
-                    <td itemprop="interInv" class="hidden">-</td>
-                    <td itemprop="interFd" class="hidden">-</td>
+                    <td itemprop="interInfo" class="hidden">Интернатов нет</td>
+                    <td itemprop="interTS" class="hidden">Интернатов нет</td>
+                    <td itemprop="interLS" class="hidden">Интернатов нет</td>
+                    <td itemprop="interNum" class="hidden">Интернатов нет</td>
+                    <td itemprop="interNumOvz" class="hidden">Интернатов нет</td>
+                    <td itemprop="interInv" class="hidden">Интернатов нет</td>
+                    <td itemprop="interFd" class="hidden">Интернатов нет</td>
                 </tr>
             }
         </table>
+    </div>
+</div>
+
+<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">
+    Информация о наличии условий для беспрепятственного доступа в общежитии, интернате
+</a>
+<div class="collapse" id="spoiler-@spoilerCounter">
+    @{
+        spoilerCounter++;
+    }
+    <div class="well">
+        <div itemprop="hostelInfoOvz">
+            <p>В общежитии № 1 студенческого городка Азово-Черноморского инженерного института ФГБОУ ВО Донской ГАУ расположенного по адресу: 347740 Ростовская область г. Зерноград ул. Советская 19 предусмотрен беспрепятственный доступ для инвалидов и лиц с ограниченными возможностями здоровья.</p>
+            <p>Для инвалидов и лиц с ОВЗ в общежитии оборудован вход и установлена кнопка вызова.</p>
+        </div>
+        <div itemprop="hostelInterOvz" class="hidden">
+            Интернатов нет
+        </div>
     </div>
 </div>
 
@@ -567,7 +577,7 @@
 
 
 
-<a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся</a>
+@* <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Сведения об условиях охраны здоровья обучающихся</a>
 <div class="collapse" id="spoiler-@spoilerCounter">
     @{
         spoilerCounter++;
@@ -590,4 +600,4 @@
             <a href="http://ачгаа.рф/sveden/objects/meals">Открыть</a>
         </div>
     </div>
-</div>
+</div> *@
