@@ -17,6 +17,8 @@
 
     var hostelInfo = (IEnumerable<HostelInfo>)ViewData["hostelInfo"];
 
+    var InfOFormirovaniiPlatiZaProjivanieVObsch = (FileDataType)ViewData["InfOFormirovaniiPlatiZaProjivanieVObsch"];
+
     int spoilerCounter = 1;
 }
 
@@ -570,7 +572,10 @@
     @{
         spoilerCounter++;
     }
-    <div class="well">
-        <a itemprop="localActObSt" href="http://ачгаа.рф/wp-content/uploads/2022/04/193o.pdf" target="_blank">Приказ № 193-O от «04» августа 2021 г. «Об установлении размера оплаты за пользование жилым помещением и коммунальными услугами в общежитиях Азово-Черноморского инженерного института ФГБОУ ВО Донской ГАУ с 01.09.2021 года»</a>
+    <div class="well" itemprop="localActObSt">
+        @foreach (var ftft in InfOFormirovaniiPlatiZaProjivanieVObsch.FileToFileTypes)
+        {
+            <p itemprop="localActObSt"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+        }
     </div>
 </div>

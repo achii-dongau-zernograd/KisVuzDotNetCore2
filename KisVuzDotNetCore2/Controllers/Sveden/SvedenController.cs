@@ -706,6 +706,15 @@ namespace KisVuzDotNetCore2.Controllers
             var hostelInfo = await _context.HostelInfo.ToListAsync();
             ViewData["hostelInfo"] = hostelInfo;
 
+            // Сведения о формировании платы за проживание в общежитии
+            var InfOFormirovaniiPlatiZaProjivanieVObsch = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.InfOFormirovaniiPlatiZaProjivanieVObsch)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["InfOFormirovaniiPlatiZaProjivanieVObsch"] = InfOFormirovaniiPlatiZaProjivanieVObsch;
+
+
             return View();
         }
 
