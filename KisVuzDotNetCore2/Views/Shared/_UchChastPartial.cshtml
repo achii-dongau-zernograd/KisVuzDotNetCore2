@@ -109,6 +109,18 @@
                     </li>
                 </ul>
             </li>
+
+            <li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Материально-техническое обеспечение <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a asp-controller="Korpus" asp-action="Index" asp-route-id="">Перечень корпусов</a></li>
+                    <li><a asp-controller="Pomeshenies" asp-action="Index" asp-route-id="">Перечень помещений</a></li>
+                    <li><a asp-controller="PomeshenieTypepomesheniyas" asp-action="Index" asp-route-id="">Помещение-Тип помещения</a></li>
+                    <li><a asp-controller="PomeshenieTypes" asp-action="Index" asp-route-id="">Типы помещений (справочник)</a></li>
+                    <li><a asp-controller="Oborudovanies" asp-action="Index" asp-route-id="">Перечень оборудования</a></li>
+                    <li><a asp-controller="DisciplinePomeshenies" asp-action="Index" asp-route-id="">Закрепление помещений за дисциплинами по уч. плану в уч. году</a></li>
+                </ul>
+            </li>
         </ul>
     </li>
     }    

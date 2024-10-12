@@ -11,7 +11,7 @@ using KisVuzDotNetCore2.Infrastructure;
 
 namespace KisVuzDotNetCore2.Models.Sveden
 {
-    [Authorize(Roles = "Администраторы")]
+    [Authorize(Roles = "Администраторы, Учебная часть")]
     public class PomesheniesController : Controller
     {
         private readonly AppIdentityDBContext _context;
