@@ -24,7 +24,7 @@ namespace KisVuzDotNetCore2.Controllers
     /// </summary>
     public class SvedenController : Controller
     {
-        ISelectListRepository _selectListRepository;        
+        ISelectListRepository _selectListRepository;
         IHostingEnvironment _appEnvironment;
         private readonly AppIdentityDBContext _context;
         private readonly IEduNapravlRepository _eduNapravlRepository;
