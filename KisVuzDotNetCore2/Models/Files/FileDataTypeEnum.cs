@@ -315,6 +315,10 @@
         /// <summary>
         /// Информация о формировании платы за проживание в общежитии
         /// </summary>
-        InfOFormirovaniiPlatiZaProjivanieVObsch = 85
+        InfOFormirovaniiPlatiZaProjivanieVObsch = 85,
+        /// <summary>
+        /// Информация об обеспечении беспрепятственного доступа в здания образовательной организации
+        /// </summary>
+        InfObObespBesprDostupaVZdaniyaObrOrg = 86
     }
 }

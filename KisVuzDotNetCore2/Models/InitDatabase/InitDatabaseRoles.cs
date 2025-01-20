@@ -47,7 +47,8 @@ namespace KisVuzDotNetCore2.Models.InitDatabase
                     "НИЧ",
                     "ЦПОРМ",
                     "Юротдел",
-                    "Администраторы СДО"
+                    "Администраторы СДО",
+                    "ОВЗ"
                 };
 
                 foreach(string role in Roles)

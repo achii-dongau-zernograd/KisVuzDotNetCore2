@@ -40,6 +40,10 @@
         /// <summary>
         /// Сведения об обр. орг. - Образование
         /// </summary>
-        SvedenEducation = 17
+        SvedenEducation = 17,
+        /// <summary>
+        /// ОВЗ
+        /// </summary>
+        OVZ = 18
     }
 }

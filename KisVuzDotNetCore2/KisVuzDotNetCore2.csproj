@@ -698,6 +698,9 @@
     <Content Update="Views\Shared\Components\StructSubvisionChief\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Shared\_OvzPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_TeacherPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
