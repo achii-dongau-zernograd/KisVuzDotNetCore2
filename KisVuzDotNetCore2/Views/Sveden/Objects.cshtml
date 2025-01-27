@@ -17,6 +17,7 @@
 
     var hostelInfo = (IEnumerable<HostelInfo>)ViewData["hostelInfo"];
 
+    var InfObObespBesprDostupaVZdaniyaObrOrg = (FileDataType)ViewData["InfObObespBesprDostupaVZdaniyaObrOrg"];
     var InfOFormirovaniiPlatiZaProjivanieVObsch = (FileDataType)ViewData["InfOFormirovaniiPlatiZaProjivanieVObsch"];
 
     int spoilerCounter = 1;
@@ -462,6 +463,12 @@
         <div itemprop="ovz">
             <div itemprop="dopSsylka1">
                 <a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/ovz">Сведения об обеспечении доступа в здания образовательной организации инвалидов и лиц с ограниченными возможностями здоровья</a>
+            </div>            
+            <div itemprop="dopSsylka1">
+                @foreach (var ftft in InfObObespBesprDostupaVZdaniyaObrOrg.FileToFileTypes)
+                {
+                    <p itemprop="dopSsylka1"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+                }
             </div>
         </div>
     </div>
