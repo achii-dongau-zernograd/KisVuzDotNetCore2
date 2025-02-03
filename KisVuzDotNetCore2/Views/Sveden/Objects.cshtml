@@ -17,6 +17,7 @@
 
     var hostelInfo = (IEnumerable<HostelInfo>)ViewData["hostelInfo"];
 
+    var InfONalichiiSpecTehnSredstvObucheniyaKollektivnIIndividPolzovaniya = (FileDataType)ViewData["InfONalichiiSpecTehnSredstvObucheniyaKollektivnIIndividPolzovaniya"];
     var InfObObespBesprDostupaVZdaniyaObrOrg = (FileDataType)ViewData["InfObObespBesprDostupaVZdaniyaObrOrg"];
     var InfOFormirovaniiPlatiZaProjivanieVObsch = (FileDataType)ViewData["InfOFormirovaniiPlatiZaProjivanieVObsch"];
 
@@ -488,6 +489,12 @@
             <a href="http://ачгаа.рф/wp-content/uploads/2019/04/SoglOSotrUFU.pdf" target="_blank">Соглашение о сотрудничестве от 10.05.2018 г.</a>
             <br />
             <a href="http://ачгаа.рф/files/achii/2019/SoglOSotrUFU_dop1_2019.pdf" target="_blank">Дополнительное соглашение № 1 к соглашению о сотрудничестве от 10.05.2018 г. (23.12.2019 г.)</a>
+        
+            @foreach (var ftft in InfONalichiiSpecTehnSredstvObucheniyaKollektivnIIndividPolzovaniya.FileToFileTypes)
+            {
+                <p itemprop="localActObSt"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+            }
+        
         </div>
     </div>
 </div>

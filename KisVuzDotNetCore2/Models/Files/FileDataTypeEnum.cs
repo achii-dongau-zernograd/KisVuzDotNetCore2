@@ -319,6 +319,10 @@
         /// <summary>
         /// Информация об обеспечении беспрепятственного доступа в здания образовательной организации
         /// </summary>
-        InfObObespBesprDostupaVZdaniyaObrOrg = 86
+        InfObObespBesprDostupaVZdaniyaObrOrg = 86,
+        /// <summary>
+        /// Информация о наличии специальных технических средств обучения коллективного и индивидуального пользования
+        /// </summary>
+        InfONalichiiSpecTehnSredstvObucheniyaKollektivnIIndividPolzovaniya = 87
     }
 }

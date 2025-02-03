@@ -715,6 +715,13 @@ namespace KisVuzDotNetCore2.Controllers
                 .FirstOrDefaultAsync();
             ViewData["InfObObespBesprDostupaVZdaniyaObrOrg"] = InfObObespBesprDostupaVZdaniyaObrOrg;
 
+            // Информация о наличии специальных технических средств обучения коллективного и индивидуального пользования
+            var InfONalichiiSpecTehnSredstvObucheniyaKollektivnIIndividPolzovaniya = await _context.FileDataTypes
+                .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.InfONalichiiSpecTehnSredstvObucheniyaKollektivnIIndividPolzovaniya)
+                .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                .FirstOrDefaultAsync();
+            ViewData["InfONalichiiSpecTehnSredstvObucheniyaKollektivnIIndividPolzovaniya"] = InfONalichiiSpecTehnSredstvObucheniyaKollektivnIIndividPolzovaniya;
 
             // Сведения о формировании платы за проживание в общежитии
             var InfOFormirovaniiPlatiZaProjivanieVObsch = await _context.FileDataTypes
