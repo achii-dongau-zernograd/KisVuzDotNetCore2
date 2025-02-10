@@ -1,0 +1,36 @@
+﻿@model IEnumerable<KisVuzDotNetCore2.Models.Common.TextBlock>
+
+@{
+    ViewData["Title"] = "Текстовые блоки";
+    string textBlockTag = (string)ViewBag.textBlockTag;
+}
+
+<h2>Текстовые блоки</h2>
+
+<p>
+    <a asp-action="Create" asp-route-textBlockTag="@textBlockTag" class=" btn btn-primary">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TextBlockText)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.TextBlockText)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TextBlockId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.TextBlockId">Подробно</a> |
+                <a asp-action="Delete" asp-route-id="@item.TextBlockId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

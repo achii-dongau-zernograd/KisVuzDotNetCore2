@@ -31,6 +31,7 @@ namespace KisVuzDotNetCore2.Controllers
         private readonly IPomeshenieRepository _pomeshenieRepository;
         private readonly IAddressPlacesRepository _addressPlacesRepository;
         private readonly IEduPOAccredRepository _eduPOAccredRepository;
+        private readonly ITextBlockRepository _textBlockRepository;
 
         public SvedenController(IHostingEnvironment appEnvironment,
             AppIdentityDBContext context,
@@ -38,7 +39,8 @@ namespace KisVuzDotNetCore2.Controllers
             IEduNapravlRepository eduNapravlRepository,
             IPomeshenieRepository pomeshenieRepository,
             IAddressPlacesRepository addressPlacesRepository,
-            IEduPOAccredRepository eduPOAccredRepository)
+            IEduPOAccredRepository eduPOAccredRepository,
+            ITextBlockRepository textBlockRepository)
         {
             _appEnvironment = appEnvironment;
             _context = context;
@@ -47,6 +49,7 @@ namespace KisVuzDotNetCore2.Controllers
             _pomeshenieRepository = pomeshenieRepository;
             _addressPlacesRepository = addressPlacesRepository;
             _eduPOAccredRepository = eduPOAccredRepository;
+            _textBlockRepository = textBlockRepository;
         }
 
         /// <summary>
@@ -708,6 +711,10 @@ namespace KisVuzDotNetCore2.Controllers
 
 
             // Информация об обеспечении беспрепятственного доступа в здания образовательной организации
+            // Текст
+            var InfObObespBesprDostupaVZdaniyaObrOrg_TextBlocks = await _textBlockRepository.GetTextBlocks("InfObObespBesprDostupaVZdaniyaObrOrg").ToListAsync();
+            ViewData["InfObObespBesprDostupaVZdaniyaObrOrg_TextBlocks"] = InfObObespBesprDostupaVZdaniyaObrOrg_TextBlocks;
+            // Файлы
             var InfObObespBesprDostupaVZdaniyaObrOrg = await _context.FileDataTypes
                 .Where(t => t.FileDataTypeId == (int)FileDataTypeEnum.InfObObespBesprDostupaVZdaniyaObrOrg)
                 .Include(fdt => fdt.FileToFileTypes)

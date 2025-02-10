@@ -35,6 +35,14 @@ namespace KisVuzDotNetCore2.Models
 
         }
         #endregion
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<TextBlock>()
+                .HasIndex(e=>e.TextBlockTag);
+            base.OnModelCreating(builder);
+        }
+
         #region Таблицы
 
         #region Электронные журнылы
@@ -111,6 +119,11 @@ namespace KisVuzDotNetCore2.Models
         /// Оплаты
         /// </summary>
         public DbSet<Payment> Payments { get; set; }
+
+        /// <summary>
+        /// Текстовые блоки на веб-странице
+        /// </summary>
+        public DbSet<TextBlock> TextBlocks { get; set; }
         #endregion
 
         #region Система дистанционного образования (СДО, LMS)
@@ -1376,7 +1389,7 @@ namespace KisVuzDotNetCore2.Models
 
             await InitDatabaseElGradebooks.CreateElGradebookLessonTypes(serviceProvider, configuration);
             await InitDatabaseElGradebooks.CreateElGradebookLessonAttendanceTypes(serviceProvider, configuration);
-        }        
+        }
         
         
     }

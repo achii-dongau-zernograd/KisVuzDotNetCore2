@@ -18,6 +18,7 @@
     var hostelInfo = (IEnumerable<HostelInfo>)ViewData["hostelInfo"];
 
     var InfONalichiiSpecTehnSredstvObucheniyaKollektivnIIndividPolzovaniya = (FileDataType)ViewData["InfONalichiiSpecTehnSredstvObucheniyaKollektivnIIndividPolzovaniya"];
+    var InfObObespBesprDostupaVZdaniyaObrOrg_TextBlocks = (IEnumerable<TextBlock>)ViewData["InfObObespBesprDostupaVZdaniyaObrOrg_TextBlocks"];
     var InfObObespBesprDostupaVZdaniyaObrOrg = (FileDataType)ViewData["InfObObespBesprDostupaVZdaniyaObrOrg"];
     var InfOFormirovaniiPlatiZaProjivanieVObsch = (FileDataType)ViewData["InfOFormirovaniiPlatiZaProjivanieVObsch"];
 
@@ -465,12 +466,15 @@
             <div itemprop="dopSsylka1">
                 <a href="http://xn--80aaak3h.xn--p1ai/sveden/objects/ovz">Сведения об обеспечении доступа в здания образовательной организации инвалидов и лиц с ограниченными возможностями здоровья</a>
             </div>            
-            <div itemprop="dopSsylka1">
-                @foreach (var ftft in InfObObespBesprDostupaVZdaniyaObrOrg.FileToFileTypes)
-                {
-                    <p itemprop="dopSsylka1"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
-                }
-            </div>
+            @foreach (var textBox in InfObObespBesprDostupaVZdaniyaObrOrg_TextBlocks)
+            {
+                <p itemprop="ovz">@textBox.TextBlockText</p>
+            }
+
+            @foreach (var ftft in InfObObespBesprDostupaVZdaniyaObrOrg.FileToFileTypes)
+            {
+                <p itemprop="dopSsylka1"><a href="/@ftft.FileModel.Path">@ftft.FileModel.Name</a></p>
+            }
         </div>
     </div>
 </div>
