@@ -187,7 +187,7 @@
                                 counter++;
                                 <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Повышение квалификации</a>
                                 <div class="collapse" id="spoiler-@counter">
-                                    <div class="well">
+                                    <div class="well" itemprop="qualification">
                                         <ol>
                                             @foreach (var pk in teacher.AppUser.RefresherCourses.Where(r => r.RefresherCourseDateIssue.Year > 2020))
                                             {
