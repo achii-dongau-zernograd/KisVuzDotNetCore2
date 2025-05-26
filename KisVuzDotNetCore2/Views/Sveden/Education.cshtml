@@ -577,7 +577,7 @@ else
 }
 
 
-<table>
+@* <table>
     <tr itemprop="eduOp">
         <td itemprop="eduCode"></td>
         <td itemprop="eduName"></td>
@@ -591,7 +591,7 @@ else
         <td itemprop="eduPr"></td>
         <td itemprop="methodology"></td>
     </tr>
-</table>
+</table> *@
 
 
 @if (openedSpoiler != "eduPrograms" && !string.IsNullOrWhiteSpace(openedSpoiler))
@@ -639,6 +639,21 @@ else
                     </tr>
                 </thead>
                 <tbody>
+
+                    <tr itemprop="eduOp">
+                        <td itemprop="eduCode"></td>
+                        <td itemprop="eduName"></td>
+                        <td itemprop="eduLevel"></td>
+                        <td itemprop="eduProf"></td>
+                        <td itemprop="eduForm"></td>
+                        <td itemprop="opMain"></td>
+                        <td itemprop="educationPlan"></td>
+                        <td itemprop="educationRpd"></td>
+                        <td itemprop="educationShedule"></td>
+                        <td itemprop="eduPr"></td>
+                        <td itemprop="methodology"></td>
+                    </tr>
+
                     @foreach (var eduProgram in t10eduPrograms.OrderBy(item => item.EduProfile.EduNapravl.EduNapravlCode).Where(op => !op.IsAdopt))
                     {
                         var eduProgramEduPlanList = new List<EduPlan>();
