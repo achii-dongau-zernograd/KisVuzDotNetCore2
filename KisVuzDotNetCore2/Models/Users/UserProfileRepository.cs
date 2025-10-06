@@ -448,7 +448,7 @@ namespace KisVuzDotNetCore2.Models.Users
         /// </summary>
         /// <param name="patentEntry"></param>
         /// <param name="patent"></param>
-        public void UpdatePatent(Patent patentEntry, Patent patent)
+        public void UpdatePatent(Nir.Patent patentEntry, Nir.Patent patent)
         {
             patentEntry.PatentNumber = patent.PatentNumber;
             patentEntry.PatentName = patent.PatentName;
@@ -517,7 +517,7 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="patentId"></param>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public Patent RemovePatent(int patentId, string userName)
+        public Nir.Patent RemovePatent(int patentId, string userName)
         {
             var patent = GetPatent(patentId, userName);
             if (patent == null) return null;
@@ -899,6 +899,11 @@ namespace KisVuzDotNetCore2.Models.Users
             {
                 await RemoveProfessionalRetrainingsAsync(appUser.ProfessionalRetrainings);
             }
+            
+
+
+            var appUserLmsEvents = _context.AppUserLmsEvents.Where(e => e.AppUserId == appUser.Id);
+            _context.AppUserLmsEvents.RemoveRange(appUserLmsEvents);
 
             _context.Users.Remove(appUser);
             await _context.SaveChangesAsync();

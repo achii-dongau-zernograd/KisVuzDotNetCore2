@@ -5,6 +5,7 @@ using KisVuzDotNetCore2.Models.Nir;
 using KisVuzDotNetCore2.Models.Students;
 using KisVuzDotNetCore2.Models.Users;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         private readonly IUserWorkRepository _userWorkRepository;
         private readonly IAbiturientRepository _abiturientRepository;
         private readonly IMessagesFromAppUserToStudentGroupsRepository _messagesFromAppUserToStudentGroupsRepository;
+        private readonly IUserProfileRepository _userProfileRepository;
 
         public DatabaseClearingController(AppIdentityDBContext context,
             IArticlesRepository articlesRepository,
@@ -31,7 +33,8 @@ namespace KisVuzDotNetCore2.Controllers.Admin
             IFileModelRepository fileModelRepository,
             IUserWorkRepository userWorkRepository,
             IAbiturientRepository abiturientRepository,
-            IMessagesFromAppUserToStudentGroupsRepository messagesFromAppUserToStudentGroupsRepository)
+            IMessagesFromAppUserToStudentGroupsRepository messagesFromAppUserToStudentGroupsRepository,
+            IUserProfileRepository userProfileRepository)
         {
             _context = context;
             _articlesRepository = articlesRepository;
@@ -40,7 +43,8 @@ namespace KisVuzDotNetCore2.Controllers.Admin
             _userWorkRepository = userWorkRepository;
             _abiturientRepository = abiturientRepository;
             _messagesFromAppUserToStudentGroupsRepository = messagesFromAppUserToStudentGroupsRepository;
-    }
+            _userProfileRepository = userProfileRepository;
+        }
 
         public IActionResult Index()
         {
@@ -295,10 +299,51 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         /// Удаление пользователей, которым не назначены роли и которые не являются ни студентами, ни преподавателями
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> RemoveUsers()
+        public async Task<IActionResult> RemoveUsers(int numUsersToDelete = 1, bool remove = false)
         {
-            
+            var usersNotStudentsAndNotTeachers = await _userProfileRepository.GetUsers()
+                .Where(user => user.Students.Count == 0
+                        && user.Teachers.Count==0)
+                .Take(numUsersToDelete)
+                .Select(user => new { user.Id, user.UserName})
+                .ToListAsync();
+
+            var usersWithRoles = await _context.UserRoles
+                .Select(ur=>ur.UserId)
+                .Distinct()
+                .ToListAsync();
+
+            var usersWithoutRoles = new List<string>();
+            foreach (var userName in usersNotStudentsAndNotTeachers)
+            {
+                if (usersWithRoles.Contains(userName.Id))
+                    continue;
+
+                //usersWithoutRoles.Add(userName.Id);
+                usersWithoutRoles.Add(userName.UserName);
+            }
+
+            if (!remove)
+            {
+                return RedirectToAction(nameof(ListOfUsersWithoutRoles), new { usersWithoutRoles });
+            }
+                
+
+            foreach (var userName in usersWithoutRoles)
+            {
+                
+                    await _userProfileRepository.RemoveAppUserAsync(userName);
+
+            }
+
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult ListOfUsersWithoutRoles(List<string> usersWithoutRoles)
+        {
+            return View(usersWithoutRoles);
+        }
+
+
     }
 }

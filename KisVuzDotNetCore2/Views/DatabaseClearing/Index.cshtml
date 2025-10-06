@@ -25,7 +25,10 @@
         <a asp-action="RemoveAbiturients" asp-route-year=2024>Удаление абитуриентов</a>
     </li>
     <li>
-        <a asp-action="RemoveUsers">Удаление пользователей, не являющихся студентами и преподавателями</a>
+        <a asp-action="RemoveUsers" asp-route-numUsersToDelete="10" asp-route-remove="false">Удаление пользователей, не являющихся студентами и преподавателями (список)</a>
+    </li>
+    <li>
+        <a asp-action="RemoveUsers" asp-route-numUsersToDelete="10" asp-route-remove="true">Удаление пользователей, не являющихся студентами и преподавателями (удаление)</a>
     </li>
     <li>
         <a asp-action="RemoveOldMessages">Удаление сообщений пользователей и групповых сообщений до 31.08.2025</a>
