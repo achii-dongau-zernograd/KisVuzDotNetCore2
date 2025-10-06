@@ -54,7 +54,7 @@
                     }
                 </td>
                 <td>
-                    <form asp-action="Delete" asp-route-id="@user.Id" method="post">
+                    <form asp-action="Delete" asp-route-userName="@user.UserName" method="post">
                         <a class="btn btn-sm btn-primary" asp-action="EditUserRoles" asp-route-id="@user.Id">Роли</a>
                         <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@user.Id">Редактировать учетные данные</a>
                         <button type="submit" class="btn btn-sm btn-danger">Удалить</button>

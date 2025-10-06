@@ -277,17 +277,27 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         }
 
         /// <summary>
-        /// Удаляет все сообщения пользователей и сообщения учебным группам до 31.08.2021
+        /// Удаляет все сообщения пользователей и сообщения учебным группам до 31.08.2024
         /// </summary>
         /// <returns></returns>
         public async Task<IActionResult> RemoveOldMessages()
         {
-            await _messagesFromAppUserToStudentGroupsRepository.RemoveMessagesToDate(new DateTime(2021, 08, 31));
+            await _messagesFromAppUserToStudentGroupsRepository.RemoveMessagesToDate(new DateTime(2024, 08, 31));
 
-            var query = _context.UserMessages.Where(m => m.UserMessageDate <= new DateTime(2021, 08, 31));
+            var query = _context.UserMessages.Where(m => m.UserMessageDate <= new DateTime(2024, 08, 31));
             _context.UserMessages.RemoveRange(query);
             await _context.SaveChangesAsync();
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        /// <summary>
+        /// Удаление пользователей, которым не назначены роли и которые не являются ни студентами, ни преподавателями
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> RemoveUsers()
+        {
+            
             return RedirectToAction(nameof(Index));
         }
     }

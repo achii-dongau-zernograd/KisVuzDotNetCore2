@@ -1,7 +1,7 @@
 ﻿@model AppUser
 
 <h1>Полное удаление пользователя</h1>
-<h4>Вы действительно хотите удалить пользователя (<a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model.Id" target="_blank">@Model.GetFullName - @Model.Email</a>) со всеми связанными данными?</h4>
+<h4>Вы действительно хотите удалить пользователя (<a asp-controller="UserProfile" asp-action="Index" asp-route-id="@Model?.Id" target="_blank">@Model?.GetFullName - @Model?.Email</a>) со всеми связанными данными?</h4>
 
 <form asp-action="DeleteConfirmed">
     <input type="hidden" name="userName" value="@Model.UserName" />
