@@ -331,8 +331,14 @@ namespace KisVuzDotNetCore2.Controllers.Admin
 
             foreach (var userName in usersWithoutRoles)
             {
-                
+                try
+                {
                     await _userProfileRepository.RemoveAppUserAsync(userName);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
 
             }
 
