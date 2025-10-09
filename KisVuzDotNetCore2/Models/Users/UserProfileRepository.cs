@@ -1002,6 +1002,7 @@ namespace KisVuzDotNetCore2.Models.Users
                         await _context.SaveChangesAsync();
                     }
                     _context.UserWorkReviews.RemoveRange(userWork.UserWorkReviews);
+                    await _context.SaveChangesAsync();
                 }
 
                 if(userWork.FileModelId != null)

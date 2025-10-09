@@ -29,11 +29,11 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <returns></returns>
         public async Task<int> GetNumUserWorksUploadedToDate(DateTime dateTime)
         {
-            var num = _context.UserWorks
+            var num = await _context.UserWorks
                 .Include(uw => uw.FileModel)
                 .Where(uw => uw.FileModelId != null)
                 .Where(uw => uw.FileModel.UploadDate <= dateTime)
-                .Count();
+                .CountAsync();
 
             return num;
         }
