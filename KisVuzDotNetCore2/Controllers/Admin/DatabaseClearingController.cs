@@ -305,7 +305,8 @@ namespace KisVuzDotNetCore2.Controllers.Admin
 
             if (!remove)
             {
-                return RedirectToAction(nameof(ListOfUsersWithoutRoles), new { usersNotStudentsAndNotTeachersAndNoRoles });
+                return View("ListOfUsersWithoutRoles", usersNotStudentsAndNotTeachersAndNoRoles);
+                //return RedirectToAction(nameof(ListOfUsersWithoutRoles), new { usersNotStudentsAndNotTeachersAndNoRoles });
             }
                 
 
