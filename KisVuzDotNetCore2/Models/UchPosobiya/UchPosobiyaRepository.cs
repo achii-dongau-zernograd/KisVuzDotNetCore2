@@ -416,5 +416,14 @@ namespace KisVuzDotNetCore2.Models.UchPosobiya
             _context.UchPosobieEduForm.Remove(uchPosobieEduForm);
             await _context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Возвращает количество учебных пособий
+        /// </summary>
+        /// <returns></returns>
+        public Task<int> GetUchPosobiyaCount()
+        {
+            return _context.UchPosobie.CountAsync();
+        }
     }
 }

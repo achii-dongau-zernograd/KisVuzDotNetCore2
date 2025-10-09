@@ -155,8 +155,12 @@ namespace KisVuzDotNetCore2.Controllers.Eios
         /// <returns></returns>
         public async Task<IActionResult> UchPosobiesSobstv(UchPosobieFilterModel uchPosobieFilterModel)
         {
-            if(uchPosobieFilterModel == null)
-                return View(new UchPosobiyaViewModel { UchPosobieFilterModel = uchPosobieFilterModel });
+            if (uchPosobieFilterModel.GodIzdaniya == "" && uchPosobieFilterModel.BiblFragment == "")
+            {
+                int uchPosNum = await _uchPosobiyaRepository.GetUchPosobiyaCount();
+                ViewBag.uchPosNum = uchPosNum;
+                return View();
+            }
 
             var uchPosobiya = await _uchPosobiyaRepository.GetUchPosobiyaAsync(uchPosobieFilterModel);
 
