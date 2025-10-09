@@ -5,6 +5,13 @@
     /// </summary>
     public class UchPosobieFilterModel
     {
-        public string GodIzdaniya { get; set; } = "2018";
+        /// <summary>
+        /// Год издания
+        /// </summary>
+        public string GodIzdaniya { get; set; } = "";
+        /// <summary>
+        /// Фрагмент библиографического описания
+        /// </summary>
+        public string BiblFragment { get; set; } = "";
     }
 }

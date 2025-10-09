@@ -59,12 +59,13 @@ namespace KisVuzDotNetCore2.Models.UchPosobiya
         {
             if(uchPosobieFilterModel == null)
                 return UchPosobiya;
-                        
-            if (uchPosobieFilterModel.GodIzdaniya == null)
-            {
-                return UchPosobiya;
-            }
-            var filteredData = UchPosobiya.Where(u => u.GodIzdaniya == uchPosobieFilterModel.GodIzdaniya);
+
+            IQueryable<UchPosobie> filteredData = UchPosobiya;
+
+            if (uchPosobieFilterModel.GodIzdaniya != null)
+                filteredData = filteredData.Where(u => u.GodIzdaniya == uchPosobieFilterModel.GodIzdaniya);
+            if (uchPosobieFilterModel.BiblFragment != null)
+                filteredData = filteredData.Where(u => u.BiblOpisanie.Contains(uchPosobieFilterModel.BiblFragment));
 
             return await filteredData.ToListAsync();
         }

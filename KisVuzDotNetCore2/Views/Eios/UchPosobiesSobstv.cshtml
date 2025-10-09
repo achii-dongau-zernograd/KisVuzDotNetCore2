@@ -1,33 +1,53 @@
-﻿
+﻿@model UchPosobiyaViewModel
+
 @{
     ViewData["Title"] = "Учебные пособия";
     int Number = 0;
 }
 
-@model IEnumerable<UchPosobie>
 
 <h2>Учебные пособия, изданные в образовательной организации</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Фильтр учебных пособий</h3>
+    </div>
+    <div class="panel-body">
+        <form asp-action="UchPosobiesSobstv" class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <label asp-for="@Model.UchPosobieFilterModel.GodIzdaniya">Год издания: </label>
+                <input asp-for="@Model.UchPosobieFilterModel.GodIzdaniya" type="text" class="form-control" placeholder="Введите год издания">
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.UchPosobieFilterModel.BiblFragment">Фрагмент библ. описания: </label>
+                <input asp-for="@Model.UchPosobieFilterModel.BiblFragment" type="text" class="form-control" placeholder="Введите фрагмент библиографического описания">
+            </div>
+            <button type="submit" class="btn btn-default">Поиск</button>
+        </form>
+    </div>
+</div>
+
 
 <table class="table">
     <thead>
         <tr>
             <th>№ п.п.</th>
             <th>
-                @Html.DisplayNameFor(model => model.UchPosobieName)
+                Наименование учебного пособия
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BiblOpisanie)
+                Библиографическое описание
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FileModel)
+                pdf файл пособия
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GodIzdaniya)
+                Год издания
             </th>            
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.OrderBy(m=>m.UchPosobieName))
+        @foreach (var item in Model.UchPosobiya.OrderBy(m => m.UchPosobieName))
         {
             Number++;
             <tr>

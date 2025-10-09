@@ -153,10 +153,20 @@ namespace KisVuzDotNetCore2.Controllers.Eios
         /// Каталог учебных пособий, изданных сотрудниками вуза
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> UchPosobiesSobstv()
-        {            
-            var uchPos = await _uchPosobiyaRepository.GetUchPosobiyaAsync(null);
-            return View(uchPos);
+        public async Task<IActionResult> UchPosobiesSobstv(UchPosobieFilterModel uchPosobieFilterModel)
+        {
+            if(uchPosobieFilterModel == null)
+                return View(new UchPosobiyaViewModel { UchPosobieFilterModel = uchPosobieFilterModel });
+
+            var uchPosobiya = await _uchPosobiyaRepository.GetUchPosobiyaAsync(uchPosobieFilterModel);
+
+            var uchPosobiyaViewModel = new UchPosobiyaViewModel
+            {
+                UchPosobiya = uchPosobiya,
+                UchPosobieFilterModel = uchPosobieFilterModel
+            };
+
+            return View(uchPosobiyaViewModel);            
         }
     }
 }
