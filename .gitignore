@@ -328,6 +328,8 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder
 .mfractor/
 
+**/*.mwb.bak
+**/*.mwb.beforefix
 
 KisVuzDotNetCore2/wwwroot/files/
 KisVuzDotNetCore2/wwwroot/tmp/
