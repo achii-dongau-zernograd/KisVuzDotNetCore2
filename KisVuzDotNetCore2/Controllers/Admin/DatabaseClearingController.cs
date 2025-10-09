@@ -301,17 +301,17 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         /// <returns></returns>
         public async Task<IActionResult> RemoveUsers(int numUsersToDelete = 1, bool remove = false)
         {
-            var usersNotStudentsAndNotTeachers = await _userProfileRepository.GetUsers()
+            var usersNotStudentsAndNotTeachers = _userProfileRepository.GetUsers()
                 .Where(user => user.Students.Count == 0
                         && user.Teachers.Count==0)
                 .Take(numUsersToDelete)
                 .Select(user => new { user.Id, user.UserName})
-                .ToListAsync();
+                .ToList();
 
-            var usersWithRoles = await _context.UserRoles
+            var usersWithRoles = _context.UserRoles
                 .Select(ur=>ur.UserId)
                 .Distinct()
-                .ToListAsync();
+                .ToList();
 
             var usersWithoutRoles = new List<string>();
             foreach (var userName in usersNotStudentsAndNotTeachers)
@@ -339,6 +339,7 @@ namespace KisVuzDotNetCore2.Controllers.Admin
 
         public IActionResult ListOfUsersWithoutRoles(List<string> usersWithoutRoles)
         {
+
             return View(usersWithoutRoles);
         }
 
