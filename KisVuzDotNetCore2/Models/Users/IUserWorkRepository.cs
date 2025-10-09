@@ -18,6 +18,13 @@ namespace KisVuzDotNetCore2.Models.Users
         Task<int> GetNumUserWorksUploadedToDate(DateTime dateTime);
 
         /// <summary>
+        /// Удаляет все работы пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        Task RemoveUserWorksAsync(string userName);
+
+        /// <summary>
         /// Удаляет файлы работ пользователей, загруженные до указанной даты
         /// </summary>
         /// <param name="date"></param>

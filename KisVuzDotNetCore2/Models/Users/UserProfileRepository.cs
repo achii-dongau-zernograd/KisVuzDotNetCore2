@@ -1127,8 +1127,32 @@ namespace KisVuzDotNetCore2.Models.Users
             await _context.SaveChangesAsync();
         }
 
-        
-
         #endregion
+
+        public List<string> GetUsersNotStudentsAndNotTeachersAndNoRoles()
+        {
+            var usersNotStudentsAndNotTeachers = GetUsers()
+                .Where(user => user.Students.Count == 0
+                        && user.Teachers.Count==0)
+                .Select(user => new { user.Id, user.UserName})
+                .ToList();
+
+            var usersWithRoles = _context.UserRoles
+                .Select(ur=>ur.UserId)
+                .Distinct()
+                .ToList();
+
+            var usersWithoutRoles = new List<string>();
+            foreach (var userName in usersNotStudentsAndNotTeachers)
+            {
+                if (usersWithRoles.Contains(userName.Id))
+                    continue;
+                                
+                usersWithoutRoles.Add(userName.UserName);
+            }
+
+            return usersWithoutRoles;
+        }
+
     }
 }

@@ -39,6 +39,37 @@ namespace KisVuzDotNetCore2.Models.Users
         }
 
         /// <summary>
+        /// Удаляет все работы пользователя
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public async Task RemoveUserWorksAsync(string userName)
+        {
+            var userWorks = await _context.UserWorks
+                .Include(uw => uw.FileModel)
+                .Include(uw => uw.AppUser)
+                .Include(uw => uw.UserWorkReviews)
+                    .ThenInclude(uwr => uwr.FileModel)
+                .Where(uw => uw.AppUser.UserName == userName)
+                .ToListAsync();
+
+            foreach (var userWork in userWorks)
+            {
+                foreach (var userWorkReview in userWork.UserWorkReviews)
+                {
+                    await _fileModelRepository.RemoveFileModelAsync(userWorkReview.FileModel);
+                    _context.UserWorkReviews.Remove(userWorkReview);
+                    await _context.SaveChangesAsync();
+                }
+                
+                await _fileModelRepository.RemoveFileModelAsync(userWork.FileModel);
+                _context.UserWorks.Remove(userWork);
+                await _context.SaveChangesAsync();
+            }
+
+        }
+
+        /// <summary>
         /// Удаляет файлы работ пользователей, загруженные до указанной даты
         /// </summary>
         /// <param name="date"></param>

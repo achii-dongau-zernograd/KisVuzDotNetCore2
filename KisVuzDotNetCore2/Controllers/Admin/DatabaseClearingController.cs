@@ -300,47 +300,28 @@ namespace KisVuzDotNetCore2.Controllers.Admin
         /// </summary>
         /// <returns></returns>
         public async Task<IActionResult> RemoveUsers(int numUsersToDelete = 1, bool remove = false)
-        {
-            var usersNotStudentsAndNotTeachers = _userProfileRepository.GetUsers()
-                .Where(user => user.Students.Count == 0
-                        && user.Teachers.Count==0)
-                .Take(numUsersToDelete)
-                .Select(user => new { user.Id, user.UserName})
-                .ToList();
-
-            var usersWithRoles = _context.UserRoles
-                .Select(ur=>ur.UserId)
-                .Distinct()
-                .ToList();
-
-            var usersWithoutRoles = new List<string>();
-            foreach (var userName in usersNotStudentsAndNotTeachers)
-            {
-                if (usersWithRoles.Contains(userName.Id))
-                    continue;
-
-                //usersWithoutRoles.Add(userName.Id);
-                usersWithoutRoles.Add(userName.UserName);
-            }
+        {            
+            List<string> usersNotStudentsAndNotTeachersAndNoRoles = _userProfileRepository.GetUsersNotStudentsAndNotTeachersAndNoRoles();
 
             if (!remove)
             {
-                return RedirectToAction(nameof(ListOfUsersWithoutRoles), new { usersWithoutRoles });
+                return RedirectToAction(nameof(ListOfUsersWithoutRoles), new { usersNotStudentsAndNotTeachersAndNoRoles });
             }
                 
 
-            foreach (var userName in usersWithoutRoles)
+            foreach (var userName in usersNotStudentsAndNotTeachersAndNoRoles)
             {
+                await _userWorkRepository.RemoveUserWorksAsync(userName);
                 await _userProfileRepository.RemoveAppUserAsync(userName);
             }
 
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult ListOfUsersWithoutRoles(List<string> usersWithoutRoles)
+        public IActionResult ListOfUsersWithoutRoles(List<string> usersNotStudentsAndNotTeachersAndNoRoles)
         {
 
-            return View(usersWithoutRoles);
+            return View(usersNotStudentsAndNotTeachersAndNoRoles);
         }
 
 

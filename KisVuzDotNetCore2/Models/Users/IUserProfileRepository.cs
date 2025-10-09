@@ -278,5 +278,11 @@ namespace KisVuzDotNetCore2.Models.Users
         /// <param name="passportData"></param>
         /// <returns></returns>
         Task UpdatePassportDataAsync(PassportData passportData);
+
+        /// <summary>
+        /// Возвращает список пользователей, не являющихся ни студентами, ни преподавателями и не имеющих ролей
+        /// </summary>
+        /// <returns></returns>
+        List<string> GetUsersNotStudentsAndNotTeachersAndNoRoles();
     }
 }
