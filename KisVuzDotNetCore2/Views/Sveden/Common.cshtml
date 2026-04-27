@@ -221,11 +221,14 @@
                 <tr itemprop="filInfo">
                     <th>№ п/п</th>
                     <th>Наименование филиала</th>
-                    <th>Адрес места нахождения</th>
-                    <th>Режим и график работы</th>
-                    <th>Контактные телефоны</th>
-                    <th>Электронная почта</th>
+                    <th>ФИО руководителя филиала</th>
+                    <th>Должность руководителя филиала</th>
+                    <th>Адрес места нахождения филиала</th>
+                    <th>Режим и график работы филиала</th>
+                    <th>Контактные телефоны филиала</th>
+                    <th>Электронная почта филиала</th>
                     <th>Адрес официального сайта или страницы филиала в сети "Интернет" (при наличии)</th>
+                    <th>Положение о филиале</th>
                 </tr>
             </thead>
             <tbody>
@@ -243,13 +246,16 @@
                 else
                 {
                     <tr itemprop="filInfo">
-                        <td itemprop="nameFil" colspan="7" align="center">Филиалов нет</td>
+                        <td itemprop="nameFil" colspan="10" align="center">Филиалов нет</td>
 
+                        <td itemprop="fioFil" class="hidden">Филиалов нет</td>
+                        <td itemprop="postFil" class="hidden">Филиалов нет</td>
                         <td itemprop="addressFil" class="hidden">Филиалов нет</td>
                         <td itemprop="workTimeFil" class="hidden">Филиалов нет</td>
                         <td itemprop="telephoneFil" class="hidden">Филиалов нет</td>
                         <td itemprop="emailFil" class="hidden">Филиалов нет</td>
                         <td itemprop="websiteFil" class="hidden">Филиалов нет</td>
+                        <td itemprop="divisionClauseDocLink" class="hidden">Филиалов нет</td>
                     </tr>
                 }
             </tbody>
@@ -267,22 +273,28 @@
                 <tr>
                     <th>№ п/п</th>
                     <th>Наименование представительства</th>
-                    <th>Адрес места нахождения</th>
-                    <th>Режим и график работы</th>
-                    <th>Контактные телефоны</th>
-                    <th>Электронная почта</th>
+                    <th>ФИО руководителя представительства</th>
+                    <th>Должность руководителя представительства</th>
+                    <th>Адрес места нахождения представительства</th>
+                    <th>Режим и график работы представительства</th>
+                    <th>Контактные телефоны представительства</th>
+                    <th>Электронная почта представительства</th>
                     <th>Адрес официального сайта или страницы представительства в сети "Интернет" (при наличии)</th>
+                    <th>Положение о представительстве</th>
                 </tr>
             </thead>
             <tbody>
                 <tr itemprop="repInfo">
-                    <td itemprop="nameRep" colspan="7" align="center">Представительств нет</td>
+                    <td itemprop="nameRep" colspan="10" align="center">Представительств нет</td>
 
+                    <td itemprop="fioRep" class="hidden">Представительств нет</td>
+                    <td itemprop="postRep" class="hidden">Представительств нет</td>
                     <td itemprop="addressRep" class="hidden">Представительств нет</td>
                     <td itemprop="workTimeRep" class="hidden">Представительств нет</td>
                     <td itemprop="telephoneRep" class="hidden">Представительств нет</td>
                     <td itemprop="emailRep" class="hidden">Представительств нет</td>
                     <td itemprop="websiteRep" class="hidden">Представительств нет</td>
+                    <td itemprop="divisionClauseDocLink" class="hidden">Представительств нет</td>
                 </tr>
             </tbody>
         </table>

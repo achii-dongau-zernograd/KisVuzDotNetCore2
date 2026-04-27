@@ -19,12 +19,13 @@
         <tr>
             <th>Ф.И.О.</th>
             <th>Должность преподавателя</th>
-            <th>Перечень преподаваемых дисциплин</th>
+            <th>Преподаваемые учебные предметы, курсы, дисциплины (модули)</th>
             <th>Уровень (уровни) профессионального образования, квалификация</th>
             <th>Наименование направления подготовки и (или) специальности, в том числе научной</th>
             <th>Учёная степень (при наличии)</th>
             <th>Учёное звание (при наличии)</th>
-            <th>Сведения о повышении квалификации (за последние 3 года) и сведения о профессиональной переподготовке (при наличии)</th>
+            <th>Сведения о повышении квалификации (за последние 3 года)</th>
+            <th>Сведения о профессиональной переподготовке (при наличии)</th>
             <th>Общий стаж работы</th>
             <th>Сведения о продолжительности опыта (лет) работы в профессиональной сфере</th>
             <th>Наименование образовательных программ, в реализации которых участвует педагогический работник</th>
@@ -41,6 +42,7 @@
             <th>9</th>
             <th>10</th>
             <th>11</th>
+            <th>12</th>
         </tr>
     </thead>
     <tbody>
@@ -161,31 +163,16 @@
                     }
                 </td>
 
-                <td itemprop="profDevelopment">
+                <td itemprop="qualification">
                     @if (!string.IsNullOrEmpty(teacher.AppUserId))
                     {
                         if (!string.IsNullOrEmpty(teacher.AppUserId))
-                        {
-                            @if (teacher.AppUser.ProfessionalRetrainings.Count > 0)
-                            {
-                                counter++;
-                                <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Профессиональная переподготовка</a>
-                                <div class="collapse" id="spoiler-@counter">
-                                    <div class="well">
-                                        <ol>
-                                            @foreach (var pp in teacher.AppUser.ProfessionalRetrainings)
-                                            {
-                                                <li><a asp-controller="ProfessionalRetrainings" asp-action="Details" asp-route-id="@pp.ProfessionalRetrainingId">@pp.GetProfessionalRetrainingString</a></li>
-                                            }
-                                        </ol>
-                                    </div>
-                                </div>
-                            }
+                        {                            
 
                             @if (teacher.AppUser.RefresherCourses.Count > 0)
                             {
                                 counter++;
-                                <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Повышение квалификации</a>
+                                <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Открыть</a>
                                 <div class="collapse" id="spoiler-@counter">
                                     <div class="well" itemprop="qualification">
                                         <ol>
@@ -197,6 +184,31 @@
                                     </div>
                                 </div>
                             }
+                        }
+                    }
+                </td>
+
+                <td itemprop="profDevelopment">
+                    @if (!string.IsNullOrEmpty(teacher.AppUserId))
+                    {
+                        if (!string.IsNullOrEmpty(teacher.AppUserId))
+                        {
+                            @if (teacher.AppUser.ProfessionalRetrainings.Count > 0)
+                            {
+                                counter++;
+                                <a href="#spoiler-@counter" data-toggle="collapse" class="btn btn-primary btn-block">Открыть</a>
+                                <div class="collapse" id="spoiler-@counter">
+                                    <div class="well">
+                                        <ol>
+                                            @foreach (var pp in teacher.AppUser.ProfessionalRetrainings)
+                                            {
+                                                <li><a asp-controller="ProfessionalRetrainings" asp-action="Details" asp-route-id="@pp.ProfessionalRetrainingId">@pp.GetProfessionalRetrainingString</a></li>
+                                            }
+                                        </ol>
+                                    </div>
+                                </div>
+                            }
+                                                        
                         }
                     }
                 </td>
