@@ -28,10 +28,10 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.OrderBy(m=>m.AppUser.GetFullName)) {
+@foreach (var item in Model.OrderBy(m=>m.AppUser?.GetFullName)) {
         <tr>
             <td>
-                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser.GetFullName</a>
+                <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@item.AppUserId">@item.AppUser?.GetFullName</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EmploymentForm.EmploymentFormName)
