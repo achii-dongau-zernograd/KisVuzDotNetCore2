@@ -8,7 +8,7 @@
 </a>
 <div class="collapse" id="spoiler-eduFedDoc">
     <div class="well">
-        @foreach (var level in Model)
+        @foreach (var level in Model.Where(l => l.EduLevelId != 6))
         {
             <a href="#spoiler-@level.EduLevelId" data-toggle="collapse" class="btn btn-primary btn-block">@level.EduLevelName</a>
             <div class="collapse" id="spoiler-@level.EduLevelId">
@@ -83,10 +83,40 @@
 </a>
 <div class="collapse" id="spoiler-eduFedTreb">
     <div class="well">
-        <table itemprop="eduDoc">
-            <tr itemprop="eduDoc">
-                <td itemprop="eduFedTreb">Не применяются</td>
-            </tr>
+        
+        <table class="table" itemprop="eduDoc">
+            <thead>
+                <tr>
+                    <th>Код направления подготовки</th>
+                    <th>Наименование направления подготовки</th>
+                    <th>Ссылка на файл</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var level in Model.Where(l => l.EduLevelId==6))
+        {
+                    @foreach (var ugs in level.EduUgses)
+                    {
+                        @foreach (var napravl in ugs.EduNapravls)
+                        {
+                            <tr itemprop="eduDoc">
+                                <td>@napravl.EduNapravlCode</td>
+                                <td>@napravl.EduNapravlName</td>
+                                <td itemprop="eduFedTreb">
+                                    @if (!string.IsNullOrWhiteSpace(napravl.EduNapravlStandartDocLink))
+                                    {
+                                        <a href="@napravl.EduNapravlStandartDocLink">Открыть</a>
+                                    }
+                                    else
+                                    {
+                                        <p>-</p>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+        }
+            </tbody>
         </table>
     </div>
 </div>
