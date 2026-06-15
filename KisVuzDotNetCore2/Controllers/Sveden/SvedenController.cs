@@ -206,6 +206,16 @@ namespace KisVuzDotNetCore2.Controllers
             ViewData["license"] = license;
             #endregion
 
+            #region Сведения о наличии государственной аккредитации образовательной деятельности
+            var accreds = await _context.FileDataTypes
+                    .Include(fdt => fdt.FileToFileTypes)
+                        .ThenInclude(ftft => ftft.FileModel)
+                            .ThenInclude(fm => fm.SignList)
+                .Where(g => g.Itemprop == "accreditationDocLink")
+                .ToListAsync();
+            ViewData["accreds"] = accreds;
+            #endregion
+
             #region Таблица 9. Информация о реализуемых уровнях образования, о формах обучения, нормативных сроках обучения, сроке действия государственной аккредитации образовательной программы (при наличии государственной аккредитации), о языках, на которых осуществляется образование(обучение)
             if (string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduAccred")
             {
