@@ -298,7 +298,7 @@ else
     </div>
 </div>
 
-@if (openedSpoiler != "eduPOAccred" && !string.IsNullOrWhiteSpace(openedSpoiler))
+@* @if (openedSpoiler != "eduPOAccred" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduPOAccred" class="btn btn-primary btn-block">
         Информация о профессионально-общественной аккредитации образовательной программы
@@ -361,10 +361,11 @@ else
             </table>
         </div>
     </div>
-}
+} *@
 
 
-@if (openedSpoiler != "eduOAccred" && !string.IsNullOrWhiteSpace(openedSpoiler))
+@* 
+@if (openedSpoiler != "eduOAccred" && !string.IsNullOrWhiteSpace(openedSpoiler)) 
 {
     <a asp-route-openedSpoiler="eduOAccred" class="btn btn-primary btn-block">
         Информация об общественной аккредитации образовательной организации
@@ -411,7 +412,7 @@ else
         </div>
     </div>
 }
-
+*@
 
 @if (openedSpoiler != "eduChislen" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
