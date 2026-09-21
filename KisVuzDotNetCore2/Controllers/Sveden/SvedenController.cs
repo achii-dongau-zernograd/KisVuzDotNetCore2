@@ -197,7 +197,7 @@ namespace KisVuzDotNetCore2.Controllers
         {
             ViewBag.OpenedSpoiler = openedSpoiler;
 
-            #region Копия лицензии с приложениями
+            /* #region Копия лицензии с приложениями
             var license = await _context.FileDataTypes.Where(fdt => fdt.FileDataTypeName == "Лицензия на осуществление образовательной деятельности")
                 .Include(fdt => fdt.FileDataTypeGroup)
                 .Include(fdt => fdt.FileToFileTypes)
@@ -214,7 +214,7 @@ namespace KisVuzDotNetCore2.Controllers
                 .Where(g => g.Itemprop == "accreditationDocLink")
                 .ToListAsync();
             ViewData["accreds"] = accreds;
-            #endregion
+            #endregion  */
 
             #region Таблица 9. Информация о реализуемых уровнях образования, о формах обучения, нормативных сроках обучения, сроке действия государственной аккредитации образовательной программы (при наличии государственной аккредитации), о языках, на которых осуществляется образование(обучение)
             if (string.IsNullOrEmpty(openedSpoiler) || openedSpoiler == "eduAccred")

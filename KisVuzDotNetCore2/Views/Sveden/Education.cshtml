@@ -1,8 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Образование";
 
-    var license = (IEnumerable<FileDataType>)ViewData["license"];
-    var accreds = (IEnumerable<FileDataType>)ViewData["accreds"];
+    //var license = (IEnumerable<FileDataType>)ViewData["license"];
+    //var accreds = (IEnumerable<FileDataType>)ViewData["accreds"];
     var t9eduAccred = (IEnumerable<EduNapravlEduFormEduSrok>)ViewData["t9eduAccred"];
 
     var eduPOAccred = (IEnumerable<EduPOAccred>)ViewData["eduPOAccred"];
@@ -88,7 +88,7 @@
 <h1>Образование</h1>
 
 
-<div itemprop="copyDoc">
+@* <div itemprop="copyDoc">
     @foreach (var fileDataType in license)
     {
         <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">@fileDataType.FileDataTypeName</a>
@@ -164,7 +164,7 @@
         }
     </div>
 </div>
-
+ *@
 
 
 @if (openedSpoiler != "eduAccred" && !string.IsNullOrWhiteSpace(openedSpoiler))
@@ -659,12 +659,12 @@ else
 @if (openedSpoiler != "eduPrograms" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduPrograms" class="btn btn-primary btn-block">
-        Образование (информация по образовательным программам)
+        Образование (информация по образовательным программам, в том числе адаптированным образовательным программам)
     </a>
 }
 else
 {
-    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образование (информация по образовательным программам)</a>
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Образование (информация по образовательным программам, в том числе адаптированным образовательным программам)</a>
     <div class="@eduProgramsClass" id="spoiler-@spoilerCounter">
         @{spoilerCounter++;}
         <div class="well">
@@ -970,7 +970,7 @@ else
 }
 
 
-@if (openedSpoiler != "eduAdOp" && !string.IsNullOrWhiteSpace(openedSpoiler))
+@* @if (openedSpoiler != "eduAdOp" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="eduAdOp" class="btn btn-primary btn-block">
         Образование (информация по адаптированным образовательным программам)
@@ -994,7 +994,7 @@ else
                         <th>Ссылка на ООП</th>
                         <th>Ссылка на учебный план</th>
                         @* <th>Ссылка на аннотации к рабочим программам дисциплин (по каждой дисциплине в составе образовательной программы)</th> *@
-                        <th>Ссылки на рабочие программы (по каждой дисциплине в составе образовательной программы)</th>
+                        @* <th>Ссылки на рабочие программы (по каждой дисциплине в составе образовательной программы)</th>
                         <th>Ссылка на календарный учебный график</th>                        
                         <th>Ссылка на рабочие программы практик, предусмотренных соответствующей образовательной программой</th>
                         <th>Ссылка на методические и иные документы, разработанные образовательной организацией для обеспечения образовательного процесса, а также рабочие программы воспитания и календарные планы воспитательной работы, включаемые в ООП</th>
@@ -1010,9 +1010,9 @@ else
                         <th>8</th>
                         <th>9</th>
                         <th>10</th>
-                        <th>11</th>
+                        <th>11</th> *@
                         @* <th>12</th> *@
-                    </tr>
+                    @* </tr>
                 </thead>
                 <tbody>
                     <tr itemprop="eduAdOp">
@@ -1034,7 +1034,7 @@ else
             </table>
         </div>
     </div>
-}
+} *@
 
 
 @if (openedSpoiler != "eduObscheobrOp" && !string.IsNullOrWhiteSpace(openedSpoiler))
@@ -1533,12 +1533,12 @@ else
 @if (openedSpoiler != "graduateJob" && !string.IsNullOrWhiteSpace(openedSpoiler))
 {
     <a asp-route-openedSpoiler="graduateJob" class="btn btn-primary btn-block">
-        Информация о трудоустройстве выпускников за 2023/24 учебный год
+        Информация о трудоустройстве выпускников за 2025/26 учебный год
     </a>
 }
 else
 {
-    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о трудоустройстве выпускников за 2024/25 учебный год</a>
+    <a href="#spoiler-@spoilerCounter" data-toggle="collapse" class="btn btn-primary btn-block">Информация о трудоустройстве выпускников за 2025/26 учебный год</a>
     <div class="@graduateJobClass" id="spoiler-@spoilerCounter">
         @{
             spoilerCounter++;
