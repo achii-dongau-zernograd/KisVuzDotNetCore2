@@ -774,16 +774,16 @@ namespace KisVuzDotNetCore2.Controllers
 
 
             // Годы выпуска
-            var GraduateYear = await _context.GraduateYear.ToListAsync();
-            ViewData["GraduateYear"] = GraduateYear;
+            //var GraduateYear = await _context.GraduateYear.ToListAsync();
+            //ViewData["GraduateYear"] = GraduateYear;
 
             // Количество выпускников
-            var EduGraduate = await _context.EduGraduate.Include(g=>g.EduProfile.EduNapravl.EduUgs.EduLevel).ToListAsync();
-            ViewData["EduGraduate"] = EduGraduate;
+            //var EduGraduate = await _context.EduGraduate.Include(g=>g.EduProfile.EduNapravl.EduUgs.EduLevel).ToListAsync();
+            //ViewData["EduGraduate"] = EduGraduate;
 
             // Количество трудоустроенных выпускников
-            var GraduateTrudoustroustvo = await _context.GraduateTrudoustroustvo.Include(g => g.EduProfile.EduNapravl.EduUgs.EduLevel).ToListAsync();
-            ViewData["GraduateTrudoustroustvo"] = GraduateTrudoustroustvo;
+            //var GraduateTrudoustroustvo = await _context.GraduateTrudoustroustvo.Include(g => g.EduProfile.EduNapravl.EduUgs.EduLevel).ToListAsync();
+            //ViewData["GraduateTrudoustroustvo"] = GraduateTrudoustroustvo;
 
 
             var t20hostelInfo = await _context.HostelInfo
